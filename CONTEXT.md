@@ -27,9 +27,10 @@ them.
 _Avoid_: fix, repair, auto-install
 
 **Provenance**:
-Where a single fact came from, and therefore how far it can be trusted: `deterministic` (resolved by
-a type checker), `syntactic` (read from source text alone), or `inferred`. Carried by the fact
-itself, not attached when rendering.
+Where a single fact came from, and therefore how far it can be trusted: `deterministic` (observed,
+not guessed — resolved by a type checker, or read from git or a project's own config), `syntactic`
+(read from source text alone), or `inferred`. Carried by the fact itself, not attached when
+rendering.
 _Avoid_: confidence, certainty, trust level
 
 **Blind spot**:
@@ -80,8 +81,8 @@ One relationship between two nodes, from a closed set of nine kinds. What PRD §
 _Avoid_: relationship, link, arc, connection
 
 **Fact**:
-One indivisible piece of knowledge in the index — a node attribute or a single edge instance. The
-unit [[Provenance]] attaches to.
+One indivisible piece of knowledge in the index — a node attribute, a single edge instance, or a
+[[Label]]. The unit [[Provenance]] attaches to.
 _Avoid_: record, datum, item, entry
 
 **SymbolId**:
@@ -98,7 +99,9 @@ _Avoid_: stable, permanent, persistent, canonical
 **Derivation**:
 The rule that produced a fact, named on the fact itself: `checker-signature`,
 `checker-base-types`, `heritage-clause`, `jsx-element-rule`, `shared-method-name`, `manifest`,
-`resolver`. What makes an `inferred` fact actionable rather than merely hedged.
+`resolver` for edges; `user-config`, `git-untracked`, `generated-header`, `codegen-path`,
+`path-convention`, `tsconfig-exclude` for [[Label]]s. What makes an `inferred` fact actionable rather
+than merely hedged.
 _Avoid_: method, source, strategy, origin
 
 **Continuity**:
@@ -106,6 +109,25 @@ Deciding that a symbol at this commit is the same symbol as one at an earlier co
 inferred, snapshot-matching layer — never a property of the `SymbolId`, because no existing system
 has managed to make identity survive a rename.
 _Avoid_: tracking, history, identity, lineage
+
+### Classification
+
+**Label**:
+One classification fact about a node: an axis, its value, a [[Provenance]] and a [[Derivation]]. The
+third kind of thing the index holds, alongside [[Node]]s and [[Edge]]s — never a node itself. Keyed
+by node id, so it labels a `Symbol` as readily as a `File`.
+_Avoid_: tag, category, annotation, flag, classification
+
+**Role**:
+What a file is for: `source`, `test` or `config`. Test helpers, mocks and fixtures are `test` —
+there is no separate role for them, because everything that excludes tests wants them excluded too.
+_Avoid_: kind, type, category, purpose
+
+**Authorship**:
+Whether a file was written by a person (`authored`) or produced by a program (`generated`).
+Orthogonal to [[Role]], because generated code is still source and a config file is still authored.
+Distinct from [[Provenance]], which is about a fact rather than a file.
+_Avoid_: origin, generated flag, provenance, source
 
 ### What the index holds
 
@@ -143,3 +165,34 @@ causes: `external` (resolved, but the target is outside the repository), `unreso
 returned nothing), `dynamic` (computed at runtime — the one cause where codedocs cannot know what it
 missed).
 _Avoid_: missing edge, dangling call, unattributed
+
+### The index on disk
+
+**Index**:
+The store of everything codedocs knows about one [[Snapshot]] of one working tree — [[Node]]s,
+[[Edge]]s and [[Label]]s, with the [[Index header]] over them. A derived artifact: never committed,
+always safe to delete.
+_Avoid_: database, cache, graph, store
+
+**Snapshot**:
+The state of a working tree an [[Index]] describes: a commit plus whatever is uncommitted on top of
+it. One index holds exactly one, which is what makes a [[SymbolId]] snapshot-scoped.
+_Avoid_: version, revision, commit, state
+
+**Index header**:
+What an [[Index]] records about itself rather than about the code: the [[Snapshot]] it describes, the
+signature it will detect [[Drift]] against, the tool and schema versions it was built with, and per
+[[Project]] the [[Analysis conditions]] and [[Environment fingerprint]]. Where an answer's
+[[Completeness]] is read from.
+_Avoid_: metadata, manifest, index root
+
+**Drift**:
+The difference between the working tree and the [[Snapshot]] its [[Index]] describes. Detected before
+every answer, and either repaired or named — an answer given over unrepaired drift reports the
+drifted files as [[Blind spot]]s.
+_Avoid_: staleness, dirty, out of date, invalidation
+
+**Baseline**:
+A separate [[Index]] for some other commit, kept so an answer can be compared against it. Never part
+of the live index, and nothing not [[Durable]] may anchor to one.
+_Avoid_: history, snapshot store, previous index

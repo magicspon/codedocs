@@ -1,5 +1,7 @@
 # codedocs
 
+Always respond to the user in plain language using ISO 24495-1:2023
+
 ## graphify
 
 This project has a knowledge graph at `graphify-out/`.
