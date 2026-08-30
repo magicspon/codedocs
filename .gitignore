@@ -35,3 +35,8 @@ graphify-out/.graphify_python
 graphify-out/.graphify_root
 # Dated snapshots of the previous graph, written on every rebuild.
 graphify-out/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
+
+# Vendored fixture repos, cloned with full history so change-impact and
+# cross-commit behaviour have real renames to run against. Never committed:
+# they belong to their own upstreams, and one of them is a ~1GB monorepo.
+repos

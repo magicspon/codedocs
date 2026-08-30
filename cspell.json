@@ -23,7 +23,9 @@
     "graphify-out",
     "dist",
     "storybook-static",
-    "**/.storybook/**/*.ts"
+    "**/.storybook/**/*.ts",
+    "repos",
+    "docs/research"
   ],
   "language": "en,en-GB",
   "ignoreRegExpList": ["/%[0-9A-Fa-f]{2}/g"]
