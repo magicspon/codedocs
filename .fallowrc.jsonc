@@ -4,9 +4,7 @@
 
   // Every published entry point. Anything not reachable from one of these is
   // genuinely dead — which is the question worth asking in a library repo.
-  "entry": [
-
-  ],
+  "entry": [],
 
   // Read by a tool rather than imported by anything. `commitlint.config.js` has
   // a fallow plugin that knows to look for it; nano-staged does not, so without
@@ -18,6 +16,7 @@
     "**/build/**",
     "**/coverage/**",
     "**/dist/**",
+    "repos/**",
     // Written by `msw init`, not by us. Every finding in it is a report about
     // MSW's code that nobody here may act on.
     "**/mockServiceWorker.js",
@@ -29,7 +28,7 @@
 
   "duplicates": {
     // Hide small-N clones; focus on widespread copy-paste worth refactoring.
-    "minOccurrences": 4,
+    "minOccurrences": 4
   },
 
   "rules": {

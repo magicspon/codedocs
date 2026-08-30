@@ -10,7 +10,8 @@
     "pnpm-lock.yaml",
     "yarn.lock",
     "**/routeTree.gen.ts",
-    "graphify-out/**"
+    "graphify-out/**",
+    "repos/**"
   ],
   "overrides": [
     {

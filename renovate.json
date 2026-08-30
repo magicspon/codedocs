@@ -4,7 +4,7 @@
   "commitMessagePrefix": "chore(deps):",
   "commitMessageAction": "update",
   "commitMessageTopic": "{{depName}}",
-
+  "ignorePaths": ["repos/**"],
   "dependencyDashboard": true,
 
   "description": [

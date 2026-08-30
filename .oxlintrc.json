@@ -16,7 +16,8 @@
     "**/dist/**",
     "**/snap/**",
     "**/vite.config.*.timestamp-*.*",
-    "graphify-out/**"
+    "graphify-out/**",
+    "repos/**"
   ],
   "rules": {},
   "overrides": [
