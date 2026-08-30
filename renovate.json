@@ -1,0 +1,66 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "commitMessagePrefix": "chore(deps):",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+
+  "dependencyDashboard": true,
+
+  "description": [
+    "prHourlyLimit is 0 (unlimited) rather than the default 2: the workflow runs once a week, so a per-hour cap is really a per-week cap and a backlog would drain two PRs at a time. prConcurrentLimit is the gate that is meant to bite."
+  ],
+
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 0,
+
+  "rangeStrategy": "bump",
+
+  "postUpgradeTasks": {
+    "description": "`pnpm update --changeset` writes a changeset for the bumps its own run makes, and Renovate never makes such a run — it rewrites the range itself. The script reads the change Renovate has already made and hands the writing to `pnpm change`. `update` mode rather than `branch` because only per-upgrade mode exposes the templated fields that say which dep in which manifest moved.",
+    "commands": [
+      "node scripts/renovate-changeset.mjs '{{{packageFile}}}' '{{{depType}}}' '{{{depName}}}'"
+    ],
+    "fileFilters": [".changeset/**"],
+    "executionMode": "update"
+  },
+
+  "packageRules": [
+    {
+      "description": "Never raise a published peer range on a consumer's behalf — bumping the `zod` or `next` floor drops support for versions that worked, which is a breaking change dressed up as a chore. `widen` only ever adds a major to the range. Dev ranges still track latest via the top-level `bump`, so the lockfile stays current either way.",
+      "matchDepTypes": ["peerDependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
+      "groupName": "Vitest",
+      "matchPackageNames": ["vitest"]
+    },
+    {
+      "description": "Lint and type tooling moves together — replaces the dependabot `typescript` group",
+      "groupName": "lint and type tooling",
+      "matchPackageNames": [
+        "@types/**",
+        "oxfmt",
+        "oxlint",
+        "oxlint-*",
+        "tsdown",
+        "typescript"
+      ]
+    },
+    {
+      "description": "Local dev hooks — replaces the dependabot `dev-tools` group",
+      "groupName": "dev tooling",
+      "matchPackageNames": [
+        "husky",
+        "nano-staged",
+        "@changesets/**",
+        "@commitlint/**"
+      ]
+    },
+
+    {
+      "groupName": "github-actions",
+      "matchManagers": ["github-actions"]
+    }
+  ]
+}

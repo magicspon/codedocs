@@ -1,0 +1,41 @@
+{
+  "name": "codedocs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=24.19.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "oxlint",
+    "format": "oxfmt && oxlint --fix",
+    "spell-check": "cspell .",
+    "spell-check:sort": "node scripts/sort-cspell-words.mjs",
+    "check": "oxfmt --check && oxlint",
+    "typecheck": "tsc --noEmit && pnpm -r typecheck",
+    "release": "changeset publish",
+    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^1.0.0",
+    "@changesets/cli": "^3.0.1",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@commitlint/types": "^21.2.0",
+    "@types/node": "^24.13.3",
+    "cspell": "^10.1.0",
+    "husky": "^9.1.7",
+    "nano-staged": "^1.0.2",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "tsdown": "^0.22.14",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  }
+}

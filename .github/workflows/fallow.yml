@@ -1,0 +1,107 @@
+name: Fallow
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Cancel superseded runs when a PR is force-pushed or updated.
+concurrency:
+  group: fallow-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  audit:
+    name: Audit changed files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Full history so `--base` can diff against the PR base commit.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.22.0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+
+      # Fallow resolves package `exports` maps through node_modules. It runs
+      # without them, but warns, and subpath imports may not resolve.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Pinned so a fallow release cannot change the gate under you.
+      # Bump deliberately, and re-run the audit locally at the new version
+      # first: a fallow major moves the built-in defaults, so the same config
+      # can gate on findings here that a local run no longer reports at all.
+      - name: Install fallow
+        run: npm install -g fallow@3.17.0
+
+      - name: Run fallow audit
+        id: audit
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || 'HEAD~1' }}
+        run: |
+          set +e
+          fallow audit \
+            --base "$BASE_SHA" \
+            --gate new-only \
+            --fail-on-issues \
+            --quiet \
+            --format pr-comment-github > fallow-report.md
+          code=$?
+          set -e
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+
+          # Exit 2 is a real failure (bad config, parse error), not "issues found".
+          if [ "$code" -eq 2 ]; then
+            echo "::error::fallow exited 2 - configuration or parse error"
+            cat fallow-report.md
+          fi
+
+      - name: Write report to job summary
+        if: always() && steps.audit.outputs.exit_code != '2'
+        run: cat fallow-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      # Sticky comment keyed on fallow's own marker, so each run edits the same
+      # comment instead of stacking new ones. Never fails the build.
+      - name: Upsert PR comment
+        if: >-
+          always()
+          && github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.fork == false
+          && steps.audit.outputs.exit_code != '2'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          marker='<!-- fallow-id: fallow-results -->'
+          # --paginate applies --jq per page, so collapse to the first hit.
+          id=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
+            --jq "map(select(.body | startswith(\"$marker\"))) | .[0].id // empty" \
+            | head -1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -F body=@fallow-report.md
+          else
+            gh pr comment "$PR" --repo "$REPO" --body-file fallow-report.md
+          fi
+
+      - name: Enforce gate
+        if: always()
+        run: |
+          case "${{ steps.audit.outputs.exit_code }}" in
+            0) echo "No new issues introduced by this PR." ;;
+            1) echo "::error::fallow found issues introduced by this PR - see the job summary"; exit 1 ;;
+            *) exit 2 ;;
+          esac

@@ -1,0 +1,56 @@
+name: Renovate
+
+on:
+  schedule:
+    # Mondays 06:00 UTC. This cron is the only thing that makes Renovate run —
+    # renovate.json deliberately sets no internal `schedule`, so an internal
+    # `schedule` of "at any time" still means "whenever this workflow fires".
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: Log level
+        type: choice
+        default: info
+        options:
+          - info
+          - debug
+      dryRun:
+        description: Dry run — resolve updates and log them, but create no branches or PRs
+        type: boolean
+        default: false
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  renovate:
+    name: Renovate
+    runs-on: ubuntu-latest
+
+    steps:
+      # Set conditionally rather than inline: RENOVATE_DRY_RUN only accepts
+      # extract/lookup/full, so it must be absent rather than empty when off.
+      - name: Enable dry run
+        if: ${{ inputs.dryRun }}
+        run: echo 'RENOVATE_DRY_RUN=full' >> "$GITHUB_ENV"
+
+      # This action publishes only full semver tags — there is no floating `v46`,
+      # so the patch version must be pinned. Renovate keeps it current via the
+      # github-actions group in renovate.json.
+      - uses: renovatebot/github-action@v46.2.2
+        with:
+          token: ${{ secrets.HOMELINK_BOT_WORKFLOWS_PAT }}
+        env:
+          RENOVATE_REPOSITORIES: homelync/mocker
+          LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
+          # Self-hosted-only settings: postUpgradeTasks commands run only if they
+          # match this allowlist, and the allowlist is tested against the command
+          # *after* templating. Templating defaults to on, but the failure mode
+          # when it is off is a literal `{{{depName}}}` reaching the script rather
+          # than an error, so it is pinned here rather than assumed.
+          RENOVATE_ALLOWED_COMMANDS: '["^node scripts/renovate-changeset\\.mjs( .*)?$"]'
+          RENOVATE_ALLOW_POST_UPGRADE_COMMAND_TEMPLATING: 'true'

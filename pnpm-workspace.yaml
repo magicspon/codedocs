@@ -1,0 +1,32 @@
+packages:
+  - 'packages/*'
+  # The example apps. In the workspace so they consume the packages by link —
+  # they are the only things in the repo that exercise them the way a consumer
+  # does. Excluded from `pnpm build`; see the root package.json.
+  - 'apps/*'
+
+allowBuilds:
+  esbuild: true
+  msw: true
+
+# 3 days
+minimumReleaseAge: 4320
+# A release younger than the store's minimum age is held back until it appears
+# here. Normally pnpm writes this list and Renovate's bumps rewrite it; the
+# Storybook pins were the versions current on the day the example app was added.
+# The cspell dictionary is a hand-added exception — it shipped inside the
+# three-day window while spell-checking was being set up. Drop it once a later
+# release ages past the cutoff.
+minimumReleaseAgeExclude:
+  - '@cspell/dict-npm@5.2.47'
+
+# esbuild arrives transitively (tsdown → rolldown toolchain) and needs its
+# postinstall to fetch the platform binary.
+#
+# msw's postinstall rewrites `mockServiceWorker.js` in the Storybook example's
+# public directory whenever msw moves. The worker is a committed file that must
+# match the installed version exactly — msw refuses to start against a stale one
+# — so leaving this off would make every msw bump a silent break of the example.
+onlyBuiltDependencies:
+  - esbuild
+  - msw

@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "**/routeTree.gen.ts",
+    "graphify-out/**"
+  ],
+  "overrides": [
+    {
+      "comment": "JSONC extends JSON with comments, not with trailing commas — the language server flags them, and the top-level `trailingComma: all` put them back on every format. Fixed here rather than muted in the editor: json-language-server has no per-rule toggle, so the only lever there is switching JSON validation off wholesale.",
+      "files": ["*.jsonc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

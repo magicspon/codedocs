@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    // DOM for `Request`/`Response`/`Headers`/`URL`: the handler seam is the
+    // platform-neutral pair, and `core` is meant to run in a browser (a
+    // Storybook decorator, an MSW worker) as readily as in Node.
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "erasableSyntaxOnly": true,
+    "noEmit": true,
+
+    /**
+     * On because the build depends on it. tsdown emits declarations with oxc's
+     * isolated-declarations transform — no typechecker in the build path — which
+     * is only correct while every exported signature is explicitly annotated.
+     * Without this flag the constraint would be discovered at publish time, in
+     * the form of a wrong `.d.ts`, rather than here.
+     */
+    "isolatedDeclarations": true,
+    "declaration": true,
+
+    "strict": true,
+    /**
+     * On because the source already assumes it. Guards like `const [, target] =
+     * key.split(" "); if (target === undefined)` are correct at runtime and
+     * unreachable to the typechecker without this — which the type-aware lint
+     * reports as a redundant condition, i.e. it would have us delete the check
+     * that makes a malformed registry key throw instead of silently parsing.
+     */
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true
+  }
+}

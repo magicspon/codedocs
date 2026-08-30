@@ -1,0 +1,38 @@
+{
+  // This file is JSONC: fallow reads these comments; generic JSON tools may not.
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+
+  // Every published entry point. Anything not reachable from one of these is
+  // genuinely dead — which is the question worth asking in a library repo.
+  "entry": [
+
+  ],
+
+  // Read by a tool rather than imported by anything. `commitlint.config.js` has
+  // a fallow plugin that knows to look for it; nano-staged does not, so without
+  // this line the pre-commit config reads as a dead file.
+  "dynamicallyLoaded": ["nano-staged.js"],
+
+  "ignorePatterns": [
+    "**/.next/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/dist/**",
+    // Written by `msw init`, not by us. Every finding in it is a report about
+    // MSW's code that nobody here may act on.
+    "**/mockServiceWorker.js",
+    "**/snap/**",
+    "**/storybook-static/**",
+    "**/vite.config.*.timestamp-*.*",
+    "graphify-out/**"
+  ],
+
+  "duplicates": {
+    // Hide small-N clones; focus on widespread copy-paste worth refactoring.
+    "minOccurrences": 4,
+  },
+
+  "rules": {
+    "unused-dependencies": "warn"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "dictionaryDefinitions": [
+    {
+      "name": "cspell-words",
+      "path": "./cspell.words.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["cspell-words"],
+  "ignorePaths": [
+    "package.json",
+    "*.tsbuildinfo",
+    "**/tests/mocks/**",
+    "**/public/mockServiceWorker.js",
+    "*.svg",
+    "pnpm-lock.yaml",
+    ".changeset/renovate-*.md",
+    "node_modules",
+    "/cspell.words.txt",
+    "playwright-report",
+    "graphify-out",
+    "dist",
+    "storybook-static",
+    "**/.storybook/**/*.ts"
+  ],
+  "language": "en,en-GB",
+  "ignoreRegExpList": ["/%[0-9A-Fa-f]{2}/g"]
+}
