@@ -38,5 +38,15 @@
     "noUncheckedSideEffectImports": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true
-  }
+  },
+
+  /**
+   * The vendored fixture repos and throwaway spike code are never part of the
+   * build, and without this `tsc` globbed both. That was not merely slow: with
+   * `isolatedDeclarations` + `declaration` on, TypeScript 7.0.2 *panics* in
+   * declaration emit — `Unhandled case in Node.Text: *ast.KeywordExpression`,
+   * in `isBoundExpando` — somewhere in that source, so `pnpm typecheck` exited
+   * 2 with a Go stack trace rather than reporting anything about this project.
+   */
+  "exclude": ["spike", "repos"]
 }
