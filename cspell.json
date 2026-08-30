@@ -25,7 +25,8 @@
     "storybook-static",
     "**/.storybook/**/*.ts",
     "repos",
-    "docs/research"
+    "docs/research",
+    "spike"
   ],
   "language": "en,en-GB",
   "ignoreRegExpList": ["/%[0-9A-Fa-f]{2}/g"]
