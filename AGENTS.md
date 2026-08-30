@@ -24,6 +24,22 @@ of those is genuinely dead.
 FILE:EXPORT`. Fallow is syntactic; an export can be imported-but-unreferenced and a dependency can be
   loaded by config rather than by import.
 
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs live as GitHub issues on `magicspon/codedocs`, managed via the `gh` CLI. See
+`docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical label vocabulary — `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`,
+`wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
 ## Comments
 
 - Always comment your code (unless it's very obvious).

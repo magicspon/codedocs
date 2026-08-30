@@ -1,0 +1,227 @@
+{
+  "/Users/magicspon/dev/projects/codedocs/.changeset/config.json": {
+    "mtime": 1788107003.17413,
+    "ast_hash": "7f8c74cd9cd194d482804f3d858d9ff2",
+    "semantic_hash": "7f8c74cd9cd194d482804f3d858d9ff2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.claude/settings.json": {
+    "mtime": 1787829968.2769244,
+    "ast_hash": "6fb5613655123546f24d10522c09dccc",
+    "semantic_hash": "6fb5613655123546f24d10522c09dccc"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.claude/settings.local.json": {
+    "mtime": 1788107571.30479,
+    "ast_hash": "8a3beae8ad23a338b338cfd800ae7ff3",
+    "semantic_hash": "8a3beae8ad23a338b338cfd800ae7ff3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/applypatch-msg": {
+    "mtime": 1787830045.9065206,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/commit-msg": {
+    "mtime": 1787830045.9063826,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/h": {
+    "mtime": 1787830045.9060035,
+    "ast_hash": "15239a01c5554e56ff745570fb583a91",
+    "semantic_hash": "15239a01c5554e56ff745570fb583a91"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/husky.sh": {
+    "mtime": 1787830045.9071972,
+    "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
+    "semantic_hash": "13871d2ab13e8423790ecb2c01c78c18"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-applypatch": {
+    "mtime": 1787830045.9066625,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-checkout": {
+    "mtime": 1787830045.9068863,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-commit": {
+    "mtime": 1787830045.9064546,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-merge": {
+    "mtime": 1787830045.9069595,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-rewrite": {
+    "mtime": 1787830045.9068089,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-applypatch": {
+    "mtime": 1787830045.9065928,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-auto-gc": {
+    "mtime": 1787830045.9071014,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-commit": {
+    "mtime": 1787830045.9061396,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-merge-commit": {
+    "mtime": 1787830045.906222,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-push": {
+    "mtime": 1787830045.907031,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-rebase": {
+    "mtime": 1787830045.906731,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/prepare-commit-msg": {
+    "mtime": 1787830045.9063027,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.oxfmtrc.json": {
+    "mtime": 1787045921.7308211,
+    "ast_hash": "8f122476330d09acc460f82db446be11",
+    "semantic_hash": "8f122476330d09acc460f82db446be11"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.oxlintrc.json": {
+    "mtime": 1787045921.7313602,
+    "ast_hash": "1bb90337c57fb367fa5498bedcf19026",
+    "semantic_hash": "1bb90337c57fb367fa5498bedcf19026"
+  },
+  "/Users/magicspon/dev/projects/codedocs/commitlint.config.js": {
+    "mtime": 1786887146.4872582,
+    "ast_hash": "8f6e7b204d54987b17bf027230fec44f",
+    "semantic_hash": "8f6e7b204d54987b17bf027230fec44f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/cspell.json": {
+    "mtime": 1787829968.2821884,
+    "ast_hash": "c8f5bf54d24d0f4f7a95812eaefbc3cb",
+    "semantic_hash": "c8f5bf54d24d0f4f7a95812eaefbc3cb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/nano-staged.js": {
+    "mtime": 1787829968.2853887,
+    "ast_hash": "44be96c75aff88f72e74b3c7ba5f5440",
+    "semantic_hash": "44be96c75aff88f72e74b3c7ba5f5440"
+  },
+  "/Users/magicspon/dev/projects/codedocs/package.json": {
+    "mtime": 1788107296.069603,
+    "ast_hash": "2c7ac6f1225c1542c25b9a8650276b09",
+    "semantic_hash": "2c7ac6f1225c1542c25b9a8650276b09"
+  },
+  "/Users/magicspon/dev/projects/codedocs/renovate.json": {
+    "mtime": 1788107119.2794988,
+    "ast_hash": "27cffedc96e6ea87446b6318e41858d8",
+    "semantic_hash": "27cffedc96e6ea87446b6318e41858d8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/scripts/renovate-changeset.mjs": {
+    "mtime": 1787066106.1904175,
+    "ast_hash": "7140581e386f2c9b88a1bc35805eaf18",
+    "semantic_hash": "7140581e386f2c9b88a1bc35805eaf18"
+  },
+  "/Users/magicspon/dev/projects/codedocs/scripts/sort-cspell-words.mjs": {
+    "mtime": 1787829968.3015184,
+    "ast_hash": "6aeea5861e29a23e9ebbde8e339bc9f9",
+    "semantic_hash": "6aeea5861e29a23e9ebbde8e339bc9f9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/scripts/yalc-publish.mjs": {
+    "mtime": 1787829968.3016436,
+    "ast_hash": "87df010a7290a38db117992ba74f985e",
+    "semantic_hash": "87df010a7290a38db117992ba74f985e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/tsconfig.json": {
+    "mtime": 1786889532.0623727,
+    "ast_hash": "729492daf906c47e0f431a1f634ceb01",
+    "semantic_hash": "729492daf906c47e0f431a1f634ceb01"
+  },
+  "/Users/magicspon/dev/projects/codedocs/vitest.config.ts": {
+    "mtime": 1787829968.301763,
+    "ast_hash": "8d59d70706934bb414b5b23ac4745147",
+    "semantic_hash": "8d59d70706934bb414b5b23ac4745147"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.changeset/README.md": {
+    "mtime": 1786887146.484749,
+    "ast_hash": "ee7f8da8dbf1e56238d932d47bed7ab5",
+    "semantic_hash": "ee7f8da8dbf1e56238d932d47bed7ab5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/ci.yaml": {
+    "mtime": 1787829968.2774959,
+    "ast_hash": "11479a7559570dd5c8c64b6460a615f6",
+    "semantic_hash": "11479a7559570dd5c8c64b6460a615f6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/fallow.yml": {
+    "mtime": 1787066106.1479745,
+    "ast_hash": "4b7e5f65bffce43a84329b922552d38b",
+    "semantic_hash": "4b7e5f65bffce43a84329b922552d38b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/release.yaml": {
+    "mtime": 1787829968.2776496,
+    "ast_hash": "27af2fe7c0b836cc4aeb720f686eb424",
+    "semantic_hash": "27af2fe7c0b836cc4aeb720f686eb424"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/renovate.yaml": {
+    "mtime": 1787829968.2778068,
+    "ast_hash": "74edaeddc4791b340feb7c84e9facef4",
+    "semantic_hash": "74edaeddc4791b340feb7c84e9facef4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/AGENTS.md": {
+    "mtime": 1788107701.2169373,
+    "ast_hash": "082f7f385e5d60fa26d59637b45d93a3",
+    "semantic_hash": "082f7f385e5d60fa26d59637b45d93a3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/CLAUDE.md": {
+    "mtime": 1786887146.486988,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "/Users/magicspon/dev/projects/codedocs/README.md": {
+    "mtime": 1788107151.8370948,
+    "ast_hash": "3e8a7839e1844603d5a6f124ababe931",
+    "semantic_hash": "3e8a7839e1844603d5a6f124ababe931"
+  },
+  "/Users/magicspon/dev/projects/codedocs/cspell.words.txt": {
+    "mtime": 1787829968.282261,
+    "ast_hash": "8159d01684c15487708ba47358e75c64",
+    "semantic_hash": "8159d01684c15487708ba47358e75c64"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/REQUIREMENTS.md": {
+    "mtime": 1788107458.6324308,
+    "ast_hash": "c32db2f7e22172601a6e62f3e3dfa276",
+    "semantic_hash": "c32db2f7e22172601a6e62f3e3dfa276"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agents/domain.md": {
+    "mtime": 1788107697.0500324,
+    "ast_hash": "2c8af411a24ee0cd50d37955acea2c5c",
+    "semantic_hash": "2c8af411a24ee0cd50d37955acea2c5c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agents/issue-tracker.md": {
+    "mtime": 1788107685.303093,
+    "ast_hash": "b2388c405a9991c4facf08506f7f8838",
+    "semantic_hash": "b2388c405a9991c4facf08506f7f8838"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agents/triage-labels.md": {
+    "mtime": 1788107688.1321473,
+    "ast_hash": "5c395c8403ff0b06342cd34b88763913",
+    "semantic_hash": "5c395c8403ff0b06342cd34b88763913"
+  },
+  "/Users/magicspon/dev/projects/codedocs/pnpm-workspace.yaml": {
+    "mtime": 1788107244.052631,
+    "ast_hash": "dd17e5e998d3c24138de11b2f784ee42",
+    "semantic_hash": "dd17e5e998d3c24138de11b2f784ee42"
+  }
+}
