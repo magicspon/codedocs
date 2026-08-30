@@ -14,9 +14,12 @@ graphifyy
 HOMELINK
 homelync
 inspectable
+Kythe
 LLBT
 logomark
+LSIF
 magicspon
+manypkg
 mattpocock
 metacharacter
 npmjs
@@ -24,6 +27,7 @@ pinnable
 predev
 remediations
 renovatebot
+SCIP
 sperno
 stackback
 tanstack
