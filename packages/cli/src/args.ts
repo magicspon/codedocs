@@ -7,16 +7,7 @@
 
 import { parseArgs } from 'node:util'
 
-import type { OperationName } from '@codedocs/core'
-
-/** The operations the skeleton binds, in the order `--help` lists them. */
-const OPERATIONS: readonly OperationName[] = [
-  'analyse',
-  'symbol',
-  'callers',
-  'callees',
-  'trace',
-]
+import { OPERATIONS, operationSpec, type OperationName } from '@codedocs/core'
 
 /** A parsed command line, or the reason it could not be parsed. */
 export type ParsedArgs =
@@ -114,25 +105,32 @@ function parseOptions(argv: readonly string[]) {
   }
 }
 
-/** The operation and its subject, with every arity rule that applies to them. */
+/**
+ * The operation and its subject, with every arity rule that applies to them.
+ *
+ * Every rule reads the manifest rather than naming an operation: `analyse` is not
+ * special-cased here, it is simply the entry whose `subject` is `null`.
+ */
 function resolveInvocation(
   positionals: readonly string[],
 ): Step<Pick<Command, 'operation' | 'subject'>> {
   const [name, subject, ...rest] = positionals
-  if (name === undefined || !isOperation(name)) {
+  const spec = name === undefined ? undefined : operationSpec(name)
+  if (spec === undefined) {
     return { message: `unknown operation \`${name ?? ''}\`\n\n${usage()}` }
   }
+  const noun = spec.subject === null ? 'argument' : spec.subject.name
   if (rest.length > 0) {
     return {
-      message: `\`${name}\` takes at most one subject, got ${positionals.length - 1}`,
+      message: `\`${spec.name}\` takes at most one ${noun}, got ${positionals.length - 1}`,
     }
   }
-  if (name !== 'analyse' && subject === undefined) {
+  if (spec.subject !== null && subject === undefined) {
     return {
-      message: `\`${name}\` needs a subject, e.g. \`codedocs ${name} AuthService.login\``,
+      message: `\`${spec.name}\` needs a ${noun}, e.g. \`codedocs ${spec.name} AuthService.login\``,
     }
   }
-  return { value: { operation: name, subject: subject ?? null } }
+  return { value: { operation: spec.name, subject: subject ?? null } }
 }
 
 /** The renderer owns the default, so an absent `--limit` means "ask the renderer". */
@@ -158,8 +156,13 @@ function resolveDepth(
   operation: OperationName,
 ): Step<number | null> {
   if (raw === undefined) return { value: null }
-  if (operation !== 'trace') {
-    return { message: `--depth applies to \`trace\`, not \`${operation}\`` }
+  if (operationSpec(operation)?.depth !== true) {
+    const takes = OPERATIONS.filter((entry) => entry.depth).map(
+      (entry) => `\`${entry.name}\``,
+    )
+    return {
+      message: `--depth applies to ${takes.join(', ')}, not \`${operation}\``,
+    }
   }
   const depth = Number(raw)
   if (!Number.isInteger(depth) || depth < 0) {
@@ -167,9 +170,6 @@ function resolveDepth(
   }
   return { value: depth }
 }
-
-const isOperation = (name: string): name is OperationName =>
-  (OPERATIONS as readonly string[]).includes(name)
 
 /** Colour is a renderer concern, and the machine renderer never uses it. */
 function resolveColor(
@@ -185,15 +185,24 @@ function resolveColor(
 
 /** The help text, which is also what an unparseable command line prints. */
 function usage(): string {
+  // Derived, so an operation cannot land without appearing in `--help`.
+  const invocation = (name: string, subject: string | null): string =>
+    `codedocs ${name}${subject === null ? '' : ` <${subject}>`}`
+  const width = Math.max(
+    ...OPERATIONS.map(
+      (entry) => invocation(entry.name, entry.subject?.name ?? null).length,
+    ),
+  )
   return [
     'codedocs — a local codebase index for TypeScript',
     '',
     'Usage:',
-    '  codedocs analyse                 build or refresh the index, one row per project',
-    '  codedocs symbol <pattern>        every symbol whose name matches a glob',
-    '  codedocs callers <subject>       every call edge into a subject',
-    '  codedocs callees <subject>       every call edge out of a subject',
-    '  codedocs trace <root>            every path of calls out of a root',
+    ...OPERATIONS.map((entry) => {
+      const left = invocation(entry.name, entry.subject?.name ?? null)
+      return `  ${left.padEnd(width + 2)}${entry.summary}`
+    }),
+    '',
+    '  codedocs mcp                serve the operations above over MCP (stdio)',
     '',
     'A subject is anything codedocs prints as an identifier:',
     '  src/auth/service.ts#AuthService.login   exact',
@@ -203,7 +212,9 @@ function usage(): string {
     '  --json           machine output; unbounded unless --limit is given',
     '  --no-update      answer from the stored snapshot and name the drift',
     `  --limit <n>      cap results (human default ${HUMAN_DEFAULT_LIMIT}, --json default none)`,
-    '  --depth <n>      `trace` only: cap the steps per path (default none)',
+    `  --depth <n>      ${OPERATIONS.filter((entry) => entry.depth)
+      .map((entry) => `\`${entry.name}\``)
+      .join(', ')} only: cap the steps per path (default none)`,
     '  --cwd <path>     run against another directory',
     '  --color / --no-color',
     '',
