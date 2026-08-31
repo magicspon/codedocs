@@ -219,6 +219,13 @@ left **251,648** unattributed — overwhelmingly calls into `node_modules`. **A 
 graph is about a quarter of its call sites.** Whatever `trace` and `impact` claim about
 completeness has to be honest about the other three quarters.
 
+> **Both counts are per project, not per file** — this sweep visits a file once for every project
+> that globs it, and cal.com's files belong to 3.5 apiece. Deduplicated they are 26,091 and 92,673.
+> The ratio is what this section is about and it barely moves: 24.6% becomes **22.5%**, so the
+> quarter still holds. See
+> [`edge-count-reconciliation.md`](./edge-count-reconciliation.md), which decomposes the 81,888 and
+> reproduces it edge for edge.
+
 ---
 
 ## 4. The algorithm: sweep call sites, do not query symbols

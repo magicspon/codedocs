@@ -20,6 +20,15 @@ edges re-dumped with ADR 0002's SCIP-shaped ids — 48,517 symbols, 81,888 edges
 of JSON. It is a floor, not a ceiling: it holds no import edges, labels, analysis conditions or
 documents.
 
+> **Corrected by [#27](https://github.com/magicspon/codedocs/issues/27).** That corpus was
+> over-counted: the spike swept each file once per project that globs it, and cal.com's files belong
+> to 3.5 projects apiece. The real index over the same tree holds **41,771 symbols and 26,091 edges**
+> across 4,827 files. The comparison below was run on the inflated corpus and is not re-run here —
+> this decision rests on the **ratio** between the two formats, which a uniformly smaller corpus does
+> not reverse, but read its absolute figures as an upper bound until
+> [#29](https://github.com/magicspon/codedocs/issues/29) re-measures.
+> See [`docs/research/edge-count-reconciliation.md`](../research/edge-count-reconciliation.md).
+
 ## Why SQLite, on measurement
 
 Both formats give the same answer to "who calls this" — 176 callers. They differ in what a fresh

@@ -213,8 +213,8 @@ const nameOf = (node: Node): string | undefined =>
 
 /**
  * A file the repository owns. `node_modules` and the default libraries are
- * walked by the program but are never nodes: cal.com's sweep left 251,648 call
- * sites crossing into `node_modules` against 81,888 resolved in-repo.
+ * walked by the program but are never nodes: cal.com's sweep left 92,673 call
+ * sites crossing into `node_modules` against 26,091 resolved in-repo.
  */
 const isRepoFile = (path: string): boolean =>
   !path.includes('/node_modules/') && !/\/lib\.[a-z0-9.]*d\.ts$/.test(path)
