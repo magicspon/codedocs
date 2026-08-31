@@ -17,18 +17,19 @@ Two things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. The operations below work end to end on real repositories;
-much of the design is settled but unbuilt. See [Not yet built](#not-yet-built).
+Pre-release, and not published to npm. Five operations, both renderers and the MCP server work end
+to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
+[What is built](#what-is-built) and [What is left](#what-is-left).
 
-Measured on [cal.com](https://github.com/calcom/cal.com) — 4,827 files across 28 TypeScript
-projects:
+Measured on [cal.com](https://github.com/calcom/cal.com) at commit `176037d` — 4,827 files across 28
+TypeScript projects:
 
 | Operation                                         | Cost                                         |
 | ------------------------------------------------- | -------------------------------------------- |
-| Cold build                                        | **17 s** → 41,771 symbols, 26,091 call edges |
-| One-file edit, repaired on the next question      | **0.76 s**                                   |
+| Cold build                                        | **17 s** → 48,069 symbols, 26,091 call edges |
+| One-file edit, repaired on the next question      | **0.8 s**                                    |
 | Answering a warm question, process start included | **~0.3 s**                                   |
-| Index on disk                                     | 49 MB                                        |
+| Index on disk                                     | 17 MB                                        |
 
 ## Requirements
 
@@ -66,7 +67,7 @@ $ codedocs analyse --limit 6
   packages/app-store-cli/tsconfig.json  103 files  typed
   packages/app-store/tsconfig.json  23 files  typed
 
-  41771 symbols, 26091 call edges, 89619 call sites unresolved
+  48069 symbols, 26091 call edges, 89619 call sites unresolved
   rebuilt cold (4827 files): the index is empty
 
   showing 6 of 28 — pass --limit for more
@@ -171,7 +172,7 @@ tree prints a shared prefix once: `sendCancelledEmailsAndSMS` is on all eight an
 line.
 
 - The walk is **unbounded unless you bound it** with `--depth`. Measured: an unbounded walk from
-  every one of cal.com's 6,313 call-graph roots yields 114,275 paths in 1.1 s, and the worst root
+  every one of cal.com's 5,217 call-graph roots yields 50,580 paths in 1.1 s, and the worst root
   exhausts at 16 steps. Only a quarter of a repository's call sites stay inside it, so a walk meets
   `node_modules` long before it meets combinatorics.
 - **Cycles terminate and are reported**, marked `↺ cycle` on the step that closed the loop, never
@@ -242,6 +243,28 @@ Four properties an agent can rely on:
 - **`--limit`'s default belongs to the renderer, not the operation.** Humans get 20 and a note saying
   how many were withheld; `--json` gets everything.
 
+### Over MCP
+
+If shelling out is the wrong shape for your agent, `codedocs mcp` serves the same operations over
+stdio:
+
+```json
+{
+  "mcpServers": {
+    "codedocs": {
+      "command": "./node_modules/.bin/codedocs",
+      "args": ["mcp"]
+    }
+  }
+}
+```
+
+One tool per operation, same name, same arguments, returning the envelope above verbatim — and no
+tool that is not an operation. The tool list is derived from the same manifest the CLI parser reads,
+and a call is answered by handing an argv to the function `codedocs` itself calls, so the bytes are
+the bytes `--json` produces by construction. `mcp` is not an operation: it owes no envelope and
+appears in no tool list.
+
 ## Three kinds of honesty, kept apart
 
 An answer that cannot say what it missed is worse than no answer. codedocs separates three things
@@ -294,11 +317,58 @@ untracked files a `tsconfig` globs that git does not. A branch switch, a rebase 
 then all just files whose signature changed. When a changed file's exported shape moves, the repair
 propagates to its direct importers and no further; when it does not, the repair stops at that file.
 
-## Not yet built
+## What is built
 
-Settled in the ADRs and not implemented: `references`, `file`, `evidence`, `docs check`,
-`docs affected`, `doctor`, `report-bug`, the MCP server, and `impact` / `review` / `plan`. Open work
-lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
+Implemented, covered by 136 tests, and measured against real repositories:
+
+- **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
+  committed one project at a time — so an interrupted cold build leaves a partial index rather than
+  nothing.
+- **Five operations.** `analyse`, `symbol`, `callers`, `callees` and `trace`.
+- **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
+  is held as data, so an operation cannot reach one renderer and miss the other.
+- **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
+  direct importers only. The import graph follows every specifier form — `import`, `export`,
+  `import()` and `import x = require()` — so a route or a lazily loaded component is not missed.
+- **Two honesty channels.** Blind spots and truncation in the envelope, plus `conditions` narrowed to
+  only the projects an answer touched.
+- **Symbol identity.** A descriptor path naming every enclosing scope, with the ids that still
+  collide reported rather than silently merged.
+- **An MCP server.** `codedocs mcp`, one tool per operation, derived from the manifest the CLI parser
+  reads.
+
+## What is left
+
+**Operations settled in ADR 0006 and not implemented:** `references`, `file`, `evidence`,
+`docs check`, `docs affected`, `doctor` and `report-bug`. The three composed operations — `impact`,
+`review` and `plan` — come after those.
+
+**Behind them, in rough order of how much they hold back:**
+
+- **Two of ADR 0001's four fidelity signals.** A project counts as `typed` when `node_modules`
+  exists and its tsconfig globs at least one file. Not yet measured: `node_modules` stale against the
+  lockfile, a declared `postinstall`, and the unresolved-specifier ratio. Marked `TODO(#13)` in
+  `session.ts`.
+- **Preflight scoping.** ADR 0001 makes preflight the first phase of every analysis, but
+  `getSemanticDiagnostics` over all of cal.com costs 36 s — more than building the call graph — so it
+  is not yet run at all. Scoping it to the question, without inventing a blind spot the tool cannot
+  see, is [#15](https://github.com/magicspon/codedocs/issues/15).
+- **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
+  `model.ts`.
+- **`codedocs.jsonc`**, so a repository can name projects discovery misses — and a rule about what is
+  allowed to enter it. [#19](https://github.com/magicspon/codedocs/issues/19), marked `TODO(#19)` in
+  `discovery.ts`.
+- **The scope channel.** The third kind of honesty has no flag, and arrives with the label layer.
+- **Exit code 1.** Nothing produces it yet; ADR 0006 assigns it to `docs check` finding a
+  contradicted claim and to `doctor` finding an unmet precondition.
+- **Agent discoverability**, the `AGENTS.md` block that tells an agent when to reach for codedocs.
+  [#18](https://github.com/magicspon/codedocs/issues/18).
+- **Two ADR refinements** the walking skeleton surfaced, where the code is right and the ADR still
+  reads the old way ([#26](https://github.com/magicspon/codedocs/issues/26)), and one under-specified
+  line about `trace --depth` ([#33](https://github.com/magicspon/codedocs/issues/33)).
+- **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+
+All open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
 
 ## Design documents
 

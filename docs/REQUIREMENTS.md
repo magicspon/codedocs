@@ -24,18 +24,18 @@ The goal is to create a persistent, queryable **codebase intelligence layer**.
 
 CodeGuide should allow an AI coding agent to answer questions such as:
 
-* Where does this functionality live?
-* How does this feature work?
-* What calls this function?
-* What does this function depend on?
-* Where are similar implementations?
-* What architectural patterns does this codebase use?
-* Which files should I modify to implement this feature?
-* What existing code should I use as an example?
-* What documentation describes this behaviour?
-* What documentation is affected by this change?
-* Does this proposed change fit the existing architecture?
-* Did this code change introduce unexpected dependencies?
+- Where does this functionality live?
+- How does this feature work?
+- What calls this function?
+- What does this function depend on?
+- Where are similar implementations?
+- What architectural patterns does this codebase use?
+- Which files should I modify to implement this feature?
+- What existing code should I use as an example?
+- What documentation describes this behaviour?
+- What documentation is affected by this change?
+- Does this proposed change fit the existing architecture?
+- Did this code change introduce unexpected dependencies?
 
 The AI agent remains responsible for generating code.
 
@@ -51,14 +51,14 @@ CodeGuide must prefer existing, mature tooling over custom implementations.
 
 Potential building blocks include:
 
-* Oxc
-* TypeScript compiler APIs
-* ast-grep
-* Graphify
-* Git
-* existing language tooling
-* existing dependency-analysis tools
-* existing test/coverage tooling
+- Oxc
+- TypeScript compiler APIs
+- ast-grep
+- Graphify
+- Git
+- existing language tooling
+- existing dependency-analysis tools
+- existing test/coverage tooling
 
 CodeGuide should primarily provide orchestration, persistence, relationships, documentation, querying and AI integration.
 
@@ -90,12 +90,12 @@ docs/
 
 The files should work with:
 
-* Git
-* GitHub
-* pull requests
-* code review
-* existing editors
-* AI coding agents
+- Git
+- GitHub
+- pull requests
+- code review
+- existing editors
+- AI coding agents
 
 CodeGuide should not require users to store their documentation in a proprietary hosted database.
 
@@ -105,10 +105,10 @@ CodeGuide must not depend on a specific LLM provider.
 
 It should work with AI coding tools including, where supported:
 
-* Claude Code
-* Codex
-* Cursor
-* other MCP-compatible agents
+- Claude Code
+- Codex
+- Cursor
+- other MCP-compatible agents
 
 LLM calls should be performed by the user's chosen AI tooling where practical.
 
@@ -120,14 +120,14 @@ CodeGuide-generated explanations should be grounded in the actual source code an
 
 Where possible, explanations should include references to:
 
-* files
-* symbols
-* relationships
-* line ranges
-* dependencies
-* callers
-* callees
-* relevant documentation
+- files
+- symbols
+- relationships
+- line ranges
+- dependencies
+- callers
+- callees
+- relevant documentation
 
 CodeGuide should avoid presenting inferred information as fact.
 
@@ -137,13 +137,13 @@ CodeGuide should avoid presenting inferred information as fact.
 
 Primary users:
 
-* TypeScript developers
-* frontend developers
-* backend developers
-* full-stack developers
-* developers using AI coding agents
-* agencies maintaining multiple TypeScript codebases
-* teams working on large or unfamiliar repositories
+- TypeScript developers
+- frontend developers
+- backend developers
+- full-stack developers
+- developers using AI coding agents
+- agencies maintaining multiple TypeScript codebases
+- teams working on large or unfamiliar repositories
 
 The initial product should focus on individual developers rather than enterprise administration.
 
@@ -180,9 +180,9 @@ CodeGuide should be divided into reusable layers.
 
 The core should be reusable by:
 
-* CLI
-* MCP server
-* desktop application
+- CLI
+- MCP server
+- desktop application
 
 The desktop application should not implement a second analysis engine.
 
@@ -196,48 +196,48 @@ The system should identify, where supported:
 
 ### Repository structure
 
-* applications
-* packages
-* libraries
-* source directories
-* test directories
-* configuration
-* generated code
-* monorepo boundaries
+- applications
+- packages
+- libraries
+- source directories
+- test directories
+- configuration
+- generated code
+- monorepo boundaries
 
 ### Symbols
 
-* functions
-* classes
-* interfaces
-* types
-* variables
-* constants
-* enums
-* methods
-* components
-* hooks
+- functions
+- classes
+- interfaces
+- types
+- variables
+- constants
+- enums
+- methods
+- components
+- hooks
 
 ### Relationships
 
-* imports
-* exports
-* calls
-* inheritance
-* implementations
-* type references
-* symbol references
-* dependencies
-* package relationships
+- imports
+- exports
+- calls
+- inheritance
+- implementations
+- type references
+- symbol references
+- dependencies
+- package relationships
 
 ### Project information
 
-* package.json
-* workspace configuration
-* TypeScript configuration
-* build configuration
-* test configuration
-* lint configuration
+- package.json
+- workspace configuration
+- TypeScript configuration
+- build configuration
+- test configuration
+- lint configuration
 
 CodeGuide should consume existing analysis output wherever possible.
 
@@ -322,12 +322,12 @@ Unless the repository contains evidence explaining the rationale, CodeGuide shou
 
 Explanations should be grounded in:
 
-* static-analysis results
-* source code
-* code graph
-* existing documentation
-* configuration
-* Git history where appropriate
+- static-analysis results
+- source code
+- code graph
+- existing documentation
+- configuration
+- Git history where appropriate
 
 ---
 
@@ -383,10 +383,10 @@ The validator should compare the claims/relationships represented by documentati
 
 Results should distinguish between:
 
-* verified
-* potentially stale
-* contradicted
-* unable to verify
+- verified
+- potentially stale
+- contradicted
+- unable to verify
 
 Example:
 
@@ -444,11 +444,11 @@ Example output:
 
 Impact analysis should use relationships between:
 
-* source files
-* symbols
-* graph nodes
-* documentation
-* documented claims
+- source files
+- symbols
+- graph nodes
+- documentation
+- documented claims
 
 ---
 
@@ -497,14 +497,14 @@ Add Apple Pay support.
 
 The AI should be able to query CodeGuide for:
 
-* relevant abstractions
-* existing implementations
-* similar features
-* dependency relationships
-* configuration
-* tests
-* documentation
-* likely affected files
+- relevant abstractions
+- existing implementations
+- similar features
+- dependency relationships
+- configuration
+- tests
+- documentation
+- likely affected files
 
 CodeGuide may expose a planning operation such as:
 
@@ -579,14 +579,14 @@ codeguide review
 
 The review should consider:
 
-* Git diff
-* dependency graph
-* architecture
-* existing patterns
-* symbol relationships
-* documentation
-* tests
-* project configuration
+- Git diff
+- dependency graph
+- architecture
+- existing patterns
+- symbol relationships
+- documentation
+- tests
+- project configuration
 
 Potential output:
 
@@ -627,13 +627,13 @@ CodeGuide should integrate with Git.
 
 It should be able to determine:
 
-* changed files
-* changed symbols
-* removed symbols
-* changed relationships
-* affected tests
-* affected documentation
-* potentially affected consumers
+- changed files
+- changed symbols
+- removed symbols
+- changed relationships
+- affected tests
+- affected documentation
+- potentially affected consumers
 
 Example:
 
@@ -758,13 +758,13 @@ It should expose the CodeGuide engine to compatible AI agents.
 
 The MCP server should:
 
-* operate locally
-* access the current repository
-* query the local code graph
-* retrieve relevant documentation
-* analyse changes
-* provide structured results
-* avoid unnecessary context expansion
+- operate locally
+- access the current repository
+- query the local code graph
+- retrieve relevant documentation
+- analyse changes
+- provide structured results
+- avoid unnecessary context expansion
 
 ---
 
@@ -778,14 +778,14 @@ The desktop application should reuse the same CodeGuide core used by the CLI and
 
 It should provide visual interfaces for:
 
-* codebase exploration
-* dependency graphs
-* documentation
-* walkthroughs
-* change impact
-* documentation health
-* AI context
-* architecture exploration
+- codebase exploration
+- dependency graphs
+- documentation
+- walkthroughs
+- change impact
+- documentation health
+- AI context
+- architecture exploration
 
 The desktop application must not duplicate static-analysis logic.
 
@@ -810,18 +810,18 @@ The implementation should be primarily TypeScript.
 
 Potential technologies:
 
-* TypeScript
-* Node.js
-* pnpm
-* Tauri
-* Vite
-* existing Rust-based JavaScript tooling
-* Oxc
-* TypeScript compiler APIs
-* ast-grep
-* Graphify
-* Git
-* MCP
+- TypeScript
+- Node.js
+- pnpm
+- Tauri
+- Vite
+- existing Rust-based JavaScript tooling
+- Oxc
+- TypeScript compiler APIs
+- ast-grep
+- Graphify
+- Git
+- MCP
 
 Use Rust-based tooling where it provides high-performance parsing or analysis rather than reimplementing equivalent functionality in TypeScript.
 
@@ -889,12 +889,12 @@ CodeGuide should be usable on large TypeScript repositories.
 
 Requirements:
 
-* incremental analysis where practical
-* cache analysis results
-* avoid rebuilding the entire graph for every query
-* analyse only changed files when possible
-* support monorepos
-* avoid sending large amounts of unnecessary context to LLMs
+- incremental analysis where practical
+- cache analysis results
+- avoid rebuilding the entire graph for every query
+- analyse only changed files when possible
+- support monorepos
+- avoid sending large amounts of unnecessary context to LLMs
 
 The initial implementation should prioritise correctness over premature optimisation.
 
@@ -908,22 +908,22 @@ CodeGuide must clearly distinguish:
 
 Examples:
 
-* imports
-* symbol references
-* callers
-* callees
-* Git changes
-* file existence
-* dependency relationships
+- imports
+- symbol references
+- callers
+- callees
+- Git changes
+- file existence
+- dependency relationships
 
 ### Inferred results
 
 Examples:
 
-* architectural intent
-* semantic similarity
-* likely purpose
-* inferred documentation meaning
+- architectural intent
+- semantic similarity
+- likely purpose
+- inferred documentation meaning
 
 Inferred results should be clearly represented as such.
 
@@ -961,16 +961,16 @@ codeguide report-bug
 
 The report should contain useful diagnostic information such as:
 
-* CodeGuide version
-* OS
-* Node version
-* package manager
-* relevant dependency versions
-* configuration
-* analysis results
-* errors
-* stack traces
-* reproduction command
+- CodeGuide version
+- OS
+- Node version
+- package manager
+- relevant dependency versions
+- configuration
+- analysis results
+- errors
+- stack traces
+- reproduction command
 
 Users should be able to give the report directly to an AI coding agent.
 
@@ -984,11 +984,11 @@ The project should favour permissively licensed dependencies suitable for commer
 
 Before adopting any dependency, verify:
 
-* license
-* redistribution requirements
-* commercial-use restrictions
-* attribution requirements
-* transitive dependency licenses
+- license
+- redistribution requirements
+- commercial-use restrictions
+- attribution requirements
+- transitive dependency licenses
 
 Graphify and other third-party analysis tools should be consumed according to their respective licenses.
 
@@ -1030,12 +1030,12 @@ The MVP should focus on proving the core concept.
 
 ### Phase 1 — Analysis
 
-* repository discovery
-* TypeScript analysis
-* symbol extraction
-* relationship extraction
-* graph integration
-* persistent local index
+- repository discovery
+- TypeScript analysis
+- symbol extraction
+- relationship extraction
+- graph integration
+- persistent local index
 
 ### Phase 2 — CLI
 
@@ -1111,14 +1111,14 @@ AI + CodeGuide MCP
 
 Measure:
 
-* time to implementation
-* number of files unnecessarily inspected
-* token usage where measurable
-* incorrect architectural assumptions
-* duplicate implementations
-* test failures
-* required corrections
-* final code quality
+- time to implementation
+- number of files unnecessarily inspected
+- token usage where measurable
+- incorrect architectural assumptions
+- duplicate implementations
+- test failures
+- required corrections
+- final code quality
 
 The primary success criterion is:
 

@@ -59,9 +59,9 @@ export interface TracePath {
  * **The walk is unbounded unless the caller bounds it**, which is measured
  * rather than assumed. The number of simple paths out of a symbol is
  * exponential in depth in principle, so a default depth looked prudent — but on
- * cal.com an unbounded walk from *every* one of its 6,313 call-graph roots
- * yields 114,275 paths in 1.1 s, the worst root being 1,630 paths in 7 ms and
- * exhausting at 16 steps. The structural reason is the backend spike's: only a
+ * cal.com an unbounded walk from *every* one of its 5,217 call-graph roots
+ * yields 50,580 paths in 1.1 s, the worst root being 1,630 paths and exhausting
+ * at 16 steps. The structural reason is the backend spike's: only a
  * quarter of a repository's call sites stay inside it, so a walk meets the
  * `node_modules` boundary long before it meets combinatorics.
  *

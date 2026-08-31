@@ -1,16 +1,16 @@
 # Graph Report - codedocs  (2026-08-31)
 
 ## Corpus Check
-- 111 files · ~88,679 words
+- 111 files · ~89,294 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1015 nodes · 1631 edges · 80 communities (68 shown, 12 thin omitted)
+- 1017 nodes · 1633 edges · 78 communities (66 shown, 12 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 37 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `529c3f2d`
+- Built from commit: `18b240b7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -82,8 +82,6 @@
 - [[_COMMUNITY_Community 66|Community 66]]
 - [[_COMMUNITY_Community 67|Community 67]]
 - [[_COMMUNITY_Community 68|Community 68]]
-- [[_COMMUNITY_Community 69|Community 69]]
-- [[_COMMUNITY_Community 70|Community 70]]
 - [[_COMMUNITY_Community 71|Community 71]]
 - [[_COMMUNITY_Community 72|Community 72]]
 - [[_COMMUNITY_Community 73|Community 73]]
@@ -99,7 +97,7 @@
 4. `run` - 16 edges
 5. `SymbolNode` - 15 edges
 6. `rebuild()` - 14 edges
-7. `codedocs` - 13 edges
+7. `codedocs` - 14 edges
 8. `Incremental re-analysis with existing TypeScript tooling` - 13 edges
 9. `scripts` - 12 edges
 10. `SymbolId` - 12 edges
@@ -124,7 +122,7 @@
 - **Codebase Intelligence Substrate** — docs_requirements_static_analysis_layer, docs_requirements_code_graph, docs_requirements_document_layer, docs_requirements_internal_representation, docs_requirements_adapter_pattern [EXTRACTED 1.00]
 - **Pull Request Quality Gate** — workflows_ci_pipeline, workflows_fallow_audit, agents_fallow, cspell_words_dictionary, pnpm_workspace_config [INFERRED 0.85]
 
-## Communities (80 total, 12 thin omitted)
+## Communities (78 total, 12 thin omitted)
 
 ### Community 0 - "Release & CI Workflows"
 Cohesion: 0.19
@@ -184,23 +182,23 @@ Nodes (4): alreadyRecorded, changesetDir, [packageFile, depType, depName], RELEA
 
 ### Community 14 - "Yalc Local Publish Script"
 Cohesion: 0.07
-Nodes (46): ProjectNode, ATTRIBUTIONS, byEndpoints(), CAUSES, clearFile(), code(), compare(), DERIVATIONS (+38 more)
+Nodes (49): ProjectNode, ATTRIBUTIONS, byEndpoints(), CAUSES, clearFile(), code(), compare(), DERIVATIONS (+41 more)
 
 ### Community 19 - "Community 19"
-Cohesion: 0.07
-Nodes (56): analyse(), openAnalysis(), currentCommit(), discoverProjects(), findRepositoryRoot(), SKIP_DIRS, detectDrift(), Drift (+48 more)
+Cohesion: 0.08
+Nodes (52): analyse(), openAnalysis(), currentCommit(), discoverProjects(), findRepositoryRoot(), SKIP_DIRS, detectDrift(), Drift (+44 more)
 
 ### Community 20 - "Community 20"
 Cohesion: 0.05
 Nodes (58): AdapterResult, AnalysisSession, ANONYMOUS_FUNCTION, attribute(), CALLABLE_KIND, callSegment(), CallSite, Claim (+50 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.18
-Nodes (23): analyse(), AnalysisTotals, ProjectSummary, answer(), BlindSpot, Budget, Envelope, EnvelopeError (+15 more)
+Cohesion: 0.08
+Nodes (54): SymbolSweep, AnalysisTotals, ProjectSummary, callees(), callers(), collect(), scopeTo(), noteCollisions() (+46 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.10
-Nodes (35): emit(), messageOf(), run, ambiguityNote(), AnalyseEnvelope, annotate(), blindSpotNote(), emptyLine() (+27 more)
+Nodes (37): analyse(), emit(), messageOf(), run, ambiguityNote(), AnalyseEnvelope, annotate(), blindSpotNote() (+29 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.07
@@ -291,8 +289,8 @@ Cohesion: 0.29
 Nodes (7): 32. Initial MVP, Phase 1 — Analysis, Phase 2 — CLI, Phase 3 — Documentation, Phase 4 — AI, Phase 5 — AI coding assistance, Phase 6 — Desktop
 
 ### Community 45 - "Community 45"
-Cohesion: 0.12
-Nodes (16): callers and callees, codedocs, Design documents, Development, Flags, For agents: one envelope, every answer, Install, Naming a subject (+8 more)
+Cohesion: 0.11
+Nodes (18): callers and callees, codedocs, Design documents, Development, Flags, For agents: one envelope, every answer, Install, Naming a subject (+10 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.33
@@ -354,14 +352,6 @@ Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, in
 Cohesion: 0.10
 Nodes (31): Answer, answered(), ArgumentSchema, argvFor(), callTool(), DEPTH_ARGUMENT, dispatch(), failed() (+23 more)
 
-### Community 69 - "Community 69"
-Cohesion: 0.16
-Nodes (15): callees(), callers(), collect(), scopeTo(), noteCollisions(), resolveSubject(), globToRegExp(), symbol() (+7 more)
-
-### Community 70 - "Community 70"
-Cohesion: 0.16
-Nodes (17): extend(), filesOf(), finish(), PathTerminus, tailOf(), terminusOf(), trace(), TracePath (+9 more)
-
 ### Community 71 - "Community 71"
 Cohesion: 0.21
 Nodes (5): eager(), lazily(), Typed, reexported(), statically()
@@ -389,7 +379,7 @@ Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, in
   .github/workflows/renovate.yaml · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **480 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+475 more)
+- **481 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+476 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -400,13 +390,13 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Renovate Workflow` and `GitHub Issue Tracker Convention`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `SymbolNode` connect `Community 20` to `Community 69`, `Yalc Local Publish Script`, `Community 19`, `Community 21`, `Community 22`?**
+- **Why does `SymbolNode` connect `Community 20` to `Community 19`, `Community 21`, `Community 22`, `Yalc Local Publish Script`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **Why does `FilePath` connect `Community 20` to `Community 69`, `Community 70`, `Yalc Local Publish Script`, `Community 19`, `Community 21`?**
+- **Why does `FilePath` connect `Community 20` to `Community 19`, `Community 21`, `Yalc Local Publish Script`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `CallEdge` connect `Community 20` to `Community 69`, `Community 70`, `Yalc Local Publish Script`, `Community 21`, `Community 22`?**
+- **Why does `CallEdge` connect `Community 20` to `Community 21`, `Community 22`, `Yalc Local Publish Script`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `$schema`, `baseBranch`, `access` to the rest of the system?**
-  _493 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _494 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `TypeScript Compiler Config` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._

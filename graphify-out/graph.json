@@ -2555,7 +2555,7 @@
       "source_location": "L756",
       "_origin": "ast",
       "id": "adapter_ts7_symbolsweep",
-      "community": 20,
+      "community": 21,
       "norm_label": "symbolsweep"
     },
     {
@@ -3005,7 +3005,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "src_envelope_answercontext",
-      "community": 70,
+      "community": 21,
       "norm_label": "answercontext"
     },
     {
@@ -3115,7 +3115,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_model_symbolid",
-      "community": 70,
+      "community": 21,
       "norm_label": "symbolid"
     },
     {
@@ -3215,7 +3215,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "src_model_filenode",
-      "community": 19,
+      "community": 20,
       "norm_label": "filenode"
     },
     {
@@ -3255,7 +3255,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "src_model_callsite",
-      "community": 70,
+      "community": 21,
       "norm_label": "callsite"
     },
     {
@@ -3315,7 +3315,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "operations_analyse_analyse",
-      "community": 21,
+      "community": 22,
       "norm_label": "analyse()"
     },
     {
@@ -3325,7 +3325,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_calls",
-      "community": 69,
+      "community": 21,
       "norm_label": "calls.ts"
     },
     {
@@ -3335,7 +3335,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "operations_calls_callers",
-      "community": 69,
+      "community": 21,
       "norm_label": "callers()"
     },
     {
@@ -3345,7 +3345,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "operations_calls_callees",
-      "community": 69,
+      "community": 21,
       "norm_label": "callees()"
     },
     {
@@ -3355,7 +3355,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "operations_calls_collect",
-      "community": 69,
+      "community": 21,
       "norm_label": "collect()"
     },
     {
@@ -3365,7 +3365,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "operations_calls_compare",
-      "community": 69,
+      "community": 21,
       "norm_label": "compare()"
     },
     {
@@ -3375,7 +3375,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_scope",
-      "community": 69,
+      "community": 21,
       "norm_label": "scope.ts"
     },
     {
@@ -3385,7 +3385,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "operations_scope_scopeto",
-      "community": 69,
+      "community": 21,
       "norm_label": "scopeto()"
     },
     {
@@ -3395,7 +3395,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_subject",
-      "community": 69,
+      "community": 21,
       "norm_label": "subject.ts"
     },
     {
@@ -3405,7 +3405,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "operations_subject_resolvesubject",
-      "community": 69,
+      "community": 21,
       "norm_label": "resolvesubject()"
     },
     {
@@ -3415,7 +3415,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "operations_subject_notecollisions",
-      "community": 69,
+      "community": 21,
       "norm_label": "notecollisions()"
     },
     {
@@ -3425,7 +3425,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_symbol",
-      "community": 69,
+      "community": 21,
       "norm_label": "symbol.ts"
     },
     {
@@ -3435,7 +3435,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "operations_symbol_globtoregexp",
-      "community": 69,
+      "community": 21,
       "norm_label": "globtoregexp()"
     },
     {
@@ -3445,7 +3445,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "operations_symbol_symbol",
-      "community": 69,
+      "community": 21,
       "norm_label": "symbol()"
     },
     {
@@ -3455,7 +3455,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_trace",
-      "community": 70,
+      "community": 21,
       "norm_label": "trace.ts"
     },
     {
@@ -3465,7 +3465,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "operations_trace_pathterminus",
-      "community": 70,
+      "community": 21,
       "norm_label": "pathterminus"
     },
     {
@@ -3475,7 +3475,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "operations_trace_tracestep",
-      "community": 70,
+      "community": 21,
       "norm_label": "tracestep"
     },
     {
@@ -3485,7 +3485,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "operations_trace_tracepath",
-      "community": 70,
+      "community": 21,
       "norm_label": "tracepath"
     },
     {
@@ -3495,7 +3495,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "operations_trace_trace",
-      "community": 70,
+      "community": 21,
       "norm_label": "trace()"
     },
     {
@@ -3505,7 +3505,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "operations_trace_walk",
-      "community": 70,
+      "community": 21,
       "norm_label": "walk"
     },
     {
@@ -3515,7 +3515,7 @@
       "source_location": "L160",
       "_origin": "ast",
       "id": "operations_trace_terminusof",
-      "community": 70,
+      "community": 21,
       "norm_label": "terminusof()"
     },
     {
@@ -3525,7 +3525,7 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "operations_trace_tailof",
-      "community": 70,
+      "community": 21,
       "norm_label": "tailof()"
     },
     {
@@ -3535,7 +3535,7 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "operations_trace_extend",
-      "community": 70,
+      "community": 21,
       "norm_label": "extend()"
     },
     {
@@ -3545,7 +3545,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "operations_trace_finish",
-      "community": 70,
+      "community": 21,
       "norm_label": "finish()"
     },
     {
@@ -3555,7 +3555,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "operations_trace_sequenceof",
-      "community": 70,
+      "community": 21,
       "norm_label": "sequenceof()"
     },
     {
@@ -3565,7 +3565,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "operations_trace_comparesequences",
-      "community": 70,
+      "community": 21,
       "norm_label": "comparesequences()"
     },
     {
@@ -3575,7 +3575,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "operations_trace_filesof",
-      "community": 70,
+      "community": 21,
       "norm_label": "filesof()"
     },
     {
@@ -3625,7 +3625,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_session_session",
-      "community": 70,
+      "community": 21,
       "norm_label": "session"
     },
     {
@@ -3672,7 +3672,7 @@
       "label": "projectFidelity()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L224",
+      "source_location": "L226",
       "_origin": "ast",
       "id": "src_session_projectfidelity",
       "community": 19,
@@ -3682,7 +3682,7 @@
       "label": "repairWave()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L251",
+      "source_location": "L253",
       "_origin": "ast",
       "id": "src_session_repairwave",
       "community": 19,
@@ -3692,7 +3692,7 @@
       "label": "seedFrontier()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L308",
+      "source_location": "L310",
       "_origin": "ast",
       "id": "src_session_seedfrontier",
       "community": 19,
@@ -3702,7 +3702,7 @@
       "label": "runWave()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L326",
+      "source_location": "L328",
       "_origin": "ast",
       "id": "src_session_runwave",
       "community": 19,
@@ -3712,7 +3712,7 @@
       "label": "stamp()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L372",
+      "source_location": "L374",
       "_origin": "ast",
       "id": "src_session_stamp",
       "community": 19,
@@ -3722,7 +3722,7 @@
       "label": "openFor()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L387",
+      "source_location": "L389",
       "_origin": "ast",
       "id": "src_session_openfor",
       "community": 19,
@@ -3732,7 +3732,7 @@
       "label": "touchedProjects()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L411",
+      "source_location": "L413",
       "_origin": "ast",
       "id": "src_session_touchedprojects",
       "community": 19,
@@ -3742,7 +3742,7 @@
       "label": "rebuild()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L455",
+      "source_location": "L457",
       "_origin": "ast",
       "id": "src_session_rebuild",
       "community": 19,
@@ -3752,7 +3752,7 @@
       "label": "ProjectSlice",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L527",
+      "source_location": "L529",
       "_origin": "ast",
       "id": "src_session_projectslice",
       "community": 20,
@@ -3762,7 +3762,7 @@
       "label": "extractProject()",
       "file_type": "code",
       "source_file": "packages/core/src/session.ts",
-      "source_location": "L541",
+      "source_location": "L543",
       "_origin": "ast",
       "id": "src_session_extractproject",
       "community": 19,
@@ -3865,7 +3865,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "src_store_enum_codes",
-      "community": 69,
+      "community": 14,
       "norm_label": "enum_codes"
     },
     {
@@ -3925,7 +3925,7 @@
       "source_location": "L283",
       "_origin": "ast",
       "id": "src_store_store",
-      "community": 69,
+      "community": 21,
       "norm_label": "store"
     },
     {
@@ -3945,7 +3945,7 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "src_store_readuserversion",
-      "community": 14,
+      "community": 19,
       "norm_label": "readuserversion()"
     },
     {
@@ -4015,7 +4015,7 @@
       "source_location": "L445",
       "_origin": "ast",
       "id": "src_store_pathid",
-      "community": 19,
+      "community": 14,
       "norm_label": "pathid()"
     },
     {
@@ -4135,7 +4135,7 @@
       "source_location": "L662",
       "_origin": "ast",
       "id": "src_store_groupbyproject",
-      "community": 14,
+      "community": 19,
       "norm_label": "groupbyproject()"
     },
     {
@@ -4305,7 +4305,7 @@
       "source_location": "L966",
       "_origin": "ast",
       "id": "src_store_readprojectsforfiles",
-      "community": 69,
+      "community": 21,
       "norm_label": "readprojectsforfiles()"
     },
     {
@@ -4325,7 +4325,7 @@
       "source_location": "L1004",
       "_origin": "ast",
       "id": "src_store_readimporters",
-      "community": 19,
+      "community": 14,
       "norm_label": "readimporters()"
     },
     {
@@ -4345,7 +4345,7 @@
       "source_location": "L1051",
       "_origin": "ast",
       "id": "src_store_readsymbolidat",
-      "community": 19,
+      "community": 14,
       "norm_label": "readsymbolidat()"
     },
     {
@@ -4435,7 +4435,7 @@
       "source_location": "L1216",
       "_origin": "ast",
       "id": "src_store_readsymbols",
-      "community": 69,
+      "community": 21,
       "norm_label": "readsymbols()"
     },
     {
@@ -4445,7 +4445,7 @@
       "source_location": "L1224",
       "_origin": "ast",
       "id": "src_store_readsymbol",
-      "community": 69,
+      "community": 21,
       "norm_label": "readsymbol()"
     },
     {
@@ -4525,7 +4525,7 @@
       "source_location": "L1310",
       "_origin": "ast",
       "id": "src_store_calleestep",
-      "community": 70,
+      "community": 21,
       "norm_label": "calleestep"
     },
     {
@@ -4545,7 +4545,7 @@
       "source_location": "L1376",
       "_origin": "ast",
       "id": "src_store_counts",
-      "community": 21,
+      "community": 22,
       "norm_label": "counts()"
     },
     {
@@ -5625,7 +5625,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_session_test",
-      "community": 69,
+      "community": 21,
       "norm_label": "session.test.ts"
     },
     {
@@ -5635,7 +5635,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "test_session_test_fixture",
-      "community": 69,
+      "community": 21,
       "norm_label": "fixture"
     },
     {
@@ -5645,7 +5645,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_store_test",
-      "community": 69,
+      "community": 14,
       "norm_label": "store.test.ts"
     },
     {
@@ -5655,7 +5655,7 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "test_store_test_site",
-      "community": 69,
+      "community": 14,
       "norm_label": "site()"
     },
     {
@@ -5665,7 +5665,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "test_store_test_node",
-      "community": 69,
+      "community": 14,
       "norm_label": "node()"
     },
     {
@@ -5675,7 +5675,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "test_store_test_edge",
-      "community": 69,
+      "community": 14,
       "norm_label": "edge()"
     },
     {
@@ -5685,7 +5685,7 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "test_store_test_write",
-      "community": 69,
+      "community": 14,
       "norm_label": "write"
     },
     {
@@ -5695,7 +5695,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_trace_test",
-      "community": 70,
+      "community": 21,
       "norm_label": "trace.test.ts"
     },
     {
@@ -5705,7 +5705,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "test_trace_test_fixture",
-      "community": 70,
+      "community": 21,
       "norm_label": "fixture"
     },
     {
@@ -5715,7 +5715,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "test_trace_test_paths",
-      "community": 70,
+      "community": 21,
       "norm_label": "paths()"
     },
     {
@@ -5725,7 +5725,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "test_trace_test_sequenceof",
-      "community": 70,
+      "community": 21,
       "norm_label": "sequenceof()"
     },
     {
@@ -5735,7 +5735,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_wave_test",
-      "community": 19,
+      "community": 21,
       "norm_label": "wave.test.ts"
     },
     {
@@ -5745,7 +5745,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "test_wave_test_fixture",
-      "community": 19,
+      "community": 21,
       "norm_label": "fixture"
     },
     {
@@ -5755,7 +5755,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "test_wave_test_source",
-      "community": 19,
+      "community": 21,
       "norm_label": "source()"
     },
     {
@@ -5765,7 +5765,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "test_wave_test_write",
-      "community": 19,
+      "community": 21,
       "norm_label": "write()"
     },
     {
@@ -5775,7 +5775,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "test_wave_test_repair",
-      "community": 19,
+      "community": 21,
       "norm_label": "repair()"
     },
     {
@@ -6642,7 +6642,7 @@
       "label": "Requirements",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "readme_requirements",
       "community": 45,
@@ -6652,7 +6652,7 @@
       "label": "Install",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L38",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "readme_install",
       "community": 45,
@@ -6662,7 +6662,7 @@
       "label": "Quick start",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L56",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "readme_quick_start",
       "community": 45,
@@ -6672,7 +6672,7 @@
       "label": "The operations",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L91",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "readme_the_operations",
       "community": 45,
@@ -6682,7 +6682,7 @@
       "label": "Naming a subject",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L101",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "readme_naming_a_subject",
       "community": 45,
@@ -6692,7 +6692,7 @@
       "label": "callers and callees",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L124",
+      "source_location": "L125",
       "_origin": "ast",
       "id": "readme_callers_and_callees",
       "community": 45,
@@ -6702,7 +6702,7 @@
       "label": "trace",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L141",
+      "source_location": "L142",
       "_origin": "ast",
       "id": "readme_trace",
       "community": 45,
@@ -6712,17 +6712,27 @@
       "label": "For agents: one envelope, every answer",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L182",
+      "source_location": "L183",
       "_origin": "ast",
       "id": "readme_for_agents_one_envelope_every_answer",
       "community": 45,
       "norm_label": "for agents: one envelope, every answer"
     },
     {
+      "label": "Over MCP",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L246",
+      "_origin": "ast",
+      "id": "readme_over_mcp",
+      "community": 45,
+      "norm_label": "over mcp"
+    },
+    {
       "label": "Three kinds of honesty, kept apart",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L245",
+      "source_location": "L268",
       "_origin": "ast",
       "id": "readme_three_kinds_of_honesty_kept_apart",
       "community": 45,
@@ -6732,7 +6742,7 @@
       "label": "Flags",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L268",
+      "source_location": "L291",
       "_origin": "ast",
       "id": "readme_flags",
       "community": 45,
@@ -6742,27 +6752,37 @@
       "label": "The index",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L283",
+      "source_location": "L306",
       "_origin": "ast",
       "id": "readme_the_index",
       "community": 45,
       "norm_label": "the index"
     },
     {
-      "label": "Not yet built",
+      "label": "What is built",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L297",
+      "source_location": "L320",
       "_origin": "ast",
-      "id": "readme_not_yet_built",
+      "id": "readme_what_is_built",
       "community": 45,
-      "norm_label": "not yet built"
+      "norm_label": "what is built"
+    },
+    {
+      "label": "What is left",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L340",
+      "_origin": "ast",
+      "id": "readme_what_is_left",
+      "community": 45,
+      "norm_label": "what is left"
     },
     {
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L303",
+      "source_location": "L373",
       "_origin": "ast",
       "id": "readme_design_documents",
       "community": 45,
@@ -6772,7 +6792,7 @@
       "label": "Development",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L316",
+      "source_location": "L386",
       "_origin": "ast",
       "id": "readme_development",
       "community": 45,
@@ -11581,9 +11601,9 @@
       "source_file": "packages/cli/src/args.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_args",
-      "target": "src_manifest_operations",
-      "confidence_score": 1.0
+      "target": "src_manifest_operations"
     },
     {
       "relation": "imports",
@@ -11592,9 +11612,9 @@
       "source_file": "packages/cli/src/args.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_args",
-      "target": "src_manifest_operationspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_operationspec"
     },
     {
       "relation": "imports_from",
@@ -11746,9 +11766,9 @@
       "source_file": "packages/cli/src/args.ts",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_args_resolveinvocation",
-      "target": "src_manifest_operationspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_operationspec"
     },
     {
       "relation": "calls",
@@ -11757,9 +11777,9 @@
       "source_file": "packages/cli/src/args.ts",
       "source_location": "L159",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_args_resolvedepth",
-      "target": "src_manifest_operationspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_operationspec"
     },
     {
       "relation": "imports_from",
@@ -11790,9 +11810,9 @@
       "source_file": "packages/cli/src/bin.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_bin",
-      "target": "src_mcp",
-      "confidence_score": 1.0
+      "target": "src_mcp"
     },
     {
       "relation": "imports",
@@ -11801,9 +11821,9 @@
       "source_file": "packages/cli/src/bin.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_bin",
-      "target": "src_mcp_serve",
-      "confidence_score": 1.0
+      "target": "src_mcp_serve"
     },
     {
       "relation": "imports",
@@ -12018,9 +12038,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_main",
-      "confidence_score": 1.0
+      "target": "src_main"
     },
     {
       "relation": "imports_from",
@@ -12040,9 +12060,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_main",
-      "confidence_score": 1.0
+      "target": "src_main"
     },
     {
       "relation": "calls",
@@ -12139,9 +12159,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_main_run",
-      "confidence_score": 1.0
+      "target": "src_main_run"
     },
     {
       "relation": "calls",
@@ -12150,9 +12170,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L285",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_calltool",
-      "target": "src_main_run",
-      "confidence_score": 1.0
+      "target": "src_main_run"
     },
     {
       "relation": "imports",
@@ -12183,9 +12203,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_main_run",
-      "confidence_score": 1.0
+      "target": "src_main_run"
     },
     {
       "relation": "imports_from",
@@ -12194,9 +12214,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_index",
-      "confidence_score": 1.0
+      "target": "src_index"
     },
     {
       "relation": "imports",
@@ -12205,9 +12225,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_manifest_operations",
-      "confidence_score": 1.0
+      "target": "src_manifest_operations"
     },
     {
       "relation": "imports",
@@ -12216,9 +12236,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_manifest_operationspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_operationspec"
     },
     {
       "relation": "contains",
@@ -12226,9 +12246,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L260",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_answer",
-      "confidence_score": 1.0
+      "target": "src_mcp_answer"
     },
     {
       "relation": "contains",
@@ -12236,9 +12256,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L264",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_answered",
-      "confidence_score": 1.0
+      "target": "src_mcp_answered"
     },
     {
       "relation": "contains",
@@ -12246,9 +12266,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_argumentschema",
-      "confidence_score": 1.0
+      "target": "src_mcp_argumentschema"
     },
     {
       "relation": "contains",
@@ -12256,9 +12276,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L229",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_argvfor",
-      "confidence_score": 1.0
+      "target": "src_mcp_argvfor"
     },
     {
       "relation": "contains",
@@ -12266,9 +12286,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L268",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_calltool",
-      "confidence_score": 1.0
+      "target": "src_mcp_calltool"
     },
     {
       "relation": "contains",
@@ -12276,9 +12296,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L88",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_depth_argument",
-      "confidence_score": 1.0
+      "target": "src_mcp_depth_argument"
     },
     {
       "relation": "contains",
@@ -12286,9 +12306,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_describe",
-      "confidence_score": 1.0
+      "target": "src_mcp_describe"
     },
     {
       "relation": "contains",
@@ -12296,9 +12316,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L296",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_dispatch",
-      "confidence_score": 1.0
+      "target": "src_mcp_dispatch"
     },
     {
       "relation": "contains",
@@ -12306,9 +12326,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L265",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_failed",
-      "confidence_score": 1.0
+      "target": "src_mcp_failed"
     },
     {
       "relation": "contains",
@@ -12316,9 +12336,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_failure",
-      "confidence_score": 1.0
+      "target": "src_mcp_failure"
     },
     {
       "relation": "contains",
@@ -12326,9 +12346,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L192",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_flagfor",
-      "confidence_score": 1.0
+      "target": "src_mcp_flagfor"
     },
     {
       "relation": "contains",
@@ -12336,9 +12356,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_global_arguments",
-      "confidence_score": 1.0
+      "target": "src_mcp_global_arguments"
     },
     {
       "relation": "contains",
@@ -12346,9 +12366,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L351",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_handle",
-      "confidence_score": 1.0
+      "target": "src_mcp_handle"
     },
     {
       "relation": "contains",
@@ -12356,9 +12376,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L340",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_isrequest",
-      "confidence_score": 1.0
+      "target": "src_mcp_isrequest"
     },
     {
       "relation": "contains",
@@ -12366,9 +12386,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L208",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_positionalfor",
-      "confidence_score": 1.0
+      "target": "src_mcp_positionalfor"
     },
     {
       "relation": "contains",
@@ -12376,9 +12396,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_read",
-      "confidence_score": 1.0
+      "target": "src_mcp_read"
     },
     {
       "relation": "contains",
@@ -12386,9 +12406,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L169",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_readargument",
-      "confidence_score": 1.0
+      "target": "src_mcp_readargument"
     },
     {
       "relation": "contains",
@@ -12396,9 +12416,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L152",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_readinteger",
-      "confidence_score": 1.0
+      "target": "src_mcp_readinteger"
     },
     {
       "relation": "contains",
@@ -12406,9 +12426,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L149",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_refused",
-      "confidence_score": 1.0
+      "target": "src_mcp_refused"
     },
     {
       "relation": "contains",
@@ -12416,9 +12436,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L321",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_reply",
-      "confidence_score": 1.0
+      "target": "src_mcp_reply"
     },
     {
       "relation": "contains",
@@ -12426,9 +12446,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_request",
-      "confidence_score": 1.0
+      "target": "src_mcp_request"
     },
     {
       "relation": "contains",
@@ -12436,9 +12456,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L329",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_respond",
-      "confidence_score": 1.0
+      "target": "src_mcp_respond"
     },
     {
       "relation": "contains",
@@ -12446,9 +12466,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L120",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_schemafor",
-      "confidence_score": 1.0
+      "target": "src_mcp_schemafor"
     },
     {
       "relation": "contains",
@@ -12456,9 +12476,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L380",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_serve",
-      "confidence_score": 1.0
+      "target": "src_mcp_serve"
     },
     {
       "relation": "contains",
@@ -12466,9 +12486,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_server_info",
-      "confidence_score": 1.0
+      "target": "src_mcp_server_info"
     },
     {
       "relation": "contains",
@@ -12476,9 +12496,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L133",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp",
-      "target": "src_mcp_tools",
-      "confidence_score": 1.0
+      "target": "src_mcp_tools"
     },
     {
       "relation": "imports_from",
@@ -12487,9 +12507,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_mcp",
-      "confidence_score": 1.0
+      "target": "src_mcp"
     },
     {
       "relation": "calls",
@@ -12498,9 +12518,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L233",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_argvfor",
-      "target": "src_mcp_schemafor",
-      "confidence_score": 1.0
+      "target": "src_mcp_schemafor"
     },
     {
       "relation": "calls",
@@ -12509,9 +12529,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L309",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_dispatch",
-      "target": "src_mcp_tools",
-      "confidence_score": 1.0
+      "target": "src_mcp_tools"
     },
     {
       "relation": "imports",
@@ -12520,9 +12540,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_mcp_tools",
-      "confidence_score": 1.0
+      "target": "src_mcp_tools"
     },
     {
       "relation": "calls",
@@ -12531,9 +12551,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L248",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_argvfor",
-      "target": "src_mcp_refused",
-      "confidence_score": 1.0
+      "target": "src_mcp_refused"
     },
     {
       "relation": "calls",
@@ -12542,9 +12562,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L175",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_readargument",
-      "target": "src_mcp_readinteger",
-      "confidence_score": 1.0
+      "target": "src_mcp_readinteger"
     },
     {
       "relation": "calls",
@@ -12553,9 +12573,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L247",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_argvfor",
-      "target": "src_mcp_readargument",
-      "confidence_score": 1.0
+      "target": "src_mcp_readargument"
     },
     {
       "relation": "calls",
@@ -12564,9 +12584,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L251",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_argvfor",
-      "target": "src_mcp_flagfor",
-      "confidence_score": 1.0
+      "target": "src_mcp_flagfor"
     },
     {
       "relation": "calls",
@@ -12575,9 +12595,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L254",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_argvfor",
-      "target": "src_mcp_positionalfor",
-      "confidence_score": 1.0
+      "target": "src_mcp_positionalfor"
     },
     {
       "relation": "calls",
@@ -12586,9 +12606,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L282",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_calltool",
-      "target": "src_mcp_argvfor",
-      "confidence_score": 1.0
+      "target": "src_mcp_argvfor"
     },
     {
       "relation": "calls",
@@ -12597,9 +12617,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L289",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_calltool",
-      "target": "src_mcp_answered",
-      "confidence_score": 1.0
+      "target": "src_mcp_answered"
     },
     {
       "relation": "calls",
@@ -12608,9 +12628,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L299",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_dispatch",
-      "target": "src_mcp_answered",
-      "confidence_score": 1.0
+      "target": "src_mcp_answered"
     },
     {
       "relation": "calls",
@@ -12619,9 +12639,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L272",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_calltool",
-      "target": "src_mcp_failed",
-      "confidence_score": 1.0
+      "target": "src_mcp_failed"
     },
     {
       "relation": "calls",
@@ -12630,9 +12650,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L313",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_dispatch",
-      "target": "src_mcp_failed",
-      "confidence_score": 1.0
+      "target": "src_mcp_failed"
     },
     {
       "relation": "calls",
@@ -12641,9 +12661,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L311",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_dispatch",
-      "target": "src_mcp_calltool",
-      "confidence_score": 1.0
+      "target": "src_mcp_calltool"
     },
     {
       "relation": "calls",
@@ -12652,9 +12672,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L333",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_respond",
-      "target": "src_mcp_dispatch",
-      "confidence_score": 1.0
+      "target": "src_mcp_dispatch"
     },
     {
       "relation": "calls",
@@ -12663,9 +12683,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L369",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_handle",
-      "target": "src_mcp_respond",
-      "confidence_score": 1.0
+      "target": "src_mcp_respond"
     },
     {
       "relation": "calls",
@@ -12674,9 +12694,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L362",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_handle",
-      "target": "src_mcp_isrequest",
-      "confidence_score": 1.0
+      "target": "src_mcp_isrequest"
     },
     {
       "relation": "calls",
@@ -12685,9 +12705,9 @@
       "source_file": "packages/cli/src/mcp.ts",
       "source_location": "L390",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_mcp_serve",
-      "target": "src_mcp_handle",
-      "confidence_score": 1.0
+      "target": "src_mcp_handle"
     },
     {
       "relation": "imports",
@@ -12696,9 +12716,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_mcp_handle",
-      "confidence_score": 1.0
+      "target": "src_mcp_handle"
     },
     {
       "relation": "calls",
@@ -12707,9 +12727,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test_ask",
-      "target": "src_mcp_handle",
-      "confidence_score": 1.0
+      "target": "src_mcp_handle"
     },
     {
       "relation": "imports",
@@ -12718,9 +12738,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_mcp_serve",
-      "confidence_score": 1.0
+      "target": "src_mcp_serve"
     },
     {
       "relation": "imports",
@@ -13394,9 +13414,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_index",
-      "confidence_score": 1.0
+      "target": "src_index"
     },
     {
       "relation": "imports",
@@ -13405,9 +13425,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "src_manifest_operations",
-      "confidence_score": 1.0
+      "target": "src_manifest_operations"
     },
     {
       "relation": "contains",
@@ -13415,9 +13435,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_ask",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_ask"
     },
     {
       "relation": "contains",
@@ -13425,9 +13445,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_call",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_call"
     },
     {
       "relation": "contains",
@@ -13435,9 +13455,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_errorof",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_errorof"
     },
     {
       "relation": "contains",
@@ -13445,9 +13465,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_fixture",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_fixture"
     },
     {
       "relation": "contains",
@@ -13455,9 +13475,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_here",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_here"
     },
     {
       "relation": "contains",
@@ -13465,9 +13485,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_resultof",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_resultof"
     },
     {
       "relation": "contains",
@@ -13475,9 +13495,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test",
-      "target": "test_mcp_test_textof",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_textof"
     },
     {
       "relation": "calls",
@@ -13486,9 +13506,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test_call",
-      "target": "test_mcp_test_ask",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_ask"
     },
     {
       "relation": "calls",
@@ -13497,9 +13517,9 @@
       "source_file": "packages/cli/test/mcp.test.ts",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_mcp_test_textof",
-      "target": "test_mcp_test_resultof",
-      "confidence_score": 1.0
+      "target": "test_mcp_test_resultof"
     },
     {
       "relation": "imports",
@@ -13894,9 +13914,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7",
-      "target": "adapter_ts7_collectspecifiers",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_collectspecifiers"
     },
     {
       "relation": "contains",
@@ -13934,9 +13954,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L167",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7",
-      "target": "adapter_ts7_declarationsite",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_declarationsite"
     },
     {
       "relation": "contains",
@@ -13984,9 +14004,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1052",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7",
-      "target": "adapter_ts7_dynamicspecifier",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_dynamicspecifier"
     },
     {
       "relation": "contains",
@@ -14154,9 +14174,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L703",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7",
-      "target": "adapter_ts7_ownedfiles",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_ownedfiles"
     },
     {
       "relation": "contains",
@@ -14184,9 +14204,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1066",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7",
-      "target": "adapter_ts7_requiredspecifier",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_requiredspecifier"
     },
     {
       "relation": "contains",
@@ -14304,9 +14324,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1083",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7",
-      "target": "adapter_ts7_typepositionspecifier",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_typepositionspecifier"
     },
     {
       "relation": "contains",
@@ -14478,9 +14498,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "adapter_ts7",
-      "confidence_score": 1.0
+      "target": "adapter_ts7"
     },
     {
       "relation": "imports_from",
@@ -14500,9 +14520,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "adapter_ts7",
-      "confidence_score": 1.0
+      "target": "adapter_ts7"
     },
     {
       "relation": "imports_from",
@@ -14522,9 +14542,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L168",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_declarationsite",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "references",
@@ -14533,9 +14553,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_declarationsite",
-      "target": "src_model_symbolid",
-      "confidence_score": 1.0
+      "target": "src_model_symbolid"
     },
     {
       "relation": "imports",
@@ -14544,9 +14564,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "adapter_ts7_declarationsite",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_declarationsite"
     },
     {
       "relation": "references",
@@ -14555,9 +14575,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L704",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_factgroup",
-      "target": "adapter_ts7_declarationsite",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_declarationsite"
     },
     {
       "relation": "references",
@@ -14566,9 +14586,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L497",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_filefacts",
-      "target": "adapter_ts7_declarationsite",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_declarationsite"
     },
     {
       "relation": "references",
@@ -14830,9 +14850,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "adapter_ts7_analyse",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_analyse"
     },
     {
       "relation": "calls",
@@ -14841,9 +14861,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "adapter_ts7_analyse",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_analyse"
     },
     {
       "relation": "imports",
@@ -14929,9 +14949,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L714",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_ownedfiles",
-      "target": "adapter_ts7_pickproject",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_pickproject"
     },
     {
       "relation": "calls",
@@ -14940,9 +14960,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L731",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_extractfrom",
-      "target": "adapter_ts7_ownedfiles",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_ownedfiles"
     },
     {
       "relation": "calls",
@@ -14951,9 +14971,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L718",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_ownedfiles",
-      "target": "src_discovery_torepopath",
-      "confidence_score": 1.0
+      "target": "src_discovery_torepopath"
     },
     {
       "relation": "calls",
@@ -15116,9 +15136,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1122",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_collectspecifiers",
-      "target": "adapter_ts7_dynamicspecifier",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_dynamicspecifier"
     },
     {
       "relation": "calls",
@@ -15127,9 +15147,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_collectspecifiers",
-      "target": "adapter_ts7_requiredspecifier",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_requiredspecifier"
     },
     {
       "relation": "calls",
@@ -15138,9 +15158,9 @@
       "source_file": "packages/core/src/adapter/ts7.ts",
       "source_location": "L1126",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adapter_ts7_collectspecifiers",
-      "target": "adapter_ts7_typepositionspecifier",
-      "confidence_score": 1.0
+      "target": "adapter_ts7_typepositionspecifier"
     },
     {
       "relation": "calls",
@@ -15276,9 +15296,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_discovery",
-      "confidence_score": 1.0
+      "target": "src_discovery"
     },
     {
       "relation": "imports",
@@ -15386,9 +15406,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_discovery_discoverprojects",
-      "confidence_score": 1.0
+      "target": "src_discovery_discoverprojects"
     },
     {
       "relation": "calls",
@@ -15397,9 +15417,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_discovery_discoverprojects",
-      "confidence_score": 1.0
+      "target": "src_discovery_discoverprojects"
     },
     {
       "relation": "imports",
@@ -15576,9 +15596,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_drift",
-      "confidence_score": 1.0
+      "target": "src_drift"
     },
     {
       "relation": "references",
@@ -15708,9 +15728,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L555",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_extractproject",
-      "target": "src_drift_statfile",
-      "confidence_score": 1.0
+      "target": "src_drift_statfile"
     },
     {
       "relation": "calls",
@@ -15741,9 +15761,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_drift_statfile",
-      "confidence_score": 1.0
+      "target": "src_drift_statfile"
     },
     {
       "relation": "calls",
@@ -15752,9 +15772,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_drift_statfile",
-      "confidence_score": 1.0
+      "target": "src_drift_statfile"
     },
     {
       "relation": "calls",
@@ -15807,9 +15827,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_drift_walksourcefiles",
-      "confidence_score": 1.0
+      "target": "src_drift_walksourcefiles"
     },
     {
       "relation": "calls",
@@ -15818,9 +15838,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_drift_walksourcefiles",
-      "confidence_score": 1.0
+      "target": "src_drift_walksourcefiles"
     },
     {
       "relation": "re_exports",
@@ -16082,9 +16102,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_envelope",
-      "confidence_score": 1.0
+      "target": "src_envelope"
     },
     {
       "relation": "imports_from",
@@ -16115,9 +16135,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_envelope_operationname",
-      "confidence_score": 1.0
+      "target": "src_envelope_operationname"
     },
     {
       "relation": "references",
@@ -16126,9 +16146,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest_operationspec",
-      "target": "src_envelope_operationname",
-      "confidence_score": 1.0
+      "target": "src_envelope_operationname"
     },
     {
       "relation": "re_exports",
@@ -16720,9 +16740,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_manifest",
-      "confidence_score": 1.0
+      "target": "src_manifest"
     },
     {
       "relation": "re_exports",
@@ -16731,9 +16751,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_manifest_operation_names",
-      "confidence_score": 1.0
+      "target": "src_manifest_operation_names"
     },
     {
       "relation": "re_exports",
@@ -16742,9 +16762,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_manifest_operations",
-      "confidence_score": 1.0
+      "target": "src_manifest_operations"
     },
     {
       "relation": "re_exports",
@@ -16753,9 +16773,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_manifest_operationspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_operationspec"
     },
     {
       "relation": "re_exports",
@@ -16764,9 +16784,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_manifest_subjectspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_subjectspec"
     },
     {
       "relation": "re_exports",
@@ -17093,9 +17113,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_manifest_identifier",
-      "confidence_score": 1.0
+      "target": "src_manifest_identifier"
     },
     {
       "relation": "contains",
@@ -17103,9 +17123,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_manifest_operation_names",
-      "confidence_score": 1.0
+      "target": "src_manifest_operation_names"
     },
     {
       "relation": "contains",
@@ -17113,9 +17133,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_manifest_operations",
-      "confidence_score": 1.0
+      "target": "src_manifest_operations"
     },
     {
       "relation": "contains",
@@ -17123,9 +17143,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L120",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_manifest_operationspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_operationspec"
     },
     {
       "relation": "contains",
@@ -17133,9 +17153,9 @@
       "source_file": "packages/core/src/manifest.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_manifest",
-      "target": "src_manifest_subjectspec",
-      "confidence_score": 1.0
+      "target": "src_manifest_subjectspec"
     },
     {
       "relation": "imports_from",
@@ -17413,9 +17433,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_model",
-      "confidence_score": 1.0
+      "target": "src_model"
     },
     {
       "relation": "imports_from",
@@ -17435,9 +17455,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_model",
-      "confidence_score": 1.0
+      "target": "src_model"
     },
     {
       "relation": "imports",
@@ -17578,9 +17598,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L532",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_projectslice",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "imports",
@@ -17600,9 +17620,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L537",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_analysisstart",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "references",
@@ -17644,9 +17664,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "imports",
@@ -17655,9 +17675,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_model_provenance",
-      "confidence_score": 1.0
+      "target": "src_model_provenance"
     },
     {
       "relation": "references",
@@ -17666,9 +17686,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L221",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_enumcodes",
-      "target": "src_model_provenance",
-      "confidence_score": 1.0
+      "target": "src_model_provenance"
     },
     {
       "relation": "imports",
@@ -17677,9 +17697,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_model_derivation",
-      "confidence_score": 1.0
+      "target": "src_model_derivation"
     },
     {
       "relation": "references",
@@ -17688,9 +17708,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L222",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_enumcodes",
-      "target": "src_model_derivation",
-      "confidence_score": 1.0
+      "target": "src_model_derivation"
     },
     {
       "relation": "imports",
@@ -17699,9 +17719,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_model_symbolkind",
-      "confidence_score": 1.0
+      "target": "src_model_symbolkind"
     },
     {
       "relation": "references",
@@ -17710,9 +17730,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L219",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_enumcodes",
-      "target": "src_model_symbolkind",
-      "confidence_score": 1.0
+      "target": "src_model_symbolkind"
     },
     {
       "relation": "imports",
@@ -17721,9 +17741,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_model_callerattribution",
-      "confidence_score": 1.0
+      "target": "src_model_callerattribution"
     },
     {
       "relation": "references",
@@ -17732,9 +17752,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_enumcodes",
-      "target": "src_model_callerattribution",
-      "confidence_score": 1.0
+      "target": "src_model_callerattribution"
     },
     {
       "relation": "imports",
@@ -17743,9 +17763,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_model_unresolvedcallcause",
-      "confidence_score": 1.0
+      "target": "src_model_unresolvedcallcause"
     },
     {
       "relation": "references",
@@ -17754,9 +17774,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_enumcodes",
-      "target": "src_model_unresolvedcallcause",
-      "confidence_score": 1.0
+      "target": "src_model_unresolvedcallcause"
     },
     {
       "relation": "imports",
@@ -17798,9 +17818,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_model_fidelity",
-      "confidence_score": 1.0
+      "target": "src_model_fidelity"
     },
     {
       "relation": "references",
@@ -17809,9 +17829,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L224",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_enumcodes",
-      "target": "src_model_fidelity",
-      "confidence_score": 1.0
+      "target": "src_model_fidelity"
     },
     {
       "relation": "imports",
@@ -17842,9 +17862,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L543",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_projectwrite",
-      "target": "src_model_projectnode",
-      "confidence_score": 1.0
+      "target": "src_model_projectnode"
     },
     {
       "relation": "references",
@@ -17908,9 +17928,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_model_filenode",
-      "confidence_score": 1.0
+      "target": "src_model_filenode"
     },
     {
       "relation": "imports",
@@ -18018,9 +18038,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_model_symbolnode",
-      "confidence_score": 1.0
+      "target": "src_model_symbolnode"
     },
     {
       "relation": "imports",
@@ -18095,9 +18115,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_model_callsite",
-      "confidence_score": 1.0
+      "target": "src_model_callsite"
     },
     {
       "relation": "imports",
@@ -18161,9 +18181,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_model_calledge",
-      "confidence_score": 1.0
+      "target": "src_model_calledge"
     },
     {
       "relation": "imports",
@@ -18462,9 +18482,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "operations_calls",
-      "confidence_score": 1.0
+      "target": "operations_calls"
     },
     {
       "relation": "imports_from",
@@ -18517,9 +18537,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "operations_calls_callers",
-      "confidence_score": 1.0
+      "target": "operations_calls_callers"
     },
     {
       "relation": "imports",
@@ -19269,9 +19289,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L541",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_session_extractproject",
-      "confidence_score": 1.0
+      "target": "src_session_extractproject"
     },
     {
       "relation": "contains",
@@ -19309,9 +19329,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L527",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_session_projectslice",
-      "confidence_score": 1.0
+      "target": "src_session_projectslice"
     },
     {
       "relation": "contains",
@@ -19472,9 +19492,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_store_beginanalysis",
-      "confidence_score": 1.0
+      "target": "src_store_beginanalysis"
     },
     {
       "relation": "imports",
@@ -19483,9 +19503,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_store_commitproject",
-      "confidence_score": 1.0
+      "target": "src_store_commitproject"
     },
     {
       "relation": "imports",
@@ -19571,9 +19591,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_store_readmembershipcounts",
-      "confidence_score": 1.0
+      "target": "src_store_readmembershipcounts"
     },
     {
       "relation": "imports",
@@ -19615,9 +19635,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_store_readunanalysedfiles",
-      "confidence_score": 1.0
+      "target": "src_store_readunanalysedfiles"
     },
     {
       "relation": "imports",
@@ -19626,9 +19646,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session",
-      "target": "src_store_readunanalysedprojects",
-      "confidence_score": 1.0
+      "target": "src_store_readunanalysedprojects"
     },
     {
       "relation": "imports",
@@ -19670,9 +19690,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_session",
-      "confidence_score": 1.0
+      "target": "src_session"
     },
     {
       "relation": "imports_from",
@@ -19769,9 +19789,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_session_typescriptversion",
-      "confidence_score": 1.0
+      "target": "src_session_typescriptversion"
     },
     {
       "relation": "calls",
@@ -19780,9 +19800,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_session_typescriptversion",
-      "confidence_score": 1.0
+      "target": "src_session_typescriptversion"
     },
     {
       "relation": "references",
@@ -19923,9 +19943,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_session_opensession",
-      "confidence_score": 1.0
+      "target": "src_session_opensession"
     },
     {
       "relation": "calls",
@@ -19934,9 +19954,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_dump",
-      "target": "src_session_opensession",
-      "confidence_score": 1.0
+      "target": "src_session_opensession"
     },
     {
       "relation": "imports",
@@ -20000,9 +20020,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L562",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_extractproject",
-      "target": "src_session_projectfidelity",
-      "confidence_score": 1.0
+      "target": "src_session_projectfidelity"
     },
     {
       "relation": "calls",
@@ -20011,9 +20031,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L496",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_rebuild",
-      "target": "src_session_projectfidelity",
-      "confidence_score": 1.0
+      "target": "src_session_projectfidelity"
     },
     {
       "relation": "calls",
@@ -20143,9 +20163,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L316",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_seedfrontier",
-      "target": "src_store_readunanalysedfiles",
-      "confidence_score": 1.0
+      "target": "src_store_readunanalysedfiles"
     },
     {
       "relation": "calls",
@@ -20209,9 +20229,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L422",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_touchedprojects",
-      "target": "src_store_readmembershipcounts",
-      "confidence_score": 1.0
+      "target": "src_store_readmembershipcounts"
     },
     {
       "relation": "calls",
@@ -20231,9 +20251,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L513",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_rebuild",
-      "target": "src_session_extractproject",
-      "confidence_score": 1.0
+      "target": "src_session_extractproject"
     },
     {
       "relation": "calls",
@@ -20264,9 +20284,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L559",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_extractproject",
-      "target": "src_store_commitproject",
-      "confidence_score": 1.0
+      "target": "src_store_commitproject"
     },
     {
       "relation": "calls",
@@ -20275,9 +20295,9 @@
       "source_file": "packages/core/src/session.ts",
       "source_location": "L550",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_session_extractproject",
-      "target": "src_store_readsymbolidat",
-      "confidence_score": 1.0
+      "target": "src_store_readsymbolidat"
     },
     {
       "relation": "contains",
@@ -20285,9 +20305,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L513",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_analysisstart",
-      "confidence_score": 1.0
+      "target": "src_store_analysisstart"
     },
     {
       "relation": "contains",
@@ -20305,9 +20325,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L191",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_attributions",
-      "confidence_score": 1.0
+      "target": "src_store_attributions"
     },
     {
       "relation": "contains",
@@ -20315,9 +20335,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L557",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_beginanalysis",
-      "confidence_score": 1.0
+      "target": "src_store_beginanalysis"
     },
     {
       "relation": "contains",
@@ -20325,9 +20345,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1279",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_byendpoints",
-      "confidence_score": 1.0
+      "target": "src_store_byendpoints"
     },
     {
       "relation": "contains",
@@ -20345,9 +20365,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L210",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_causes",
-      "confidence_score": 1.0
+      "target": "src_store_causes"
     },
     {
       "relation": "contains",
@@ -20365,9 +20385,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L238",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_code",
-      "confidence_score": 1.0
+      "target": "src_store_code"
     },
     {
       "relation": "contains",
@@ -20375,9 +20395,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L585",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_commitproject",
-      "confidence_score": 1.0
+      "target": "src_store_commitproject"
     },
     {
       "relation": "contains",
@@ -20385,9 +20405,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1276",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_compare",
-      "confidence_score": 1.0
+      "target": "src_store_compare"
     },
     {
       "relation": "contains",
@@ -20405,9 +20425,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L201",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_derivations",
-      "confidence_score": 1.0
+      "target": "src_store_derivations"
     },
     {
       "relation": "contains",
@@ -20425,9 +20445,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L228",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_enum_codes",
-      "confidence_score": 1.0
+      "target": "src_store_enum_codes"
     },
     {
       "relation": "contains",
@@ -20435,9 +20455,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L218",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_enumcodes",
-      "confidence_score": 1.0
+      "target": "src_store_enumcodes"
     },
     {
       "relation": "contains",
@@ -20455,9 +20475,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L215",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_fidelities",
-      "confidence_score": 1.0
+      "target": "src_store_fidelities"
     },
     {
       "relation": "contains",
@@ -20485,9 +20505,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L258",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_idof",
-      "confidence_score": 1.0
+      "target": "src_store_idof"
     },
     {
       "relation": "contains",
@@ -20505,9 +20525,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L347",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_interner",
-      "confidence_score": 1.0
+      "target": "src_store_interner"
     },
     {
       "relation": "contains",
@@ -20515,9 +20535,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L354",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "contains",
@@ -20525,9 +20545,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L344",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_interners",
-      "confidence_score": 1.0
+      "target": "src_store_interners"
     },
     {
       "relation": "contains",
@@ -20535,9 +20555,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_kinds",
-      "confidence_score": 1.0
+      "target": "src_store_kinds"
     },
     {
       "relation": "contains",
@@ -20545,9 +20565,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L370",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_makeinterner",
-      "confidence_score": 1.0
+      "target": "src_store_makeinterner"
     },
     {
       "relation": "contains",
@@ -20555,9 +20575,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L245",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_named",
-      "confidence_score": 1.0
+      "target": "src_store_named"
     },
     {
       "relation": "contains",
@@ -20565,9 +20585,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L454",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_nodeid",
-      "confidence_score": 1.0
+      "target": "src_store_nodeid"
     },
     {
       "relation": "contains",
@@ -20585,9 +20605,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L267",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_partsof",
-      "confidence_score": 1.0
+      "target": "src_store_partsof"
     },
     {
       "relation": "contains",
@@ -20595,9 +20615,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L445",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_pathid",
-      "confidence_score": 1.0
+      "target": "src_store_pathid"
     },
     {
       "relation": "contains",
@@ -20605,9 +20625,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L431",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_prepared",
-      "confidence_score": 1.0
+      "target": "src_store_prepared"
     },
     {
       "relation": "contains",
@@ -20615,9 +20635,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L542",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_projectwrite",
-      "confidence_score": 1.0
+      "target": "src_store_projectwrite"
     },
     {
       "relation": "contains",
@@ -20625,9 +20645,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L196",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_provenances",
-      "confidence_score": 1.0
+      "target": "src_store_provenances"
     },
     {
       "relation": "contains",
@@ -20725,9 +20745,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1132",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_readmembershipcounts",
-      "confidence_score": 1.0
+      "target": "src_store_readmembershipcounts"
     },
     {
       "relation": "contains",
@@ -20795,9 +20815,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_readunanalysedfiles",
-      "confidence_score": 1.0
+      "target": "src_store_readunanalysedfiles"
     },
     {
       "relation": "contains",
@@ -20805,9 +20825,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1099",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_readunanalysedprojects",
-      "confidence_score": 1.0
+      "target": "src_store_readunanalysedprojects"
     },
     {
       "relation": "contains",
@@ -20835,9 +20855,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L429",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_statements",
-      "confidence_score": 1.0
+      "target": "src_store_statements"
     },
     {
       "relation": "contains",
@@ -20855,9 +20875,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_symbolrow",
-      "confidence_score": 1.0
+      "target": "src_store_symbolrow"
     },
     {
       "relation": "contains",
@@ -20935,9 +20955,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L856",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_writedeclarations",
-      "confidence_score": 1.0
+      "target": "src_store_writedeclarations"
     },
     {
       "relation": "contains",
@@ -20995,9 +21015,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L776",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store",
-      "target": "src_store_writemembershippaths",
-      "confidence_score": 1.0
+      "target": "src_store_writemembershippaths"
     },
     {
       "relation": "contains",
@@ -21056,9 +21076,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_store",
-      "confidence_score": 1.0
+      "target": "src_store"
     },
     {
       "relation": "imports_from",
@@ -21067,9 +21087,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store",
-      "confidence_score": 1.0
+      "target": "src_store"
     },
     {
       "relation": "imports",
@@ -21078,9 +21098,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_enum_codes",
-      "confidence_score": 1.0
+      "target": "src_store_enum_codes"
     },
     {
       "relation": "calls",
@@ -21089,9 +21109,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L882",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writecalledges",
-      "target": "src_store_code",
-      "confidence_score": 1.0
+      "target": "src_store_code"
     },
     {
       "relation": "calls",
@@ -21100,9 +21120,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L749",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writeproject",
-      "target": "src_store_code",
-      "confidence_score": 1.0
+      "target": "src_store_code"
     },
     {
       "relation": "calls",
@@ -21111,9 +21131,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L836",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writesymbols",
-      "target": "src_store_code",
-      "confidence_score": 1.0
+      "target": "src_store_code"
     },
     {
       "relation": "calls",
@@ -21122,9 +21142,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L903",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writeunresolvedcalls",
-      "target": "src_store_code",
-      "confidence_score": 1.0
+      "target": "src_store_code"
     },
     {
       "relation": "calls",
@@ -21133,9 +21153,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1263",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_tosite",
-      "target": "src_store_named",
-      "confidence_score": 1.0
+      "target": "src_store_named"
     },
     {
       "relation": "calls",
@@ -21144,9 +21164,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1192",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_tosymbol",
-      "target": "src_store_named",
-      "confidence_score": 1.0
+      "target": "src_store_named"
     },
     {
       "relation": "calls",
@@ -21155,9 +21175,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1064",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readsymbolidat",
-      "target": "src_store_idof",
-      "confidence_score": 1.0
+      "target": "src_store_idof"
     },
     {
       "relation": "calls",
@@ -21166,9 +21186,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1271",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_toedge",
-      "target": "src_store_idof",
-      "confidence_score": 1.0
+      "target": "src_store_idof"
     },
     {
       "relation": "calls",
@@ -21177,9 +21197,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1189",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_tosymbol",
-      "target": "src_store_idof",
-      "confidence_score": 1.0
+      "target": "src_store_idof"
     },
     {
       "relation": "calls",
@@ -21188,9 +21208,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L455",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_nodeid",
-      "target": "src_store_partsof",
-      "confidence_score": 1.0
+      "target": "src_store_partsof"
     },
     {
       "relation": "calls",
@@ -21199,9 +21219,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1225",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readsymbol",
-      "target": "src_store_partsof",
-      "confidence_score": 1.0
+      "target": "src_store_partsof"
     },
     {
       "relation": "imports",
@@ -21210,9 +21230,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_store",
-      "confidence_score": 1.0
+      "target": "src_store_store"
     },
     {
       "relation": "calls",
@@ -21232,9 +21252,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_store_openstore",
-      "confidence_score": 1.0
+      "target": "src_store_openstore"
     },
     {
       "relation": "calls",
@@ -21243,9 +21263,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_store_openstore",
-      "confidence_score": 1.0
+      "target": "src_store_openstore"
     },
     {
       "relation": "imports",
@@ -21254,9 +21274,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_openstore",
-      "confidence_score": 1.0
+      "target": "src_store_openstore"
     },
     {
       "relation": "calls",
@@ -21265,9 +21285,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L357",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_internerfor",
-      "target": "src_store_makeinterner",
-      "confidence_score": 1.0
+      "target": "src_store_makeinterner"
     },
     {
       "relation": "calls",
@@ -21276,9 +21296,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L725",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_transaction",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21287,9 +21307,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L870",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writecalledges",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21298,9 +21318,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L860",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writedeclarations",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21309,9 +21329,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L801",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writefilerows",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21320,9 +21340,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L913",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writeimportedges",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21331,9 +21351,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L781",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writemembershippaths",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21342,9 +21362,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L748",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writeproject",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21353,9 +21373,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L757",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writeseenfiles",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21364,9 +21384,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L819",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writesymbols",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21375,9 +21395,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L895",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writeunresolvedcalls",
-      "target": "src_store_internerfor",
-      "confidence_score": 1.0
+      "target": "src_store_internerfor"
     },
     {
       "relation": "calls",
@@ -21386,9 +21406,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L732",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_clearfile",
-      "target": "src_store_prepared",
-      "confidence_score": 1.0
+      "target": "src_store_prepared"
     },
     {
       "relation": "calls",
@@ -21397,9 +21417,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L456",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_nodeid",
-      "target": "src_store_prepared",
-      "confidence_score": 1.0
+      "target": "src_store_prepared"
     },
     {
       "relation": "calls",
@@ -21408,9 +21428,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1058",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readsymbolidat",
-      "target": "src_store_prepared",
-      "confidence_score": 1.0
+      "target": "src_store_prepared"
     },
     {
       "relation": "calls",
@@ -21419,9 +21439,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1016",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readimporters",
-      "target": "src_store_pathid",
-      "confidence_score": 1.0
+      "target": "src_store_pathid"
     },
     {
       "relation": "calls",
@@ -21430,9 +21450,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1056",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readsymbolidat",
-      "target": "src_store_pathid",
-      "confidence_score": 1.0
+      "target": "src_store_pathid"
     },
     {
       "relation": "calls",
@@ -21441,9 +21461,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1298",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readcalleesof",
-      "target": "src_store_nodeid",
-      "confidence_score": 1.0
+      "target": "src_store_nodeid"
     },
     {
       "relation": "calls",
@@ -21452,9 +21472,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1336",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readcalleesteps",
-      "target": "src_store_nodeid",
-      "confidence_score": 1.0
+      "target": "src_store_nodeid"
     },
     {
       "relation": "calls",
@@ -21463,9 +21483,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1287",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readcallersof",
-      "target": "src_store_nodeid",
-      "confidence_score": 1.0
+      "target": "src_store_nodeid"
     },
     {
       "relation": "inherits",
@@ -21474,9 +21494,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L542",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_projectwrite",
-      "target": "src_store_filefacts",
-      "confidence_score": 1.0
+      "target": "src_store_filefacts"
     },
     {
       "relation": "inherits",
@@ -21496,9 +21516,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L562",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_beginanalysis",
-      "target": "src_store_transaction",
-      "confidence_score": 1.0
+      "target": "src_store_transaction"
     },
     {
       "relation": "imports",
@@ -21507,9 +21527,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_store_beginanalysis",
-      "confidence_score": 1.0
+      "target": "src_store_beginanalysis"
     },
     {
       "relation": "calls",
@@ -21518,9 +21538,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_store_beginanalysis",
-      "confidence_score": 1.0
+      "target": "src_store_beginanalysis"
     },
     {
       "relation": "imports",
@@ -21529,9 +21549,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_beginanalysis",
-      "confidence_score": 1.0
+      "target": "src_store_beginanalysis"
     },
     {
       "relation": "calls",
@@ -21540,9 +21560,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L586",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_commitproject",
-      "target": "src_store_transaction",
-      "confidence_score": 1.0
+      "target": "src_store_transaction"
     },
     {
       "relation": "imports",
@@ -21551,9 +21571,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_store_commitproject",
-      "confidence_score": 1.0
+      "target": "src_store_commitproject"
     },
     {
       "relation": "calls",
@@ -21562,9 +21582,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test_halfbuild",
-      "target": "src_store_commitproject",
-      "confidence_score": 1.0
+      "target": "src_store_commitproject"
     },
     {
       "relation": "imports",
@@ -21573,9 +21593,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_commitproject",
-      "confidence_score": 1.0
+      "target": "src_store_commitproject"
     },
     {
       "relation": "calls",
@@ -21639,9 +21659,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L769",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writemembership",
-      "target": "src_store_writemembershippaths",
-      "confidence_score": 1.0
+      "target": "src_store_writemembershippaths"
     },
     {
       "relation": "calls",
@@ -21661,9 +21681,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L793",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_writefilefacts",
-      "target": "src_store_writedeclarations",
-      "confidence_score": 1.0
+      "target": "src_store_writedeclarations"
     },
     {
       "relation": "calls",
@@ -21716,9 +21736,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_readsymbolidat",
-      "confidence_score": 1.0
+      "target": "src_store_readsymbolidat"
     },
     {
       "relation": "calls",
@@ -21738,9 +21758,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_readsymbols",
-      "confidence_score": 1.0
+      "target": "src_store_readsymbols"
     },
     {
       "relation": "imports",
@@ -21749,9 +21769,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_readsymbol",
-      "confidence_score": 1.0
+      "target": "src_store_readsymbol"
     },
     {
       "relation": "calls",
@@ -21782,9 +21802,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1348",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_readcalleesteps",
-      "target": "src_store_toedge",
-      "confidence_score": 1.0
+      "target": "src_store_toedge"
     },
     {
       "relation": "calls",
@@ -21793,9 +21813,9 @@
       "source_file": "packages/core/src/store.ts",
       "source_location": "L1280",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_byendpoints",
-      "target": "src_store_compare",
-      "confidence_score": 1.0
+      "target": "src_store_compare"
     },
     {
       "relation": "imports",
@@ -21804,9 +21824,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_readcallersof",
-      "confidence_score": 1.0
+      "target": "src_store_readcallersof"
     },
     {
       "relation": "imports",
@@ -21815,9 +21835,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_readcalleesof",
-      "confidence_score": 1.0
+      "target": "src_store_readcalleesof"
     },
     {
       "relation": "imports",
@@ -21826,9 +21846,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_store_readcalleesteps",
-      "confidence_score": 1.0
+      "target": "src_store_readcalleesteps"
     },
     {
       "relation": "contains",
@@ -21846,9 +21866,9 @@
       "source_file": "packages/core/test/adapter.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_adapter_test",
-      "target": "test_adapter_test_fixture",
-      "confidence_score": 1.0
+      "target": "test_adapter_test_fixture"
     },
     {
       "relation": "contains",
@@ -21876,9 +21896,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "test_cold_build_test_dump",
-      "confidence_score": 1.0
+      "target": "test_cold_build_test_dump"
     },
     {
       "relation": "contains",
@@ -21886,9 +21906,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "test_cold_build_test_fixture",
-      "confidence_score": 1.0
+      "target": "test_cold_build_test_fixture"
     },
     {
       "relation": "contains",
@@ -21896,9 +21916,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "test_cold_build_test_halfbuild",
-      "confidence_score": 1.0
+      "target": "test_cold_build_test_halfbuild"
     },
     {
       "relation": "contains",
@@ -21947,9 +21967,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/checkout.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_basic_src_checkout_ts_src_checkout",
-      "target": "src_barrel",
-      "confidence_score": 1.0
+      "target": "src_barrel"
     },
     {
       "relation": "re_exports",
@@ -21979,9 +21999,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/checkout.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_basic_src_checkout_ts_src_checkout",
-      "target": "src_checkout_boottotal",
-      "confidence_score": 1.0
+      "target": "src_checkout_boottotal"
     },
     {
       "relation": "contains",
@@ -21989,9 +22009,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/checkout.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_basic_src_checkout_ts_src_checkout",
-      "target": "src_checkout_checkout",
-      "confidence_score": 1.0
+      "target": "src_checkout_checkout"
     },
     {
       "relation": "contains",
@@ -21999,9 +22019,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/checkout.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_basic_src_checkout_ts_src_checkout",
-      "target": "src_checkout_settle",
-      "confidence_score": 1.0
+      "target": "src_checkout_settle"
     },
     {
       "relation": "imports",
@@ -22010,9 +22030,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/checkout.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_basic_src_checkout_ts_src_checkout",
-      "target": "src_payments_charge",
-      "confidence_score": 1.0
+      "target": "src_payments_charge"
     },
     {
       "relation": "calls",
@@ -22051,9 +22071,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/lazy.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_lazy",
-      "target": "src_lazy_loadpayments",
-      "confidence_score": 1.0
+      "target": "src_lazy_loadpayments"
     },
     {
       "relation": "imports_from",
@@ -22062,9 +22082,9 @@
       "source_file": "packages/core/test/fixtures/basic/src/lazy.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_lazy_loadpayments",
-      "target": "src_payments",
-      "confidence_score": 1.0
+      "target": "src_payments"
     },
     {
       "relation": "contains",
@@ -22427,9 +22447,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/src/checkout.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_projects_b_app_src_checkout_ts_src_checkout",
-      "target": "src_money",
-      "confidence_score": 1.0
+      "target": "src_money"
     },
     {
       "relation": "contains",
@@ -22437,9 +22457,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/src/money.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_money",
-      "target": "src_money_charge",
-      "confidence_score": 1.0
+      "target": "src_money_charge"
     },
     {
       "relation": "imports",
@@ -22448,9 +22468,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/src/checkout.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_projects_b_app_src_checkout_ts_src_checkout",
-      "target": "src_money_charge",
-      "confidence_score": 1.0
+      "target": "src_money_charge"
     },
     {
       "relation": "contains",
@@ -22458,9 +22478,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig",
-      "target": "a_lib_tsconfig_compileroptions",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_compileroptions"
     },
     {
       "relation": "contains",
@@ -22468,9 +22488,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig",
-      "target": "a_lib_tsconfig_include",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_include"
     },
     {
       "relation": "contains",
@@ -22478,9 +22498,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig_compileroptions",
-      "target": "a_lib_tsconfig_compileroptions_module",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_compileroptions_module"
     },
     {
       "relation": "contains",
@@ -22488,9 +22508,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig_compileroptions",
-      "target": "a_lib_tsconfig_compileroptions_moduleresolution",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_compileroptions_moduleresolution"
     },
     {
       "relation": "contains",
@@ -22498,9 +22518,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig_compileroptions",
-      "target": "a_lib_tsconfig_compileroptions_noemit",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_compileroptions_noemit"
     },
     {
       "relation": "contains",
@@ -22508,9 +22528,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig_compileroptions",
-      "target": "a_lib_tsconfig_compileroptions_strict",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_compileroptions_strict"
     },
     {
       "relation": "contains",
@@ -22518,9 +22538,9 @@
       "source_file": "packages/core/test/fixtures/projects/a-lib/tsconfig.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "a_lib_tsconfig_compileroptions",
-      "target": "a_lib_tsconfig_compileroptions_target",
-      "confidence_score": 1.0
+      "target": "a_lib_tsconfig_compileroptions_target"
     },
     {
       "relation": "contains",
@@ -22528,9 +22548,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/src/checkout.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "packages_core_test_fixtures_projects_b_app_src_checkout_ts_src_checkout",
-      "target": "src_checkout_go",
-      "confidence_score": 1.0
+      "target": "src_checkout_go"
     },
     {
       "relation": "contains",
@@ -22538,9 +22558,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig",
-      "target": "b_app_tsconfig_compileroptions",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_compileroptions"
     },
     {
       "relation": "contains",
@@ -22548,9 +22568,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig",
-      "target": "b_app_tsconfig_include",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_include"
     },
     {
       "relation": "contains",
@@ -22558,9 +22578,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig_compileroptions",
-      "target": "b_app_tsconfig_compileroptions_module",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_compileroptions_module"
     },
     {
       "relation": "contains",
@@ -22568,9 +22588,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig_compileroptions",
-      "target": "b_app_tsconfig_compileroptions_moduleresolution",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_compileroptions_moduleresolution"
     },
     {
       "relation": "contains",
@@ -22578,9 +22598,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig_compileroptions",
-      "target": "b_app_tsconfig_compileroptions_noemit",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_compileroptions_noemit"
     },
     {
       "relation": "contains",
@@ -22588,9 +22608,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig_compileroptions",
-      "target": "b_app_tsconfig_compileroptions_strict",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_compileroptions_strict"
     },
     {
       "relation": "contains",
@@ -22598,9 +22618,9 @@
       "source_file": "packages/core/test/fixtures/projects/b-app/tsconfig.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "b_app_tsconfig_compileroptions",
-      "target": "b_app_tsconfig_compileroptions_target",
-      "confidence_score": 1.0
+      "target": "b_app_tsconfig_compileroptions_target"
     },
     {
       "relation": "contains",
@@ -22608,9 +22628,9 @@
       "source_file": "packages/core/test/fixtures/projects/package.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "projects_package",
-      "target": "projects_package_name",
-      "confidence_score": 1.0
+      "target": "projects_package_name"
     },
     {
       "relation": "contains",
@@ -22618,9 +22638,9 @@
       "source_file": "packages/core/test/fixtures/projects/package.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "projects_package",
-      "target": "projects_package_private",
-      "confidence_score": 1.0
+      "target": "projects_package_private"
     },
     {
       "relation": "contains",
@@ -22628,9 +22648,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_forms_eager",
-      "confidence_score": 1.0
+      "target": "src_forms_eager"
     },
     {
       "relation": "contains",
@@ -22638,9 +22658,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_forms_gone",
-      "confidence_score": 1.0
+      "target": "src_forms_gone"
     },
     {
       "relation": "contains",
@@ -22648,9 +22668,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_forms_lazily",
-      "confidence_score": 1.0
+      "target": "src_forms_lazily"
     },
     {
       "relation": "contains",
@@ -22658,9 +22678,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_forms_typed",
-      "confidence_score": 1.0
+      "target": "src_forms_typed"
     },
     {
       "relation": "contains",
@@ -22668,9 +22688,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_forms_unknowable",
-      "confidence_score": 1.0
+      "target": "src_forms_unknowable"
     },
     {
       "relation": "re_exports",
@@ -22679,9 +22699,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_reexported",
-      "confidence_score": 1.0
+      "target": "src_reexported"
     },
     {
       "relation": "re_exports",
@@ -22690,9 +22710,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_reexported_reexported",
-      "confidence_score": 1.0
+      "target": "src_reexported_reexported"
     },
     {
       "relation": "imports_from",
@@ -22701,9 +22721,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_statically",
-      "confidence_score": 1.0
+      "target": "src_statically"
     },
     {
       "relation": "imports",
@@ -22712,9 +22732,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms",
-      "target": "src_statically_statically",
-      "confidence_score": 1.0
+      "target": "src_statically_statically"
     },
     {
       "relation": "imports_from",
@@ -22723,9 +22743,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/forms.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_forms_lazily",
-      "target": "src_lazily",
-      "confidence_score": 1.0
+      "target": "src_lazily"
     },
     {
       "relation": "calls",
@@ -22744,9 +22764,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/lazily.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_lazily",
-      "target": "src_lazily_lazily",
-      "confidence_score": 1.0
+      "target": "src_lazily_lazily"
     },
     {
       "relation": "contains",
@@ -22754,9 +22774,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/reexported.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_reexported",
-      "target": "src_reexported_reexported",
-      "confidence_score": 1.0
+      "target": "src_reexported_reexported"
     },
     {
       "relation": "contains",
@@ -22764,9 +22784,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/required.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_required",
-      "target": "src_required_required",
-      "confidence_score": 1.0
+      "target": "src_required_required"
     },
     {
       "relation": "contains",
@@ -22774,9 +22794,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/statically.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_statically",
-      "target": "src_statically_statically",
-      "confidence_score": 1.0
+      "target": "src_statically_statically"
     },
     {
       "relation": "contains",
@@ -22784,9 +22804,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/src/typed.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_typed",
-      "target": "src_typed_typed",
-      "confidence_score": 1.0
+      "target": "src_typed_typed"
     },
     {
       "relation": "contains",
@@ -22794,9 +22814,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig",
-      "target": "specifiers_tsconfig_compileroptions",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_compileroptions"
     },
     {
       "relation": "contains",
@@ -22804,9 +22824,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig",
-      "target": "specifiers_tsconfig_include",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_include"
     },
     {
       "relation": "contains",
@@ -22814,9 +22834,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig_compileroptions",
-      "target": "specifiers_tsconfig_compileroptions_module",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_compileroptions_module"
     },
     {
       "relation": "contains",
@@ -22824,9 +22844,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig_compileroptions",
-      "target": "specifiers_tsconfig_compileroptions_moduleresolution",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_compileroptions_moduleresolution"
     },
     {
       "relation": "contains",
@@ -22834,9 +22854,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig_compileroptions",
-      "target": "specifiers_tsconfig_compileroptions_noemit",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_compileroptions_noemit"
     },
     {
       "relation": "contains",
@@ -22844,9 +22864,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig_compileroptions",
-      "target": "specifiers_tsconfig_compileroptions_strict",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_compileroptions_strict"
     },
     {
       "relation": "contains",
@@ -22854,9 +22874,9 @@
       "source_file": "packages/core/test/fixtures/specifiers/tsconfig.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "specifiers_tsconfig_compileroptions",
-      "target": "specifiers_tsconfig_compileroptions_target",
-      "confidence_score": 1.0
+      "target": "specifiers_tsconfig_compileroptions_target"
     },
     {
       "relation": "contains",
@@ -22874,9 +22894,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "test_store_test_edge",
-      "confidence_score": 1.0
+      "target": "test_store_test_edge"
     },
     {
       "relation": "contains",
@@ -22884,9 +22904,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "test_store_test_node",
-      "confidence_score": 1.0
+      "target": "test_store_test_node"
     },
     {
       "relation": "contains",
@@ -22894,9 +22914,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L153",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "test_store_test_site",
-      "confidence_score": 1.0
+      "target": "test_store_test_site"
     },
     {
       "relation": "contains",
@@ -22904,9 +22924,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L195",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "test_store_test_write",
-      "confidence_score": 1.0
+      "target": "test_store_test_write"
     },
     {
       "relation": "contains",
@@ -23852,16 +23872,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L297",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "readme_codedocs",
-      "target": "readme_not_yet_built"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
       "source_location": "L56",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -23922,6 +23932,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
+      "source_location": "L320",
+      "weight": 1.0,
+      "source": "readme_codedocs",
+      "target": "readme_what_is_built",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L340",
+      "weight": 1.0,
+      "source": "readme_codedocs",
+      "target": "readme_what_is_left",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
       "source_location": "L124",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -23947,6 +23977,16 @@
       "confidence_score": 1.0,
       "source": "readme_the_operations",
       "target": "readme_trace"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L246",
+      "weight": 1.0,
+      "source": "readme_for_agents_one_envelope_every_answer",
+      "target": "readme_over_mcp",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27465,5 +27505,5 @@
       "source_file": ".github/workflows/ci.yaml"
     }
   ],
-  "built_at_commit": "529c3f2dff5b4393dcb00154cf7ca2d5d28378fe"
+  "built_at_commit": "18b240b732dd74c07930728f27b3f673ce9e7b3c"
 }

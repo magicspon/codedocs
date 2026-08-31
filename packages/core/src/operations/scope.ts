@@ -2,8 +2,8 @@
  * Narrowing an answer's conditions to the projects it actually touched.
  *
  * ADR 0006: this is what stops the envelope growing with the size of the
- * repository rather than the size of the question. cal.com has 34 projects and
- * 33 of them have nothing to say about one `callers` answer. The full set is
+ * repository rather than the size of the question. cal.com has 28 projects and
+ * 27 of them have nothing to say about one `callers` answer. The full set is
  * `analyse`'s job, and later `doctor`'s.
  */
 

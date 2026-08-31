@@ -211,15 +211,17 @@ const toConditions = (project: ProjectNode): ProjectConditions => ({
 })
 
 /**
- * Whether a project's dependencies are installed.
+ * A project's fidelity, from two of ADR 0001's four signals.
  *
- * The cheapest of ADR 0001's four signals, and the one that fires on the case
+ * Signal 1, whether `node_modules` exists, is the cheapest and fires on the case
  * that matters most: a fresh clone type-checks without failing and returns `any`
- * everywhere. The other three — a declared `postinstall`, tsconfig globs that
- * match no files, and the measured unresolved-specifier ratio — are what catch
- * framework codegen, which is not an install step.
+ * everywhere. Signal 3, a tsconfig that globs no files, is the load-bearing one,
+ * because framework codegen is not an install step — a full, successful install
+ * can still leave a project with nothing to analyse. Not yet measured: signal 1's
+ * other half, `node_modules` stale against the lockfile; signal 2, a declared
+ * `postinstall`; and signal 4, the unresolved-specifier ratio.
  *
- * TODO(#13): implement the remaining three signals and their remediations.
+ * TODO(#13): implement the remaining signals and their remediations.
  */
 function projectFidelity(
   root: string,
