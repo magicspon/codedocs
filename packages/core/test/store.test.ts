@@ -22,7 +22,8 @@ import {
   readSymbol,
   readSymbolIdAt,
   readSymbols,
-  writeAnalysis,
+  beginAnalysis,
+  commitProject,
   type Store,
 } from '../src/store.ts'
 
@@ -69,7 +70,21 @@ describe('interned ids', () => {
     root = mkdtempSync(join(tmpdir(), 'codedocs-store-'))
     writeFileSync(join(root, 'package.json'), '{"name":"fixture"}\n')
     store = openStore(root)
-    writeAnalysis(store, WRITE)
+    beginAnalysis(store, {
+      seenFiles: WRITE.seenFiles,
+      filesByProject: WRITE.filesByProject,
+      header: WRITE.header,
+    })
+    commitProject(store, {
+      project: WRITE.projects[0]!,
+      files: WRITE.files,
+      exportShapes: WRITE.exportShapes,
+      symbols: WRITE.symbols,
+      declarations: WRITE.declarations,
+      callEdges: WRITE.callEdges,
+      unresolvedCalls: WRITE.unresolvedCalls,
+      importEdges: WRITE.importEdges,
+    })
   })
 
   afterEach(() => {
@@ -121,6 +136,17 @@ describe('interned ids', () => {
 
   it('find a symbol by the offset it was declared at', () => {
     expect(readSymbolIdAt(store, 'src/a.ts', 42)).toBe('src/a.ts#alpha.inner')
+  })
+
+  it('find it by an offset its own row cannot carry', () => {
+    // ADR 0002 collapses overloads and declaration merging into one symbol, so
+    // the row holds one offset and the others are stored beside it. Without
+    // them, a call landing on the second overload resolves in memory and nowhere
+    // else — which is 20 of `microsoft/vscode`'s edges once a build stops
+    // holding every project at once.
+    expect(readSymbolIdAt(store, 'src/a.ts', 0)).toBe('src/a.ts#alpha')
+    expect(readSymbolIdAt(store, 'src/a.ts', 21)).toBe('src/a.ts#alpha')
+    expect(readSymbolIdAt(store, 'src/a.ts', 22)).toBeUndefined()
   })
 })
 
@@ -196,6 +222,8 @@ const WRITE = {
       7,
     ),
   ],
+  /** `alpha` is declared twice — an overload — and the row keeps the first offset. */
+  declarations: [{ file: 'src/a.ts', start: 21, id: 'src/a.ts#alpha' }],
   callEdges: [
     edge('src/b.ts#beta', 'src/a.ts#alpha', 'symbol', 9),
     edge('src/b.ts', 'src/a.ts#alpha', 'file', 3),

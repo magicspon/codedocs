@@ -26,6 +26,8 @@ import { DatabaseSync, type StatementSync } from 'node:sqlite'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
+import type { DeclarationSite } from './adapter/ts7.ts'
+
 import type {
   CallEdge,
   CallerAttribution,
@@ -50,7 +52,7 @@ import type {
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 4
+export const STORE_SCHEMA_VERSION = 5
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 const TABLES: readonly string[] = [
@@ -63,6 +65,7 @@ const TABLES: readonly string[] = [
   'file_project',
   'file_import',
   'symbol',
+  'declaration',
   'call_edge',
   'unresolved_call',
 ]
@@ -128,6 +131,13 @@ create table if not exists symbol (
   durable integer not null,
   callable integer not null,
   collisions integer not null
+) strict;
+
+create table if not exists declaration (
+  path_id integer not null,
+  start integer not null,
+  node_id integer not null,
+  primary key (path_id, start)
 ) strict;
 
 create table if not exists call_edge (
@@ -483,24 +493,11 @@ interface FileFacts {
   readonly files: readonly FileNode[]
   readonly exportShapes: ReadonlyMap<FilePath, string>
   readonly symbols: readonly SymbolNode[]
+  /** The declaration offsets the symbol rows cannot carry. See `declaration`. */
+  readonly declarations: readonly DeclarationSite[]
   readonly callEdges: readonly CallEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
-}
-
-/** Everything one analysis run writes. */
-export interface AnalysisWrite extends FileFacts {
-  readonly projects: readonly ProjectNode[]
-  /**
-   * Every source file the tree walk saw, analysed or not.
-   *
-   * Without it, a file no tsconfig globs — a config script, a vendored bundle —
-   * is absent from `file` and so looks newly added on every single query, which
-   * makes drift permanent and a rebuild unconditional.
-   */
-  readonly seenFiles: readonly FilePath[]
-  readonly filesByProject: ReadonlyMap<FilePath, readonly FilePath[]>
-  readonly header: IndexHeader
 }
 
 /** One wave's worth of facts: the files it re-extracted, and where they belong. */
@@ -512,24 +509,56 @@ export interface WaveWrite extends FileFacts {
   readonly header: IndexHeader
 }
 
+/** What a cold build writes before it extracts anything project by project. */
+export interface AnalysisStart {
+  /**
+   * Every source file the tree walk saw, analysed or not.
+   *
+   * Without it, a file no tsconfig globs — a config script, a vendored bundle —
+   * is absent from `file` and so looks newly added on every single query, which
+   * makes drift permanent and a rebuild unconditional.
+   *
+   * It is written here, before anything is extracted, and that is safe *because*
+   * a half-built index is recognised by `readUnanalysedProjects` rather than by
+   * drift: the files of a project a build never reached did not appear, they
+   * were never analysed, and saying so is a different sentence.
+   */
+  readonly seenFiles: readonly FilePath[]
+  /**
+   * Every open project's files, per project.
+   *
+   * Written as membership before any project is extracted, so a project the
+   * build never reached still says which project its files belong to — which is
+   * what lets the repairing wave open the right projects rather than adopting
+   * thousands of files it has no record of. No `file` rows come with it: `file`
+   * is what drift is measured against, and a file whose project never finished
+   * must read as unanalysed.
+   */
+  readonly filesByProject: ReadonlyMap<FilePath, readonly FilePath[]>
+  readonly header: IndexHeader
+}
+
+/** One project's facts, committed on their own. */
+export interface ProjectWrite extends FileFacts {
+  readonly project: ProjectNode
+}
+
 /**
- * Replace the index contents with one analysis run.
+ * Empty the index and record what the build is about to do.
  *
- * Committed per project, as ADR 0004 decided, so an interrupted build leaves a
- * partial index rather than nothing: a project's row appears only once its facts
- * are in, so finished projects are current and the rest are simply absent — which
- * the next run rebuilds and a query in between names as a blind spot.
- *
- * TODO(#30): extraction is still one pass over every project, so an interruption
- * during the analysis itself — the 22.9 s, against ~1 s of commits — still leaves
- * nothing. Extracting per project needs the cross-project symbol join to survive
- * being split, which is a larger change than the commit boundary.
+ * The header is stamped **here** rather than at the end. A partial index is only
+ * useful if the next run recognises it, and the next run reads the tool and
+ * TypeScript versions from the header to decide whether the index is repairable
+ * at all — an unstamped one is discarded whole, which is the outcome per-project
+ * commits exist to avoid. When a project's own analysis ran is
+ * `project.analysedAt`, which is per project and is what the envelope's
+ * conditions report.
  */
-export function writeAnalysis(store: Store, write: AnalysisWrite): void {
+export function beginAnalysis(store: Store, write: AnalysisStart): void {
   const { db } = store
 
-  // The clear is its own transaction so a project's commit is never rolled back
-  // by a later project's failure.
+  // Its own transaction so a project's commit is never rolled back by a later
+  // project's failure.
   transaction(store, () => {
     for (const table of TABLES.filter((name) => name !== 'meta')) {
       db.exec(`delete from ${table}`)
@@ -537,29 +566,28 @@ export function writeAnalysis(store: Store, write: AnalysisWrite): void {
     // The ids the cache holds named rows that no longer exist.
     internerFor(store).reset()
     writeSeenFiles(store, write.seenFiles)
+    writeMeta(db, write.header)
   })
 
-  const owner = new Map<FilePath, FilePath>()
   for (const [configPath, paths] of write.filesByProject) {
-    for (const path of paths) owner.set(path, configPath)
+    transaction(store, () => writeMembershipPaths(store, configPath, paths))
   }
+}
 
-  const grouped = groupByProject(write, owner)
-  for (const project of write.projects) {
-    const facts = grouped.get(project.configPath)
-    transaction(store, () => {
-      writeProject(store, project)
-      writeMembership(store, project.configPath, facts?.files ?? [])
-      if (facts) writeFileFacts(store, facts)
-    })
-  }
-
-  // Anything no project claimed, so a fact is never silently dropped because its
-  // file fell outside `filesByProject`.
-  const orphans = grouped.get(UNOWNED)
-  if (orphans) transaction(store, () => writeFileFacts(store, orphans))
-
-  transaction(store, () => writeMeta(db, write.header))
+/**
+ * Commit one project's facts.
+ *
+ * The project row is written last within the transaction and the whole thing is
+ * atomic, so a project's row appears only once its facts are in: finished
+ * projects are current, and the rest are simply absent — which the next run
+ * repairs and a query in between names as a blind spot.
+ */
+export function commitProject(store: Store, write: ProjectWrite): void {
+  transaction(store, () => {
+    writeMembership(store, write.project.configPath, write.files)
+    writeFileFacts(store, write)
+    writeProject(store, write.project)
+  })
 }
 
 /**
@@ -644,6 +672,7 @@ function groupByProject(
         files: [],
         exportShapes: new Map(),
         symbols: [],
+        declarations: [],
         callEdges: [],
         unresolvedCalls: [],
         importEdges: [],
@@ -659,6 +688,7 @@ function groupByProject(
     into.exportShapes.set(file.path, facts.exportShapes.get(file.path) ?? '')
   }
   for (const row of facts.symbols) group(row.file).symbols.push(row)
+  for (const row of facts.declarations) group(row.file).declarations.push(row)
   for (const row of facts.callEdges) group(row.file).callEdges.push(row)
   for (const row of facts.unresolvedCalls)
     group(row.file).unresolvedCalls.push(row)
@@ -671,6 +701,7 @@ interface FactGroup {
   files: FileNode[]
   exportShapes: Map<FilePath, string>
   symbols: SymbolNode[]
+  declarations: DeclarationSite[]
   callEdges: CallEdge[]
   unresolvedCalls: UnresolvedCall[]
   importEdges: ImportEdge[]
@@ -699,6 +730,7 @@ function transaction(store: Store, work: () => void): void {
 /** Every row keyed to one file, so re-extraction cannot leave a stale duplicate. */
 function clearFile(db: DatabaseSync, id: number): void {
   prepared(db, 'delete from symbol where path_id = ?').run(id)
+  prepared(db, 'delete from declaration where path_id = ?').run(id)
   prepared(db, 'delete from call_edge where path_id = ?').run(id)
   prepared(db, 'delete from unresolved_call where path_id = ?').run(id)
   prepared(db, 'delete from file_import where from_id = ?').run(id)
@@ -720,7 +752,7 @@ function writeProject(store: Store, project: ProjectNode): void {
     )
 }
 
-/** `seen_file` is what keeps drift finite; see `AnalysisWrite.seenFiles`. */
+/** `seen_file` is what keeps drift finite; see `AnalysisStart.seenFiles`. */
 function writeSeenFiles(store: Store, seenFiles: readonly FilePath[]): void {
   const intern = internerFor(store)
   const seen = store.db.prepare(
@@ -734,18 +766,31 @@ function writeMembership(
   configPath: FilePath,
   files: readonly FileNode[],
 ): void {
+  writeMembershipPaths(
+    store,
+    configPath,
+    files.map((file) => file.path),
+  )
+}
+
+function writeMembershipPaths(
+  store: Store,
+  configPath: FilePath,
+  paths: readonly FilePath[],
+): void {
   const intern = internerFor(store)
   const project = intern.path(configPath)
   const membership = store.db.prepare(
     'insert or ignore into file_project (file_id, project_id, canonical) values (?, ?, 1)',
   )
-  for (const file of files) membership.run(intern.path(file.path), project)
+  for (const path of paths) membership.run(intern.path(path), project)
 }
 
 /** One project's facts, in one transaction. */
 function writeFileFacts(store: Store, facts: FileFacts): void {
   writeFileRows(store, facts)
   writeSymbols(store, facts.symbols)
+  writeDeclarations(store, facts.declarations)
   writeCallEdges(store, facts.callEdges)
   writeUnresolvedCalls(store, facts.unresolvedCalls)
   writeImportEdges(store, facts.importEdges)
@@ -795,6 +840,29 @@ function writeSymbols(store: Store, symbols: readonly SymbolNode[]): void {
       row.callable ? 1 : 0,
       row.collisions,
     )
+  }
+}
+
+/**
+ * The declaration offsets a symbol row has no room for.
+ *
+ * ADR 0002 collapses overloads and declaration merging into one symbol, and the
+ * row records the first declaration's offset. `readSymbolIdAt` joins on an
+ * offset, so without these an edge into the *second* overload — or into the
+ * static twin of an instance method — resolves in memory and nowhere else. That
+ * cost 20 of `microsoft/vscode`'s 728,717 edges the moment a build stopped
+ * holding every project in memory at once.
+ */
+function writeDeclarations(
+  store: Store,
+  declarations: readonly DeclarationSite[],
+): void {
+  const intern = internerFor(store)
+  const site = store.db.prepare(
+    'insert or ignore into declaration (path_id, start, node_id) values (?, ?, ?)',
+  )
+  for (const row of declarations) {
+    site.run(intern.path(row.file), row.start, intern.node(row.id))
   }
 }
 
@@ -987,14 +1055,23 @@ export function readSymbolIdAt(
 ): SymbolId | undefined {
   const id = pathId(store.db, path)
   if (id === undefined) return undefined
-  const row = store.db
-    .prepare(
-      `select n.qualified from symbol s
-       join node n on n.id = s.node_id
-       where s.path_id = ? and s.start = ?`,
-    )
-    .get(id, start) as { qualified: string } | undefined
-  return row === undefined ? undefined : idOf(path, row.qualified)
+  const row = prepared(
+    store.db,
+    `select n.qualified from symbol s
+     join node n on n.id = s.node_id
+     where s.path_id = ? and s.start = ?`,
+  ).get(id, start) as { qualified: string } | undefined
+  if (row !== undefined) return idOf(path, row.qualified)
+
+  // The offset belongs to a declaration the row could not carry: a later
+  // overload, or the static twin of an instance method. Same symbol, same id.
+  const extra = prepared(
+    store.db,
+    `select n.qualified from declaration d
+     join node n on n.id = d.node_id
+     where d.path_id = ? and d.start = ?`,
+  ).get(id, start) as { qualified: string } | undefined
+  return extra === undefined ? undefined : idOf(path, extra.qualified)
 }
 
 /** Per file, the project its facts were produced in. */
@@ -1008,6 +1085,60 @@ export function readCanonicalProjects(store: Store): Map<FilePath, FilePath> {
     )
     .all() as { file: string; project: string }[]
   return new Map(rows.map((row) => [row.file, row.project]))
+}
+
+/**
+ * The projects the index has membership for but no analysis of.
+ *
+ * ADR 0004's half-built index, in the vocabulary it already has: a project's row
+ * appears only once its facts are in, so a project that owns files and has no row
+ * is one a build never reached. Named here rather than inferred from drift,
+ * because a project may glob files the tree walk never sees — anything under
+ * `dist` or `.next` — and drift can only report what the walk found.
+ */
+export function readUnanalysedProjects(store: Store): FilePath[] {
+  const rows = store.db
+    .prepare(
+      `select distinct c.path from file_project fp
+       join path c on c.id = fp.project_id
+       where not exists (select 1 from project r where r.path_id = fp.project_id)
+       order by c.path`,
+    )
+    .all() as { path: string }[]
+  return rows.map((row) => row.path)
+}
+
+/** Every file canonically owned by a project the index has no analysis of. */
+export function readUnanalysedFiles(store: Store): FilePath[] {
+  const rows = store.db
+    .prepare(
+      `select f.path from file_project fp
+       join path f on f.id = fp.file_id
+       where fp.canonical = 1
+         and not exists (select 1 from project r where r.path_id = fp.project_id)
+       order by f.path`,
+    )
+    .all() as { path: string }[]
+  return rows.map((row) => row.path)
+}
+
+/**
+ * How many files each project owns, from membership rather than from its row.
+ *
+ * A wave writes a project row for a project that may never have had one — the
+ * repair of a half-built index does exactly that — and `rootFileCount` has to be
+ * the project's size rather than the size of the wave.
+ */
+export function readMembershipCounts(store: Store): Map<FilePath, number> {
+  const rows = store.db
+    .prepare(
+      `select c.path, count(*) as n from file_project fp
+       join path c on c.id = fp.project_id
+       where fp.canonical = 1
+       group by c.path`,
+    )
+    .all() as { path: string; n: number }[]
+  return new Map(rows.map((row) => [row.path, row.n]))
 }
 
 /** Every source file the last analysis saw, whether or not a project globbed it. */
