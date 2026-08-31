@@ -90,6 +90,7 @@ describe('interned ids', () => {
       callEdges: WRITE.callEdges,
       unresolvedCalls: WRITE.unresolvedCalls,
       importEdges: WRITE.importEdges,
+      unresolvedSpecifiers: WRITE.unresolvedSpecifiers,
     })
   })
 
@@ -208,6 +209,14 @@ const WRITE = {
       fingerprint: 'fingerprint',
       cause: null,
       postinstall: false,
+    },
+  ],
+  unresolvedSpecifiers: [
+    {
+      file: 'src/a.ts',
+      specifier: '@calcom/prisma/enums',
+      line: 1,
+      cause: 'missing-generated' as const,
     },
   ],
   files: [

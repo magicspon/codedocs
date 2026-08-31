@@ -46,6 +46,7 @@ import type {
   SymbolNode,
   UnresolvedCall,
   UnresolvedCallCause,
+  UnresolvedSpecifier,
 } from './model.ts'
 
 /**
@@ -53,7 +54,7 @@ import type {
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 6
+export const STORE_SCHEMA_VERSION = 7
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 const TABLES: readonly string[] = [
@@ -69,6 +70,7 @@ const TABLES: readonly string[] = [
   'declaration',
   'call_edge',
   'unresolved_call',
+  'unresolved_specifier',
 ]
 
 const DDL = `
@@ -161,6 +163,14 @@ create table if not exists unresolved_call (
   line integer not null,
   cause integer not null,
   name text
+) strict;
+
+create table if not exists unresolved_specifier (
+  rowid_ integer primary key autoincrement,
+  path_id integer not null,
+  specifier text not null,
+  line integer not null,
+  cause integer not null
 ) strict;
 
 create index if not exists file_import_to on file_import(to_id);
@@ -510,6 +520,15 @@ interface FileFacts {
   readonly callEdges: readonly CallEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
+  /**
+   * ADR 0009's signal 4, per site and keyed by file.
+   *
+   * Per site because the wave's write unit is one file: a project-level count
+   * would need read-modify-write across files, and would go wrong exactly where
+   * ADR 0004 permits a partial build committed per project. Deduplicating 306
+   * copies of one specifier into one fact is the operation's job.
+   */
+  readonly unresolvedSpecifiers: readonly UnresolvedSpecifier[]
 }
 
 /** One wave's worth of facts: the files it re-extracted, and where they belong. */
@@ -688,6 +707,7 @@ function groupByProject(
         callEdges: [],
         unresolvedCalls: [],
         importEdges: [],
+        unresolvedSpecifiers: [],
       }
       groups.set(key, found)
     }
@@ -705,6 +725,8 @@ function groupByProject(
   for (const row of facts.unresolvedCalls)
     group(row.file).unresolvedCalls.push(row)
   for (const row of facts.importEdges) group(row.from).importEdges.push(row)
+  for (const row of facts.unresolvedSpecifiers)
+    group(row.file).unresolvedSpecifiers.push(row)
   return groups
 }
 
@@ -717,6 +739,7 @@ interface FactGroup {
   callEdges: CallEdge[]
   unresolvedCalls: UnresolvedCall[]
   importEdges: ImportEdge[]
+  unresolvedSpecifiers: UnresolvedSpecifier[]
 }
 
 /**
@@ -745,6 +768,7 @@ function clearFile(db: DatabaseSync, id: number): void {
   prepared(db, 'delete from declaration where path_id = ?').run(id)
   prepared(db, 'delete from call_edge where path_id = ?').run(id)
   prepared(db, 'delete from unresolved_call where path_id = ?').run(id)
+  prepared(db, 'delete from unresolved_specifier where path_id = ?').run(id)
   prepared(db, 'delete from file_import where from_id = ?').run(id)
   prepared(db, 'delete from file_project where file_id = ?').run(id)
 }
@@ -829,6 +853,7 @@ function writeFileFacts(store: Store, facts: FileFacts): void {
   writeCallEdges(store, facts.callEdges)
   writeUnresolvedCalls(store, facts.unresolvedCalls)
   writeImportEdges(store, facts.importEdges)
+  writeUnresolvedSpecifiers(store, facts.unresolvedSpecifiers)
 }
 
 /** The file row carries both hashes: content for drift, export shape for the wave. */
@@ -954,6 +979,25 @@ function writeImportEdges(
       intern.path(row.from),
       row.specifier,
       row.to === null ? null : intern.path(row.to),
+    )
+  }
+}
+
+function writeUnresolvedSpecifiers(
+  store: Store,
+  specifiers: readonly UnresolvedSpecifier[],
+): void {
+  const intern = internerFor(store)
+  const row = store.db.prepare(
+    `insert into unresolved_specifier (path_id, specifier, line, cause)
+     values (?, ?, ?, ?)`,
+  )
+  for (const specifier of specifiers) {
+    row.run(
+      intern.path(specifier.file),
+      specifier.specifier,
+      specifier.line,
+      code(PRECONDITION_CAUSES, specifier.cause, 'precondition cause'),
     )
   }
 }
@@ -1200,6 +1244,66 @@ export function readProjectFiles(
     }
   }
   return [...found].sort()
+}
+
+/**
+ * Every unresolved specifier written against the given files.
+ *
+ * Filtered here rather than in the operation, because ADR 0009 scopes these to
+ * the answer's own result: cal.com `apps/web`'s 576 have no business on a
+ * `callers` answer over three files of `packages/lib`.
+ */
+export function readUnresolvedSpecifiers(
+  store: Store,
+  files: readonly FilePath[],
+): UnresolvedSpecifier[] {
+  const found: UnresolvedSpecifier[] = []
+  if (files.length === 0) return found
+  const statement = store.db.prepare(
+    `select u.specifier, u.line, u.cause from unresolved_specifier u
+     join path p on p.id = u.path_id
+     where p.path = ?`,
+  )
+  for (const file of new Set(files)) {
+    for (const row of statement.all(file) as {
+      specifier: string
+      line: number
+      cause: number
+    }[]) {
+      found.push({
+        file,
+        specifier: row.specifier,
+        line: row.line,
+        cause: named(PRECONDITION_CAUSES, row.cause, 'precondition cause'),
+      })
+    }
+  }
+  return found
+}
+
+/** Every unresolved specifier in the index, for the operations whose scope is the repository. */
+export function readAllUnresolvedSpecifiers(
+  store: Store,
+): UnresolvedSpecifier[] {
+  return (
+    store.db
+      .prepare(
+        `select p.path, u.specifier, u.line, u.cause from unresolved_specifier u
+         join path p on p.id = u.path_id
+         order by p.path, u.line`,
+      )
+      .all() as {
+      path: string
+      specifier: string
+      line: number
+      cause: number
+    }[]
+  ).map((row) => ({
+    file: row.path,
+    specifier: row.specifier,
+    line: row.line,
+    cause: named(PRECONDITION_CAUSES, row.cause, 'precondition cause'),
+  }))
 }
 
 /** Every source file the last analysis saw, whether or not a project globbed it. */

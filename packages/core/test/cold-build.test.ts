@@ -137,6 +137,7 @@ function halfBuild(): void {
       unresolvedCalls: result.unresolvedCalls.filter((row) =>
         mine.has(row.file),
       ),
+      unresolvedSpecifiers: [],
       importEdges: result.importEdges.filter((row) => mine.has(row.from)),
     })
   } finally {

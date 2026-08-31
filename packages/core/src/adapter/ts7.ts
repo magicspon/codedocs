@@ -42,6 +42,7 @@ import type {
   CallerAttribution,
   FilePath,
   ImportEdge,
+  SpecifierSite,
   SymbolId,
   SymbolKind,
   SymbolNode,
@@ -199,6 +200,16 @@ export interface AdapterResult {
   readonly callEdges: readonly CallEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
+  /**
+   * Every module specifier that resolved to nothing, with no cause attached.
+   *
+   * ADR 0009's signal 4, and a by-product rather than a pass: the program is
+   * open and module resolution is already done, which is why the whole scan is
+   * 0.7 ms over `packages/lib`'s 1,282 specifiers. The cause is decided above
+   * the adapter, because it is a question about the filesystem rather than about
+   * the program.
+   */
+  readonly unresolvedSpecifiers: readonly SpecifierSite[]
   /**
    * Per extracted file, the hash of its resolved export surface.
    *
@@ -738,6 +749,8 @@ function extractFrom(
     request.resolve,
   )
 
+  const imports = sweepImports(files, view)
+
   return {
     filesByProject: view.filesByProject,
     extracted: files.map((file) => file.path),
@@ -746,7 +759,8 @@ function extractFrom(
     declarations,
     callEdges,
     unresolvedCalls,
-    importEdges: sweepImports(files, view),
+    importEdges: imports.edges,
+    unresolvedSpecifiers: imports.unresolved,
     exportShapes: sweepExportShapes(files),
     emptyProjects: view.emptyProjects,
   }
@@ -1138,39 +1152,64 @@ function collectSpecifiers(node: Node, into: StringLiteral[]): void {
  * form goes into one batch per file, because the batch is the whole reason this
  * is affordable.
  */
-function sweepImports(files: readonly OwnedFile[], view: View): ImportEdge[] {
+function sweepImports(
+  files: readonly OwnedFile[],
+  view: View,
+): { edges: ImportEdge[]; unresolved: SpecifierSite[] } {
   const edges: ImportEdge[] = []
+  const unresolved: SpecifierSite[] = []
+  for (const file of files) {
+    sweepFileImports(file, view, edges, unresolved)
+  }
+  return { edges, unresolved }
+}
 
-  for (const { path, sf, project } of files) {
-    const specifiers: StringLiteral[] = []
-    const walk = (node: Node): void => {
-      collectSpecifiers(node, specifiers)
-      node.forEachChild(walk)
+/** One file's specifiers, resolved in a single batch and sorted into the two lists. */
+function sweepFileImports(
+  { path, sf, project }: OwnedFile,
+  view: View,
+  edges: ImportEdge[],
+  unresolved: SpecifierSite[],
+): void {
+  const specifiers: StringLiteral[] = []
+  const walk = (node: Node): void => {
+    collectSpecifiers(node, specifiers)
+    node.forEachChild(walk)
+  }
+  sf.forEachChild(walk)
+  if (specifiers.length === 0) return
+
+  let resolved: (CheckerSymbol | undefined)[]
+  try {
+    resolved = project.checker.getSymbolAtLocation(specifiers)
+  } catch {
+    return // A failed batch loses this file's import edges, never an answer.
+  }
+
+  for (const [index, specifier] of specifiers.entries()) {
+    const text = specifier.text
+    const symbol = resolved[index]
+    const to = moduleFileOf(symbol, view)
+    if (to !== undefined) {
+      edges.push({ from: path, specifier: text, to })
+      continue
     }
-    sf.forEachChild(walk)
-    if (specifiers.length === 0) continue
-
-    let resolved: (CheckerSymbol | undefined)[]
-    try {
-      resolved = project.checker.getSymbolAtLocation(specifiers)
-    } catch {
-      continue // A failed batch loses this file's import edges, never an answer.
+    // A relative specifier that resolves to nothing is an import the wave has to
+    // watch: the file that would complete it may appear later.
+    if (text.startsWith('.')) {
+      edges.push({ from: path, specifier: text, to: null })
     }
-
-    for (const [index, specifier] of specifiers.entries()) {
-      const text = specifier.text
-      const to = moduleFileOf(resolved[index], view)
-      if (to !== undefined) {
-        edges.push({ from: path, specifier: text, to })
-      } else if (text.startsWith('.')) {
-        // A relative specifier that resolves to nothing is a broken import, and
-        // the file that would fix it may appear later. Recorded so the wave can
-        // re-extract this file when it does.
-        edges.push({ from: path, specifier: text, to: null })
-      }
+    // A symbol with declarations outside the repository is a package that
+    // resolved perfectly well; only a specifier the checker found nothing at all
+    // for is signal 4.
+    if (symbol === undefined) {
+      unresolved.push({
+        file: path,
+        specifier: text,
+        line: lineOf(sf, specifier.getStart(sf)),
+      })
     }
   }
-  return edges
 }
 
 /** The repository file a resolved module symbol declares, if it is one of ours. */

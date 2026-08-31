@@ -9,7 +9,13 @@
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { Fidelity, FilePath } from '../model.ts'
 import type { RepairReport } from '../session.ts'
-import { counts, readProjects, type Store } from '../store.ts'
+import {
+  counts,
+  readAllUnresolvedSpecifiers,
+  readProjects,
+  type Store,
+} from '../store.ts'
+import { specifierSpots } from './scope.ts'
 
 /** What `analyse` reports about one project. */
 export interface ProjectSummary {
@@ -50,11 +56,20 @@ export function analyse(
     analysedAt: project.analysedAt,
   }))
   const totals = counts(store)
+  // The one operation whose scope *is* the repository, so its blind spots are
+  // every unresolved specifier rather than one answer's own files.
+  const whole: AnswerContext = {
+    ...context,
+    blindSpots: [
+      ...context.blindSpots,
+      ...specifierSpots(readAllUnresolvedSpecifiers(store)),
+    ],
+  }
   return {
     ...answer(
       'analyse',
       { subject: null, resolved: [], limit, depth: null },
-      context,
+      whole,
       summaries,
     ),
     totals: {

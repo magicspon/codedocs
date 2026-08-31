@@ -153,6 +153,28 @@ export interface ImportEdge {
   readonly to: FilePath | null
 }
 
+/**
+ * One module specifier that resolved to nothing, where it was written.
+ *
+ * ADR 0009's fourth signal, and per site rather than per project: a rate cannot
+ * tell a caller whether *this* answer is affected, and the deduplication that
+ * makes 302 copies of one specifier readable is the operation's job, not the
+ * store's. The cause is filesystem knowledge — which package is declared, which
+ * is on disk — so the adapter reports the specifier and something above it says
+ * why.
+ */
+export interface SpecifierSite {
+  readonly file: FilePath
+  /** The specifier as written, which is what a remediation has to name. */
+  readonly specifier: string
+  readonly line: number
+}
+
+/** One unresolved specifier, once the filesystem has said why. */
+export interface UnresolvedSpecifier extends SpecifierSite {
+  readonly cause: PreconditionCause
+}
+
 /** One declaration name in its scope. Overloads collapse into one node. */
 export interface SymbolNode {
   readonly id: SymbolId

@@ -32,6 +32,7 @@ import type {
 } from './envelope.ts'
 import type { FileNode, FilePath, ProjectNode } from './model.ts'
 import {
+  classifySpecifiers,
   fidelityOf,
   preflightProjects,
   type ProjectPreflight,
@@ -492,6 +493,13 @@ function runWave(
     callEdges: result.callEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
+    // The adapter measured which specifiers resolved to nothing; the cause is
+    // filesystem knowledge, so it is decided here rather than in the program.
+    unresolvedSpecifiers: classifySpecifiers(
+      root,
+      result.unresolvedSpecifiers,
+      result.canonicalOf,
+    ),
     projects: touchedProjects(store, result.canonicalOf, context),
     header: stamp(root),
   })
@@ -684,6 +692,7 @@ export function rebuild(
         callEdges: [],
         unresolvedCalls: [],
         importEdges: [],
+        unresolvedSpecifiers: [],
       })
     }
 
@@ -746,6 +755,11 @@ function extractProject(
     callEdges: result.callEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
+    unresolvedSpecifiers: classifySpecifiers(
+      root,
+      result.unresolvedSpecifiers,
+      result.canonicalOf,
+    ),
   })
 
   return files.length
