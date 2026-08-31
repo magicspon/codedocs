@@ -261,6 +261,11 @@ describe('a wave and a cold build', () => {
    * indistinguishable: whatever it leaves behind must be what analysing the same
    * tree from scratch would have produced. Comparing counts would pass while
    * pointing at the wrong symbols, so the rows themselves are compared.
+   *
+   * Every row is joined back through the intern tables. The atom ids are handed
+   * out in insertion order, so a wave and a cold build assign them differently
+   * without disagreeing about anything — and a wave's atoms outlive the rows
+   * that named them, which is deliberate and which a raw comparison would fail on.
    */
   const dump = (): string => {
     const session = openSession({ cwd: root, noUpdate: false })
@@ -269,18 +274,38 @@ describe('a wave and a cold build', () => {
       const rows = (sql: string): string =>
         JSON.stringify(db.prepare(sql).all())
       return [
-        rows('select * from symbol order by id, file_path, start'),
-        rows(
-          'select from_id, to_id, attribution, file_path, line, provenance, derivation from call_edge order by from_id, to_id, file_path, line',
-        ),
-        rows(
-          'select * from unresolved_call order by file_path, line, cause, name',
-        ),
-        rows('select * from file_import order by from_path, specifier'),
-        rows('select * from file_project order by file_path, config_path'),
-        rows(
-          'select path, content_hash, export_shape_hash from file order by path',
-        ),
+        rows(`select p.path, n.qualified, s.name, s.kind, s.start, s.line,
+                s.durable, s.callable, s.collisions
+              from symbol s
+              join node n on n.id = s.node_id
+              join path p on p.id = s.path_id
+              order by p.path, n.qualified, s.start`),
+        rows(`select fp.path as from_path, fn.qualified as from_qualified,
+                tp.path as to_path, tn.qualified as to_qualified,
+                e.attribution, ep.path as file, e.line, e.provenance, e.derivation
+              from call_edge e
+              join node fn on fn.id = e.from_id
+              join path fp on fp.id = fn.path_id
+              join node tn on tn.id = e.to_id
+              join path tp on tp.id = tn.path_id
+              join path ep on ep.id = e.path_id
+              order by from_path, from_qualified, to_path, to_qualified, file, e.line`),
+        rows(`select p.path, u.line, u.cause, u.name
+              from unresolved_call u join path p on p.id = u.path_id
+              order by p.path, u.line, u.cause, u.name`),
+        rows(`select f.path as from_path, i.specifier, t.path as to_path
+              from file_import i
+              join path f on f.id = i.from_id
+              left join path t on t.id = i.to_id
+              order by from_path, i.specifier`),
+        rows(`select f.path as file, c.path as project, fp.canonical
+              from file_project fp
+              join path f on f.id = fp.file_id
+              join path c on c.id = fp.project_id
+              order by file, project`),
+        rows(`select p.path, f.content_hash, f.export_shape_hash
+              from file f join path p on p.id = f.path_id
+              order by p.path`),
       ].join('\n')
     } finally {
       session.close()
