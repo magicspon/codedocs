@@ -35,6 +35,8 @@ import type {
 import type { FileNode, Fidelity, FilePath, ProjectNode } from './model.ts'
 import {
   applyWave,
+  beginAnalysis,
+  commitProject,
   openStore,
   readBrokenImporters,
   readCanonicalProjects,
@@ -42,11 +44,13 @@ import {
   readFiles,
   readHeader,
   readImporters,
+  readMembershipCounts,
   readProjects,
   readSeenFiles,
   readSymbolIdAt,
+  readUnanalysedFiles,
+  readUnanalysedProjects,
   retireFiles,
-  writeAnalysis,
   writeHeader,
   type Store,
 } from './store.ts'
@@ -120,14 +124,29 @@ export function openSession(options: SessionOptions): Session {
   let repair: RepairReport | null = null
   const header = readHeader(store)
   const stale = staleReason(header, indexed.length === 0)
+  // A build that was interrupted between two of its per-project commits. Not
+  // drift — these files never changed, they were never analysed — so it is its
+  // own reason to repair and its own kind of blind spot.
+  const unanalysed = readUnanalysedProjects(store)
 
-  if (!options.noUpdate && (stale !== null || hasDrift(drift))) {
+  if (
+    !options.noUpdate &&
+    (stale !== null || hasDrift(drift) || unanalysed.length > 0)
+  ) {
     repair =
       stale === null
         ? repairWave(root, store, drift)
         : { ...rebuild(root, store), reason: stale }
     projects = readProjects(store)
-  } else if (hasDrift(drift)) {
+  } else if (hasDrift(drift) || unanalysed.length > 0) {
+    for (const project of unanalysed) {
+      blindSpots.push({
+        subject: project,
+        reason:
+          'this project was never analysed — a build was interrupted before it ' +
+          'reached it — and --no-update was passed',
+      })
+    }
     for (const { path, reason } of driftedPaths(drift)) {
       blindSpots.push({
         subject: path,
@@ -280,17 +299,22 @@ function repairWave(root: string, store: Store, drift: Drift): RepairReport {
 /**
  * The files the first wave starts from.
  *
- * Changed and added files are obvious. The other two are not: a deleted file's
+ * Changed and added files are obvious. The other three are not: a deleted file's
  * importers hold edges that are now dangling and nothing about their own content
- * says so, and a file appearing may be the one that completes a relative import
- * that is broken today.
+ * says so, a file appearing may be the one that completes a relative import that
+ * is broken today, and the files of a project an interrupted build never reached
+ * are unanalysed without having drifted at all.
  */
 function seedFrontier(
   store: Store,
   drift: Drift,
   gone: ReadonlySet<FilePath>,
 ): FilePath[] {
-  const frontier = new Set<FilePath>([...drift.changed, ...drift.added])
+  const frontier = new Set<FilePath>([
+    ...drift.changed,
+    ...drift.added,
+    ...readUnanalysedFiles(store),
+  ])
   for (const path of readImporters(store, drift.deleted)) frontier.add(path)
   if (drift.added.length > 0) {
     for (const path of readBrokenImporters(store)) frontier.add(path)
@@ -325,6 +349,7 @@ function runWave(
     exportShapes: result.exportShapes,
     canonicalOf: result.canonicalOf,
     symbols: result.symbols,
+    declarations: result.declarations,
     callEdges: result.callEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
@@ -380,7 +405,8 @@ function openFor(
  *
  * `rootFileCount` is left as the index recorded it: a wave re-extracts files, it
  * does not re-enumerate a project, and overwriting the count with the size of the
- * wave would report a 3-file project where there are 3,000.
+ * wave would report a 3-file project where there are 3,000. A project with no
+ * recorded row falls back to its membership, for the same reason.
  */
 function touchedProjects(
   root: string,
@@ -390,10 +416,14 @@ function touchedProjects(
   const known = new Map(
     readProjects(store).map((project) => [project.configPath, project]),
   )
+  // A project the index has no row for at all — the repair of a half-built index
+  // writes its first one — takes its size from membership, which the interrupted
+  // build recorded before it started extracting.
+  const owned = readMembershipCounts(store)
   const analysedAt = new Date().toISOString()
   return [...new Set(canonicalOf.values())].sort().map((configPath) => {
     const existing = known.get(configPath)
-    const rootFileCount = existing?.rootFileCount ?? 0
+    const rootFileCount = existing?.rootFileCount ?? owned.get(configPath) ?? 0
     return {
       configPath,
       fidelity:
@@ -404,7 +434,24 @@ function touchedProjects(
   })
 }
 
-/** Re-analyse every project and replace the index contents. */
+/**
+ * Re-analyse every project and replace the index contents.
+ *
+ * ADR 0004 wants an interrupted build to leave a partial index. Committing per
+ * project was only half of that while every project was extracted before the
+ * first commit: of cal.com's 16 s, the ~1 s of commits was interruptible and the
+ * 15 s of analysis was not. Now each project is extracted and committed on its
+ * own, so a project that finished is in the index and the rest read as
+ * unanalysed files, which the next run repairs with a wave.
+ *
+ * **What makes the split safe is the order.** A call leaving a project has no
+ * in-memory symbol to join against, so it falls through to the index — the same
+ * fallback the wave uses. The row is always there: the callee's declaration is
+ * necessarily in the caller's own program, so the callee's file was claimed by a
+ * project no later than the caller's, and `filesByProject` is iterated in the
+ * order that claim was made. Verified rather than argued: extracting cal.com's
+ * 34 projects one at a time produces a byte-identical index.
+ */
 export function rebuild(
   root: string,
   store: Store,
@@ -413,53 +460,117 @@ export function rebuild(
   if (configPaths.length === 0) return { kind: 'cold', files: 0, waves: 0 }
 
   const analysis = openAnalysis(root)
-  let result
   try {
     analysis.openProjects(configPaths)
-    result = analysis.extract({ files: analysis.everyFile() })
+    const byProject = analysis.filesByProject()
+
+    beginAnalysis(store, {
+      seenFiles: walkSourceFiles(root),
+      filesByProject: byProject,
+      header: {
+        commit: currentCommit(root),
+        analysedAt: new Date().toISOString(),
+        toolVersion: TOOL_VERSION,
+        typescriptVersion: typescriptVersion(),
+      },
+    })
+
+    // Named explicitly rather than left to the adapter's own tie-break, so the
+    // project a file is extracted in is the project this loop credits it to.
+    const canonicalOf = new Map<FilePath, FilePath>()
+    for (const [configPath, paths] of byProject) {
+      for (const path of paths) canonicalOf.set(path, configPath)
+    }
+
+    // A project that globs nothing has no facts to wait for, so its row is
+    // written before anything is extracted rather than whenever the loop happens
+    // to reach it. ADR 0001 makes a config whose includes match no files a lower
+    // fidelity rather than an absence, and that signal must survive an
+    // interruption like any other project's. The same goes for a tsconfig that
+    // was discovered but that the server returned no project for.
+    for (const configPath of configPaths) {
+      if ((byProject.get(configPath)?.length ?? 0) > 0) continue
+      commitProject(store, {
+        project: {
+          configPath,
+          fidelity: projectFidelity(root, configPath, 0),
+          rootFileCount: 0,
+          analysedAt: new Date().toISOString(),
+        },
+        files: [],
+        exportShapes: new Map(),
+        symbols: [],
+        declarations: [],
+        callEdges: [],
+        unresolvedCalls: [],
+        importEdges: [],
+      })
+    }
+
+    let extracted = 0
+    for (const [configPath, owned] of byProject) {
+      if (owned.length === 0) continue
+      extracted += extractProject(root, store, analysis, {
+        configPath,
+        owned,
+        canonicalOf,
+      })
+    }
+
+    return { kind: 'cold', files: extracted, waves: 0 }
   } finally {
     analysis.close()
   }
-  const analysedAt = new Date().toISOString()
+}
 
-  const projects: ProjectNode[] = configPaths.map((configPath) => {
-    const rootFileCount = result.filesByProject.get(configPath)?.length ?? 0
-    return {
-      configPath,
-      fidelity: projectFidelity(root, configPath, rootFileCount),
-      rootFileCount,
-      analysedAt,
-    }
+/** One project's slice of the cold build. */
+interface ProjectSlice {
+  readonly configPath: FilePath
+  /** The files this project owns, which are the ones it extracts. */
+  readonly owned: readonly FilePath[]
+  /** Every file's owner, so a shared file is extracted where it is credited. */
+  readonly canonicalOf: ReadonlyMap<FilePath, FilePath>
+}
+
+/**
+ * Extract and commit one project. Returns how many files it produced facts for.
+ *
+ * `resolve` is what carries a call out of the project: the callee's rows are
+ * already in the index, because its project was committed first.
+ */
+function extractProject(
+  root: string,
+  store: Store,
+  analysis: AnalysisSession,
+  slice: ProjectSlice,
+): number {
+  const result = analysis.extract({
+    files: slice.owned,
+    canonicalOf: slice.canonicalOf,
+    resolve: (path, start) => readSymbolIdAt(store, path, start),
   })
 
   const files: FileNode[] = []
-  const seen = new Set<FilePath>()
-  for (const paths of result.filesByProject.values()) {
-    for (const path of paths) {
-      if (seen.has(path)) continue
-      seen.add(path)
-      const stats = statFile(root, path)
-      if (stats) files.push(stats)
-    }
+  for (const path of result.extracted) {
+    const stats = statFile(root, path)
+    if (stats) files.push(stats)
   }
 
-  writeAnalysis(store, {
-    projects,
+  commitProject(store, {
+    project: {
+      configPath: slice.configPath,
+      fidelity: projectFidelity(root, slice.configPath, slice.owned.length),
+      rootFileCount: slice.owned.length,
+      analysedAt: new Date().toISOString(),
+    },
     files,
     exportShapes: result.exportShapes,
-    seenFiles: walkSourceFiles(root),
-    filesByProject: result.filesByProject,
     symbols: result.symbols,
+    declarations: result.declarations,
     callEdges: result.callEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
-    header: {
-      commit: currentCommit(root),
-      analysedAt,
-      toolVersion: TOOL_VERSION,
-      typescriptVersion: typescriptVersion(),
-    },
   })
 
-  return { kind: 'cold', files: files.length, waves: 0 }
+  return files.length
 }
