@@ -91,9 +91,25 @@ package version normalised away and locals named by descriptor path. Determinist
 snapshot — it says what a symbol is called at this commit and nothing about the past.
 _Avoid_: symbol name, key, fully-qualified name, FQN, handle
 
+**Descriptor path**:
+The dotted route from a file to a declaration, one segment per scope, each taken from what the author
+wrote — a declared name, an object-literal key, `constructor`, or the call an anonymous callback is an
+argument to. What makes a [[SymbolId]] survive a sibling being inserted above it, where an ordinal
+would not.
+_Avoid_: qualified name, path, scope chain, ordinal
+
+**Collision**:
+One [[SymbolId]] claimed by declarations that are not the same symbol, because their [[Descriptor
+path]]s are equal and the scopes between them carry no name — two `catch` clauses in one function.
+Counted on the symbol and named as a [[Blind spot]] by any operation that walks its edges, because
+the answer really is their union. Distinct from the deliberate collapse of overloads and declaration
+merging, which _are_ one symbol.
+_Avoid_: duplicate, clash, ambiguity (which is a subject matching several symbols)
+
 **Durable**:
 Whether a `SymbolId` may be relied on to mean the same thing after an edit. Local symbols are not
-durable, and nothing durable may anchor to one — a document, an impact baseline.
+durable, and nothing durable may anchor to one — a document, an impact baseline. No durable id
+collides.
 _Avoid_: stable, permanent, persistent, canonical
 
 **Derivation**:

@@ -10,7 +10,7 @@ import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { CallEdge } from '../model.ts'
 import { readCalleesOf, readCallersOf, type Store } from '../store.ts'
 import { scopeTo } from './scope.ts'
-import { resolveSubject } from './subject.ts'
+import { noteCollisions, resolveSubject } from './subject.ts'
 
 /**
  * Every call edge into the subject.
@@ -62,10 +62,13 @@ function collect(
   return answer(
     direction,
     { subject, resolved: resolved.map((node) => node.id), limit, depth: null },
-    scopeTo(store, context, [
-      ...resolved.map((node) => node.file),
-      ...edges.map((e) => e.file),
-    ]),
+    noteCollisions(
+      scopeTo(store, context, [
+        ...resolved.map((node) => node.file),
+        ...edges.map((e) => e.file),
+      ]),
+      resolved,
+    ),
     edges,
   )
 }

@@ -137,6 +137,17 @@ export interface SymbolNode {
   /** Whether this id may be relied on to mean the same thing after an edit. */
   readonly durable: boolean
   readonly callable: boolean
+  /**
+   * How many declarations claim this id when they are not one symbol.
+   *
+   * `0` for the ordinary case, and for ADR 0002's deliberate collapse of
+   * overloads and declaration merging — those *are* one symbol. Above `0` the id
+   * is a collision: unrelated bindings share a descriptor path, so every edge
+   * touching it is a union of that many bindings' edges. Reported rather than
+   * hidden, because an over-report presented as `deterministic` is wrong where
+   * an over-report that names itself is merely imprecise.
+   */
+  readonly collisions: number
 }
 
 /**

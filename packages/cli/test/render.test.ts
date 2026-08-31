@@ -37,6 +37,7 @@ const node: SymbolNode = {
   line: 1,
   durable: true,
   callable: true,
+  collisions: 0,
 }
 
 /** A clean envelope, so each test only says what it changes. */

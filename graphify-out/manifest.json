@@ -5,13 +5,13 @@
     "semantic_hash": "7f8c74cd9cd194d482804f3d858d9ff2"
   },
   ".claude/settings.json": {
-    "mtime": 1787829968.2769244,
-    "ast_hash": "6fb5613655123546f24d10522c09dccc",
-    "semantic_hash": "6fb5613655123546f24d10522c09dccc"
+    "mtime": 1788190460.7273078,
+    "ast_hash": "be4819e98953cbb781a347325ee8a0ef",
+    "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1788182508.840096,
-    "ast_hash": "177adab1c574eec2fc0cfa4941eefab9",
+    "mtime": 1788190905.560087,
+    "ast_hash": "1ce03b90d5b9f5f1731deac82919474f",
     "semantic_hash": ""
   },
   ".husky/_/applypatch-msg": {
@@ -190,9 +190,9 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1788107151.8370948,
-    "ast_hash": "3e8a7839e1844603d5a6f124ababe931",
-    "semantic_hash": "3e8a7839e1844603d5a6f124ababe931"
+    "mtime": 1788188473.9741364,
+    "ast_hash": "8631f1c69d827d67575ac8484c6d9ce0",
+    "semantic_hash": ""
   },
   "cspell.words.txt": {
     "mtime": 1788178019.9917903,
@@ -230,7 +230,7 @@
     "semantic_hash": ""
   },
   "packages/cli/src/args.ts": {
-    "mtime": 1788182344.6080844,
+    "mtime": 1788188473.9764578,
     "ast_hash": "105308eb046a02c06e3d9ae7b7ca5274",
     "semantic_hash": ""
   },
@@ -240,17 +240,17 @@
     "semantic_hash": ""
   },
   "packages/cli/src/main.ts": {
-    "mtime": 1788181429.3925066,
+    "mtime": 1788188473.976633,
     "ast_hash": "f31f473a8bf5098906975fbe8e97cc1e",
     "semantic_hash": ""
   },
   "packages/cli/src/render.ts": {
-    "mtime": 1788182508.8388278,
+    "mtime": 1788188473.976959,
     "ast_hash": "9d8015453b19dcd17c536f7948080116",
     "semantic_hash": ""
   },
   "packages/cli/test/main.test.ts": {
-    "mtime": 1788182598.0511549,
+    "mtime": 1788188473.9772875,
     "ast_hash": "53a21ceace55109ff536e8868833281c",
     "semantic_hash": ""
   },
@@ -260,8 +260,8 @@
     "semantic_hash": ""
   },
   "packages/cli/test/render.test.ts": {
-    "mtime": 1788182508.8394318,
-    "ast_hash": "e6018d06b49661d49b5d3c85d0310645",
+    "mtime": 1788190023.5672026,
+    "ast_hash": "68642078778db232f0cbd38b6f690fe3",
     "semantic_hash": ""
   },
   "packages/cli/tsconfig.json": {
@@ -280,8 +280,8 @@
     "semantic_hash": ""
   },
   "packages/core/src/adapter/ts7.ts": {
-    "mtime": 1788180905.4285374,
-    "ast_hash": "5ee90132690bba725077b699fed9f030",
+    "mtime": 1788190837.5037262,
+    "ast_hash": "18893fcf3664c5c9ad193819ca57ac6f",
     "semantic_hash": ""
   },
   "packages/core/src/discovery.ts": {
@@ -290,33 +290,33 @@
     "semantic_hash": ""
   },
   "packages/core/src/drift.ts": {
-    "mtime": 1788180905.4287791,
+    "mtime": 1788188473.978266,
     "ast_hash": "0e854648b42f9cda7fdd3b5648406c74",
     "semantic_hash": ""
   },
   "packages/core/src/envelope.ts": {
-    "mtime": 1788181296.4498677,
+    "mtime": 1788188473.9784863,
     "ast_hash": "7452cdb94eaff90af0851f25dc4f4eb0",
     "semantic_hash": ""
   },
   "packages/core/src/index.ts": {
-    "mtime": 1788182344.6078885,
+    "mtime": 1788188473.978699,
     "ast_hash": "de4e09fe58b70455589f4061fa75ee08",
     "semantic_hash": ""
   },
   "packages/core/src/model.ts": {
-    "mtime": 1788181285.6146643,
-    "ast_hash": "a23f767a43e3bedb98dfdd2a34fd7d56",
+    "mtime": 1788189976.9997072,
+    "ast_hash": "8110a115eb5e344a6673ad26711394c5",
     "semantic_hash": ""
   },
   "packages/core/src/operations/analyse.ts": {
-    "mtime": 1788181309.7604098,
+    "mtime": 1788188473.9791827,
     "ast_hash": "b1c8fafdce571e6396d4e752bfd081c7",
     "semantic_hash": ""
   },
   "packages/core/src/operations/calls.ts": {
-    "mtime": 1788181309.760264,
-    "ast_hash": "92b340e557100f5bbba767e6695af11c",
+    "mtime": 1788190014.313616,
+    "ast_hash": "c3241d5514b36a351209a9f5215c83ee",
     "semantic_hash": ""
   },
   "packages/core/src/operations/scope.ts": {
@@ -325,23 +325,23 @@
     "semantic_hash": ""
   },
   "packages/core/src/operations/subject.ts": {
-    "mtime": 1788178019.9988046,
-    "ast_hash": "ee408ea461edf1bf9f8ec355c634790f",
+    "mtime": 1788190861.176156,
+    "ast_hash": "8806939a48c7eaf07df603f4359a6653",
     "semantic_hash": ""
   },
   "packages/core/src/operations/symbol.ts": {
-    "mtime": 1788182508.8392384,
+    "mtime": 1788188473.9797308,
     "ast_hash": "6f49cd6924412c14b18fc8f4c9e6976e",
     "semantic_hash": ""
   },
   "packages/core/src/session.ts": {
-    "mtime": 1788180905.4297023,
+    "mtime": 1788188473.9802434,
     "ast_hash": "d040225ee35f3b6f3c8431fba9cdd9bc",
     "semantic_hash": ""
   },
   "packages/core/src/store.ts": {
-    "mtime": 1788182557.8726368,
-    "ast_hash": "dfaa4810517a78ae1ea17aa46c847809",
+    "mtime": 1788189986.5356793,
+    "ast_hash": "e93252e45f771ae8e65605ddc871bd66",
     "semantic_hash": ""
   },
   "packages/core/test/adapter.test.ts": {
@@ -380,7 +380,7 @@
     "semantic_hash": ""
   },
   "packages/core/test/wave.test.ts": {
-    "mtime": 1788180905.4302058,
+    "mtime": 1788188473.9812493,
     "ast_hash": "2c1c998fe02c49b244e1ea980f4cf655",
     "semantic_hash": ""
   },
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "CONTEXT.md": {
-    "mtime": 1788182505.6531448,
-    "ast_hash": "ff27252e760941fed44e038f5fdd383a",
+    "mtime": 1788190826.7949684,
+    "ast_hash": "8460928b66459f2fe4fffcd8eadf297e",
     "semantic_hash": ""
   },
   "docs/adr/0001-analysis-preconditions-and-answer-honesty.md": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0002-internal-representation-and-symbol-identity.md": {
-    "mtime": 1788117536.9965117,
-    "ast_hash": "60db8ce1fb135840e2c97f5efac0ee57",
+    "mtime": 1788190837.630705,
+    "ast_hash": "3e3f33c42dc33d918b6b171a4fa8216f",
     "semantic_hash": ""
   },
   "docs/adr/0003-repository-structure-classification.md": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0004-index-storage-and-invalidation.md": {
-    "mtime": 1788132349.8522856,
-    "ast_hash": "8d8ff2591c2148a9359f56be2d90d3b8",
+    "mtime": 1788189138.9720547,
+    "ast_hash": "710c845448c7aec247277178a609a0fa",
     "semantic_hash": ""
   },
   "docs/adr/0005-document-claims-and-verdicts.md": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0006-operation-set-and-renderer-contract.md": {
-    "mtime": 1788170209.7559242,
-    "ast_hash": "42b9edd2904c23168659b0cc8f255bd5",
+    "mtime": 1788189138.972383,
+    "ast_hash": "e4864007e90125f4985ef1b0d6b2a5e8",
     "semantic_hash": ""
   },
   "docs/adr/0007-cross-commit-continuity.md": {
@@ -440,8 +440,8 @@
     "semantic_hash": ""
   },
   "docs/research/call-graph-backend-spike.md": {
-    "mtime": 1788116170.1487026,
-    "ast_hash": "0b1eb935dcae316993702a4659e52ffd",
+    "mtime": 1788189138.9726946,
+    "ast_hash": "4f701bcc9095b92901b41a4f00ff8722",
     "semantic_hash": ""
   },
   "docs/research/capability-matrix.md": {
@@ -465,18 +465,38 @@
     "semantic_hash": ""
   },
   "packages/core/src/operations/trace.ts": {
-    "mtime": 1788182558.61621,
-    "ast_hash": "1d2478de0f5a29671644f9f96d44e64a",
+    "mtime": 1788190014.3139427,
+    "ast_hash": "5a2aaa8c524c843606185412e3fe9323",
     "semantic_hash": ""
   },
   "packages/core/test/fixtures/basic/src/recursion.ts": {
-    "mtime": 1788182204.5165882,
+    "mtime": 1788188473.9808335,
     "ast_hash": "e2b594de4a89d23ed24a51639692958e",
     "semantic_hash": ""
   },
   "packages/core/test/trace.test.ts": {
-    "mtime": 1788182357.9186282,
+    "mtime": 1788188473.9810002,
     "ast_hash": "307073652de25b3f5ad0c2b664785718",
+    "semantic_hash": ""
+  },
+  "packages/core/test/descriptors.test.ts": {
+    "mtime": 1788190864.1248808,
+    "ast_hash": "5462a423cec0a538a55b92bd43ec26a0",
+    "semantic_hash": ""
+  },
+  "packages/core/test/fixtures/descriptors/src/descriptors.ts": {
+    "mtime": 1788190771.7662067,
+    "ast_hash": "fe9e600a71edf737fb78bac38180bead",
+    "semantic_hash": ""
+  },
+  "packages/core/test/fixtures/descriptors/tsconfig.json": {
+    "mtime": 1788190092.4569345,
+    "ast_hash": "191de7b13898f676942c58b46e2ece31",
+    "semantic_hash": ""
+  },
+  "docs/research/edge-count-reconciliation.md": {
+    "mtime": 1788189138.9729307,
+    "ast_hash": "8b3f48dcae0687bf604461c2ea707bfe",
     "semantic_hash": ""
   }
 }
