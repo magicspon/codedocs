@@ -196,3 +196,30 @@ _Avoid_: staleness, dirty, out of date, invalidation
 A separate [[Index]] for some other commit, kept so an answer can be compared against it. Never part
 of the live index, and nothing not [[Durable]] may anchor to one.
 _Avoid_: history, snapshot store, previous index
+
+### Documentation
+
+**Document**:
+A Markdown file in the repository carrying at least one [[Claim]]. Committed, unlike the [[Index]],
+and found by scanning for claims rather than by living in a particular directory.
+_Avoid_: doc, page, article, walkthrough
+
+**Claim**:
+One checkable assertion a [[Document]] makes about the code, from a closed set of predicates over the
+[[Node]]s, [[Edge]]s and [[Label]]s the index holds. Written beside the prose it justifies, and
+anchored to a [[Durable]] subject. An assertion no predicate can express is not a claim and is not
+checked.
+_Avoid_: assertion, annotation, statement, test
+
+**Verdict**:
+What `docs check` decides about a [[Document]] or one of its sections: `verified` or `contradicted`
+from its [[Claim]]s, `potentially stale` from a file it touches having changed, `unable to verify`
+from a [[Blind spot]]. Each has exactly one source; [[Provenance]] is reported alongside a verdict,
+never as a fifth one.
+_Avoid_: status, result, state, score
+
+**Claim coverage**:
+How many of a [[Document]]'s sections carry a [[Claim]] at all. Reported with every [[Verdict]], so
+`verified` cannot be read as "all of this is true". Distinct from [[Completeness]], which is about one
+answer's [[Blind spot]]s, and never combined with it into a score.
+_Avoid_: coverage score, doc quality, verification percentage
