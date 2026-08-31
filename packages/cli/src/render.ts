@@ -117,65 +117,89 @@ function finish(
   style: Style,
   unit: string,
 ): string {
-  const out = lines.length > 0 ? [...lines] : [style.dim(`  no ${unit}`)]
-  const { budget, request } = envelope
+  const body = lines.length > 0 ? lines : [style.dim(`  no ${unit}`)]
+  return [
+    ...body,
+    ...truncationNote(envelope, style),
+    ...ambiguityNote(envelope, style),
+    ...syntacticNote(envelope, style),
+    ...blindSpotNote(envelope, style),
+    ...snapshotNote(envelope, style),
+  ].join('\n')
+}
 
-  if (budget.truncated) {
-    out.push(
-      '',
-      style.dim(
-        `  showing ${budget.returned} of ${budget.available} — pass --limit for more`,
-      ),
-    )
-  }
+/** How many blind spots are named before the rest are counted. */
+const BLIND_SPOT_LIMIT = 10
 
-  // An ambiguous subject is not an error: the candidates are the answer to
-  // "which did you mean", so they are named rather than costing a round trip.
-  if (request.resolved.length > 1 && envelope.operation !== 'symbol') {
-    const subject = request.subject ?? ''
-    out.push(
-      '',
-      style.warn(
-        `  \`${subject}\` is ambiguous — ${request.resolved.length} symbols:`,
-      ),
-      ...request.resolved.map((id) => style.dim(`    ${id}`)),
-    )
-  }
+/** Each note is empty or opens with a blank line, so `finish` never spaces them itself. */
+type Note = readonly string[]
 
+function truncationNote(envelope: Envelope<unknown>, style: Style): Note {
+  const { budget } = envelope
+  if (!budget.truncated) return []
+  return [
+    '',
+    style.dim(
+      `  showing ${budget.returned} of ${budget.available} — pass --limit for more`,
+    ),
+  ]
+}
+
+/**
+ * An ambiguous subject is not an error: the candidates are the answer to "which
+ * did you mean", so they are named rather than costing a round trip.
+ */
+function ambiguityNote(envelope: Envelope<unknown>, style: Style): Note {
+  const { resolved, subject } = envelope.request
+  if (resolved.length <= 1 || envelope.operation === 'symbol') return []
+  return [
+    '',
+    style.warn(
+      `  \`${subject ?? ''}\` is ambiguous — ${resolved.length} symbols:`,
+    ),
+    ...resolved.map((id) => style.dim(`    ${id}`)),
+  ]
+}
+
+function syntacticNote(envelope: Envelope<unknown>, style: Style): Note {
   const syntactic = envelope.conditions.filter(
     (row) => row.fidelity === 'syntactic',
   )
-  if (syntactic.length > 0) {
-    out.push(
-      '',
-      style.warn(`  ${syntactic.length} project(s) analysed without types:`),
-      ...syntactic.map((row) => style.dim(`    ${row.project}`)),
-      // Named, not diagnosed. A remediation needs a framework lookup ADR 0001
-      // allows to be absent, and guessing "run install" is wrong for a tsconfig
-      // that simply globs nothing.
-      style.dim('    calls into and out of these projects may be missing'),
-    )
-  }
+  if (syntactic.length === 0) return []
+  return [
+    '',
+    style.warn(`  ${syntactic.length} project(s) analysed without types:`),
+    ...syntactic.map((row) => style.dim(`    ${row.project}`)),
+    // Named, not diagnosed. A remediation needs a framework lookup ADR 0001
+    // allows to be absent, and guessing "run install" is wrong for a tsconfig
+    // that simply globs nothing.
+    style.dim('    calls into and out of these projects may be missing'),
+  ]
+}
 
-  if (envelope.blindSpots.length > 0) {
-    out.push(
-      '',
-      style.warn(
-        `  ${envelope.blindSpots.length} blind spot(s) — this answer may be incomplete:`,
-      ),
-    )
-    for (const spot of envelope.blindSpots.slice(0, 10)) {
-      out.push(style.dim(`    ${spot.subject} — ${spot.reason}`))
-    }
-    if (envelope.blindSpots.length > 10) {
-      out.push(style.dim(`    …and ${envelope.blindSpots.length - 10} more`))
-    }
-  }
+function blindSpotNote(envelope: Envelope<unknown>, style: Style): Note {
+  const spots = envelope.blindSpots
+  if (spots.length === 0) return []
+  const overflow = spots.length - BLIND_SPOT_LIMIT
+  return [
+    '',
+    style.warn(
+      `  ${spots.length} blind spot(s) — this answer may be incomplete:`,
+    ),
+    ...spots
+      .slice(0, BLIND_SPOT_LIMIT)
+      .map((spot) => style.dim(`    ${spot.subject} — ${spot.reason}`)),
+    ...(overflow > 0 ? [style.dim(`    …and ${overflow} more`)] : []),
+  ]
+}
 
-  if (envelope.snapshot.dirty) {
-    const commit = envelope.snapshot.commit ?? 'an unknown commit'
-    out.push('', style.dim(`  answered from the snapshot at ${commit}`))
-  }
-
-  return out.join('\n')
+function snapshotNote(envelope: Envelope<unknown>, style: Style): Note {
+  const { dirty, commit } = envelope.snapshot
+  if (!dirty) return []
+  return [
+    '',
+    style.dim(
+      `  answered from the snapshot at ${commit ?? 'an unknown commit'}`,
+    ),
+  ]
 }

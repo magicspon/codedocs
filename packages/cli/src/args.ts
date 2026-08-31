@@ -48,6 +48,12 @@ const OPTIONS = {
   help: { type: 'boolean', short: 'h' },
 } as const
 
+/** One parsing step's value, or the reason parsing stopped. */
+type Step<T> = { readonly value: T } | { readonly message: string }
+
+const failed = <T>(step: Step<T>): step is { readonly message: string } =>
+  'message' in step
+
 /**
  * Parse `argv` into one command.
  *
@@ -56,71 +62,82 @@ const OPTIONS = {
  * agent capturing output through a pty discovers the hard way.
  */
 export function parse(argv: readonly string[]): ParsedArgs {
-  let parsed
-  try {
-    parsed = parseArgs({
-      args: [...argv],
-      options: OPTIONS,
-      allowPositionals: true,
-      strict: true,
-    })
-  } catch (error) {
-    return {
-      ok: false,
-      message: error instanceof Error ? error.message : String(error),
-    }
-  }
+  const options = parseOptions(argv)
+  if (failed(options)) return { ok: false, message: options.message }
 
-  const { values, positionals } = parsed
+  const { values, positionals } = options.value
   if (values.help === true || positionals.length === 0) {
     return { ok: false, message: usage() }
   }
 
+  const invocation = resolveInvocation(positionals)
+  if (failed(invocation)) return { ok: false, message: invocation.message }
+
+  const json = values.json === true
+  const limit = resolveLimit(values.limit, json)
+  if (failed(limit)) return { ok: false, message: limit.message }
+
+  return {
+    ok: true,
+    command: {
+      ...invocation.value,
+      json,
+      noUpdate: values['no-update'] === true,
+      limit: limit.value,
+      cwd: values.cwd ?? process.cwd(),
+      color: resolveColor(values.color, values['no-color']),
+    },
+  }
+}
+
+/** `parseArgs` throws on an unknown flag; a bad command line is not exceptional here. */
+function parseOptions(argv: readonly string[]) {
+  try {
+    return {
+      value: parseArgs({
+        args: [...argv],
+        options: OPTIONS,
+        allowPositionals: true,
+        strict: true,
+      }),
+    }
+  } catch (error) {
+    return { message: error instanceof Error ? error.message : String(error) }
+  }
+}
+
+/** The operation and its subject, with every arity rule that applies to them. */
+function resolveInvocation(
+  positionals: readonly string[],
+): Step<Pick<Command, 'operation' | 'subject'>> {
   const [name, subject, ...rest] = positionals
   if (name === undefined || !isOperation(name)) {
-    return {
-      ok: false,
-      message: `unknown operation \`${name ?? ''}\`\n\n${usage()}`,
-    }
+    return { message: `unknown operation \`${name ?? ''}\`\n\n${usage()}` }
   }
   if (rest.length > 0) {
     return {
-      ok: false,
       message: `\`${name}\` takes at most one subject, got ${positionals.length - 1}`,
     }
   }
   if (name !== 'analyse' && subject === undefined) {
     return {
-      ok: false,
       message: `\`${name}\` needs a subject, e.g. \`codedocs ${name} AuthService.login\``,
     }
   }
+  return { value: { operation: name, subject: subject ?? null } }
+}
 
-  const json = values.json === true
-  let limit: number | null = json ? null : HUMAN_DEFAULT_LIMIT
-  if (values.limit !== undefined) {
-    const parsedLimit = Number(values.limit)
-    if (!Number.isInteger(parsedLimit) || parsedLimit < 0) {
-      return {
-        ok: false,
-        message: `--limit must be a non-negative integer, got \`${values.limit}\``,
-      }
-    }
-    limit = parsedLimit
+/** The renderer owns the default, so an absent `--limit` means "ask the renderer". */
+function resolveLimit(
+  raw: string | undefined,
+  json: boolean,
+): Step<number | null> {
+  if (raw === undefined) return { value: json ? null : HUMAN_DEFAULT_LIMIT }
+  const limit = Number(raw)
+  if (!Number.isInteger(limit) || limit < 0) {
+    return { message: `--limit must be a non-negative integer, got \`${raw}\`` }
   }
-
-  return {
-    ok: true,
-    command: {
-      operation: name,
-      subject: subject ?? null,
-      json,
-      noUpdate: values['no-update'] === true,
-      limit,
-      cwd: values.cwd ?? process.cwd(),
-      color: resolveColor(values.color, values['no-color']),
-    },
-  }
+  return { value: limit }
 }
 
 const isOperation = (name: string): name is OperationName =>

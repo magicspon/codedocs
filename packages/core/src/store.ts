@@ -228,91 +228,126 @@ export function writeAnalysis(store: Store, write: AnalysisWrite): void {
       db.exec(`delete from ${table}`)
     }
 
-    const project = db.prepare(
-      'insert into project (config_path, fidelity, root_file_count, analysed_at) values (?, ?, ?, ?)',
-    )
-    for (const row of write.projects) {
-      project.run(
-        row.configPath,
-        row.fidelity,
-        row.rootFileCount,
-        row.analysedAt,
-      )
-    }
-
-    const file = db.prepare(
-      'insert into file (path, content_hash, size, mtime_ms) values (?, ?, ?, ?)',
-    )
-    for (const row of write.files)
-      file.run(row.path, row.contentHash, row.size, row.mtimeMs)
-
-    const seen = db.prepare('insert or ignore into seen_file (path) values (?)')
-    for (const path of write.seenFiles) seen.run(path)
-
-    const membership = db.prepare(
-      'insert or ignore into file_project (file_path, config_path, canonical) values (?, ?, 1)',
-    )
-    for (const [configPath, paths] of write.filesByProject) {
-      for (const path of paths) membership.run(path, configPath)
-    }
-
-    const symbol = db.prepare(
-      `insert or ignore into symbol
-       (id, name, qualified, kind, file_path, start, line, durable, callable)
-       values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    )
-    for (const row of write.symbols) {
-      symbol.run(
-        row.id,
-        row.name,
-        row.qualified,
-        row.kind,
-        row.file,
-        row.start,
-        row.line,
-        row.durable ? 1 : 0,
-        row.callable ? 1 : 0,
-      )
-    }
-
-    const edge = db.prepare(
-      `insert into call_edge
-       (from_id, from_kind, to_id, attribution, file_path, line, provenance, derivation)
-       values (?, ?, ?, ?, ?, ?, ?, ?)`,
-    )
-    for (const row of write.callEdges) {
-      edge.run(
-        row.from,
-        row.attribution === 'file' ? 'file' : 'symbol',
-        row.to,
-        row.attribution,
-        row.file,
-        row.line,
-        row.provenance,
-        row.derivation,
-      )
-    }
-
-    const unresolved = db.prepare(
-      'insert into unresolved_call (file_path, line, cause, name) values (?, ?, ?, ?)',
-    )
-    for (const row of write.unresolvedCalls) {
-      unresolved.run(row.file, row.line, row.cause, row.name)
-    }
-
-    const meta = db.prepare(
-      'insert or replace into meta (key, value) values (?, ?)',
-    )
-    meta.run('commit', write.header.commit ?? '')
-    meta.run('analysedAt', write.header.analysedAt ?? '')
-    meta.run('toolVersion', write.header.toolVersion)
-    meta.run('typescriptVersion', write.header.typescriptVersion)
+    writeProjects(db, write.projects)
+    writeFiles(db, write.files, write.seenFiles)
+    writeMembership(db, write.filesByProject)
+    writeSymbols(db, write.symbols)
+    writeCallEdges(db, write.callEdges)
+    writeUnresolvedCalls(db, write.unresolvedCalls)
+    writeMeta(db, write.header)
 
     db.exec('commit')
   } catch (error) {
     db.exec('rollback')
     throw error
   }
+}
+
+function writeProjects(
+  db: DatabaseSync,
+  projects: readonly ProjectNode[],
+): void {
+  const project = db.prepare(
+    'insert into project (config_path, fidelity, root_file_count, analysed_at) values (?, ?, ?, ?)',
+  )
+  for (const row of projects) {
+    project.run(row.configPath, row.fidelity, row.rootFileCount, row.analysedAt)
+  }
+}
+
+/** Analysed files and the wider tree walk together: `seen_file` is what keeps drift finite. */
+function writeFiles(
+  db: DatabaseSync,
+  files: readonly FileNode[],
+  seenFiles: readonly FilePath[],
+): void {
+  const file = db.prepare(
+    'insert into file (path, content_hash, size, mtime_ms) values (?, ?, ?, ?)',
+  )
+  for (const row of files)
+    file.run(row.path, row.contentHash, row.size, row.mtimeMs)
+
+  const seen = db.prepare('insert or ignore into seen_file (path) values (?)')
+  for (const path of seenFiles) seen.run(path)
+}
+
+function writeMembership(
+  db: DatabaseSync,
+  filesByProject: ReadonlyMap<FilePath, readonly FilePath[]>,
+): void {
+  const membership = db.prepare(
+    'insert or ignore into file_project (file_path, config_path, canonical) values (?, ?, 1)',
+  )
+  for (const [configPath, paths] of filesByProject) {
+    for (const path of paths) membership.run(path, configPath)
+  }
+}
+
+function writeSymbols(db: DatabaseSync, symbols: readonly SymbolNode[]): void {
+  const symbol = db.prepare(
+    `insert or ignore into symbol
+       (id, name, qualified, kind, file_path, start, line, durable, callable)
+       values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  )
+  for (const row of symbols) {
+    symbol.run(
+      row.id,
+      row.name,
+      row.qualified,
+      row.kind,
+      row.file,
+      row.start,
+      row.line,
+      row.durable ? 1 : 0,
+      row.callable ? 1 : 0,
+    )
+  }
+}
+
+function writeCallEdges(
+  db: DatabaseSync,
+  callEdges: readonly CallEdge[],
+): void {
+  const edge = db.prepare(
+    `insert into call_edge
+       (from_id, from_kind, to_id, attribution, file_path, line, provenance, derivation)
+       values (?, ?, ?, ?, ?, ?, ?, ?)`,
+  )
+  for (const row of callEdges) {
+    edge.run(
+      row.from,
+      row.attribution === 'file' ? 'file' : 'symbol',
+      row.to,
+      row.attribution,
+      row.file,
+      row.line,
+      row.provenance,
+      row.derivation,
+    )
+  }
+}
+
+function writeUnresolvedCalls(
+  db: DatabaseSync,
+  unresolvedCalls: readonly UnresolvedCall[],
+): void {
+  const unresolved = db.prepare(
+    'insert into unresolved_call (file_path, line, cause, name) values (?, ?, ?, ?)',
+  )
+  for (const row of unresolvedCalls) {
+    unresolved.run(row.file, row.line, row.cause, row.name)
+  }
+}
+
+/** `meta` survives the clear, so every key is written rather than inserted. */
+function writeMeta(db: DatabaseSync, header: IndexHeader): void {
+  const meta = db.prepare(
+    'insert or replace into meta (key, value) values (?, ?)',
+  )
+  meta.run('commit', header.commit ?? '')
+  meta.run('analysedAt', header.analysedAt ?? '')
+  meta.run('toolVersion', header.toolVersion)
+  meta.run('typescriptVersion', header.typescriptVersion)
 }
 
 /** Every file the index describes, with the signature drift is detected against. */

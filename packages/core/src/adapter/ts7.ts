@@ -387,7 +387,27 @@ function sweepCallEdges(
   const callEdges: CallEdge[] = []
   const unresolvedCalls: UnresolvedCall[] = []
 
-  // Grouped by project because `getSymbolAtLocation` batches within one checker.
+  for (const [project, sites] of collectCallSites(ownership)) {
+    for (let i = 0; i < sites.length; i += BATCH_SIZE) {
+      const batch = resolveBatch(
+        project,
+        sites.slice(i, i + BATCH_SIZE),
+        byDeclaration,
+      )
+      callEdges.push(...batch.callEdges)
+      unresolvedCalls.push(...batch.unresolvedCalls)
+    }
+  }
+  return { callEdges, unresolvedCalls }
+}
+
+/**
+ * Every call site in the tree, grouped by project.
+ *
+ * Grouped because `getSymbolAtLocation` batches within one checker, so a batch
+ * that spanned projects would resolve against the wrong one.
+ */
+function collectCallSites(ownership: Ownership): Map<Project, CallSite[]> {
   const byProject = new Map<Project, CallSite[]>()
   for (const { path, sf, project } of ownership.files) {
     const sites = byProject.get(project) ?? []
@@ -409,34 +429,35 @@ function sweepCallEdges(
     sf.forEachChild(walk)
     byProject.set(project, sites)
   }
+  return byProject
+}
 
-  for (const [project, sites] of byProject) {
-    for (let i = 0; i < sites.length; i += BATCH_SIZE) {
-      const chunk = sites.slice(i, i + BATCH_SIZE)
-      let resolved: (CheckerSymbol | undefined)[]
-      try {
-        resolved = project.checker.getSymbolAtLocation(
-          chunk.map((site) => site.callee),
-        )
-      } catch {
-        // A failed batch is recorded site by site rather than dropped: a call
-        // site that yields no edge is a fact with a cause, per ADR 0002.
-        for (const site of chunk)
-          unresolvedCalls.push(record(site, 'unresolvable'))
-        continue
-      }
-      for (const [offset, site] of chunk.entries()) {
-        const outcome = resolveSite(
-          project,
-          site,
-          resolved[offset],
-          byDeclaration,
-        )
-        if ('cause' in outcome)
-          unresolvedCalls.push(record(site, outcome.cause))
-        else callEdges.push(outcome.edge)
-      }
+/** One checker round trip, and the edges or causes its answers produced. */
+function resolveBatch(
+  project: Project,
+  chunk: readonly CallSite[],
+  byDeclaration: ReadonlyMap<string, SymbolId>,
+): { callEdges: CallEdge[]; unresolvedCalls: UnresolvedCall[] } {
+  let resolved: (CheckerSymbol | undefined)[]
+  try {
+    resolved = project.checker.getSymbolAtLocation(
+      chunk.map((site) => site.callee),
+    )
+  } catch {
+    // A failed batch is recorded site by site rather than dropped: a call site
+    // that yields no edge is a fact with a cause, per ADR 0002.
+    return {
+      callEdges: [],
+      unresolvedCalls: chunk.map((site) => record(site, 'unresolvable')),
     }
+  }
+
+  const callEdges: CallEdge[] = []
+  const unresolvedCalls: UnresolvedCall[] = []
+  for (const [offset, site] of chunk.entries()) {
+    const outcome = resolveSite(project, site, resolved[offset], byDeclaration)
+    if ('cause' in outcome) unresolvedCalls.push(record(site, outcome.cause))
+    else callEdges.push(outcome.edge)
   }
   return { callEdges, unresolvedCalls }
 }
