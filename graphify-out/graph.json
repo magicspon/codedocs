@@ -1315,7 +1315,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_mcp",
-      "community": 68,
+      "community": 22,
       "norm_label": "mcp.ts"
     },
     {
@@ -1325,7 +1325,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_mcp_server_info",
-      "community": 68,
+      "community": 22,
       "norm_label": "server_info"
     },
     {
@@ -1335,7 +1335,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_mcp_request",
-      "community": 68,
+      "community": 22,
       "norm_label": "request"
     },
     {
@@ -1345,7 +1345,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_mcp_failure",
-      "community": 68,
+      "community": 22,
       "norm_label": "failure"
     },
     {
@@ -1355,7 +1355,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_mcp_argumentschema",
-      "community": 68,
+      "community": 22,
       "norm_label": "argumentschema"
     },
     {
@@ -1365,7 +1365,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_mcp_global_arguments",
-      "community": 68,
+      "community": 22,
       "norm_label": "global_arguments"
     },
     {
@@ -1375,7 +1375,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_mcp_depth_argument",
-      "community": 68,
+      "community": 22,
       "norm_label": "depth_argument"
     },
     {
@@ -1385,7 +1385,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "src_mcp_describe",
-      "community": 68,
+      "community": 22,
       "norm_label": "describe()"
     },
     {
@@ -1395,7 +1395,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "src_mcp_schemafor",
-      "community": 68,
+      "community": 22,
       "norm_label": "schemafor()"
     },
     {
@@ -1405,7 +1405,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_mcp_tools",
-      "community": 68,
+      "community": 22,
       "norm_label": "tools()"
     },
     {
@@ -1415,7 +1415,7 @@
       "source_location": "L147",
       "_origin": "ast",
       "id": "src_mcp_read",
-      "community": 68,
+      "community": 22,
       "norm_label": "read"
     },
     {
@@ -1425,7 +1425,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_mcp_refused",
-      "community": 68,
+      "community": 22,
       "norm_label": "refused()"
     },
     {
@@ -1435,7 +1435,7 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "src_mcp_readinteger",
-      "community": 68,
+      "community": 22,
       "norm_label": "readinteger()"
     },
     {
@@ -1445,7 +1445,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "src_mcp_readargument",
-      "community": 68,
+      "community": 22,
       "norm_label": "readargument()"
     },
     {
@@ -1455,7 +1455,7 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "src_mcp_flagfor",
-      "community": 68,
+      "community": 22,
       "norm_label": "flagfor()"
     },
     {
@@ -1465,7 +1465,7 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "src_mcp_positionalfor",
-      "community": 68,
+      "community": 22,
       "norm_label": "positionalfor()"
     },
     {
@@ -1475,7 +1475,7 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "src_mcp_argvfor",
-      "community": 68,
+      "community": 22,
       "norm_label": "argvfor()"
     },
     {
@@ -1485,7 +1485,7 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "src_mcp_answer",
-      "community": 68,
+      "community": 22,
       "norm_label": "answer"
     },
     {
@@ -1495,7 +1495,7 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "src_mcp_answered",
-      "community": 68,
+      "community": 22,
       "norm_label": "answered()"
     },
     {
@@ -1505,7 +1505,7 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "src_mcp_failed",
-      "community": 68,
+      "community": 22,
       "norm_label": "failed()"
     },
     {
@@ -1515,7 +1515,7 @@
       "source_location": "L268",
       "_origin": "ast",
       "id": "src_mcp_calltool",
-      "community": 68,
+      "community": 22,
       "norm_label": "calltool()"
     },
     {
@@ -1525,7 +1525,7 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "src_mcp_dispatch",
-      "community": 68,
+      "community": 22,
       "norm_label": "dispatch()"
     },
     {
@@ -1535,7 +1535,7 @@
       "source_location": "L321",
       "_origin": "ast",
       "id": "src_mcp_reply",
-      "community": 68,
+      "community": 22,
       "norm_label": "reply"
     },
     {
@@ -1545,7 +1545,7 @@
       "source_location": "L329",
       "_origin": "ast",
       "id": "src_mcp_respond",
-      "community": 68,
+      "community": 22,
       "norm_label": "respond()"
     },
     {
@@ -1555,7 +1555,7 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "src_mcp_isrequest",
-      "community": 68,
+      "community": 22,
       "norm_label": "isrequest()"
     },
     {
@@ -1565,7 +1565,7 @@
       "source_location": "L351",
       "_origin": "ast",
       "id": "src_mcp_handle",
-      "community": 68,
+      "community": 22,
       "norm_label": "handle()"
     },
     {
@@ -1575,7 +1575,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "src_mcp_serve",
-      "community": 68,
+      "community": 22,
       "norm_label": "serve()"
     },
     {
@@ -1885,7 +1885,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_mcp_test",
-      "community": 68,
+      "community": 22,
       "norm_label": "mcp.test.ts"
     },
     {
@@ -1895,7 +1895,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "test_mcp_test_here",
-      "community": 68,
+      "community": 22,
       "norm_label": "here"
     },
     {
@@ -1905,7 +1905,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "test_mcp_test_fixture",
-      "community": 68,
+      "community": 22,
       "norm_label": "fixture"
     },
     {
@@ -1915,7 +1915,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "test_mcp_test_ask",
-      "community": 68,
+      "community": 22,
       "norm_label": "ask()"
     },
     {
@@ -1925,7 +1925,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "test_mcp_test_call",
-      "community": 68,
+      "community": 22,
       "norm_label": "call()"
     },
     {
@@ -1935,7 +1935,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "test_mcp_test_resultof",
-      "community": 68,
+      "community": 22,
       "norm_label": "resultof()"
     },
     {
@@ -1945,7 +1945,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "test_mcp_test_errorof",
-      "community": 68,
+      "community": 22,
       "norm_label": "errorof()"
     },
     {
@@ -1955,7 +1955,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "test_mcp_test_textof",
-      "community": 68,
+      "community": 22,
       "norm_label": "textof()"
     },
     {
@@ -1965,7 +1965,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_render_test",
-      "community": 22,
+      "community": 21,
       "norm_label": "render.test.ts"
     },
     {
@@ -1975,7 +1975,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "test_render_test_plain",
-      "community": 22,
+      "community": 21,
       "norm_label": "plain"
     },
     {
@@ -1985,7 +1985,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "test_render_test_node",
-      "community": 22,
+      "community": 21,
       "norm_label": "node"
     },
     {
@@ -1995,7 +1995,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "test_render_test_envelopeof",
-      "community": 22,
+      "community": 21,
       "norm_label": "envelopeof()"
     },
     {
@@ -2005,7 +2005,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "test_render_test_render",
-      "community": 22,
+      "community": 21,
       "norm_label": "render()"
     },
     {
@@ -2285,7 +2285,7 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "adapter_ts7_declarationsite",
-      "community": 69,
+      "community": 21,
       "norm_label": "declarationsite"
     },
     {
@@ -2295,7 +2295,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "adapter_ts7_adapterresult",
-      "community": 69,
+      "community": 21,
       "norm_label": "adapterresult"
     },
     {
@@ -2315,7 +2315,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "adapter_ts7_extractrequest",
-      "community": 69,
+      "community": 21,
       "norm_label": "extractrequest"
     },
     {
@@ -2335,7 +2335,7 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "adapter_ts7_iscallable",
-      "community": 81,
+      "community": 20,
       "norm_label": "iscallable()"
     },
     {
@@ -2345,7 +2345,7 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "adapter_ts7_nameof",
-      "community": 81,
+      "community": 20,
       "norm_label": "nameof()"
     },
     {
@@ -2365,7 +2365,7 @@
       "source_location": "L287",
       "_origin": "ast",
       "id": "adapter_ts7_segment",
-      "community": 81,
+      "community": 20,
       "norm_label": "segment()"
     },
     {
@@ -2375,7 +2375,7 @@
       "source_location": "L305",
       "_origin": "ast",
       "id": "adapter_ts7_callsegment",
-      "community": 81,
+      "community": 20,
       "norm_label": "callsegment()"
     },
     {
@@ -2395,7 +2395,7 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "adapter_ts7_segmentof",
-      "community": 81,
+      "community": 20,
       "norm_label": "segmentof()"
     },
     {
@@ -2405,7 +2405,7 @@
       "source_location": "L362",
       "_origin": "ast",
       "id": "adapter_ts7_descriptorpath",
-      "community": 81,
+      "community": 20,
       "norm_label": "descriptorpath()"
     },
     {
@@ -2435,7 +2435,7 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "adapter_ts7_attribute",
-      "community": 81,
+      "community": 20,
       "norm_label": "attribute()"
     },
     {
@@ -2465,7 +2465,7 @@
       "source_location": "L477",
       "_origin": "ast",
       "id": "adapter_ts7_lineof",
-      "community": 81,
+      "community": 20,
       "norm_label": "lineof()"
     },
     {
@@ -2475,7 +2475,7 @@
       "source_location": "L490",
       "_origin": "ast",
       "id": "adapter_ts7_analyse",
-      "community": 19,
+      "community": 68,
       "norm_label": "analyse()"
     },
     {
@@ -2485,7 +2485,7 @@
       "source_location": "L505",
       "_origin": "ast",
       "id": "adapter_ts7_view",
-      "community": 69,
+      "community": 21,
       "norm_label": "view"
     },
     {
@@ -2505,7 +2505,7 @@
       "source_location": "L544",
       "_origin": "ast",
       "id": "adapter_ts7_openanalysis",
-      "community": 19,
+      "community": 68,
       "norm_label": "openanalysis()"
     },
     {
@@ -2515,7 +2515,7 @@
       "source_location": "L670",
       "_origin": "ast",
       "id": "adapter_ts7_ownedfile",
-      "community": 69,
+      "community": 21,
       "norm_label": "ownedfile"
     },
     {
@@ -2525,7 +2525,7 @@
       "source_location": "L686",
       "_origin": "ast",
       "id": "adapter_ts7_pickproject",
-      "community": 82,
+      "community": 20,
       "norm_label": "pickproject()"
     },
     {
@@ -2535,7 +2535,7 @@
       "source_location": "L703",
       "_origin": "ast",
       "id": "adapter_ts7_ownedfiles",
-      "community": 82,
+      "community": 20,
       "norm_label": "ownedfiles()"
     },
     {
@@ -2545,7 +2545,7 @@
       "source_location": "L726",
       "_origin": "ast",
       "id": "adapter_ts7_extractfrom",
-      "community": 82,
+      "community": 20,
       "norm_label": "extractfrom()"
     },
     {
@@ -2555,7 +2555,7 @@
       "source_location": "L756",
       "_origin": "ast",
       "id": "adapter_ts7_symbolsweep",
-      "community": 84,
+      "community": 21,
       "norm_label": "symbolsweep"
     },
     {
@@ -2565,7 +2565,7 @@
       "source_location": "L769",
       "_origin": "ast",
       "id": "adapter_ts7_claim",
-      "community": 84,
+      "community": 20,
       "norm_label": "claim"
     },
     {
@@ -2575,7 +2575,7 @@
       "source_location": "L782",
       "_origin": "ast",
       "id": "adapter_ts7_sweepsymbols",
-      "community": 82,
+      "community": 20,
       "norm_label": "sweepsymbols()"
     },
     {
@@ -2585,7 +2585,7 @@
       "source_location": "L848",
       "_origin": "ast",
       "id": "adapter_ts7_callsite",
-      "community": 69,
+      "community": 21,
       "norm_label": "callsite"
     },
     {
@@ -2595,7 +2595,7 @@
       "source_location": "L856",
       "_origin": "ast",
       "id": "adapter_ts7_sweepcalledges",
-      "community": 82,
+      "community": 20,
       "norm_label": "sweepcalledges()"
     },
     {
@@ -2605,7 +2605,7 @@
       "source_location": "L887",
       "_origin": "ast",
       "id": "adapter_ts7_collectcallsites",
-      "community": 82,
+      "community": 20,
       "norm_label": "collectcallsites()"
     },
     {
@@ -2615,7 +2615,7 @@
       "source_location": "L915",
       "_origin": "ast",
       "id": "adapter_ts7_resolvebatch",
-      "community": 81,
+      "community": 20,
       "norm_label": "resolvebatch()"
     },
     {
@@ -2625,7 +2625,7 @@
       "source_location": "L953",
       "_origin": "ast",
       "id": "adapter_ts7_record",
-      "community": 81,
+      "community": 20,
       "norm_label": "record()"
     },
     {
@@ -2635,7 +2635,7 @@
       "source_location": "L970",
       "_origin": "ast",
       "id": "adapter_ts7_resolvesite",
-      "community": 81,
+      "community": 20,
       "norm_label": "resolvesite()"
     },
     {
@@ -2695,7 +2695,7 @@
       "source_location": "L1141",
       "_origin": "ast",
       "id": "adapter_ts7_sweepimports",
-      "community": 82,
+      "community": 20,
       "norm_label": "sweepimports()"
     },
     {
@@ -2705,7 +2705,7 @@
       "source_location": "L1177",
       "_origin": "ast",
       "id": "adapter_ts7_modulefileof",
-      "community": 82,
+      "community": 20,
       "norm_label": "modulefileof()"
     },
     {
@@ -2715,7 +2715,7 @@
       "source_location": "L1189",
       "_origin": "ast",
       "id": "adapter_ts7_sweepexportshapes",
-      "community": 82,
+      "community": 20,
       "norm_label": "sweepexportshapes()"
     },
     {
@@ -2725,7 +2725,7 @@
       "source_location": "L1210",
       "_origin": "ast",
       "id": "adapter_ts7_exportshapeof",
-      "community": 82,
+      "community": 20,
       "norm_label": "exportshapeof()"
     },
     {
@@ -2785,7 +2785,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_discovery_torepopath",
-      "community": 82,
+      "community": 20,
       "norm_label": "torepopath()"
     },
     {
@@ -2802,20 +2802,20 @@
       "label": "discoverProjects()",
       "file_type": "code",
       "source_file": "packages/core/src/discovery.ts",
-      "source_location": "L68",
+      "source_location": "L69",
       "_origin": "ast",
       "id": "src_discovery_discoverprojects",
-      "community": 19,
+      "community": 68,
       "norm_label": "discoverprojects()"
     },
     {
       "label": "currentCommit()",
       "file_type": "code",
       "source_file": "packages/core/src/discovery.ts",
-      "source_location": "L97",
+      "source_location": "L98",
       "_origin": "ast",
       "id": "src_discovery_currentcommit",
-      "community": 19,
+      "community": 70,
       "norm_label": "currentcommit()"
     },
     {
@@ -2885,7 +2885,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_drift_statfile",
-      "community": 19,
+      "community": 68,
       "norm_label": "statfile()"
     },
     {
@@ -2895,7 +2895,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "src_drift_walksourcefiles",
-      "community": 19,
+      "community": 68,
       "norm_label": "walksourcefiles()"
     },
     {
@@ -3125,7 +3125,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_model_filepath",
-      "community": 69,
+      "community": 21,
       "norm_label": "filepath"
     },
     {
@@ -3205,7 +3205,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_model_projectnode",
-      "community": 69,
+      "community": 21,
       "norm_label": "projectnode"
     },
     {
@@ -3215,7 +3215,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "src_model_filenode",
-      "community": 19,
+      "community": 21,
       "norm_label": "filenode"
     },
     {
@@ -3225,7 +3225,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_model_importedge",
-      "community": 69,
+      "community": 21,
       "norm_label": "importedge"
     },
     {
@@ -3235,7 +3235,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "src_model_symbolnode",
-      "community": 84,
+      "community": 21,
       "norm_label": "symbolnode"
     },
     {
@@ -3265,7 +3265,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_model_calledge",
-      "community": 69,
+      "community": 21,
       "norm_label": "calledge"
     },
     {
@@ -3275,7 +3275,7 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "src_model_unresolvedcall",
-      "community": 69,
+      "community": 21,
       "norm_label": "unresolvedcall"
     },
     {
@@ -3585,7 +3585,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_session",
-      "community": 19,
+      "community": 70,
       "norm_label": "session.ts"
     },
     {
@@ -3595,7 +3595,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_session_require",
-      "community": 19,
+      "community": 70,
       "norm_label": "require"
     },
     {
@@ -3605,7 +3605,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_session_typescriptversion",
-      "community": 19,
+      "community": 68,
       "norm_label": "typescriptversion()"
     },
     {
@@ -3615,7 +3615,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_session_sessionoptions",
-      "community": 21,
+      "community": 70,
       "norm_label": "sessionoptions"
     },
     {
@@ -3665,7 +3665,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_session_toconditions",
-      "community": 19,
+      "community": 70,
       "norm_label": "toconditions()"
     },
     {
@@ -3675,7 +3675,7 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "src_session_projectfidelity",
-      "community": 19,
+      "community": 68,
       "norm_label": "projectfidelity()"
     },
     {
@@ -3715,7 +3715,7 @@
       "source_location": "L374",
       "_origin": "ast",
       "id": "src_session_stamp",
-      "community": 19,
+      "community": 70,
       "norm_label": "stamp()"
     },
     {
@@ -3735,7 +3735,7 @@
       "source_location": "L413",
       "_origin": "ast",
       "id": "src_session_touchedprojects",
-      "community": 86,
+      "community": 70,
       "norm_label": "touchedprojects()"
     },
     {
@@ -3745,7 +3745,7 @@
       "source_location": "L457",
       "_origin": "ast",
       "id": "src_session_rebuild",
-      "community": 19,
+      "community": 68,
       "norm_label": "rebuild()"
     },
     {
@@ -3755,7 +3755,7 @@
       "source_location": "L529",
       "_origin": "ast",
       "id": "src_session_projectslice",
-      "community": 69,
+      "community": 21,
       "norm_label": "projectslice"
     },
     {
@@ -3765,7 +3765,7 @@
       "source_location": "L543",
       "_origin": "ast",
       "id": "src_session_extractproject",
-      "community": 19,
+      "community": 68,
       "norm_label": "extractproject()"
     },
     {
@@ -3775,7 +3775,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_store",
-      "community": 14,
+      "community": 80,
       "norm_label": "store.ts"
     },
     {
@@ -3785,7 +3785,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_store_tables",
-      "community": 14,
+      "community": 80,
       "norm_label": "tables"
     },
     {
@@ -3795,7 +3795,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_store_kinds",
-      "community": 14,
+      "community": 80,
       "norm_label": "kinds"
     },
     {
@@ -3805,7 +3805,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "src_store_attributions",
-      "community": 14,
+      "community": 80,
       "norm_label": "attributions"
     },
     {
@@ -3815,7 +3815,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "src_store_provenances",
-      "community": 14,
+      "community": 80,
       "norm_label": "provenances"
     },
     {
@@ -3825,7 +3825,7 @@
       "source_location": "L201",
       "_origin": "ast",
       "id": "src_store_derivations",
-      "community": 14,
+      "community": 80,
       "norm_label": "derivations"
     },
     {
@@ -3835,7 +3835,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "src_store_causes",
-      "community": 14,
+      "community": 80,
       "norm_label": "causes"
     },
     {
@@ -3845,7 +3845,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "src_store_fidelities",
-      "community": 14,
+      "community": 80,
       "norm_label": "fidelities"
     },
     {
@@ -3915,7 +3915,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "src_store_indexheader",
-      "community": 14,
+      "community": 80,
       "norm_label": "indexheader"
     },
     {
@@ -3955,7 +3955,7 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "src_store_interners",
-      "community": 14,
+      "community": 80,
       "norm_label": "interners"
     },
     {
@@ -3965,7 +3965,7 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "src_store_interner",
-      "community": 14,
+      "community": 80,
       "norm_label": "interner"
     },
     {
@@ -3995,7 +3995,7 @@
       "source_location": "L429",
       "_origin": "ast",
       "id": "src_store_statements",
-      "community": 14,
+      "community": 80,
       "norm_label": "statements"
     },
     {
@@ -4015,7 +4015,7 @@
       "source_location": "L445",
       "_origin": "ast",
       "id": "src_store_pathid",
-      "community": 70,
+      "community": 14,
       "norm_label": "pathid()"
     },
     {
@@ -4045,7 +4045,7 @@
       "source_location": "L492",
       "_origin": "ast",
       "id": "src_store_filefacts",
-      "community": 69,
+      "community": 21,
       "norm_label": "filefacts"
     },
     {
@@ -4055,7 +4055,7 @@
       "source_location": "L504",
       "_origin": "ast",
       "id": "src_store_wavewrite",
-      "community": 69,
+      "community": 21,
       "norm_label": "wavewrite"
     },
     {
@@ -4065,7 +4065,7 @@
       "source_location": "L513",
       "_origin": "ast",
       "id": "src_store_analysisstart",
-      "community": 69,
+      "community": 21,
       "norm_label": "analysisstart"
     },
     {
@@ -4075,7 +4075,7 @@
       "source_location": "L542",
       "_origin": "ast",
       "id": "src_store_projectwrite",
-      "community": 69,
+      "community": 21,
       "norm_label": "projectwrite"
     },
     {
@@ -4085,7 +4085,7 @@
       "source_location": "L557",
       "_origin": "ast",
       "id": "src_store_beginanalysis",
-      "community": 19,
+      "community": 68,
       "norm_label": "beginanalysis()"
     },
     {
@@ -4095,7 +4095,7 @@
       "source_location": "L585",
       "_origin": "ast",
       "id": "src_store_commitproject",
-      "community": 19,
+      "community": 68,
       "norm_label": "commitproject()"
     },
     {
@@ -4145,7 +4145,7 @@
       "source_location": "L700",
       "_origin": "ast",
       "id": "src_store_factgroup",
-      "community": 69,
+      "community": 21,
       "norm_label": "factgroup"
     },
     {
@@ -4195,7 +4195,7 @@
       "source_location": "L764",
       "_origin": "ast",
       "id": "src_store_writemembership",
-      "community": 14,
+      "community": 80,
       "norm_label": "writemembership()"
     },
     {
@@ -4205,7 +4205,7 @@
       "source_location": "L776",
       "_origin": "ast",
       "id": "src_store_writemembershippaths",
-      "community": 14,
+      "community": 80,
       "norm_label": "writemembershippaths()"
     },
     {
@@ -4285,7 +4285,7 @@
       "source_location": "L927",
       "_origin": "ast",
       "id": "src_store_writemeta",
-      "community": 14,
+      "community": 80,
       "norm_label": "writemeta()"
     },
     {
@@ -4385,7 +4385,7 @@
       "source_location": "L1132",
       "_origin": "ast",
       "id": "src_store_readmembershipcounts",
-      "community": 86,
+      "community": 70,
       "norm_label": "readmembershipcounts()"
     },
     {
@@ -4405,7 +4405,7 @@
       "source_location": "L1153",
       "_origin": "ast",
       "id": "src_store_readprojects",
-      "community": 86,
+      "community": 70,
       "norm_label": "readprojects()"
     },
     {
@@ -4415,7 +4415,7 @@
       "source_location": "L1176",
       "_origin": "ast",
       "id": "src_store_symbolrow",
-      "community": 14,
+      "community": 80,
       "norm_label": "symbolrow"
     },
     {
@@ -4455,7 +4455,7 @@
       "source_location": "L1238",
       "_origin": "ast",
       "id": "src_store_edgerow",
-      "community": 14,
+      "community": 80,
       "norm_label": "edgerow"
     },
     {
@@ -4485,7 +4485,7 @@
       "source_location": "L1276",
       "_origin": "ast",
       "id": "src_store_compare",
-      "community": 14,
+      "community": 80,
       "norm_label": "compare()"
     },
     {
@@ -4495,7 +4495,7 @@
       "source_location": "L1279",
       "_origin": "ast",
       "id": "src_store_byendpoints",
-      "community": 14,
+      "community": 80,
       "norm_label": "byendpoints()"
     },
     {
@@ -4535,7 +4535,7 @@
       "source_location": "L1330",
       "_origin": "ast",
       "id": "src_store_readcalleesteps",
-      "community": 21,
+      "community": 14,
       "norm_label": "readcalleesteps()"
     },
     {
@@ -4555,7 +4555,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_adapter_test",
-      "community": 85,
+      "community": 20,
       "norm_label": "adapter.test.ts"
     },
     {
@@ -4565,7 +4565,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "test_adapter_test_fixture",
-      "community": 85,
+      "community": 20,
       "norm_label": "fixture()"
     },
     {
@@ -4575,7 +4575,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "test_adapter_test_root",
-      "community": 85,
+      "community": 20,
       "norm_label": "root"
     },
     {
@@ -4585,7 +4585,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "test_adapter_test_result",
-      "community": 85,
+      "community": 20,
       "norm_label": "result"
     },
     {
@@ -4595,7 +4595,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "test_adapter_test_edge",
-      "community": 85,
+      "community": 20,
       "norm_label": "edge()"
     },
     {
@@ -4605,7 +4605,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_cold_build_test",
-      "community": 19,
+      "community": 68,
       "norm_label": "cold-build.test.ts"
     },
     {
@@ -4615,7 +4615,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "test_cold_build_test_fixture",
-      "community": 19,
+      "community": 68,
       "norm_label": "fixture"
     },
     {
@@ -4635,7 +4635,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "test_cold_build_test_halfbuild",
-      "community": 19,
+      "community": 68,
       "norm_label": "halfbuild()"
     },
     {
@@ -4645,7 +4645,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_descriptors_test",
-      "community": 84,
+      "community": 21,
       "norm_label": "descriptors.test.ts"
     },
     {
@@ -4655,7 +4655,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "test_descriptors_test_fixtureroot",
-      "community": 84,
+      "community": 21,
       "norm_label": "fixtureroot"
     },
     {
@@ -4665,7 +4665,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "test_descriptors_test_result",
-      "community": 84,
+      "community": 21,
       "norm_label": "result"
     },
     {
@@ -4675,7 +4675,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "test_descriptors_test_at",
-      "community": 84,
+      "community": 21,
       "norm_label": "at()"
     },
     {
@@ -4685,7 +4685,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "test_descriptors_test_claiming",
-      "community": 84,
+      "community": 21,
       "norm_label": "claiming()"
     },
     {
@@ -6542,7 +6542,7 @@
       "label": "Observing the repository",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L48",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "context_observing_the_repository",
       "community": 35,
@@ -6552,7 +6552,7 @@
       "label": "The internal representation",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L83",
+      "source_location": "L94",
       "_origin": "ast",
       "id": "context_the_internal_representation",
       "community": 35,
@@ -6562,7 +6562,7 @@
       "label": "Classification",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L151",
+      "source_location": "L162",
       "_origin": "ast",
       "id": "context_classification",
       "community": 35,
@@ -6572,7 +6572,7 @@
       "label": "What the index holds",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L170",
+      "source_location": "L181",
       "_origin": "ast",
       "id": "context_what_the_index_holds",
       "community": 35,
@@ -6582,7 +6582,7 @@
       "label": "The index on disk",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L209",
+      "source_location": "L220",
       "_origin": "ast",
       "id": "context_the_index_on_disk",
       "community": 35,
@@ -6592,7 +6592,7 @@
       "label": "Documentation",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L253",
+      "source_location": "L264",
       "_origin": "ast",
       "id": "context_documentation",
       "community": 35,
@@ -6602,7 +6602,7 @@
       "label": "The operation surface",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L280",
+      "source_location": "L291",
       "_origin": "ast",
       "id": "context_the_operation_surface",
       "community": 35,
@@ -6782,7 +6782,7 @@
       "label": "Design documents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L373",
+      "source_location": "L379",
       "_origin": "ast",
       "id": "readme_design_documents",
       "community": 45,
@@ -6792,7 +6792,7 @@
       "label": "Development",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L386",
+      "source_location": "L393",
       "_origin": "ast",
       "id": "readme_development",
       "community": 45,
@@ -8086,6 +8086,116 @@
       "_origin": "ast",
       "id": "adr_0009_preflight_cost_and_signal_shapes_consequences",
       "community": 83,
+      "norm_label": "consequences"
+    },
+    {
+      "label": "0010-configuration-file-and-what-may-enter-it.md",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it",
+      "community": 69,
+      "norm_label": "0010-configuration-file-and-what-may-enter-it.md"
+    },
+    {
+      "label": "`codedocs.jsonc` holds facts codedocs cannot determine, and nothing else",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "community": 69,
+      "norm_label": "`codedocs.jsonc` holds facts codedocs cannot determine, and nothing else"
+    },
+    {
+      "label": "The rule",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_the_rule",
+      "community": 69,
+      "norm_label": "the rule"
+    },
+    {
+      "label": "The file",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_the_file",
+      "community": 69,
+      "norm_label": "the file"
+    },
+    {
+      "label": "`discover`, which is what `discovery.ts`'s project-path TODO actually wanted",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_discover_which_is_what_discovery_ts_s_project_path_todo_actually_wanted",
+      "community": 69,
+      "norm_label": "`discover`, which is what `discovery.ts`'s project-path todo actually wanted"
+    },
+    {
+      "label": "`remediations`, which is [#17](https://github.com/magicspon/codedocs/issues/17)'s residue",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_remediations_which_is_17_https_github_com_magicspon_codedocs_issues_17_s_residue",
+      "community": 69,
+      "norm_label": "`remediations`, which is [#17](https://github.com/magicspon/codedocs/issues/17)'s residue"
+    },
+    {
+      "label": "Discovery, and a repository root that means one thing",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L112",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_discovery_and_a_repository_root_that_means_one_thing",
+      "community": 69,
+      "norm_label": "discovery, and a repository root that means one thing"
+    },
+    {
+      "label": "Parsing, versioning, and unknown keys",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L132",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_parsing_versioning_and_unknown_keys",
+      "community": 69,
+      "norm_label": "parsing, versioning, and unknown keys"
+    },
+    {
+      "label": "What configuration may never do",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L154",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_what_configuration_may_never_do",
+      "community": 69,
+      "norm_label": "what configuration may never do"
+    },
+    {
+      "label": "Considered Options",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L165",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_considered_options",
+      "community": 69,
+      "norm_label": "considered options"
+    },
+    {
+      "label": "Consequences",
+      "file_type": "document",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L212",
+      "_origin": "ast",
+      "id": "adr_0010_configuration_file_and_what_may_enter_it_consequences",
+      "community": 69,
       "norm_label": "consequences"
     },
     {
@@ -25194,9 +25304,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal"
     },
     {
       "relation": "contains",
@@ -25204,9 +25314,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_consequences",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_consequences"
     },
     {
       "relation": "contains",
@@ -25214,9 +25324,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_considered_options",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_considered_options"
     },
     {
       "relation": "contains",
@@ -25224,9 +25334,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L122",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_how_preflight_reaches_an_answer",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_how_preflight_reaches_an_answer"
     },
     {
       "relation": "contains",
@@ -25234,9 +25344,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_preflight_s_two_halves",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_preflight_s_two_halves"
     },
     {
       "relation": "contains",
@@ -25244,9 +25354,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L83",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_the_environment_fingerprint_made_computable",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_the_environment_fingerprint_made_computable"
     },
     {
       "relation": "contains",
@@ -25254,9 +25364,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_the_four_signals_and_the_shape_of_the_fourth",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_the_four_signals_and_the_shape_of_the_fourth"
     },
     {
       "relation": "contains",
@@ -25264,9 +25374,9 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_what_doctor_runs",
-      "confidence_score": 1.0
+      "target": "adr_0009_preflight_cost_and_signal_shapes_what_doctor_runs"
     },
     {
       "relation": "contains",
@@ -25274,8 +25384,108 @@
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "adr_0009_preflight_cost_and_signal_shapes_preflight_is_filesystem_work_and_the_type_checker_s_diagnostics_were_never_a_signal",
-      "target": "adr_0009_preflight_cost_and_signal_shapes_what_the_36_seconds_was",
+      "target": "adr_0009_preflight_cost_and_signal_shapes_what_the_36_seconds_was"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_consequences",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L165",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_considered_options",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_discovery_and_a_repository_root_that_means_one_thing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L132",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_parsing_versioning_and_unknown_keys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_the_file",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_the_rule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_codedocs_jsonc_holds_facts_codedocs_cannot_determine_and_nothing_else",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_what_configuration_may_never_do",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_the_file",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_discover_which_is_what_discovery_ts_s_project_path_todo_actually_wanted",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/0010-configuration-file-and-what-may-enter-it.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "adr_0010_configuration_file_and_what_may_enter_it_the_file",
+      "target": "adr_0010_configuration_file_and_what_may_enter_it_remediations_which_is_17_https_github_com_magicspon_codedocs_issues_17_s_residue",
       "confidence_score": 1.0
     },
     {
@@ -27695,5 +27905,5 @@
       "source_file": ".github/workflows/ci.yaml"
     }
   ],
-  "built_at_commit": "729192097cebb69fef3ddb36b699eff594c69626"
+  "built_at_commit": "ae11f24ac0b018fc268d2de6ccdb9043c8582045"
 }

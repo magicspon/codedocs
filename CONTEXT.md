@@ -25,7 +25,9 @@ _Avoid_: requirement, prerequisite
 
 **Remediation**:
 The command that would clear an unmet precondition. codedocs reports remediations; it never runs
-them.
+them, and never guesses one — an install command is derived from the lockfile, a codegen command is
+declared in [[Configuration]] or is absent, and two of the four [[Unresolved specifier]] causes have
+none at all.
 _Avoid_: fix, repair, auto-install
 
 **Provenance**:
@@ -79,6 +81,15 @@ no [[Remediation]]: none would help, and none is a command. Stored per site and 
 deduplicated — one distinct specifier, its count and its files, because one absent generated artefact
 produced 302 of them on cal.com.
 _Avoid_: missing import, broken import, dangling edge, unresolved ratio
+
+**Configuration**:
+`codedocs.jsonc` at the repository root: the facts about a repository codedocs cannot determine and
+must be told. Optional, because every key has a default; strict, because an unrecognised key is a
+typo; and never a home for preferences, since anything codedocs can determine is not a fact it needs
+telling. A key may change what is in [[Scope]]; none may change what is reported about what was
+analysed.
+_Avoid_: settings, options, preferences, rc file — and bare "config", which in this codebase means a
+`tsconfig`
 
 ### The internal representation
 

@@ -62,8 +62,9 @@ export function findRepositoryRoot(from: string): string {
  * shared fragments rather than projects, and opening one yields a project with
  * no root files.
  *
- * TODO(#19): let `codedocs.jsonc` name extra project paths for repositories that
- * do not follow the convention.
+ * TODO(#52): `discover.projects` in `codedocs.jsonc` names extra config files for
+ * repositories that do not follow the convention, added to what this finds
+ * (ADR 0010). `discover.skip` adds to SKIP_DIRS; it never replaces it.
  */
 export function discoverProjects(root: string): FilePath[] {
   const found: FilePath[] = []
