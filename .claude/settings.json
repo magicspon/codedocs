@@ -5,7 +5,7 @@
       "Bash(storybook *)",
       "Bash(fallow *)",
       "Bash(graphify *)",
-      "Bash(npx *)",
+      "Bash(npx tsx *)",
       "Bash(pnpm *)",
       "Bash(npm run *)",
       "Bash(npm view *)",
