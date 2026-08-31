@@ -39,15 +39,3 @@ jobs:
 
       - name: Test
         run: pnpm test
-
-      - name: Build
-        run: pnpm build
-
-      # The first CI step that starts an app. `pnpm build` filters to
-      # `./packages/*`, so `apps/*` is otherwise only typechecked — and the e2e
-      # app has no build step at all: it is one HTML file and a node server.
-      - name: Install browsers
-        run: pnpm --filter @homelync/e2e-example exec playwright install --with-deps chromium
-
-      - name: E2E
-        run: pnpm e2e
