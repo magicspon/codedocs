@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    // TypeScript 7 does not auto-discover `node_modules/@types` from a package
+    // directory the way TS 6 did, so the Node globals are named explicitly.
+    "types": ["node"]
+  },
+  "include": ["src", "test"]
+}

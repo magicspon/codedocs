@@ -100,15 +100,25 @@ _Avoid_: stable, permanent, persistent, canonical
 The rule that produced a fact, named on the fact itself: `checker-signature`,
 `checker-base-types`, `heritage-clause`, `jsx-element-rule`, `shared-method-name`, `manifest`,
 `resolver` for edges; `user-config`, `git-untracked`, `generated-header`, `codegen-path`,
-`path-convention`, `tsconfig-exclude` for [[Label]]s. What makes an `inferred` fact actionable rather
-than merely hedged.
+`path-convention`, `tsconfig-exclude` for [[Label]]s; `content-hash`, `path-prefix-rewrite`,
+`git-rename`, `shape-hash`, `descriptor-suffix`, `declared-name`, `name-in-head`, `call-site-overlap`
+for [[Candidate]]s, in that order of strength. What makes an `inferred` fact actionable rather than
+merely hedged.
 _Avoid_: method, source, strategy, origin
 
 **Continuity**:
 Deciding that a symbol at this commit is the same symbol as one at an earlier commit. A separate,
-inferred, snapshot-matching layer — never a property of the `SymbolId`, because no existing system
-has managed to make identity survive a rename.
+inferred layer — never a property of the `SymbolId`, because no existing system has managed to make
+identity survive a rename. Two matchers with different inputs: **subject matching**, from a [[Claim]]
+subject that no longer resolves, against git history and the current index, needing no [[Baseline]];
+and **snapshot matching**, between two [[Index]]es, which only `impact` needs.
 _Avoid_: tracking, history, identity, lineage
+
+**Candidate**:
+One possible continuation of a subject, carrying the [[Derivation]]s that produced it. Ranked against
+its rivals by evidence rather than by a score, and never asserted as the answer even when it is alone
+in the list. An empty list means no candidate was found, never that the subject was deleted.
+_Avoid_: match, guess, suggestion, resolution
 
 ### Classification
 
@@ -193,6 +203,81 @@ drifted files as [[Blind spot]]s.
 _Avoid_: staleness, dirty, out of date, invalidation
 
 **Baseline**:
-A separate [[Index]] for some other commit, kept so an answer can be compared against it. Never part
-of the live index, and nothing not [[Durable]] may anchor to one.
+A separate [[Index]] for some other commit, kept so an answer can be compared against it. Recorded by
+[[Capture]] rather than built on demand, immutable once written, and never moved to another machine.
+Never part of the live index, and nothing not [[Durable]] may anchor to one.
 _Avoid_: history, snapshot store, previous index
+
+**Capture**:
+The copying of a finished [[Index]] into a [[Baseline]], which happens as a side effect of an analysis
+over a clean working tree and never as a command of its own.
+_Avoid_: save, promote, checkpoint, backup
+
+**Baseline substitution**:
+Using an older [[Baseline]] because the commit an answer asked to be compared against has none. Part of
+an answer's scope, reported with the commit requested, the commit used and the distance between them —
+never a [[Blind spot]].
+_Avoid_: fallback, approximation, nearest match
+
+### Documentation
+
+**Document**:
+A Markdown file in the repository carrying at least one [[Claim]]. Committed, unlike the [[Index]],
+and found by scanning for claims rather than by living in a particular directory.
+_Avoid_: doc, page, article, walkthrough
+
+**Claim**:
+One checkable assertion a [[Document]] makes about the code, from a closed set of predicates over the
+[[Node]]s, [[Edge]]s and [[Label]]s the index holds. Written beside the prose it justifies, and
+anchored to a [[Durable]] subject. An assertion no predicate can express is not a claim and is not
+checked.
+_Avoid_: assertion, annotation, statement, test
+
+**Verdict**:
+What `docs check` decides about a [[Document]] or one of its sections: `verified` or `contradicted`
+from its [[Claim]]s, `potentially stale` from a file it touches having changed, `unable to verify`
+from a [[Blind spot]]. Each has exactly one source; [[Provenance]] is reported alongside a verdict,
+never as a fifth one.
+_Avoid_: status, result, state, score
+
+**Claim coverage**:
+How many of a [[Document]]'s sections carry a [[Claim]] at all. Reported with every [[Verdict]], so
+`verified` cannot be read as "all of this is true". Distinct from [[Completeness]], which is about one
+answer's [[Blind spot]]s, and never combined with it into a score.
+_Avoid_: coverage score, doc quality, verification percentage
+
+### The operation surface
+
+**Operation**:
+One question codedocs can answer, and the unit the whole product is built from. The CLI, `--json` and
+the MCP server are [[Renderer]]s or bindings of the same operation, one to one — nothing composes
+operations above them.
+_Avoid_: command, query, endpoint, tool
+
+**Renderer**:
+One presentation of an [[Operation]]'s answer: machine (`--json`) or human. The human renderer is a
+pure function of the [[Envelope]] — it may group, colour and page, never re-sort or withhold silently.
+_Avoid_: formatter, output mode, view, printer
+
+**Envelope**:
+The fixed wrapper every answer carries, whatever the [[Operation]]: the request as resolved, the
+[[Snapshot]], the [[Analysis conditions]] of the projects the answer touched, its [[Blind spot]]s, its
+budget, and the result. A failure is the same envelope carrying an error.
+_Avoid_: response, wrapper, payload, metadata
+
+**Truncation**:
+Results an answer deliberately withheld to stay inside its budget, reported with how many exist.
+Distinct from a [[Blind spot]]: codedocs knows exactly what it withheld.
+_Avoid_: limit, cut-off, paging, elision
+
+**Scope**:
+The [[Label]] filter a question carries — what the caller asked to exclude. Echoed with every answer
+and reported as an excluded count, never as a [[Blind spot]] and never as [[Truncation]], because it
+is part of the question rather than a limit on the answer.
+_Avoid_: filter, selection, view, subset
+
+**Evidence**:
+Everything the index holds about one subject, assembled for someone else to write prose from — its
+node, [[Label]]s, [[Fidelity]], edges in and out, and the [[Document]]s whose [[Claim]]s name it.
+What PRD §9's `explain` becomes once codedocs never generates text.
+_Avoid_: explanation, summary, context, description

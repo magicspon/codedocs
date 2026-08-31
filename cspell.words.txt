@@ -9,6 +9,7 @@ devicecard
 esbuild
 expando
 fallowrc
+frontmatter
 graphify
 graphifyy
 HOMELINK
@@ -35,9 +36,12 @@ Tauri
 tsdown
 turba
 turbopack
+unbatchable
 unconfig
 unloadable
+unnormalised
 unparameterised
+unparseable
 unstub
 untallied
 uprn
