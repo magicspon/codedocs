@@ -1,0 +1,12 @@
+{
+  // codedocs reads exactly this file, at the repository root. Every key is
+  // optional — see docs/adr/0010-configuration-file-and-what-may-enter-it.md
+  // for the rule about what may enter it.
+
+  "discover": {
+    // `repos/` holds five fixture checkouts used for measurement. cal.com alone
+    // contributes 28 tsconfigs, so without this codedocs analysing itself
+    // discovers 126 projects belonging to other people's repositories.
+    "skip": ["repos"]
+  }
+}
