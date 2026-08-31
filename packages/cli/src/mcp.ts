@@ -148,34 +148,75 @@ type Read = { readonly value: string | number | boolean | undefined } | Failure
 
 const refused = (read: Read): read is Failure => 'code' in read
 
+/** The only argument type with a bound of its own, so the only one with a body. */
+function readInteger(
+  value: unknown,
+  name: string,
+  schema: ArgumentSchema,
+): Read {
+  if (typeof value !== 'number' || !Number.isInteger(value)) {
+    return { code: -32602, message: `\`${name}\` must be an integer` }
+  }
+  if (schema.minimum !== undefined && value < schema.minimum) {
+    return {
+      code: -32602,
+      message: `\`${name}\` must be at least ${schema.minimum}`,
+    }
+  }
+  return { value }
+}
+
 function readArgument(
   value: unknown,
   name: string,
   schema: ArgumentSchema,
 ): Read {
   if (value === undefined) return { value: undefined }
-  if (schema.type === 'integer') {
-    if (typeof value !== 'number' || !Number.isInteger(value)) {
-      return { code: -32602, message: `\`${name}\` must be an integer` }
-    }
-    if (schema.minimum !== undefined && value < schema.minimum) {
-      return {
-        code: -32602,
-        message: `\`${name}\` must be at least ${schema.minimum}`,
-      }
-    }
-    return { value }
-  }
+  if (schema.type === 'integer') return readInteger(value, name, schema)
   if (schema.type === 'boolean') {
-    if (typeof value !== 'boolean') {
-      return { code: -32602, message: `\`${name}\` must be a boolean` }
+    return typeof value === 'boolean'
+      ? { value }
+      : { code: -32602, message: `\`${name}\` must be a boolean` }
+  }
+  return typeof value === 'string'
+    ? { value }
+    : { code: -32602, message: `\`${name}\` must be a string` }
+}
+
+/**
+ * How one non-subject argument is spelled as argv.
+ *
+ * A boolean is the flag alone, and a false one is nothing at all: `--no-update`
+ * off is the absence of the flag, not `--no-update false`.
+ */
+function flagFor(
+  name: string,
+  schema: ArgumentSchema,
+  value: string | number | boolean,
+): string[] {
+  if (schema.type !== 'boolean') return [`--${name}`, String(value)]
+  return value === true ? [`--${name}`] : []
+}
+
+/**
+ * The subject's tail of the argv, or why the call has no subject to put there.
+ *
+ * An operation that takes no subject contributes nothing. One that does gets a
+ * positional after `--`, so a subject beginning with a hyphen is read as a
+ * subject rather than as an unknown flag.
+ */
+function positionalFor(
+  spec: OperationSpec,
+  subject: string | undefined,
+): { tail: string[] } | Failure {
+  if (spec.subject === null) return { tail: [] }
+  if (subject === undefined || subject === '') {
+    return {
+      code: -32602,
+      message: `\`${spec.name}\` needs a \`${spec.subject.name}\``,
     }
-    return { value }
   }
-  if (typeof value !== 'string') {
-    return { code: -32602, message: `\`${name}\` must be a string` }
-  }
-  return { value }
+  return { tail: ['--', subject] }
 }
 
 /**
@@ -207,24 +248,12 @@ function argvFor(
     if (refused(read)) return read
     if (read.value === undefined) continue
     if (name === spec.subject?.name) subject = read.value as string
-    else if (declared.type !== 'boolean')
-      argv.push(`--${name}`, String(read.value))
-    else if (read.value === true) argv.push(`--${name}`)
+    else argv.push(...flagFor(name, declared, read.value))
   }
 
-  if (spec.subject !== null) {
-    if (subject === undefined || subject === '') {
-      return {
-        code: -32602,
-        message: `\`${spec.name}\` needs a \`${spec.subject.name}\``,
-      }
-    }
-    // After `--`, so a subject that begins with a hyphen is a subject rather
-    // than an unknown flag.
-    argv.push('--', subject)
-  }
-
-  return { argv }
+  const positional = positionalFor(spec, subject)
+  if (!('tail' in positional)) return positional
+  return { argv: [...argv, ...positional.tail] }
 }
 
 /** What one method produced: a result to send, or a failure to send instead. */

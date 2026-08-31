@@ -52,5 +52,4 @@ vinxi
 wayfinder
 wayfinding
 worktree
-yalc
 yargs
