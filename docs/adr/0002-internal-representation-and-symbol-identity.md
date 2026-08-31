@@ -136,6 +136,14 @@ useTranslations()` and then `t(...)`), and the per-symbol method structurally ca
   available, "no named caller" stops being an omission and becomes **caller attribution** — `symbol`,
   `variable` (the `brokenCaller.result` case, now a deliberate decision rather than an accident of a
   parent walk), or `file`.
+- **The attribution walk seeks the nearest _callable_ ancestor, not the nearest _named_ one.** An
+  enclosing variable takes the credit only when there is no callable ancestor at all, and that
+  two-stage order is the decision rather than a detail of it. Read as "stop at the nearest named
+  declaration", the split above credits `const clientI18n = useClientLocale()` inside `useLocale` to
+  `clientI18n` instead of to the hook — so `callees` on any hook returns nothing and the call graph
+  fragments into single-edge islands. The spike's own helper had exactly this defect, which is why
+  the ordering is stated here rather than left to be inferred
+  ([#26](https://github.com/magicspon/codedocs/issues/26)).
 - **A call site that yields no edge is a stored fact with a cause**, following ADR 0001's precedent
   for unresolved specifiers. Three causes: `external` (resolved, target outside the repository),
   `unresolvable` (the checker returned nothing), and `dynamic` (`gateway[method](n)` — no target at

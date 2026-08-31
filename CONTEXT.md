@@ -181,8 +181,10 @@ _Avoid_: type hash, signature hash, fingerprint
 
 **Caller attribution**:
 Which node a call edge is credited to: a `symbol`, the `variable` a call initialises, or the `file`
-when there is no enclosing declaration at all. Module-level calls and calls in anonymous callbacks
-are attributed to the file — the honest answer, not a dropped edge.
+when there is no enclosing declaration at all. The walk seeks the nearest **callable** ancestor first,
+and a variable takes the credit only where there is no callable one — stopping at the nearest named
+declaration instead credits a hook's calls to the constant holding its result. Module-level calls and
+calls in anonymous callbacks are attributed to the file — the honest answer, not a dropped edge.
 _Avoid_: owner, parent, scope, enclosing symbol
 
 **Unresolved call**:
@@ -215,7 +217,8 @@ _Avoid_: metadata, manifest, index root
 **Drift**:
 The difference between the working tree and the [[Snapshot]] its [[Index]] describes. Detected before
 every answer, and either repaired or named — an answer given over unrepaired drift reports the
-drifted files as [[Blind spot]]s.
+drifted files as [[Blind spot]]s. A file counts as new against the previous tree walk rather than
+against the files that were analysed, so a source file no project globs never reads as newly appeared.
 _Avoid_: staleness, dirty, out of date, invalidation
 
 **Baseline**:

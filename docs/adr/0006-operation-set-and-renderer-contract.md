@@ -44,6 +44,13 @@ additive, and specified elsewhere.
 build in CI wants to be a step that can fail on its own rather than a hidden cost inside the first
 question.
 
+`trace`'s result unit needs one more sentence than the table gives it, because the sort key above
+presumes it. **A path is a root plus its steps, and a step is a _callee_, not a call site**: two calls
+between the same pair are one step carrying two sites, so a hot root does not fork a path per call
+instance. **A root that calls nothing answers with a path of no steps**, which is what makes an empty
+`trace` result mean "nothing resolved" and nothing else
+([#33](https://github.com/magicspon/codedocs/issues/33)).
+
 ## The envelope
 
 One shape, every operation, success and failure alike.
@@ -116,6 +123,18 @@ depth is a semantic bound — how far to walk — and folding it into a size bou
 limit silently change the shape of the answer. `evidence` returns several kinds at once and applies
 one `--limit` **per kind**, reporting truncation per kind, because a shared pool means adding a caller
 quietly evicts a document.
+
+**`--depth` has no default: the walk is unbounded unless the caller bounds it.** This is the one
+place the two bounds part company, and it is measured rather than assumed. A default looked prudent,
+since the number of simple paths out of a symbol is exponential in depth in principle — but on cal.com
+an unbounded walk from _every one_ of its 5,217 call-graph roots yields 50,580 paths in 1.1 s, the
+worst root being 1,630 paths and exhausting at 16 steps. The structural reason is the backend spike's:
+only a quarter of a repository's call sites stay inside it, so a walk meets the `node_modules`
+boundary long before it meets combinatorics. A default would therefore have bought nothing, and it
+would have cost more than the `--limit` default it resembles — a limit withholds results the answer
+still counts, while a depth bound changes which results **exist**, and an agent handed a shape it did
+not ask for cannot tell from the answer that the shape is wrong. `microsoft/vscode`, ADR 0004's
+ceiling test, is the revisit trigger ([#33](https://github.com/magicspon/codedocs/issues/33)).
 
 The default belongs to the **renderer**, not the operation. The human renderer caps and says
 `showing 20 of 176`; **`--json` is unbounded by default**. An agent that never passes `--limit` must

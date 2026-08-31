@@ -10,8 +10,8 @@
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1788197182.933701,
-    "ast_hash": "b9c261dea9858c08fea7f432ba95085b",
+    "mtime": 1788197836.9750977,
+    "ast_hash": "9410a9f1eb7c4346f3e31e49174c276c",
     "semantic_hash": ""
   },
   ".husky/_/applypatch-msg": {
@@ -195,9 +195,9 @@
     "semantic_hash": ""
   },
   "docs/REQUIREMENTS.md": {
-    "mtime": 1788182642.0821035,
-    "ast_hash": "c32db2f7e22172601a6e62f3e3dfa276",
-    "semantic_hash": "c32db2f7e22172601a6e62f3e3dfa276"
+    "mtime": 1788197837.2924545,
+    "ast_hash": "acb2d250b4e66fa1bc8a967a11048d03",
+    "semantic_hash": ""
   },
   "docs/agents/domain.md": {
     "mtime": 1788107697.0500324,
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "CONTEXT.md": {
-    "mtime": 1788191056.0369966,
-    "ast_hash": "8460928b66459f2fe4fffcd8eadf297e",
+    "mtime": 1788198317.719037,
+    "ast_hash": "8dfe976527eb28816440b16e1936ab34",
     "semantic_hash": ""
   },
   "docs/adr/0001-analysis-preconditions-and-answer-honesty.md": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0002-internal-representation-and-symbol-identity.md": {
-    "mtime": 1788191056.0373297,
-    "ast_hash": "3e3f33c42dc33d918b6b171a4fa8216f",
+    "mtime": 1788198283.9161553,
+    "ast_hash": "94358d5b96e178466d1ec15d8acbe207",
     "semantic_hash": ""
   },
   "docs/adr/0003-repository-structure-classification.md": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0004-index-storage-and-invalidation.md": {
-    "mtime": 1788189138.9720547,
-    "ast_hash": "710c845448c7aec247277178a609a0fa",
+    "mtime": 1788198394.1570306,
+    "ast_hash": "b58f9c71d57b6025fb9c1069009d419a",
     "semantic_hash": ""
   },
   "docs/adr/0005-document-claims-and-verdicts.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0006-operation-set-and-renderer-contract.md": {
-    "mtime": 1788189138.972383,
-    "ast_hash": "e4864007e90125f4985ef1b0d6b2a5e8",
+    "mtime": 1788198333.5735705,
+    "ast_hash": "09e83dfbaddb6913a649114fa70575ab",
     "semantic_hash": ""
   },
   "docs/adr/0007-cross-commit-continuity.md": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "packages/core/src/operations/trace.ts": {
-    "mtime": 1788197690.1531265,
-    "ast_hash": "20776393542e71ec0de20ec4506ca6f4",
+    "mtime": 1788198283.9171455,
+    "ast_hash": "81cfd46c5992ab7ffe9653c20790defc",
     "semantic_hash": ""
   },
   "packages/core/test/fixtures/basic/src/recursion.ts": {
