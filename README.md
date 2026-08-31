@@ -345,14 +345,20 @@ Implemented, covered by 136 tests, and measured against real repositories:
 
 **Behind them, in rough order of how much they hold back:**
 
-- **Two of ADR 0001's four fidelity signals.** A project counts as `typed` when `node_modules`
-  exists and its tsconfig globs at least one file. Not yet measured: `node_modules` stale against the
-  lockfile, a declared `postinstall`, and the unresolved-specifier ratio. Marked `TODO(#13)` in
-  `session.ts`.
-- **Preflight scoping.** ADR 0001 makes preflight the first phase of every analysis, but
-  `getSemanticDiagnostics` over all of cal.com costs 36 s — more than building the call graph — so it
-  is not yet run at all. Scoping it to the question, without inventing a blind spot the tool cannot
-  see, is [#15](https://github.com/magicspon/codedocs/issues/15).
+- **The environment fingerprint, and the last two preflight signals.** Preflight itself is settled:
+  ADR 0009 deleted the 36 s `getSemanticDiagnostics` sweep that was never one of ADR 0001's signals,
+  leaving filesystem checks that cost microseconds and a specifier scan at 0.7–4.9 ms per project.
+  What is left is implementation. A project counts as `typed` when `node_modules` exists and its
+  tsconfig globs at least one file — signals 1 and 3 of the three that now decide fidelity. Missing: a
+  declared `postinstall`, unresolved specifiers, and the fingerprint that invalidates a project when
+  its environment changes. The fingerprint is the urgent one, because without it an install after a
+  cold analysis is invisible and the syntactic answer is served forever.
+  [#44](https://github.com/magicspon/codedocs/issues/44), marked `TODO(#13)` in `session.ts`.
+- **Unresolved specifiers as stored facts.** Today only unresolved _relative_ specifiers are kept, so
+  the cause that matters most cannot be reported — 302 of cal.com `apps/web`'s 542 are the single bare
+  specifier `@calcom/prisma/enums`, one absent generated artefact. Storing every cause, and reporting
+  them deduplicated and filtered to the answer's own files, is
+  [#45](https://github.com/magicspon/codedocs/issues/45).
 - **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
   `model.ts`.
 - **`codedocs.jsonc`**, so a repository can name projects discovery misses — and a rule about what is
@@ -360,12 +366,9 @@ Implemented, covered by 136 tests, and measured against real repositories:
   `discovery.ts`.
 - **The scope channel.** The third kind of honesty has no flag, and arrives with the label layer.
 - **Exit code 1.** Nothing produces it yet; ADR 0006 assigns it to `docs check` finding a
-  contradicted claim and to `doctor` finding an unmet precondition.
+  contradicted claim and to `doctor` finding an unmet precondition that has a remediation.
 - **Agent discoverability**, the `AGENTS.md` block that tells an agent when to reach for codedocs.
   [#18](https://github.com/magicspon/codedocs/issues/18).
-- **Two ADR refinements** the walking skeleton surfaced, where the code is right and the ADR still
-  reads the old way ([#26](https://github.com/magicspon/codedocs/issues/26)), and one under-specified
-  line about `trace --depth` ([#33](https://github.com/magicspon/codedocs/issues/33)).
 - **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 All open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
@@ -378,7 +381,7 @@ the code:
 - **[`CONTEXT.md`](CONTEXT.md)** — the glossary. One meaning per term, and the words to avoid.
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
-  cross-commit continuity, baseline retention.
+  cross-commit continuity, baseline retention, and what preflight measures.
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on, including the call-graph
   backend spike that chose TypeScript 7 over TypeScript 6 on evidence.
 - **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — the original product requirements.
