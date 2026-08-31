@@ -190,8 +190,8 @@
     "semantic_hash": ""
   },
   "cspell.words.txt": {
-    "mtime": 1788197030.4708943,
-    "ast_hash": "01b149055dddf0f8c7322d2e9a150c3a",
+    "mtime": 1788199571.9745982,
+    "ast_hash": "45753256c682ac142dc90aa89c1854f8",
     "semantic_hash": ""
   },
   "docs/REQUIREMENTS.md": {
@@ -390,17 +390,17 @@
     "semantic_hash": ""
   },
   "CONTEXT.md": {
-    "mtime": 1788198317.719037,
-    "ast_hash": "8dfe976527eb28816440b16e1936ab34",
+    "mtime": 1788199499.2368522,
+    "ast_hash": "e8c5fbc28b7baaa90dc0f48ae4d90584",
     "semantic_hash": ""
   },
   "docs/adr/0001-analysis-preconditions-and-answer-honesty.md": {
-    "mtime": 1788114148.2724564,
-    "ast_hash": "2e3f8c5a148f1dd4529f819f68299005",
+    "mtime": 1788199540.4802783,
+    "ast_hash": "61118ef662724cd07f8ccef62ea8f0fe",
     "semantic_hash": ""
   },
   "docs/adr/0002-internal-representation-and-symbol-identity.md": {
-    "mtime": 1788198283.9161553,
+    "mtime": 1788198895.8582914,
     "ast_hash": "94358d5b96e178466d1ec15d8acbe207",
     "semantic_hash": ""
   },
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0004-index-storage-and-invalidation.md": {
-    "mtime": 1788198394.1570306,
-    "ast_hash": "b58f9c71d57b6025fb9c1069009d419a",
+    "mtime": 1788199673.1207314,
+    "ast_hash": "df4929270de3014fb7ad87a5dec2b0c6",
     "semantic_hash": ""
   },
   "docs/adr/0005-document-claims-and-verdicts.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0006-operation-set-and-renderer-contract.md": {
-    "mtime": 1788198333.5735705,
-    "ast_hash": "09e83dfbaddb6913a649114fa70575ab",
+    "mtime": 1788199673.1244555,
+    "ast_hash": "37a9fe7272b5d5cbe6b8c0363e1682a1",
     "semantic_hash": ""
   },
   "docs/adr/0007-cross-commit-continuity.md": {
@@ -460,7 +460,7 @@
     "semantic_hash": ""
   },
   "packages/core/src/operations/trace.ts": {
-    "mtime": 1788198283.9171455,
+    "mtime": 1788198895.8624241,
     "ast_hash": "81cfd46c5992ab7ffe9653c20790defc",
     "semantic_hash": ""
   },
@@ -582,6 +582,11 @@
   "packages/core/test/store.test.ts": {
     "mtime": 1788196557.3077285,
     "ast_hash": "2b1182e4e7ff05ff33f068bbc6e21932",
+    "semantic_hash": ""
+  },
+  "docs/adr/0009-preflight-cost-and-signal-shapes.md": {
+    "mtime": 1788199577.9015174,
+    "ast_hash": "6d1a8e536b098e612c95fd484b70ddf1",
     "semantic_hash": ""
   }
 }
