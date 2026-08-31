@@ -7,11 +7,13 @@
  * caller having to parse the text.
  */
 
-import { cpSync, mkdtempSync, rmSync } from 'node:fs'
+import { cpSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+
+// cspell:ignore exlucde — a deliberate typo; refusing it is the point
 
 import { run } from '../src/main.ts'
 
@@ -175,5 +177,51 @@ describe('the human renderer', () => {
 
   it('marks a call credited to the variable it initialises', () => {
     expect(invoke('callers', 'checkout').stdout).toContain('(variable)')
+  })
+})
+
+describe('codedocs.jsonc', () => {
+  const config = () => join(root, 'codedocs.jsonc')
+
+  afterEach(() => {
+    rmSync(config(), { force: true })
+  })
+
+  it('is absent by default, and nothing is said about it', () => {
+    const result = invoke('symbol', '*', '--json')
+
+    expect(result.code).toBe(0)
+    expect(result.stderr).toBe('')
+  })
+
+  it('cannot answer when the file exists and is wrong', () => {
+    writeFileSync(config(), '{"baselines": "three"}\n')
+    const result = invoke('symbol', '*')
+
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain(
+      'config-invalid: codedocs.jsonc: `baselines` must be a non-negative integer',
+    )
+  })
+
+  it('carries the refusal in the envelope, so `--json` still parses', () => {
+    writeFileSync(config(), '{"exlucde": []}\n')
+    const result = invoke('symbol', '*', '--json')
+
+    expect(result.code).toBe(2)
+    const envelope = JSON.parse(result.stdout) as {
+      error: { code: string; message: string }
+      result?: unknown
+    }
+    expect(envelope.error.code).toBe('config-invalid')
+    expect(envelope.error.message).toContain('`exlucde`')
+    // ADR 0006: `error` is carried instead of `result`, never beside it.
+    expect(envelope.result).toBeUndefined()
+  })
+
+  it('does not fall back to the defaults on a file it refused', () => {
+    writeFileSync(config(), '{"baselines": -1}\n')
+
+    expect(invoke('symbol', '*').stdout).toBe('')
   })
 })

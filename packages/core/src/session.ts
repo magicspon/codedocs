@@ -11,6 +11,7 @@
 import { createRequire } from 'node:module'
 
 import { openAnalysis, type AnalysisSession } from './adapter/ts7.ts'
+import { loadConfig, type Config } from './config.ts'
 import {
   currentCommit,
   discoverProjects,
@@ -93,6 +94,8 @@ export interface SessionOptions {
 export interface Session {
   readonly root: string
   readonly store: Store
+  /** The repository's own `codedocs.jsonc`, or the defaults it did not override. */
+  readonly config: Config
   readonly context: AnswerContext
   /** What the repair actually did, for a test to pin and for `analyse` to report. */
   readonly repair: RepairReport | null
@@ -129,6 +132,9 @@ export interface RepairReport {
  */
 export function openSession(options: SessionOptions): Session {
   const root = findRepositoryRoot(options.cwd)
+  // Read before the store is opened: a config that cannot be used means the
+  // user's intent is unknown, and nothing should be built on a guess at it.
+  const config = loadConfig(root)
   const store = openStore(root)
 
   const indexed = readFiles(store)
@@ -151,7 +157,9 @@ export function openSession(options: SessionOptions): Session {
     outstanding.drift.seenFiles,
   )
 
-  const repair = options.noUpdate ? null : repairFor(root, store, outstanding)
+  const repair = options.noUpdate
+    ? null
+    : repairFor(root, store, config, outstanding)
   const blindSpots = options.noUpdate ? withheld(root, outstanding) : []
   const projects = readProjects(store)
 
@@ -167,6 +175,7 @@ export function openSession(options: SessionOptions): Session {
   return {
     root,
     store,
+    config,
     context: {
       snapshot,
       conditions: projects.map(toConditions),
@@ -199,13 +208,14 @@ const anythingOutstanding = (outstanding: Outstanding): boolean =>
 function repairFor(
   root: string,
   store: Store,
+  config: Config,
   outstanding: Outstanding,
 ): RepairReport | null {
   if (!anythingOutstanding(outstanding)) return null
   const { stale, drift, moved } = outstanding
   return stale === null
-    ? repairWave(root, store, drift, moved)
-    : { ...rebuild(root, store), environment: [], reason: stale }
+    ? repairWave(root, store, config, drift, moved)
+    : { ...rebuild(root, store, config), environment: [], reason: stale }
 }
 
 /**
@@ -342,6 +352,7 @@ function projectRow(
 function repairWave(
   root: string,
   store: Store,
+  config: Config,
   drift: Drift,
   moved: readonly ProjectPreflight[],
 ): RepairReport {
@@ -380,7 +391,7 @@ function repairWave(
         // Propagation that will not settle is a bug in the shape hash, not a
         // large edit. Falling back is honest and bounded; looping is neither.
         return {
-          ...rebuild(root, store),
+          ...rebuild(root, store, config),
           environment: [],
           reason: `the wave did not settle within ${MAX_WAVES} rounds`,
         }
@@ -642,8 +653,9 @@ function touchedProjects(
 export function rebuild(
   root: string,
   store: Store,
+  config: Config,
 ): { kind: 'cold'; files: number; waves: number } {
-  const configPaths = discoverProjects(root)
+  const configPaths = discoverProjects(root, config)
   if (configPaths.length === 0) return { kind: 'cold', files: 0, waves: 0 }
 
   // Preflight before anything is opened, over the same walk the index stores as

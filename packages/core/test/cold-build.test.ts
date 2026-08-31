@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { analyse } from '../src/adapter/ts7.ts'
+import { DEFAULT_CONFIG } from '../src/config.ts'
 import { discoverProjects } from '../src/discovery.ts'
 import { statFile, walkSourceFiles } from '../src/drift.ts'
 import { preflightProjects } from '../src/preflight.ts'
@@ -90,7 +91,7 @@ function dump(): string {
  * membership and header of the whole build are in, and only `a-lib` has facts.
  */
 function halfBuild(): void {
-  const configPaths = discoverProjects(root)
+  const configPaths = discoverProjects(root, DEFAULT_CONFIG)
   const result = analyse(root, configPaths)
   const store = openStore(root)
   try {

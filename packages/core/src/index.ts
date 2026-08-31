@@ -55,6 +55,7 @@ export {
 } from './session.ts'
 
 export type {
+  Authorship,
   CallEdge,
   CallerAttribution,
   CallSite,
@@ -68,6 +69,7 @@ export type {
   PreconditionCause,
   ProjectNode,
   Provenance,
+  Role,
   SymbolId,
   SymbolKind,
   SymbolNode,
@@ -92,3 +94,15 @@ export {
   findRepositoryRoot,
   toRepoPath,
 } from './discovery.ts'
+export {
+  CONFIG_FILE,
+  ConfigError,
+  DEFAULT_CONFIG,
+  loadConfig,
+  parseConfig,
+  remediationFor,
+  type ClassifyRule,
+  type Config,
+  type Discover,
+  type Remediation,
+} from './config.ts'

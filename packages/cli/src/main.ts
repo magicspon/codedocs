@@ -11,13 +11,17 @@ import {
   analyse,
   callees,
   callers,
+  ConfigError,
   openSession,
+  SCHEMA_VERSION,
   symbol,
   trace,
+  type AnswerContext,
   type Envelope,
+  type EnvelopeError,
 } from '@codedocs/core'
 
-import { parse } from './args.ts'
+import { parse, type Command } from './args.ts'
 import {
   renderAnalyse,
   renderEdges,
@@ -26,6 +30,7 @@ import {
   renderTrace,
   styleFor,
   type AnalyseEnvelope,
+  type Style,
 } from './render.ts'
 
 /** What one invocation produced: text for stdout or stderr, and an exit code. */
@@ -56,13 +61,15 @@ export function run(argv: readonly string[]): Run {
   try {
     session = openSession({ cwd: command.cwd, noUpdate: command.noUpdate })
   } catch (error) {
-    // A failure to open or build the index is the one case with no envelope to
-    // carry it: there is no snapshot to name and no conditions to report.
-    return {
-      stdout: '',
-      stderr: style.warn(`  index-unavailable: ${messageOf(error)}`),
-      code: 2,
-    }
+    // Nothing was opened, so there is no snapshot to name and no conditions to
+    // report — but the envelope is still the shape a caller parses, and a
+    // `--json` run that answered nothing at all is the one an agent can least
+    // afford to have to guess at. A bad `codedocs.jsonc` keeps its own code:
+    // ADR 0010 makes it a different repair from an index that will not open.
+    return failed(command, style, {
+      code: error instanceof ConfigError ? error.code : 'index-unavailable',
+      message: messageOf(error),
+    })
   }
 
   try {
@@ -94,28 +101,53 @@ export function run(argv: readonly string[]): Run {
       }
     }
   } catch (error) {
-    const envelope: Envelope<never> = {
-      operation: command.operation,
-      schemaVersion: 1,
-      request: {
-        subject: command.subject,
-        resolved: [],
-        limit: command.limit,
-        depth: command.depth,
-      },
-      snapshot: session.context.snapshot,
-      conditions: session.context.conditions,
-      blindSpots: session.context.blindSpots,
-      budget: { returned: 0, available: 0, truncated: false },
-      error: { code: 'operation-failed', message: messageOf(error) },
-    }
-    return {
-      stdout: command.json ? JSON.stringify(envelope, null, 2) : '',
-      stderr: command.json ? '' : renderError(envelope, style),
-      code: 2,
-    }
+    return failed(
+      command,
+      style,
+      { code: 'operation-failed', message: messageOf(error) },
+      session.context,
+    )
   } finally {
     session.close()
+  }
+}
+
+/**
+ * Render one failure, as the same envelope every success uses.
+ *
+ * `context` is absent only where the session never opened, in which case the
+ * honesty fields are empty rather than invented: an unknown snapshot is reported
+ * as unknown.
+ */
+function failed(
+  command: Command,
+  style: Style,
+  error: EnvelopeError,
+  context?: AnswerContext,
+): Run {
+  const envelope: Envelope<never> = {
+    operation: command.operation,
+    schemaVersion: SCHEMA_VERSION,
+    request: {
+      subject: command.subject,
+      resolved: [],
+      limit: command.limit,
+      depth: command.depth,
+    },
+    snapshot: context?.snapshot ?? {
+      commit: null,
+      dirty: false,
+      analysedAt: null,
+    },
+    conditions: context?.conditions ?? [],
+    blindSpots: context?.blindSpots ?? [],
+    budget: { returned: 0, available: 0, truncated: false },
+    error,
+  }
+  return {
+    stdout: command.json ? JSON.stringify(envelope, null, 2) : '',
+    stderr: command.json ? '' : renderError(envelope, style),
+    code: 2,
   }
 }
 
