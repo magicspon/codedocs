@@ -89,6 +89,14 @@ runs before every answer, so its cost is added to every query.
 | export-shape hash, then the propagation wave   | 3–5 ms per changed file         | only where content changed  |
 | per-project environment fingerprint (ADR 0001) | —                               | invalidates a whole project |
 
+"Appeared" is decided against the **previous walk**, not against the set of files that were
+analysed — which is why the index stores both. Compared against the analysed set instead, every source
+file no `tsconfig` globs reads as newly appeared on every query, forever: a config script, a vendored
+bundle, **519 of them in this repo when the skeleton first measured it**, which in the update path
+means a full rebuild per question. The
+walk's own result is therefore a stored fact, refreshed by each detection
+([#26](https://github.com/magicspon/codedocs/issues/26)).
+
 Under 120 ms buys a complete answer to "which files moved", without git. Git is deliberately absent
 from this path: it cannot see untracked or ignored files that a `Project` still globs — which ADR
 0003 measured at 183 files on the fixtures — and the index has to work in a checkout that is not a
@@ -199,8 +207,9 @@ between answers from what exists and names the unanalysed projects as blind spot
 ## Consequences
 
 - **The index has a header**, and it is the load-bearing part of every honest answer: the commit and
-  dirty state the snapshot describes, the stat signature of every indexed file, the schema, codedocs
-  and TypeScript versions, and per project the ADR 0001 analysis conditions and environment
+  dirty state the snapshot describes, the stat signature of every indexed file, **the paths the last
+  tree walk saw** — analysed or not, because that is what drift is decided against — the schema,
+  codedocs and TypeScript versions, and per project the ADR 0001 analysis conditions and environment
   fingerprint. This is what ADR 0002 meant by demoting `Repository` from a node to the header.
 - **Every answer carries the index state it came from.** Complete, or naming its blind spots — the
   drifted files, the projects that never finished, the scope a label filter excluded. There is one

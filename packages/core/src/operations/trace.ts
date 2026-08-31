@@ -56,19 +56,9 @@ export interface TracePath {
 /**
  * Every path out of the subject, sorted lexically.
  *
- * **The walk is unbounded unless the caller bounds it**, which is measured
- * rather than assumed. The number of simple paths out of a symbol is
- * exponential in depth in principle, so a default depth looked prudent — but on
- * cal.com an unbounded walk from *every* one of its 5,217 call-graph roots
- * yields 50,580 paths in 1.1 s, the worst root being 1,630 paths and exhausting
- * at 16 steps. The structural reason is the backend spike's: only a
- * quarter of a repository's call sites stay inside it, so a walk meets the
- * `node_modules` boundary long before it meets combinatorics.
- *
- * A default would therefore have bought nothing and cost the one thing ADR 0006
- * protects — a bound the caller did not ask for changes which results *exist*,
- * not merely how many are shown, so it is a worse lie than a silent `--limit`.
- * `microsoft/vscode`, ADR 0004's ceiling test, is the revisit trigger.
+ * **The walk is unbounded unless the caller bounds it.** ADR 0006 owns that
+ * rule, along with the measurement behind it and the revisit trigger, because it
+ * is part of the renderer contract rather than a property of this walk.
  *
  * @param depth - Maximum steps per path; `null` walks until every path ends.
  */
