@@ -35,22 +35,29 @@ export function toRepoPath(root: string, absolute: string): FilePath {
 }
 
 /**
- * Walk upward for the nearest directory holding a `.git` or a `package.json`.
+ * Walk upward for the nearest enclosing `.git`.
  *
- * Falls back to `from` so codedocs still works in a checkout that is not a
+ * The nearest `package.json` is a fallback, taken only where no `.git` exists
+ * anywhere on the way up, so codedocs still works in a checkout that is not a
  * repository — ADR 0004 requires the index to, and git is not on the drift path.
+ * It cannot outrank `.git`: in a monorepo a package is not a working tree, and
+ * rooting there would index part of the tree and store it under the package.
+ *
+ * Falls back to `from` when neither is found.
  */
 export function findRepositoryRoot(from: string): string {
-  let current = resolve(from)
+  const start = resolve(from)
+  let current = start
+  let nearestPackage: string | null = null
   for (;;) {
-    if (
-      existsSync(join(current, '.git')) ||
-      existsSync(join(current, 'package.json'))
-    ) {
-      return current
+    // `.git` is a directory in a normal clone and a file in a worktree or
+    // submodule; both mark the root.
+    if (existsSync(join(current, '.git'))) return current
+    if (nearestPackage === null && existsSync(join(current, 'package.json'))) {
+      nearestPackage = current
     }
     const parent = dirname(current)
-    if (parent === current) return resolve(from)
+    if (parent === current) return nearestPackage ?? start
     current = parent
   }
 }

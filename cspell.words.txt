@@ -11,6 +11,7 @@ esbuild
 expando
 fallowrc
 frontmatter
+gitdir
 graphify
 graphifyy
 HOMELINK
@@ -54,4 +55,5 @@ vinxi
 wayfinder
 wayfinding
 worktree
+worktrees
 yargs

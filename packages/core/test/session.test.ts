@@ -23,8 +23,9 @@ let root: string
 beforeEach(() => {
   root = mkdtempSync(join(tmpdir(), 'codedocs-'))
   cpSync(fixture, root, { recursive: true })
-  // `findRepositoryRoot` stops at a `package.json`, so the temp tree needs one
-  // or the walk escapes into the enclosing filesystem.
+  // With no `.git` above it, `findRepositoryRoot` falls back to the nearest
+  // `package.json`, so the temp tree needs one or the walk escapes into the
+  // enclosing filesystem.
   writeFileSync(
     join(root, 'package.json'),
     '{"name":"fixture","private":true}\n',
