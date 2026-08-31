@@ -87,10 +87,12 @@ useTranslations()` and then `t(...)`), and the per-symbol method structurally ca
   rejected in favour of collapsing overloads into one node, because no operation the product offers
   — `callers`, `callees`, `impact`, `docs check`, `trace` — is meaningfully per-overload, and a
   document anchored to "overload 2 of `parse`" is a document nobody wants.
-- **Materialising external symbols.** Rejected on scale: cal.com's sweep left **251,648** call sites
-  crossing into `node_modules` against **81,888** resolved in-repo, and the first-party index is
+- **Materialising external symbols.** Rejected on scale: cal.com's sweep left **92,673** call sites
+  crossing into `node_modules` against **26,091** resolved in-repo, and the first-party index is
   already 48 MB. External _packages_ are nodes; external _symbols_ are named on the edge and never
-  materialised.
+  materialised. (Both figures were re-measured by
+  [#27](https://github.com/magicspon/codedocs/issues/27), which widened the ratio from 3.1:1 to
+  3.6:1; the argument is unchanged.)
 - **Storing `contains` edges.** Rejected: `Package → File → Symbol` containment is already encoded in
   the `SymbolId`'s descriptors, so storing it creates a second source of truth that can disagree with
   the first. `Project` membership is stored, because it is _not_ in the id and is genuinely

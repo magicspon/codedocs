@@ -120,7 +120,7 @@ quietly evicts a document.
 The default belongs to the **renderer**, not the operation. The human renderer caps and says
 `showing 20 of 176`; **`--json` is unbounded by default**. An agent that never passes `--limit` must
 not be handed a capped answer it may read as the whole truth, and the sizes do not justify the risk —
-the backend spike's hot symbol had **176 callers** and cal.com's _entire_ edge set is 81,888. PRD §18's
+the backend spike's hot symbol had **176 callers** and cal.com's _entire_ edge set is 26,091. PRD §18's
 context efficiency is better served by the caller choosing its bound than by codedocs guessing on its
 behalf.
 
