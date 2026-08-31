@@ -9,6 +9,9 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
+    // Imports carry their `.ts` extension so Node 24 can run the source directly
+    // with type stripping, which is how the CLI's bin entry starts.
+    "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "noEmit": true,
 
@@ -48,5 +51,5 @@
    * in `isBoundExpando` — somewhere in that source, so `pnpm typecheck` exited
    * 2 with a Go stack trace rather than reporting anything about this project.
    */
-  "exclude": ["spike", "repos"]
+  "exclude": ["spike", "repos", "**/test/fixtures"]
 }

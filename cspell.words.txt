@@ -36,8 +36,10 @@ Tauri
 tsdown
 turba
 turbopack
+unbatchable
 unconfig
 unloadable
+unnormalised
 unparameterised
 unparseable
 unstub
