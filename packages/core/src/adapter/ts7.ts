@@ -164,6 +164,14 @@ const TYPE_ISH =
   SymbolFlags.Class |
   SymbolFlags.Enum
 
+/** One declaration's offset, and the symbol it declares. */
+export interface DeclarationSite {
+  readonly file: FilePath
+  /** Byte offset of the declaration. */
+  readonly start: number
+  readonly id: SymbolId
+}
+
 /** Everything one extraction produced, ready for the store. */
 export interface AdapterResult {
   /**
@@ -180,6 +188,15 @@ export interface AdapterResult {
   /** The one project each extracted file's facts were produced in. */
   readonly canonicalOf: ReadonlyMap<FilePath, FilePath>
   readonly symbols: readonly SymbolNode[]
+  /**
+   * Every declaration site an extracted symbol has beyond the one its row
+   * carries — the second overload, the static twin of an instance method.
+   *
+   * ADR 0002 collapses those into one symbol deliberately, and the row records
+   * one offset. A call resolving to any of the others has to find the same id,
+   * so the offsets the row cannot hold are stored beside it.
+   */
+  readonly declarations: readonly DeclarationSite[]
   readonly callEdges: readonly CallEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
@@ -504,6 +521,16 @@ interface View {
 interface InternalSession extends AnalysisSession {
   /** Every repository file of every open project. The cold path's file set. */
   everyFile(): readonly FilePath[]
+  /**
+   * Every open project's files, per project, each file credited to exactly one.
+   *
+   * **The iteration order is the ownership order**, because both come from the
+   * same loop over projects sorted by config path: a file is claimed by the
+   * first project whose program contains it, and the map is filled in that same
+   * order. A cold build extracts project by project along this map, and that is
+   * what lets a call leaving a project resolve against rows already committed.
+   */
+  filesByProject(): ReadonlyMap<FilePath, readonly FilePath[]>
 }
 
 /**
@@ -626,6 +653,10 @@ export function openAnalysis(root: string): InternalSession {
       return [...current().programPathOf.keys()].sort()
     },
 
+    filesByProject() {
+      return current().filesByProject
+    },
+
     extract(request) {
       return extractFrom(root, current(), request)
     },
@@ -669,12 +700,12 @@ function pickProject(
   return owners[0]
 }
 
-/** Run every sweep over one file set, and return the facts they produced. */
-function extractFrom(
+/** The files a request names, each paired with the project it is analysed in. */
+function ownedFiles(
   root: string,
   view: View,
   request: ExtractRequest,
-): AdapterResult {
+): { files: OwnedFile[]; canonicalOf: Map<FilePath, FilePath> } {
   const files: OwnedFile[] = []
   const canonicalOf = new Map<FilePath, FilePath>()
 
@@ -689,8 +720,18 @@ function extractFrom(
     files.push({ programPath, path, sf, project, configPath })
     canonicalOf.set(path, configPath)
   }
+  return { files, canonicalOf }
+}
 
-  const { nodes, byDeclaration } = sweepSymbols(files)
+/** Run every sweep over one file set, and return the facts they produced. */
+function extractFrom(
+  root: string,
+  view: View,
+  request: ExtractRequest,
+): AdapterResult {
+  const { files, canonicalOf } = ownedFiles(root, view, request)
+
+  const { nodes, byDeclaration, declarations } = sweepSymbols(files)
   const { callEdges, unresolvedCalls } = sweepCallEdges(
     files,
     view,
@@ -703,6 +744,7 @@ function extractFrom(
     extracted: files.map((file) => file.path),
     canonicalOf,
     symbols: nodes,
+    declarations,
     callEdges,
     unresolvedCalls,
     importEdges: sweepImports(files, view),
@@ -720,6 +762,8 @@ interface SymbolSweep {
    * a build-time join.
    */
   readonly byDeclaration: ReadonlyMap<string, SymbolId>
+  /** The offsets the node rows do not carry. See `AdapterResult.declarations`. */
+  readonly declarations: readonly DeclarationSite[]
 }
 
 /** One declaration's claim on an id, and the space it claimed it from. */
@@ -739,6 +783,7 @@ interface Claim {
 function sweepSymbols(files: readonly OwnedFile[]): SymbolSweep {
   const nodes: SymbolNode[] = []
   const byDeclaration = new Map<string, SymbolId>()
+  const declarations: DeclarationSite[] = []
 
   for (const { programPath, path, sf } of files) {
     // Per file, because an id carries its file: two files can never claim one id.
@@ -785,9 +830,19 @@ function sweepSymbols(files: readonly OwnedFile[]): SymbolSweep {
       nodes.push(
         spaces.size > 1 ? { ...first, collisions: claims.length } : first,
       )
+      // The rest lose the row but keep the id, and a call site may land on any
+      // of them. Recorded so a later extraction that has none of this file in
+      // memory can still join against the one it hit.
+      for (const claim of claims.slice(1)) {
+        declarations.push({
+          file: claim.row.file,
+          start: claim.row.start,
+          id: first.id,
+        })
+      }
     }
   }
-  return { nodes, byDeclaration }
+  return { nodes, byDeclaration, declarations }
 }
 
 /** One call site, collected client-side before any checker round trip. */
