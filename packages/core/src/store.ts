@@ -38,6 +38,7 @@ import type {
   FileNode,
   FilePath,
   ImportEdge,
+  PreconditionCause,
   ProjectNode,
   Provenance,
   SymbolId,
@@ -52,7 +53,7 @@ import type {
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 5
+export const STORE_SCHEMA_VERSION = 6
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 const TABLES: readonly string[] = [
@@ -92,7 +93,10 @@ create table if not exists project (
   path_id integer primary key,
   fidelity integer not null,
   root_file_count integer not null,
-  analysed_at text not null
+  analysed_at text not null,
+  fingerprint text not null,
+  cause integer,
+  postinstall integer not null
 ) strict;
 
 create table if not exists file (
@@ -213,6 +217,12 @@ const CAUSES: readonly UnresolvedCallCause[] = [
   'dynamic',
 ]
 const FIDELITIES: readonly Fidelity[] = ['typed', 'syntactic']
+const PRECONDITION_CAUSES: readonly PreconditionCause[] = [
+  'unprepared',
+  'missing-generated',
+  'unmapped',
+  'broken',
+]
 
 /** The closed lists, exposed only so a test can pin their order. */
 export interface EnumCodes {
@@ -222,6 +232,7 @@ export interface EnumCodes {
   readonly derivation: readonly Derivation[]
   readonly cause: readonly UnresolvedCallCause[]
   readonly fidelity: readonly Fidelity[]
+  readonly preconditionCause: readonly PreconditionCause[]
 }
 
 /** The stored order of every closed enum, so a reorder fails a test. */
@@ -232,6 +243,7 @@ export const ENUM_CODES: EnumCodes = {
   derivation: DERIVATIONS,
   cause: CAUSES,
   fidelity: FIDELITIES,
+  preconditionCause: PRECONDITION_CAUSES,
 }
 
 /** The stored code for one enum value. Throws rather than storing a wrong row. */
@@ -741,15 +753,38 @@ function writeProject(store: Store, project: ProjectNode): void {
   store.db
     .prepare(
       `insert or replace into project
-       (path_id, fidelity, root_file_count, analysed_at)
-       values (?, ?, ?, ?)`,
+       (path_id, fidelity, root_file_count, analysed_at, fingerprint, cause,
+        postinstall)
+       values (?, ?, ?, ?, ?, ?, ?)`,
     )
     .run(
       internerFor(store).path(project.configPath),
       code(FIDELITIES, project.fidelity, 'fidelity'),
       project.rootFileCount,
       project.analysedAt,
+      project.fingerprint,
+      project.cause === null
+        ? null
+        : code(PRECONDITION_CAUSES, project.cause, 'precondition cause'),
+      project.postinstall ? 1 : 0,
     )
+}
+
+/**
+ * Rewrite project rows without touching a fact.
+ *
+ * A project whose environment fingerprint moved is re-analysed, and its new
+ * fingerprint has to reach the index even when the re-analysis extracted
+ * nothing — a project that globs no files has no facts to carry it. Without
+ * this, such a project would fingerprint as stale on every query for ever.
+ */
+export function refreshProjects(
+  store: Store,
+  projects: readonly ProjectNode[],
+): void {
+  transaction(store, () => {
+    for (const project of projects) writeProject(store, project)
+  })
 }
 
 /** `seen_file` is what keeps drift finite; see `AnalysisStart.seenFiles`. */
@@ -1141,6 +1176,32 @@ export function readMembershipCounts(store: Store): Map<FilePath, number> {
   return new Map(rows.map((row) => [row.path, row.n]))
 }
 
+/**
+ * The files a project owns, from membership rather than from a re-enumeration.
+ *
+ * What a project whose environment fingerprint moved re-extracts: ADR 0001 makes
+ * a fingerprint change a full re-analysis of that project, and its files are the
+ * ones the index credited to it.
+ */
+export function readProjectFiles(
+  store: Store,
+  configPaths: readonly FilePath[],
+): FilePath[] {
+  const found = new Set<FilePath>()
+  const statement = store.db.prepare(
+    `select f.path from file_project fp
+     join path f on f.id = fp.file_id
+     join path c on c.id = fp.project_id
+     where c.path = ? and fp.canonical = 1`,
+  )
+  for (const configPath of configPaths) {
+    for (const row of statement.all(configPath) as { path: string }[]) {
+      found.add(row.path)
+    }
+  }
+  return [...found].sort()
+}
+
 /** Every source file the last analysis saw, whether or not a project globbed it. */
 export function readSeenFiles(store: Store): Set<FilePath> {
   const rows = store.db
@@ -1154,7 +1215,8 @@ export function readProjects(store: Store): ProjectNode[] {
   return (
     store.db
       .prepare(
-        `select p.path, r.fidelity, r.root_file_count, r.analysed_at
+        `select p.path, r.fidelity, r.root_file_count, r.analysed_at,
+                r.fingerprint, r.cause, r.postinstall
          from project r join path p on p.id = r.path_id
          order by p.path`,
       )
@@ -1163,12 +1225,21 @@ export function readProjects(store: Store): ProjectNode[] {
       fidelity: number
       root_file_count: number
       analysed_at: string
+      fingerprint: string
+      cause: number | null
+      postinstall: number
     }[]
   ).map((row) => ({
     configPath: row.path,
     fidelity: named(FIDELITIES, row.fidelity, 'fidelity'),
     rootFileCount: row.root_file_count,
     analysedAt: row.analysed_at,
+    fingerprint: row.fingerprint,
+    cause:
+      row.cause === null
+        ? null
+        : named(PRECONDITION_CAUSES, row.cause, 'precondition cause'),
+    postinstall: row.postinstall === 1,
   }))
 }
 

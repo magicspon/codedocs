@@ -83,6 +83,21 @@ export type UnresolvedCallCause = 'external' | 'unresolvable' | 'dynamic'
 /** Which analysis ran on a file — never a claim about completeness. */
 export type Fidelity = 'typed' | 'syntactic'
 
+/**
+ * Why a precondition is unmet, from ADR 0009's closed set.
+ *
+ * The first two have a remediation and the last two do not, for opposite
+ * reasons: nothing would help a `broken` import, and no *command* would help an
+ * `unmapped` one — it resolves under a framework's own resolver, which codedocs
+ * declines to run. A cause is what `doctor` deduplicates across signals, so the
+ * same missing codegen seen twice is reported once.
+ */
+export type PreconditionCause =
+  | 'unprepared'
+  | 'missing-generated'
+  | 'unmapped'
+  | 'broken'
+
 /** One TypeScript project: a single tsconfig and the files it globs. */
 export interface ProjectNode {
   /** Repository-relative path of the tsconfig. Its identity. */
@@ -91,6 +106,23 @@ export interface ProjectNode {
   readonly rootFileCount: number
   /** ISO timestamp of the analysis that produced this project's facts. */
   readonly analysedAt: string
+  /**
+   * ADR 0009's environment fingerprint, and part of the index's cache key.
+   *
+   * Stored because fidelity is stored: it reports the analysis that ran, not the
+   * machine as it is now, so something has to say when the machine moved
+   * underneath it. A project whose fingerprint changed is re-analysed in full.
+   */
+  readonly fingerprint: string
+  /** Why this project's fidelity is `syntactic`, or `null` where it is `typed`. */
+  readonly cause: PreconditionCause | null
+  /**
+   * Signal 2: an install script is declared for this project.
+   *
+   * Never a cause on its own — once `node_modules` exists it has already run —
+   * so it only sharpens what an unprepared project is told to run.
+   */
+  readonly postinstall: boolean
 }
 
 /** One file in the working tree, and the signature drift is detected against. */

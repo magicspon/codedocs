@@ -124,11 +124,15 @@ describe('the footer', () => {
           project: 'tsconfig.json',
           fidelity: 'typed',
           analysedAt: '2026-01-01T00:00:00Z',
+          cause: null,
+          postinstall: false,
         },
         {
           project: 'apps/web/tsconfig.json',
           fidelity: 'syntactic',
           analysedAt: '2026-01-01T00:00:00Z',
+          cause: 'unprepared',
+          postinstall: false,
         },
       ],
     })
@@ -176,6 +180,8 @@ describe('the footer', () => {
           project: 'tsconfig.json',
           fidelity: 'syntactic',
           analysedAt: '2026-01-01T00:00:00Z',
+          cause: 'missing-generated',
+          postinstall: false,
         },
       ],
       blindSpots: [{ subject: 'vendor.js', reason: 'not analysed' }],
@@ -251,7 +257,13 @@ describe('the repair note', () => {
 
   it('says how far a wave reached', () => {
     const text = renderAnalyse(
-      analyseEnvelope({ kind: 'wave', files: 3, waves: 2, reason: '' }),
+      analyseEnvelope({
+        kind: 'wave',
+        files: 3,
+        waves: 2,
+        environment: [],
+        reason: '',
+      }),
       plain,
     )
     expect(text).toContain('repaired 3 files in 2 waves')
@@ -265,6 +277,7 @@ describe('the repair note', () => {
         kind: 'cold',
         files: 4827,
         waves: 0,
+        environment: [],
         reason: 'the index was built against TypeScript 7.0.1, not 7.0.2',
       }),
       plain,

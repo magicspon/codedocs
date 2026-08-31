@@ -18,6 +18,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { analyse } from '../src/adapter/ts7.ts'
 import { discoverProjects } from '../src/discovery.ts'
 import { statFile, walkSourceFiles } from '../src/drift.ts'
+import { preflightProjects } from '../src/preflight.ts'
 import { callers } from '../src/operations/calls.ts'
 import type { FileNode, FilePath } from '../src/model.ts'
 import { openSession, TOOL_VERSION, typescriptVersion } from '../src/session.ts'
@@ -112,11 +113,19 @@ function halfBuild(): void {
       if (stats) files.push(stats)
     }
     commitProject(store, {
+      // The real fingerprint, so the interrupted build is the only thing the
+      // next session finds to repair: a placeholder would read as an
+      // environment change and re-analyse a project that is already current.
       project: {
         configPath: LIB,
         fidelity: 'syntactic',
         rootFileCount: owned.length,
         analysedAt: new Date().toISOString(),
+        fingerprint: preflightProjects(root, [LIB], walkSourceFiles(root)).get(
+          LIB,
+        )!.fingerprint,
+        cause: 'unprepared',
+        postinstall: false,
       },
       files,
       exportShapes: new Map(
@@ -202,6 +211,7 @@ describe('a build interrupted between two projects', () => {
     try {
       expect(session.repair).toEqual({
         kind: 'wave',
+        environment: [],
         files: 1,
         waves: 1,
         reason: '',

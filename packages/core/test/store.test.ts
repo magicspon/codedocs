@@ -58,6 +58,12 @@ describe('the stored enum codes', () => {
       ],
       cause: ['external', 'unresolvable', 'dynamic'],
       fidelity: ['typed', 'syntactic'],
+      preconditionCause: [
+        'unprepared',
+        'missing-generated',
+        'unmapped',
+        'broken',
+      ],
     })
   })
 })
@@ -199,6 +205,9 @@ const WRITE = {
       fidelity: 'typed' as const,
       rootFileCount: 2,
       analysedAt: '2026-01-01T00:00:00.000Z',
+      fingerprint: 'fingerprint',
+      cause: null,
+      postinstall: false,
     },
   ],
   files: [

@@ -12,6 +12,7 @@ import type {
   CallEdge,
   CallSite,
   Envelope,
+  ProjectConditions,
   ProjectSummary,
   RepairReport,
   SymbolNode,
@@ -77,10 +78,22 @@ function repairLine(repair: RepairReport | null, style: Style): string | null {
   if (repair.kind === 'wave') {
     const files = repair.files === 1 ? '1 file' : `${repair.files} files`
     const waves = repair.waves === 1 ? '1 wave' : `${repair.waves} waves`
-    return style.dim(`  repaired ${files} in ${waves}`)
+    // The environment half is named separately because nothing in the tree
+    // changed: an install or a codegen landed, and the projects it reached were
+    // re-analysed rather than repaired.
+    const environment =
+      repair.environment.length === 0
+        ? ''
+        : `, and re-analysed ${count(repair.environment.length, 'project')} ` +
+          `whose environment changed (${repair.environment.join(', ')})`
+    return style.dim(`  repaired ${files} in ${waves}${environment}`)
   }
   return style.warn(`  rebuilt cold (${repair.files} files): ${repair.reason}`)
 }
+
+/** `1 project` / `3 projects`, for a line that counts something. */
+const count = (n: number, unit: string): string =>
+  `${n} ${unit}${n === 1 ? '' : 's'}`
 
 /** Render a `symbol` answer. */
 export function renderSymbols(
@@ -338,12 +351,30 @@ function syntacticNote(envelope: Envelope<unknown>, style: Style): Note {
   return [
     '',
     style.warn(`  ${syntactic.length} project(s) analysed without types:`),
-    ...syntactic.map((row) => style.dim(`    ${row.project}`)),
-    // Named, not diagnosed. A remediation needs a framework lookup ADR 0001
-    // allows to be absent, and guessing "run install" is wrong for a tsconfig
-    // that simply globs nothing.
+    ...syntactic.map((row) => style.dim(`    ${row.project}${causeOf(row)}`)),
     style.dim('    calls into and out of these projects may be missing'),
   ]
+}
+
+/**
+ * Why one project was analysed without types, in the caller's own terms.
+ *
+ * The cause is read off the stored preflight rather than guessed at: an absent
+ * install and a config that globs nothing are fixed by different commands, and
+ * ADR 0001 refuses a remediation that would send a user the wrong way. Signal 2
+ * only sharpens the first — a repository that declares an install script has
+ * codegen waiting behind its install.
+ */
+function causeOf(row: ProjectConditions): string {
+  if (row.cause === 'unprepared') {
+    return row.postinstall
+      ? ' — no node_modules; install (its postinstall generates types)'
+      : ' — no node_modules; install the dependencies'
+  }
+  if (row.cause === 'missing-generated') {
+    return ' — its config globs no files, so something has yet to generate them'
+  }
+  return ''
 }
 
 function blindSpotNote(envelope: Envelope<unknown>, style: Style): Note {

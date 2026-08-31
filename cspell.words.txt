@@ -20,6 +20,7 @@ interner
 interners
 Kythe
 LLBT
+lockfiles
 logomark
 LSIF
 magicspon

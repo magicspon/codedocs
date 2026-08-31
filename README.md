@@ -71,16 +71,6 @@ $ codedocs analyse --limit 6
   rebuilt cold (4827 files): the index is empty
 
   showing 6 of 28 — pass --limit for more
-
-  7 project(s) analysed without types:
-    packages/dayjs/tsconfig.json
-    packages/lib/tsconfig.json
-    packages/platform/constants/tsconfig.json
-    packages/platform/libraries/tsconfig.json
-    packages/platform/types/tsconfig.json
-    packages/platform/utils/tsconfig.json
-    packages/types/tsconfig.json
-    calls into and out of these projects may be missing
 ```
 
 You do not have to run `analyse` again. **Every question repairs the index before it answers**, so an
