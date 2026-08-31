@@ -100,15 +100,25 @@ _Avoid_: stable, permanent, persistent, canonical
 The rule that produced a fact, named on the fact itself: `checker-signature`,
 `checker-base-types`, `heritage-clause`, `jsx-element-rule`, `shared-method-name`, `manifest`,
 `resolver` for edges; `user-config`, `git-untracked`, `generated-header`, `codegen-path`,
-`path-convention`, `tsconfig-exclude` for [[Label]]s. What makes an `inferred` fact actionable rather
-than merely hedged.
+`path-convention`, `tsconfig-exclude` for [[Label]]s; `content-hash`, `path-prefix-rewrite`,
+`git-rename`, `shape-hash`, `descriptor-suffix`, `declared-name`, `name-in-head`, `call-site-overlap`
+for [[Candidate]]s, in that order of strength. What makes an `inferred` fact actionable rather than
+merely hedged.
 _Avoid_: method, source, strategy, origin
 
 **Continuity**:
 Deciding that a symbol at this commit is the same symbol as one at an earlier commit. A separate,
-inferred, snapshot-matching layer — never a property of the `SymbolId`, because no existing system
-has managed to make identity survive a rename.
+inferred layer — never a property of the `SymbolId`, because no existing system has managed to make
+identity survive a rename. Two matchers with different inputs: **subject matching**, from a [[Claim]]
+subject that no longer resolves, against git history and the current index, needing no [[Baseline]];
+and **snapshot matching**, between two [[Index]]es, which only `impact` needs.
 _Avoid_: tracking, history, identity, lineage
+
+**Candidate**:
+One possible continuation of a subject, carrying the [[Derivation]]s that produced it. Ranked against
+its rivals by evidence rather than by a score, and never asserted as the answer even when it is alone
+in the list. An empty list means no candidate was found, never that the subject was deleted.
+_Avoid_: match, guess, suggestion, resolution
 
 ### Classification
 
