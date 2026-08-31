@@ -13,7 +13,10 @@ import { describe, expect, it } from 'vitest'
 import { analyse } from '../src/adapter/ts7.ts'
 import type { CallEdge } from '../src/model.ts'
 
-const root = join(dirname(fileURLToPath(import.meta.url)), 'fixtures', 'basic')
+const fixture = (name: string): string =>
+  join(dirname(fileURLToPath(import.meta.url)), 'fixtures', name)
+
+const root = fixture('basic')
 const result = analyse(root, ['tsconfig.json'])
 
 const edge = (from: string, to: string): CallEdge | undefined =>
@@ -115,5 +118,49 @@ describe('caller attribution', () => {
   it('never credits a call to a local when a callable encloses it', () => {
     const locals = result.callEdges.filter((e) => e.from.includes('#settle.'))
     expect(locals).toHaveLength(0)
+  })
+})
+
+describe('the import sweep', () => {
+  /**
+   * Five syntactic forms name a module, and the wave propagates along all of
+   * them. The fixture points each form at a module of its own, so a missing form
+   * is a missing edge with a name rather than one absence among five.
+   */
+  const specifiers = analyse(fixture('specifiers'), ['tsconfig.json'])
+  const to = (specifier: string): string | null | undefined =>
+    specifiers.importEdges.find(
+      (edge) => edge.from === 'src/forms.ts' && edge.specifier === specifier,
+    )?.to
+
+  it('follows a static import and a re-export', () => {
+    expect(to('./statically')).toBe('src/statically.ts')
+    expect(to('./reexported')).toBe('src/reexported.ts')
+  })
+
+  it('follows a dynamic import', () => {
+    expect(to('./lazily')).toBe('src/lazily.ts')
+  })
+
+  it('follows an import-equals-require', () => {
+    expect(to('./required')).toBe('src/required.ts')
+  })
+
+  it('follows a specifier in a type position', () => {
+    expect(to('./typed')).toBe('src/typed.ts')
+  })
+
+  it('records a dynamic specifier that resolves to nothing', () => {
+    // The row the wave needs: the file that would complete this import may
+    // appear later, and nothing about `forms.ts` itself would say so.
+    expect(to('./not-here')).toBeNull()
+  })
+
+  it('records nothing for a specifier that is not a literal', () => {
+    // `import(where)` names no file anyone can know statically. The call sweep
+    // records the site with cause `dynamic`; there is no edge to invent here.
+    expect(
+      specifiers.importEdges.filter((edge) => edge.from === 'src/forms.ts'),
+    ).toHaveLength(6)
   })
 })

@@ -121,9 +121,33 @@ describe('an export-shape change', () => {
 
     const report = repair()
     expect(report.kind).toBe('wave')
-    // payments.ts -> barrel.ts -> checkout.ts, and no further.
+    // payments.ts -> {barrel.ts, lazy.ts} -> checkout.ts, and no further.
     expect(report.waves).toBe(3)
-    expect(report.files).toBe(3)
+    expect(report.files).toBe(4)
+  })
+
+  it('reaches a file that only imports dynamically', () => {
+    // #30: nothing imports `lazy.ts`, and `lazy.ts` imports `payments.ts` only
+    // through `import()`. A sweep that read static specifiers alone left it
+    // holding edges into a signature that had moved — and a route, a plugin or a
+    // lazily loaded component is exactly the file that is reached this way.
+    write(
+      'payments.ts',
+      source('payments.ts').replaceAll('amount: number', 'amount: string'),
+    )
+    repair()
+
+    const session = openSession({ cwd: root, noUpdate: false })
+    try {
+      // Re-extracted, so its call into `charge` is the current one rather than
+      // the one the cold build recorded against the old signature.
+      const envelope = callers(session.store, session.context, 'charge', null)
+      expect(envelope.result?.map((edge) => edge.from)).toContain(
+        'src/lazy.ts#loadPayments',
+      )
+    } finally {
+      session.close()
+    }
   })
 
   it('never reaches a file that imports nothing from the edit', () => {
