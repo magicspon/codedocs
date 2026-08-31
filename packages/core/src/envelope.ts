@@ -6,10 +6,16 @@
  * learns the honesty fields once rather than once per operation.
  */
 
-import type { Fidelity, FilePath } from './model.ts'
+import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
 
-/** One integer over the envelope and every result shape. */
-export const SCHEMA_VERSION: number = 1
+/**
+ * One integer over the envelope and every result shape.
+ *
+ * 2: `conditions` gained the cause of a project's fidelity and whether an
+ * install script is declared, so a caller can act on a `syntactic` project
+ * rather than only being told about it.
+ */
+export const SCHEMA_VERSION: number = 2
 
 /**
  * The operation set. Phase 5's names are absent rather than reserved: the
@@ -40,6 +46,17 @@ export interface ProjectConditions {
   readonly project: FilePath
   readonly fidelity: Fidelity
   readonly analysedAt: string
+  /**
+   * Why the fidelity is `syntactic`, or `null` where it is `typed`.
+   *
+   * ADR 0001 allows a remediation to be absent, but not the cause: naming a
+   * project without saying what is missing leaves the caller to guess between an
+   * absent install and a config waiting on codegen, and the two are fixed by
+   * different commands.
+   */
+  readonly cause: PreconditionCause | null
+  /** Whether an install script is declared, which sharpens `unprepared`. */
+  readonly postinstall: boolean
 }
 
 /** The state of the working tree the answer came from. */
