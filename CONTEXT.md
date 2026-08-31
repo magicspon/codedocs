@@ -304,8 +304,17 @@ _Avoid_: formatter, output mode, view, printer
 **Envelope**:
 The fixed wrapper every answer carries, whatever the [[Operation]]: the request as resolved, the
 [[Snapshot]], the [[Analysis conditions]] of the projects the answer touched, its [[Blind spot]]s, its
-budget, and the result. A failure is the same envelope carrying an error.
+budget, and the result. A failure is the same envelope carrying an error: a code and typed
+parameters, never a formatted sentence, so a [[Report]] that must not name the user's code can carry
+the code and drop the parameters.
 _Avoid_: response, wrapper, payload, metadata
+
+**Report**:
+What `report-bug` writes: one reproduced failure, in one of two shapes. The default carries facts
+about codedocs and the machine alone, so it is safe to paste in public unread; `--with-repository`
+adds the facts that name the user's code. The only artefact codedocs produces that is meant to leave
+the machine — and codedocs writes it, never moves it.
+_Avoid_: diagnostic, dump, bug report, telemetry
 
 **Truncation**:
 Results an answer deliberately withheld to stay inside its budget, reported with how many exist.
