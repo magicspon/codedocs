@@ -8,7 +8,8 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { findRepositoryRoot } from '../src/discovery.ts'
+import { DEFAULT_CONFIG, parseConfig } from '../src/config.ts'
+import { discoverProjects, findRepositoryRoot } from '../src/discovery.ts'
 
 let root: string
 
@@ -90,5 +91,93 @@ describe('findRepositoryRoot', () => {
     const bare = tree(join(root, 'bare', 'src'))
 
     expect(findRepositoryRoot(bare)).toBe(bare)
+  })
+})
+
+describe('discoverProjects', () => {
+  /** A tree with a tsconfig in three places, one of them behind `repos/`. */
+  function repository(): string {
+    const path = tree(join(root, 'repo'), { git: true })
+    for (const directory of [
+      '',
+      join('packages', 'core'),
+      join('repos', 'cal.com'),
+      join('repos', 'cal.com', 'packages', 'ui'),
+    ]) {
+      mkdirSync(join(path, directory), { recursive: true })
+      writeFileSync(join(path, directory, 'tsconfig.json'), '{}\n')
+    }
+    writeFileSync(join(path, 'packages', 'core', 'tsconfig.build.json'), '{}\n')
+    return path
+  }
+
+  it('finds every `tsconfig.json`, foreign checkouts included', () => {
+    expect(discoverProjects(repository(), DEFAULT_CONFIG)).toEqual([
+      'packages/core/tsconfig.json',
+      'repos/cal.com/packages/ui/tsconfig.json',
+      'repos/cal.com/tsconfig.json',
+      'tsconfig.json',
+    ])
+  })
+
+  it('`discover.skip` adds to the walk’s floor', () => {
+    const config = parseConfig('{"discover":{"skip":["repos"]}}')
+
+    expect(discoverProjects(repository(), config)).toEqual([
+      'packages/core/tsconfig.json',
+      'tsconfig.json',
+    ])
+  })
+
+  it('cannot remove `node_modules` from the floor', () => {
+    const path = repository()
+    mkdirSync(join(path, 'node_modules', 'dep'), { recursive: true })
+    writeFileSync(join(path, 'node_modules', 'dep', 'tsconfig.json'), '{}\n')
+    // `skip` is additive, so naming nothing does not empty it.
+    const config = parseConfig('{"discover":{"skip":[]}}')
+
+    expect(discoverProjects(path, config)).not.toContain(
+      'node_modules/dep/tsconfig.json',
+    )
+  })
+
+  it('`discover.projects` unions with the walk rather than replacing it', () => {
+    const config = parseConfig(
+      '{"discover":{"projects":["packages/*/tsconfig.build.json"]}}',
+    )
+
+    expect(discoverProjects(repository(), config)).toEqual([
+      'packages/core/tsconfig.build.json',
+      'packages/core/tsconfig.json',
+      'repos/cal.com/packages/ui/tsconfig.json',
+      'repos/cal.com/tsconfig.json',
+      'tsconfig.json',
+    ])
+  })
+
+  it('keeps a literal `discover.projects` path the walk already found, once', () => {
+    const config = parseConfig('{"discover":{"projects":["tsconfig.json"]}}')
+
+    expect(
+      discoverProjects(repository(), config).filter(
+        (path) => path === 'tsconfig.json',
+      ),
+    ).toHaveLength(1)
+  })
+
+  it('refuses a second `codedocs.jsonc` below the root, naming both', () => {
+    const path = repository()
+    writeFileSync(join(path, 'packages', 'core', 'codedocs.jsonc'), '{}\n')
+
+    expect(() => discoverProjects(path, DEFAULT_CONFIG)).toThrowError(
+      /packages\/core\/codedocs\.jsonc is below the repository root/,
+    )
+  })
+
+  it('allows the one at the root', () => {
+    const path = repository()
+    writeFileSync(join(path, 'codedocs.jsonc'), '{}\n')
+
+    expect(() => discoverProjects(path, DEFAULT_CONFIG)).not.toThrow()
   })
 })
