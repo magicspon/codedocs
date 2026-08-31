@@ -223,3 +223,39 @@ How many of a [[Document]]'s sections carry a [[Claim]] at all. Reported with ev
 `verified` cannot be read as "all of this is true". Distinct from [[Completeness]], which is about one
 answer's [[Blind spot]]s, and never combined with it into a score.
 _Avoid_: coverage score, doc quality, verification percentage
+
+### The operation surface
+
+**Operation**:
+One question codedocs can answer, and the unit the whole product is built from. The CLI, `--json` and
+the MCP server are [[Renderer]]s or bindings of the same operation, one to one — nothing composes
+operations above them.
+_Avoid_: command, query, endpoint, tool
+
+**Renderer**:
+One presentation of an [[Operation]]'s answer: machine (`--json`) or human. The human renderer is a
+pure function of the [[Envelope]] — it may group, colour and page, never re-sort or withhold silently.
+_Avoid_: formatter, output mode, view, printer
+
+**Envelope**:
+The fixed wrapper every answer carries, whatever the [[Operation]]: the request as resolved, the
+[[Snapshot]], the [[Analysis conditions]] of the projects the answer touched, its [[Blind spot]]s, its
+budget, and the result. A failure is the same envelope carrying an error.
+_Avoid_: response, wrapper, payload, metadata
+
+**Truncation**:
+Results an answer deliberately withheld to stay inside its budget, reported with how many exist.
+Distinct from a [[Blind spot]]: codedocs knows exactly what it withheld.
+_Avoid_: limit, cut-off, paging, elision
+
+**Scope**:
+The [[Label]] filter a question carries — what the caller asked to exclude. Echoed with every answer
+and reported as an excluded count, never as a [[Blind spot]] and never as [[Truncation]], because it
+is part of the question rather than a limit on the answer.
+_Avoid_: filter, selection, view, subset
+
+**Evidence**:
+Everything the index holds about one subject, assembled for someone else to write prose from — its
+node, [[Label]]s, [[Fidelity]], edges in and out, and the [[Document]]s whose [[Claim]]s name it.
+What PRD §9's `explain` becomes once codedocs never generates text.
+_Avoid_: explanation, summary, context, description
