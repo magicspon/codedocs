@@ -149,16 +149,27 @@ export interface SymbolNode {
  */
 export type CallSource = string
 
-/** One call site that resolved to a symbol in this repository. */
-export interface CallEdge {
-  readonly from: CallSource
-  readonly to: SymbolId
+/**
+ * Where one call happens, and how far that instance may be trusted.
+ *
+ * Named apart from the edge because ADR 0002 puts provenance on the edge
+ * *instance* rather than the edge type — method dispatch over-approximates
+ * across implementations, so only the site says which rule produced it. `trace`
+ * needs the site without the endpoints, since a path already names those.
+ */
+export interface CallSite {
   readonly attribution: CallerAttribution
   /** The file the call site is in. */
   readonly file: FilePath
   readonly line: number
   readonly provenance: Provenance
   readonly derivation: Derivation
+}
+
+/** One call site that resolved to a symbol in this repository. */
+export interface CallEdge extends CallSite {
+  readonly from: CallSource
+  readonly to: SymbolId
 }
 
 /** A call site that produced no edge, stored as a fact with its cause. */

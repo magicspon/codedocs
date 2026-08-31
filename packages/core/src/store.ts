@@ -17,6 +17,7 @@ import { join } from 'node:path'
 
 import type {
   CallEdge,
+  CallSite,
   CallSource,
   FileNode,
   FilePath,
@@ -746,7 +747,12 @@ export function readSymbol(store: Store, id: SymbolId): SymbolNode | undefined {
 const EDGE_COLUMNS =
   'from_id, to_id, attribution, file_path, line, provenance, derivation'
 
-const toEdge = (row: {
+/**
+ * One `call_edge` row as SQLite hands it over. A type rather than an interface
+ * because only a type literal gets the implicit index signature that lets a
+ * `Record<string, SQLOutputValue>` be asserted to it.
+ */
+type EdgeRow = {
   from_id: string
   to_id: string
   attribution: string
@@ -754,14 +760,21 @@ const toEdge = (row: {
   line: number
   provenance: string
   derivation: string
-}): CallEdge => ({
-  from: row.from_id,
-  to: row.to_id,
-  attribution: row.attribution as CallEdge['attribution'],
+}
+
+/** The site half of a row: what a path needs once it has named the endpoints. */
+const toSite = (row: EdgeRow): CallSite => ({
+  attribution: row.attribution as CallSite['attribution'],
   file: row.file_path,
   line: row.line,
-  provenance: row.provenance as CallEdge['provenance'],
-  derivation: row.derivation as CallEdge['derivation'],
+  provenance: row.provenance as CallSite['provenance'],
+  derivation: row.derivation as CallSite['derivation'],
+})
+
+const toEdge = (row: EdgeRow): CallEdge => ({
+  from: row.from_id,
+  to: row.to_id,
+  ...toSite(row),
 })
 
 /** Every call edge into a symbol, in ADR 0006's `(source, target, kind, site)` order. */
@@ -772,7 +785,7 @@ export function readCallersOf(store: Store, id: SymbolId): CallEdge[] {
         `select ${EDGE_COLUMNS} from call_edge where to_id = ?
          order by from_id, to_id, file_path, line`,
       )
-      .all(id) as Parameters<typeof toEdge>[0][]
+      .all(id) as EdgeRow[]
   ).map(toEdge)
 }
 
@@ -784,8 +797,59 @@ export function readCalleesOf(store: Store, id: CallSource): CallEdge[] {
         `select ${EDGE_COLUMNS} from call_edge where from_id = ?
          order by from_id, to_id, file_path, line`,
       )
-      .all(id) as Parameters<typeof toEdge>[0][]
+      .all(id) as EdgeRow[]
   ).map(toEdge)
+}
+
+/** One outgoing relation from a symbol: the callee, and every site that calls it. */
+export interface CalleeStep {
+  readonly to: SymbolId
+  readonly sites: readonly CallSite[]
+}
+
+/**
+ * SQLite's default parameter ceiling is 32,766; a chunk well under it keeps one
+ * statement small enough to plan quickly and bounds how many distinct parameter
+ * counts — and so how many compiled statements — a walk can produce.
+ */
+const ID_CHUNK = 900
+
+/**
+ * Every call edge out of `ids`, grouped by source and then by callee.
+ *
+ * Batched because `trace` walks breadth-first: one query per level costs the
+ * walk `depth` round trips rather than one per symbol it reaches. Grouping by
+ * callee is what stops a path set exploding per call *instance* — two call sites
+ * from A to B are one step carrying two sites, not two paths.
+ */
+export function readCalleeSteps(
+  store: Store,
+  ids: readonly CallSource[],
+): Map<CallSource, CalleeStep[]> {
+  const grouped = new Map<CallSource, { to: SymbolId; sites: CallSite[] }[]>()
+  for (let at = 0; at < ids.length; at += ID_CHUNK) {
+    const chunk = ids.slice(at, at + ID_CHUNK)
+    const rows = store.db
+      .prepare(
+        `select ${EDGE_COLUMNS} from call_edge
+         where from_id in (${chunk.map(() => '?').join(',')})
+         order by from_id, to_id, file_path, line`,
+      )
+      .all(...chunk) as EdgeRow[]
+    for (const row of rows) {
+      let steps = grouped.get(row.from_id)
+      if (steps === undefined) {
+        steps = []
+        grouped.set(row.from_id, steps)
+      }
+      // Rows arrive sorted by `(from_id, to_id, …)`, so one callee's sites are
+      // contiguous and only the last step can be the one to append to.
+      const last = steps.at(-1)
+      if (last?.to === row.to_id) last.sites.push(toSite(row))
+      else steps.push({ to: row.to_id, sites: [toSite(row)] })
+    }
+  }
+  return grouped
 }
 
 /** How many rows the index holds, for `analyse` to report what it built. */

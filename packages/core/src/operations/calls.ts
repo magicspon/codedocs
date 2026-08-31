@@ -61,7 +61,7 @@ function collect(
 
   return answer(
     direction,
-    { subject, resolved: resolved.map((node) => node.id), limit },
+    { subject, resolved: resolved.map((node) => node.id), limit, depth: null },
     scopeTo(store, context, [
       ...resolved.map((node) => node.file),
       ...edges.map((e) => e.file),

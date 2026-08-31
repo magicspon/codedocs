@@ -53,7 +53,7 @@ export function analyse(
   return {
     ...answer(
       'analyse',
-      { subject: null, resolved: [], limit },
+      { subject: null, resolved: [], limit, depth: null },
       context,
       summaries,
     ),

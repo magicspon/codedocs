@@ -13,6 +13,7 @@ import {
   callers,
   openSession,
   symbol,
+  trace,
   type Envelope,
 } from '@codedocs/core'
 
@@ -22,6 +23,7 @@ import {
   renderEdges,
   renderError,
   renderSymbols,
+  renderTrace,
   styleFor,
   type AnalyseEnvelope,
 } from './render.ts'
@@ -65,7 +67,7 @@ export function run(argv: readonly string[]): Run {
 
   try {
     const { store, context } = session
-    const { limit, subject } = command
+    const { depth, limit, subject } = command
 
     switch (command.operation) {
       case 'analyse': {
@@ -86,12 +88,21 @@ export function run(argv: readonly string[]): Run {
         const envelope = operation(store, context, subject ?? '', limit)
         return emit(command.json, envelope, () => renderEdges(envelope, style))
       }
+      case 'trace': {
+        const envelope = trace(store, context, subject ?? '', limit, depth)
+        return emit(command.json, envelope, () => renderTrace(envelope, style))
+      }
     }
   } catch (error) {
     const envelope: Envelope<never> = {
       operation: command.operation,
       schemaVersion: 1,
-      request: { subject: command.subject, resolved: [], limit: command.limit },
+      request: {
+        subject: command.subject,
+        resolved: [],
+        limit: command.limit,
+        depth: command.depth,
+      },
       snapshot: session.context.snapshot,
       conditions: session.context.conditions,
       blindSpots: session.context.blindSpots,

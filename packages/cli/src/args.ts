@@ -15,6 +15,7 @@ const OPERATIONS: readonly OperationName[] = [
   'symbol',
   'callers',
   'callees',
+  'trace',
 ]
 
 /** A parsed command line, or the reason it could not be parsed. */
@@ -31,6 +32,8 @@ export interface Command {
   readonly noUpdate: boolean
   /** `null` means unbounded; the renderer, not the operation, owns the default. */
   readonly limit: number | null
+  /** `null` means "ask the operation": depth is a semantic bound, so it owns the default. */
+  readonly depth: number | null
   readonly cwd: string
   readonly color: boolean
 }
@@ -42,6 +45,7 @@ const OPTIONS = {
   json: { type: 'boolean' },
   'no-update': { type: 'boolean' },
   limit: { type: 'string' },
+  depth: { type: 'string' },
   cwd: { type: 'string' },
   color: { type: 'boolean' },
   'no-color': { type: 'boolean' },
@@ -77,6 +81,9 @@ export function parse(argv: readonly string[]): ParsedArgs {
   const limit = resolveLimit(values.limit, json)
   if (failed(limit)) return { ok: false, message: limit.message }
 
+  const depth = resolveDepth(values.depth, invocation.value.operation)
+  if (failed(depth)) return { ok: false, message: depth.message }
+
   return {
     ok: true,
     command: {
@@ -84,6 +91,7 @@ export function parse(argv: readonly string[]): ParsedArgs {
       json,
       noUpdate: values['no-update'] === true,
       limit: limit.value,
+      depth: depth.value,
       cwd: values.cwd ?? process.cwd(),
       color: resolveColor(values.color, values['no-color']),
     },
@@ -140,6 +148,26 @@ function resolveLimit(
   return { value: limit }
 }
 
+/**
+ * `--depth` is per-operation, and a flag silently ignored is worse than a flag
+ * refused: a caller who asked `callers --depth 2` would read a one-hop answer as
+ * a bounded walk.
+ */
+function resolveDepth(
+  raw: string | undefined,
+  operation: OperationName,
+): Step<number | null> {
+  if (raw === undefined) return { value: null }
+  if (operation !== 'trace') {
+    return { message: `--depth applies to \`trace\`, not \`${operation}\`` }
+  }
+  const depth = Number(raw)
+  if (!Number.isInteger(depth) || depth < 0) {
+    return { message: `--depth must be a non-negative integer, got \`${raw}\`` }
+  }
+  return { value: depth }
+}
+
 const isOperation = (name: string): name is OperationName =>
   (OPERATIONS as readonly string[]).includes(name)
 
@@ -165,6 +193,7 @@ function usage(): string {
     '  codedocs symbol <pattern>        every symbol whose name matches a glob',
     '  codedocs callers <subject>       every call edge into a subject',
     '  codedocs callees <subject>       every call edge out of a subject',
+    '  codedocs trace <root>            every path of calls out of a root',
     '',
     'A subject is anything codedocs prints as an identifier:',
     '  src/auth/service.ts#AuthService.login   exact',
@@ -174,6 +203,7 @@ function usage(): string {
     '  --json           machine output; unbounded unless --limit is given',
     '  --no-update      answer from the stored snapshot and name the drift',
     `  --limit <n>      cap results (human default ${HUMAN_DEFAULT_LIMIT}, --json default none)`,
+    '  --depth <n>      `trace` only: cap the steps per path (default none)',
     '  --cwd <path>     run against another directory',
     '  --color / --no-color',
     '',

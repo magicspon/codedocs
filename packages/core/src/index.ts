@@ -11,6 +11,12 @@ export {
   type ProjectSummary,
 } from './operations/analyse.ts'
 export { callees, callers } from './operations/calls.ts'
+export {
+  trace,
+  type PathTerminus,
+  type TracePath,
+  type TraceStep,
+} from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
 export { resolveSubject } from './operations/subject.ts'
 export { scopeTo } from './operations/scope.ts'
@@ -43,6 +49,7 @@ export {
 export type {
   CallEdge,
   CallerAttribution,
+  CallSite,
   CallSource,
   Derivation,
   EdgeKind,
@@ -59,7 +66,12 @@ export type {
   UnresolvedCallCause,
 } from './model.ts'
 
-export { STORE_SCHEMA_VERSION, type IndexHeader, type Store } from './store.ts'
+export {
+  STORE_SCHEMA_VERSION,
+  type CalleeStep,
+  type IndexHeader,
+  type Store,
+} from './store.ts'
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
 export {
   discoverProjects,

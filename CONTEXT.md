@@ -276,6 +276,13 @@ and reported as an excluded count, never as a [[Blind spot]] and never as [[Trun
 is part of the question rather than a limit on the answer.
 _Avoid_: filter, selection, view, subset
 
+**Path**:
+`trace`'s result unit: one walk outward from a root symbol, as the sequence of symbols it reached
+with the call sites realising each step, plus **why it stopped** — the walk ran out of callees, the
+caller's `--depth` cut it, or it closed a loop. Steps are grouped by callee rather than by call site,
+so two calls between the same pair are one step carrying two sites and not two paths.
+_Avoid_: chain, trace, route, call stack, walkthrough
+
 **Evidence**:
 Everything the index holds about one subject, assembled for someone else to write prose from — its
 node, [[Label]]s, [[Fidelity]], edges in and out, and the [[Document]]s whose [[Claim]]s name it.

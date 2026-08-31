@@ -1,16 +1,16 @@
 # Graph Report - codedocs  (2026-08-31)
 
 ## Corpus Check
-- 87 files · ~67,118 words
+- 90 files · ~71,521 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 790 nodes · 1166 edges · 64 communities (54 shown, 10 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 33 edges (avg confidence: 0.89)
+- 827 nodes · 1272 edges · 65 communities (55 shown, 10 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6a6d092c`
+- Built from commit: `fee8958c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -77,14 +77,15 @@
 - [[_COMMUNITY_Community 60|Community 60]]
 - [[_COMMUNITY_Community 61|Community 61]]
 - [[_COMMUNITY_Community 62|Community 62]]
+- [[_COMMUNITY_Community 64|Community 64]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `FilePath` - 22 edges
+1. `FilePath` - 23 edges
 2. `compilerOptions` - 21 edges
-3. `openSession()` - 19 edges
-4. `Incremental re-analysis with existing TypeScript tooling` - 13 edges
-5. `scripts` - 12 edges
-6. `run` - 12 edges
+3. `openSession()` - 20 edges
+4. `run` - 13 edges
+5. `Incremental re-analysis with existing TypeScript tooling` - 13 edges
+6. `scripts` - 12 edges
 7. `SymbolNode` - 12 edges
 8. `repairWave()` - 12 edges
 9. `3. The candidates` - 12 edges
@@ -110,7 +111,7 @@
 - **Codebase Intelligence Substrate** — docs_requirements_static_analysis_layer, docs_requirements_code_graph, docs_requirements_document_layer, docs_requirements_internal_representation, docs_requirements_adapter_pattern [EXTRACTED 1.00]
 - **Pull Request Quality Gate** — workflows_ci_pipeline, workflows_fallow_audit, agents_fallow, cspell_words_dictionary, pnpm_workspace_config [INFERRED 0.85]
 
-## Communities (64 total, 10 thin omitted)
+## Communities (65 total, 10 thin omitted)
 
 ### Community 0 - "Release & CI Workflows"
 Cohesion: 0.19
@@ -173,20 +174,20 @@ Cohesion: 0.40
 Nodes (3): PACKAGES, push, ROOT
 
 ### Community 19 - "Community 19"
-Cohesion: 0.08
-Nodes (50): openAnalysis(), currentCommit(), discoverProjects(), findRepositoryRoot(), SKIP_DIRS, toRepoPath(), detectDrift(), Drift (+42 more)
+Cohesion: 0.07
+Nodes (56): openAnalysis(), currentCommit(), discoverProjects(), findRepositoryRoot(), SKIP_DIRS, toRepoPath(), detectDrift(), Drift (+48 more)
 
 ### Community 20 - "Community 20"
 Cohesion: 0.06
-Nodes (49): AdapterResult, analyse(), AnalysisSession, attribute(), CALLABLE_KIND, CallSite, collectCallSites(), declarationKey() (+41 more)
+Nodes (48): AdapterResult, analyse(), AnalysisSession, attribute(), CALLABLE_KIND, CallSite, collectCallSites(), declarationKey() (+40 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.10
-Nodes (40): AnalysisTotals, ProjectSummary, callees(), callers(), collect(), scopeTo(), resolveSubject(), globToRegExp() (+32 more)
+Cohesion: 0.08
+Nodes (53): AnalysisTotals, ProjectSummary, callees(), callers(), collect(), scopeTo(), resolveSubject(), globToRegExp() (+45 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.11
-Nodes (29): analyse(), { stdout, stderr, code }, emit(), messageOf(), run, ambiguityNote(), AnalyseEnvelope, blindSpotNote() (+21 more)
+Cohesion: 0.09
+Nodes (38): analyse(), { stdout, stderr, code }, emit(), messageOf(), run, ambiguityNote(), AnalyseEnvelope, annotate() (+30 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.07
@@ -213,8 +214,8 @@ Cohesion: 0.10
 Nodes (19): ast-grep — CLEARED, Attribution: what codedocs must actually ship, Copyleft in the transitive tree, Distribution assumption, Does subprocess vs library change the answer?, Findings, Graphify — AMBIGUOUS (needs a human call), Licence and redistribution audit of candidate analysis dependencies (+11 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.22
-Nodes (14): Command, failed(), isOperation(), OPERATIONS, OPTIONS, parse(), ParsedArgs, parseOptions() (+6 more)
+Cohesion: 0.21
+Nodes (15): Command, failed(), isOperation(), OPERATIONS, OPTIONS, parse(), ParsedArgs, parseOptions() (+7 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.18
@@ -320,6 +321,10 @@ Nodes (3): 27. Reliability, Deterministic results, Inferred results
 Cohesion: 0.67
 Nodes (3): 31. Pricing, CodeGuide CLI, CodeGuide Desktop
 
+### Community 64 - "Community 64"
+Cohesion: 0.60
+Nodes (4): countdown(), ping(), pong(), twice()
+
 ## Ambiguous Edges - Review These
 - `Code Docs` → `CodeGuide`  [AMBIGUOUS]
   README.md · relation: conceptually_related_to
@@ -329,7 +334,7 @@ Nodes (3): 31. Pricing, CodeGuide CLI, CodeGuide Desktop
   .github/workflows/renovate.yaml · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **403 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+398 more)
+- **405 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+400 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -347,6 +352,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `FilePath` connect `Community 20` to `Community 19`, `Community 21`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **Why does `CallEdge` connect `Community 20` to `Community 19`, `Community 21`, `Community 22`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `$schema`, `baseBranch`, `access` to the rest of the system?**
-  _416 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _418 weakly-connected nodes found - possible documentation gaps or missing edges._
