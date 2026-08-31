@@ -8,12 +8,19 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import type { Envelope, RepairReport, SymbolNode } from '@codedocs/core'
+import type {
+  CallSite,
+  Envelope,
+  RepairReport,
+  SymbolNode,
+  TracePath,
+} from '@codedocs/core'
 
 import {
   renderAnalyse,
   renderError,
   renderSymbols,
+  renderTrace,
   styleFor,
   type AnalyseEnvelope,
 } from '../src/render.ts'
@@ -42,6 +49,7 @@ const envelopeOf = (
     subject: 'charge',
     resolved: ['src/payments.ts#charge'],
     limit: null,
+    depth: null,
   },
   snapshot: {
     commit: 'abc1234',
@@ -85,6 +93,7 @@ describe('the footer', () => {
         subject: 'charge',
         resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
         limit: null,
+        depth: null,
       },
     })
     expect(out).toContain('`charge` is ambiguous — 2 symbols')
@@ -99,6 +108,7 @@ describe('the footer', () => {
           subject: '*',
           resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
           limit: null,
+          depth: null,
         },
       }),
       plain,
@@ -217,7 +227,7 @@ describe('the repair note', () => {
   const analyseEnvelope = (repair: RepairReport | null): AnalyseEnvelope => ({
     operation: 'analyse',
     schemaVersion: 1,
-    request: { subject: null, resolved: [], limit: null },
+    request: { subject: null, resolved: [], limit: null, depth: null },
     snapshot: {
       commit: 'abc1234',
       dirty: false,
@@ -266,5 +276,186 @@ describe('the repair note', () => {
     const text = renderAnalyse(analyseEnvelope(null), plain)
     expect(text).not.toContain('repaired')
     expect(text).not.toContain('rebuilt')
+  })
+})
+
+describe('a traced path', () => {
+  const site = (line: number, overrides: Partial<CallSite> = {}): CallSite => ({
+    attribution: 'symbol',
+    file: 'src/checkout.ts',
+    line,
+    provenance: 'deterministic',
+    derivation: 'checker-signature',
+    ...overrides,
+  })
+
+  const traced = (result: readonly TracePath[], depth = 5): string =>
+    renderTrace(
+      {
+        operation: 'trace',
+        schemaVersion: 1,
+        request: { subject: 'checkout', resolved: ['a'], limit: null, depth },
+        snapshot: { commit: 'abc1234', dirty: false, analysedAt: null },
+        conditions: [],
+        blindSpots: [],
+        budget: {
+          returned: result.length,
+          available: result.length,
+          truncated: false,
+        },
+        result,
+      },
+      plain,
+    )
+
+  it('prints every site of a step, collapsing the lines that share a file', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [{ to: 'b', sites: [site(3), site(9)] }],
+        terminus: 'leaf',
+      },
+    ])
+    expect(out).toContain('src/checkout.ts:3,9')
+  })
+
+  it('keeps two files apart within one step', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [
+          { to: 'b', sites: [site(3), site(9, { file: 'src/other.ts' })] },
+        ],
+        terminus: 'leaf',
+      },
+    ])
+    expect(out).toContain('src/checkout.ts:3  src/other.ts:9')
+  })
+
+  it('never merges sites whose honesty fields differ', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [
+          {
+            to: 'b',
+            sites: [
+              site(3),
+              site(9, {
+                provenance: 'inferred',
+                derivation: 'jsx-element-rule',
+              }),
+            ],
+          },
+        ],
+        terminus: 'leaf',
+      },
+    ])
+    expect(out).toContain(
+      'src/checkout.ts:3  src/checkout.ts:9 [inferred: jsx-element-rule]',
+    )
+  })
+
+  it('indents one level per step, and the root none', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [
+          { to: 'b', sites: [site(1)] },
+          { to: 'c', sites: [site(2)] },
+        ],
+        terminus: 'leaf',
+      },
+    ])
+    expect(out.split('\n').slice(0, 3)).toEqual([
+      '  a',
+      '    → b  src/checkout.ts:1',
+      '      → c  src/checkout.ts:2',
+    ])
+  })
+
+  it('prints a shared prefix once and keeps both tails', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [
+          { to: 'b', sites: [site(1)] },
+          { to: 'c', sites: [site(2)] },
+        ],
+        terminus: 'leaf',
+      },
+      {
+        root: 'a',
+        steps: [
+          { to: 'b', sites: [site(1)] },
+          { to: 'd', sites: [site(3)] },
+        ],
+        terminus: 'leaf',
+      },
+    ])
+    expect(out.split('\n').filter((line) => line.includes('→ b'))).toHaveLength(
+      1,
+    )
+    expect(out).toContain('→ c')
+    expect(out).toContain('→ d')
+  })
+
+  it('says a root calls nothing, rather than leaving a bare id', () => {
+    expect(traced([{ root: 'a', steps: [], terminus: 'leaf' }])).toContain(
+      'calls nothing',
+    )
+  })
+
+  it('marks the step that closed a loop', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [
+          { to: 'b', sites: [site(1)] },
+          { to: 'a', sites: [site(2)] },
+        ],
+        terminus: 'cycle',
+      },
+    ])
+    expect(out).toContain('→ a  src/checkout.ts:2 ↺ cycle')
+  })
+
+  it('names the bound where it cut a branch, so the answer is not read as whole', () => {
+    const out = traced(
+      [
+        {
+          root: 'a',
+          steps: [{ to: 'b', sites: [site(1)] }],
+          terminus: 'depth',
+        },
+      ],
+      1,
+    )
+    expect(out).toContain('⇣ more calls beyond depth 1')
+  })
+
+  it('flags a step the adapter inferred rather than observed', () => {
+    const out = traced([
+      {
+        root: 'a',
+        steps: [
+          {
+            to: 'b',
+            sites: [
+              site(6, {
+                provenance: 'inferred',
+                derivation: 'jsx-element-rule',
+              }),
+            ],
+          },
+        ],
+        terminus: 'leaf',
+      },
+    ])
+    expect(out).toContain('[inferred: jsx-element-rule]')
+  })
+
+  it('says plainly when a root produced no paths at all', () => {
+    expect(traced([])).toContain('no paths')
   })
 })

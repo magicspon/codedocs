@@ -10,10 +10,12 @@
 import type {
   AnalysisTotals,
   CallEdge,
+  CallSite,
   Envelope,
   ProjectSummary,
   RepairReport,
   SymbolNode,
+  TracePath,
 } from '@codedocs/core'
 
 /** Terminal styling, disabled wholesale when colour is off. */
@@ -93,7 +95,12 @@ export function renderSymbols(
   return finish(envelope, lines, style, 'symbols')
 }
 
-/** Render a `callers` or `callees` answer. */
+/**
+ * Render a `callers` or `callees` answer.
+ *
+ * The end an answer prints is the end the caller did not name: `callers` shows
+ * the source, `callees` the target.
+ */
 export function renderEdges(
   envelope: Envelope<readonly CallEdge[]>,
   style: Style,
@@ -101,21 +108,141 @@ export function renderEdges(
   const showTarget = envelope.operation === 'callees'
   const lines = (envelope.result ?? []).map((edge) => {
     const subject = showTarget ? edge.to : edge.from
-    const attribution =
-      edge.attribution === 'symbol'
-        ? ''
-        : ` ${style.warn(`(${edge.attribution})`)}`
-    // Provenance is shown whenever it is not observed, because an inferred or
-    // syntactic edge must never read as a checked one.
-    const provenance =
-      edge.provenance === 'deterministic'
-        ? ''
-        : ` ${style.warn(`[${edge.provenance}: ${edge.derivation}]`)}`
-    const where = style.dim(`${edge.file}:${edge.line}`)
-    return `  ${subject}${attribution}  ${where}${provenance}`
+    return `  ${subject}  ${renderSite(edge, style)}`
   })
   return finish(envelope, lines, style, 'call edges')
 }
+
+/**
+ * Render a `trace` answer as a tree, collapsing the prefix each path shares
+ * with the one before it.
+ *
+ * ADR 0006 allows the human renderer to group, and here it has to: the sort puts
+ * paths sharing a prefix next to each other, and printing every path in full
+ * repeats the same four lines a dozen times over on a real repository. The
+ * collapse is lossless — two paths agreeing on a node prefix necessarily agree
+ * on those steps' call sites, because a step's sites are every site between the
+ * same two symbols.
+ */
+export function renderTrace(
+  envelope: Envelope<readonly TracePath[]>,
+  style: Style,
+): string {
+  const lines: string[] = []
+  let previous: readonly string[] = []
+  for (const path of envelope.result ?? []) {
+    const sequence = [path.root, ...path.steps.map((step) => step.to)]
+    const shared = sharedPrefix(previous, sequence)
+    if (shared === 0) lines.push(`  ${path.root}`)
+    for (let at = Math.max(shared, 1); at <= path.steps.length; at += 1) {
+      const step = path.steps[at - 1]
+      if (step === undefined) continue
+      const closes =
+        path.terminus === 'cycle' && at === path.steps.length
+          ? ` ${style.warn('↺ cycle')}`
+          : ''
+      const sites = renderSites(step.sites, style)
+      lines.push(`${indent(at)}→ ${step.to}  ${sites}${closes}`)
+    }
+    lines.push(...terminusNote(path, envelope.request.depth, style))
+    previous = sequence
+  }
+  return finish(envelope, lines, style, 'paths')
+}
+
+/** How many leading symbols two path sequences agree on. */
+function sharedPrefix(a: readonly string[], b: readonly string[]): number {
+  let at = 0
+  while (at < a.length && at < b.length && a[at] === b[at]) at += 1
+  return at
+}
+
+/** One level of the tree per step, with the root's own two spaces underneath. */
+const indent = (level: number): string => '  '.repeat(level + 1)
+
+/** The tail of a path that neither ended nor closed a loop, said out loud. */
+function terminusNote(
+  path: TracePath,
+  depth: number | null,
+  style: Style,
+): readonly string[] {
+  if (path.terminus === 'depth') {
+    // Only a caller's own `--depth` can produce this terminus, so the number is
+    // always there to name; the fallback is for a hand-built envelope.
+    const bound = depth === null ? '' : ` ${depth}`
+    return [
+      style.warn(
+        `${indent(path.steps.length + 1)}⇣ more calls beyond depth${bound}`,
+      ),
+    ]
+  }
+  // A root that calls nothing renders as a bare id, which reads as an answer
+  // withheld rather than as the answer it is.
+  if (path.terminus === 'leaf' && path.steps.length === 0) {
+    return [style.dim('    calls nothing')]
+  }
+  return []
+}
+
+/**
+ * The honesty fields a site carries, printed only where they are not the plain
+ * case.
+ *
+ * Shared by `renderEdges` and `renderTrace` so the two cannot disagree about
+ * when a fact is worth flagging: a call credited to a file, or produced by the
+ * adapter's own rule, must never read as a checked one. Both belong beside the
+ * site rather than beside either endpoint, because they describe this instance.
+ */
+function annotate(site: CallSite, style: Style): string {
+  const attribution =
+    site.attribution === 'symbol'
+      ? ''
+      : ` ${style.warn(`(${site.attribution})`)}`
+  const provenance =
+    site.provenance === 'deterministic'
+      ? ''
+      : ` ${style.warn(`[${site.provenance}: ${site.derivation}]`)}`
+  return `${attribution}${provenance}`
+}
+
+/** One call site: where it is, and what to know about it. */
+const renderSite = (site: CallSite, style: Style): string =>
+  `${style.dim(`${site.file}:${site.line}`)}${annotate(site, style)}`
+
+/**
+ * Every site of one step, with the lines that share a file collapsed onto it.
+ *
+ * A hot step in cal.com has six sites in one file, and printing the path six
+ * times costs 300 columns to say what the first one said. Sites arrive sorted by
+ * `(file, line)`, so a file's lines are contiguous; sites whose honesty fields
+ * differ never merge, because the annotation belongs to the instance.
+ */
+function renderSites(sites: readonly CallSite[], style: Style): string {
+  const groups: { readonly site: CallSite; readonly lines: number[] }[] = []
+  for (const site of sites) {
+    const last = groups.at(-1)
+    if (
+      last !== undefined &&
+      last.site.file === site.file &&
+      sameFacts(last.site, site)
+    ) {
+      last.lines.push(site.line)
+    } else {
+      groups.push({ site, lines: [site.line] })
+    }
+  }
+  return groups
+    .map(
+      (group) =>
+        `${style.dim(`${group.site.file}:${group.lines.join(',')}`)}${annotate(group.site, style)}`,
+    )
+    .join('  ')
+}
+
+const sameFacts = (a: CallSite, b: CallSite): boolean =>
+  a.attribution === b.attribution &&
+  a.provenance === b.provenance &&
+  a.derivation === b.derivation
 
 /** Render a failure envelope. */
 export function renderError(envelope: Envelope<never>, style: Style): string {
@@ -138,7 +265,7 @@ function finish(
   style: Style,
   unit: string,
 ): string {
-  const body = lines.length > 0 ? lines : [style.dim(`  no ${unit}`)]
+  const body = lines.length > 0 ? lines : [emptyLine(envelope, style, unit)]
   return [
     ...body,
     ...truncationNote(envelope, style),
@@ -147,6 +274,27 @@ function finish(
     ...blindSpotNote(envelope, style),
     ...snapshotNote(envelope, style),
   ].join('\n')
+}
+
+/**
+ * What an answer with nothing in it says.
+ *
+ * "No callers" and "no such symbol" are different facts, and an operation that
+ * resolves its subject knows which one it is holding. Saying only the first
+ * leaves a caller retrying a name that will never match — and for `trace` it
+ * would be plainly wrong, since a root that calls nothing still answers with a
+ * path of no steps.
+ */
+function emptyLine(
+  envelope: Envelope<unknown>,
+  style: Style,
+  unit: string,
+): string {
+  const { subject, resolved } = envelope.request
+  if (subject !== null && resolved.length === 0) {
+    return style.warn(`  \`${subject}\` matched no symbol`)
+  }
+  return style.dim(`  no ${unit}`)
 }
 
 /** How many blind spots are named before the rest are counted. */

@@ -17,7 +17,12 @@ export const SCHEMA_VERSION: number = 1
  *
  * TODO(#10): widen to ADR 0006's full table as each operation lands.
  */
-export type OperationName = 'analyse' | 'symbol' | 'callers' | 'callees'
+export type OperationName =
+  | 'analyse'
+  | 'symbol'
+  | 'callers'
+  | 'callees'
+  | 'trace'
 
 /**
  * A file or region the analysis could not see, and which could therefore have
@@ -55,6 +60,16 @@ export interface ResolvedRequest {
   readonly resolved: readonly string[]
   /** The effective limit, or `null` for unbounded. */
   readonly limit: number | null
+  /**
+   * The effective semantic bound, or `null` for an operation that has none.
+   *
+   * Present on every operation so a parser meets one shape. It is separate from
+   * `limit` because ADR 0006 splits the two: a limit is a display bound the
+   * renderer owns, while a bound that changes the *shape* of the answer belongs
+   * to the operation and must be echoed here, or a caller cannot tell a bounded
+   * answer from a whole one.
+   */
+  readonly depth: number | null
 }
 
 /** Results returned against results available, and whether any were withheld. */

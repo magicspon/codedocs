@@ -50,6 +50,13 @@ describe('argument handling', () => {
   it('rejects a limit that is not a non-negative integer', () => {
     expect(invoke('symbol', '*', '--limit', 'lots').code).toBe(2)
   })
+
+  it('refuses `--depth` on an operation that has no depth', () => {
+    // Ignoring it would let `callers --depth 2` read as a bounded walk.
+    const result = invoke('callers', 'charge', '--depth', '2')
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain('--depth applies to `trace`')
+  })
 })
 
 describe('the machine renderer', () => {
@@ -102,14 +109,62 @@ describe('the machine renderer', () => {
   })
 })
 
+describe('trace', () => {
+  it('answers with paths, unbounded until the caller says otherwise', () => {
+    const envelope = JSON.parse(
+      invoke('trace', 'checkout', '--json').stdout,
+    ) as {
+      request: { depth: number | null }
+      result: { root: string; steps: unknown[]; terminus: string }[]
+    }
+    expect(envelope.request.depth).toBeNull()
+    expect(envelope.result[0]?.root).toBe('src/checkout.ts#checkout')
+    expect(envelope.result[0]?.steps.length).toBeGreaterThan(0)
+  })
+
+  it('echoes the bound the caller set', () => {
+    const envelope = JSON.parse(
+      invoke('trace', 'checkout', '--depth', '1', '--json').stdout,
+    ) as { request: { depth: number | null } }
+    expect(envelope.request.depth).toBe(1)
+  })
+
+  it('collapses the prefix two paths share, rather than repeating it', () => {
+    const lines = invoke('trace', 'checkout').stdout.split('\n')
+    // Both paths run through `charge`; it is printed once.
+    expect(lines.filter((line) => line.includes('#charge'))).toHaveLength(1)
+  })
+
+  it('says where a walk closed a loop', () => {
+    expect(invoke('trace', 'ping').stdout).toContain('cycle')
+  })
+
+  it('is byte-identical across two walks of the same index', () => {
+    // The walk itself is in graph order; only the sort makes the answer stable.
+    expect(invoke('trace', 'checkout', '--json').stdout).toBe(
+      invoke('trace', 'checkout', '--json').stdout,
+    )
+  })
+
+  it('says there is more beyond the bound the caller set', () => {
+    expect(invoke('trace', 'checkout', '--depth', '1').stdout).toContain(
+      'beyond depth 1',
+    )
+  })
+})
+
 describe('the human renderer', () => {
   it('caps by default and says how many it withheld', () => {
     const result = invoke('symbol', '*', '--limit', '2')
     expect(result.stdout).toContain('showing 2 of')
   })
 
-  it('says so plainly when there is nothing to show', () => {
-    expect(invoke('callers', 'NoSuchSymbol').stdout).toContain('no call edges')
+  it('distinguishes an empty answer from a subject that matched nothing', () => {
+    expect(invoke('callers', 'NoSuchSymbol').stdout).toContain(
+      '`NoSuchSymbol` matched no symbol',
+    )
+    // `twice` resolves and simply has no callers.
+    expect(invoke('callers', 'twice').stdout).toContain('no call edges')
   })
 
   it('marks an edge the adapter inferred rather than observed', () => {

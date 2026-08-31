@@ -35,7 +35,12 @@ export function symbol(
   )
   return answer(
     'symbol',
-    { subject: pattern, resolved: matches.map((node) => node.id), limit },
+    {
+      subject: pattern,
+      resolved: matches.map((node) => node.id),
+      limit,
+      depth: null,
+    },
     scopeTo(
       store,
       context,
