@@ -8,8 +8,15 @@
 
   // Read by a tool rather than imported by anything. `commitlint.config.js` has
   // a fallow plugin that knows to look for it; nano-staged does not, so without
-  // this line the pre-commit config reads as a dead file.
-  "dynamicallyLoaded": ["nano-staged.js"],
+  // this line the pre-commit config reads as a dead file. The changeset script
+  // is spelled out in `renovate.json`'s `postUpgradeTasks` and in the workflow's
+  // `RENOVATE_ALLOWED_COMMANDS`, neither of which is an import.
+  "dynamicallyLoaded": ["nano-staged.js", "scripts/renovate-changeset.mjs"],
+
+  // `packages/core/test/fixtures/specifiers` exists to prove the sweep reads a
+  // dynamic `import()` that resolves to nothing, so this specifier is the
+  // fixture working rather than a broken path.
+  "ignoreUnresolvedImports": ["./not-here"],
 
   // Declared at the root so pnpm links the `codedocs` binary into
   // `node_modules/.bin`, which is a use fallow cannot see: nothing imports it,
