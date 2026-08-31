@@ -347,9 +347,12 @@ Implemented, covered by 155 tests, and measured against real repositories:
   names where they disagree with the index, and the exit code that follows from a remediable cause.
 - **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
   `model.ts`.
-- **`codedocs.jsonc`**, so a repository can name projects discovery misses — and a rule about what is
-  allowed to enter it. [#19](https://github.com/magicspon/codedocs/issues/19), marked `TODO(#19)` in
-  `discovery.ts`.
+- **`codedocs.jsonc`**, so a repository can name projects discovery misses. The rule about what may
+  enter it is settled — [ADR 0010](docs/adr/0010-configuration-file-and-what-may-enter-it.md): facts
+  codedocs cannot determine, never preferences — but nothing reads the file yet, so `classify` and
+  `baselines` are both specified against a file that does not exist.
+  [#52](https://github.com/magicspon/codedocs/issues/52), marked `TODO(#52)` in `discovery.ts`, and
+  the repository-root fix it waits on, [#53](https://github.com/magicspon/codedocs/issues/53).
 - **The scope channel.** The third kind of honesty has no flag, and arrives with the label layer.
 - **Exit code 1.** Nothing produces it yet; ADR 0006 assigns it to `docs check` finding a
   contradicted claim and to `doctor` finding an unmet precondition that has a remediation.
@@ -367,7 +370,8 @@ the code:
 - **[`CONTEXT.md`](CONTEXT.md)** — the glossary. One meaning per term, and the words to avoid.
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
-  cross-commit continuity, baseline retention, and what preflight measures.
+  cross-commit continuity, baseline retention, what preflight measures, and what may enter the
+  configuration file.
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on, including the call-graph
   backend spike that chose TypeScript 7 over TypeScript 6 on evidence.
 - **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — the original product requirements.
