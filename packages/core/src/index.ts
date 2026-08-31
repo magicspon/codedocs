@@ -37,6 +37,14 @@ export {
 } from './envelope.ts'
 
 export {
+  OPERATION_NAMES,
+  OPERATIONS,
+  operationSpec,
+  type OperationSpec,
+  type SubjectSpec,
+} from './manifest.ts'
+
+export {
   openSession,
   rebuild,
   TOOL_VERSION,
