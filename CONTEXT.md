@@ -203,9 +203,21 @@ drifted files as [[Blind spot]]s.
 _Avoid_: staleness, dirty, out of date, invalidation
 
 **Baseline**:
-A separate [[Index]] for some other commit, kept so an answer can be compared against it. Never part
-of the live index, and nothing not [[Durable]] may anchor to one.
+A separate [[Index]] for some other commit, kept so an answer can be compared against it. Recorded by
+[[Capture]] rather than built on demand, immutable once written, and never moved to another machine.
+Never part of the live index, and nothing not [[Durable]] may anchor to one.
 _Avoid_: history, snapshot store, previous index
+
+**Capture**:
+The copying of a finished [[Index]] into a [[Baseline]], which happens as a side effect of an analysis
+over a clean working tree and never as a command of its own.
+_Avoid_: save, promote, checkpoint, backup
+
+**Baseline substitution**:
+Using an older [[Baseline]] because the commit an answer asked to be compared against has none. Part of
+an answer's scope, reported with the commit requested, the commit used and the distance between them —
+never a [[Blind spot]].
+_Avoid_: fallback, approximation, nearest match
 
 ### Documentation
 
