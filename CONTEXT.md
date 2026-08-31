@@ -12,7 +12,9 @@ and what it could not see.
 
 **Fidelity**:
 Which analysis ran on a single file — `typed` (a type checker was applied to its project) or
-`syntactic` (parsed only). A property of a file in the index, never of the repository as a whole,
+`syntactic` (parsed only). Decided by [[Preflight]]'s first three signals, stored with the facts it
+describes and never recomputed at query time, because it reports the analysis that ran rather than
+the machine as it is now. A property of a file in the index, never of the repository as a whole,
 and never a claim about completeness: a `typed` file may still have blind spots.
 _Avoid_: tier, level, mode, degraded mode, partial
 
@@ -46,9 +48,13 @@ _Avoid_: confidence score, accuracy, coverage percentage
 ### Observing the repository
 
 **Preflight**:
-The sweep that observes a repository's preconditions. Callable on its own, and always the first
-phase of an analysis, which stores its result.
-_Avoid_: check, health check, validation
+The observation of a repository's preconditions, in two halves. The **phase** is signals 1-3 —
+filesystem state, config globs, a declared `postinstall` — which runs first and unconditionally
+because it costs microseconds. The fourth signal, [[Unresolved specifier]]s, is a by-product of
+extraction and never a pass of its own. A type checker's diagnostics are not a signal: they cost
+3,100x the specifier scan on the same files and cannot tell a prepared repository from an unprepared
+one.
+_Avoid_: check, health check, validation, diagnostics sweep
 
 **Analysis conditions**:
 The preflight result stored alongside an index: the preconditions observed, when they were
@@ -57,16 +63,22 @@ _Avoid_: health, status, environment
 
 **Environment fingerprint**:
 A summary of everything outside a file's own contents that determines what the type checker can see
-of it — the installed dependency set, the files a project's config globs actually match, the
-compiler options. Held per project; a change to it means fidelity could rise.
+of it: the lockfile hash, the project's `compilerOptions`, and the count and set-hash of the files
+its config globs. Held per project; a change to it means fidelity could rise. None of the three walks
+`node_modules`, so a hand-modified install under an unchanged lockfile reads as unchanged — the
+accepted blind spot, and what `doctor --measure` is for.
 _Avoid_: env hash, install hash
 
 **Unresolved specifier**:
 An import whose target the analysis could not find, recorded as a fact with its cause rather than
-dropped. Three causes: `unprepared` (declared as a dependency, absent from disk),
-`missing-generated` (its target lies where a codegen step would have written), `broken` (imported
-but declared nowhere — a defect in the repository, and the one cause with no remediation).
-_Avoid_: missing import, broken import, dangling edge
+dropped, and never as a ratio. Four causes: `unprepared` (declared as a dependency, absent from
+disk), `missing-generated` (its target lies where a codegen step would have written), `unmapped`
+(resolves only under a resolver codedocs does not run — a limit of codedocs, not a defect of the
+repository), `broken` (imported but declared nowhere — a defect in the repository). The last two have
+no [[Remediation]]: none would help, and none is a command. Stored per site and reported
+deduplicated — one distinct specifier, its count and its files, because one absent generated artefact
+produced 302 of them on cal.com.
+_Avoid_: missing import, broken import, dangling edge, unresolved ratio
 
 ### The internal representation
 

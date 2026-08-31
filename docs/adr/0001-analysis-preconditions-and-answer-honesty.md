@@ -39,12 +39,19 @@ as a confidence score.
 
 - **Detection is four generic signals**: `node_modules` absent or stale against the lockfile;
   `postinstall`/`prepare` declared; **`tsconfig` `include`/`files`/`rootDirs`/`paths` entries that
-  match no files**; and the measured unresolved-specifier ratio. Measured against the fixtures, the
+  match no files**; and unresolved specifiers. Measured against the fixtures, the
   third is the load-bearing one: a full, successful install cleared every `unprepared` cause and
   (via `postinstall`) both Prisma codegens, yet left `redwood` with no `.redwood/` and `next` with
   no `next-env.d.ts` or `.next/types`. Framework codegen is not an install step. Signal 2 therefore
   never fires a remediation on its own — once `node_modules` exists, `postinstall` has already run.
-- **The environment fingerprint joins the cache key**, per project. Without it, analysing a fresh
+  [ADR 0009](0009-preflight-cost-and-signal-shapes.md) refines the fourth signal and the phase: the
+  fourth is per-specifier facts grouped by cause, never a **ratio**, and it decides blind spots rather
+  than fidelity, which is signals 1-3 alone. Preflight splits accordingly — only signals 1-3 can run
+  before a program is open, so the fourth is a by-product of extraction — and a type checker's
+  diagnostics are not a signal at all.
+- **The environment fingerprint joins the cache key**, per project. Its inputs are fixed by
+  [ADR 0009](0009-preflight-cost-and-signal-shapes.md): the lockfile hash, the project's
+  `compilerOptions`, and the count and set-hash of the files its config globs. Without it, analysing a fresh
   clone and then running `pnpm install` leaves no file content changed, so an incremental pass would
   serve the syntactic answer forever — confidently wrong by caching. A fingerprint change is a
   legitimate full re-analysis of that project, and is reported as one.
@@ -54,8 +61,12 @@ as a confidence score.
 - **Preflight is a core operation**, not a `doctor` implementation detail: `doctor` renders it,
   `analyse` runs it and persists the result as the index's analysis conditions, and `report-bug`
   becomes preflight plus the index header. `doctor` is static-and-instant by default, reading
-  measured signals from the index; `--measure` forces a fresh sweep.
+  measured signals from the index; `--measure` re-runs signals 1-3 against the working tree and
+  reports where they disagree with what the index stored — it opens no program and extracts nothing
+  ([ADR 0009](0009-preflight-cost-and-signal-shapes.md)).
 - **`analyse` always exits 0** and produces an index; `--strict` (no file below `typed` fidelity, no
   blind spots) is the CI and agent gate. Refusal is reserved for "no TypeScript project here".
 - **The `broken` cause has no remediation** and must never be rendered as one — it is a finding
-  about the repository, and telling that user to run an install would send them the wrong way.
+  about the repository, and telling that user to run an install would send them the wrong way. ADR
+  0009 adds `unmapped` on the same footing for the opposite reason: a specifier only the framework's
+  own resolver can find is a limit of codedocs, so there is no command to offer.

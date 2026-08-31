@@ -22,19 +22,19 @@ constraint — `init` has nothing left to initialise, and `search` is `symbol` w
 Phases 1–4. `--limit` counts the result unit; the sort key is part of the contract, not an
 implementation detail.
 
-| Operation             | Result unit    | Sorted by                          | Exit 1 when              |
-| --------------------- | -------------- | ---------------------------------- | ------------------------ |
-| `analyse`             | project        | `tsconfig` path                    | —                        |
-| `symbol <pattern>`    | node           | `SymbolId`, then path              | —                        |
-| `callers` / `callees` | call edge      | `(source, target, kind, site)`     | —                        |
-| `references`          | reference edge | `(source, target, kind, site)`     | —                        |
-| `file <path>`         | file           | path                               | —                        |
-| `trace <root>`        | path           | the `SymbolId` sequence, lexically | —                        |
-| `evidence <subject>`  | per kind       | each kind by its own key           | —                        |
-| `docs check`          | document       | path, then section order           | a `contradicted` verdict |
-| `docs affected`       | document       | path                               | —                        |
-| `doctor`              | precondition   | project, then cause                | an unmet precondition    |
-| `report-bug`          | —              | —                                  | —                        |
+| Operation             | Result unit    | Sorted by                          | Exit 1 when                          |
+| --------------------- | -------------- | ---------------------------------- | ------------------------------------ |
+| `analyse`             | project        | `tsconfig` path                    | —                                    |
+| `symbol <pattern>`    | node           | `SymbolId`, then path              | —                                    |
+| `callers` / `callees` | call edge      | `(source, target, kind, site)`     | —                                    |
+| `references`          | reference edge | `(source, target, kind, site)`     | —                                    |
+| `file <path>`         | file           | path                               | —                                    |
+| `trace <root>`        | path           | the `SymbolId` sequence, lexically | —                                    |
+| `evidence <subject>`  | per kind       | each kind by its own key           | —                                    |
+| `docs check`          | document       | path, then section order           | a `contradicted` verdict             |
+| `docs affected`       | document       | path                               | —                                    |
+| `doctor`              | precondition   | project, then cause                | an unmet **remediable** precondition |
+| `report-bug`          | —              | —                                  | —                                    |
 
 `mcp` is in PRD §20 but is **not an operation**: it is a server that binds them. `impact`, `review`
 and `plan` are Phase 5 — named in the schema's operation enum from day one so their arrival is
@@ -185,6 +185,13 @@ recreates the noise the ADR refused. `unable to verify` does not either, because
 an unmet precondition punishes the environment rather than the code, which ADR 0001 declined to do.
 Uncovered sections are not a failure at all — [[Claim coverage]] is reported, never enforced.
 `--fail-on <verdict>` raises the bar for teams that want it.
+
+For `doctor`, **a remediable cause alone** reaches `1`, whichever signal evidenced it — a filesystem
+signal and a group of unresolved specifiers are the same finding at different granularity, so the exit
+code follows the cause, not the signal. `unmapped` and `broken` never reach it: both are findings with
+no command to offer, and a red build that cannot be cleared is noise. One cause may be evidenced twice,
+so `doctor` deduplicates causes across signals
+([ADR 0009](0009-preflight-cost-and-signal-shapes.md)).
 
 ## Considered Options
 
