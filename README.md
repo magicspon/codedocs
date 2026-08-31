@@ -71,16 +71,6 @@ $ codedocs analyse --limit 6
   rebuilt cold (4827 files): the index is empty
 
   showing 6 of 28 — pass --limit for more
-
-  7 project(s) analysed without types:
-    packages/dayjs/tsconfig.json
-    packages/lib/tsconfig.json
-    packages/platform/constants/tsconfig.json
-    packages/platform/libraries/tsconfig.json
-    packages/platform/types/tsconfig.json
-    packages/platform/utils/tsconfig.json
-    packages/types/tsconfig.json
-    calls into and out of these projects may be missing
 ```
 
 You do not have to run `analyse` again. **Every question repairs the index before it answers**, so an
@@ -319,7 +309,7 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 136 tests, and measured against real repositories:
+Implemented, covered by 155 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
@@ -332,6 +322,11 @@ Implemented, covered by 136 tests, and measured against real repositories:
   `import()` and `import x = require()` — so a route or a lazily loaded component is not missed.
 - **Two honesty channels.** Blind spots and truncation in the envelope, plus `conditions` narrowed to
   only the projects an answer touched.
+- **Preflight, and the environment fingerprint.** All four of ADR 0001's signals: whether the
+  dependencies are installed, whether an install script is declared, whether a config globs anything,
+  and every specifier that resolved to nothing, each with the cause behind it. A project whose
+  environment moved — an install landed, a codegen wrote the directory a tsconfig already globbed —
+  is re-analysed rather than answered from facts extracted on a machine that is gone.
 - **Symbol identity.** A descriptor path naming every enclosing scope, with the ids that still
   collide reported rather than silently merged.
 - **An MCP server.** `codedocs mcp`, one tool per operation, derived from the manifest the CLI parser
@@ -345,20 +340,11 @@ Implemented, covered by 136 tests, and measured against real repositories:
 
 **Behind them, in rough order of how much they hold back:**
 
-- **The environment fingerprint, and the last two preflight signals.** Preflight itself is settled:
-  ADR 0009 deleted the 36 s `getSemanticDiagnostics` sweep that was never one of ADR 0001's signals,
-  leaving filesystem checks that cost microseconds and a specifier scan at 0.7–4.9 ms per project.
-  What is left is implementation. A project counts as `typed` when `node_modules` exists and its
-  tsconfig globs at least one file — signals 1 and 3 of the three that now decide fidelity. Missing: a
-  declared `postinstall`, unresolved specifiers, and the fingerprint that invalidates a project when
-  its environment changes. The fingerprint is the urgent one, because without it an install after a
-  cold analysis is invisible and the syntactic answer is served forever.
-  [#44](https://github.com/magicspon/codedocs/issues/44), marked `TODO(#13)` in `session.ts`.
-- **Unresolved specifiers as stored facts.** Today only unresolved _relative_ specifiers are kept, so
-  the cause that matters most cannot be reported — 302 of cal.com `apps/web`'s 542 are the single bare
-  specifier `@calcom/prisma/enums`, one absent generated artefact. Storing every cause, and reporting
-  them deduplicated and filtered to the answer's own files, is
-  [#45](https://github.com/magicspon/codedocs/issues/45).
+- **`doctor`**, which is what preflight is still missing. All four of ADR 0001's signals are
+  measured and stored — `node_modules`, a declared install script, a config that globs nothing, and
+  every unresolved specifier with its cause — and `analyse` and every answer report them. What has no
+  home yet is `doctor --measure`, which re-runs the filesystem signals against the working tree and
+  names where they disagree with the index, and the exit code that follows from a remediable cause.
 - **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
   `model.ts`.
 - **`codedocs.jsonc`**, so a repository can name projects discovery misses — and a rule about what is

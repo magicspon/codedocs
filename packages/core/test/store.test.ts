@@ -58,6 +58,12 @@ describe('the stored enum codes', () => {
       ],
       cause: ['external', 'unresolvable', 'dynamic'],
       fidelity: ['typed', 'syntactic'],
+      preconditionCause: [
+        'unprepared',
+        'missing-generated',
+        'unmapped',
+        'broken',
+      ],
     })
   })
 })
@@ -84,6 +90,7 @@ describe('interned ids', () => {
       callEdges: WRITE.callEdges,
       unresolvedCalls: WRITE.unresolvedCalls,
       importEdges: WRITE.importEdges,
+      unresolvedSpecifiers: WRITE.unresolvedSpecifiers,
     })
   })
 
@@ -199,6 +206,17 @@ const WRITE = {
       fidelity: 'typed' as const,
       rootFileCount: 2,
       analysedAt: '2026-01-01T00:00:00.000Z',
+      fingerprint: 'fingerprint',
+      cause: null,
+      postinstall: false,
+    },
+  ],
+  unresolvedSpecifiers: [
+    {
+      file: 'src/a.ts',
+      specifier: '@calcom/prisma/enums',
+      line: 1,
+      cause: 'missing-generated' as const,
     },
   ],
   files: [

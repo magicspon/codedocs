@@ -8,8 +8,6 @@
  * behaviour ruled out.
  */
 
-import { existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { createRequire } from 'node:module'
 
 import { openAnalysis, type AnalysisSession } from './adapter/ts7.ts'
@@ -32,7 +30,13 @@ import type {
   ProjectConditions,
   Snapshot,
 } from './envelope.ts'
-import type { FileNode, Fidelity, FilePath, ProjectNode } from './model.ts'
+import type { FileNode, FilePath, ProjectNode } from './model.ts'
+import {
+  classifySpecifiers,
+  fidelityOf,
+  preflightProjects,
+  type ProjectPreflight,
+} from './preflight.ts'
 import {
   applyWave,
   beginAnalysis,
@@ -45,11 +49,13 @@ import {
   readHeader,
   readImporters,
   readMembershipCounts,
+  readProjectFiles,
   readProjects,
   readSeenFiles,
   readSymbolIdAt,
   readUnanalysedFiles,
   readUnanalysedProjects,
+  refreshProjects,
   retireFiles,
   writeHeader,
   type Store,
@@ -100,6 +106,15 @@ export interface RepairReport {
   readonly files: number
   /** How many propagation rounds ran. Always 0 for a cold build. */
   readonly waves: number
+  /**
+   * The projects re-analysed because their environment fingerprint moved.
+   *
+   * Reported separately from the file count because it is a different event: no
+   * file changed, the machine did. ADR 0001 makes that a legitimate full
+   * re-analysis of those projects, and one that is reported as such rather than
+   * dressed up as drift.
+   */
+  readonly environment: readonly FilePath[]
   /** Why a cold build was chosen over a wave, when one was. */
   readonly reason: string
 }
@@ -117,55 +132,35 @@ export function openSession(options: SessionOptions): Session {
   const store = openStore(root)
 
   const indexed = readFiles(store)
-  const drift = detectDrift(root, indexed, readSeenFiles(store))
-  const blindSpots: BlindSpot[] = []
-
-  let projects = readProjects(store)
-  let repair: RepairReport | null = null
-  const header = readHeader(store)
-  const stale = staleReason(header, indexed.length === 0)
-  // A build that was interrupted between two of its per-project commits. Not
-  // drift — these files never changed, they were never analysed — so it is its
-  // own reason to repair and its own kind of blind spot.
-  const unanalysed = readUnanalysedProjects(store)
-
-  if (
-    !options.noUpdate &&
-    (stale !== null || hasDrift(drift) || unanalysed.length > 0)
-  ) {
-    repair =
-      stale === null
-        ? repairWave(root, store, drift)
-        : { ...rebuild(root, store), reason: stale }
-    projects = readProjects(store)
-  } else if (hasDrift(drift) || unanalysed.length > 0) {
-    for (const project of unanalysed) {
-      blindSpots.push({
-        subject: project,
-        reason:
-          'this project was never analysed — a build was interrupted before it ' +
-          'reached it — and --no-update was passed',
-      })
-    }
-    for (const { path, reason } of driftedPaths(drift)) {
-      blindSpots.push({
-        subject: path,
-        reason: `${reason}, and --no-update was passed`,
-      })
-    }
-  } else if (stale !== null) {
-    blindSpots.push({
-      subject: root,
-      reason: `${stale}, and --no-update was passed; run \`codedocs analyse\``,
-    })
+  const outstanding: Outstanding = {
+    drift: detectDrift(root, indexed, readSeenFiles(store)),
+    stale: staleReason(readHeader(store), indexed.length === 0),
+    // A build that was interrupted between two of its per-project commits. Not
+    // drift — these files never changed, they were never analysed — so it is its
+    // own reason to repair and its own kind of blind spot.
+    unanalysed: readUnanalysedProjects(store),
+    // The environment under a project, which no file's content reveals: an
+    // install lands, or codegen writes the directory a tsconfig already globbed,
+    // and every stored fidelity for that project describes a machine that is
+    // gone.
+    moved: [],
   }
+  outstanding.moved = movedProjects(
+    root,
+    readProjects(store),
+    outstanding.drift.seenFiles,
+  )
+
+  const repair = options.noUpdate ? null : repairFor(root, store, outstanding)
+  const blindSpots = options.noUpdate ? withheld(root, outstanding) : []
+  const projects = readProjects(store)
 
   const current = readHeader(store)
   const snapshot: Snapshot = {
     commit: current.commit === '' ? null : current.commit,
     // A snapshot is a commit plus whatever is uncommitted on top of it. After a
     // repair the tree and the index agree, so `dirty` is about drift we kept.
-    dirty: options.noUpdate && hasDrift(drift),
+    dirty: options.noUpdate && hasDrift(outstanding.drift),
     analysedAt: current.analysedAt === '' ? null : current.analysedAt,
   }
 
@@ -180,6 +175,73 @@ export function openSession(options: SessionOptions): Session {
     repair,
     close: () => store.close(),
   }
+}
+
+/** Everything a session found out of date before it decided what to do. */
+interface Outstanding {
+  readonly drift: Drift
+  /** Why the whole index must be rebuilt, or `null`. */
+  readonly stale: string | null
+  /** Projects a previous build was interrupted before it reached. */
+  readonly unanalysed: readonly FilePath[]
+  /** Projects whose environment fingerprint no longer matches the index. */
+  moved: readonly ProjectPreflight[]
+}
+
+/** Whether anything at all is out of date. */
+const anythingOutstanding = (outstanding: Outstanding): boolean =>
+  outstanding.stale !== null ||
+  hasDrift(outstanding.drift) ||
+  outstanding.unanalysed.length > 0 ||
+  outstanding.moved.length > 0
+
+/** Bring the index up to date, or report that there was nothing to do. */
+function repairFor(
+  root: string,
+  store: Store,
+  outstanding: Outstanding,
+): RepairReport | null {
+  if (!anythingOutstanding(outstanding)) return null
+  const { stale, drift, moved } = outstanding
+  return stale === null
+    ? repairWave(root, store, drift, moved)
+    : { ...rebuild(root, store), environment: [], reason: stale }
+}
+
+/**
+ * What `--no-update` withheld, named file by file and project by project.
+ *
+ * ADR 0004's one rule for this path: the answer is still given, and what could
+ * not be brought up to date is named. A version mismatch is reported only when
+ * nothing else is, because it is the whole index rather than a list of subjects.
+ */
+function withheld(root: string, outstanding: Outstanding): BlindSpot[] {
+  const { stale, drift, unanalysed, moved } = outstanding
+  const spots: BlindSpot[] = [
+    ...moved.map((project) => ({
+      subject: project.configPath,
+      reason:
+        'this project’s environment changed since it was analysed, so its ' +
+        'fidelity and its facts may both be stale, and --no-update was passed',
+    })),
+    ...unanalysed.map((project) => ({
+      subject: project,
+      reason:
+        'this project was never analysed — a build was interrupted before it ' +
+        'reached it — and --no-update was passed',
+    })),
+    ...driftedPaths(drift).map(({ path, reason }) => ({
+      subject: path,
+      reason: `${reason}, and --no-update was passed`,
+    })),
+  ]
+  if (spots.length > 0 || stale === null) return spots
+  return [
+    {
+      subject: root,
+      reason: `${stale}, and --no-update was passed; run \`codedocs analyse\``,
+    },
+  ]
 }
 
 /**
@@ -208,37 +270,64 @@ const toConditions = (project: ProjectNode): ProjectConditions => ({
   project: project.configPath,
   fidelity: project.fidelity,
   analysedAt: project.analysedAt,
+  cause: project.cause,
+  postinstall: project.postinstall,
 })
 
 /**
- * A project's fidelity, from two of ADR 0001's four signals.
+ * The projects whose environment fingerprint no longer matches the index.
  *
- * Signal 1, whether `node_modules` exists, is the cheapest and fires on the case
- * that matters most: a fresh clone type-checks without failing and returns `any`
- * everywhere. Signal 3, a tsconfig that globs no files, is the load-bearing one,
- * because framework codegen is not an install step — a full, successful install
- * can still leave a project with nothing to analyse. Not yet measured: signal 1's
- * other half, `node_modules` stale against the lockfile; signal 2, a declared
- * `postinstall`; and signal 4, the unresolved-specifier ratio.
- *
- * TODO(#13): implement the remaining signals and their remediations.
+ * Preflight runs over the walk drift detection has just done, so the whole check
+ * is a lockfile hash, a config read and a glob match per project. A project the
+ * index has a row for but whose config has since gone reads as changed, which is
+ * the honest answer: it is no longer the project that was analysed.
  */
-function projectFidelity(
+function movedProjects(
   root: string,
-  configPath: FilePath,
-  fileCount: number,
-): Fidelity {
-  // A tsconfig that globs nothing analysed nothing. ADR 0001 makes that a lower
-  // fidelity rather than an error, and it is the third of its four signals: a
-  // config whose includes match no files is usually waiting on codegen.
-  if (fileCount === 0) return 'syntactic'
-  let directory = join(root, dirname(configPath))
-  for (;;) {
-    if (existsSync(join(directory, 'node_modules'))) return 'typed'
-    if (directory === root) return 'syntactic'
-    const parent = dirname(directory)
-    if (parent === directory) return 'syntactic'
-    directory = parent
+  projects: readonly ProjectNode[],
+  seenFiles: readonly FilePath[],
+): ProjectPreflight[] {
+  const measured = preflightProjects(
+    root,
+    projects.map((project) => project.configPath),
+    seenFiles,
+  )
+  return projects
+    .map((project) => measured.get(project.configPath))
+    .filter((preflight) => preflight !== undefined)
+    .filter((preflight) => {
+      const stored = projects.find(
+        (project) => project.configPath === preflight.configPath,
+      )
+      // A project whose tsconfig has gone is not an environment change but a
+      // structural one, and re-analysing a project that no longer exists would
+      // ask the backend to open nothing. `analyse` is where that is resolved.
+      return preflight.present && stored?.fingerprint !== preflight.fingerprint
+    })
+}
+
+/**
+ * One project's row, from the preflight measured for it.
+ *
+ * `rootFileCount` stays the analysis's own count of the files it extracted for
+ * this project, which is not preflight's glob count: preflight reads the config
+ * against the tree, and the analysis credits a shared file to exactly one
+ * project. The two answer different questions, and only the first can be
+ * recomputed without opening a program.
+ */
+function projectRow(
+  preflight: ProjectPreflight,
+  rootFileCount: number,
+): ProjectNode {
+  const { fidelity, cause } = fidelityOf(preflight)
+  return {
+    configPath: preflight.configPath,
+    fidelity,
+    rootFileCount,
+    analysedAt: new Date().toISOString(),
+    fingerprint: preflight.fingerprint,
+    cause,
+    postinstall: preflight.postinstall,
   }
 }
 
@@ -250,7 +339,12 @@ function projectFidelity(
  * changed file against a 22.9 s cold build, because a body-only edit — the
  * commonest edit there is — settles in one wave and one file.
  */
-function repairWave(root: string, store: Store, drift: Drift): RepairReport {
+function repairWave(
+  root: string,
+  store: Store,
+  drift: Drift,
+  moved: readonly ProjectPreflight[],
+): RepairReport {
   const shapes = readExportShapes(store)
   const canonicalOf = readCanonicalProjects(store)
   const gone = new Set(drift.deleted)
@@ -262,8 +356,22 @@ function repairWave(root: string, store: Store, drift: Drift): RepairReport {
 
   const analysis = openAnalysis(root)
   try {
+    // A project whose environment moved is re-analysed in full, so its files
+    // join the frontier rather than getting their own code path: the wave then
+    // propagates out of them exactly as it does out of an edit, which is what
+    // carries a project turning `typed` into the answers of the projects that
+    // import it.
+    const measured = new Map(
+      moved.map((preflight) => [preflight.configPath, preflight]),
+    )
+    const preflightOf = (configPath: FilePath): ProjectPreflight =>
+      measured.get(configPath) ??
+      preflightProjects(root, [configPath], drift.seenFiles).get(configPath)!
+    const environment = reanalyse(store, analysis, moved, canonicalOf)
     const visited = new Set<FilePath>(gone)
-    let pending = seed
+    let pending = [...new Set([...seed, ...environment.files])].filter(
+      (path) => !gone.has(path),
+    )
     let waves = 0
     let extracted = 0
 
@@ -273,26 +381,44 @@ function repairWave(root: string, store: Store, drift: Drift): RepairReport {
         // large edit. Falling back is honest and bounded; looping is neither.
         return {
           ...rebuild(root, store),
+          environment: [],
           reason: `the wave did not settle within ${MAX_WAVES} rounds`,
         }
       }
       waves += 1
       for (const path of pending) visited.add(path)
 
-      const moved = runWave(root, store, analysis, pending, canonicalOf, shapes)
-      extracted += moved.extracted
+      const wave = runWave(root, store, analysis, {
+        pending,
+        canonicalOf,
+        shapes,
+        preflightOf,
+        refreshed: environment.rows,
+      })
+      extracted += wave.extracted
 
-      pending = [...readImporters(store, moved.reshaped)].filter(
+      pending = [...readImporters(store, wave.reshaped)].filter(
         (path) => !visited.has(path),
       )
     }
+
+    // Written whatever the wave did. A project that globs no files has no facts
+    // to carry its new fingerprint into the index, and without the row it would
+    // read as moved again on the next question, for ever.
+    refreshProjects(store, [...environment.rows.values()])
 
     // A repair that extracted nothing still happened: without the stamp, a lone
     // deletion would leave `analysedAt` reporting an older snapshot than the one
     // the index now holds.
     if (waves === 0) writeHeader(store, stamp(root))
 
-    return { kind: 'wave', files: extracted, waves, reason: '' }
+    return {
+      kind: 'wave',
+      files: extracted,
+      waves,
+      environment: [...environment.rows.keys()],
+      reason: '',
+    }
   } finally {
     analysis.close()
   }
@@ -324,15 +450,27 @@ function seedFrontier(
   return [...frontier].filter((path) => !gone.has(path))
 }
 
+/** What one round of the wave needs, beyond the files it is extracting. */
+interface WaveContext {
+  readonly pending: readonly FilePath[]
+  /** Every file's project, as the index credits it. Ownership never moves here. */
+  readonly canonicalOf: ReadonlyMap<FilePath, FilePath>
+  /** Per file, the export-shape hash the last extraction produced. */
+  readonly shapes: Map<FilePath, string>
+  /** Preflight for a project the wave meets without a row in the index. */
+  readonly preflightOf: (configPath: FilePath) => ProjectPreflight
+  /** Rows for the projects being re-analysed for an environment change. */
+  readonly refreshed: ReadonlyMap<FilePath, ProjectNode>
+}
+
 /** One round: extract the frontier, commit it, and report whose shape moved. */
 function runWave(
   root: string,
   store: Store,
   analysis: AnalysisSession,
-  pending: readonly FilePath[],
-  canonicalOf: ReadonlyMap<FilePath, FilePath>,
-  shapes: Map<FilePath, string>,
+  context: WaveContext,
 ): { extracted: number; reshaped: FilePath[] } {
+  const { pending, canonicalOf, shapes } = context
   openFor(analysis, pending, canonicalOf)
   const result = analysis.extract({
     files: pending,
@@ -355,7 +493,14 @@ function runWave(
     callEdges: result.callEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
-    projects: touchedProjects(root, store, result.canonicalOf),
+    // The adapter measured which specifiers resolved to nothing; the cause is
+    // filesystem knowledge, so it is decided here rather than in the program.
+    unresolvedSpecifiers: classifySpecifiers(
+      root,
+      result.unresolvedSpecifiers,
+      result.canonicalOf,
+    ),
+    projects: touchedProjects(store, result.canonicalOf, context),
     header: stamp(root),
   })
 
@@ -368,6 +513,42 @@ function runWave(
     shapes.set(path, shape)
   }
   return { extracted: result.extracted.length, reshaped }
+}
+
+/**
+ * Re-open the projects whose environment moved, and say what to re-extract.
+ *
+ * Both halves matter. The files the index already credits to the project are
+ * re-extracted because their facts were produced under the old environment — an
+ * `any` where there is now a type — and the files the project globs *now* are
+ * re-extracted because that is how codegen landing becomes facts. Ownership is
+ * left where the index put it: a re-analysis refreshes a project, it does not
+ * take files off its neighbours.
+ */
+function reanalyse(
+  store: Store,
+  analysis: ReturnType<typeof openAnalysis>,
+  moved: readonly ProjectPreflight[],
+  canonicalOf: ReadonlyMap<FilePath, FilePath>,
+): { files: FilePath[]; rows: Map<FilePath, ProjectNode> } {
+  const rows = new Map<FilePath, ProjectNode>()
+  if (moved.length === 0) return { files: [], rows }
+
+  const configPaths = moved.map((preflight) => preflight.configPath)
+  analysis.openProjects(configPaths)
+  const byProject = analysis.filesByProject()
+  const files = new Set<FilePath>(readProjectFiles(store, configPaths))
+
+  for (const preflight of moved) {
+    const owned = (byProject.get(preflight.configPath) ?? []).filter(
+      (path) =>
+        (canonicalOf.get(path) ?? preflight.configPath) ===
+        preflight.configPath,
+    )
+    for (const path of owned) files.add(path)
+    rows.set(preflight.configPath, projectRow(preflight, owned.length))
+  }
+  return { files: [...files].sort(), rows }
 }
 
 /** The header one repair stamps on the index. */
@@ -409,11 +590,16 @@ function openFor(
  * does not re-enumerate a project, and overwriting the count with the size of the
  * wave would report a 3-file project where there are 3,000. A project with no
  * recorded row falls back to its membership, for the same reason.
+ *
+ * Fidelity, its cause and the fingerprint are carried forward untouched, because
+ * they describe the environment the facts were extracted in rather than the
+ * machine as it is now. The exception is a project being re-analysed *for* an
+ * environment change, whose row was measured before the wave started.
  */
 function touchedProjects(
-  root: string,
   store: Store,
   canonicalOf: ReadonlyMap<FilePath, FilePath>,
+  context: WaveContext,
 ): ProjectNode[] {
   const known = new Map(
     readProjects(store).map((project) => [project.configPath, project]),
@@ -424,15 +610,14 @@ function touchedProjects(
   const owned = readMembershipCounts(store)
   const analysedAt = new Date().toISOString()
   return [...new Set(canonicalOf.values())].sort().map((configPath) => {
+    const refreshed = context.refreshed.get(configPath)
+    if (refreshed !== undefined) return refreshed
     const existing = known.get(configPath)
-    const rootFileCount = existing?.rootFileCount ?? owned.get(configPath) ?? 0
-    return {
-      configPath,
-      fidelity:
-        existing?.fidelity ?? projectFidelity(root, configPath, rootFileCount),
-      rootFileCount,
-      analysedAt,
-    }
+    if (existing !== undefined) return { ...existing, analysedAt }
+    return projectRow(
+      context.preflightOf(configPath),
+      owned.get(configPath) ?? 0,
+    )
   })
 }
 
@@ -461,13 +646,19 @@ export function rebuild(
   const configPaths = discoverProjects(root)
   if (configPaths.length === 0) return { kind: 'cold', files: 0, waves: 0 }
 
+  // Preflight before anything is opened, over the same walk the index stores as
+  // the files it has seen. ADR 0009 makes it the first phase unconditionally,
+  // because signals 1-3 are `existsSync` work against a 12 s analysis.
+  const seenFiles = walkSourceFiles(root)
+  const preflight = preflightProjects(root, configPaths, seenFiles)
+
   const analysis = openAnalysis(root)
   try {
     analysis.openProjects(configPaths)
     const byProject = analysis.filesByProject()
 
     beginAnalysis(store, {
-      seenFiles: walkSourceFiles(root),
+      seenFiles,
       filesByProject: byProject,
       header: {
         commit: currentCommit(root),
@@ -493,12 +684,7 @@ export function rebuild(
     for (const configPath of configPaths) {
       if ((byProject.get(configPath)?.length ?? 0) > 0) continue
       commitProject(store, {
-        project: {
-          configPath,
-          fidelity: projectFidelity(root, configPath, 0),
-          rootFileCount: 0,
-          analysedAt: new Date().toISOString(),
-        },
+        project: projectRow(preflight.get(configPath)!, 0),
         files: [],
         exportShapes: new Map(),
         symbols: [],
@@ -506,6 +692,7 @@ export function rebuild(
         callEdges: [],
         unresolvedCalls: [],
         importEdges: [],
+        unresolvedSpecifiers: [],
       })
     }
 
@@ -513,7 +700,7 @@ export function rebuild(
     for (const [configPath, owned] of byProject) {
       if (owned.length === 0) continue
       extracted += extractProject(root, store, analysis, {
-        configPath,
+        preflight: preflight.get(configPath)!,
         owned,
         canonicalOf,
       })
@@ -527,7 +714,8 @@ export function rebuild(
 
 /** One project's slice of the cold build. */
 interface ProjectSlice {
-  readonly configPath: FilePath
+  /** What preflight measured for this project before anything was opened. */
+  readonly preflight: ProjectPreflight
   /** The files this project owns, which are the ones it extracts. */
   readonly owned: readonly FilePath[]
   /** Every file's owner, so a shared file is extracted where it is credited. */
@@ -559,12 +747,7 @@ function extractProject(
   }
 
   commitProject(store, {
-    project: {
-      configPath: slice.configPath,
-      fidelity: projectFidelity(root, slice.configPath, slice.owned.length),
-      rootFileCount: slice.owned.length,
-      analysedAt: new Date().toISOString(),
-    },
+    project: projectRow(slice.preflight, slice.owned.length),
     files,
     exportShapes: result.exportShapes,
     symbols: result.symbols,
@@ -572,6 +755,11 @@ function extractProject(
     callEdges: result.callEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
+    unresolvedSpecifiers: classifySpecifiers(
+      root,
+      result.unresolvedSpecifiers,
+      result.canonicalOf,
+    ),
   })
 
   return files.length

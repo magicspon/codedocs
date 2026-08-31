@@ -65,6 +65,7 @@ export type {
   FileNode,
   FilePath,
   ImportEdge,
+  PreconditionCause,
   ProjectNode,
   Provenance,
   SymbolId,
@@ -81,6 +82,11 @@ export {
   type Store,
 } from './store.ts'
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
+export {
+  fidelityOf,
+  preflightProjects,
+  type ProjectPreflight,
+} from './preflight.ts'
 export {
   discoverProjects,
   findRepositoryRoot,

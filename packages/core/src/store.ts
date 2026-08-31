@@ -38,6 +38,7 @@ import type {
   FileNode,
   FilePath,
   ImportEdge,
+  PreconditionCause,
   ProjectNode,
   Provenance,
   SymbolId,
@@ -45,6 +46,7 @@ import type {
   SymbolNode,
   UnresolvedCall,
   UnresolvedCallCause,
+  UnresolvedSpecifier,
 } from './model.ts'
 
 /**
@@ -52,7 +54,7 @@ import type {
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 5
+export const STORE_SCHEMA_VERSION = 7
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 const TABLES: readonly string[] = [
@@ -68,6 +70,7 @@ const TABLES: readonly string[] = [
   'declaration',
   'call_edge',
   'unresolved_call',
+  'unresolved_specifier',
 ]
 
 const DDL = `
@@ -92,7 +95,10 @@ create table if not exists project (
   path_id integer primary key,
   fidelity integer not null,
   root_file_count integer not null,
-  analysed_at text not null
+  analysed_at text not null,
+  fingerprint text not null,
+  cause integer,
+  postinstall integer not null
 ) strict;
 
 create table if not exists file (
@@ -159,6 +165,14 @@ create table if not exists unresolved_call (
   name text
 ) strict;
 
+create table if not exists unresolved_specifier (
+  rowid_ integer primary key autoincrement,
+  path_id integer not null,
+  specifier text not null,
+  line integer not null,
+  cause integer not null
+) strict;
+
 create index if not exists file_import_to on file_import(to_id);
 create index if not exists symbol_name on symbol(name);
 create index if not exists symbol_site on symbol(path_id, start);
@@ -213,6 +227,12 @@ const CAUSES: readonly UnresolvedCallCause[] = [
   'dynamic',
 ]
 const FIDELITIES: readonly Fidelity[] = ['typed', 'syntactic']
+const PRECONDITION_CAUSES: readonly PreconditionCause[] = [
+  'unprepared',
+  'missing-generated',
+  'unmapped',
+  'broken',
+]
 
 /** The closed lists, exposed only so a test can pin their order. */
 export interface EnumCodes {
@@ -222,6 +242,7 @@ export interface EnumCodes {
   readonly derivation: readonly Derivation[]
   readonly cause: readonly UnresolvedCallCause[]
   readonly fidelity: readonly Fidelity[]
+  readonly preconditionCause: readonly PreconditionCause[]
 }
 
 /** The stored order of every closed enum, so a reorder fails a test. */
@@ -232,6 +253,7 @@ export const ENUM_CODES: EnumCodes = {
   derivation: DERIVATIONS,
   cause: CAUSES,
   fidelity: FIDELITIES,
+  preconditionCause: PRECONDITION_CAUSES,
 }
 
 /** The stored code for one enum value. Throws rather than storing a wrong row. */
@@ -498,6 +520,15 @@ interface FileFacts {
   readonly callEdges: readonly CallEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
+  /**
+   * ADR 0009's signal 4, per site and keyed by file.
+   *
+   * Per site because the wave's write unit is one file: a project-level count
+   * would need read-modify-write across files, and would go wrong exactly where
+   * ADR 0004 permits a partial build committed per project. Deduplicating 306
+   * copies of one specifier into one fact is the operation's job.
+   */
+  readonly unresolvedSpecifiers: readonly UnresolvedSpecifier[]
 }
 
 /** One wave's worth of facts: the files it re-extracted, and where they belong. */
@@ -676,6 +707,7 @@ function groupByProject(
         callEdges: [],
         unresolvedCalls: [],
         importEdges: [],
+        unresolvedSpecifiers: [],
       }
       groups.set(key, found)
     }
@@ -693,6 +725,8 @@ function groupByProject(
   for (const row of facts.unresolvedCalls)
     group(row.file).unresolvedCalls.push(row)
   for (const row of facts.importEdges) group(row.from).importEdges.push(row)
+  for (const row of facts.unresolvedSpecifiers)
+    group(row.file).unresolvedSpecifiers.push(row)
   return groups
 }
 
@@ -705,6 +739,7 @@ interface FactGroup {
   callEdges: CallEdge[]
   unresolvedCalls: UnresolvedCall[]
   importEdges: ImportEdge[]
+  unresolvedSpecifiers: UnresolvedSpecifier[]
 }
 
 /**
@@ -733,6 +768,7 @@ function clearFile(db: DatabaseSync, id: number): void {
   prepared(db, 'delete from declaration where path_id = ?').run(id)
   prepared(db, 'delete from call_edge where path_id = ?').run(id)
   prepared(db, 'delete from unresolved_call where path_id = ?').run(id)
+  prepared(db, 'delete from unresolved_specifier where path_id = ?').run(id)
   prepared(db, 'delete from file_import where from_id = ?').run(id)
   prepared(db, 'delete from file_project where file_id = ?').run(id)
 }
@@ -741,15 +777,38 @@ function writeProject(store: Store, project: ProjectNode): void {
   store.db
     .prepare(
       `insert or replace into project
-       (path_id, fidelity, root_file_count, analysed_at)
-       values (?, ?, ?, ?)`,
+       (path_id, fidelity, root_file_count, analysed_at, fingerprint, cause,
+        postinstall)
+       values (?, ?, ?, ?, ?, ?, ?)`,
     )
     .run(
       internerFor(store).path(project.configPath),
       code(FIDELITIES, project.fidelity, 'fidelity'),
       project.rootFileCount,
       project.analysedAt,
+      project.fingerprint,
+      project.cause === null
+        ? null
+        : code(PRECONDITION_CAUSES, project.cause, 'precondition cause'),
+      project.postinstall ? 1 : 0,
     )
+}
+
+/**
+ * Rewrite project rows without touching a fact.
+ *
+ * A project whose environment fingerprint moved is re-analysed, and its new
+ * fingerprint has to reach the index even when the re-analysis extracted
+ * nothing — a project that globs no files has no facts to carry it. Without
+ * this, such a project would fingerprint as stale on every query for ever.
+ */
+export function refreshProjects(
+  store: Store,
+  projects: readonly ProjectNode[],
+): void {
+  transaction(store, () => {
+    for (const project of projects) writeProject(store, project)
+  })
 }
 
 /** `seen_file` is what keeps drift finite; see `AnalysisStart.seenFiles`. */
@@ -794,6 +853,7 @@ function writeFileFacts(store: Store, facts: FileFacts): void {
   writeCallEdges(store, facts.callEdges)
   writeUnresolvedCalls(store, facts.unresolvedCalls)
   writeImportEdges(store, facts.importEdges)
+  writeUnresolvedSpecifiers(store, facts.unresolvedSpecifiers)
 }
 
 /** The file row carries both hashes: content for drift, export shape for the wave. */
@@ -919,6 +979,25 @@ function writeImportEdges(
       intern.path(row.from),
       row.specifier,
       row.to === null ? null : intern.path(row.to),
+    )
+  }
+}
+
+function writeUnresolvedSpecifiers(
+  store: Store,
+  specifiers: readonly UnresolvedSpecifier[],
+): void {
+  const intern = internerFor(store)
+  const row = store.db.prepare(
+    `insert into unresolved_specifier (path_id, specifier, line, cause)
+     values (?, ?, ?, ?)`,
+  )
+  for (const specifier of specifiers) {
+    row.run(
+      intern.path(specifier.file),
+      specifier.specifier,
+      specifier.line,
+      code(PRECONDITION_CAUSES, specifier.cause, 'precondition cause'),
     )
   }
 }
@@ -1141,6 +1220,92 @@ export function readMembershipCounts(store: Store): Map<FilePath, number> {
   return new Map(rows.map((row) => [row.path, row.n]))
 }
 
+/**
+ * The files a project owns, from membership rather than from a re-enumeration.
+ *
+ * What a project whose environment fingerprint moved re-extracts: ADR 0001 makes
+ * a fingerprint change a full re-analysis of that project, and its files are the
+ * ones the index credited to it.
+ */
+export function readProjectFiles(
+  store: Store,
+  configPaths: readonly FilePath[],
+): FilePath[] {
+  const found = new Set<FilePath>()
+  const statement = store.db.prepare(
+    `select f.path from file_project fp
+     join path f on f.id = fp.file_id
+     join path c on c.id = fp.project_id
+     where c.path = ? and fp.canonical = 1`,
+  )
+  for (const configPath of configPaths) {
+    for (const row of statement.all(configPath) as { path: string }[]) {
+      found.add(row.path)
+    }
+  }
+  return [...found].sort()
+}
+
+/**
+ * Every unresolved specifier written against the given files.
+ *
+ * Filtered here rather than in the operation, because ADR 0009 scopes these to
+ * the answer's own result: cal.com `apps/web`'s 576 have no business on a
+ * `callers` answer over three files of `packages/lib`.
+ */
+export function readUnresolvedSpecifiers(
+  store: Store,
+  files: readonly FilePath[],
+): UnresolvedSpecifier[] {
+  const found: UnresolvedSpecifier[] = []
+  if (files.length === 0) return found
+  const statement = store.db.prepare(
+    `select u.specifier, u.line, u.cause from unresolved_specifier u
+     join path p on p.id = u.path_id
+     where p.path = ?`,
+  )
+  for (const file of new Set(files)) {
+    for (const row of statement.all(file) as {
+      specifier: string
+      line: number
+      cause: number
+    }[]) {
+      found.push({
+        file,
+        specifier: row.specifier,
+        line: row.line,
+        cause: named(PRECONDITION_CAUSES, row.cause, 'precondition cause'),
+      })
+    }
+  }
+  return found
+}
+
+/** Every unresolved specifier in the index, for the operations whose scope is the repository. */
+export function readAllUnresolvedSpecifiers(
+  store: Store,
+): UnresolvedSpecifier[] {
+  return (
+    store.db
+      .prepare(
+        `select p.path, u.specifier, u.line, u.cause from unresolved_specifier u
+         join path p on p.id = u.path_id
+         order by p.path, u.line`,
+      )
+      .all() as {
+      path: string
+      specifier: string
+      line: number
+      cause: number
+    }[]
+  ).map((row) => ({
+    file: row.path,
+    specifier: row.specifier,
+    line: row.line,
+    cause: named(PRECONDITION_CAUSES, row.cause, 'precondition cause'),
+  }))
+}
+
 /** Every source file the last analysis saw, whether or not a project globbed it. */
 export function readSeenFiles(store: Store): Set<FilePath> {
   const rows = store.db
@@ -1154,7 +1319,8 @@ export function readProjects(store: Store): ProjectNode[] {
   return (
     store.db
       .prepare(
-        `select p.path, r.fidelity, r.root_file_count, r.analysed_at
+        `select p.path, r.fidelity, r.root_file_count, r.analysed_at,
+                r.fingerprint, r.cause, r.postinstall
          from project r join path p on p.id = r.path_id
          order by p.path`,
       )
@@ -1163,12 +1329,21 @@ export function readProjects(store: Store): ProjectNode[] {
       fidelity: number
       root_file_count: number
       analysed_at: string
+      fingerprint: string
+      cause: number | null
+      postinstall: number
     }[]
   ).map((row) => ({
     configPath: row.path,
     fidelity: named(FIDELITIES, row.fidelity, 'fidelity'),
     rootFileCount: row.root_file_count,
     analysedAt: row.analysed_at,
+    fingerprint: row.fingerprint,
+    cause:
+      row.cause === null
+        ? null
+        : named(PRECONDITION_CAUSES, row.cause, 'precondition cause'),
+    postinstall: row.postinstall === 1,
   }))
 }
 
