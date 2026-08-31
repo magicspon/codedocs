@@ -253,10 +253,12 @@ so `doctor` deduplicates causes across signals
 - **`docs affected` with no arguments uses the drift set**, not a diff against a guessed default
   branch. ADR 0004 already computes it before every answer, so the zero-argument case answers "what
   have I broken right now" with no git and no configuration; `--base <ref>` widens it.
-- **The `report-bug` payload is still open, deliberately.** The operation is named and owes the
-  envelope like any other, but _what is safe to include_ is a PRD §28 privacy question — paths, symbol
-  names and dependency versions all leak repository content into a file a user may paste into a public
-  issue. That deserves its own decision, not a paragraph at the end of a renderer ADR.
+- **The `report-bug` payload was left open, deliberately, and is now closed by [ADR
+  0011](0011-report-bug-payload.md).** The operation is named here and owes the envelope like any
+  other, but _what is safe to include_ was a PRD §28 privacy question — paths, symbol names and
+  dependency versions all leak repository content into a file a user may paste into a public issue.
+  ADR 0011 splits the payload by reader rather than by sensitivity, and makes `report-bug` the one
+  operation exempt from the byte-identical rule above.
 - **Agent discoverability stays unowned.** The `AGENTS.md` block that teaches an agent to shell out is
   the human-facing half of this contract, but it is writing that depends on the finished surface and
   is better done once, after this lands.
