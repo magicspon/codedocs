@@ -293,6 +293,57 @@ Exit codes follow the `fallow` convention: **0** answered, **1** a negative find
 answer. Nothing produces 1 yet — ADR 0006 assigns it to `docs check` finding a contradicted claim and
 to `doctor` finding an unmet precondition.
 
+<!-- cspell:ignore exlucde -->
+
+## Configuration
+
+Optional. `codedocs.jsonc` at the repository root — the nearest enclosing `.git` — holds the facts
+about a repository codedocs cannot determine and must be told. Every key has a default, so a fresh
+clone needs no file at all.
+
+```jsonc
+{
+  "version": 1,
+  "classify": { "vendor/**": { "authorship": "generated" } },
+  "baselines": 3,
+  "discover": {
+    "projects": ["packages/*/tsconfig.build.json"],
+    "skip": ["repos"],
+  },
+  "remediations": [
+    { "specifier": "@calcom/prisma/*", "run": "pnpm prisma generate" },
+  ],
+}
+```
+
+| Key            | Default                      | What it tells codedocs                                                    |
+| -------------- | ---------------------------- | ------------------------------------------------------------------------- |
+| `version`      | `1`                          | Which shape this file is for                                              |
+| `classify`     | `{}`                         | Glob to `role` / `authorship`, last match wins, highest precedence        |
+| `baselines`    | `3`                          | How many baselines to keep; `0` disables capture                          |
+| `discover`     | `{ projects: [], skip: [] }` | Extra config paths, and extra directory names to skip                     |
+| `remediations` | `[]`                         | The command that clears a `missing-generated` specifier, first match wins |
+
+Both `discover` keys are **additive**. `discover.projects` is added to the `tsconfig.json` files the
+walk found; `discover.skip` is added to the skip list, so `node_modules` cannot be removed from it. A
+config key that appears to control something hard-coded elsewhere is a config that lies.
+
+Neither key decides membership: a file is in the index if and only if a project globs it.
+
+**It holds facts, never preferences.** A default `--limit`, an output format, a colour setting —
+codedocs can determine all of them, so none may enter. Nor may a key change what is reported about
+what was analysed: no blind spot, truncation, fidelity label or provenance can be configured away.
+
+**Parsing is strict.** Comments and trailing commas are read, as `.jsonc` promises. A file that is
+absent is normal and silent; a file that exists and is wrong exits 2 naming the file, the key and
+what was expected, and never falls back to the defaults. An unknown key is an error, naming a near
+neighbour where there is one — `exlucde` parsing to nothing, silently, is the failure this buys out.
+So is a second `codedocs.jsonc` below the root: codedocs reads one, because ADR 0004 gives one index
+per working tree.
+
+The rule about what may enter the file is
+[ADR 0010](docs/adr/0010-configuration-file-and-what-may-enter-it.md).
+
 ## The index
 
 One SQLite file per working tree, at `.codedocs/index.db`, holding one snapshot. It writes its own
@@ -347,12 +398,10 @@ Implemented, covered by 155 tests, and measured against real repositories:
   names where they disagree with the index, and the exit code that follows from a remediable cause.
 - **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
   `model.ts`.
-- **`codedocs.jsonc`**, so a repository can name projects discovery misses. The rule about what may
-  enter it is settled — [ADR 0010](docs/adr/0010-configuration-file-and-what-may-enter-it.md): facts
-  codedocs cannot determine, never preferences — but nothing reads the file yet, so `classify` and
-  `baselines` are both specified against a file that does not exist.
-  [#52](https://github.com/magicspon/codedocs/issues/52), marked `TODO(#52)` in `discovery.ts`, and
-  the repository-root fix it waits on, [#53](https://github.com/magicspon/codedocs/issues/53).
+- **The consumers of two `codedocs.jsonc` keys.** The file is read, validated and strict, and
+  `discover` and `remediations` are wired to the code that wanted them. `classify` and `baselines`
+  parse and default, but the label layer (ADR 0003) and baseline capture (ADR 0008) that would read
+  them are not built, so setting either changes nothing today.
 - **The scope channel.** The third kind of honesty has no flag, and arrives with the label layer.
 - **Exit code 1.** Nothing produces it yet; ADR 0006 assigns it to `docs check` finding a
   contradicted claim and to `doctor` finding an unmet precondition that has a remediation.

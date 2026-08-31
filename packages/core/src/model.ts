@@ -84,6 +84,19 @@ export type UnresolvedCallCause = 'external' | 'unresolvable' | 'dynamic'
 export type Fidelity = 'typed' | 'syntactic'
 
 /**
+ * ADR 0003's two label axes, which are orthogonal because the fixtures refuse to
+ * let them collapse: `next.config.ts` is config *and* type-checked source, and
+ * `apps.metadata.generated.ts` is generated *and* real source.
+ *
+ * Declared here because `codedocs.jsonc`'s `classify` block validates against
+ * them; the label store that produces them is ADR 0003's to build.
+ */
+export type Role = 'source' | 'test' | 'config'
+
+/** The second axis. Defaults to `authored`. */
+export type Authorship = 'authored' | 'generated'
+
+/**
  * Why a precondition is unmet, from ADR 0009's closed set.
  *
  * The first two have a remediation and the last two do not, for opposite

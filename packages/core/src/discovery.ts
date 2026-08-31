@@ -7,14 +7,19 @@
  */
 
 import { execFileSync } from 'node:child_process'
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync, globSync, readdirSync } from 'node:fs'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 
+import { CONFIG_FILE, misplacedConfig, type Config } from './config.ts'
 import type { FilePath } from './model.ts'
 
 /**
- * Directories never walked when looking for projects. `node_modules` dominates
- * the cost; the rest are build output that would yield duplicate projects.
+ * The floor of directories never walked. `node_modules` dominates the cost; the
+ * rest are build output that would yield duplicate projects.
+ *
+ * `discover.skip` adds to this and never replaces it (ADR 0010): a config key
+ * that appears to control something hard-coded elsewhere is a config that lies,
+ * and the failure is silent.
  */
 const SKIP_DIRS: ReadonlySet<string> = new Set([
   'node_modules',
@@ -63,18 +68,22 @@ export function findRepositoryRoot(from: string): string {
 }
 
 /**
- * Every `tsconfig.json` under the root, repository-relative and sorted by path.
+ * Every `tsconfig.json` under the root, plus whatever `discover.projects` names,
+ * repository-relative, deduplicated and sorted by path.
  *
  * Exact-name matching only: variants like `tsconfig.base.json` are usually
  * shared fragments rather than projects, and opening one yields a project with
- * no root files.
+ * no root files. A repository that names its real projects otherwise reaches
+ * this list through `discover.projects`, which is added to the walk's result and
+ * never replaces it — neither key decides membership, only which projects exist.
  *
- * TODO(#52): `discover.projects` in `codedocs.jsonc` names extra config files for
- * repositories that do not follow the convention, added to what this finds
- * (ADR 0010). `discover.skip` adds to SKIP_DIRS; it never replaces it.
+ * Throws where a second `codedocs.jsonc` sits below the root. The walk visits
+ * every directory already, so noticing one costs nothing, and the alternative is
+ * a file in a package silently governing an index that spans the whole tree.
  */
-export function discoverProjects(root: string): FilePath[] {
-  const found: FilePath[] = []
+export function discoverProjects(root: string, config: Config): FilePath[] {
+  const skip = new Set([...SKIP_DIRS, ...config.discover.skip])
+  const found = new Set<FilePath>()
   const walk = (directory: string): void => {
     let entries
     try {
@@ -85,14 +94,39 @@ export function discoverProjects(root: string): FilePath[] {
     for (const entry of entries) {
       const absolute = join(directory, entry.name)
       if (entry.isDirectory()) {
-        if (!SKIP_DIRS.has(entry.name)) walk(absolute)
+        if (!skip.has(entry.name)) walk(absolute)
       } else if (entry.name === 'tsconfig.json') {
-        found.push(toRepoPath(root, absolute))
+        found.add(toRepoPath(root, absolute))
+      } else if (entry.name === CONFIG_FILE && directory !== root) {
+        throw misplacedConfig(root, toRepoPath(root, absolute))
       }
     }
   }
   walk(root)
-  return found.sort()
+  for (const path of expandProjectGlobs(root, config)) found.add(path)
+  return [...found].sort()
+}
+
+/**
+ * Resolve `discover.projects` against the tree.
+ *
+ * A literal path is kept whether or not it exists: the config asserts that this
+ * is a project, and a project whose config is missing is signal 3's business to
+ * report, not discovery's to silently drop. A glob can only ever yield what is
+ * on disk.
+ */
+function expandProjectGlobs(root: string, config: Config): FilePath[] {
+  const paths: FilePath[] = []
+  for (const pattern of config.discover.projects) {
+    if (!/[*?[]/.test(pattern)) {
+      paths.push(pattern.split(sep).join('/'))
+      continue
+    }
+    for (const hit of globSync(pattern, { cwd: root })) {
+      paths.push(hit.split(sep).join('/'))
+    }
+  }
+  return paths
 }
 
 /**
