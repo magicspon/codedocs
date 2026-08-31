@@ -245,7 +245,7 @@ export interface WaveWrite extends FileFacts {
  * are in, so finished projects are current and the rest are simply absent — which
  * the next run rebuilds and a query in between names as a blind spot.
  *
- * TODO(#25): extraction is still one pass over every project, so an interruption
+ * TODO(#30): extraction is still one pass over every project, so an interruption
  * during the analysis itself — the 22.9 s, against ~1 s of commits — still leaves
  * nothing. Extracting per project needs the cross-project symbol join to survive
  * being split, which is a larger change than the commit boundary.

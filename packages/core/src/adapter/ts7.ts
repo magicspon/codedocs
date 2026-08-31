@@ -823,7 +823,7 @@ function lookup(
  * specifier is resolved the only way available: ask the checker for the symbol at
  * the string literal and read the path of the source file it declares.
  *
- * TODO(#25): `import()` and `import x = require()` carry specifiers too, and a
+ * TODO(#30): `import()` and `import x = require()` carry specifiers too, and a
  * dynamic import is how a route or a plugin is loaded, so the wave under-reaches
  * on exactly the files that matter most in a framework repository.
  */
