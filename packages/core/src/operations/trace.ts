@@ -17,7 +17,7 @@ import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { CallSite, FilePath, SymbolId } from '../model.ts'
 import { readCalleeSteps, type CalleeStep, type Store } from '../store.ts'
 import { scopeTo } from './scope.ts'
-import { resolveSubject } from './subject.ts'
+import { noteCollisions, resolveSubject } from './subject.ts'
 
 /**
  * Why a path stopped where it did.
@@ -95,10 +95,13 @@ export function trace(
       limit,
       depth,
     },
-    scopeTo(store, context, [
-      ...resolved.map((node) => node.file),
-      ...filesOf(paths),
-    ]),
+    noteCollisions(
+      scopeTo(store, context, [
+        ...resolved.map((node) => node.file),
+        ...filesOf(paths),
+      ]),
+      resolved,
+    ),
     paths,
   )
 }

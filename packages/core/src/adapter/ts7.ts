@@ -87,6 +87,54 @@ const CALLABLE_KIND: ReadonlySet<SyntaxKind> = new Set([
   SyntaxKind.SetAccessor,
 ])
 
+/**
+ * Anonymous callables. They declare no name, so they contribute a descriptor
+ * segment only through the call they are an argument to.
+ */
+const ANONYMOUS_FUNCTION: ReadonlySet<SyntaxKind> = new Set([
+  SyntaxKind.ArrowFunction,
+  SyntaxKind.FunctionExpression,
+])
+
+/**
+ * Kinds that introduce a declaration space.
+ *
+ * Two declarations that claim one id from the *same* space are one symbol, and
+ * ADR 0002 collapses them deliberately — overloads, and declaration merging such
+ * as a local `type` beside a local `const`. From *different* spaces they are
+ * unrelated bindings that happen to share a descriptor path, which is a
+ * collision rather than a collapse.
+ */
+const DECLARATION_SPACE: ReadonlySet<SyntaxKind> = new Set([
+  SyntaxKind.Block,
+  SyntaxKind.SourceFile,
+  SyntaxKind.ModuleBlock,
+  SyntaxKind.CaseClause,
+  SyntaxKind.DefaultClause,
+  SyntaxKind.CatchClause,
+  SyntaxKind.ForStatement,
+  SyntaxKind.ForInStatement,
+  SyntaxKind.ForOfStatement,
+  SyntaxKind.ClassDeclaration,
+  SyntaxKind.ClassExpression,
+  SyntaxKind.InterfaceDeclaration,
+  SyntaxKind.TypeLiteral,
+  SyntaxKind.EnumDeclaration,
+  SyntaxKind.ObjectLiteralExpression,
+])
+
+/**
+ * How much of one descriptor segment is kept.
+ *
+ * A test name is the segment that separates sibling `it(...)` blocks, and it can
+ * be a sentence. Uncapped, cal.com's longest id reaches 827 characters; at 96 it
+ * reaches 540, and the shortening costs 31 extra colliding declarations out of
+ * 48,517. The bytes are the smaller half of that trade — ids are interned by
+ * [#29](https://github.com/magicspon/codedocs/issues/29), so an id's length is
+ * paid once per symbol rather than once per edge — and readability is the larger.
+ */
+const SEGMENT_CAP = 96
+
 /** Kinds that introduce a new scope, and so end a local symbol's durability. */
 const SCOPE_KIND: ReadonlySet<SyntaxKind> = new Set([
   SyntaxKind.FunctionDeclaration,
@@ -219,17 +267,103 @@ const nameOf = (node: Node): string | undefined =>
 const isRepoFile = (path: string): boolean =>
   !path.includes('/node_modules/') && !/\/lib\.[a-z0-9.]*d\.ts$/.test(path)
 
-/** The dotted path from the file root, e.g. `AuthService.login`. */
-function qualifiedName(node: Node): string {
+/** One descriptor segment: whitespace collapsed, and bounded by `SEGMENT_CAP`. */
+function segment(raw: string): string {
+  const flat = raw.replaceAll(/\s+/g, ' ').trim()
+  return flat.length > SEGMENT_CAP ? flat.slice(0, SEGMENT_CAP) : flat
+}
+
+/**
+ * The segment an anonymous callable contributes: the call it is an argument to.
+ *
+ * `it("rejects an unknown field")` names the scope its callback opens the way
+ * the author already named it, and — unlike an ordinal — it survives a sibling
+ * block being inserted above it. Without it every `const schema` in a test file
+ * claims one id: cal.com's worst was 69 declarations under
+ * `getBookingResponsesSchema.test.ts#schema`.
+ *
+ * The first string-literal argument is what separates siblings, so a call
+ * without one yields `map()` and separates nothing. That is a collision this
+ * cannot resolve, and `sweepSymbols` reports it rather than hiding it.
+ */
+function callSegment(fn: Node, sf: SourceFile): string | undefined {
+  const call = fn.parent
+  if (call === undefined || call.kind !== SyntaxKind.CallExpression) return
+  const { expression, arguments: args } = call as Node & {
+    readonly expression?: Node
+    readonly arguments?: readonly Node[]
+  }
+  // The callee is not an argument: `(() => {})()` names no scope.
+  if (expression === undefined || expression === fn) return
+  const callee = segment(expression.getText(sf))
+  for (const arg of args ?? []) {
+    if (
+      arg.kind === SyntaxKind.StringLiteral ||
+      arg.kind === SyntaxKind.NoSubstitutionTemplateLiteral
+    ) {
+      return `${callee}("${segment((arg as StringLiteral).text)}")`
+    }
+  }
+  return `${callee}()`
+}
+
+/**
+ * Class members that open a scope the author named without declaring a name.
+ *
+ * A class has exactly one of each, so these are fixed segments rather than
+ * ordinals — nothing about them shifts when a member is inserted above. Without
+ * them a `const url` in a constructor claims the same id as the `url` property
+ * beside it, which is the one way this defect reached a *durable* id.
+ */
+const UNNAMED_MEMBER: ReadonlyMap<SyntaxKind, string> = new Map([
+  [SyntaxKind.Constructor, 'constructor'],
+  [SyntaxKind.ClassStaticBlockDeclaration, 'static'],
+] as const)
+
+/** The segment one node contributes to a descriptor path, if any. */
+function segmentOf(node: Node, sf: SourceFile): string | undefined {
+  const name = nameOf(node)
+  if (name !== undefined && NAMED_DECLARATION.has(node.kind)) return name
+  // An object-literal key is the author's own name for the scope beneath it,
+  // and it is what tells six sibling arrow functions that each declare a
+  // `field` apart.
+  if (node.kind === SyntaxKind.PropertyAssignment) return name
+  const member = UNNAMED_MEMBER.get(node.kind)
+  if (member !== undefined) return member
+  if (ANONYMOUS_FUNCTION.has(node.kind)) return callSegment(node, sf)
+  return undefined
+}
+
+/**
+ * The dotted descriptor path from the file root, e.g. `AuthService.login`.
+ *
+ * Every scope between the file and the declaration contributes a segment taken
+ * from what the author wrote — a declared name, an object-literal key, or the
+ * call an anonymous callback is an argument to. This is ADR 0002's "descriptor
+ * path rather than ordinal" taken literally: a segment derived from content
+ * survives a sibling being inserted above it, where an ordinal does not.
+ */
+function descriptorPath(node: Node, sf: SourceFile): string {
   const parts: string[] = []
   let current: Node | undefined = node
   while (current) {
-    const text = nameOf(current)
-    if (text !== undefined && NAMED_DECLARATION.has(current.kind))
-      parts.unshift(text)
+    // A declaration contributes its own name; only ancestors contribute the
+    // scope segments, so the subject is never named twice.
+    const part = current === node ? nameOf(current) : segmentOf(current, sf)
+    if (part !== undefined) parts.unshift(part)
     current = current.parent
   }
   return parts.join('.')
+}
+
+/** The declaration space a node sits in — its identity, not its kind. */
+function declarationSpace(node: Node): Node | undefined {
+  let current: Node | undefined = node.parent
+  while (current) {
+    if (DECLARATION_SPACE.has(current.kind)) return current
+    current = current.parent
+  }
+  return undefined
 }
 
 /**
@@ -588,34 +722,70 @@ interface SymbolSweep {
   readonly byDeclaration: ReadonlyMap<string, SymbolId>
 }
 
+/** One declaration's claim on an id, and the space it claimed it from. */
+interface Claim {
+  readonly space: Node | undefined
+  readonly row: SymbolNode
+}
+
+/**
+ * Every declaration in the given files, one `Symbol` node per id.
+ *
+ * Where several declarations claim one id, the adapter decides here whether that
+ * is ADR 0002's deliberate collapse or a collision, and says which — rather than
+ * leaving the store's `insert or ignore` to merge them silently, which reported
+ * the union of 69 unrelated bindings' callers as `deterministic`.
+ */
 function sweepSymbols(files: readonly OwnedFile[]): SymbolSweep {
   const nodes: SymbolNode[] = []
   const byDeclaration = new Map<string, SymbolId>()
 
   for (const { programPath, path, sf } of files) {
+    // Per file, because an id carries its file: two files can never claim one id.
+    const claimed = new Map<SymbolId, Claim[]>()
+
     const walk = (node: Node): void => {
       const kind = NAMED_DECLARATION.get(node.kind)
       const name = nameOf(node)
       if (kind !== undefined && name !== undefined) {
         const start = node.getStart(sf)
-        const qualified = qualifiedName(node)
+        const qualified = descriptorPath(node, sf)
         const id = `${path}#${qualified}`
-        nodes.push({
-          id,
-          name,
-          qualified,
-          kind,
-          file: path,
-          start,
-          line: lineOf(sf, start),
-          durable: isDurable(node),
-          callable: isCallable(node),
-        })
+        const claim: Claim = {
+          space: declarationSpace(node),
+          row: {
+            id,
+            name,
+            qualified,
+            kind,
+            file: path,
+            start,
+            line: lineOf(sf, start),
+            durable: isDurable(node),
+            callable: isCallable(node),
+            collisions: 0,
+          },
+        }
+        const claims = claimed.get(id)
+        if (claims === undefined) claimed.set(id, [claim])
+        else claims.push(claim)
+        // Every declaration joins, not only the one that became the node: an
+        // edge into the third overload has to find the id the first one claimed.
         byDeclaration.set(declarationKey(programPath, start), id)
       }
       node.forEachChild(walk)
     }
     sf.forEachChild(walk)
+
+    for (const claims of claimed.values()) {
+      // First in source order wins the row, which is the declaration the store's
+      // `insert or ignore` kept before this decision was made explicit.
+      const first = claims[0]!.row
+      const spaces = new Set(claims.map((claim) => claim.space))
+      nodes.push(
+        spaces.size > 1 ? { ...first, collisions: claims.length } : first,
+      )
+    }
   }
   return { nodes, byDeclaration }
 }
@@ -767,7 +937,9 @@ function resolveSite(
 
   const { owner, attribution } = attribute(site.site)
   const from =
-    owner === undefined ? site.path : `${site.path}#${qualifiedName(owner)}`
+    owner === undefined
+      ? site.path
+      : `${site.path}#${descriptorPath(owner, site.sf)}`
 
   return {
     edge: {

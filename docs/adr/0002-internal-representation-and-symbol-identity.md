@@ -112,6 +112,25 @@ useTranslations()` and then `t(...)`), and the per-symbol method structurally ca
   otherwise invalidate every symbol in a package and every cross-package reference to it), and locals
   are named by descriptor path rather than by ordinal. Third-party symbols keep their real version,
   where it carries information.
+- **A descriptor path segment is taken from what the author wrote**, which is what makes it survive a
+  sibling being inserted above it where an ordinal does not. Four things name a scope: a declared
+  name, an object-literal key, `constructor` or `static` for the one unnamed member a class may hold,
+  and — for an anonymous callback — the call it is an argument to, including that call's first
+  string-literal argument (`it("rejects an unknown field")`). Each segment is capped at 96
+  characters: cal.com's longest id is 540 rather than 827, and the shortening costs 31 colliding
+  declarations out of 48,517. Naming only the declarations, as the skeleton first did, collapsed
+  **6,746 of cal.com's declarations onto 1,571 ids** — one per test case in the worst file — because
+  an anonymous callback contributed no segment ([#34](https://github.com/magicspon/codedocs/issues/34)).
+- **An id several unrelated declarations claim is reported, never merged silently.** Two declarations
+  claiming one id from the _same_ declaration space are one symbol, and the overload and
+  declaration-merging collapse above is deliberate. From _different_ spaces they are unrelated
+  bindings, and the `Symbol` carries `collisions` — how many claim it — so an operation that walks
+  its edges names the union as a blind spot instead of presenting it as `deterministic`. What
+  survives is same-named locals in sibling blocks a language gives no name — `catch (err)` twice in
+  one function, a `const` in each arm of an `if` — which is **405 declarations across 330 ids** on
+  cal.com and **none** on the Next fixture. **No durable id collides.** An ordinal would close the
+  remainder and is still refused for the reason above; an over-report that names itself is wrong in a
+  way an over-report presented as complete is not.
 - **`File` is a caller.** Module-level calls have no enclosing declaration and dropping them is not
   an option. This dissolves one of the three buckets the spike found conflated: with a `File` caller
   available, "no named caller" stops being an omission and becomes **caller attribution** — `symbol`,

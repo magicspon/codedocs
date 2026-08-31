@@ -1,16 +1,16 @@
 # Graph Report - codedocs  (2026-08-31)
 
 ## Corpus Check
-- 90 files · ~71,521 words
+- 94 files · ~78,364 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 827 nodes · 1272 edges · 65 communities (55 shown, 10 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.88)
+- 886 nodes · 1346 edges · 68 communities (58 shown, 10 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 37 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fee8958c`
+- Built from commit: `75253314`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -78,30 +78,33 @@
 - [[_COMMUNITY_Community 61|Community 61]]
 - [[_COMMUNITY_Community 62|Community 62]]
 - [[_COMMUNITY_Community 64|Community 64]]
+- [[_COMMUNITY_Community 65|Community 65]]
+- [[_COMMUNITY_Community 66|Community 66]]
+- [[_COMMUNITY_Community 67|Community 67]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `FilePath` - 23 edges
-2. `compilerOptions` - 21 edges
-3. `openSession()` - 20 edges
-4. `run` - 13 edges
-5. `Incremental re-analysis with existing TypeScript tooling` - 13 edges
-6. `scripts` - 12 edges
-7. `SymbolNode` - 12 edges
-8. `repairWave()` - 12 edges
-9. `3. The candidates` - 12 edges
-10. `Prior art: how existing code-intelligence indexes model and persist symbols` - 12 edges
+2. `openSession()` - 21 edges
+3. `compilerOptions` - 21 edges
+4. `SymbolNode` - 14 edges
+5. `run` - 13 edges
+6. `codedocs` - 13 edges
+7. `Incremental re-analysis with existing TypeScript tooling` - 13 edges
+8. `scripts` - 12 edges
+9. `trace()` - 12 edges
+10. `repairWave()` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `graphify` --semantically_similar_to--> `Code Graph`  [INFERRED] [semantically similar]
-  AGENTS.md → docs/REQUIREMENTS.md
 - `fallow` --semantically_similar_to--> `Static Analysis Layer`  [INFERRED] [semantically similar]
   AGENTS.md → docs/REQUIREMENTS.md
 - `Fallow PR Audit Workflow` --semantically_similar_to--> `AI Code Review / Verification`  [INFERRED] [semantically similar]
   .github/workflows/fallow.yml → docs/REQUIREMENTS.md
-- `Code Docs` --conceptually_related_to--> `CodeGuide`  [AMBIGUOUS]
-  README.md → docs/REQUIREMENTS.md
+- `graphify` --semantically_similar_to--> `Code Graph`  [INFERRED] [semantically similar]
+  AGENTS.md → docs/REQUIREMENTS.md
 - `Fallow Is Syntactic, Not Semantic` --semantically_similar_to--> `Deterministic vs Inferred Results`  [INFERRED] [semantically similar]
   AGENTS.md → docs/REQUIREMENTS.md
+- `version-packages Lockfile Resync` --shares_data_with--> `pnpm Workspace Configuration`  [INFERRED]
+  .github/workflows/release.yaml → pnpm-workspace.yaml
 
 ## Import Cycles
 - None detected.
@@ -111,11 +114,11 @@
 - **Codebase Intelligence Substrate** — docs_requirements_static_analysis_layer, docs_requirements_code_graph, docs_requirements_document_layer, docs_requirements_internal_representation, docs_requirements_adapter_pattern [EXTRACTED 1.00]
 - **Pull Request Quality Gate** — workflows_ci_pipeline, workflows_fallow_audit, agents_fallow, cspell_words_dictionary, pnpm_workspace_config [INFERRED 0.85]
 
-## Communities (65 total, 10 thin omitted)
+## Communities (68 total, 10 thin omitted)
 
 ### Community 0 - "Release & CI Workflows"
 Cohesion: 0.19
-Nodes (13): Single-Context Repo Layout, fallow, Fallow Exit Code Convention, Project Spelling Dictionary, pnpm Workspace Configuration, Example Apps Consume Packages By Link, Built Dependency Allowlist, E2E Browser Install Step (+5 more)
+Nodes (14): Single-Context Repo Layout, fallow, Fallow Exit Code Convention, Project Spelling Dictionary, pnpm Workspace Configuration, Example Apps Consume Packages By Link, Minimum Release Age Policy, Built Dependency Allowlist (+6 more)
 
 ### Community 1 - "TypeScript Compiler Config"
 Cohesion: 0.09
@@ -134,12 +137,12 @@ Cohesion: 0.17
 Nodes (12): scripts, check, format, lint, prepare, release, spell-check, spell-check:sort (+4 more)
 
 ### Community 5 - "Static Analysis Principles"
-Cohesion: 0.22
-Nodes (9): ast-grep, Do Not Reinvent The Wheel, Graphify (tool), Incremental Analysis And Caching, Permissive Licensing Policy, No Custom Static-Analysis Engine, Oxc, Static Analysis Layer (+1 more)
+Cohesion: 0.17
+Nodes (12): AI-Provider Agnostic, ast-grep, Codebase Intelligence Layer, CodeGuide, Do Not Reinvent The Wheel, Incremental Analysis And Caching, Local First, No Custom Static-Analysis Engine (+4 more)
 
 ### Community 6 - "CodeGuide Product Architecture"
-Cohesion: 0.17
-Nodes (17): Tool Adapter Pattern, AI Code Review / Verification, AI Context Efficiency, Change Impact Analysis, CodeGuide CLI, Code Graph, CodeGuide Core, codeguide doctor (+9 more)
+Cohesion: 0.28
+Nodes (9): Tool Adapter Pattern, CodeGuide CLI, CodeGuide Core, codeguide doctor, CodeGuide Desktop, Normalised Internal Representation, One-Time Pricing Model, codeguide report-bug (+1 more)
 
 ### Community 7 - "Renovate Dependency Config"
 Cohesion: 0.11
@@ -174,20 +177,20 @@ Cohesion: 0.40
 Nodes (3): PACKAGES, push, ROOT
 
 ### Community 19 - "Community 19"
-Cohesion: 0.07
-Nodes (56): openAnalysis(), currentCommit(), discoverProjects(), findRepositoryRoot(), SKIP_DIRS, toRepoPath(), detectDrift(), Drift (+48 more)
+Cohesion: 0.08
+Nodes (46): openAnalysis(), currentCommit(), discoverProjects(), findRepositoryRoot(), SKIP_DIRS, toRepoPath(), detectDrift(), Drift (+38 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.06
-Nodes (48): AdapterResult, analyse(), AnalysisSession, attribute(), CALLABLE_KIND, CallSite, collectCallSites(), declarationKey() (+40 more)
+Cohesion: 0.05
+Nodes (44): analyse(), AnalysisSession, ANONYMOUS_FUNCTION, attribute(), CALLABLE_KIND, callSegment(), CallSite, Claim (+36 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.08
-Nodes (53): AnalysisTotals, ProjectSummary, callees(), callers(), collect(), scopeTo(), resolveSubject(), globToRegExp() (+45 more)
+Cohesion: 0.06
+Nodes (79): AdapterResult, SymbolSweep, analyse(), AnalysisTotals, ProjectSummary, callees(), callers(), collect() (+71 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.09
-Nodes (38): analyse(), { stdout, stderr, code }, emit(), messageOf(), run, ambiguityNote(), AnalyseEnvelope, annotate() (+30 more)
+Cohesion: 0.10
+Nodes (36): { stdout, stderr, code }, emit(), messageOf(), run, ambiguityNote(), AnalyseEnvelope, annotate(), blindSpotNote() (+28 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.07
@@ -214,12 +217,12 @@ Cohesion: 0.10
 Nodes (19): ast-grep — CLEARED, Attribution: what codedocs must actually ship, Copyleft in the transitive tree, Distribution assumption, Does subprocess vs library change the answer?, Findings, Graphify — AMBIGUOUS (needs a human call), Licence and redistribution audit of candidate analysis dependencies (+11 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.21
-Nodes (15): Command, failed(), isOperation(), OPERATIONS, OPTIONS, parse(), ParsedArgs, parseOptions() (+7 more)
+Cohesion: 0.11
+Nodes (18): Command, failed(), isOperation(), OPERATIONS, OPTIONS, parse(), ParsedArgs, parseOptions() (+10 more)
 
 ### Community 30 - "Community 30"
-Cohesion: 0.18
-Nodes (14): Changesets Versioning, codedocs Agent Instructions, GitHub Issue Tracker Convention, GitHub Default Label Distinction, Canonical Triage Labels, CLAUDE.md Entry Point, Minimum Release Age Policy, Bot PAT Requirement (+6 more)
+Cohesion: 0.19
+Nodes (13): Changesets Versioning, codedocs Agent Instructions, GitHub Issue Tracker Convention, GitHub Default Label Distinction, Canonical Triage Labels, CLAUDE.md Entry Point, Bot PAT Requirement, GitHub Packages Publishing (+5 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.14
@@ -250,8 +253,8 @@ Cohesion: 0.31
 Nodes (5): bootTotal, checkout(), charge(), Gateway, StripeGateway
 
 ### Community 38 - "Community 38"
-Cohesion: 0.22
-Nodes (8): Agent skills, codedocs, Comments, Domain docs, Graph Outputs Are Derived Artifacts, graphify, Issue tracker, Triage labels
+Cohesion: 0.29
+Nodes (6): Agent skills, codedocs, Comments, Domain docs, Issue tracker, Triage labels
 
 ### Community 39 - "Community 39"
 Cohesion: 0.22
@@ -278,8 +281,8 @@ Cohesion: 0.29
 Nodes (7): 32. Initial MVP, Phase 1 — Analysis, Phase 2 — CLI, Phase 3 — Documentation, Phase 4 — AI, Phase 5 — AI coding assistance, Phase 6 — Desktop
 
 ### Community 45 - "Community 45"
-Cohesion: 0.29
-Nodes (6): AI-Provider Agnostic, Codebase Intelligence Layer, CodeGuide, Local First, Privacy: Source Code Stays Local, Code Docs
+Cohesion: 0.12
+Nodes (16): callers and callees, codedocs, Design documents, Development, Flags, For agents: one envelope, every answer, Install, Naming a subject (+8 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.33
@@ -325,33 +328,43 @@ Nodes (3): 31. Pricing, CodeGuide CLI, CodeGuide Desktop
 Cohesion: 0.60
 Nodes (4): countdown(), ping(), pong(), twice()
 
+### Community 65 - "Community 65"
+Cohesion: 0.15
+Nodes (12): 10. What changes, 1. Two discovery rules, and they see the same files, 2. How much cal.com's projects overlap, 3. The 81,888, decomposed, 4. Every call site, on both sides, 5. Edge for edge, not count for count, 6. The two edges canonicalisation cannot see, 7. A single-project control (+4 more)
+
+### Community 66 - "Community 66"
+Cohesion: 0.23
+Nodes (12): Graph Outputs Are Derived Artifacts, graphify, AI Code Review / Verification, AI Context Efficiency, Change Impact Analysis, Code Graph, Documentation Impact Analysis, Graphify (tool) (+4 more)
+
+### Community 67 - "Community 67"
+Cohesion: 0.25
+Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, include
+
 ## Ambiguous Edges - Review These
-- `Code Docs` → `CodeGuide`  [AMBIGUOUS]
-  README.md · relation: conceptually_related_to
 - `Release Workflow` → `GitHub Issue Tracker Convention`  [AMBIGUOUS]
   .github/workflows/release.yaml · relation: conceptually_related_to
 - `Renovate Workflow` → `GitHub Issue Tracker Convention`  [AMBIGUOUS]
   .github/workflows/renovate.yaml · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **405 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+400 more)
+- **441 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+436 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What is the exact relationship between `Code Docs` and `CodeGuide`?**
-  _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Release Workflow` and `GitHub Issue Tracker Convention`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Renovate Workflow` and `GitHub Issue Tracker Convention`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `SymbolNode` connect `Community 20` to `Community 19`, `Community 21`, `Community 22`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `FilePath` connect `Community 20` to `Community 19`, `Community 21`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `CallEdge` connect `Community 20` to `Community 19`, `Community 21`, `Community 22`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `SymbolNode` connect `Community 21` to `Community 20`, `Community 22`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `baseBranch`, `access` to the rest of the system?**
-  _418 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _454 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `TypeScript Compiler Config` be split into smaller, more focused modules?**
+  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+- **Should `Agent & Documentation Conventions` be split into smaller, more focused modules?**
+  _Cohesion score 0.11695906432748537 - nodes in this community are weakly interconnected._
+- **Should `Dev Tooling Dependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._

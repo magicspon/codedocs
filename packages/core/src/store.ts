@@ -33,7 +33,7 @@ import type {
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 2
+export const STORE_SCHEMA_VERSION = 3
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 const TABLES: readonly string[] = [
@@ -96,7 +96,8 @@ create table if not exists symbol (
   start integer not null,
   line integer not null,
   durable integer not null,
-  callable integer not null
+  callable integer not null,
+  collisions integer not null
 ) strict;
 
 create table if not exists call_edge (
@@ -477,10 +478,13 @@ function writeFileRows(db: DatabaseSync, facts: FileFacts): void {
 }
 
 function writeSymbols(db: DatabaseSync, symbols: readonly SymbolNode[]): void {
+  // `or ignore` is a safety net rather than the collapse: the adapter now emits
+  // one row per id and says whether several declarations claim it.
   const symbol = db.prepare(
     `insert or ignore into symbol
-       (id, name, qualified, kind, file_path, start, line, durable, callable)
-       values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       (id, name, qualified, kind, file_path, start, line, durable, callable,
+        collisions)
+       values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
   for (const row of symbols) {
     symbol.run(
@@ -493,6 +497,7 @@ function writeSymbols(db: DatabaseSync, symbols: readonly SymbolNode[]): void {
       row.line,
       row.durable ? 1 : 0,
       row.callable ? 1 : 0,
+      row.collisions,
     )
   }
 }
@@ -712,6 +717,7 @@ const toSymbol = (row: {
   line: number
   durable: number
   callable: number
+  collisions: number
 }): SymbolNode => ({
   id: row.id,
   name: row.name,
@@ -722,10 +728,11 @@ const toSymbol = (row: {
   line: row.line,
   durable: row.durable === 1,
   callable: row.callable === 1,
+  collisions: row.collisions,
 })
 
 const SYMBOL_COLUMNS =
-  'id, name, qualified, kind, file_path, start, line, durable, callable'
+  'id, name, qualified, kind, file_path, start, line, durable, callable, collisions'
 
 /** Every symbol, sorted by id then path — ADR 0006's total order for `symbol`. */
 export function readSymbols(store: Store): SymbolNode[] {
