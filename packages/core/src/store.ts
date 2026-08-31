@@ -9,23 +9,40 @@
  * This is not a decision to use SQLite's query engine. Operations read rows and
  * answer in code; nothing in the CLI surface may expose SQL, or SQLite becomes
  * an interface we cannot change.
+ *
+ * **Every string the model repeats is interned here and nowhere else.** A
+ * `SymbolId` is `path#qualified`, so storing it verbatim wrote the path three
+ * times per symbol and twice more per edge; the tables below hold integers and
+ * the reads rebuild the strings. That is invisible above this module — the
+ * operations still see `SymbolId` and `FilePath`, and every answer is byte for
+ * byte the one the skeleton gave — and it takes cal.com from 61 MB to 17.6 MB,
+ * which is the 20 MB ADR 0004 measured. `microsoft/vscode`, the ceiling test,
+ * goes from 851 MB to 184 MB. No query got slower: `callers` on a 1,038-edge
+ * hub is 2.6 ms warm either way, because the joins the interning adds are all
+ * primary-key lookups.
  */
 
-import { DatabaseSync } from 'node:sqlite'
+import { DatabaseSync, type StatementSync } from 'node:sqlite'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 import type {
   CallEdge,
+  CallerAttribution,
   CallSite,
   CallSource,
+  Derivation,
+  Fidelity,
   FileNode,
   FilePath,
   ImportEdge,
   ProjectNode,
+  Provenance,
   SymbolId,
+  SymbolKind,
   SymbolNode,
   UnresolvedCall,
+  UnresolvedCallCause,
 } from './model.ts'
 
 /**
@@ -33,11 +50,13 @@ import type {
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 3
+export const STORE_SCHEMA_VERSION = 4
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 const TABLES: readonly string[] = [
   'meta',
+  'path',
+  'node',
   'project',
   'file',
   'seen_file',
@@ -54,15 +73,27 @@ create table if not exists meta (
   value text not null
 ) strict;
 
+create table if not exists path (
+  id integer primary key,
+  path text not null unique
+) strict;
+
+create table if not exists node (
+  id integer primary key,
+  path_id integer not null,
+  qualified text not null,
+  unique (path_id, qualified)
+) strict;
+
 create table if not exists project (
-  config_path text primary key,
-  fidelity text not null,
+  path_id integer primary key,
+  fidelity integer not null,
   root_file_count integer not null,
   analysed_at text not null
 ) strict;
 
 create table if not exists file (
-  path text primary key,
+  path_id integer primary key,
   content_hash text not null,
   size integer not null,
   mtime_ms real not null,
@@ -70,29 +101,28 @@ create table if not exists file (
 ) strict;
 
 create table if not exists seen_file (
-  path text primary key
+  path_id integer primary key
 ) strict;
 
 create table if not exists file_import (
-  from_path text not null,
+  from_id integer not null,
   specifier text not null,
-  to_path text,
-  primary key (from_path, specifier)
+  to_id integer,
+  primary key (from_id, specifier)
 ) strict;
 
 create table if not exists file_project (
-  file_path text not null,
-  config_path text not null,
+  file_id integer not null,
+  project_id integer not null,
   canonical integer not null,
-  primary key (file_path, config_path)
+  primary key (file_id, project_id)
 ) strict;
 
 create table if not exists symbol (
-  id text primary key,
+  node_id integer primary key,
+  path_id integer not null,
   name text not null,
-  qualified text not null,
-  kind text not null,
-  file_path text not null,
+  kind integer not null,
   start integer not null,
   line integer not null,
   durable integer not null,
@@ -102,31 +132,132 @@ create table if not exists symbol (
 
 create table if not exists call_edge (
   rowid_ integer primary key autoincrement,
-  from_id text not null,
-  from_kind text not null,
-  to_id text not null,
-  attribution text not null,
-  file_path text not null,
+  from_id integer not null,
+  to_id integer not null,
+  attribution integer not null,
+  path_id integer not null,
   line integer not null,
-  provenance text not null,
-  derivation text not null
+  provenance integer not null,
+  derivation integer not null
 ) strict;
 
 create table if not exists unresolved_call (
   rowid_ integer primary key autoincrement,
-  file_path text not null,
+  path_id integer not null,
   line integer not null,
-  cause text not null,
+  cause integer not null,
   name text
 ) strict;
 
-create index if not exists file_import_to on file_import(to_path);
+create index if not exists file_import_to on file_import(to_id);
 create index if not exists symbol_name on symbol(name);
-create index if not exists symbol_site on symbol(file_path, start);
-create index if not exists symbol_file on symbol(file_path);
+create index if not exists symbol_site on symbol(path_id, start);
 create index if not exists call_edge_to on call_edge(to_id);
 create index if not exists call_edge_from on call_edge(from_id);
 `
+// There is no separate index on `symbol(path_id)`: `symbol_site` leads with that
+// column, so the file-scoped delete already uses it. The skeleton carried both,
+// which cost 3.8 MB on cal.com and bought nothing.
+
+/**
+ * Closed enums are stored as their position in these lists rather than as text.
+ * `unresolved_call.cause` alone repeated one of two words 91,674 times on
+ * cal.com, and `call_edge` carried three such columns on every row.
+ *
+ * **Append only, never reorder.** The position is what the index holds, so
+ * moving a name silently relabels every stored row. `store.test.ts` pins the
+ * lists for that reason; changing one is a schema change and owes a version bump.
+ */
+const KINDS: readonly SymbolKind[] = [
+  'function',
+  'class',
+  'interface',
+  'typeAlias',
+  'enum',
+  'variable',
+  'method',
+  'namespace',
+]
+const ATTRIBUTIONS: readonly CallerAttribution[] = [
+  'symbol',
+  'variable',
+  'file',
+]
+const PROVENANCES: readonly Provenance[] = [
+  'deterministic',
+  'syntactic',
+  'inferred',
+]
+const DERIVATIONS: readonly Derivation[] = [
+  'checker-signature',
+  'checker-base-types',
+  'heritage-clause',
+  'jsx-element-rule',
+  'shared-method-name',
+  'manifest',
+  'resolver',
+]
+const CAUSES: readonly UnresolvedCallCause[] = [
+  'external',
+  'unresolvable',
+  'dynamic',
+]
+const FIDELITIES: readonly Fidelity[] = ['typed', 'syntactic']
+
+/** The closed lists, exposed only so a test can pin their order. */
+export interface EnumCodes {
+  readonly kind: readonly SymbolKind[]
+  readonly attribution: readonly CallerAttribution[]
+  readonly provenance: readonly Provenance[]
+  readonly derivation: readonly Derivation[]
+  readonly cause: readonly UnresolvedCallCause[]
+  readonly fidelity: readonly Fidelity[]
+}
+
+/** The stored order of every closed enum, so a reorder fails a test. */
+export const ENUM_CODES: EnumCodes = {
+  kind: KINDS,
+  attribution: ATTRIBUTIONS,
+  provenance: PROVENANCES,
+  derivation: DERIVATIONS,
+  cause: CAUSES,
+  fidelity: FIDELITIES,
+}
+
+/** The stored code for one enum value. Throws rather than storing a wrong row. */
+function code<T>(list: readonly T[], value: T, column: string): number {
+  const at = list.indexOf(value)
+  if (at === -1) throw new Error(`unknown ${column}: ${String(value)}`)
+  return at
+}
+
+/** The enum value one stored code names. Throws rather than inventing one. */
+function named<T>(list: readonly T[], stored: number, column: string): T {
+  const value = list[stored]
+  if (value === undefined) throw new Error(`unknown ${column} code: ${stored}`)
+  return value
+}
+
+/**
+ * The string form of an interned node.
+ *
+ * A file used as a call source is the node whose descriptor path is empty, so
+ * one table addresses both halves of `CallSource` and `call_edge` needs no
+ * column saying which namespace an endpoint came from.
+ */
+const idOf = (path: string, qualified: string): CallSource =>
+  qualified === '' ? path : `${path}#${qualified}`
+
+/**
+ * Split a `CallSource` back into its file and its descriptor path.
+ *
+ * On the first `#`, which is what `resolveSubject` already assumes: a descriptor
+ * path may contain one inside a string literal, a repository path may not.
+ */
+function partsOf(id: CallSource): [FilePath, string] {
+  const at = id.indexOf('#')
+  return at === -1 ? [id, ''] : [id.slice(0, at), id.slice(at + 1)]
+}
 
 /** What the index records about itself rather than about the code. */
 export interface IndexHeader {
@@ -165,11 +296,17 @@ export function openStore(root: string): Store {
 
   const found = readUserVersion(db)
   if (found !== 0 && found !== STORE_SCHEMA_VERSION) {
-    // Discarded, never migrated. Dropping the tables is enough: the caller's
-    // next `analyse` rebuilds, and a rebuild is unconditionally correct.
+    // Discarded, never migrated. Dropping the tables is enough for correctness:
+    // the caller's next `analyse` rebuilds, and a rebuild is unconditionally
+    // correct.
     for (const table of TABLES) {
       db.exec(`drop table if exists ${table}`)
     }
+    // Dropped pages stay in the file as free pages, so without this an index
+    // upgraded from the pre-interning schema would keep its 61 MB for ever and
+    // hold 17 MB of rows in it. The cost is one rewrite of a file the next step
+    // is about to spend 16 seconds refilling.
+    db.exec('vacuum')
   }
   db.exec(DDL)
   db.exec(`pragma user_version = ${STORE_SCHEMA_VERSION}`)
@@ -187,6 +324,142 @@ function readUserVersion(db: DatabaseSync): number {
     | undefined
   return row?.user_version ?? 0
 }
+
+/**
+ * The write-side intern caches, one per open store.
+ *
+ * Held beside the store rather than on it, so nothing above this module can
+ * reach the id space: a `Store` is still a database handle and a directory.
+ */
+const interners = new WeakMap<Store, Interner>()
+
+/** Turns the model's strings into the integers the tables hold. */
+interface Interner {
+  path(text: FilePath): number
+  node(id: CallSource): number
+  /** Forget everything, for when the rows those ids named have been deleted. */
+  reset(): void
+}
+
+function internerFor(store: Store): Interner {
+  let found = interners.get(store)
+  if (found === undefined) {
+    found = makeInterner(store.db)
+    interners.set(store, found)
+  }
+  return found
+}
+
+/**
+ * Read-then-insert, memoised per run.
+ *
+ * A wave mostly re-interns strings the index already holds, so the read comes
+ * first; a cold build mostly inserts, and the memo means each distinct string is
+ * looked up once however many rows repeat it.
+ */
+function makeInterner(db: DatabaseSync): Interner {
+  const paths = new Map<string, number>()
+  const nodes = new Map<string, number>()
+  const selectPath = db.prepare('select id from path where path = ?')
+  const insertPath = db.prepare('insert into path (path) values (?)')
+  const selectNode = db.prepare(
+    'select id from node where path_id = ? and qualified = ?',
+  )
+  const insertNode = db.prepare(
+    'insert into node (path_id, qualified) values (?, ?)',
+  )
+
+  const path = (text: FilePath): number => {
+    const cached = paths.get(text)
+    if (cached !== undefined) return cached
+    const found = selectPath.get(text) as { id: number } | undefined
+    const id = found?.id ?? Number(insertPath.run(text).lastInsertRowid)
+    paths.set(text, id)
+    return id
+  }
+
+  const node = (id: CallSource): number => {
+    const cached = nodes.get(id)
+    if (cached !== undefined) return cached
+    const [file, qualified] = partsOf(id)
+    const pathId = path(file)
+    const found = selectNode.get(pathId, qualified) as
+      | { id: number }
+      | undefined
+    const nodeId =
+      found?.id ?? Number(insertNode.run(pathId, qualified).lastInsertRowid)
+    nodes.set(id, nodeId)
+    return nodeId
+  }
+
+  return {
+    path,
+    node,
+    reset: () => {
+      paths.clear()
+      nodes.clear()
+    },
+  }
+}
+
+/**
+ * The id of an already-interned path, or `undefined`.
+ *
+ * The read-side counterpart, which never inserts: a query about a file the index
+ * has never seen is an empty answer, not a new row.
+ */
+/**
+ * One prepared statement per database and SQL text.
+ *
+ * The two helpers below run once per file or per symbol rather than once per
+ * query — a wave clears 185 files, a `trace` level looks up every live tail — so
+ * compiling the same statement each time is pure overhead. SQLite reprepares a
+ * cached statement itself when the schema changes underneath it.
+ */
+const statements = new WeakMap<DatabaseSync, Map<string, StatementSync>>()
+
+function prepared(db: DatabaseSync, sql: string): StatementSync {
+  let byDatabase = statements.get(db)
+  if (byDatabase === undefined) {
+    byDatabase = new Map()
+    statements.set(db, byDatabase)
+  }
+  let statement = byDatabase.get(sql)
+  if (statement === undefined) {
+    statement = db.prepare(sql)
+    byDatabase.set(sql, statement)
+  }
+  return statement
+}
+
+function pathId(db: DatabaseSync, path: FilePath): number | undefined {
+  return (
+    db.prepare('select id from path where path = ?').get(path) as
+      | { id: number }
+      | undefined
+  )?.id
+}
+
+/** The id of an already-interned node, or `undefined`. Never inserts. */
+function nodeId(db: DatabaseSync, id: CallSource): number | undefined {
+  const [file, qualified] = partsOf(id)
+  const found = prepared(
+    db,
+    `select n.id from node n join path p on p.id = n.path_id
+     where p.path = ? and n.qualified = ?`,
+  ).get(file, qualified) as { id: number } | undefined
+  return found?.id
+}
+
+/**
+ * Atoms are never deleted, only added.
+ *
+ * A `path` or `node` row is referenced from tables a single file's clear does not
+ * touch — an edge into a deleted file is stored under the *calling* file — so
+ * collecting one would silently drop the rows still pointing at it. An orphan
+ * atom is invisible to every read, since each read joins from the fact to the
+ * atom; a cold rebuild is what collects them.
+ */
 
 /** Read the index header. */
 export function readHeader(store: Store): IndexHeader {
@@ -257,11 +530,13 @@ export function writeAnalysis(store: Store, write: AnalysisWrite): void {
 
   // The clear is its own transaction so a project's commit is never rolled back
   // by a later project's failure.
-  transaction(db, () => {
+  transaction(store, () => {
     for (const table of TABLES.filter((name) => name !== 'meta')) {
       db.exec(`delete from ${table}`)
     }
-    writeSeenFiles(db, write.seenFiles)
+    // The ids the cache holds named rows that no longer exist.
+    internerFor(store).reset()
+    writeSeenFiles(store, write.seenFiles)
   })
 
   const owner = new Map<FilePath, FilePath>()
@@ -272,19 +547,19 @@ export function writeAnalysis(store: Store, write: AnalysisWrite): void {
   const grouped = groupByProject(write, owner)
   for (const project of write.projects) {
     const facts = grouped.get(project.configPath)
-    transaction(db, () => {
-      writeProject(db, project)
-      writeMembership(db, project.configPath, facts?.files ?? [])
-      if (facts) writeFileFacts(db, facts)
+    transaction(store, () => {
+      writeProject(store, project)
+      writeMembership(store, project.configPath, facts?.files ?? [])
+      if (facts) writeFileFacts(store, facts)
     })
   }
 
   // Anything no project claimed, so a fact is never silently dropped because its
   // file fell outside `filesByProject`.
   const orphans = grouped.get(UNOWNED)
-  if (orphans) transaction(db, () => writeFileFacts(db, orphans))
+  if (orphans) transaction(store, () => writeFileFacts(store, orphans))
 
-  transaction(db, () => writeMeta(db, write.header))
+  transaction(store, () => writeMeta(db, write.header))
 }
 
 /**
@@ -301,15 +576,17 @@ export function retireFiles(
   seenFiles: readonly FilePath[],
 ): void {
   const { db } = store
-  transaction(db, () => {
-    const file = db.prepare('delete from file where path = ?')
-    const seen = db.prepare('delete from seen_file where path = ?')
+  transaction(store, () => {
+    const file = db.prepare('delete from file where path_id = ?')
+    const seen = db.prepare('delete from seen_file where path_id = ?')
     for (const path of deleted) {
-      clearFile(db, path)
-      file.run(path)
-      seen.run(path)
+      const id = pathId(db, path)
+      if (id === undefined) continue
+      clearFile(db, id)
+      file.run(id)
+      seen.run(id)
     }
-    writeSeenFiles(db, seenFiles)
+    writeSeenFiles(store, seenFiles)
   })
 }
 
@@ -323,17 +600,20 @@ export function applyWave(store: Store, write: WaveWrite): void {
   const { db } = store
   const grouped = groupByProject(write, write.canonicalOf)
 
-  transaction(db, () => {
-    for (const path of write.canonicalOf.keys()) clearFile(db, path)
+  transaction(store, () => {
+    for (const path of write.canonicalOf.keys()) {
+      const id = pathId(db, path)
+      if (id !== undefined) clearFile(db, id)
+    }
   })
 
   for (const project of write.projects) {
     const facts = grouped.get(project.configPath)
-    transaction(db, () => {
-      writeProject(db, project)
+    transaction(store, () => {
+      writeProject(store, project)
       if (facts) {
-        writeMembership(db, project.configPath, facts.files)
-        writeFileFacts(db, facts)
+        writeMembership(store, project.configPath, facts.files)
+        writeFileFacts(store, facts)
       }
     })
   }
@@ -344,7 +624,7 @@ export function applyWave(store: Store, write: WaveWrite): void {
 /** Stamp the index header. Its own transaction, so a repair that extracted
  * nothing — a lone deletion — still records that it ran. */
 export function writeHeader(store: Store, header: IndexHeader): void {
-  transaction(store.db, () => writeMeta(store.db, header))
+  transaction(store, () => writeMeta(store.db, header))
 }
 
 /** The group for facts about a file no project claimed. Never a config path. */
@@ -396,79 +676,92 @@ interface FactGroup {
   importEdges: ImportEdge[]
 }
 
-/** Run one unit of work in an immediate transaction, rolling back on a throw. */
-function transaction(db: DatabaseSync, work: () => void): void {
+/**
+ * Run one unit of work in an immediate transaction, rolling back on a throw.
+ *
+ * The intern cache is dropped on a rollback: the ids it holds were assigned by
+ * inserts the rollback has just undone, and a later row referring to one would
+ * point at nothing.
+ */
+function transaction(store: Store, work: () => void): void {
+  const { db } = store
   db.exec('begin immediate')
   try {
     work()
     db.exec('commit')
   } catch (error) {
     db.exec('rollback')
+    internerFor(store).reset()
     throw error
   }
 }
 
 /** Every row keyed to one file, so re-extraction cannot leave a stale duplicate. */
-function clearFile(db: DatabaseSync, path: FilePath): void {
-  db.prepare('delete from symbol where file_path = ?').run(path)
-  db.prepare('delete from call_edge where file_path = ?').run(path)
-  db.prepare('delete from unresolved_call where file_path = ?').run(path)
-  db.prepare('delete from file_import where from_path = ?').run(path)
-  db.prepare('delete from file_project where file_path = ?').run(path)
+function clearFile(db: DatabaseSync, id: number): void {
+  prepared(db, 'delete from symbol where path_id = ?').run(id)
+  prepared(db, 'delete from call_edge where path_id = ?').run(id)
+  prepared(db, 'delete from unresolved_call where path_id = ?').run(id)
+  prepared(db, 'delete from file_import where from_id = ?').run(id)
+  prepared(db, 'delete from file_project where file_id = ?').run(id)
 }
 
-function writeProject(db: DatabaseSync, project: ProjectNode): void {
-  db.prepare(
-    `insert or replace into project
-       (config_path, fidelity, root_file_count, analysed_at)
+function writeProject(store: Store, project: ProjectNode): void {
+  store.db
+    .prepare(
+      `insert or replace into project
+       (path_id, fidelity, root_file_count, analysed_at)
        values (?, ?, ?, ?)`,
-  ).run(
-    project.configPath,
-    project.fidelity,
-    project.rootFileCount,
-    project.analysedAt,
-  )
+    )
+    .run(
+      internerFor(store).path(project.configPath),
+      code(FIDELITIES, project.fidelity, 'fidelity'),
+      project.rootFileCount,
+      project.analysedAt,
+    )
 }
 
 /** `seen_file` is what keeps drift finite; see `AnalysisWrite.seenFiles`. */
-function writeSeenFiles(
-  db: DatabaseSync,
-  seenFiles: readonly FilePath[],
-): void {
-  const seen = db.prepare('insert or ignore into seen_file (path) values (?)')
-  for (const path of seenFiles) seen.run(path)
+function writeSeenFiles(store: Store, seenFiles: readonly FilePath[]): void {
+  const intern = internerFor(store)
+  const seen = store.db.prepare(
+    'insert or ignore into seen_file (path_id) values (?)',
+  )
+  for (const path of seenFiles) seen.run(intern.path(path))
 }
 
 function writeMembership(
-  db: DatabaseSync,
+  store: Store,
   configPath: FilePath,
   files: readonly FileNode[],
 ): void {
-  const membership = db.prepare(
-    'insert or ignore into file_project (file_path, config_path, canonical) values (?, ?, 1)',
+  const intern = internerFor(store)
+  const project = intern.path(configPath)
+  const membership = store.db.prepare(
+    'insert or ignore into file_project (file_id, project_id, canonical) values (?, ?, 1)',
   )
-  for (const file of files) membership.run(file.path, configPath)
+  for (const file of files) membership.run(intern.path(file.path), project)
 }
 
 /** One project's facts, in one transaction. */
-function writeFileFacts(db: DatabaseSync, facts: FileFacts): void {
-  writeFileRows(db, facts)
-  writeSymbols(db, facts.symbols)
-  writeCallEdges(db, facts.callEdges)
-  writeUnresolvedCalls(db, facts.unresolvedCalls)
-  writeImportEdges(db, facts.importEdges)
+function writeFileFacts(store: Store, facts: FileFacts): void {
+  writeFileRows(store, facts)
+  writeSymbols(store, facts.symbols)
+  writeCallEdges(store, facts.callEdges)
+  writeUnresolvedCalls(store, facts.unresolvedCalls)
+  writeImportEdges(store, facts.importEdges)
 }
 
 /** The file row carries both hashes: content for drift, export shape for the wave. */
-function writeFileRows(db: DatabaseSync, facts: FileFacts): void {
-  const file = db.prepare(
+function writeFileRows(store: Store, facts: FileFacts): void {
+  const intern = internerFor(store)
+  const file = store.db.prepare(
     `insert or replace into file
-       (path, content_hash, size, mtime_ms, export_shape_hash)
+       (path_id, content_hash, size, mtime_ms, export_shape_hash)
        values (?, ?, ?, ?, ?)`,
   )
   for (const row of facts.files) {
     file.run(
-      row.path,
+      intern.path(row.path),
       row.contentHash,
       row.size,
       row.mtimeMs,
@@ -477,22 +770,25 @@ function writeFileRows(db: DatabaseSync, facts: FileFacts): void {
   }
 }
 
-function writeSymbols(db: DatabaseSync, symbols: readonly SymbolNode[]): void {
+function writeSymbols(store: Store, symbols: readonly SymbolNode[]): void {
+  const intern = internerFor(store)
   // `or ignore` is a safety net rather than the collapse: the adapter now emits
   // one row per id and says whether several declarations claim it.
-  const symbol = db.prepare(
+  const symbol = store.db.prepare(
     `insert or ignore into symbol
-       (id, name, qualified, kind, file_path, start, line, durable, callable,
+       (node_id, path_id, name, kind, start, line, durable, callable,
         collisions)
-       values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
   for (const row of symbols) {
+    // `path_id` repeats the file already inside `node`, and is derived from the
+    // same interning call so the two cannot disagree. It buys `symbol_site`,
+    // which is what makes a file's rows deletable without a table scan.
     symbol.run(
-      row.id,
+      intern.node(row.id),
+      intern.path(row.file),
       row.name,
-      row.qualified,
-      row.kind,
-      row.file,
+      code(KINDS, row.kind, 'kind'),
       row.start,
       row.line,
       row.durable ? 1 : 0,
@@ -502,50 +798,60 @@ function writeSymbols(db: DatabaseSync, symbols: readonly SymbolNode[]): void {
   }
 }
 
-function writeCallEdges(
-  db: DatabaseSync,
-  callEdges: readonly CallEdge[],
-): void {
-  const edge = db.prepare(
+function writeCallEdges(store: Store, callEdges: readonly CallEdge[]): void {
+  const intern = internerFor(store)
+  // No column says whether a source is a symbol or a file: a file source is the
+  // node with an empty descriptor path, and `attribution` already names the case.
+  const edge = store.db.prepare(
     `insert into call_edge
-       (from_id, from_kind, to_id, attribution, file_path, line, provenance, derivation)
-       values (?, ?, ?, ?, ?, ?, ?, ?)`,
+       (from_id, to_id, attribution, path_id, line, provenance, derivation)
+       values (?, ?, ?, ?, ?, ?, ?)`,
   )
   for (const row of callEdges) {
     edge.run(
-      row.from,
-      row.attribution === 'file' ? 'file' : 'symbol',
-      row.to,
-      row.attribution,
-      row.file,
+      intern.node(row.from),
+      intern.node(row.to),
+      code(ATTRIBUTIONS, row.attribution, 'attribution'),
+      intern.path(row.file),
       row.line,
-      row.provenance,
-      row.derivation,
+      code(PROVENANCES, row.provenance, 'provenance'),
+      code(DERIVATIONS, row.derivation, 'derivation'),
     )
   }
 }
 
 function writeUnresolvedCalls(
-  db: DatabaseSync,
+  store: Store,
   unresolvedCalls: readonly UnresolvedCall[],
 ): void {
-  const unresolved = db.prepare(
-    'insert into unresolved_call (file_path, line, cause, name) values (?, ?, ?, ?)',
+  const intern = internerFor(store)
+  const unresolved = store.db.prepare(
+    'insert into unresolved_call (path_id, line, cause, name) values (?, ?, ?, ?)',
   )
   for (const row of unresolvedCalls) {
-    unresolved.run(row.file, row.line, row.cause, row.name)
+    unresolved.run(
+      intern.path(row.file),
+      row.line,
+      code(CAUSES, row.cause, 'cause'),
+      row.name,
+    )
   }
 }
 
 function writeImportEdges(
-  db: DatabaseSync,
+  store: Store,
   importEdges: readonly ImportEdge[],
 ): void {
-  const imported = db.prepare(
-    'insert or replace into file_import (from_path, specifier, to_path) values (?, ?, ?)',
+  const intern = internerFor(store)
+  const imported = store.db.prepare(
+    'insert or replace into file_import (from_id, specifier, to_id) values (?, ?, ?)',
   )
   for (const row of importEdges) {
-    imported.run(row.from, row.specifier, row.to)
+    imported.run(
+      intern.path(row.from),
+      row.specifier,
+      row.to === null ? null : intern.path(row.to),
+    )
   }
 }
 
@@ -564,7 +870,10 @@ function writeMeta(db: DatabaseSync, header: IndexHeader): void {
 export function readFiles(store: Store): FileNode[] {
   return (
     store.db
-      .prepare('select path, content_hash, size, mtime_ms from file')
+      .prepare(
+        `select p.path, f.content_hash, f.size, f.mtime_ms
+         from file f join path p on p.id = f.path_id`,
+      )
       .all() as {
       path: string
       content_hash: string
@@ -593,11 +902,14 @@ export function readProjectsForFiles(
   const found = new Set<FilePath>()
   if (paths.length === 0) return found
   const statement = store.db.prepare(
-    'select distinct config_path from file_project where file_path = ?',
+    `select distinct c.path from file_project fp
+     join path f on f.id = fp.file_id
+     join path c on c.id = fp.project_id
+     where f.path = ?`,
   )
   for (const path of new Set(paths)) {
-    for (const row of statement.all(path) as { config_path: string }[]) {
-      found.add(row.config_path)
+    for (const row of statement.all(path) as { path: string }[]) {
+      found.add(row.path)
     }
   }
   return found
@@ -606,7 +918,10 @@ export function readProjectsForFiles(
 /** Per file, the export-shape hash the wave gates propagation on. */
 export function readExportShapes(store: Store): Map<FilePath, string> {
   const rows = store.db
-    .prepare('select path, export_shape_hash from file')
+    .prepare(
+      `select p.path, f.export_shape_hash
+       from file f join path p on p.id = f.path_id`,
+    )
     .all() as { path: string; export_shape_hash: string }[]
   return new Map(rows.map((row) => [row.path, row.export_shape_hash]))
 }
@@ -625,11 +940,15 @@ export function readImporters(
   const found = new Set<FilePath>()
   if (paths.length === 0) return found
   const statement = store.db.prepare(
-    'select distinct from_path from file_import where to_path = ?',
+    `select distinct f.path from file_import i
+     join path f on f.id = i.from_id
+     where i.to_id = ?`,
   )
   for (const path of new Set(paths)) {
-    for (const row of statement.all(path) as { from_path: string }[]) {
-      found.add(row.from_path)
+    const id = pathId(store.db, path)
+    if (id === undefined) continue
+    for (const row of statement.all(id) as { path: string }[]) {
+      found.add(row.path)
     }
   }
   return found
@@ -645,9 +964,13 @@ export function readImporters(
  */
 export function readBrokenImporters(store: Store): Set<FilePath> {
   const rows = store.db
-    .prepare('select distinct from_path from file_import where to_path is null')
-    .all() as { from_path: string }[]
-  return new Set(rows.map((row) => row.from_path))
+    .prepare(
+      `select distinct f.path from file_import i
+       join path f on f.id = i.from_id
+       where i.to_id is null`,
+    )
+    .all() as { path: string }[]
+  return new Set(rows.map((row) => row.path))
 }
 
 /**
@@ -662,27 +985,36 @@ export function readSymbolIdAt(
   path: FilePath,
   start: number,
 ): SymbolId | undefined {
+  const id = pathId(store.db, path)
+  if (id === undefined) return undefined
   const row = store.db
-    .prepare('select id from symbol where file_path = ? and start = ?')
-    .get(path, start) as { id: string } | undefined
-  return row?.id
+    .prepare(
+      `select n.qualified from symbol s
+       join node n on n.id = s.node_id
+       where s.path_id = ? and s.start = ?`,
+    )
+    .get(id, start) as { qualified: string } | undefined
+  return row === undefined ? undefined : idOf(path, row.qualified)
 }
 
 /** Per file, the project its facts were produced in. */
 export function readCanonicalProjects(store: Store): Map<FilePath, FilePath> {
   const rows = store.db
     .prepare(
-      'select file_path, config_path from file_project where canonical = 1',
+      `select f.path as file, c.path as project from file_project fp
+       join path f on f.id = fp.file_id
+       join path c on c.id = fp.project_id
+       where fp.canonical = 1`,
     )
-    .all() as { file_path: string; config_path: string }[]
-  return new Map(rows.map((row) => [row.file_path, row.config_path]))
+    .all() as { file: string; project: string }[]
+  return new Map(rows.map((row) => [row.file, row.project]))
 }
 
 /** Every source file the last analysis saw, whether or not a project globbed it. */
 export function readSeenFiles(store: Store): Set<FilePath> {
-  const rows = store.db.prepare('select path from seen_file').all() as {
-    path: string
-  }[]
+  const rows = store.db
+    .prepare('select p.path from seen_file s join path p on p.id = s.path_id')
+    .all() as { path: string }[]
   return new Set(rows.map((row) => row.path))
 }
 
@@ -691,39 +1023,43 @@ export function readProjects(store: Store): ProjectNode[] {
   return (
     store.db
       .prepare(
-        'select config_path, fidelity, root_file_count, analysed_at from project order by config_path',
+        `select p.path, r.fidelity, r.root_file_count, r.analysed_at
+         from project r join path p on p.id = r.path_id
+         order by p.path`,
       )
       .all() as {
-      config_path: string
-      fidelity: string
+      path: string
+      fidelity: number
       root_file_count: number
       analysed_at: string
     }[]
   ).map((row) => ({
-    configPath: row.config_path,
-    fidelity: row.fidelity === 'typed' ? 'typed' : 'syntactic',
+    configPath: row.path,
+    fidelity: named(FIDELITIES, row.fidelity, 'fidelity'),
     rootFileCount: row.root_file_count,
     analysedAt: row.analysed_at,
   }))
 }
 
-const toSymbol = (row: {
-  id: string
-  name: string
+/** One `symbol` row joined back to the strings the model uses. */
+type SymbolRow = {
+  path: string
   qualified: string
-  kind: string
-  file_path: string
+  name: string
+  kind: number
   start: number
   line: number
   durable: number
   callable: number
   collisions: number
-}): SymbolNode => ({
-  id: row.id,
+}
+
+const toSymbol = (row: SymbolRow): SymbolNode => ({
+  id: idOf(row.path, row.qualified),
   name: row.name,
   qualified: row.qualified,
-  kind: row.kind as SymbolNode['kind'],
-  file: row.file_path,
+  kind: named(KINDS, row.kind, 'kind'),
+  file: row.path,
   start: row.start,
   line: row.line,
   durable: row.durable === 1,
@@ -731,81 +1067,112 @@ const toSymbol = (row: {
   collisions: row.collisions,
 })
 
-const SYMBOL_COLUMNS =
-  'id, name, qualified, kind, file_path, start, line, durable, callable, collisions'
+const SYMBOL_SELECT = `select p.path, n.qualified, s.name, s.kind, s.start,
+    s.line, s.durable, s.callable, s.collisions
+  from symbol s
+  join node n on n.id = s.node_id
+  join path p on p.id = s.path_id`
 
-/** Every symbol, sorted by id then path — ADR 0006's total order for `symbol`. */
+/**
+ * Every symbol, sorted by id then path — ADR 0006's total order for `symbol`.
+ *
+ * Sorted here rather than in SQL because the key is the `SymbolId`, which is no
+ * longer a stored column: ordering by `(path, qualified)` is close but not the
+ * same relation, and ADR 0006 names the id itself. Sorting in JavaScript also
+ * makes the store agree with `resolveSubject` and `trace`, which already order
+ * ids by the same comparison.
+ */
 export function readSymbols(store: Store): SymbolNode[] {
-  return (
-    store.db
-      .prepare(`select ${SYMBOL_COLUMNS} from symbol order by id, file_path`)
-      .all() as Parameters<typeof toSymbol>[0][]
-  ).map(toSymbol)
+  const rows = (store.db.prepare(SYMBOL_SELECT).all() as SymbolRow[]).map(
+    toSymbol,
+  )
+  return rows.sort((a, b) => compare(a.id, b.id) || compare(a.file, b.file))
 }
 
 /** One symbol by exact id, or `undefined`. */
 export function readSymbol(store: Store, id: SymbolId): SymbolNode | undefined {
+  const [path, qualified] = partsOf(id)
   const row = store.db
-    .prepare(`select ${SYMBOL_COLUMNS} from symbol where id = ?`)
-    .get(id) as Parameters<typeof toSymbol>[0] | undefined
+    .prepare(`${SYMBOL_SELECT} where p.path = ? and n.qualified = ?`)
+    .get(path, qualified) as SymbolRow | undefined
   return row === undefined ? undefined : toSymbol(row)
 }
 
-const EDGE_COLUMNS =
-  'from_id, to_id, attribution, file_path, line, provenance, derivation'
-
 /**
- * One `call_edge` row as SQLite hands it over. A type rather than an interface
- * because only a type literal gets the implicit index signature that lets a
- * `Record<string, SQLOutputValue>` be asserted to it.
+ * One `call_edge` row as SQLite hands it over, with both endpoints rejoined to
+ * their atoms. A type rather than an interface because only a type literal gets
+ * the implicit index signature that lets a `Record<string, SQLOutputValue>` be
+ * asserted to it.
  */
 type EdgeRow = {
-  from_id: string
-  to_id: string
-  attribution: string
+  from_path: string
+  from_qualified: string
+  to_path: string
+  to_qualified: string
+  attribution: number
   file_path: string
   line: number
-  provenance: string
-  derivation: string
+  provenance: number
+  derivation: number
 }
+
+const EDGE_SELECT = `select
+    fp.path as from_path, fn.qualified as from_qualified,
+    tp.path as to_path, tn.qualified as to_qualified,
+    e.attribution, ep.path as file_path, e.line, e.provenance, e.derivation
+  from call_edge e
+  join node fn on fn.id = e.from_id
+  join path fp on fp.id = fn.path_id
+  join node tn on tn.id = e.to_id
+  join path tp on tp.id = tn.path_id
+  join path ep on ep.id = e.path_id`
 
 /** The site half of a row: what a path needs once it has named the endpoints. */
 const toSite = (row: EdgeRow): CallSite => ({
-  attribution: row.attribution as CallSite['attribution'],
+  attribution: named(ATTRIBUTIONS, row.attribution, 'attribution'),
   file: row.file_path,
   line: row.line,
-  provenance: row.provenance as CallSite['provenance'],
-  derivation: row.derivation as CallSite['derivation'],
+  provenance: named(PROVENANCES, row.provenance, 'provenance'),
+  derivation: named(DERIVATIONS, row.derivation, 'derivation'),
 })
 
 const toEdge = (row: EdgeRow): CallEdge => ({
-  from: row.from_id,
-  to: row.to_id,
+  from: idOf(row.from_path, row.from_qualified),
+  to: idOf(row.to_path, row.to_qualified),
   ...toSite(row),
 })
 
+const compare = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)
+
+/** ADR 0006's `(source, target, kind, site)` order, on the ids rather than the atoms. */
+const byEndpoints = (a: CallEdge, b: CallEdge): number =>
+  compare(a.from, b.from) ||
+  compare(a.to, b.to) ||
+  compare(a.file, b.file) ||
+  a.line - b.line
+
 /** Every call edge into a symbol, in ADR 0006's `(source, target, kind, site)` order. */
 export function readCallersOf(store: Store, id: SymbolId): CallEdge[] {
+  const to = nodeId(store.db, id)
+  if (to === undefined) return []
   return (
-    store.db
-      .prepare(
-        `select ${EDGE_COLUMNS} from call_edge where to_id = ?
-         order by from_id, to_id, file_path, line`,
-      )
-      .all(id) as EdgeRow[]
-  ).map(toEdge)
+    store.db.prepare(`${EDGE_SELECT} where e.to_id = ?`).all(to) as EdgeRow[]
+  )
+    .map(toEdge)
+    .sort(byEndpoints)
 }
 
 /** Every call edge out of a symbol or file, in the same order. */
 export function readCalleesOf(store: Store, id: CallSource): CallEdge[] {
+  const from = nodeId(store.db, id)
+  if (from === undefined) return []
   return (
     store.db
-      .prepare(
-        `select ${EDGE_COLUMNS} from call_edge where from_id = ?
-         order by from_id, to_id, file_path, line`,
-      )
-      .all(id) as EdgeRow[]
-  ).map(toEdge)
+      .prepare(`${EDGE_SELECT} where e.from_id = ?`)
+      .all(from) as EdgeRow[]
+  )
+    .map(toEdge)
+    .sort(byEndpoints)
 }
 
 /** One outgoing relation from a symbol: the callee, and every site that calls it. */
@@ -833,28 +1200,43 @@ export function readCalleeSteps(
   store: Store,
   ids: readonly CallSource[],
 ): Map<CallSource, CalleeStep[]> {
-  const grouped = new Map<CallSource, { to: SymbolId; sites: CallSite[] }[]>()
-  for (let at = 0; at < ids.length; at += ID_CHUNK) {
-    const chunk = ids.slice(at, at + ID_CHUNK)
+  const interned: number[] = []
+  for (const id of ids) {
+    const found = nodeId(store.db, id)
+    if (found !== undefined) interned.push(found)
+  }
+
+  const edges: CallEdge[] = []
+  for (let at = 0; at < interned.length; at += ID_CHUNK) {
+    const chunk = interned.slice(at, at + ID_CHUNK)
     const rows = store.db
       .prepare(
-        `select ${EDGE_COLUMNS} from call_edge
-         where from_id in (${chunk.map(() => '?').join(',')})
-         order by from_id, to_id, file_path, line`,
+        `${EDGE_SELECT} where e.from_id in (${chunk.map(() => '?').join(',')})`,
       )
       .all(...chunk) as EdgeRow[]
-    for (const row of rows) {
-      let steps = grouped.get(row.from_id)
-      if (steps === undefined) {
-        steps = []
-        grouped.set(row.from_id, steps)
-      }
-      // Rows arrive sorted by `(from_id, to_id, …)`, so one callee's sites are
-      // contiguous and only the last step can be the one to append to.
-      const last = steps.at(-1)
-      if (last?.to === row.to_id) last.sites.push(toSite(row))
-      else steps.push({ to: row.to_id, sites: [toSite(row)] })
+    for (const row of rows) edges.push(toEdge(row))
+  }
+  edges.sort(byEndpoints)
+
+  const grouped = new Map<CallSource, { to: SymbolId; sites: CallSite[] }[]>()
+  for (const edge of edges) {
+    let steps = grouped.get(edge.from)
+    if (steps === undefined) {
+      steps = []
+      grouped.set(edge.from, steps)
     }
+    // Sorted by `(from, to, …)`, so one callee's sites are contiguous and only
+    // the last step can be the one to append to.
+    const last = steps.at(-1)
+    const site = {
+      attribution: edge.attribution,
+      file: edge.file,
+      line: edge.line,
+      provenance: edge.provenance,
+      derivation: edge.derivation,
+    }
+    if (last?.to === edge.to) last.sites.push(site)
+    else steps.push({ to: edge.to, sites: [site] })
   }
   return grouped
 }
