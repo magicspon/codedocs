@@ -81,13 +81,13 @@ machine that built it.
 Drift is the difference between the working tree and the snapshot the index describes. Detecting it
 runs before every answer, so its cost is added to every query.
 
-| Check                                          | Cost on cal.com                 | When                        |
-| ---------------------------------------------- | ------------------------------- | --------------------------- |
-| stat every indexed file (size, mtime)          | 17 ms                           | every query                 |
-| walk the tree for files that appeared          | 94 ms, 11,726 files             | every query                 |
-| hash the content of flagged files              | 280 ms for _all_ files (sha256) | only the flagged ones       |
-| export-shape hash, then the propagation wave   | 3–5 ms per changed file         | only where content changed  |
-| per-project environment fingerprint (ADR 0001) | —                               | invalidates a whole project |
+| Check                                          | Cost on cal.com                           | When                        |
+| ---------------------------------------------- | ----------------------------------------- | --------------------------- |
+| stat every indexed file (size, mtime)          | 17 ms                                     | every query                 |
+| walk the tree for files that appeared          | 94 ms, 11,726 files                       | every query                 |
+| hash the content of flagged files              | 280 ms for _all_ files (sha256)           | only the flagged ones       |
+| export-shape hash, then the propagation wave   | 3–5 ms per changed file                   | only where content changed  |
+| per-project environment fingerprint (ADR 0001) | one file read, plus the walk's own result | invalidates a whole project |
 
 "Appeared" is decided against the **previous walk**, not against the set of files that were
 analysed — which is why the index stores both. Compared against the analysed set instead, every source
@@ -109,12 +109,12 @@ the 22.9 s cold build, honestly and by itself.
 
 ## What invalidates what
 
-| Trigger                                                          | Scope                                                                     | Why                                 |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------- |
-| a file's content hash changed                                    | that file, then the wave to direct importers whose own export shape moved | ticket #5                           |
-| a project's `compilerOptions` or environment fingerprint changed | every file of that project                                                | ADR 0001 — types cross files freely |
-| the codedocs, schema or TypeScript version changed               | the whole file: deleted, rebuilt cold                                     | see below                           |
-| a `codedocs.jsonc` `classify` block changed                      | the label set, which is recomputed every run anyway                       | ADR 0003                            |
+| Trigger                                                          | Scope                                                                     | Why                                                                                                                                              |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| a file's content hash changed                                    | that file, then the wave to direct importers whose own export shape moved | ticket #5                                                                                                                                        |
+| a project's `compilerOptions` or environment fingerprint changed | every file of that project                                                | ADR 0001 — types cross files freely; the fingerprint's inputs are the lockfile hash, `compilerOptions`, and the globbed file set-hash (ADR 0009) |
+| the codedocs, schema or TypeScript version changed               | the whole file: deleted, rebuilt cold                                     | see below                                                                                                                                        |
+| a `codedocs.jsonc` `classify` block changed                      | the label set, which is recomputed every run anyway                       | ADR 0003                                                                                                                                         |
 
 On a version mismatch the index is **discarded, never migrated**. TypeScript's own builder does
 exactly this and it is the right trade: a migration is a maintenance burden on every schema change
