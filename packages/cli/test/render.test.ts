@@ -8,9 +8,15 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import type { Envelope, SymbolNode } from '@codedocs/core'
+import type { Envelope, RepairReport, SymbolNode } from '@codedocs/core'
 
-import { renderError, renderSymbols, styleFor } from '../src/render.ts'
+import {
+  renderAnalyse,
+  renderError,
+  renderSymbols,
+  styleFor,
+  type AnalyseEnvelope,
+} from '../src/render.ts'
 
 const plain = styleFor(false)
 
@@ -203,5 +209,62 @@ describe('styleFor', () => {
   it('emits escapes only when colour is on', () => {
     expect(styleFor(true).warn('x')).not.toBe('x')
     expect(plain.warn('x')).toBe('x')
+  })
+})
+
+describe('the repair note', () => {
+  /** An `analyse` envelope carrying one project and whatever repair happened. */
+  const analyseEnvelope = (repair: RepairReport | null): AnalyseEnvelope => ({
+    operation: 'analyse',
+    schemaVersion: 1,
+    request: { subject: null, resolved: [], limit: null },
+    snapshot: {
+      commit: 'abc1234',
+      dirty: false,
+      analysedAt: '2026-01-01T00:00:00Z',
+    },
+    conditions: [],
+    blindSpots: [],
+    budget: { returned: 1, available: 1, truncated: false },
+    result: [
+      {
+        project: 'tsconfig.json',
+        fidelity: 'typed',
+        files: 4,
+        analysedAt: '2026-01-01T00:00:00Z',
+      },
+    ],
+    totals: { symbols: 10, callEdges: 5, unresolvedCalls: 1 },
+    repair,
+  })
+
+  it('says how far a wave reached', () => {
+    const text = renderAnalyse(
+      analyseEnvelope({ kind: 'wave', files: 3, waves: 2, reason: '' }),
+      plain,
+    )
+    expect(text).toContain('repaired 3 files in 2 waves')
+  })
+
+  it('names the reason a cold rebuild was chosen instead', () => {
+    // The cost worth naming every time: a silent 16 s where 3 ms was expected is
+    // exactly the hidden cost ADR 0004 refuses.
+    const text = renderAnalyse(
+      analyseEnvelope({
+        kind: 'cold',
+        files: 4827,
+        waves: 0,
+        reason: 'the index was built against TypeScript 7.0.1, not 7.0.2',
+      }),
+      plain,
+    )
+    expect(text).toContain('rebuilt cold (4827 files)')
+    expect(text).toContain('not 7.0.2')
+  })
+
+  it('stays silent when the index needed nothing', () => {
+    const text = renderAnalyse(analyseEnvelope(null), plain)
+    expect(text).not.toContain('repaired')
+    expect(text).not.toContain('rebuilt')
   })
 })

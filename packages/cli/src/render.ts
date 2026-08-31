@@ -12,6 +12,7 @@ import type {
   CallEdge,
   Envelope,
   ProjectSummary,
+  RepairReport,
   SymbolNode,
 } from '@codedocs/core'
 
@@ -37,6 +38,7 @@ export function styleFor(color: boolean): Style {
 /** An `analyse` envelope, which carries totals alongside the standard shape. */
 export type AnalyseEnvelope = Envelope<readonly ProjectSummary[]> & {
   readonly totals: AnalysisTotals
+  readonly repair: RepairReport | null
 }
 
 /** Render an `analyse` answer. */
@@ -51,12 +53,31 @@ export function renderAnalyse(envelope: AnalyseEnvelope, style: Style): string {
     `  ${style.bold(String(symbols))} symbols, ` +
     `${style.bold(String(callEdges))} call edges, ` +
     `${unresolvedCalls} call sites unresolved`
+  const body = lines.length > 0 ? [...lines, '', totals] : []
+  const repair = repairLine(envelope.repair, style)
   return finish(
     envelope,
-    lines.length > 0 ? [...lines, '', totals] : [],
+    repair === null ? body : [...body, repair],
     style,
     'projects',
   )
+}
+
+/**
+ * What this invocation paid to bring the index up to date.
+ *
+ * A cold build behind a question that asked for a repair is the one cost worth
+ * naming every time: it is 16 s against 3 ms on cal.com, and the reason is always
+ * something the user can act on.
+ */
+function repairLine(repair: RepairReport | null, style: Style): string | null {
+  if (repair === null) return null
+  if (repair.kind === 'wave') {
+    const files = repair.files === 1 ? '1 file' : `${repair.files} files`
+    const waves = repair.waves === 1 ? '1 wave' : `${repair.waves} waves`
+    return style.dim(`  repaired ${files} in ${waves}`)
+  }
+  return style.warn(`  rebuilt cold (${repair.files} files): ${repair.reason}`)
 }
 
 /** Render a `symbol` answer. */

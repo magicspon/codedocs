@@ -8,6 +8,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { Fidelity, FilePath } from '../model.ts'
+import type { RepairReport } from '../session.ts'
 import { counts, readProjects, type Store } from '../store.ts'
 
 /** What `analyse` reports about one project. */
@@ -30,12 +31,18 @@ export interface AnalysisTotals {
  *
  * The build itself happened in the session: `analyse` names the result rather
  * than performing it, so the cold path and the repair path cannot diverge.
+ *
+ * @param repair - What the session's repair cost, or `null` if it did none.
  */
 export function analyse(
   store: Store,
   context: AnswerContext,
   limit: number | null,
-): Envelope<readonly ProjectSummary[]> & { readonly totals: AnalysisTotals } {
+  repair: RepairReport | null = null,
+): Envelope<readonly ProjectSummary[]> & {
+  readonly totals: AnalysisTotals
+  readonly repair: RepairReport | null
+} {
   const summaries: ProjectSummary[] = readProjects(store).map((project) => ({
     project: project.configPath,
     fidelity: project.fidelity,
@@ -55,5 +62,9 @@ export function analyse(
       callEdges: totals.callEdges,
       unresolvedCalls: totals.unresolved,
     },
+    // Reported rather than hidden: a wave that fell back to a cold build is the
+    // difference between a 3 ms answer and a 16 s one, and ADR 0004 makes the
+    // cost of an answer part of the answer.
+    repair,
   }
 }
