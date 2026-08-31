@@ -35,6 +35,7 @@ export {
   rebuild,
   TOOL_VERSION,
   typescriptVersion,
+  type RepairReport,
   type Session,
   type SessionOptions,
 } from './session.ts'
@@ -48,6 +49,7 @@ export type {
   Fidelity,
   FileNode,
   FilePath,
+  ImportEdge,
   ProjectNode,
   Provenance,
   SymbolId,

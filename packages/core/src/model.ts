@@ -101,6 +101,26 @@ export interface FileNode {
   readonly mtimeMs: number
 }
 
+/**
+ * One module specifier, resolved to the file it names.
+ *
+ * The reverse of this relation is what the incremental wave propagates along:
+ * a file whose export shape moved is re-extracted together with the files that
+ * import it, and no further.
+ *
+ * `to` is `null` when a **relative** specifier resolved to nothing. That is the
+ * only unresolved case worth storing, because it is what tells the wave that a
+ * file appearing later may complete an import that is broken today. A bare
+ * specifier that does not resolve is a package, and there are far too many of
+ * those to keep.
+ */
+export interface ImportEdge {
+  readonly from: FilePath
+  /** The specifier as written, which is the key that makes the row idempotent. */
+  readonly specifier: string
+  readonly to: FilePath | null
+}
+
 /** One declaration name in its scope. Overloads collapse into one node. */
 export interface SymbolNode {
   readonly id: SymbolId

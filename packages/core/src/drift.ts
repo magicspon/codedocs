@@ -38,6 +38,14 @@ export interface Drift {
   readonly changed: readonly FilePath[]
   readonly deleted: readonly FilePath[]
   readonly added: readonly FilePath[]
+  /**
+   * Every source file this detection's walk saw.
+   *
+   * Carried on the result because the repair needs the same list to refresh
+   * `seen_file`, and walking cal.com's 5,064 files twice costs 69 ms of the ~740
+   * a one-file wave takes.
+   */
+  readonly seenFiles: readonly FilePath[]
 }
 
 /** Whether anything at all moved. */
@@ -148,13 +156,13 @@ export function detectDrift(
   // index nor any project, and comparing against the index alone would report
   // it as new on every query — making drift permanent and a rebuild
   // unconditional.
-  const added = walkSourceFiles(root).filter(
-    (path) => !known.has(path) && !seen.has(path),
-  )
+  const seenFiles = walkSourceFiles(root)
+  const added = seenFiles.filter((path) => !known.has(path) && !seen.has(path))
 
   return {
     changed: changed.sort(),
     deleted: deleted.sort(),
     added: added.sort(),
+    seenFiles,
   }
 }

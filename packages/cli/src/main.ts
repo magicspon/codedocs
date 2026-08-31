@@ -69,7 +69,7 @@ export function run(argv: readonly string[]): Run {
 
     switch (command.operation) {
       case 'analyse': {
-        const envelope = analyse(store, context, limit)
+        const envelope = analyse(store, context, limit, session.repair)
         return emit(command.json, envelope, () =>
           renderAnalyse(envelope as AnalyseEnvelope, style),
         )
