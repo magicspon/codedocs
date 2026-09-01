@@ -10,7 +10,7 @@
  */
 
 import { type AnalysisSession, openAnalysis } from '../adapter/ts7/index.ts'
-import type { Config } from '../config.ts'
+import type { Config } from '../config/index.ts'
 import { currentCommit, discoverProjects } from '../discovery.ts'
 import { statFile, walkSourceFiles } from '../drift.ts'
 import type { FileNode, FilePath } from '../model.ts'

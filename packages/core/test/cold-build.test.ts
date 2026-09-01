@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { analyse } from '../src/adapter/ts7/index.ts'
-import { DEFAULT_CONFIG } from '../src/config.ts'
+import { DEFAULT_CONFIG } from '../src/config/index.ts'
 import { discoverProjects } from '../src/discovery.ts'
 import { statFile, walkSourceFiles } from '../src/drift.ts'
 import { preflightProjects } from '../src/preflight.ts'

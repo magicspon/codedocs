@@ -8,8 +8,8 @@
  * behaviour ruled out.
  */
 
-import type { Config } from '../config.ts'
-import { loadConfig } from '../config.ts'
+import type { Config } from '../config/index.ts'
+import { loadConfig } from '../config/index.ts'
 import { findRepositoryRoot } from '../discovery.ts'
 import { detectDrift, driftedPaths, hasDrift, type Drift } from '../drift.ts'
 import type {

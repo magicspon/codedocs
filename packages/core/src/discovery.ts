@@ -10,7 +10,7 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, globSync, readdirSync } from 'node:fs'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 
-import { CONFIG_FILE, misplacedConfig, type Config } from './config.ts'
+import { CONFIG_FILE, misplacedConfig, type Config } from './config/index.ts'
 import type { FilePath } from './model.ts'
 
 /**

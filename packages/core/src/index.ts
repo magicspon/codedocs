@@ -133,4 +133,4 @@ export {
   type ConfigRefusal,
   type Discover,
   type Remediation,
-} from './config.ts'
+} from './config/index.ts'

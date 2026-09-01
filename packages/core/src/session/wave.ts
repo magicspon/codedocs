@@ -8,7 +8,7 @@
  */
 
 import { type AnalysisSession, openAnalysis } from '../adapter/ts7/index.ts'
-import type { Config } from '../config.ts'
+import type { Config } from '../config/index.ts'
 import type { Drift } from '../drift.ts'
 import { statFile } from '../drift.ts'
 import type { FileNode, FilePath, ProjectNode } from '../model.ts'

@@ -17,7 +17,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { release } from 'node:os'
 import { join } from 'node:path'
 
-import { configFacts, type ConfigFacts } from '../config.ts'
+import { configFacts, type ConfigFacts } from '../config/index.ts'
 import { findRepositoryRoot } from '../discovery.ts'
 import {
   SCHEMA_VERSION,
