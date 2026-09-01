@@ -8,7 +8,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { Fidelity, FilePath } from '../model.ts'
-import type { RepairReport } from '../session.ts'
+import type { RepairReport } from '../session/index.ts'
 import {
   counts,
   readAllUnresolvedSpecifiers,

@@ -76,7 +76,7 @@ export {
   type RepairReport,
   type Session,
   type SessionOptions,
-} from './session.ts'
+} from './session/index.ts'
 
 export type {
   Authorship,

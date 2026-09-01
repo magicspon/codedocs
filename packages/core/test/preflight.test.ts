@@ -17,7 +17,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { walkSourceFiles } from '../src/drift.ts'
 import { preflightProjects } from '../src/preflight.ts'
-import { openSession } from '../src/session.ts'
+import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),

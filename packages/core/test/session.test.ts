@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { callers } from '../src/operations/calls.ts'
 import { symbol } from '../src/operations/symbol.ts'
-import { openSession } from '../src/session.ts'
+import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),

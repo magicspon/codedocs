@@ -30,7 +30,7 @@ import {
 } from '../envelope.ts'
 import type { Fidelity, PreconditionCause } from '../model.ts'
 import { compilerOptionsOf, lockfileName } from '../preflight.ts'
-import { TOOL_VERSION, typescriptVersion } from '../session.ts'
+import { TOOL_VERSION, typescriptVersion } from '../session/index.ts'
 import {
   counts,
   openStore,
