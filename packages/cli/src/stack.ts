@@ -116,7 +116,7 @@ export function codedocsFrames(error: unknown): readonly string[] | undefined {
   return frames.length > 0 ? frames : undefined
 }
 
-/** Rewrite a frame to `at open (@codedocs/core/src/store.ts:12:3)`, or refuse it. */
+/** Rewrite a frame to `at open (@codedocs/core/src/store/open.ts:12:3)`, or refuse it. */
 function relativise(frame: string): string | null {
   for (const own of OWN) {
     for (const prefix of own.prefixes) {

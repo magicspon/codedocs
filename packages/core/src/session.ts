@@ -60,7 +60,7 @@ import {
   retireFiles,
   writeHeader,
   type Store,
-} from './store.ts'
+} from './store/index.ts'
 
 const require = createRequire(import.meta.url)
 

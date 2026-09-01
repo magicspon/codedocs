@@ -14,7 +14,7 @@ import {
   readAllUnresolvedSpecifiers,
   readProjects,
   type Store,
-} from '../store.ts'
+} from '../store/index.ts'
 import { specifierSpots } from './scope.ts'
 
 /** What `analyse` reports about one project. */

@@ -23,7 +23,7 @@ import { preflightProjects } from '../src/preflight.ts'
 import { callers } from '../src/operations/calls.ts'
 import type { FileNode, FilePath } from '../src/model.ts'
 import { openSession, TOOL_VERSION, typescriptVersion } from '../src/session.ts'
-import { beginAnalysis, commitProject, openStore } from '../src/store.ts'
+import { beginAnalysis, commitProject, openStore } from '../src/store/index.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),

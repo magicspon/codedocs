@@ -9,7 +9,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { SymbolNode } from '../model.ts'
-import { readSymbols, type Store } from '../store.ts'
+import { readSymbols, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
 
 /** Translate a glob into an anchored regular expression. */

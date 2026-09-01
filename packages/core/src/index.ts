@@ -106,7 +106,7 @@ export {
   type CalleeStep,
   type IndexHeader,
   type Store,
-} from './store.ts'
+} from './store/index.ts'
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
 export {
   fidelityOf,

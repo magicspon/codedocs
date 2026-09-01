@@ -17,7 +17,7 @@ import {
   readProjectsForFiles,
   readUnresolvedSpecifiers,
   type Store,
-} from '../store.ts'
+} from '../store/index.ts'
 
 /**
  * Return `context` with its conditions limited to the projects holding `files`,

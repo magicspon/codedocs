@@ -25,7 +25,7 @@ import {
   beginAnalysis,
   commitProject,
   type Store,
-} from '../src/store.ts'
+} from '../src/store/index.ts'
 
 describe('the stored enum codes', () => {
   /**

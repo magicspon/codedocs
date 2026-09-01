@@ -38,7 +38,7 @@ import {
   readHeader,
   readProjects,
   STORE_SCHEMA_VERSION,
-} from '../store.ts'
+} from '../store/index.ts'
 
 /**
  * Where a report lands unless `--out` moves it.

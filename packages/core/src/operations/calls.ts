@@ -8,7 +8,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { CallEdge } from '../model.ts'
-import { readCalleesOf, readCallersOf, type Store } from '../store.ts'
+import { readCalleesOf, readCallersOf, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
 import { noteCollisions, resolveSubject } from './subject.ts'
 
