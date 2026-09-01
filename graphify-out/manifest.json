@@ -185,8 +185,8 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1788288421.668655,
-    "ast_hash": "3c66590190ef9f3b07bd4e3bbae4c654",
+    "mtime": 1788289390.1109805,
+    "ast_hash": "0b14be0b4e8f00a30a2eb4abba5d4e06",
     "semantic_hash": ""
   },
   "cspell.words.txt": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "packages/cli/src/args.ts": {
-    "mtime": 1788196557.299786,
-    "ast_hash": "95474234c93bb1694a6e23476b8e54b8",
+    "mtime": 1788289365.088609,
+    "ast_hash": "136961aad8205e7c4e04406cae8bfbc9",
     "semantic_hash": ""
   },
   "packages/cli/src/bin.ts": {
@@ -235,18 +235,18 @@
     "semantic_hash": ""
   },
   "packages/cli/src/main.ts": {
-    "mtime": 1788212214.8140202,
-    "ast_hash": "e988f544b3ef0923b4bea2ddbd3f049d",
+    "mtime": 1788289247.7440424,
+    "ast_hash": "49262e7152077f714d1300c2a0a9de7a",
     "semantic_hash": ""
   },
   "packages/cli/src/render.ts": {
-    "mtime": 1788209605.190604,
-    "ast_hash": "040134aecd9d845ac1eb36b8ef3ecd55",
+    "mtime": 1788289234.128319,
+    "ast_hash": "6f1e5fc5b0a091ff26f828a31297a99f",
     "semantic_hash": ""
   },
   "packages/cli/test/main.test.ts": {
-    "mtime": 1788212214.814243,
-    "ast_hash": "7681546dd519225e415c9a1f8de0ed35",
+    "mtime": 1788289288.7098405,
+    "ast_hash": "bce18d777b1f13c2259c7a59154f94d7",
     "semantic_hash": ""
   },
   "packages/cli/test/package.fixture.json": {
@@ -255,8 +255,8 @@
     "semantic_hash": ""
   },
   "packages/cli/test/render.test.ts": {
-    "mtime": 1788209605.1909237,
-    "ast_hash": "7e475c7f9f64726ca275328782578dd9",
+    "mtime": 1788289277.8733356,
+    "ast_hash": "605d27cff1ba4bcf2585f57b5dd9187f",
     "semantic_hash": ""
   },
   "packages/cli/tsconfig.json": {
@@ -290,13 +290,13 @@
     "semantic_hash": ""
   },
   "packages/core/src/envelope.ts": {
-    "mtime": 1788209605.1920621,
-    "ast_hash": "30663c3030d70f9e8f15e41fb0b00070",
+    "mtime": 1788289135.312317,
+    "ast_hash": "cfdc7ad0a3c7fe007297c7567beb3f74",
     "semantic_hash": ""
   },
   "packages/core/src/index.ts": {
-    "mtime": 1788212214.814872,
-    "ast_hash": "0d0ba014e31eeb931ac79432f72bc38f",
+    "mtime": 1788289159.924511,
+    "ast_hash": "d53b68adf1e297189f6a46a63c943c99",
     "semantic_hash": ""
   },
   "packages/core/src/model.ts": {
@@ -620,8 +620,8 @@
     "semantic_hash": ""
   },
   "packages/core/src/config.ts": {
-    "mtime": 1788212214.8144398,
-    "ast_hash": "4b11a81c359c09a6fe7979bbb22caa60",
+    "mtime": 1788289365.0899258,
+    "ast_hash": "4fffa79d1edf8bf1cd817d703194f979",
     "semantic_hash": ""
   },
   "packages/core/test/config.test.ts": {
@@ -837,6 +837,21 @@
   "docs/adr/0012-audience-and-the-fallow-boundary.md": {
     "mtime": 1788288421.6457272,
     "ast_hash": "b135f726b00c896c406fd49865342f51",
+    "semantic_hash": ""
+  },
+  "packages/cli/src/messages.ts": {
+    "mtime": 1788289229.0719635,
+    "ast_hash": "0565f3d9286c4ac61718420440b4aa13",
+    "semantic_hash": ""
+  },
+  "packages/cli/src/stack.ts": {
+    "mtime": 1788289347.1159947,
+    "ast_hash": "b7ead0933d5fb19c873f95707f245dd6",
+    "semantic_hash": ""
+  },
+  "packages/cli/test/stack.test.ts": {
+    "mtime": 1788289365.0887496,
+    "ast_hash": "2cdde71313d47585c5f14683f8dbf7bb",
     "semantic_hash": ""
   }
 }

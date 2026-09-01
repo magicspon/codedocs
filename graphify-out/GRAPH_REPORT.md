@@ -1,16 +1,16 @@
 # Graph Report - codedocs  (2026-09-01)
 
 ## Corpus Check
-- 162 files · ~124,958 words
+- 165 files · ~127,570 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1267 nodes · 2151 edges · 95 communities (82 shown, 13 thin omitted)
+- 1286 nodes · 2201 edges · 95 communities (82 shown, 13 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 38 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `710fc33c`
+- Built from commit: `090b5348`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -111,7 +111,7 @@
 1. `FilePath` - 32 edges
 2. `openSession()` - 31 edges
 3. `compilerOptions` - 21 edges
-4. `run` - 17 edges
+4. `run` - 20 edges
 5. `repairWave()` - 16 edges
 6. `rebuild()` - 16 edges
 7. `codedocs` - 16 edges
@@ -198,8 +198,8 @@ Cohesion: 0.33
 Nodes (4): alreadyRecorded, changesetDir, [packageFile, depType, depName], RELEASABLE_DEP_TYPES
 
 ### Community 14 - "Yalc Local Publish Script"
-Cohesion: 0.10
-Nodes (32): ATTRIBUTIONS, byEndpoints(), CAUSES, code(), compare(), DERIVATIONS, EdgeRow, FIDELITIES (+24 more)
+Cohesion: 0.09
+Nodes (38): ATTRIBUTIONS, byEndpoints(), CAUSES, code(), compare(), DERIVATIONS, EdgeRow, FIDELITIES (+30 more)
 
 ### Community 19 - "Community 19"
 Cohesion: 0.15
@@ -211,11 +211,11 @@ Nodes (15): AnalysisSession, ANONYMOUS_FUNCTION, CALLABLE_KIND, collectSpecifier
 
 ### Community 21 - "Community 21"
 Cohesion: 0.06
-Nodes (70): analyse(), AnalysisTotals, ProjectSummary, callees(), callers(), collect(), MEANING, scopeTo() (+62 more)
+Nodes (74): Claim, SymbolSweep, analyse(), AnalysisTotals, ProjectSummary, callees(), callers(), collect() (+66 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.07
-Nodes (51): Command, failed(), OPTIONS, parse(), ParsedArgs, parseOptions(), resolveColor(), resolveDepth() (+43 more)
+Cohesion: 0.05
+Nodes (66): Command, failed(), OPTIONS, parse(), ParsedArgs, parseOptions(), resolveColor(), resolveDepth() (+58 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.15
@@ -330,20 +330,20 @@ Cohesion: 0.40
 Nodes (4): compilerOptions, types, extends, include
 
 ### Community 51 - "Community 51"
-Cohesion: 0.12
-Nodes (17): clearFile(), ENUM_CODES, idOf(), named(), nodeId(), partsOf(), pathId(), prepared() (+9 more)
+Cohesion: 0.18
+Nodes (9): clearFile(), ENUM_CODES, nodeId(), partsOf(), prepared(), readCalleesOf(), readCallersOf(), readSymbolIdAt() (+1 more)
 
 ### Community 52 - "Community 52"
 Cohesion: 0.50
 Nodes (3): Consequences, Considered Options, Preconditions lower fidelity; honesty is evidence, not a score
 
 ### Community 53 - "Community 53"
-Cohesion: 0.20
-Nodes (14): analyse(), detectDrift(), hashFile(), SKIP_DIRS, statFile(), walkSourceFiles(), FileNode, preflightProjects() (+6 more)
+Cohesion: 0.16
+Nodes (23): analyse(), openAnalysis(), Config, currentCommit(), discoverProjects(), expandProjectGlobs(), SKIP_DIRS, detectDrift() (+15 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.20
-Nodes (12): driftedPaths(), hasDrift(), anythingOutstanding(), movedProjects(), openSession(), repairFor(), withheld(), readFiles() (+4 more)
+Cohesion: 0.11
+Nodes (27): findRepositoryRoot(), Drift, driftedPaths(), hasDrift(), classifySpecifiers(), fidelityOf(), anythingOutstanding(), movedProjects() (+19 more)
 
 ### Community 56 - "Community 56"
 Cohesion: 0.22
@@ -374,8 +374,8 @@ Cohesion: 0.18
 Nodes (10): `codedocs.jsonc` holds facts codedocs cannot determine, and nothing else, Consequences, Considered Options, `discover`, which is what `discovery.ts`'s project-path TODO actually wanted, Discovery, and a repository root that means one thing, Parsing, versioning, and unknown keys, `remediations`, which is [#17](https://github.com/magicspon/codedocs/issues/17)'s residue, The file (+2 more)
 
 ### Community 70 - "Community 70"
-Cohesion: 0.12
-Nodes (36): openAnalysis(), currentCommit(), Drift, classifySpecifiers(), fidelityOf(), ProjectPreflight, extractProject(), openFor() (+28 more)
+Cohesion: 0.16
+Nodes (17): openFor(), repairWave(), runWave(), seedFrontier(), stamp(), applyWave(), groupByProject(), pathId() (+9 more)
 
 ### Community 71 - "Community 71"
 Cohesion: 0.21
@@ -383,7 +383,7 @@ Nodes (5): eager(), lazily(), Typed, reexported(), statically()
 
 ### Community 72 - "Community 72"
 Cohesion: 0.12
-Nodes (31): AUTHORSHIPS, blank(), blankComments(), blankTrailingCommas(), ConfigError, describe(), Discover, editDistance() (+23 more)
+Nodes (33): AUTHORSHIPS, blank(), blankComments(), blankTrailingCommas(), ConfigError, configSentence(), DEFAULT_CONFIG, describe() (+25 more)
 
 ### Community 73 - "Community 73"
 Cohesion: 0.25
@@ -402,32 +402,32 @@ Cohesion: 0.17
 Nodes (15): attribute(), callSegment(), collectCallSites(), declarationKey(), descriptorPath(), isCallable(), lineOf(), lookup() (+7 more)
 
 ### Community 81 - "Community 81"
-Cohesion: 0.18
-Nodes (19): AdapterResult, CallSite, DeclarationSite, ExtractRequest, OwnedFile, View, CallEdge, FilePath (+11 more)
+Cohesion: 0.29
+Nodes (12): AdapterResult, DeclarationSite, CallEdge, ImportEdge, ProjectNode, SpecifierSite, UnresolvedCall, UnresolvedSpecifier (+4 more)
 
 ### Community 82 - "Community 82"
-Cohesion: 0.33
-Nodes (7): DEFAULT_CONFIG, discoverProjects(), expandProjectGlobs(), findRepositoryRoot(), SKIP_DIRS, repository(), tree()
+Cohesion: 0.24
+Nodes (10): CallSite, ExtractRequest, OwnedFile, View, FilePath, Lookups, ProjectPreflight, ProjectSlice (+2 more)
 
 ### Community 83 - "Community 83"
 Cohesion: 0.20
 Nodes (9): Consequences, Considered Options, How preflight reaches an answer, Preflight is filesystem work, and the type checker's diagnostics were never a signal, Preflight's two halves, The environment fingerprint, made computable, The four signals, and the shape of the fourth, What `doctor` runs (+1 more)
 
 ### Community 84 - "Community 84"
-Cohesion: 0.12
-Nodes (33): asRecord(), asStrings(), baseOf(), canonical(), causeOf(), configFor(), declaresInstallScript(), DEFAULT_EXCLUDES (+25 more)
+Cohesion: 0.11
+Nodes (34): asRecord(), asStrings(), baseOf(), canonical(), causeOf(), configFor(), declaresInstallScript(), DEFAULT_EXCLUDES (+26 more)
 
 ### Community 85 - "Community 85"
-Cohesion: 0.25
-Nodes (6): Claim, SymbolSweep, SymbolNode, at(), fixtureRoot, result
+Cohesion: 1.00
+Nodes (3): moduleFileOf(), sweepFileImports(), sweepImports()
 
 ### Community 86 - "Community 86"
 Cohesion: 0.25
 Nodes (7): Running it, The cases, The localization benchmark, The task, The two arms, What is measured, What this does not show
 
 ### Community 87 - "Community 87"
-Cohesion: 0.27
-Nodes (10): exportShapeOf(), extractFrom(), moduleFileOf(), ownedFiles(), pickProject(), sweepExportShapes(), sweepFileImports(), sweepImports() (+2 more)
+Cohesion: 0.38
+Nodes (7): exportShapeOf(), extractFrom(), ownedFiles(), pickProject(), sweepExportShapes(), sweepSymbols(), toRepoPath()
 
 ### Community 88 - "Community 88"
 Cohesion: 0.29
@@ -460,7 +460,7 @@ Nodes (3): 31. Pricing, CodeGuide CLI, CodeGuide Desktop
   .github/workflows/renovate.yaml · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **559 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+554 more)
+- **562 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+557 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -471,13 +471,13 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Renovate Workflow` and `GitHub Issue Tracker Convention`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `openSession()` connect `Community 55` to `Community 70`, `Community 72`, `Community 82`, `Community 21`, `Community 22`, `Community 53`, `Community 85`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `FilePath` connect `Community 81` to `Community 70`, `Yalc Local Publish Script`, `Community 82`, `Community 20`, `Community 53`, `Community 21`, `Community 84`, `Community 22`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `SymbolNode` connect `Community 85` to `Yalc Local Publish Script`, `Community 81`, `Community 51`, `Community 20`, `Community 21`, `Community 22`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `openSession()` connect `Community 55` to `Community 70`, `Community 72`, `Yalc Local Publish Script`, `Community 53`, `Community 21`, `Community 22`?**
+  _High betweenness centrality (0.009) - this node is a cross-community bridge._
+- **Why does `Step` connect `Community 29` to `Community 22`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `$schema`, `baseBranch`, `access` to the rest of the system?**
-  _572 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _575 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `TypeScript Compiler Config` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+- **Should `Agent & Documentation Conventions` be split into smaller, more focused modules?**
+  _Cohesion score 0.11695906432748537 - nodes in this community are weakly interconnected._
