@@ -14,7 +14,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-import { openSession, type Session } from '../src/session.ts'
+import { openSession, type Session } from '../src/session/index.ts'
 import { trace, type TracePath } from '../src/operations/trace.ts'
 
 const fixture = join(

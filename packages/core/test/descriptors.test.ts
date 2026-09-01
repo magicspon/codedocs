@@ -13,10 +13,10 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { analyse } from '../src/adapter/ts7.ts'
+import { analyse } from '../src/adapter/ts7/index.ts'
 import type { SymbolNode } from '../src/model.ts'
 import { callers } from '../src/operations/calls.ts'
-import { openSession } from '../src/session.ts'
+import { openSession } from '../src/session/index.ts'
 
 const fixtureRoot = join(
   dirname(fileURLToPath(import.meta.url)),

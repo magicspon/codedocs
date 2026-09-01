@@ -59,3 +59,5 @@ Single-context: `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/
 - `// TODO(WP-xxx):` for known incomplete work.
 - JSDoc on all exported functions and types.
 - Keep comments short; a single paragraph is usually enough.
+
+Try to keep files under 300 lines of code, prefer many small files over one large file

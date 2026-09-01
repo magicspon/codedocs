@@ -8,13 +8,13 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { Fidelity, FilePath } from '../model.ts'
-import type { RepairReport } from '../session.ts'
+import type { RepairReport } from '../session/index.ts'
 import {
   counts,
   readAllUnresolvedSpecifiers,
   readProjects,
   type Store,
-} from '../store.ts'
+} from '../store/index.ts'
 import { specifierSpots } from './scope.ts'
 
 /** What `analyse` reports about one project. */

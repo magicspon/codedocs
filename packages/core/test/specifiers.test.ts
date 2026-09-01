@@ -18,8 +18,8 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import type { PreconditionCause } from '../src/model.ts'
 import { symbol } from '../src/operations/symbol.ts'
-import { classifySpecifiers } from '../src/preflight.ts'
-import { openSession } from '../src/session.ts'
+import { classifySpecifiers } from '../src/preflight/index.ts'
+import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),

@@ -76,7 +76,7 @@ export {
   type RepairReport,
   type Session,
   type SessionOptions,
-} from './session.ts'
+} from './session/index.ts'
 
 export type {
   Authorship,
@@ -106,13 +106,13 @@ export {
   type CalleeStep,
   type IndexHeader,
   type Store,
-} from './store.ts'
+} from './store/index.ts'
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
 export {
   fidelityOf,
   preflightProjects,
   type ProjectPreflight,
-} from './preflight.ts'
+} from './preflight/index.ts'
 export {
   discoverProjects,
   findRepositoryRoot,
@@ -133,4 +133,4 @@ export {
   type ConfigRefusal,
   type Discover,
   type Remediation,
-} from './config.ts'
+} from './config/index.ts'

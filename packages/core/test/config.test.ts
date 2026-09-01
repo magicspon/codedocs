@@ -15,7 +15,7 @@ import {
   DEFAULT_CONFIG,
   parseConfig,
   remediationFor,
-} from '../src/config.ts'
+} from '../src/config/index.ts'
 
 /** The message of the `ConfigError` a bad config raises. */
 function refusal(text: string): string {

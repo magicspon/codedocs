@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-import { analyse } from '../src/adapter/ts7.ts'
+import { analyse } from '../src/adapter/ts7/index.ts'
 import type { CallEdge } from '../src/model.ts'
 
 const fixture = (name: string): string =>

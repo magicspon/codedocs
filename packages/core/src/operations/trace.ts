@@ -15,7 +15,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import type { CallSite, FilePath, SymbolId } from '../model.ts'
-import { readCalleeSteps, type CalleeStep, type Store } from '../store.ts'
+import { readCalleeSteps, type CalleeStep, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
 import { noteCollisions, resolveSubject } from './subject.ts'
 

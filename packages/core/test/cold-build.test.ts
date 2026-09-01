@@ -15,15 +15,19 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { analyse } from '../src/adapter/ts7.ts'
-import { DEFAULT_CONFIG } from '../src/config.ts'
+import { analyse } from '../src/adapter/ts7/index.ts'
+import { DEFAULT_CONFIG } from '../src/config/index.ts'
 import { discoverProjects } from '../src/discovery.ts'
 import { statFile, walkSourceFiles } from '../src/drift.ts'
-import { preflightProjects } from '../src/preflight.ts'
+import { preflightProjects } from '../src/preflight/index.ts'
 import { callers } from '../src/operations/calls.ts'
 import type { FileNode, FilePath } from '../src/model.ts'
-import { openSession, TOOL_VERSION, typescriptVersion } from '../src/session.ts'
-import { beginAnalysis, commitProject, openStore } from '../src/store.ts'
+import {
+  openSession,
+  TOOL_VERSION,
+  typescriptVersion,
+} from '../src/session/index.ts'
+import { beginAnalysis, commitProject, openStore } from '../src/store/index.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),

@@ -12,7 +12,7 @@
  */
 
 import type { AnswerContext } from '../envelope.ts'
-import { readSymbol, readSymbols, type Store } from '../store.ts'
+import { readSymbol, readSymbols, type Store } from '../store/index.ts'
 import type { SymbolId, SymbolNode } from '../model.ts'
 
 /**

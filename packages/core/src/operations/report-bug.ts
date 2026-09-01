@@ -17,7 +17,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { release } from 'node:os'
 import { join } from 'node:path'
 
-import { configFacts, type ConfigFacts } from '../config.ts'
+import { configFacts, type ConfigFacts } from '../config/index.ts'
 import { findRepositoryRoot } from '../discovery.ts'
 import {
   SCHEMA_VERSION,
@@ -29,8 +29,8 @@ import {
   type Snapshot,
 } from '../envelope.ts'
 import type { Fidelity, PreconditionCause } from '../model.ts'
-import { compilerOptionsOf, lockfileName } from '../preflight.ts'
-import { TOOL_VERSION, typescriptVersion } from '../session.ts'
+import { compilerOptionsOf, lockfileName } from '../preflight/index.ts'
+import { TOOL_VERSION, typescriptVersion } from '../session/index.ts'
 import {
   counts,
   openStore,
@@ -38,7 +38,7 @@ import {
   readHeader,
   readProjects,
   STORE_SCHEMA_VERSION,
-} from '../store.ts'
+} from '../store/index.ts'
 
 /**
  * Where a report lands unless `--out` moves it.

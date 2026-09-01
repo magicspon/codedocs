@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { DEFAULT_CONFIG, parseConfig } from '../src/config.ts'
+import { DEFAULT_CONFIG, parseConfig } from '../src/config/index.ts'
 import { discoverProjects, findRepositoryRoot } from '../src/discovery.ts'
 
 let root: string
