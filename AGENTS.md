@@ -26,6 +26,16 @@ of those is genuinely dead.
 FILE:EXPORT`. Fallow is syntactic; an export can be imported-but-unreferenced and a dependency can be
   loaded by config rather than by import.
 
+## No network
+
+No codedocs package may reach the network — [ADR 0011](docs/adr/0011-report-bug-payload.md).
+Two gates hold it: oxlint's `no-restricted-imports` and `no-restricted-globals` cover
+first-party source, and `pnpm check:network` covers the production dependency closure.
+
+- A new runtime dependency that opens a socket fails the build. Where the socket is
+  demonstrably local, add a row to `ALLOWED` in `scripts/no-network.ts` naming the package,
+  the one module and the reason. Never widen the module list instead.
+
 ## Agent skills
 
 ### Issue tracker

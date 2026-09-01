@@ -18,7 +18,8 @@
     "scripts/renovate-changeset.mjs",
     "bench/run.ts",
     "bench/report.ts",
-    "bench/freeze-cases.ts"
+    "bench/freeze-cases.ts",
+    "scripts/no-network.ts"
   ],
 
   // `packages/core/test/fixtures/specifiers` exists to prove the sweep reads a

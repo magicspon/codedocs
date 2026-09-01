@@ -19,7 +19,53 @@
     "graphify-out/**",
     "repos/**"
   ],
-  "rules": {},
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [
+              "http",
+              "https",
+              "http2",
+              "net",
+              "tls",
+              "dgram",
+              "dns",
+              "node:http",
+              "node:https",
+              "node:http2",
+              "node:net",
+              "node:tls",
+              "node:dgram",
+              "node:dns"
+            ],
+            "message": "No codedocs package may reach the network (ADR 0011). scripts/no-network.ts is the same rule over the dependency closure."
+          }
+        ]
+      }
+    ],
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "fetch",
+        "message": "No codedocs package may reach the network (ADR 0011). scripts/no-network.ts is the same rule over the dependency closure."
+      },
+      {
+        "name": "XMLHttpRequest",
+        "message": "No codedocs package may reach the network (ADR 0011). scripts/no-network.ts is the same rule over the dependency closure."
+      },
+      {
+        "name": "WebSocket",
+        "message": "No codedocs package may reach the network (ADR 0011). scripts/no-network.ts is the same rule over the dependency closure."
+      },
+      {
+        "name": "EventSource",
+        "message": "No codedocs package may reach the network (ADR 0011). scripts/no-network.ts is the same rule over the dependency closure."
+      }
+    ]
+  },
   "overrides": [
     {
       "files": ["**/*.{js,ts,tsx}"],
