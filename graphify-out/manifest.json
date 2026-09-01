@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "packages/cli/src/main.ts": {
-    "mtime": 1788292245.6553273,
-    "ast_hash": "7ed603c38c417eef75c246b1971a556b",
+    "mtime": 1788292900.0359957,
+    "ast_hash": "fe3db249fa35d2b9f0545c243104bc8d",
     "semantic_hash": ""
   },
   "packages/cli/src/render.ts": {
@@ -869,14 +869,9 @@
     "ast_hash": "04c9d95db5a82737fdac88dde421b4f0",
     "semantic_hash": ""
   },
-  "packages/core/src/operations/report-bug copy.ts": {
-    "mtime": 1788292351.5007553,
-    "ast_hash": "6fdc99b7857b1e64b44b7d93aedd1988",
-    "semantic_hash": ""
-  },
   "packages/core/src/operations/report-bug.ts": {
-    "mtime": 1788292351.5007553,
-    "ast_hash": "6fdc99b7857b1e64b44b7d93aedd1988",
+    "mtime": 1788292833.045882,
+    "ast_hash": "baa8e4f2687099374bd083eb7739b790",
     "semantic_hash": ""
   }
 }

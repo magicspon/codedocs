@@ -21,10 +21,12 @@ import { configFacts, type ConfigFacts } from '../config.ts'
 import { findRepositoryRoot } from '../discovery.ts'
 import {
   SCHEMA_VERSION,
+  type BlindSpot,
   type Budget,
   type Envelope,
   type EnvelopeError,
   type ProjectConditions,
+  type Snapshot,
 } from '../envelope.ts'
 import type { Fidelity, PreconditionCause } from '../model.ts'
 import { compilerOptionsOf, lockfileName } from '../preflight.ts'
@@ -224,6 +226,44 @@ const CONTAINS: Readonly<Record<'excluded' | 'included', string>> = {
 }
 
 /**
+ * The fields the report reads off the re-run's envelope.
+ *
+ * Read through one shape rather than one `?.` per field, because "there was no
+ * envelope at all" is a single state — the command line never parsed to one —
+ * and stating it once keeps every reader below from inventing its own default.
+ */
+interface AnswerFacts {
+  readonly error: EnvelopeError | null
+  readonly budget: Budget | null
+  readonly snapshot: Snapshot
+  readonly blindSpots: readonly BlindSpot[]
+  readonly resolved: readonly string[]
+  readonly conditions: readonly ProjectConditions[]
+}
+
+/** What those fields are where no envelope was reached. Nothing is invented. */
+const NO_ANSWER: AnswerFacts = {
+  error: null,
+  budget: null,
+  snapshot: { commit: null, dirty: false, analysedAt: null },
+  blindSpots: [],
+  resolved: [],
+  conditions: [],
+}
+
+const answerFacts = (envelope: Envelope<unknown> | null): AnswerFacts =>
+  envelope === null
+    ? NO_ANSWER
+    : {
+        error: envelope.error ?? null,
+        budget: envelope.budget,
+        snapshot: envelope.snapshot,
+        blindSpots: envelope.blindSpots,
+        resolved: envelope.request.resolved,
+        conditions: envelope.conditions,
+      }
+
+/**
  * A `report-bug` answer, whose result is always there: the operation's finding
  * is that a report exists, so an envelope of it without one is not a state.
  */
@@ -248,13 +288,13 @@ export function reportBug(
 ): ReportEnvelope {
   const root = findRepositoryRoot(reproduction.cwd)
   const index = indexFacts(root, withRepository)
-  const reproduced = reproductionFacts(reproduction, withRepository)
+  const answer = answerFacts(reproduction.envelope)
   const shape = withRepository ? 'included' : 'excluded'
 
   const report: Report = {
     repositoryFacts: shape,
     contains: CONTAINS[shape],
-    carries: disclosure(reproduced, index.facts),
+    carries: disclosure(answer, index.facts, withRepository),
     codedocs: {
       version: TOOL_VERSION,
       schemaVersion: SCHEMA_VERSION,
@@ -263,7 +303,7 @@ export function reportBug(
       indexTypescript: index.typescript,
     },
     machine: machineFacts(root),
-    reproduction: reproduced,
+    reproduction: reproductionFacts(reproduction, answer, withRepository),
     index: index.facts,
     config: configReport(configFacts(root), withRepository),
     ...(withRepository ? { dependencies: dependenciesOf(root) } : {}),
@@ -288,27 +328,40 @@ export function reportBug(
 }
 
 /**
- * Count what the report carries, from the keys it actually wrote.
+ * Count what the report carries, category by category.
  *
- * Derived rather than declared, so the count cannot claim one thing while the
- * fields say another. A blind spot's subject is a path unless it is one of the
- * module specifiers, which is how ADR 0009 files them in the first place.
+ * Counted from the re-run's own envelope rather than from the report just built,
+ * so the header cannot claim one thing while the fields hold another. A blind
+ * spot's subject is a path unless it is one of the module specifiers, which is
+ * how ADR 0009 files them in the first place.
  */
 function disclosure(
-  reproduced: ReproductionFacts,
+  answer: AnswerFacts,
   index: IndexFacts | null,
+  withRepository: boolean,
 ): Disclosure {
+  const reasons = new Set(answer.blindSpots.map((spot) => spot.reason)).size
+  if (!withRepository) {
+    return {
+      blindSpotReasons: reasons,
+      paths: 0,
+      symbolNames: 0,
+      moduleSpecifiers: 0,
+    }
+  }
   const specifiers = new Set(
     (index?.specifiers ?? []).map((found) => found.specifier),
   )
-  const subjects = reproduced.blindSpotSubjects ?? []
+  const paths = answer.blindSpots.filter(
+    (spot) => !specifiers.has(spot.subject),
+  )
   return {
-    blindSpotReasons: reproduced.blindSpots.length,
+    blindSpotReasons: reasons,
     paths:
-      subjects.filter((subject) => !specifiers.has(subject)).length +
-      (reproduced.conditions?.length ?? 0) +
-      (index?.environment?.length ?? 0),
-    symbolNames: reproduced.resolved?.length ?? 0,
+      paths.length +
+      answer.conditions.length +
+      (index?.environment ?? []).length,
+    symbolNames: answer.resolved.length,
     moduleSpecifiers: specifiers.size,
   }
 }
@@ -316,23 +369,23 @@ function disclosure(
 /** The re-run's envelope, sorted by ADR 0011's rule. */
 function reproductionFacts(
   reproduction: Reproduction,
+  answer: AnswerFacts,
   withRepository: boolean,
 ): ReproductionFacts {
-  const { envelope } = reproduction
-  const failure = envelope?.error ?? reproduction.error ?? null
+  const failure = answer.error ?? reproduction.error
   return {
     operation: reproduction.operation,
     flags: reproduction.flags,
     exitCode: reproduction.exitCode,
     durationMs: reproduction.durationMs,
     error: failure === null ? null : reportedError(failure, withRepository),
-    budget: envelope?.budget ?? null,
-    dirty: envelope?.snapshot.dirty ?? false,
-    analysedAt: envelope?.snapshot.analysedAt ?? null,
-    blindSpots: histogram(
-      (envelope?.blindSpots ?? []).map((spot) => spot.reason),
-    ).map(([reason, count]) => ({ reason, count })),
-    ...(withRepository ? named(reproduction) : {}),
+    budget: answer.budget,
+    dirty: answer.snapshot.dirty,
+    analysedAt: answer.snapshot.analysedAt,
+    blindSpots: histogram(answer.blindSpots.map((spot) => spot.reason)).map(
+      ([reason, count]) => ({ reason, count }),
+    ),
+    ...(withRepository ? named(reproduction, answer) : {}),
   }
 }
 
@@ -342,14 +395,16 @@ function reproductionFacts(
  * One function rather than five conditional keys, so the rule is legible as a
  * rule: everything here is added together or not at all.
  */
-function named(reproduction: Reproduction): Partial<ReproductionFacts> {
-  const { envelope } = reproduction
+function named(
+  reproduction: Reproduction,
+  answer: AnswerFacts,
+): Partial<ReproductionFacts> {
   return {
     command: reproduction.argv,
-    resolved: envelope?.request.resolved ?? [],
-    commit: envelope?.snapshot.commit ?? null,
-    blindSpotSubjects: (envelope?.blindSpots ?? []).map((spot) => spot.subject),
-    conditions: envelope?.conditions ?? [],
+    resolved: answer.resolved,
+    commit: answer.snapshot.commit,
+    blindSpotSubjects: answer.blindSpots.map((spot) => spot.subject),
+    conditions: answer.conditions,
   }
 }
 

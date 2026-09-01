@@ -31,9 +31,11 @@ import {
   type Envelope,
   type EnvelopeError,
   type ReportEnvelope,
+  type Reproduction,
+  type Session,
 } from '@codedocs/core'
 
-import { flagsIn, parse, type Command } from './args.ts'
+import { flagsIn, parse, type Command, type ParsedArgs } from './args.ts'
 import { formatError } from './messages.ts'
 import { codedocsFrames } from './stack.ts'
 import {
@@ -102,53 +104,33 @@ function execute(argv: readonly string[], cwd?: string): Outcome {
       error: parsed.error,
     }
   }
-
   const { command } = parsed
   const style = styleFor(command.color)
+  // `report-bug` is the one operation that opens no session of its own: it
+  // re-runs a command that opens one, and reads the index that answered it.
+  return command.operation === 'report-bug'
+    ? report(command, style)
+    : answered(command, style)
+}
 
-  // Reproducing a reproduction writes two reports over one path and reads as one
-  // failure nested in another. The command that failed is the one to give it.
-  if (command.operation === 'report-bug') return report(command, style)
-
+/**
+ * Open the index, answer, and close it however that went.
+ *
+ * Every failure past this point is the same envelope a success would have been,
+ * because a `--json` run that answered nothing at all is the one an agent can
+ * least afford to have to guess at.
+ */
+function answered(command: Command, style: Style): Outcome {
   let session
   try {
     session = openSession({ cwd: command.cwd, noUpdate: command.noUpdate })
   } catch (error) {
     // Nothing was opened, so there is no snapshot to name and no conditions to
-    // report — but the envelope is still the shape a caller parses, and a
-    // `--json` run that answered nothing at all is the one an agent can least
-    // afford to have to guess at.
+    // report — the envelope's honesty fields are empty rather than invented.
     return failed(command, style, unavailable(error))
   }
-
   try {
-    const { store, context } = session
-    const { depth, limit, subject } = command
-
-    switch (command.operation) {
-      case 'analyse': {
-        const envelope = analyse(store, context, limit, session.repair)
-        return emit(command.json, envelope, () =>
-          renderAnalyse(envelope as AnalyseEnvelope, style),
-        )
-      }
-      case 'symbol': {
-        const envelope = symbol(store, context, subject ?? '*', limit)
-        return emit(command.json, envelope, () =>
-          renderSymbols(envelope, style),
-        )
-      }
-      case 'callers':
-      case 'callees': {
-        const operation = command.operation === 'callers' ? callers : callees
-        const envelope = operation(store, context, subject ?? '', limit)
-        return emit(command.json, envelope, () => renderEdges(envelope, style))
-      }
-      case 'trace': {
-        const envelope = trace(store, context, subject ?? '', limit, depth)
-        return emit(command.json, envelope, () => renderTrace(envelope, style))
-      }
-    }
+    return dispatch(command, session, style)
   } catch (error) {
     return failed(
       command,
@@ -166,50 +148,116 @@ function execute(argv: readonly string[], cwd?: string): Outcome {
 }
 
 /**
+ * One operation, and the renderer that goes with it.
+ *
+ * The subject is coalesced once: the parser has already refused an operation
+ * that needs one and was given none, so the fallback is unreachable and exists
+ * only because the type says it can be `null` for `analyse`.
+ */
+function dispatch(command: Command, session: Session, style: Style): Outcome {
+  const { store, context } = session
+  const { depth, json, limit } = command
+  const subject = command.subject ?? ''
+
+  switch (command.operation) {
+    case 'analyse': {
+      const envelope = analyse(store, context, limit, session.repair)
+      return emit(json, envelope, () =>
+        renderAnalyse(envelope as AnalyseEnvelope, style),
+      )
+    }
+    case 'symbol': {
+      const envelope = symbol(store, context, subject, limit)
+      return emit(json, envelope, () => renderSymbols(envelope, style))
+    }
+    case 'callers':
+    case 'callees': {
+      const operation = command.operation === 'callers' ? callers : callees
+      const envelope = operation(store, context, subject, limit)
+      return emit(json, envelope, () => renderEdges(envelope, style))
+    }
+    case 'trace': {
+      const envelope = trace(store, context, subject, limit, depth)
+      return emit(json, envelope, () => renderTrace(envelope, style))
+    }
+    // Unreachable: `execute` routes `report-bug` before a session is opened.
+    // The case is here so that adding an operation is a type error rather than a
+    // silent fall through — and if it ever did run, it did fail.
+    case 'report-bug':
+      return failed(command, style, {
+        code: 'operation-failed',
+        params: { detail: '`report-bug` opens no session' },
+      })
+  }
+}
+
+/**
  * `report-bug`: re-run the failing command, then write what it did.
  *
  * The re-run happens in this process rather than in a child, because the
  * envelope is the payload and a child would only hand back the bytes it printed.
- * Everything about the reproduction that leaves this function is the envelope it
- * produced, which is what `codedocs` would have shown the user.
  */
 function report(command: Command, style: Style): Outcome {
   const inner = parse(command.trailing, command.cwd)
+  // Reproducing a reproduction writes two reports over one path and reads as one
+  // failure nested in another. The command that failed is the one to give it.
   if (inner.ok && inner.command.operation === 'report-bug') {
     return failed(command, style, { code: 'report-recursive', params: {} })
   }
 
+  const envelope = reportBug(reproduce(command, inner), command.withRepository)
+  const written = write(command, envelope)
+  return written.error === null
+    ? present(command, envelope, written, style)
+    : failed(command, style, written.error)
+}
+
+/**
+ * Run the failing command again, and record what running it cost.
+ *
+ * `operation` and `cwd` come from the parse rather than from the run, because a
+ * command line that named nothing codedocs knows still has a report owed about
+ * it — and the report then says so rather than guessing at an operation.
+ */
+function reproduce(command: Command, inner: ParsedArgs): Reproduction {
   const started = performance.now()
   const rerun = execute(command.trailing, command.cwd)
-  const envelope = reportBug(
-    {
-      argv: command.trailing,
-      operation: inner.ok ? inner.command.operation : null,
-      flags: flagsIn(command.trailing),
-      // Where the failing command ran, which is the index the report describes.
-      cwd: inner.ok ? inner.command.cwd : command.cwd,
-      exitCode: rerun.code,
-      durationMs: Math.round(performance.now() - started),
-      envelope: rerun.envelope,
-      error: rerun.error,
-    },
-    command.withRepository,
-  )
+  return {
+    argv: command.trailing,
+    operation: inner.ok ? inner.command.operation : null,
+    flags: flagsIn(command.trailing),
+    // Where the failing command ran, which is the index the report describes.
+    cwd: inner.ok ? inner.command.cwd : command.cwd,
+    exitCode: rerun.code,
+    durationMs: Math.round(performance.now() - started),
+    envelope: rerun.envelope,
+    error: rerun.error,
+  }
+}
 
-  const written = write(command, envelope)
-  if (written.error !== null) return failed(command, style, written.error)
+/**
+ * What a written report prints, which depends only on where it went.
+ *
+ * With `--out -` the report *is* stdout, so the disclosure moves to stderr
+ * rather than into the bytes an agent is piping. `--json` puts the envelope on
+ * stdout as every other operation does, and prints no disclosure at all: it is
+ * in the file, and in the `carries` block of the report itself.
+ */
+function present(
+  command: Command,
+  envelope: ReportEnvelope,
+  written: Written,
+  style: Style,
+): Outcome {
+  const disclosure = renderReport(envelope, written.path, style)
+  const toStdout = written.path === null
   return {
     stdout: command.json
       ? JSON.stringify(envelope, null, 2)
-      : written.path === null
+      : toStdout
         ? written.text
-        : renderReport(envelope, written.path, style),
-    // With `--out -` the report *is* stdout, so the disclosure moves to stderr
-    // rather than into the bytes an agent is piping.
-    stderr:
-      command.json || written.path !== null
-        ? ''
-        : renderReport(envelope, null, style),
+        : disclosure,
+    stderr: command.json || !toStdout ? '' : disclosure,
     code: 0,
     envelope,
     error: null,
@@ -223,14 +271,15 @@ function report(command: Command, style: Style): Outcome {
  * payload the caller puts on stdout. codedocs writes the one file it was asked
  * for and edits nothing else — not the user's `.gitignore`, not their config.
  */
-function write(
-  command: Command,
-  envelope: ReportEnvelope,
-): {
+interface Written {
+  /** Where it landed, or `null` for `--out -`, which writes no file. */
   readonly path: string | null
+  /** The report as JSON, which is the payload `--out -` puts on stdout. */
   readonly text: string
   readonly error: EnvelopeError | null
-} {
+}
+
+function write(command: Command, envelope: ReportEnvelope): Written {
   const text = JSON.stringify(envelope.result, null, 2)
   const out = command.out ?? REPORT_FILE
   if (out === '-') return { path: null, text, error: null }
