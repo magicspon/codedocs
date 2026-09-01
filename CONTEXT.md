@@ -339,3 +339,11 @@ Everything the index holds about one subject, assembled for someone else to writ
 node, [[Label]]s, [[Fidelity]], edges in and out, and the [[Document]]s whose [[Claim]]s name it.
 What PRD §9's `explain` becomes once codedocs never generates text.
 _Avoid_: explanation, summary, context, description
+
+**Impact**:
+What a change could reach: the symbols a working tree's edits reach through the index's edges,
+resolved against a [[Baseline]] by [[Continuity]] and walked outward from there. The only
+[[Operation]] that composes several parts of the index at once, and the only one that survived of the
+three the original PRD planned — `review` split along the boundary with `fallow`, and `plan` was a
+ranking. Which tests a change reaches is this scoped to `role: test`, never an operation of its own.
+_Avoid_: blast radius, affected set, ripple, risk

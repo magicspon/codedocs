@@ -262,3 +262,9 @@ so `doctor` deduplicates causes across signals
 - **Agent discoverability stays unowned.** The `AGENTS.md` block that teaches an agent to shell out is
   the human-facing half of this contract, but it is writing that depends on the finished surface and
   is better done once, after this lands.
+- **Phase 5 is now one operation, not three.** `review` and `plan` are deleted by [ADR
+  0012](0012-audience-and-the-fallow-boundary.md), which takes the position that codedocs implements
+  no analysis `fallow` already ships: `review`'s architecture and dependency halves are `fallow`'s,
+  and what remains of it is `impact` and `docs affected` printed together, which the rule above
+  forbids an operation from doing. `plan` falls to this ADR's own reasoning about `search` — it is a
+  ranking, and a ranking is a judgement. `impact` alone enters the operation enum.
