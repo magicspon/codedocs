@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Five operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Six operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -462,37 +462,24 @@ Implemented, covered by 240 tests, and measured against real repositories:
 In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
 is gated by the one above it.
 
-1. **`references` and `file`**, which complete the relationship set. `impact` cannot be honest
-   without `references`: a changed type reaches everything that names it, not only its callers.
-2. **`doctor`**, which is what preflight is still missing. All four of ADR 0001's signals are
-   measured and stored — `node_modules`, a declared install script, a config that globs nothing, and
-   every unresolved specifier with its cause — and `analyse` and every answer report them. What has
-   no home yet is `doctor --measure`, which re-runs the filesystem signals against the working tree
-   and names where they disagree with the index. It is also the first operation that can reach **exit
-   code 1**, which nothing produces today.
-3. **The label layer** (ADR 0003), and with it the **scope channel** — the third kind of honesty,
-   which has no flag yet — and `impact --label role=test`.
-4. **`impact`**, with baseline capture and retention (ADR 0008) underneath it.
+1. **`references` and `file`** — the rest of the relationship set. `impact` cannot be honest without
+   `references`, because a changed type reaches everything that names it.
+2. **`doctor`** — all four preflight signals are measured, stored and reported already; what has no
+   home is `doctor --measure`, and **exit code 1**, which nothing produces today.
+3. **The label layer** (ADR 0003), and with it the **scope channel** and `impact --label role=test`.
+4. **`impact`**, over baseline capture and retention (ADR 0008).
 5. **`evidence`**, once labels and fidelity exist for it to assemble.
 6. **`docs check` and `docs affected`** (ADR 0005).
-7. **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+7. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
-Not tied to that order:
+Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
+(`TODO(#7)` in `model.ts`); the `classify` and `baselines` config keys, which parse and default but
+have no consumer until steps 3 and 4; and the `AGENTS.md` discovery block that tells an agent when to
+reach for codedocs ([#18](https://github.com/magicspon/codedocs/issues/18)).
 
-- **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
-  `model.ts`.
-- **Two `codedocs.jsonc` keys have no consumer.** The file is read, validated and strict, and
-  `discover` and `remediations` are wired to the code that wanted them. `classify` and `baselines`
-  parse and default, but the label layer and baseline capture that would read them are steps 3 and 4
-  above, so setting either changes nothing today.
-- **Agent discoverability**, the `AGENTS.md` block that tells an agent when to reach for codedocs.
-  [#18](https://github.com/magicspon/codedocs/issues/18).
-
-**`review` and `plan` are deleted.** They were the other two composed operations in the original
-plan. `review`'s architecture and dependency halves belong to `fallow`, and what was left of it was
-`impact` and `docs affected` printed together; `plan` was a ranking, and a ranking is a judgement that
-cannot also be a determinism guarantee — the same reason `search` went. Anything not on this page and
-not covered by `fallow` is not planned.
+**`review` and `plan` are deleted.** `review` was `fallow`'s work plus `impact` and `docs affected`
+printed together, and `plan` was a ranking — which cannot also be a determinism guarantee, the same
+reason `search` went. Anything not on this page and not covered by `fallow` is not planned.
 
 All open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
 
@@ -505,7 +492,7 @@ the code:
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
   cross-commit continuity, baseline retention, what preflight measures, what may enter the
-  configuration file, and where codedocs stops and `fallow` starts.
+  configuration file, what a bug report may carry, and where codedocs stops and `fallow` starts.
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on, including the call-graph
   backend spike that chose TypeScript 7 over TypeScript 6 on evidence.
 - **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and
@@ -515,12 +502,13 @@ the code:
 ## Development
 
 ```sh
-pnpm test         # vitest
-pnpm typecheck    # tsc across the workspace
-pnpm lint         # oxlint
-pnpm check        # oxfmt --check && oxlint
-pnpm format       # oxfmt && oxlint --fix
-pnpm spell-check  # cspell
+pnpm test           # vitest
+pnpm typecheck      # tsc across the workspace
+pnpm lint           # oxlint
+pnpm check          # oxfmt --check && oxlint
+pnpm check:network  # no package reaches the network, over the dependency closure
+pnpm format         # oxfmt && oxlint --fix
+pnpm spell-check    # cspell
 ```
 
 Every performance claim in this README is measured against fixture repositories cloned into `repos/`,
