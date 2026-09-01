@@ -5,7 +5,7 @@
 
 import { currentCommit } from '../discovery.ts'
 import type { FilePath, ProjectNode } from '../model.ts'
-import { fidelityOf, type ProjectPreflight } from '../preflight.ts'
+import { fidelityOf, type ProjectPreflight } from '../preflight/index.ts'
 import type { IndexHeader } from '../store/index.ts'
 import { TOOL_VERSION, typescriptVersion } from './version.ts'
 

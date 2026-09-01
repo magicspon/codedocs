@@ -19,7 +19,7 @@ import { analyse } from '../src/adapter/ts7/index.ts'
 import { DEFAULT_CONFIG } from '../src/config/index.ts'
 import { discoverProjects } from '../src/discovery.ts'
 import { statFile, walkSourceFiles } from '../src/drift.ts'
-import { preflightProjects } from '../src/preflight.ts'
+import { preflightProjects } from '../src/preflight/index.ts'
 import { callers } from '../src/operations/calls.ts'
 import type { FileNode, FilePath } from '../src/model.ts'
 import {

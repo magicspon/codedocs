@@ -19,7 +19,7 @@ import type {
   Snapshot,
 } from '../envelope.ts'
 import type { FilePath, ProjectNode } from '../model.ts'
-import { preflightProjects, type ProjectPreflight } from '../preflight.ts'
+import { preflightProjects, type ProjectPreflight } from '../preflight/index.ts'
 import {
   openStore,
   readFiles,

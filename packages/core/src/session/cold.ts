@@ -18,7 +18,7 @@ import {
   classifySpecifiers,
   preflightProjects,
   type ProjectPreflight,
-} from '../preflight.ts'
+} from '../preflight/index.ts'
 import {
   beginAnalysis,
   commitProject,

@@ -29,7 +29,7 @@ import {
   type Snapshot,
 } from '../envelope.ts'
 import type { Fidelity, PreconditionCause } from '../model.ts'
-import { compilerOptionsOf, lockfileName } from '../preflight.ts'
+import { compilerOptionsOf, lockfileName } from '../preflight/index.ts'
 import { TOOL_VERSION, typescriptVersion } from '../session/index.ts'
 import {
   counts,

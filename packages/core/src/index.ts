@@ -112,7 +112,7 @@ export {
   fidelityOf,
   preflightProjects,
   type ProjectPreflight,
-} from './preflight.ts'
+} from './preflight/index.ts'
 export {
   discoverProjects,
   findRepositoryRoot,
