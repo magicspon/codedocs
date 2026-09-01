@@ -88,6 +88,26 @@ describe('the tool list', () => {
     expect(schemas.get('analyse')).toEqual([])
   })
 
+  it('takes a variadic subject as a list, not as a string to be split again', () => {
+    const tool = (
+      tools() as {
+        name: string
+        inputSchema: {
+          required: string[]
+          properties: Record<string, { type: string }>
+        }
+      }[]
+    ).find((entry) => entry.name === 'report-bug')
+    expect(tool?.inputSchema.required).toEqual(['command'])
+    expect(tool?.inputSchema.properties['command']?.type).toBe('array')
+    // Its per-operation flags reach this binding from the same manifest, so it
+    // has nothing of its own to forget.
+    expect(tool?.inputSchema.properties['with-repository']?.type).toBe(
+      'boolean',
+    )
+    expect(tool?.inputSchema.properties['out']?.type).toBe('string')
+  })
+
   it('offers `depth` only where the operation has one', () => {
     const properties = new Map(
       (
@@ -172,6 +192,26 @@ describe('a tool call', () => {
     }
     expect(envelope.request.subject).toBe('-nope')
     expect(envelope.result).toEqual([])
+  })
+
+  it('reproduces a failure and hands back the report, writing no file', () => {
+    // `out: '-'` is the shape an agent uses: the report comes back in the
+    // answer rather than as a file it would then have to read.
+    const envelope = JSON.parse(
+      textOf(call('report-bug', { command: ['symbol', 'nope'], out: '-' })),
+    ) as {
+      operation: string
+      result: { repositoryFacts: string; reproduction: { operation: string } }
+    }
+    expect(envelope.operation).toBe('report-bug')
+    expect(envelope.result.repositoryFacts).toBe('excluded')
+    expect(envelope.result.reproduction.operation).toBe('symbol')
+  })
+
+  it('refuses a variadic subject that is not a list of strings', () => {
+    expect(
+      errorOf(call('report-bug', { command: 'symbol *' }))['message'],
+    ).toContain('must be an array of strings')
   })
 
   it('refuses a tool that is not an operation', () => {

@@ -18,6 +18,25 @@ export {
   type TraceStep,
 } from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
+export {
+  REPORT_FILE,
+  reportBug,
+  type BlindSpotReason,
+  type CodedocsFacts,
+  type ConfigReport,
+  type Disclosure,
+  type IndexFacts,
+  type MachineFacts,
+  type PackageManager,
+  type ProjectEnvironment,
+  type Report,
+  type ReportedError,
+  type ReportEnvelope,
+  type Reproduction,
+  type ReproductionFacts,
+  type SpecifierFact,
+  type SpecifierTotals,
+} from './operations/report-bug.ts'
 export { resolveSubject } from './operations/subject.ts'
 export { scopeTo } from './operations/scope.ts'
 
@@ -39,9 +58,12 @@ export {
 } from './envelope.ts'
 
 export {
+  OPERATION_FLAGS,
   OPERATION_NAMES,
   OPERATIONS,
   operationSpec,
+  operationsTaking,
+  type OperationFlag,
   type OperationSpec,
   type SubjectSpec,
 } from './manifest.ts'
@@ -99,6 +121,7 @@ export {
 export {
   CONFIG_FILE,
   ConfigError,
+  configFacts,
   configSentence,
   DEFAULT_CONFIG,
   loadConfig,
@@ -106,6 +129,7 @@ export {
   remediationFor,
   type ClassifyRule,
   type Config,
+  type ConfigFacts,
   type ConfigRefusal,
   type Discover,
   type Remediation,

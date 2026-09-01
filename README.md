@@ -98,6 +98,7 @@ Built:
 | `callers <subject>` | every call edge into a subject         | call edge   |
 | `callees <subject>` | every call edge out of a subject       | call edge   |
 | `trace <root>`      | every path of calls out of a root      | path        |
+| `report-bug`        | a reproduced failure, safe to paste    | —           |
 
 Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
 sets:
@@ -111,7 +112,6 @@ sets:
 | `evidence <subject>`   | everything the index holds about one subject         | per kind       |
 | `docs check`           | which documented claims the code now contradicts     | document       |
 | `docs affected`        | which documents a change touches                     | document       |
-| `report-bug`           | a reproduced failure, in a shape safe to paste       | —              |
 
 There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
 because a second traversal is a second thing to keep correct.
@@ -354,6 +354,10 @@ fixed behind your back.
 --depth <n>      `trace` only: cap the steps per path (default none)
 --cwd <path>     run against another directory
 --color / --no-color
+
+`report-bug` only:
+  --with-repository  add the facts that name your code
+  --out <path>       where to write it; `-` is stdout (default ./codedocs-report.json)
 ```
 
 Exit codes follow the `fallow` convention: **0** answered, **1** a negative finding, **2** could not
@@ -427,12 +431,12 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 155 tests, and measured against real repositories:
+Implemented, covered by 240 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
   nothing.
-- **Five operations.** `analyse`, `symbol`, `callers`, `callees` and `trace`.
+- **Six operations.** `analyse`, `symbol`, `callers`, `callees`, `trace` and `report-bug`.
 - **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
   is held as data, so an operation cannot reach one renderer and miss the other.
 - **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
@@ -447,6 +451,9 @@ Implemented, covered by 155 tests, and measured against real repositories:
   is re-analysed rather than answered from facts extracted on a machine that is gone.
 - **Symbol identity.** A descriptor path naming every enclosing scope, with the ids that still
   collide reported rather than silently merged.
+- **A bug report you can paste.** `report-bug` re-runs the failing command and writes one file whose
+  default shape carries codedocs and machine facts alone. Nothing is logged, nothing is transmitted,
+  and the split is by reader rather than by sensitivity (ADR 0011).
 - **An MCP server.** `codedocs mcp`, one tool per operation, derived from the manifest the CLI parser
   reads.
 
@@ -468,8 +475,7 @@ is gated by the one above it.
 4. **`impact`**, with baseline capture and retention (ADR 0008) underneath it.
 5. **`evidence`**, once labels and fidelity exist for it to assemble.
 6. **`docs check` and `docs affected`** (ADR 0005).
-7. **`report-bug`** (ADR 0011).
-8. **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+7. **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order:
 

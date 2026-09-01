@@ -49,8 +49,10 @@ interface Failure {
 
 /** A JSON Schema fragment for one tool argument. */
 interface ArgumentSchema {
-  readonly type: 'string' | 'integer' | 'boolean'
+  readonly type: 'string' | 'integer' | 'boolean' | 'array'
   readonly minimum?: number
+  /** Present for `array` alone, which codedocs only ever uses for strings. */
+  readonly items?: { readonly type: 'string' }
   readonly description: string
 }
 
@@ -101,14 +103,31 @@ const DEPTH_ARGUMENT: ArgumentSchema = {
  * is total can page through an answer instead of re-asking for it.
  */
 function describe(spec: OperationSpec): string {
+  const call = `\`codedocs ${spec.name}${invocationSuffix(spec)} --json\``
+  // An operation with no result unit answers with one object rather than a list,
+  // so the two sentences about paging and blind spots would both be false.
+  if (spec.unit === null) {
+    return [
+      `${spec.summary}.`,
+      `Returns the codedocs answer envelope as JSON — the same bytes ${call}`,
+      'prints — whose `result` is the report. It is written to a file as well,',
+      'unless `out` is `-`. The default shape names nothing in your code.',
+    ].join(' ')
+  }
   return [
     `${spec.summary}.`,
-    `Returns the codedocs answer envelope as JSON — the same bytes`,
-    `\`codedocs ${spec.name}${spec.subject === null ? '' : ` <${spec.subject.name}>`} --json\``,
+    `Returns the codedocs answer envelope as JSON — the same bytes ${call}`,
     `prints. \`result\` is a list of ${spec.unit}s, sorted by ${spec.sortedBy}.`,
     `Every answer also carries \`snapshot\`, \`conditions\`, \`blindSpots\` and`,
     `\`budget\`: read \`blindSpots\` before treating an answer as complete.`,
   ].join(' ')
+}
+
+/** How the CLI spells one operation's subject, for a description that quotes it. */
+function invocationSuffix(spec: OperationSpec): string {
+  if (spec.subject === null) return ''
+  const subject = ` <${spec.subject.name}>`
+  return spec.subject.variadic ? ` --${subject}` : subject
 }
 
 /**
@@ -120,12 +139,23 @@ function describe(spec: OperationSpec): string {
 function schemaFor(spec: OperationSpec): Record<string, ArgumentSchema> {
   const properties: Record<string, ArgumentSchema> = {}
   if (spec.subject !== null) {
-    properties[spec.subject.name] = {
-      type: 'string',
-      description: spec.subject.description,
-    }
+    properties[spec.subject.name] = spec.subject.variadic
+      ? {
+          type: 'array',
+          items: { type: 'string' },
+          description: spec.subject.description,
+        }
+      : { type: 'string', description: spec.subject.description }
   }
   if (spec.depth) properties['depth'] = DEPTH_ARGUMENT
+  // Per-operation flags, described by the manifest so this binding has nothing
+  // of its own to forget.
+  for (const flag of spec.flags) {
+    properties[flag.name] = {
+      type: flag.value === null ? 'boolean' : 'string',
+      description: flag.description,
+    }
+  }
   return Object.assign(properties, GLOBAL_ARGUMENTS)
 }
 
@@ -144,7 +174,11 @@ export function tools(): unknown[] {
 }
 
 /** One argument read at the type its own schema declares, or refused by name. */
-type Read = { readonly value: string | number | boolean | undefined } | Failure
+type Read =
+  | {
+      readonly value: string | number | boolean | readonly string[] | undefined
+    }
+  | Failure
 
 const refused = (read: Read): read is Failure => 'code' in read
 
@@ -173,6 +207,12 @@ function readArgument(
 ): Read {
   if (value === undefined) return { value: undefined }
   if (schema.type === 'integer') return readInteger(value, name, schema)
+  if (schema.type === 'array') {
+    return Array.isArray(value) &&
+      value.every((entry) => typeof entry === 'string')
+      ? { value: value as readonly string[] }
+      : { code: -32602, message: `\`${name}\` must be an array of strings` }
+  }
   if (schema.type === 'boolean') {
     return typeof value === 'boolean'
       ? { value }
@@ -192,7 +232,7 @@ function readArgument(
 function flagFor(
   name: string,
   schema: ArgumentSchema,
-  value: string | number | boolean,
+  value: string | number | boolean | readonly string[],
 ): string[] {
   if (schema.type !== 'boolean') return [`--${name}`, String(value)]
   return value === true ? [`--${name}`] : []
@@ -207,16 +247,25 @@ function flagFor(
  */
 function positionalFor(
   spec: OperationSpec,
-  subject: string | undefined,
+  subject: string | readonly string[] | undefined,
 ): { tail: string[] } | Failure {
   if (spec.subject === null) return { tail: [] }
-  if (subject === undefined || subject === '') {
+  const empty =
+    subject === undefined ||
+    subject === '' ||
+    (Array.isArray(subject) && subject.length === 0)
+  if (empty) {
     return {
       code: -32602,
       message: `\`${spec.name}\` needs a \`${spec.subject.name}\``,
     }
   }
-  return { tail: ['--', subject] }
+  // Both forms sit after `--`: for a variadic subject that is where the command
+  // it re-runs begins, and for an ordinary one it is what stops a subject
+  // beginning with a hyphen being read as an unknown flag.
+  return {
+    tail: ['--', ...(typeof subject === 'string' ? [subject] : subject)],
+  }
 }
 
 /**
@@ -234,7 +283,7 @@ function argvFor(
   // A server's stdout is a protocol stream, so colour is refused rather than
   // left to a TTY check that would be wrong here.
   const argv = [spec.name, '--json', '--no-color']
-  let subject: string | undefined
+  let subject: string | readonly string[] | undefined
 
   for (const name of Object.keys(args)) {
     const declared = schema[name]
@@ -247,7 +296,7 @@ function argvFor(
     const read = readArgument(args[name], name, declared)
     if (refused(read)) return read
     if (read.value === undefined) continue
-    if (name === spec.subject?.name) subject = read.value as string
+    if (name === spec.subject?.name) subject = read.value as string | string[]
     else argv.push(...flagFor(name, declared, read.value))
   }
 

@@ -18,6 +18,9 @@ import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
  * 3: `error` became a code plus typed parameters. The formatted `message` is
  * gone from the wire, so a caller branches on the code rather than parsing
  * English, and a [[Report]] can carry the code while dropping the parameters.
+ *
+ * An operation arriving does not bump it: ADR 0006 makes the operation enum
+ * additive, so a caller written against 3 still reads every field it knew.
  */
 export const SCHEMA_VERSION: number = 3
 
@@ -33,6 +36,7 @@ export type OperationName =
   | 'callers'
   | 'callees'
   | 'trace'
+  | 'report-bug'
 
 /**
  * A file or region the analysis could not see, and which could therefore have
@@ -133,6 +137,12 @@ export interface ErrorParams {
   }
   /** `--depth` on an operation with no semantic depth. */
   readonly 'depth-unsupported': { readonly operation: string }
+  /** A per-operation flag given to an operation that does not declare it. */
+  readonly 'flag-unsupported': {
+    /** The flag as spelled, without its `--`. */
+    readonly flag: string
+    readonly operation: string
+  }
   readonly 'limit-invalid': { readonly value: string }
   readonly 'depth-invalid': { readonly value: string }
   /** `codedocs.jsonc` exists and cannot be used. `key` is `''` for the file. */
@@ -149,6 +159,18 @@ export interface ErrorParams {
   readonly 'index-unavailable': { readonly detail: string }
   /** The index opened and the operation threw. */
   readonly 'operation-failed': { readonly detail: string }
+  /** `report-bug` given itself to reproduce, which writes two reports over one path. */
+  readonly 'report-recursive': Record<string, never>
+  /**
+   * `report-bug` reproduced the failure and could not write the report.
+   *
+   * The one thing that operation owes, so it is the one thing that makes it
+   * exit 2 — the reproduced failure is a field, never a reason to fail.
+   */
+  readonly 'report-unwritable': {
+    readonly out: string
+    readonly detail: string
+  }
 }
 
 /** The closed set of error codes. A caller may branch on it exhaustively. */

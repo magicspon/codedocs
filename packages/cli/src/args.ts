@@ -2,16 +2,20 @@
  * Argument parsing.
  *
  * ADR 0006 closes the global flag set, and no operation may redefine a global
- * flag's meaning. Per-operation flags are additive only.
+ * flag's meaning. Per-operation flags are additive only: the manifest declares
+ * which operation takes which, and every other operation refuses it rather than
+ * ignoring it.
  */
 
 import { parseArgs } from 'node:util'
 
 import {
+  OPERATION_FLAGS,
   OPERATIONS,
   operationSpec,
   type EnvelopeError,
   type OperationName,
+  type OperationSpec,
 } from '@codedocs/core'
 
 /**
@@ -29,8 +33,16 @@ export type ParsedArgs =
 /** One resolved invocation. */
 export interface Command {
   readonly operation: OperationName
-  /** The subject or pattern, absent for `analyse`. */
+  /** The subject or pattern, absent for `analyse` and for a variadic subject. */
   readonly subject: string | null
+  /**
+   * The command line after `--`, for an operation whose subject is variadic.
+   *
+   * Empty for every other operation. `report-bug`'s subject is a whole command,
+   * so it is kept as the words it was given as: joining it into a string and
+   * splitting it again is a parser, and a lossy one.
+   */
+  readonly trailing: readonly string[]
   readonly json: boolean
   readonly noUpdate: boolean
   /** `null` means unbounded; the renderer, not the operation, owns the default. */
@@ -39,6 +51,10 @@ export interface Command {
   readonly depth: number | null
   readonly cwd: string
   readonly color: boolean
+  /** `report-bug`: add the facts that name the user's code (ADR 0011). */
+  readonly withRepository: boolean
+  /** `report-bug`: where to write the report. `null` means the default path. */
+  readonly out: string | null
 }
 
 /** The default the human renderer applies when no `--limit` is given. */
@@ -52,6 +68,8 @@ const OPTIONS = {
   cwd: { type: 'string' },
   color: { type: 'boolean' },
   'no-color': { type: 'boolean' },
+  'with-repository': { type: 'boolean' },
+  out: { type: 'string' },
   help: { type: 'boolean', short: 'h' },
 } as const
 
@@ -67,51 +85,90 @@ const failed = <T>(step: Step<T>): step is { readonly error: EnvelopeError } =>
  * `--json` is explicit and never inferred from a TTY. Sniffing a pipe makes the
  * same command produce different output depending on where it runs, which an
  * agent capturing output through a pty discovers the hard way.
+ *
+ * @param cwd - What `--cwd` defaults to. `report-bug` passes its own, so that a
+ * reproduction runs where the report-bug that asked for it was pointed, and the
+ * command line stays the one the user typed rather than one codedocs edited.
  */
-export function parse(argv: readonly string[]): ParsedArgs {
+export function parse(
+  argv: readonly string[],
+  cwd: string = process.cwd(),
+): ParsedArgs {
   const options = parseOptions(argv)
   if (failed(options)) return { ok: false, error: options.error }
 
-  const { values, positionals } = options.value
-  if (values.help === true || positionals.length === 0) {
+  const { values, own, trailing } = options.value
+  if (values.help === true || own.length + trailing.length === 0) {
     return { ok: false, error: { code: 'usage', params: {} } }
   }
 
-  const invocation = resolveInvocation(positionals)
+  const invocation = resolveInvocation(own, trailing)
   if (failed(invocation)) return { ok: false, error: invocation.error }
+  const { spec } = invocation.value
+
+  const perOperation = checkFlags(values, spec)
+  if (failed(perOperation)) return { ok: false, error: perOperation.error }
 
   const json = values.json === true
-  const limit = resolveLimit(values.limit, json)
+  const limit = resolveLimit(values.limit, json, spec)
   if (failed(limit)) return { ok: false, error: limit.error }
 
-  const depth = resolveDepth(values.depth, invocation.value.operation)
+  const depth = resolveDepth(values.depth, spec)
   if (failed(depth)) return { ok: false, error: depth.error }
 
   return {
     ok: true,
     command: {
-      ...invocation.value,
+      operation: spec.name,
+      subject: invocation.value.subject,
+      trailing: invocation.value.trailing,
       json,
       noUpdate: values['no-update'] === true,
       limit: limit.value,
       depth: depth.value,
-      cwd: values.cwd ?? process.cwd(),
+      cwd: values.cwd ?? cwd,
       color: resolveColor(values.color, values['no-color']),
+      withRepository: values['with-repository'] === true,
+      out: values.out ?? null,
     },
   }
+}
+
+/**
+ * Every flag `argv` gave that codedocs knows, without its value.
+ *
+ * ADR 0011's default report carries "the operation name, and every flag given"
+ * and nothing a flag was set *to*, since a value can be a path or a subject.
+ * Only recognised flags are reported, so a subject that happens to look like one
+ * cannot smuggle the user's own text into the safe shape.
+ */
+export function flagsIn(argv: readonly string[]): readonly string[] {
+  const known = new Set([
+    ...Object.keys(OPTIONS),
+    ...OPERATION_FLAGS.map((flag) => flag.name),
+  ])
+  const given: string[] = []
+  for (const token of argv) {
+    if (!token.startsWith('--')) continue
+    const name = token.slice(2).split('=')[0] ?? ''
+    if (known.has(name)) given.push(name)
+  }
+  return given
 }
 
 /** `parseArgs` throws on an unknown flag; a bad command line is not exceptional here. */
 function parseOptions(argv: readonly string[]) {
   try {
-    return {
-      value: parseArgs({
-        args: [...argv],
-        options: OPTIONS,
-        allowPositionals: true,
-        strict: true,
-      }),
-    }
+    const parsed = parseArgs({
+      args: [...argv],
+      options: OPTIONS,
+      allowPositionals: true,
+      strict: true,
+      // The `--` is load-bearing rather than decoration: it is where a variadic
+      // subject begins, and `tokens` is the only way to see that it was there.
+      tokens: true,
+    })
+    return { value: { values: parsed.values, ...partition(parsed.tokens) } }
   } catch (error) {
     // Node's own sentence names the flag the user typed, so it is a parameter
     // rather than the code: `unknown-flag` is the fact a report may carry.
@@ -127,32 +184,107 @@ function parseOptions(argv: readonly string[]) {
   }
 }
 
+/** One `parseArgs` token, at the width this file reads them. */
+interface Token {
+  readonly kind: string
+  readonly index: number
+  readonly value?: string
+}
+
+/** The positionals either side of `--`, which is where a variadic subject starts. */
+function partition(tokens: readonly Token[]): {
+  own: string[]
+  trailing: string[]
+} {
+  const terminator = tokens.find((token) => token.kind === 'option-terminator')
+  const own: string[] = []
+  const trailing: string[] = []
+  for (const token of tokens) {
+    if (token.kind !== 'positional' || token.value === undefined) continue
+    const after = terminator !== undefined && token.index > terminator.index
+    ;(after ? trailing : own).push(token.value)
+  }
+  return { own, trailing }
+}
+
+/** What one command line resolved to, before its flags are checked. */
+interface Invocation {
+  readonly spec: OperationSpec
+  readonly subject: string | null
+  readonly trailing: readonly string[]
+}
+
 /**
  * The operation and its subject, with every arity rule that applies to them.
  *
  * Every rule reads the manifest rather than naming an operation: `analyse` is not
- * special-cased here, it is simply the entry whose `subject` is `null`.
+ * special-cased here, it is simply the entry whose `subject` is `null`, and
+ * `report-bug` is the entry whose subject is variadic.
+ *
+ * A `--` before an ordinary subject is not a variadic subject — it is how the
+ * MCP binding passes a subject that starts with a hyphen — so for every other
+ * operation the two halves are read as one list.
  */
 function resolveInvocation(
-  positionals: readonly string[],
-): Step<Pick<Command, 'operation' | 'subject'>> {
-  const [name, subject, ...rest] = positionals
+  own: readonly string[],
+  trailing: readonly string[],
+): Step<Invocation> {
+  const name = own[0] ?? trailing[0]
   const spec = name === undefined ? undefined : operationSpec(name)
   if (spec === undefined) {
     return {
       error: { code: 'unknown-operation', params: { name: name ?? '' } },
     }
   }
+  return spec.subject?.variadic === true
+    ? resolveVariadic(spec, own, trailing)
+    : resolveSubject(spec, [...own, ...trailing])
+}
+
+/**
+ * An operation whose subject is the command line after `--`.
+ *
+ * The name has to be on this side of the `--`, or there is no `--` left to start
+ * the command with: `codedocs -- report-bug trace X` gave one, and it is the
+ * wrong one.
+ */
+function resolveVariadic(
+  spec: OperationSpec,
+  own: readonly string[],
+  trailing: readonly string[],
+): Step<Invocation> {
+  const noun = spec.subject?.name ?? 'argument'
+  if (own.length !== 1) {
+    return {
+      error: {
+        code: 'too-many-arguments',
+        params: { operation: spec.name, noun, got: own.length - 1 },
+      },
+    }
+  }
+  if (trailing.length === 0) {
+    return {
+      error: {
+        code: 'subject-required',
+        params: { operation: spec.name, noun },
+      },
+    }
+  }
+  return { value: { spec, subject: null, trailing } }
+}
+
+/** An operation that takes one token, or — like `analyse` — takes none. */
+function resolveSubject(
+  spec: OperationSpec,
+  positionals: readonly string[],
+): Step<Invocation> {
   const noun = spec.subject === null ? 'argument' : spec.subject.name
+  const [, subject, ...rest] = positionals
   if (rest.length > 0) {
     return {
       error: {
         code: 'too-many-arguments',
-        params: {
-          operation: spec.name,
-          noun,
-          got: positionals.length - 1,
-        },
+        params: { operation: spec.name, noun, got: positionals.length - 1 },
       },
     }
   }
@@ -164,15 +296,52 @@ function resolveInvocation(
       },
     }
   }
-  return { value: { operation: spec.name, subject: subject ?? null } }
+  return { value: { spec, subject: subject ?? null, trailing: [] } }
 }
 
-/** The renderer owns the default, so an absent `--limit` means "ask the renderer". */
+/**
+ * Refuse a per-operation flag the operation does not declare.
+ *
+ * The same rule `--depth` has had since it existed, applied from the manifest so
+ * that adding a flag to one operation cannot silently add it to five.
+ */
+function checkFlags(
+  values: Readonly<Record<string, unknown>>,
+  spec: OperationSpec,
+): Step<null> {
+  for (const flag of OPERATION_FLAGS) {
+    if (values[flag.name] === undefined) continue
+    if (spec.flags.some((entry) => entry.name === flag.name)) continue
+    return {
+      error: {
+        code: 'flag-unsupported',
+        params: { flag: flag.name, operation: spec.name },
+      },
+    }
+  }
+  return { value: null }
+}
+
+/**
+ * The renderer owns the default, so an absent `--limit` means "ask the renderer".
+ *
+ * An operation with no result unit has nothing for a limit to count, and is told
+ * so rather than accepting a flag it would drop.
+ */
 function resolveLimit(
   raw: string | undefined,
   json: boolean,
+  spec: OperationSpec,
 ): Step<number | null> {
   if (raw === undefined) return { value: json ? null : HUMAN_DEFAULT_LIMIT }
+  if (spec.unit === null) {
+    return {
+      error: {
+        code: 'flag-unsupported',
+        params: { flag: 'limit', operation: spec.name },
+      },
+    }
+  }
   const limit = Number(raw)
   if (!Number.isInteger(limit) || limit < 0) {
     return { error: { code: 'limit-invalid', params: { value: raw } } }
@@ -187,11 +356,13 @@ function resolveLimit(
  */
 function resolveDepth(
   raw: string | undefined,
-  operation: OperationName,
+  spec: OperationSpec,
 ): Step<number | null> {
   if (raw === undefined) return { value: null }
-  if (operationSpec(operation)?.depth !== true) {
-    return { error: { code: 'depth-unsupported', params: { operation } } }
+  if (!spec.depth) {
+    return {
+      error: { code: 'depth-unsupported', params: { operation: spec.name } },
+    }
   }
   const depth = Number(raw)
   if (!Number.isInteger(depth) || depth < 0) {
@@ -212,6 +383,13 @@ function resolveColor(
   return process.stdout.isTTY === true
 }
 
+/** How one operation is invoked, as `--help` spells it. */
+function invocation(spec: OperationSpec): string {
+  if (spec.subject === null) return `codedocs ${spec.name}`
+  const subject = `<${spec.subject.name}>`
+  return `codedocs ${spec.name} ${spec.subject.variadic ? `-- ${subject}` : subject}`
+}
+
 /**
  * The help text, which is also what an unparseable command line prints.
  *
@@ -221,21 +399,14 @@ function resolveColor(
  */
 export function usage(): string {
   // Derived, so an operation cannot land without appearing in `--help`.
-  const invocation = (name: string, subject: string | null): string =>
-    `codedocs ${name}${subject === null ? '' : ` <${subject}>`}`
-  const width = Math.max(
-    ...OPERATIONS.map(
-      (entry) => invocation(entry.name, entry.subject?.name ?? null).length,
-    ),
-  )
+  const width = Math.max(...OPERATIONS.map((entry) => invocation(entry).length))
   return [
     'codedocs — a local codebase index for TypeScript',
     '',
     'Usage:',
-    ...OPERATIONS.map((entry) => {
-      const left = invocation(entry.name, entry.subject?.name ?? null)
-      return `  ${left.padEnd(width + 2)}${entry.summary}`
-    }),
+    ...OPERATIONS.map(
+      (entry) => `  ${invocation(entry).padEnd(width + 2)}${entry.summary}`,
+    ),
     '',
     '  codedocs mcp                serve the operations above over MCP (stdio)',
     '',
@@ -252,6 +423,16 @@ export function usage(): string {
       .join(', ')} only: cap the steps per path (default none)`,
     '  --cwd <path>     run against another directory',
     '  --color / --no-color',
+    // Per-operation flags are listed with the operation that takes them, so the
+    // closed global set stays readable as a closed set.
+    ...OPERATIONS.filter((entry) => entry.flags.length > 0).flatMap((entry) => [
+      '',
+      `\`${entry.name}\` only:`,
+      ...entry.flags.map((flag) => {
+        const left = `  --${flag.name}${flag.value === null ? '' : ` <${flag.value}>`}`
+        return `${left.padEnd(21)}${flag.summary}`
+      }),
+    ]),
     '',
     'Exit codes: 0 answered, 1 negative finding, 2 could not answer.',
   ].join('\n')

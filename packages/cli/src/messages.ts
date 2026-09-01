@@ -11,7 +11,13 @@
  * code without a sentence is a type error rather than a missing string.
  */
 
-import { configSentence, OPERATIONS, type EnvelopeError } from '@codedocs/core'
+import {
+  configSentence,
+  OPERATIONS,
+  operationSpec,
+  operationsTaking,
+  type EnvelopeError,
+} from '@codedocs/core'
 
 import { usage } from './args.ts'
 
@@ -26,12 +32,31 @@ export function formatError(error: EnvelopeError): string {
       return `unknown operation \`${error.params.name}\`\n\n${usage()}`
     case 'subject-required': {
       const { operation, noun } = error.params
-      return `\`${operation}\` needs a ${noun}, e.g. \`codedocs ${operation} AuthService.login\``
+      // A variadic subject is a whole command line, so the example has to show
+      // the `--` that starts it rather than a subject standing on its own.
+      return variadic(operation)
+        ? `\`${operation}\` needs a ${noun} after \`--\`, e.g. \`codedocs ${operation} -- trace AuthService.login\``
+        : `\`${operation}\` needs a ${noun}, e.g. \`codedocs ${operation} AuthService.login\``
     }
     case 'too-many-arguments': {
       const { operation, noun, got } = error.params
-      return `\`${operation}\` takes at most one ${noun}, got ${got}`
+      return variadic(operation)
+        ? `\`${operation}\` takes no arguments of its own — its ${noun} goes after \`--\``
+        : `\`${operation}\` takes at most one ${noun}, got ${got}`
     }
+    case 'flag-unsupported': {
+      const { flag, operation } = error.params
+      // Derived from the manifest for the same reason `--depth`'s sentence is:
+      // the list of operations that take a flag is the manifest's to know.
+      const takes = operationsTaking(flag).map((entry) => `\`${entry.name}\``)
+      return takes.length === 0
+        ? `--${flag} does not apply to \`${operation}\``
+        : `--${flag} applies to ${takes.join(', ')}, not \`${operation}\``
+    }
+    case 'report-recursive':
+      return '`report-bug` cannot reproduce itself — give it the command that failed'
+    case 'report-unwritable':
+      return `could not write ${error.params.out}: ${error.params.detail}`
     case 'depth-unsupported': {
       // Derived from the manifest, so the list cannot fall out of step with the
       // operations that actually take a depth.
@@ -54,3 +79,7 @@ export function formatError(error: EnvelopeError): string {
       return error.params.detail
   }
 }
+
+/** Whether an operation's subject is a whole command line rather than one token. */
+const variadic = (operation: string): boolean =>
+  operationSpec(operation)?.subject?.variadic === true
