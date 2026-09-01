@@ -39,3 +39,9 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+      # ADR 0011's invariant over the dependency closure. Its own step so the
+      # failure names itself: `pnpm test` covers it too, but a red "Test" says
+      # nothing about a dependency that started reaching the network.
+      - name: No network
+        run: pnpm check:network

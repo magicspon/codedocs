@@ -13,7 +13,14 @@ import { defineConfig, type ViteUserConfig } from 'vitest/config'
 // infer the type of a default-exported call expression (TS9037).
 const config: ViteUserConfig = defineConfig({
   test: {
-    projects: ['packages/*'],
+    projects: [
+      'packages/*',
+      // The repository's own invariants belong to no package: ADR 0011's "no
+      // codedocs package reaches the network" is a fact about the workspace and
+      // its dependency closure, and there is no package it could sit inside
+      // without becoming a fact about that package instead.
+      { test: { name: 'repo', include: ['test/**/*.test.ts'] } },
+    ],
   },
 })
 

@@ -17,6 +17,7 @@
     "spell-check": "cspell .",
     "spell-check:sort": "node scripts/sort-cspell-words.mjs",
     "check": "oxfmt --check && oxlint",
+    "check:network": "node scripts/no-network.ts",
     "typecheck": "tsc --noEmit && pnpm -r typecheck",
     "release": "changeset publish",
     "version-packages": "changeset version && pnpm install --lockfile-only",
