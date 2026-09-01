@@ -168,6 +168,34 @@ function declaresInstallScript(root: string, from: string): boolean {
   )
 }
 
+/**
+ * The nearest lockfile's filename, or `null` where a repository has none.
+ *
+ * The name alone, never its content: ADR 0011 puts the filename in the default
+ * [[Report]] because it names the package manager, which is one of the two
+ * dependency versions that change what codedocs does.
+ */
+export function lockfileName(root: string, from: string = root): string | null {
+  return (
+    upward(root, from, (directory) =>
+      LOCKFILES.find((name) => existsSync(join(directory, name))),
+    ) ?? null
+  )
+}
+
+/**
+ * One project's `compilerOptions`, with its relative `extends` chain followed.
+ *
+ * Exported for the [[Report]], which carries them behind `--with-repository`:
+ * they are the half of the environment fingerprint a maintainer can read.
+ */
+export function compilerOptionsOf(
+  root: string,
+  configPath: FilePath,
+): Record<string, unknown> {
+  return readConfig(join(root, configPath)).compilerOptions
+}
+
 /** The nearest lockfile's content hash, or the empty string where there is none. */
 function lockfileHash(
   root: string,

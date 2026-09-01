@@ -129,6 +129,53 @@ export function loadConfig(root: string): Config {
   return parseConfig(readFileSync(path, 'utf8'))
 }
 
+/**
+ * `codedocs.jsonc` as it is written, rather than as it resolves.
+ *
+ * ADR 0011 splits the file in two — which keys are set is a fact about codedocs,
+ * and what they are set to is a fact about the repository — and `loadConfig`
+ * answers neither, because it returns every key with its default filled in. It
+ * never throws: a file that cannot be parsed is one of the likelier things a
+ * bug report is about, and a report that cannot be written about a broken config
+ * is no use.
+ */
+export interface ConfigFacts {
+  readonly present: boolean
+  /** Whether it parsed. `false` leaves `keys` and `values` empty. */
+  readonly readable: boolean
+  /** The top-level keys the file sets, sorted. */
+  readonly keys: readonly string[]
+  /** What it sets them to. Repository facts, so ADR 0011 puts them behind the flag. */
+  readonly values: Readonly<Record<string, unknown>>
+}
+
+/** Read `codedocs.jsonc` for its keys and their values, or report it absent. */
+export function configFacts(root: string): ConfigFacts {
+  const path = join(root, CONFIG_FILE)
+  if (!existsSync(path)) {
+    return { present: false, readable: true, keys: [], values: {} }
+  }
+  try {
+    const parsed: unknown = parseJsonc(readFileSync(path, 'utf8'))
+    if (
+      typeof parsed !== 'object' ||
+      parsed === null ||
+      Array.isArray(parsed)
+    ) {
+      return { present: true, readable: false, keys: [], values: {} }
+    }
+    const values = parsed as Record<string, unknown>
+    return {
+      present: true,
+      readable: true,
+      keys: Object.keys(values).sort(),
+      values,
+    }
+  } catch {
+    return { present: true, readable: false, keys: [], values: {} }
+  }
+}
+
 /** Parse config text. Separate from the read so a test needs no file. */
 export function parseConfig(text: string): Config {
   const root = expectObject(parseJsonc(text), '')

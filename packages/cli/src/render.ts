@@ -15,6 +15,7 @@ import type {
   ProjectConditions,
   ProjectSummary,
   RepairReport,
+  ReportEnvelope,
   SymbolNode,
   TracePath,
 } from '@codedocs/core'
@@ -258,6 +259,54 @@ const sameFacts = (a: CallSite, b: CallSite): boolean =>
   a.attribution === b.attribution &&
   a.provenance === b.provenance &&
   a.derivation === b.derivation
+
+/**
+ * Render what `report-bug` wrote, which is the disclosure it owes the user.
+ *
+ * ADR 0011 fixes what this says: the path, the shape, a category summary with
+ * counts, and — in the default shape only — one line naming the flag that adds
+ * the rest. There is no confirmation prompt, because the default is already the
+ * safe one and a prompt over a safe default only teaches people to dismiss
+ * prompts.
+ *
+ * @param out - Where it went, as the user spelled it, or `null` for stdout.
+ */
+export function renderReport(
+  envelope: ReportEnvelope,
+  out: string | null,
+  style: Style,
+): string {
+  const report = envelope.result
+  const { carries, reproduction } = report
+  const lines = [
+    out === null
+      ? style.bold('  wrote the report to stdout')
+      : `  ${style.bold(`wrote ${out}`)}`,
+    style.dim(
+      `  ${report.repositoryFacts} repository facts — ${report.contains}`,
+    ),
+    style.dim(
+      `  carries ${count(carries.blindSpotReasons, 'blind-spot reason')}, ` +
+        `${count(carries.paths, 'path')}, ` +
+        `${count(carries.symbolNames, 'symbol name')}, ` +
+        `${count(carries.moduleSpecifiers, 'module specifier')}`,
+    ),
+    style.dim(
+      `  reproduced \`${reproduction.operation ?? 'nothing codedocs knows'}\`: ` +
+        `exit ${reproduction.exitCode} in ${reproduction.durationMs} ms` +
+        (reproduction.error === null ? '' : ` — ${reproduction.error.code}`),
+    ),
+  ]
+  if (report.repositoryFacts === 'included') return lines.join('\n')
+  return [
+    ...lines,
+    '',
+    style.dim(
+      '  --with-repository adds the facts that name your code: file paths, ' +
+        'symbol names, module specifiers, dependency versions and the commit',
+    ),
+  ].join('\n')
+}
 
 /** Render a failure envelope. */
 export function renderError(envelope: Envelope<never>, style: Style): string {

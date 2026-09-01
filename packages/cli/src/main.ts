@@ -5,7 +5,16 @@
  * operations, and every answer is the envelope the core returned. The MCP server
  * will be the second binding, one tool per operation, returning the machine
  * envelope verbatim.
+ *
+ * `report-bug` is the one operation that runs another, and it is still not
+ * composition: it re-runs a command line the user gave and reports the envelope
+ * that came back, which is the same envelope `codedocs` itself would have
+ * printed. ADR 0011 makes the reproduction the payload precisely so that nothing
+ * has to be logged for a report to exist.
  */
+
+import { writeFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 import {
   analyse,
@@ -13,21 +22,25 @@ import {
   callers,
   ConfigError,
   openSession,
+  REPORT_FILE,
+  reportBug,
   SCHEMA_VERSION,
   symbol,
   trace,
   type AnswerContext,
   type Envelope,
   type EnvelopeError,
+  type ReportEnvelope,
 } from '@codedocs/core'
 
-import { parse, type Command } from './args.ts'
+import { flagsIn, parse, type Command } from './args.ts'
 import { formatError } from './messages.ts'
 import { codedocsFrames } from './stack.ts'
 import {
   renderAnalyse,
   renderEdges,
   renderError,
+  renderReport,
   renderSymbols,
   renderTrace,
   styleFor,
@@ -44,6 +57,20 @@ export interface Run {
 }
 
 /**
+ * One invocation, before it is reduced to text.
+ *
+ * `report-bug` needs the envelope of the command it re-ran rather than the
+ * bytes that command would have printed, and nothing else may: `run` returns
+ * `Run`, so this stays inside the binding.
+ */
+interface Outcome extends Run {
+  /** The envelope the operation produced, or `null` where none was reached. */
+  readonly envelope: Envelope<unknown> | null
+  /** The failure, where there was no envelope to carry it. */
+  readonly error: EnvelopeError | null
+}
+
+/**
  * Run one command line and return what to print.
  *
  * Returns rather than prints so the whole binding is testable without a process,
@@ -51,16 +78,37 @@ export interface Run {
  * test rather than a promise.
  */
 export function run(argv: readonly string[]): Run {
-  const parsed = parse(argv)
+  const { stdout, stderr, code } = execute(argv)
+  return { stdout, stderr, code }
+}
+
+/**
+ * Run one command line and keep the envelope, for the one caller that needs it.
+ *
+ * @param cwd - What `--cwd` defaults to, which only `report-bug` sets: a
+ * reproduction runs where its `report-bug` was pointed.
+ */
+function execute(argv: readonly string[], cwd?: string): Outcome {
+  const parsed = parse(argv, cwd)
   if (!parsed.ok) {
     // No operation was resolved, so there is no envelope to put this in: an
     // envelope names the operation it answers for, and inventing one would tell
     // a caller that a command it never ran had failed.
-    return { stdout: '', stderr: formatError(parsed.error), code: 2 }
+    return {
+      stdout: '',
+      stderr: formatError(parsed.error),
+      code: 2,
+      envelope: null,
+      error: parsed.error,
+    }
   }
 
   const { command } = parsed
   const style = styleFor(command.color)
+
+  // Reproducing a reproduction writes two reports over one path and reads as one
+  // failure nested in another. The command that failed is the one to give it.
+  if (command.operation === 'report-bug') return report(command, style)
 
   let session
   try {
@@ -118,6 +166,95 @@ export function run(argv: readonly string[]): Run {
 }
 
 /**
+ * `report-bug`: re-run the failing command, then write what it did.
+ *
+ * The re-run happens in this process rather than in a child, because the
+ * envelope is the payload and a child would only hand back the bytes it printed.
+ * Everything about the reproduction that leaves this function is the envelope it
+ * produced, which is what `codedocs` would have shown the user.
+ */
+function report(command: Command, style: Style): Outcome {
+  const inner = parse(command.trailing, command.cwd)
+  if (inner.ok && inner.command.operation === 'report-bug') {
+    return failed(command, style, { code: 'report-recursive', params: {} })
+  }
+
+  const started = performance.now()
+  const rerun = execute(command.trailing, command.cwd)
+  const envelope = reportBug(
+    {
+      argv: command.trailing,
+      operation: inner.ok ? inner.command.operation : null,
+      flags: flagsIn(command.trailing),
+      // Where the failing command ran, which is the index the report describes.
+      cwd: inner.ok ? inner.command.cwd : command.cwd,
+      exitCode: rerun.code,
+      durationMs: Math.round(performance.now() - started),
+      envelope: rerun.envelope,
+      error: rerun.error,
+    },
+    command.withRepository,
+  )
+
+  const written = write(command, envelope)
+  if (written.error !== null) return failed(command, style, written.error)
+  return {
+    stdout: command.json
+      ? JSON.stringify(envelope, null, 2)
+      : written.path === null
+        ? written.text
+        : renderReport(envelope, written.path, style),
+    // With `--out -` the report *is* stdout, so the disclosure moves to stderr
+    // rather than into the bytes an agent is piping.
+    stderr:
+      command.json || written.path !== null
+        ? ''
+        : renderReport(envelope, null, style),
+    code: 0,
+    envelope,
+    error: null,
+  }
+}
+
+/**
+ * Write the report where `--out` said, or report that it could not be.
+ *
+ * `path` is `null` for `--out -`, which writes no file: `text` is then the
+ * payload the caller puts on stdout. codedocs writes the one file it was asked
+ * for and edits nothing else — not the user's `.gitignore`, not their config.
+ */
+function write(
+  command: Command,
+  envelope: ReportEnvelope,
+): {
+  readonly path: string | null
+  readonly text: string
+  readonly error: EnvelopeError | null
+} {
+  const text = JSON.stringify(envelope.result, null, 2)
+  const out = command.out ?? REPORT_FILE
+  if (out === '-') return { path: null, text, error: null }
+  // Relative to the directory the user is standing in, not to `--cwd`: `--cwd`
+  // names the repository to answer about, and a file the user is meant to find
+  // belongs where they typed the command.
+  const path = resolve(process.cwd(), out)
+  try {
+    writeFileSync(path, `${text}\n`)
+  } catch (error) {
+    return {
+      path,
+      text,
+      error: {
+        code: 'report-unwritable',
+        params: { out, detail: messageOf(error) },
+        stack: codedocsFrames(error),
+      },
+    }
+  }
+  return { path, text, error: null }
+}
+
+/**
  * Render one failure, as the same envelope every success uses.
  *
  * `context` is absent only where the session never opened, in which case the
@@ -129,7 +266,7 @@ function failed(
   style: Style,
   error: EnvelopeError,
   context?: AnswerContext,
-): Run {
+): Outcome {
   const envelope: Envelope<never> = {
     operation: command.operation,
     schemaVersion: SCHEMA_VERSION,
@@ -153,6 +290,8 @@ function failed(
     stdout: command.json ? JSON.stringify(envelope, null, 2) : '',
     stderr: command.json ? '' : renderError(envelope, style),
     code: 2,
+    envelope,
+    error,
   }
 }
 
@@ -167,11 +306,13 @@ function emit(
   json: boolean,
   envelope: Envelope<unknown>,
   human: () => string,
-): Run {
+): Outcome {
   return {
     stdout: json ? JSON.stringify(envelope, null, 2) : human(),
     stderr: '',
     code: 0,
+    envelope,
+    error: null,
   }
 }
 

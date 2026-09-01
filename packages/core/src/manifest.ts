@@ -20,6 +20,32 @@ export interface SubjectSpec {
   readonly name: string
   /** One or two sentences, for a caller who has only this to go on. */
   readonly description: string
+  /**
+   * Whether the subject is a whole command line rather than one token.
+   *
+   * `report-bug`'s subject is the command it re-runs, which has its own flags
+   * and its own subject, so it is taken as everything after `--` and never
+   * joined into a string: quoting a command line and splitting it again is a
+   * parser, and a lossy one.
+   */
+  readonly variadic: boolean
+}
+
+/**
+ * One flag an operation adds to the global set.
+ *
+ * Described here rather than in a binding, because ADR 0006 has three bindings
+ * and a flag documented in one of them is a flag the other two get wrong.
+ */
+export interface OperationFlag {
+  /** As spelled, without its `--`. */
+  readonly name: string
+  /** What its value is called in help, or `null` for a boolean flag. */
+  readonly value: string | null
+  /** Half a line, as `--help` lists it. */
+  readonly summary: string
+  /** One or two sentences, for a caller who has only the tool list to go on. */
+  readonly description: string
 }
 
 /** One operation's surface. */
@@ -37,10 +63,19 @@ export interface OperationSpec {
    * bounded walk.
    */
   readonly depth: boolean
-  /** ADR 0006's result unit, which is what `--limit` counts. */
-  readonly unit: string
+  /**
+   * The flags this operation adds to the global set, without their `--`.
+   *
+   * ADR 0006 closes the global set and permits per-operation flags as additive
+   * only, so they are declared here and refused everywhere else — for the same
+   * reason `depth` is: a flag another operation ignores reads as a flag it
+   * honoured.
+   */
+  readonly flags: readonly OperationFlag[]
+  /** ADR 0006's result unit, which is what `--limit` counts. `null` where there is none. */
+  readonly unit: string | null
   /** ADR 0006's sort key. Part of the contract, not an implementation detail. */
-  readonly sortedBy: string
+  readonly sortedBy: string | null
 }
 
 /** A subject is anything an operation prints as an identifier. */
@@ -50,6 +85,7 @@ const IDENTIFIER: SubjectSpec = {
     'Anything codedocs prints as an identifier: `src/auth/service.ts#AuthService.login` ' +
     'names one symbol exactly, and `AuthService.login` may resolve to several — in ' +
     'which case the answer is their union and `request.resolved` names them.',
+  variadic: false,
 }
 
 /**
@@ -63,6 +99,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     summary: 'build or refresh the index, one row per project',
     subject: null,
     depth: false,
+    flags: [],
     unit: 'project',
     sortedBy: 'tsconfig path',
   },
@@ -75,8 +112,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
         'A glob, matched against both the declared name and the qualified name — ' +
         '`*Service`, `AuthService.login`, or `*` for everything. There is no ' +
         'ranking: results are sorted, never scored.',
+      variadic: false,
     },
     depth: false,
+    flags: [],
     unit: 'node',
     sortedBy: 'SymbolId, then path',
   },
@@ -85,6 +124,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     summary: 'every call edge into a subject',
     subject: IDENTIFIER,
     depth: false,
+    flags: [],
     unit: 'call edge',
     sortedBy: '(source, target, kind, site)',
   },
@@ -93,6 +133,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     summary: 'every call edge out of a subject',
     subject: IDENTIFIER,
     depth: false,
+    flags: [],
     unit: 'call edge',
     sortedBy: '(source, target, kind, site)',
   },
@@ -104,10 +145,50 @@ export const OPERATIONS: readonly OperationSpec[] = [
       description:
         'The symbol to walk outward from, in either form a subject takes. The ' +
         'walk is unbounded unless `depth` bounds it.',
+      variadic: false,
     },
     depth: true,
+    flags: [],
     unit: 'path',
     sortedBy: 'the SymbolId sequence, lexically',
+  },
+  {
+    name: 'report-bug',
+    summary: 'reproduce a failing command and write a report you can paste',
+    subject: {
+      name: 'command',
+      description:
+        'The failing codedocs command, given after `--`: `report-bug -- trace ' +
+        'AuthService.login --depth 3`. It is re-run, and the report carries the ' +
+        'envelope of the failure happening now — nothing is read from a log, ' +
+        'because codedocs logs nothing.',
+      variadic: true,
+    },
+    depth: false,
+    flags: [
+      {
+        name: 'with-repository',
+        value: null,
+        summary: 'add the facts that name your code',
+        description:
+          'Add the facts that name your code: file paths, symbol names, module ' +
+          'specifiers, dependency versions and the commit. The default shape ' +
+          'carries none of them, and is meant to be safe to paste unread.',
+      },
+      {
+        name: 'out',
+        value: 'path',
+        summary:
+          'where to write it; `-` is stdout (default ./codedocs-report.json)',
+        description:
+          'Where to write the report. `-` writes it to stdout, which is what an ' +
+          'agent pipes. Defaults to ./codedocs-report.json, overwritten each run.',
+      },
+    ],
+    // ADR 0006: a report is one object, so `--limit` has nothing to count and
+    // there is no order to fix.
+    unit: null,
+    sortedBy: null,
   },
 ]
 
@@ -120,3 +201,15 @@ export const OPERATION_NAMES: readonly OperationName[] = OPERATIONS.map(
 export function operationSpec(name: string): OperationSpec | undefined {
   return OPERATIONS.find((operation) => operation.name === name)
 }
+
+/** Every operation that takes `flag`, for a binding explaining why one was refused. */
+export function operationsTaking(flag: string): readonly OperationSpec[] {
+  return OPERATIONS.filter((operation) =>
+    operation.flags.some((entry) => entry.name === flag),
+  )
+}
+
+/** Every per-operation flag any operation declares, which is the closed set of them. */
+export const OPERATION_FLAGS: readonly OperationFlag[] = OPERATIONS.flatMap(
+  (operation) => operation.flags,
+)
