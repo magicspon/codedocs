@@ -26,7 +26,7 @@ import { DatabaseSync, type StatementSync } from 'node:sqlite'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-import type { DeclarationSite } from './adapter/ts7.ts'
+import type { DeclarationSite } from './adapter/ts7/index.ts'
 
 import type {
   CallEdge,

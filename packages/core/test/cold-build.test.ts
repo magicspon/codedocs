@@ -15,7 +15,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { analyse } from '../src/adapter/ts7.ts'
+import { analyse } from '../src/adapter/ts7/index.ts'
 import { DEFAULT_CONFIG } from '../src/config.ts'
 import { discoverProjects } from '../src/discovery.ts'
 import { statFile, walkSourceFiles } from '../src/drift.ts'

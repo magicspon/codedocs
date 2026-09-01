@@ -10,7 +10,7 @@
 
 import { createRequire } from 'node:module'
 
-import { openAnalysis, type AnalysisSession } from './adapter/ts7.ts'
+import { openAnalysis, type AnalysisSession } from './adapter/ts7/index.ts'
 import { loadConfig, type Config } from './config.ts'
 import {
   currentCommit,
