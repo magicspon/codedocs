@@ -1,0 +1,34 @@
+5 case(s) x 2 arm(s) x 3 replicate(s) on claude-sonnet-5
+
+  331102/baseline/r1             775476 tok   17 calls    3 files   126s  hit
+  331102/codedocs/r1             717251 tok   16 calls    3 files   158s  hit
+  331452/baseline/r1             783404 tok   13 calls    4 files    92s  INVALID (baseline reached for codedocs)
+  331452/codedocs/r1            3698445 tok   43 calls    8 files   208s  hit
+  332885/baseline/r1             470038 tok   14 calls    3 files    51s  hit
+  332885/codedocs/r1             345581 tok    9 calls    2 files    42s  miss
+  333085/baseline/r1             322715 tok    9 calls    1 files    69s  hit
+  333085/codedocs/r1             630566 tok   14 calls    1 files    75s  hit
+  333230/baseline/r1             757757 tok   16 calls    3 files   166s  hit
+  333230/codedocs/r1             777539 tok   17 calls    3 files   157s  hit
+  331102/codedocs/r2             380536 tok   10 calls    3 files    83s  hit
+  331102/baseline/r2             836837 tok   18 calls    2 files   151s  hit
+  331452/codedocs/r2            1936074 tok   26 calls    7 files   194s  hit
+  331452/baseline/r2             988005 tok   16 calls    6 files   112s  INVALID (baseline reached for codedocs)
+  332885/codedocs/r2             429717 tok   12 calls    2 files    49s  miss
+  332885/baseline/r2             339500 tok   10 calls    2 files    28s  miss
+  333085/codedocs/r2             391897 tok   12 calls    1 files    84s  hit
+  333085/baseline/r2             397885 tok    8 calls    1 files    52s  INVALID (baseline reached for codedocs)
+  333230/codedocs/r2             937601 tok   19 calls    3 files   174s  hit
+  333230/baseline/r2            1193857 tok   25 calls    4 files   160s  INVALID (no parseable answer block)
+  331102/baseline/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  331102/codedocs/r3                  0 tok    0 calls    0 files     0s  INVALID (no parseable answer block)
+  331452/baseline/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  331452/codedocs/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  332885/baseline/r3                  0 tok    0 calls    0 files     0s  INVALID (no parseable answer block)
+  332885/codedocs/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  333085/baseline/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  333085/codedocs/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  333230/baseline/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+  333230/codedocs/r3                  0 tok    0 calls    0 files     1s  INVALID (no parseable answer block)
+
+wrote /Users/magicspon/dev/projects/codedocs/bench/results. Run `node bench/report.ts` for the comparison.

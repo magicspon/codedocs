@@ -1,0 +1,30 @@
+5 case(s) x 2 arm(s) x 3 replicate(s) on claude-sonnet-5
+
+  331102/baseline/r1          already measured, skipped
+  331102/codedocs/r1          already measured, skipped
+  331452/baseline/r1          already measured, skipped
+  331452/codedocs/r1          already measured, skipped
+  332885/baseline/r1          already measured, skipped
+  332885/codedocs/r1          already measured, skipped
+  333085/baseline/r1          already measured, skipped
+  333085/codedocs/r1          already measured, skipped
+  333230/baseline/r1          already measured, skipped
+  333230/codedocs/r1          already measured, skipped
+  331102/codedocs/r2          already measured, skipped
+  331102/baseline/r2          already measured, skipped
+  331452/codedocs/r2          already measured, skipped
+  331452/baseline/r2          already measured, skipped
+  332885/codedocs/r2          already measured, skipped
+  332885/baseline/r2          already measured, skipped
+  333085/codedocs/r2          already measured, skipped
+  333085/baseline/r2          already measured, skipped
+  333230/codedocs/r2          already measured, skipped
+  333230/baseline/r2             841258 tok   19 calls    2 files   157s  hit
+  331102/baseline/r3             406200 tok    8 calls    2 files   129s  hit
+  331102/codedocs/r3             652244 tok   14 calls    3 files   116s  hit
+  331452/baseline/r3            1381529 tok   21 calls    5 files   118s  hit
+  331452/codedocs/r3            3332684 tok   37 calls    8 files   277s  hit
+  332885/baseline/r3             375879 tok   11 calls    2 files    56s  miss
+  332885/codedocs/r3             405807 tok   11 calls    2 files    63s  miss
+  333085/baseline/r3             263117 tok    5 calls    1 files    53s  hit
+  333085/codedocs/r3          

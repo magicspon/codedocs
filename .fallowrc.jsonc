@@ -11,7 +11,15 @@
   // this line the pre-commit config reads as a dead file. The changeset script
   // is spelled out in `renovate.json`'s `postUpgradeTasks` and in the workflow's
   // `RENOVATE_ALLOWED_COMMANDS`, neither of which is an import.
-  "dynamicallyLoaded": ["nano-staged.js", "scripts/renovate-changeset.mjs"],
+  // Run by hand, never imported: `node bench/run.ts` and the two scripts beside
+  // it are roots of their own. Without this the whole benchmark reads as dead.
+  "dynamicallyLoaded": [
+    "nano-staged.js",
+    "scripts/renovate-changeset.mjs",
+    "bench/run.ts",
+    "bench/report.ts",
+    "bench/freeze-cases.ts"
+  ],
 
   // `packages/core/test/fixtures/specifiers` exists to prove the sweep reads a
   // dynamic `import()` that resolves to nothing, so this specifier is the

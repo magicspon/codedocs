@@ -1,0 +1,18 @@
+{
+  "id": "333085",
+  "issue": 333085,
+  "shape": "symptom-only",
+  "fix": {
+    "commit": "8853be931dfb182c2497ecd99768a9442e4b7019",
+    "url": "https://github.com/microsoft/vscode/commit/8853be931dfb182c2497ecd99768a9442e4b7019",
+    "landedAt": "2026-08-31T00:00:00Z"
+  },
+  "truth": {
+    "files": ["src/vs/sessions/contrib/automations/browser/automationTools.ts"],
+    "symbols": ["getToolData", "ConfigureAutomationTool"]
+  },
+  "notes": "Behaviour only: an agent created a scheduled automation nobody asked for. Nothing in the text is a code identifier, and the fix is a tool-description string. The case where grep on a product noun may well beat a call graph — worth keeping for exactly that reason.",
+  "title": "Agent unexpectedly creates automation for PR monitoring",
+  "issueUrl": "https://github.com/microsoft/vscode/issues/333085",
+  "body": "When asked to monitor a pull request and keep it green, the agent created a scheduled automation without confirming that this was intended.\n\nExpected: treat monitoring as active work in the current session (for example, wait for checks and poll for updates), unless the user explicitly asks for recurring or scheduled automation.\n\nActual: a persistent hourly automation was created. This was surprising and provided a worse follow-up experience than active in-session monitoring."
+}
