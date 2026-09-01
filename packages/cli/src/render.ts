@@ -19,6 +19,8 @@ import type {
   TracePath,
 } from '@codedocs/core'
 
+import { formatError } from './messages.ts'
+
 /** Terminal styling, disabled wholesale when colour is off. */
 export interface Style {
   dim(text: string): string
@@ -260,9 +262,8 @@ const sameFacts = (a: CallSite, b: CallSite): boolean =>
 /** Render a failure envelope. */
 export function renderError(envelope: Envelope<never>, style: Style): string {
   const error = envelope.error
-  return style.warn(
-    `  ${error?.code ?? 'error'}: ${error?.message ?? 'could not answer'}`,
-  )
+  if (error === undefined) return style.warn('  error: could not answer')
+  return style.warn(`  ${error.code}: ${formatError(error)}`)
 }
 
 /**

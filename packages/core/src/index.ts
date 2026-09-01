@@ -30,6 +30,8 @@ export {
   type Budget,
   type Envelope,
   type EnvelopeError,
+  type ErrorCode,
+  type ErrorParams,
   type OperationName,
   type ProjectConditions,
   type ResolvedRequest,
@@ -97,12 +99,14 @@ export {
 export {
   CONFIG_FILE,
   ConfigError,
+  configSentence,
   DEFAULT_CONFIG,
   loadConfig,
   parseConfig,
   remediationFor,
   type ClassifyRule,
   type Config,
+  type ConfigRefusal,
   type Discover,
   type Remediation,
 } from './config.ts'

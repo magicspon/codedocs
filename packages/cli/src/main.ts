@@ -22,6 +22,8 @@ import {
 } from '@codedocs/core'
 
 import { parse, type Command } from './args.ts'
+import { formatError } from './messages.ts'
+import { codedocsFrames } from './stack.ts'
 import {
   renderAnalyse,
   renderEdges,
@@ -51,7 +53,10 @@ export interface Run {
 export function run(argv: readonly string[]): Run {
   const parsed = parse(argv)
   if (!parsed.ok) {
-    return { stdout: '', stderr: parsed.message, code: 2 }
+    // No operation was resolved, so there is no envelope to put this in: an
+    // envelope names the operation it answers for, and inventing one would tell
+    // a caller that a command it never ran had failed.
+    return { stdout: '', stderr: formatError(parsed.error), code: 2 }
   }
 
   const { command } = parsed
@@ -64,12 +69,8 @@ export function run(argv: readonly string[]): Run {
     // Nothing was opened, so there is no snapshot to name and no conditions to
     // report — but the envelope is still the shape a caller parses, and a
     // `--json` run that answered nothing at all is the one an agent can least
-    // afford to have to guess at. A bad `codedocs.jsonc` keeps its own code:
-    // ADR 0010 makes it a different repair from an index that will not open.
-    return failed(command, style, {
-      code: error instanceof ConfigError ? error.code : 'index-unavailable',
-      message: messageOf(error),
-    })
+    // afford to have to guess at.
+    return failed(command, style, unavailable(error))
   }
 
   try {
@@ -104,7 +105,11 @@ export function run(argv: readonly string[]): Run {
     return failed(
       command,
       style,
-      { code: 'operation-failed', message: messageOf(error) },
+      {
+        code: 'operation-failed',
+        params: { detail: messageOf(error) },
+        stack: codedocsFrames(error),
+      },
       session.context,
     )
   } finally {
@@ -170,5 +175,29 @@ function emit(
   }
 }
 
+/**
+ * Why the session could not be opened.
+ *
+ * A bad `codedocs.jsonc` keeps its own code: ADR 0010 makes it a different
+ * repair from an index that will not open, and the refusal already carries the
+ * parameters that say which key was wrong.
+ */
+function unavailable(error: unknown): EnvelopeError {
+  const stack = codedocsFrames(error)
+  if (error instanceof ConfigError) return { ...error.refusal, stack }
+  return {
+    code: 'index-unavailable',
+    params: { detail: messageOf(error) },
+    stack,
+  }
+}
+
+/**
+ * The thrown message, kept as a parameter rather than as the error itself.
+ *
+ * It is free text out of `node:fs` or the adapter and can name a path, which is
+ * exactly why it is a parameter: ADR 0011's default report drops parameters and
+ * keeps codes.
+ */
 const messageOf = (error: unknown): string =>
   error instanceof Error ? error.message : String(error)
