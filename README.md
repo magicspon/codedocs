@@ -1,19 +1,27 @@
 # codedocs
 
-A local codebase index for TypeScript, built for the question an editor cannot answer.
+A local codebase index for TypeScript, built for the questions an editor cannot answer.
 
-Your editor already tells you who calls one function. codedocs indexes the whole repository — every
-symbol, every call edge, every project — into a single SQLite file beside your working tree, then
-answers questions **across** it: what path of calls leads out of this handler, which projects an
-answer depended on, and what the analysis could not see.
+Your editor tells you who calls one function, inside one project. codedocs indexes the whole
+repository — every symbol, every call edge, every project — into a single SQLite file beside your
+working tree, then answers questions **across** it.
 
-Two things shape everything else:
+Two kinds of question. **Relationship** questions are about the repository as it stands: what calls
+this from anywhere, where a declaration actually comes from behind a barrel and a re-export, and what
+path of calls leads out of this handler. **Change** questions compare the working tree against an
+earlier commit: what a change could reach, which tests it reaches, and which documents it
+contradicts.
 
-- **No LLM.** codedocs emits deterministic structured facts. Your own agent writes the prose. There
-  is no provider, no API key and no inference cost anywhere in it.
+Three things shape everything else:
+
 - **The CLI is the product.** Every operation has a human renderer and a `--json` renderer over one
-  fixed envelope. Agents use it by shelling out, the way this repo already uses `graphify` and
-  `fallow`.
+  fixed envelope, and every answer says what the analysis could not see.
+- **No LLM.** codedocs emits deterministic structured facts and never prose. There is no provider, no
+  API key and no inference cost anywhere in it. If you want prose, `evidence` gives your own agent
+  the facts to write it from — one operation among thirteen, not the point of the tool.
+- **It stops where `fallow` starts.** Dead code, cycles, duplication, complexity and boundary
+  violations are `fallow`'s and are not reimplemented here. See
+  [codedocs and fallow](#codedocs-and-fallow).
 
 ## Status
 
@@ -81,6 +89,8 @@ Then ask. There is no daemon and no watcher; each command is a one-shot process.
 
 ## The operations
 
+Built:
+
 | Operation           | Answers                                | Result unit |
 | ------------------- | -------------------------------------- | ----------- |
 | `analyse`           | build or refresh the index             | project     |
@@ -88,6 +98,23 @@ Then ask. There is no daemon and no watcher; each command is a one-shot process.
 | `callers <subject>` | every call edge into a subject         | call edge   |
 | `callees <subject>` | every call edge out of a subject       | call edge   |
 | `trace <root>`      | every path of calls out of a root      | path        |
+
+Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
+sets:
+
+| Operation              | Answers                                              | Result unit    |
+| ---------------------- | ---------------------------------------------------- | -------------- |
+| `references <subject>` | everything that names a subject, types included      | reference edge |
+| `file <path>`          | what is in a file and what it reaches                | file           |
+| `doctor`               | why an answer was narrower than you wanted           | precondition   |
+| `impact`               | what a change could reach, against an earlier commit | symbol         |
+| `evidence <subject>`   | everything the index holds about one subject         | per kind       |
+| `docs check`           | which documented claims the code now contradicts     | document       |
+| `docs affected`        | which documents a change touches                     | document       |
+| `report-bug`           | a reproduced failure, in a shape safe to paste       | —              |
+
+There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
+because a second traversal is a second thing to keep correct.
 
 ### Naming a subject
 
@@ -170,15 +197,16 @@ line.
 - Where `--depth` did cut a branch, that branch says so — `⇣ more calls beyond depth 3` — so a
   bounded answer can never be read as a whole one.
 
-## For agents: one envelope, every answer
+## Machine output: one envelope, every answer
 
-Pass `--json` and every operation returns the same shape, success or failure:
+Pass `--json` and every operation returns the same shape, success or failure. This is what CI, a
+script and an agent all read — there is no separate agent surface:
 
 ```console
 $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData' --json
 {
   "operation": "callees",
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "request": {
     "subject": "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData",
     "resolved": [
@@ -196,7 +224,9 @@ $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getP
     {
       "project": "apps/api/v2/tsconfig.json",
       "fidelity": "typed",
-      "analysedAt": "2026-08-31T13:30:49.529Z"
+      "analysedAt": "2026-08-31T13:30:49.529Z",
+      "cause": null,
+      "postinstall": false
     }
   ],
   "blindSpots": [],
@@ -220,9 +250,22 @@ $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getP
 ```
 
 Only `result` differs between operations. A failure carries `error` **instead of** `result`, so a
-parser never meets a second shape.
+parser never meets a second shape:
 
-Four properties an agent can rely on:
+```jsonc
+"error": {
+  "code": "config-invalid",
+  "params": { "key": "exlucde", "expectation": "is not a key codedocs knows — did you mean `exclude`?" },
+}
+```
+
+An error is a **code and typed parameters, never a sentence**. Branch on `code` — it is a closed set
+— rather than matching on English that may be reworded. The human renderer builds the line it always
+printed from the same two fields, so nothing changes in a terminal. The split is what lets
+`report-bug` carry every code into a report you can paste in public while dropping the parameters,
+which are the half that can quote your own code back at you.
+
+Four properties a caller can rely on:
 
 - **`request.resolved` echoes what your subject became**, which is how you feed an answer back in.
 - **A total order, sorted on the data.** The same commit rebuilt gives byte-identical output, given
@@ -254,6 +297,30 @@ tool that is not an operation. The tool list is derived from the same manifest t
 and a call is answered by handing an argv to the function `codedocs` itself calls, so the bytes are
 the bytes `--json` produces by construction. `mcp` is not an operation: it owes no envelope and
 appears in no tool list.
+
+## codedocs and fallow
+
+This repository uses both, and the split is deliberate rather than incidental. **codedocs implements
+no analysis `fallow` already ships** — not because the overlap would be hard, but because two tools
+answering one question about one repository will disagree, and you would have no way to decide which
+is right.
+
+| You want to know                             | Reach for                                     |
+| -------------------------------------------- | --------------------------------------------- |
+| Is this export used anywhere?                | `fallow dead-code`, then `--trace` to confirm |
+| Are there import cycles?                     | `fallow dead-code`                            |
+| Is this logic duplicated?                    | `fallow dupes`                                |
+| Which files are complexity hotspots?         | `fallow health`                               |
+| Did this branch cross an architecture layer? | `fallow audit --base main`                    |
+| What calls this, across every project?       | `codedocs callers`                            |
+| What actually happens when this runs?        | `codedocs trace`                              |
+| What does this change reach?                 | `codedocs impact`                             |
+| Which tests does this change reach?          | `codedocs impact --label role=test`           |
+| Which docs does this change contradict?      | `codedocs docs check`                         |
+
+The line is the shape of the question. `fallow` reads the repository's text and reports its hygiene;
+codedocs resolves its symbols and reports its relationships and what a change to them reaches. The
+reasoning is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md).
 
 ## Three kinds of honesty, kept apart
 
@@ -385,29 +452,41 @@ Implemented, covered by 155 tests, and measured against real repositories:
 
 ## What is left
 
-**Operations settled in ADR 0006 and not implemented:** `references`, `file`, `evidence`,
-`docs check`, `docs affected`, `doctor` and `report-bug`. The three composed operations — `impact`,
-`review` and `plan` — come after those.
+In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
+is gated by the one above it.
 
-**Behind them, in rough order of how much they hold back:**
+1. **`references` and `file`**, which complete the relationship set. `impact` cannot be honest
+   without `references`: a changed type reaches everything that names it, not only its callers.
+2. **`doctor`**, which is what preflight is still missing. All four of ADR 0001's signals are
+   measured and stored — `node_modules`, a declared install script, a config that globs nothing, and
+   every unresolved specifier with its cause — and `analyse` and every answer report them. What has
+   no home yet is `doctor --measure`, which re-runs the filesystem signals against the working tree
+   and names where they disagree with the index. It is also the first operation that can reach **exit
+   code 1**, which nothing produces today.
+3. **The label layer** (ADR 0003), and with it the **scope channel** — the third kind of honesty,
+   which has no flag yet — and `impact --label role=test`.
+4. **`impact`**, with baseline capture and retention (ADR 0008) underneath it.
+5. **`evidence`**, once labels and fidelity exist for it to assemble.
+6. **`docs check` and `docs affected`** (ADR 0005).
+7. **`report-bug`** (ADR 0011).
+8. **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
-- **`doctor`**, which is what preflight is still missing. All four of ADR 0001's signals are
-  measured and stored — `node_modules`, a declared install script, a config that globs nothing, and
-  every unresolved specifier with its cause — and `analyse` and every answer report them. What has no
-  home yet is `doctor --measure`, which re-runs the filesystem signals against the working tree and
-  names where they disagree with the index, and the exit code that follows from a remediable cause.
+Not tied to that order:
+
 - **Normalised SCIP symbol strings**, in place of today's descriptor path. Marked `TODO(#7)` in
   `model.ts`.
-- **The consumers of two `codedocs.jsonc` keys.** The file is read, validated and strict, and
+- **Two `codedocs.jsonc` keys have no consumer.** The file is read, validated and strict, and
   `discover` and `remediations` are wired to the code that wanted them. `classify` and `baselines`
-  parse and default, but the label layer (ADR 0003) and baseline capture (ADR 0008) that would read
-  them are not built, so setting either changes nothing today.
-- **The scope channel.** The third kind of honesty has no flag, and arrives with the label layer.
-- **Exit code 1.** Nothing produces it yet; ADR 0006 assigns it to `docs check` finding a
-  contradicted claim and to `doctor` finding an unmet precondition that has a remediation.
+  parse and default, but the label layer and baseline capture that would read them are steps 3 and 4
+  above, so setting either changes nothing today.
 - **Agent discoverability**, the `AGENTS.md` block that tells an agent when to reach for codedocs.
   [#18](https://github.com/magicspon/codedocs/issues/18).
-- **Publishing.** codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+
+**`review` and `plan` are deleted.** They were the other two composed operations in the original
+plan. `review`'s architecture and dependency halves belong to `fallow`, and what was left of it was
+`impact` and `docs affected` printed together; `plan` was a ranking, and a ranking is a judgement that
+cannot also be a determinism guarantee — the same reason `search` went. Anything not on this page and
+not covered by `fallow` is not planned.
 
 All open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
 
@@ -419,11 +498,13 @@ the code:
 - **[`CONTEXT.md`](CONTEXT.md)** — the glossary. One meaning per term, and the words to avoid.
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
-  cross-commit continuity, baseline retention, what preflight measures, and what may enter the
-  configuration file.
+  cross-commit continuity, baseline retention, what preflight measures, what may enter the
+  configuration file, and where codedocs stops and `fallow` starts.
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on, including the call-graph
   backend spike that chose TypeScript 7 over TypeScript 6 on evidence.
-- **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — the original product requirements.
+- **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and
+  what it will not do. The original PRD it replaced is frozen at
+  [`docs/PRD-v1.md`](docs/PRD-v1.md), because the ADRs cite it by section number.
 
 ## Development
 

@@ -104,6 +104,13 @@ describe('the machine renderer', () => {
     expect(envelope.budget.returned).toBe(envelope.budget.available)
   })
 
+  it('carries the schema version the error shape belongs to', () => {
+    const envelope = JSON.parse(invoke('symbol', '*', '--json').stdout) as {
+      schemaVersion: number
+    }
+    expect(envelope.schemaVersion).toBe(3)
+  })
+
   it('is byte-identical when the same question is asked twice', () => {
     expect(invoke('symbol', '*', '--json').stdout).toBe(
       invoke('symbol', '*', '--json').stdout,
@@ -210,13 +217,27 @@ describe('codedocs.jsonc', () => {
 
     expect(result.code).toBe(2)
     const envelope = JSON.parse(result.stdout) as {
-      error: { code: string; message: string }
+      error: {
+        code: string
+        params: { key: string; expectation: string }
+        message?: string
+      }
       result?: unknown
     }
     expect(envelope.error.code).toBe('config-invalid')
-    expect(envelope.error.message).toContain('`exlucde`')
+    // ADR 0011: the key is a typed parameter, not a word inside a sentence.
+    expect(envelope.error.params.key).toBe('exlucde')
+    expect(envelope.error.message).toBeUndefined()
     // ADR 0006: `error` is carried instead of `result`, never beside it.
     expect(envelope.result).toBeUndefined()
+  })
+
+  it('prints the same sentence it always did, from the code and parameters', () => {
+    writeFileSync(config(), '{"exlucde": []}\n')
+
+    expect(invoke('symbol', '*').stderr).toContain(
+      'config-invalid: codedocs.jsonc: `exlucde` is not a key codedocs knows',
+    )
   })
 
   it('does not fall back to the defaults on a file it refused', () => {
