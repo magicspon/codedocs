@@ -206,7 +206,7 @@ script and an agent all read — there is no separate agent surface:
 $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData' --json
 {
   "operation": "callees",
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "request": {
     "subject": "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData",
     "resolved": [
@@ -224,7 +224,9 @@ $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getP
     {
       "project": "apps/api/v2/tsconfig.json",
       "fidelity": "typed",
-      "analysedAt": "2026-08-31T13:30:49.529Z"
+      "analysedAt": "2026-08-31T13:30:49.529Z",
+      "cause": null,
+      "postinstall": false
     }
   ],
   "blindSpots": [],
@@ -248,7 +250,20 @@ $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getP
 ```
 
 Only `result` differs between operations. A failure carries `error` **instead of** `result`, so a
-parser never meets a second shape.
+parser never meets a second shape:
+
+```jsonc
+"error": {
+  "code": "config-invalid",
+  "params": { "key": "exlucde", "expectation": "is not a key codedocs knows — did you mean `exclude`?" },
+}
+```
+
+An error is a **code and typed parameters, never a sentence**. Branch on `code` — it is a closed set
+— rather than matching on English that may be reworded. The human renderer builds the line it always
+printed from the same two fields, so nothing changes in a terminal. The split is what lets
+`report-bug` carry every code into a report you can paste in public while dropping the parameters,
+which are the half that can quote your own code back at you.
 
 Four properties a caller can rely on:
 

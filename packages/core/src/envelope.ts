@@ -14,8 +14,12 @@ import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
  * 2: `conditions` gained the cause of a project's fidelity and whether an
  * install script is declared, so a caller can act on a `syntactic` project
  * rather than only being told about it.
+ *
+ * 3: `error` became a code plus typed parameters. The formatted `message` is
+ * gone from the wire, so a caller branches on the code rather than parsing
+ * English, and a [[Report]] can carry the code while dropping the parameters.
  */
-export const SCHEMA_VERSION: number = 2
+export const SCHEMA_VERSION: number = 3
 
 /**
  * The operation set. Phase 5's names are absent rather than reserved: the
@@ -96,11 +100,77 @@ export interface Budget {
   readonly truncated: boolean
 }
 
-/** An operation that could not answer. Carried instead of `result`, never beside it. */
-export interface EnvelopeError {
-  readonly code: string
-  readonly message: string
+/**
+ * Every reason codedocs cannot answer, and the parameters each one carries.
+ *
+ * ADR 0011: an error message is free text and no field rule can classify it —
+ * `--limit lots` interpolates whatever was typed, and a resolver error
+ * interpolates a `SymbolId`. Splitting the sentence into a closed `code` and
+ * typed `params` makes the classification structural: `report-bug`'s default
+ * shape keeps every code and drops every parameter, and that stays true as
+ * errors are added rather than needing a scrubbing rule kept in step.
+ *
+ * A parameter may therefore hold free text — `detail`, `expectation` — because
+ * a parameter is the half that does not travel. A code may not.
+ */
+export interface ErrorParams {
+  /** No operation was named, or `--help` was asked for. */
+  readonly usage: Record<string, never>
+  /** A flag the parser does not know. `detail` is Node's own sentence. */
+  readonly 'unknown-flag': { readonly detail: string }
+  readonly 'unknown-operation': { readonly name: string }
+  /** An operation that needs a subject was given none. */
+  readonly 'subject-required': {
+    readonly operation: string
+    /** What the operation calls its subject, e.g. `subject`, `pattern`. */
+    readonly noun: string
+  }
+  readonly 'too-many-arguments': {
+    readonly operation: string
+    readonly noun: string
+    /** How many were given, against the one that is allowed. */
+    readonly got: number
+  }
+  /** `--depth` on an operation with no semantic depth. */
+  readonly 'depth-unsupported': { readonly operation: string }
+  readonly 'limit-invalid': { readonly value: string }
+  readonly 'depth-invalid': { readonly value: string }
+  /** `codedocs.jsonc` exists and cannot be used. `key` is `''` for the file. */
+  readonly 'config-invalid': {
+    readonly key: string
+    readonly expectation: string
+  }
+  /** A second `codedocs.jsonc` below the repository root. */
+  readonly 'config-misplaced': {
+    readonly found: string
+    readonly expected: string
+  }
+  /** The index could not be opened at all, so there is no snapshot to name. */
+  readonly 'index-unavailable': { readonly detail: string }
+  /** The index opened and the operation threw. */
+  readonly 'operation-failed': { readonly detail: string }
 }
+
+/** The closed set of error codes. A caller may branch on it exhaustively. */
+export type ErrorCode = keyof ErrorParams
+
+/**
+ * An operation that could not answer. Carried instead of `result`, never beside
+ * it.
+ *
+ * `stack` holds only the frames that resolve inside codedocs' own packages, each
+ * one already rewritten to a package-relative path. Both halves of that matter:
+ * a frame below ours is in the user's code, and the absolute prefix above ours
+ * names the machine the user is on. Neither is a codedocs fact, so neither is
+ * ever captured — the unfiltered stack does not travel far enough to be leaked.
+ */
+export type EnvelopeError = {
+  [TCode in ErrorCode]: {
+    readonly code: TCode
+    readonly params: ErrorParams[TCode]
+    readonly stack?: readonly string[]
+  }
+}[ErrorCode]
 
 /** The fixed wrapper every answer carries, whatever the operation. */
 export interface Envelope<TResult> {

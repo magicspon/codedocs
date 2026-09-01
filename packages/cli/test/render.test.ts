@@ -204,16 +204,34 @@ describe('the footer', () => {
 })
 
 describe('a failure envelope', () => {
-  it('renders the code and the message, not a stack', () => {
+  it('renders the code and the sentence its parameters make', () => {
     const out = renderError(
       {
         ...envelopeOf(),
         result: undefined,
-        error: { code: 'operation-failed', message: 'no such subject' },
+        error: {
+          code: 'operation-failed',
+          params: { detail: 'no such subject' },
+        },
       } as unknown as Envelope<never>,
       plain,
     )
     expect(out).toContain('operation-failed: no such subject')
+  })
+
+  it('renders a code the envelope carries no sentence for', () => {
+    // ADR 0011 takes the message off the wire, so this is the whole input.
+    const out = renderError(
+      {
+        ...envelopeOf(),
+        result: undefined,
+        error: { code: 'limit-invalid', params: { value: 'lots' } },
+      } as unknown as Envelope<never>,
+      plain,
+    )
+    expect(out).toContain(
+      'limit-invalid: --limit must be a non-negative integer, got `lots`',
+    )
   })
 
   it('falls back rather than printing `undefined` for an errorless failure', () => {

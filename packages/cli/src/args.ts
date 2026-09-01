@@ -7,12 +7,24 @@
 
 import { parseArgs } from 'node:util'
 
-import { OPERATIONS, operationSpec, type OperationName } from '@codedocs/core'
+import {
+  OPERATIONS,
+  operationSpec,
+  type EnvelopeError,
+  type OperationName,
+} from '@codedocs/core'
 
-/** A parsed command line, or the reason it could not be parsed. */
+/**
+ * A parsed command line, or the reason it could not be parsed.
+ *
+ * ADR 0011: the reason is a code and typed parameters, never a sentence. A bad
+ * command line is the one failure whose text is built entirely from what the
+ * user typed, so it is exactly the one a report must be able to carry without
+ * carrying the typing.
+ */
 export type ParsedArgs =
   | { readonly ok: true; readonly command: Command }
-  | { readonly ok: false; readonly message: string }
+  | { readonly ok: false; readonly error: EnvelopeError }
 
 /** One resolved invocation. */
 export interface Command {
@@ -44,10 +56,10 @@ const OPTIONS = {
 } as const
 
 /** One parsing step's value, or the reason parsing stopped. */
-type Step<T> = { readonly value: T } | { readonly message: string }
+type Step<T> = { readonly value: T } | { readonly error: EnvelopeError }
 
-const failed = <T>(step: Step<T>): step is { readonly message: string } =>
-  'message' in step
+const failed = <T>(step: Step<T>): step is { readonly error: EnvelopeError } =>
+  'error' in step
 
 /**
  * Parse `argv` into one command.
@@ -58,22 +70,22 @@ const failed = <T>(step: Step<T>): step is { readonly message: string } =>
  */
 export function parse(argv: readonly string[]): ParsedArgs {
   const options = parseOptions(argv)
-  if (failed(options)) return { ok: false, message: options.message }
+  if (failed(options)) return { ok: false, error: options.error }
 
   const { values, positionals } = options.value
   if (values.help === true || positionals.length === 0) {
-    return { ok: false, message: usage() }
+    return { ok: false, error: { code: 'usage', params: {} } }
   }
 
   const invocation = resolveInvocation(positionals)
-  if (failed(invocation)) return { ok: false, message: invocation.message }
+  if (failed(invocation)) return { ok: false, error: invocation.error }
 
   const json = values.json === true
   const limit = resolveLimit(values.limit, json)
-  if (failed(limit)) return { ok: false, message: limit.message }
+  if (failed(limit)) return { ok: false, error: limit.error }
 
   const depth = resolveDepth(values.depth, invocation.value.operation)
-  if (failed(depth)) return { ok: false, message: depth.message }
+  if (failed(depth)) return { ok: false, error: depth.error }
 
   return {
     ok: true,
@@ -101,7 +113,17 @@ function parseOptions(argv: readonly string[]) {
       }),
     }
   } catch (error) {
-    return { message: error instanceof Error ? error.message : String(error) }
+    // Node's own sentence names the flag the user typed, so it is a parameter
+    // rather than the code: `unknown-flag` is the fact a report may carry.
+    // Annotated because this function's return type is inferred, and an
+    // inferred `code: string` is not a member of the closed set.
+    const refused: EnvelopeError = {
+      code: 'unknown-flag',
+      params: {
+        detail: error instanceof Error ? error.message : String(error),
+      },
+    }
+    return { error: refused }
   }
 }
 
@@ -117,17 +139,29 @@ function resolveInvocation(
   const [name, subject, ...rest] = positionals
   const spec = name === undefined ? undefined : operationSpec(name)
   if (spec === undefined) {
-    return { message: `unknown operation \`${name ?? ''}\`\n\n${usage()}` }
+    return {
+      error: { code: 'unknown-operation', params: { name: name ?? '' } },
+    }
   }
   const noun = spec.subject === null ? 'argument' : spec.subject.name
   if (rest.length > 0) {
     return {
-      message: `\`${spec.name}\` takes at most one ${noun}, got ${positionals.length - 1}`,
+      error: {
+        code: 'too-many-arguments',
+        params: {
+          operation: spec.name,
+          noun,
+          got: positionals.length - 1,
+        },
+      },
     }
   }
   if (spec.subject !== null && subject === undefined) {
     return {
-      message: `\`${spec.name}\` needs a ${noun}, e.g. \`codedocs ${spec.name} AuthService.login\``,
+      error: {
+        code: 'subject-required',
+        params: { operation: spec.name, noun },
+      },
     }
   }
   return { value: { operation: spec.name, subject: subject ?? null } }
@@ -141,7 +175,7 @@ function resolveLimit(
   if (raw === undefined) return { value: json ? null : HUMAN_DEFAULT_LIMIT }
   const limit = Number(raw)
   if (!Number.isInteger(limit) || limit < 0) {
-    return { message: `--limit must be a non-negative integer, got \`${raw}\`` }
+    return { error: { code: 'limit-invalid', params: { value: raw } } }
   }
   return { value: limit }
 }
@@ -157,16 +191,11 @@ function resolveDepth(
 ): Step<number | null> {
   if (raw === undefined) return { value: null }
   if (operationSpec(operation)?.depth !== true) {
-    const takes = OPERATIONS.filter((entry) => entry.depth).map(
-      (entry) => `\`${entry.name}\``,
-    )
-    return {
-      message: `--depth applies to ${takes.join(', ')}, not \`${operation}\``,
-    }
+    return { error: { code: 'depth-unsupported', params: { operation } } }
   }
   const depth = Number(raw)
   if (!Number.isInteger(depth) || depth < 0) {
-    return { message: `--depth must be a non-negative integer, got \`${raw}\`` }
+    return { error: { code: 'depth-invalid', params: { value: raw } } }
   }
   return { value: depth }
 }
@@ -183,8 +212,14 @@ function resolveColor(
   return process.stdout.isTTY === true
 }
 
-/** The help text, which is also what an unparseable command line prints. */
-function usage(): string {
+/**
+ * The help text, which is also what an unparseable command line prints.
+ *
+ * Exported for the renderer: `usage` and `unknown-operation` are the two codes
+ * whose sentence is this whole block, and it is derived from the manifest here
+ * so that an operation cannot land without appearing in it.
+ */
+export function usage(): string {
   // Derived, so an operation cannot land without appearing in `--help`.
   const invocation = (name: string, subject: string | null): string =>
     `codedocs ${name}${subject === null ? '' : ` <${subject}>`}`
