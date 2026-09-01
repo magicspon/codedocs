@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Five operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Six operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -505,7 +505,7 @@ the code:
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
   cross-commit continuity, baseline retention, what preflight measures, what may enter the
-  configuration file, and where codedocs stops and `fallow` starts.
+  configuration file, what a bug report may carry, and where codedocs stops and `fallow` starts.
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on, including the call-graph
   backend spike that chose TypeScript 7 over TypeScript 6 on evidence.
 - **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and
@@ -515,12 +515,13 @@ the code:
 ## Development
 
 ```sh
-pnpm test         # vitest
-pnpm typecheck    # tsc across the workspace
-pnpm lint         # oxlint
-pnpm check        # oxfmt --check && oxlint
-pnpm format       # oxfmt && oxlint --fix
-pnpm spell-check  # cspell
+pnpm test           # vitest
+pnpm typecheck      # tsc across the workspace
+pnpm lint           # oxlint
+pnpm check          # oxfmt --check && oxlint
+pnpm check:network  # no package reaches the network, over the dependency closure
+pnpm format         # oxfmt && oxlint --fix
+pnpm spell-check    # cspell
 ```
 
 Every performance claim in this README is measured against fixture repositories cloned into `repos/`,
