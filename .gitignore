@@ -37,6 +37,17 @@ graphify-out/graph.html
 graphify-out/cost.json
 graphify-out/.graphify_python
 graphify-out/.graphify_root
+# Pipeline scratch, deleted by the rebuild's own cleanup step. Committing these
+# is how a stale chunk from an earlier run gets merged back into a later graph.
+graphify-out/.graphify_ast.json
+graphify-out/.graphify_analysis.json
+graphify-out/.graphify_detect.json
+graphify-out/.graphify_extract.json
+graphify-out/.graphify_incremental.json
+graphify-out/.graphify_semantic.json
+graphify-out/.graphify_old.json
+graphify-out/.graphify_uncached.txt
+graphify-out/.graphify_chunk_*.json
 # Dated snapshots of the previous graph, written on every rebuild.
 graphify-out/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
 

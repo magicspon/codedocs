@@ -57,6 +57,20 @@ export interface OperationSpec {
   readonly name: OperationName
   /** One line. `--help` prints it and the MCP tool list carries it. */
   readonly summary: string
+  /**
+   * When to reach for this operation rather than a neighbouring one.
+   *
+   * `summary` says what an operation answers; this says when it is the right
+   * question to ask. An agent choosing from a tool list has only these two
+   * strings to go on, and picking `trace` where `callers` would do is the
+   * expensive mistake — so the advice lives beside the operation rather than in
+   * a document a binding cannot read.
+   *
+   * Required rather than optional: an operation arriving without it would reach
+   * the tool list describing itself less well than its neighbours, which is the
+   * kind of drift the manifest exists to prevent.
+   */
+  readonly selection: string
   /** `null` for an operation that takes no subject, which is `analyse` alone. */
   readonly subject: SubjectSpec | null
   /**
@@ -121,6 +135,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'analyse',
     summary: 'build or refresh the index, one row per project',
+    selection:
+      'Reach for this only when the build is a step of its own — a cold build ' +
+      'in CI that should fail on its own. Every other operation repairs the ' +
+      'index before it answers, so asking a question is never a reason to run ' +
+      'this first.',
     subject: null,
     depth: false,
     flags: [],
@@ -131,6 +150,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'symbol',
     summary: 'every symbol whose name matches a glob',
+    selection:
+      'Reach for this when you have a name and not a location. It is a glob ' +
+      'match rather than a ranked search, so widen with `*Service` and narrow ' +
+      'with a qualified name. Once you have the symbol and want everything ' +
+      'about it, `evidence` answers in one call what a sequence of these would.',
     subject: {
       name: 'pattern',
       description:
@@ -148,6 +172,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'callers',
     summary: 'every call edge into a subject',
+    selection:
+      'Reach for this to answer "what breaks if I change this" one hop out. ' +
+      'It is direct call edges alone: use `trace` where the flow crosses ' +
+      'several hops, and `references` for the places that name the subject ' +
+      'without calling it — a symbol with no callers may still have those.',
     subject: IDENTIFIER,
     depth: false,
     flags: [],
@@ -158,6 +187,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'callees',
     summary: 'every call edge out of a subject',
+    selection:
+      'Reach for this to see what one symbol depends on, one hop out. Use ' +
+      '`trace` instead when the question is what actually happens end to end, ' +
+      'rather than what this one body calls.',
     subject: IDENTIFIER,
     depth: false,
     flags: [],
@@ -168,6 +201,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'references',
     summary: 'everything that names a subject without calling it',
+    selection:
+      'Reach for this where a call graph would miss the answer: a type ' +
+      'annotation, an import, a symbol passed as a value. Deciding a symbol is ' +
+      'unused on `callers` alone is how a reference is discovered late.',
     subject: IDENTIFIER,
     depth: false,
     flags: [],
@@ -178,6 +215,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'file',
     summary: 'what the index holds about one file',
+    selection:
+      'Reach for this when the subject is a path rather than a name. It is the ' +
+      'cheapest way to orient in an unfamiliar file — what it declares and what ' +
+      'labels it carries — before spending context reading it.',
     subject: {
       name: 'path',
       description:
@@ -195,6 +236,12 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'trace',
     summary: 'every path of calls out of a root',
+    selection:
+      'Reach for this when the question crosses layers and one hop cannot ' +
+      'answer it — how a request reaches the database, what a handler really ' +
+      'does. It is the expensive operation: an unbounded walk from a busy root ' +
+      'yields thousands of paths, so bound it with `depth` unless you have ' +
+      'measured that you can afford not to.',
     subject: {
       name: 'root',
       description:
@@ -211,6 +258,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'evidence',
     summary: 'everything the index holds about one subject, assembled',
+    selection:
+      'Reach for this first when you have one subject and want to understand ' +
+      'it: it returns every kind of fact at once, so it replaces a sequence of ' +
+      '`symbol`, `callers`, `callees` and `references` with one call. Narrow to ' +
+      'a single operation afterwards when one kind needs a larger `limit`.',
     subject: IDENTIFIER,
     depth: false,
     flags: [
@@ -234,6 +286,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'docs check',
     summary: 'every document, and which of its claims the code now contradicts',
+    selection:
+      'Reach for this to ask whether the prose still matches the code, across ' +
+      'every document at once. Use `docs affected` instead when you have just ' +
+      'changed something and want only the documents that change reaches.',
     subject: null,
     depth: false,
     flags: [
@@ -257,6 +313,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'docs affected',
     summary: 'which documents a change reaches, re-checked against the index',
+    selection:
+      'Reach for this after making a change, to ask which documents it reaches ' +
+      'rather than re-checking every document in the repository. With no ' +
+      '`base` it answers "what have I broken right now", which is the question ' +
+      'worth asking before a commit.',
     subject: null,
     depth: false,
     flags: [
@@ -278,6 +339,12 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'impact',
     summary: 'every symbol a change could reach, against an earlier commit',
+    selection:
+      'Reach for this before changing shared code, and again before proposing ' +
+      'the change as finished. It takes **no subject**: the change is read from ' +
+      'the diff against a baseline commit, so it answers what your working tree ' +
+      'already reaches, not what editing an arbitrary symbol would reach. To ' +
+      'ask that hypothetically, use `callers` or `trace` on the symbol instead.',
     subject: null,
     depth: true,
     flags: [
@@ -302,6 +369,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
     name: 'doctor',
     summary:
       'every unmet precondition in the repository, and what would clear it',
+    selection:
+      'Reach for this when an answer looks thinner than the repository ' +
+      'deserves and `conditions` reports `syntactic`. It names the unmet ' +
+      'precondition and the command that clears it; it never runs that command ' +
+      'for you, because codedocs does not execute your repository.',
     subject: null,
     depth: false,
     flags: [
@@ -323,6 +395,11 @@ export const OPERATIONS: readonly OperationSpec[] = [
   {
     name: 'report-bug',
     summary: 'reproduce a failing command and write a report you can paste',
+    selection:
+      'Reach for this when codedocs itself is wrong — an answer you can show ' +
+      'is incorrect, or a command that fails. It re-runs the command and ' +
+      'captures the failure happening now. It is never a way to answer a ' +
+      'question about the repository.',
     subject: {
       name: 'command',
       description:

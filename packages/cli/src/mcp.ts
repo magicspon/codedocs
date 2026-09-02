@@ -119,6 +119,12 @@ const DEPTH_ARGUMENT: ArgumentSchema = {
  * The result unit and the sort key are part of ADR 0006's contract, not
  * implementation detail, so they are stated here: a caller that knows the order
  * is total can page through an answer instead of re-asking for it.
+ *
+ * `selection` closes the gap that leaves. Everything else here says what the
+ * operation answers and in what shape; an agent choosing between twelve tools
+ * also needs to know when this one is the wrong question, so the manifest's
+ * advice is appended last, where a reader who stopped early has still read the
+ * contract.
  */
 function describe(spec: OperationSpec): string {
   const call = `\`codedocs ${spec.name}${invocationSuffix(spec)} --json\``
@@ -129,9 +135,17 @@ function describe(spec: OperationSpec): string {
   const honesty =
     'Every answer also carries `snapshot`, `conditions`, `blindSpots` and ' +
     '`budget`: read `blindSpots` before treating an answer as complete.'
-  // Read off the manifest's `shape` rather than guessed at from `unit`, because
-  // the three shapes make different promises: only a list can be paged, and only
-  // `kinds` bounds each of its lists separately.
+  return [shaped(spec, opening, honesty), spec.selection].join(' ')
+}
+
+/**
+ * The half of a description that depends on how `result` is shaped.
+ *
+ * Read off the manifest's `shape` rather than guessed at from `unit`, because
+ * the three shapes make different promises: only a list can be paged, and only
+ * `kinds` bounds each of its lists separately.
+ */
+function shaped(spec: OperationSpec, opening: string, honesty: string): string {
   if (spec.shape === 'report') {
     return [
       opening,

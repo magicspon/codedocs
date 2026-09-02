@@ -114,6 +114,20 @@ describe('the tool list', () => {
     expect(properties.get('callers')).not.toContain('depth')
   })
 
+  it('carries every operation’s selection advice into its description', () => {
+    // The manifest requires `selection`, so the only way it can be missing from
+    // an agent's view is this binding dropping it.
+    const descriptions = new Map(
+      (tools() as { name: string; description: string }[]).map((tool) => [
+        tool.name,
+        tool.description,
+      ]),
+    )
+    for (const spec of OPERATIONS) {
+      expect(descriptions.get(toolName(spec))).toContain(spec.selection)
+    }
+  })
+
   it('offers `claims` only on the operation that produces them', () => {
     // ADR 0006 keeps claim expressions to `evidence` for now, and a per-operation
     // flag is refused elsewhere rather than accepted and dropped.
