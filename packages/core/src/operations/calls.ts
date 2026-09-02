@@ -8,7 +8,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import { applyScope, type Scoping } from '../labels/index.ts'
-import type { CallEdge } from '../model.ts'
+import type { CallEdge, SymbolNode } from '../model.ts'
 import { readCalleesOf, readCallersOf, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
 import { noteCollisions, resolveSubject } from './subject.ts'
@@ -41,6 +41,33 @@ export function callees(
   return collect(store, context, subject, limit, scoping, 'callees')
 }
 
+/**
+ * Every call edge one direction from a set of already-resolved symbols.
+ *
+ * Split out for `evidence`, which reports both directions about one subject and
+ * must read them by the same union and the same sort key these operations do —
+ * two answers about one symbol disagreeing about order is the failure ADR 0006's
+ * sort key exists to forbid.
+ */
+export function callEdgesOf(
+  store: Store,
+  resolved: readonly SymbolNode[],
+  direction: 'callers' | 'callees',
+): CallEdge[] {
+  const read = direction === 'callers' ? readCallersOf : readCalleesOf
+  // Re-sorted after the union because each symbol's rows arrive already sorted
+  // but the concatenation of two sorted lists is not.
+  return resolved
+    .flatMap((node) => read(store, node.id))
+    .sort(
+      (a, b) =>
+        compare(a.from, b.from) ||
+        compare(a.to, b.to) ||
+        compare(a.file, b.file) ||
+        a.line - b.line,
+    )
+}
+
 function collect(
   store: Store,
   context: AnswerContext,
@@ -50,20 +77,12 @@ function collect(
   direction: 'callers' | 'callees',
 ): Envelope<readonly CallEdge[]> {
   const resolved = resolveSubject(store, subject)
-  const read = direction === 'callers' ? readCallersOf : readCalleesOf
-  const found = resolved.flatMap((node) => read(store, node.id))
   // The site's file is the join: for `callers` that is the caller's own file,
   // which is what "which of these callers are in test files" asks about.
-  const { kept: edges, scope } = applyScope(scoping, found, (edge) => edge.file)
-
-  // Re-sorted after the union because each symbol's rows arrive already sorted
-  // but the concatenation of two sorted lists is not.
-  edges.sort(
-    (a, b) =>
-      compare(a.from, b.from) ||
-      compare(a.to, b.to) ||
-      compare(a.file, b.file) ||
-      a.line - b.line,
+  const { kept: edges, scope } = applyScope(
+    scoping,
+    callEdgesOf(store, resolved, direction),
+    (edge) => edge.file,
   )
 
   return answer(

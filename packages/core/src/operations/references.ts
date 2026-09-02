@@ -14,7 +14,7 @@
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import { applyScope, type Scoping } from '../labels/index.ts'
-import type { ReferenceEdge } from '../model.ts'
+import type { ReferenceEdge, SymbolNode } from '../model.ts'
 import {
   byReference,
   readReferencesFrom,
@@ -38,24 +38,9 @@ export function references(
   scoping: Scoping,
 ): Envelope<readonly ReferenceEdge[]> {
   const resolved = resolveSubject(store, subject)
-  const subjects = new Set(resolved.map((node) => node.id))
-  const outgoing = resolved.flatMap((node) =>
-    readReferencesFrom(store, node.id),
-  )
-  // One edge between two symbols an ambiguous subject both resolved to is read
-  // twice — once out of its source and once into its target — and it is one
-  // fact. Dropping it from the incoming half is exact where deduplicating the
-  // rows would not be: two references to one target on one line are two facts
-  // that no stored column tells apart.
-  const incoming = resolved
-    .flatMap((node) => readReferencesTo(store, node.id))
-    .filter((edge) => !subjects.has(edge.from))
-
-  // Re-sorted after the union: each read arrives sorted, and the concatenation
-  // of sorted lists is not.
   const { kept: edges, scope } = applyScope(
     scoping,
-    [...outgoing, ...incoming].sort(byReference),
+    referenceEdgesOf(store, resolved),
     (edge) => edge.file,
   )
 
@@ -77,4 +62,33 @@ export function references(
     ),
     edges,
   )
+}
+
+/**
+ * Both directions of the reference set for a set of already-resolved symbols.
+ *
+ * Split out for `evidence`, which reports references about a subject and must
+ * read them by the same union, the same deduplication and the same sort key
+ * this operation does.
+ */
+export function referenceEdgesOf(
+  store: Store,
+  resolved: readonly SymbolNode[],
+): ReferenceEdge[] {
+  const subjects = new Set(resolved.map((node) => node.id))
+  const outgoing = resolved.flatMap((node) =>
+    readReferencesFrom(store, node.id),
+  )
+  // One edge between two symbols an ambiguous subject both resolved to is read
+  // twice — once out of its source and once into its target — and it is one
+  // fact. Dropping it from the incoming half is exact where deduplicating the
+  // rows would not be: two references to one target on one line are two facts
+  // that no stored column tells apart.
+  const incoming = resolved
+    .flatMap((node) => readReferencesTo(store, node.id))
+    .filter((edge) => !subjects.has(edge.from))
+
+  // Re-sorted after the union: each read arrives sorted, and the concatenation
+  // of sorted lists is not.
+  return [...outgoing, ...incoming].sort(byReference)
 }

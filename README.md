@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Ten operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Eleven operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -100,6 +100,7 @@ Built:
 | `references <subject>` | everything that names a subject without calling it            | reference edge |
 | `file <path>`          | what the index holds about one file                           | file           |
 | `trace <root>`         | every path of calls out of a root                             | path           |
+| `evidence <subject>`   | everything the index holds about one subject                  | per kind       |
 | `impact`               | every symbol a change could reach, against an earlier commit  | symbol         |
 | `doctor`               | every unmet precondition, and the command that would clear it | precondition   |
 | `report-bug`           | a reproduced failure, safe to paste                           | —              |
@@ -107,11 +108,10 @@ Built:
 Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
 sets:
 
-| Operation            | Answers                                          | Result unit |
-| -------------------- | ------------------------------------------------ | ----------- |
-| `evidence <subject>` | everything the index holds about one subject     | per kind    |
-| `docs check`         | which documented claims the code now contradicts | document    |
-| `docs affected`      | which documents a change touches                 | document    |
+| Operation       | Answers                                          | Result unit |
+| --------------- | ------------------------------------------------ | ----------- |
+| `docs check`    | which documented claims the code now contradicts | document    |
+| `docs affected` | which documents a change touches                 | document    |
 
 There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
 because a second traversal is a second thing to keep correct.
@@ -294,6 +294,69 @@ $ codedocs file src/types.ts
 The projects are all of them, with the canonical one — the project its facts were produced in, and so
 the one whose fidelity applies — marked `*`. It takes a repository-relative path or the tail of one,
 so `codedocs file types.ts` finds the same file, and a tail matching several answers about each.
+
+### evidence
+
+Every kind of fact the index holds about one subject, assembled in one answer so an agent — or a
+person — writing a document has them all without asking six questions. It generates nothing: there
+is no prose here, and never will be.
+
+```console
+$ codedocs evidence 'scopeTo' --limit 3
+  symbols (1)
+    packages/core/src/operations/scope.ts#scopeTo  function  packages/core/src/operations/scope.ts:31
+  files (1)
+    packages/core/src/operations/scope.ts  typed
+      in packages/cli/tsconfig.json *
+      declares (9)
+        …
+      imports (3)
+        ../envelope.ts → packages/core/src/envelope.ts
+        ../model.ts → packages/core/src/model.ts
+        ../store/index.ts → packages/core/src/store/index.ts
+      imported by (9)
+        …
+  callers (showing 3 of 6)
+    packages/core/src/operations/calls.ts#collect  packages/core/src/operations/calls.ts:98
+    packages/core/src/operations/file.ts#file  packages/core/src/operations/file.ts:75
+    packages/core/src/operations/impact.ts#impact  packages/core/src/operations/impact.ts:145
+  callees (3)
+    packages/core/src/operations/scope.ts#specifierSpots  packages/core/src/operations/scope.ts:42
+    packages/core/src/store/read-projects.ts#readProjectsForFiles  packages/core/src/operations/scope.ts:36
+    packages/core/src/store/read-specifiers.ts#readUnresolvedSpecifiers  packages/core/src/operations/scope.ts:42
+  references (showing 3 of 5)
+    …
+  labels (3)
+    packages/core/src/operations/scope.ts  role=source  [inferred: default]
+    packages/core/src/operations/scope.ts  authorship=authored  [deterministic: git-untracked]
+    packages/core/src/operations/scope.ts  authorship=authored  [inferred: default]
+
+  showing 14 of 19 — pass --limit for more
+```
+
+- **`--limit` applies per kind**, and each kind reports its own truncation. A shared pool would let a
+  fourth caller quietly evict the file, the labels or a document.
+- **Each kind keeps its own sort key** — the one that kind has in its own operation — so two answers
+  about the same subject cannot disagree about order.
+- **Labels ride on what they describe.** A symbol does not inherit its file's labels; the rows say
+  which node each label was filed against, and the rule that decided it.
+- **`--claims`** restates the facts in the payload as [ADR
+  0005](docs/adr/0005-document-claims-and-verdicts.md) claim expressions, so an agent writing a
+  document never invents the syntax. It is opt-in and `--json` only — a claim string is a restatement
+  of a fact the answer already carries, and sending it always would spend budget saying the same
+  thing twice. A claim anchored to a local symbol is never emitted, because ADR 0005 refuses one.
+
+```console
+$ codedocs evidence 'scopeTo' --claims --json | jq -r '.claims[0:3][]'
+exists(packages/core/src/operations/scope.ts#scopeTo)
+imports(packages/core/src/operations/scope.ts, packages/core/src/envelope.ts)
+imports(packages/core/src/operations/scope.ts, packages/core/src/model.ts)
+```
+
+There is no `context` command that bundles several subjects for a prompt, and there will not be one:
+it is `evidence` with a loop above it, which is composition above an operation. The documents whose
+claims name a subject become a kind of their own when `docs check` lands; an empty list today would
+read as "nothing documents this" when the truth is that codedocs holds no documents at all.
 
 ### impact
 
@@ -557,9 +620,15 @@ $ codedocs callers charge --exclude-label role=test
 --json           machine output; unbounded unless --limit is given
 --no-update      answer from the stored snapshot and name the drift
 --limit <n>      cap results (human default 20, --json default none)
---depth <n>      `trace` only: cap the steps per path (default none)
+--depth <n>      `trace`, `impact` only: cap the steps per path (default none)
 --cwd <path>     run against another directory
 --color / --no-color
+
+`evidence` only:
+  --claims           restate the facts as claim expressions (--json only)
+
+`impact` only:
+  --base <ref>       the commit to compare against (default: the merge base)
 
 `doctor` only:
   --measure          check the signals against the working tree
@@ -640,13 +709,13 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 333 tests, and measured against real repositories:
+Implemented, covered by 346 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
   nothing.
-- **Ten operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
-  `impact`, `doctor` and `report-bug`.
+- **Eleven operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
+  `evidence`, `impact`, `doctor` and `report-bug`.
 - **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
   is held as data, so an operation cannot reach one renderer and miss the other.
 - **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
@@ -678,9 +747,8 @@ Implemented, covered by 333 tests, and measured against real repositories:
 In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
 is gated by the one above it.
 
-1. **`evidence`**, once fidelity and labels are assembled into one answer.
-2. **`docs check` and `docs affected`** (ADR 0005).
-3. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+1. **`docs check` and `docs affected`** (ADR 0005).
+2. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
 (`TODO(#7)` in `model.ts`); ADR 0007's `shape-hash` and `path-prefix-rewrite` continuity signals,

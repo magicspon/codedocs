@@ -109,18 +109,30 @@ describe('the tool list', () => {
   })
 
   it('offers `depth` only where the operation has one', () => {
-    const properties = new Map(
-      (
-        tools() as {
-          name: string
-          inputSchema: { properties: Record<string, unknown> }
-        }[]
-      ).map((tool) => [tool.name, Object.keys(tool.inputSchema.properties)]),
-    )
+    const properties = argumentsByTool()
     expect(properties.get('trace')).toContain('depth')
     expect(properties.get('callers')).not.toContain('depth')
   })
+
+  it('offers `claims` only on the operation that produces them', () => {
+    // ADR 0006 keeps claim expressions to `evidence` for now, and a per-operation
+    // flag is refused elsewhere rather than accepted and dropped.
+    const properties = argumentsByTool()
+    expect(properties.get('evidence')).toContain('claims')
+    expect(properties.get('callers')).not.toContain('claims')
+  })
 })
+
+/** Every tool's argument names, for the assertions that check one is absent. */
+const argumentsByTool = (): Map<string, string[]> =>
+  new Map(
+    (
+      tools() as {
+        name: string
+        inputSchema: { properties: Record<string, unknown> }
+      }[]
+    ).map((tool) => [tool.name, Object.keys(tool.inputSchema.properties)]),
+  )
 
 describe('the handshake', () => {
   it('answers with a version and the one capability codedocs has', () => {

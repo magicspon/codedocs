@@ -162,6 +162,68 @@ describe('trace', () => {
   })
 })
 
+describe('evidence', () => {
+  it('assembles every kind under its own heading and its own count', () => {
+    const text = invoke('evidence', 'charge').stdout
+    // Headed even when empty: "no callers" is a fact about the subject, and
+    // silence would read as a kind that was dropped.
+    for (const kind of [
+      'symbols',
+      'files',
+      'callers',
+      'callees',
+      'references',
+      'labels',
+    ]) {
+      expect(text).toContain(`  ${kind} (`)
+    }
+    expect(text).toContain('src/payments.ts#charge')
+  })
+
+  it('bounds each kind separately, so one cap cannot evict another kind', () => {
+    const envelope = JSON.parse(
+      invoke('evidence', 'charge', '--limit', '1', '--json').stdout,
+    ) as {
+      result: Record<string, { items: unknown[]; budget: { returned: number } }>
+    }
+    for (const kind of Object.values(envelope.result)) {
+      expect(kind.budget.returned).toBeLessThanOrEqual(1)
+    }
+    // Every kind still answered, which a shared pool of one could not do.
+    expect(envelope.result['symbols']?.items).toHaveLength(1)
+    expect(envelope.result['files']?.items).toHaveLength(1)
+    expect(envelope.result['callers']?.items).toHaveLength(1)
+  })
+
+  it('emits claim expressions in the machine renderer alone', () => {
+    const envelope = JSON.parse(
+      invoke('evidence', 'charge', '--claims', '--json').stdout,
+    ) as { claims: string[] }
+    expect(envelope.claims).toContain('exists(src/payments.ts#charge)')
+
+    // Absent unasked, rather than always sent: a claim restates a fact the
+    // payload already carries.
+    const plain = JSON.parse(invoke('evidence', 'charge', '--json').stdout) as {
+      claims: string[] | null
+    }
+    expect(plain.claims).toBeNull()
+  })
+
+  it('refuses `--claims` without `--json` rather than dropping it', () => {
+    const result = invoke('evidence', 'charge', '--claims')
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain('--claims needs --json')
+    // And the human answer never carries one, asked for or not.
+    expect(invoke('evidence', 'charge').stdout).not.toContain('exists(')
+  })
+
+  it('refuses `--claims` on an operation that produces none', () => {
+    const result = invoke('callers', 'charge', '--claims', '--json')
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain('--claims applies to `evidence`')
+  })
+})
+
 describe('the human renderer', () => {
   it('caps by default and says how many it withheld', () => {
     const result = invoke('symbol', '*', '--limit', '2')

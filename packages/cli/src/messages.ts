@@ -22,6 +22,11 @@ import {
 import { usage } from './args.ts'
 
 /** Render one error as the sentence it used to carry. */
+// One flat `case` per code, so the count is the size of the closed set rather
+// than logic. Collapsing it to a lookup table is what this file's header
+// rejected: the switch is what makes a code added without a sentence a type
+// error.
+// fallow-ignore-next-line complexity
 export function formatError(error: EnvelopeError): string {
   switch (error.code) {
     case 'usage':
@@ -69,6 +74,11 @@ export function formatError(error: EnvelopeError): string {
       const { flag, value, expectation } = error.params
       return `--${flag} takes \`axis=value\`, got \`${value}\` — expected ${expectation}`
     }
+    case 'claims-requires-json':
+      return (
+        '--claims needs --json — a claim expression restates a fact the ' +
+        'answer already prints, so only the machine renderer carries it'
+      )
     case 'limit-invalid':
       return `--limit must be a non-negative integer, got \`${error.params.value}\``
     case 'depth-invalid':

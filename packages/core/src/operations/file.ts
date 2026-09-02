@@ -67,7 +67,7 @@ export function file(
     resolvePath(store, subject),
     (path) => path,
   )
-  const reports = paths.map((path) => report(store, context, path))
+  const reports = paths.map((path) => fileReport(store, context, path))
 
   return answer(
     'file',
@@ -77,8 +77,14 @@ export function file(
   )
 }
 
-/** One file's row set, assembled. */
-function report(
+/**
+ * One file's row set, assembled.
+ *
+ * Exported because `evidence` reports the file its subject lives in, and the
+ * two operations must not be able to disagree about a file's fidelity or which
+ * project is canonical for it.
+ */
+export function fileReport(
   store: Store,
   context: AnswerContext,
   path: FilePath,

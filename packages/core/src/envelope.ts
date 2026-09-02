@@ -35,6 +35,7 @@ export const SCHEMA_VERSION: number = 4
  *
  * `impact` is the only one of Phase 5's three to arrive: ADR 0012 deleted
  * `review` and `plan`, so the enum grows by exactly the operations that exist.
+ * `evidence` is what `explain` was renamed to and what is left of `plan`.
  *
  * TODO(#10): widen to ADR 0006's full table as each operation lands.
  */
@@ -46,6 +47,7 @@ export type OperationName =
   | 'references'
   | 'file'
   | 'trace'
+  | 'evidence'
   | 'impact'
   | 'doctor'
   | 'report-bug'
@@ -165,6 +167,14 @@ export interface ErrorParams {
     readonly operation: string
   }
   readonly 'limit-invalid': { readonly value: string }
+  /**
+   * `--claims` without `--json`, which is the only renderer that carries them.
+   *
+   * Refused rather than ignored, for the reason every per-operation flag is: a
+   * flag that does nothing reads as a flag that was honoured, and here it would
+   * leave a caller believing an answer held claim expressions it never had.
+   */
+  readonly 'claims-requires-json': Record<string, never>
   /** A `--label` or `--exclude-label` that is not an `axis=value` codedocs knows. */
   readonly 'label-invalid': {
     /** The flag as spelled, without its `--`. */
@@ -271,6 +281,34 @@ export function answer<TResult>(
       truncated: returned.length < results.length,
     },
     result: returned,
+  }
+}
+
+/**
+ * Build a success envelope around a result the envelope cannot bound itself.
+ *
+ * `answer` owns the limit because one list has one budget. `evidence` returns
+ * several lists at once and ADR 0006 gives it **one `--limit` per kind**, so the
+ * bounding happens before the envelope is built and the budget arrives already
+ * counted. Everything else about the envelope is identical, which is the point
+ * of it being built here rather than in the operation.
+ */
+export function assembled<TResult>(
+  operation: OperationName,
+  request: ResolvedRequest,
+  context: AnswerContext,
+  result: TResult,
+  budget: Budget,
+): Envelope<TResult> {
+  return {
+    operation,
+    schemaVersion: SCHEMA_VERSION,
+    request,
+    snapshot: context.snapshot,
+    conditions: context.conditions,
+    blindSpots: context.blindSpots,
+    budget,
+    result,
   }
 }
 
