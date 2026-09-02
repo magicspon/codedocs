@@ -94,7 +94,12 @@ describe('the machine renderer', () => {
     ) as {
       request: { resolved: string[] }
     }
-    expect(envelope.request.resolved).toEqual(['src/payments.ts#charge'])
+    // The `SymbolId` itself, which is ADR 0006's third input form: the package
+    // is the fixture's own, and the version is the fixed placeholder ADR 0002
+    // normalises a workspace version to.
+    expect(envelope.request.resolved).toEqual([
+      'codedocs npm codedocs-cli-fixture . `src/payments.ts`/charge().',
+    ])
 
     // The resolved id round-trips: passing it back gives the same answer.
     const again = JSON.parse(
@@ -134,7 +139,9 @@ describe('trace', () => {
       result: { root: string; steps: unknown[]; terminus: string }[]
     }
     expect(envelope.request.depth).toBeNull()
-    expect(envelope.result[0]?.root).toBe('src/checkout.ts#checkout')
+    expect(envelope.result[0]?.root).toBe(
+      'codedocs npm codedocs-cli-fixture . `src/checkout.ts`/checkout().',
+    )
     expect(envelope.result[0]?.steps.length).toBeGreaterThan(0)
   })
 
@@ -405,6 +412,22 @@ describe('the human renderer', () => {
   it('marks a call credited to the variable it initialises', () => {
     expect(invoke('callers', 'checkout').stdout).toContain('(variable)')
   })
+
+  it('prints the shorthand, never the `SymbolId` it projects from', () => {
+    // ADR 0005 rejected the SCIP string as something anyone reads or types, and
+    // ADR 0006 makes whatever is printed an accepted subject — so the printed
+    // form has to be the shorthand, on every operation that names a symbol.
+    for (const printed of [
+      invoke('symbol', 'charge').stdout,
+      invoke('callers', 'charge').stdout,
+      invoke('references', 'Gateway').stdout,
+      invoke('trace', 'checkout').stdout,
+      invoke('evidence', 'charge').stdout,
+    ]) {
+      expect(printed).toMatch(/src\/[a-z]+\.ts#/)
+      expect(printed).not.toContain('codedocs npm')
+    }
+  })
 })
 
 describe('references', () => {
@@ -416,9 +439,12 @@ describe('references', () => {
       result: { from: string; to: string; kind: string }[]
     }
     expect(envelope.operation).toBe('references')
+    // Both ends as `SymbolId`s: `--json` is what an agent feeds back in, and
+    // ADR 0005's shorthand is what the human renderer prints instead.
+    const pkg = 'codedocs npm codedocs-cli-fixture .'
     expect(envelope.result[0]).toMatchObject({
-      from: 'src/payments.ts#StripeGateway',
-      to: 'src/payments.ts#Gateway',
+      from: `${pkg} \`src/payments.ts\`/StripeGateway#`,
+      to: `${pkg} \`src/payments.ts\`/Gateway#`,
       kind: 'implements',
     })
   })

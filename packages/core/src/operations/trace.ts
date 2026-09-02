@@ -19,6 +19,7 @@ import type { CallSite, FilePath, SymbolId } from '../model.ts'
 import { readCalleeSteps, type CalleeStep, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
 import { noteCollisions, resolveSubject } from './subject.ts'
+import { fileOf } from '../symbol-id.ts'
 
 /**
  * Why a path stopped where it did.
@@ -143,7 +144,7 @@ function walk(
     for (const path of live) {
       const reachable = outgoing.get(tailOf(path)) ?? []
       const callees = reachable.filter(
-        (step) => !excludedBy(scoping.scope, scoping.labels, fileOfId(step.to)),
+        (step) => !excludedBy(scoping.scope, scoping.labels, fileOf(step.to)),
       )
       excluded += reachable.length - callees.length
       const terminus = terminusOf(path, callees, depth)
@@ -162,9 +163,6 @@ function walk(
   }
   return { paths: finished, scope: { ...scoping.scope, excluded } }
 }
-
-/** The file a `SymbolId` names, which is the node a label is filed against. */
-const fileOfId = (id: SymbolId): FilePath => id.split('#')[0] ?? id
 
 /** Why this path ends here, or `null` where it continues. */
 function terminusOf(

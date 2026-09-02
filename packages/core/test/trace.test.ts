@@ -17,6 +17,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession, type Session } from '../src/session/index.ts'
 import { trace, type TracePath } from '../src/operations/trace.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -51,9 +52,12 @@ const paths = (
   trace(session.store, session.context, subject, null, depth, UNSCOPED)
     .result ?? []
 
-/** A path written the way the sort key reads it, which is how a test can name one. */
+/**
+ * A path written the way the sort key reads it, which is how a test can name
+ * one — in ADR 0005's shorthand, which is the form the human renderer prints.
+ */
 const sequenceOf = (path: TracePath): string =>
-  [path.root, ...path.steps.map((step) => step.to)].join(' → ')
+  [path.root, ...path.steps.map((step) => step.to)].map(shorthandOf).join(' → ')
 
 describe('the walk', () => {
   it('returns a path per branch, not an edge per hop', () => {
@@ -94,7 +98,7 @@ describe('the walk', () => {
     // `twice` calls `countdown` on two lines. That is one step in the graph and
     // two facts about it, so splitting it would double a path set per call site.
     const step = paths('twice')[0]?.steps[0]
-    expect(step?.to).toBe('src/recursion.ts#countdown')
+    expect(shorthandOf(step?.to ?? '')).toBe('src/recursion.ts#countdown')
     expect(step?.sites.map((site) => site.line)).toEqual([17, 18])
   })
 })

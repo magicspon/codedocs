@@ -18,6 +18,7 @@ import type {
   ReferenceEdge,
   SymbolNode,
 } from '../src/model.ts'
+import { symbolId, WORKSPACE_VERSION } from '../src/symbol-id.ts'
 import {
   ENUM_CODES,
   openStore,
@@ -125,48 +126,56 @@ describe('interned ids', () => {
 
   it('rebuild the SymbolId every symbol was written with', () => {
     expect(readSymbols(store).map((node) => node.id)).toEqual([
-      'src/a.ts#alpha',
-      'src/a.ts#alpha.inner',
-      'src/b.ts#beta',
-      'src/b.ts#describe("a#b").gamma',
+      'codedocs npm fixture . `src/a.ts`/alpha().',
+      'codedocs npm fixture . `src/a.ts`/alpha().inner().',
+      'codedocs npm fixture . `src/b.ts`/`describe("a#b`` c")`().gamma().',
+      'codedocs npm fixture . `src/b.ts`/beta().',
     ])
   })
 
-  it('round-trip a descriptor path that contains a hash of its own', () => {
-    // A descriptor path picks up a string literal verbatim, so the split has to
-    // be on the first `#` — a repository path has none, a `describe` title may.
-    const found = readSymbol(store, 'src/b.ts#describe("a#b").gamma')
-    expect(found?.qualified).toBe('describe("a#b").gamma')
+  it('round-trip a descriptor name the grammar has to escape', () => {
+    // A descriptor segment picks up a string literal verbatim, so it may hold a
+    // `#`, a space, a quote — and a backtick, which is the one character the
+    // escape itself has to write twice.
+    const id = ID('src/b.ts', '`describe("a#b`` c")`().gamma().')
+    const found = readSymbol(store, id)
+    expect(found?.qualified).toBe('describe("a#b` c").gamma')
     expect(found?.file).toBe('src/b.ts')
   })
 
   it('answer for an id the index has never seen', () => {
-    expect(readSymbol(store, 'src/nowhere.ts#missing')).toBeUndefined()
-    expect(readCallersOf(store, 'src/nowhere.ts#missing')).toEqual([])
-    expect(readCalleesOf(store, 'src/nowhere.ts#missing')).toEqual([])
+    const missing = ID('src/nowhere.ts', 'missing().')
+    expect(readSymbol(store, missing)).toBeUndefined()
+    expect(readCallersOf(store, missing)).toEqual([])
+    expect(readCalleesOf(store, missing)).toEqual([])
     expect(readSymbolIdAt(store, 'src/nowhere.ts', 0)).toBeUndefined()
   })
 
   it('name a file-attributed source by its path alone', () => {
     // A module-level call is credited to the file, which is the node whose
     // descriptor path is empty — so its id is the path with no `#`.
-    const edges = readCallersOf(store, 'src/a.ts#alpha')
+    const edges = readCallersOf(store, ID('src/a.ts', 'alpha().'))
+    // Sorted by the source id, and a `SymbolId` begins with the scheme, so a
+    // symbol source now sorts ahead of the file that is only ever a path.
     expect(edges.map((edge) => [edge.from, edge.attribution])).toEqual([
+      [ID('src/b.ts', 'beta().'), 'symbol'],
       ['src/b.ts', 'file'],
-      ['src/b.ts#beta', 'symbol'],
     ])
   })
 
   it('group a batched walk by the source id rather than the atom', () => {
-    const steps = readCalleeSteps(store, ['src/b.ts#beta', 'src/b.ts'])
-    expect([...steps.keys()].sort()).toEqual(['src/b.ts', 'src/b.ts#beta'])
-    expect(steps.get('src/b.ts#beta')).toEqual([
-      { to: 'src/a.ts#alpha', sites: [SITE('src/b.ts', 9)] },
+    const beta = ID('src/b.ts', 'beta().')
+    const steps = readCalleeSteps(store, [beta, 'src/b.ts'])
+    expect([...steps.keys()].sort()).toEqual([beta, 'src/b.ts'].sort())
+    expect(steps.get(beta)).toEqual([
+      { to: ID('src/a.ts', 'alpha().'), sites: [SITE('src/b.ts', 9)] },
     ])
   })
 
   it('find a symbol by the offset it was declared at', () => {
-    expect(readSymbolIdAt(store, 'src/a.ts', 42)).toBe('src/a.ts#alpha.inner')
+    expect(readSymbolIdAt(store, 'src/a.ts', 42)).toBe(
+      ID('src/a.ts', 'alpha().inner().'),
+    )
   })
 
   it('find it by an offset its own row cannot carry', () => {
@@ -175,8 +184,12 @@ describe('interned ids', () => {
     // them, a call landing on the second overload resolves in memory and nowhere
     // else — which is 20 of `microsoft/vscode`'s edges once a build stops
     // holding every project at once.
-    expect(readSymbolIdAt(store, 'src/a.ts', 0)).toBe('src/a.ts#alpha')
-    expect(readSymbolIdAt(store, 'src/a.ts', 21)).toBe('src/a.ts#alpha')
+    expect(readSymbolIdAt(store, 'src/a.ts', 0)).toBe(
+      ID('src/a.ts', 'alpha().'),
+    )
+    expect(readSymbolIdAt(store, 'src/a.ts', 21)).toBe(
+      ID('src/a.ts', 'alpha().'),
+    )
     expect(readSymbolIdAt(store, 'src/a.ts', 22)).toBeUndefined()
   })
 })
@@ -189,13 +202,24 @@ const SITE = (file: string, line: number): CallSite => ({
   derivation: 'checker-signature',
 })
 
+/**
+ * A `SymbolId` in the fixture's own package, which is what `package.json` at the
+ * temp root names.
+ */
+const ID = (file: string, descriptors: string): string =>
+  symbolId(
+    { manager: 'npm', name: 'fixture', version: WORKSPACE_VERSION },
+    file,
+    descriptors,
+  )
+
 const node = (
-  id: string,
   file: string,
+  descriptors: string,
   qualified: string,
   start: number,
 ): SymbolNode => ({
-  id,
+  id: ID(file, descriptors),
   name: qualified.split('.').at(-1) ?? qualified,
   qualified,
   kind: 'function',
@@ -270,25 +294,34 @@ const WRITE = {
   seenFiles: ['src/a.ts', 'src/b.ts'],
   filesByProject: new Map([['tsconfig.json', ['src/a.ts', 'src/b.ts']]]),
   symbols: [
-    node('src/a.ts#alpha', 'src/a.ts', 'alpha', 0),
-    node('src/a.ts#alpha.inner', 'src/a.ts', 'alpha.inner', 42),
-    node('src/b.ts#beta', 'src/b.ts', 'beta', 0),
+    node('src/a.ts', 'alpha().', 'alpha', 0),
+    node('src/a.ts', 'alpha().inner().', 'alpha.inner', 42),
+    node('src/b.ts', 'beta().', 'beta', 0),
+    // A descriptor name with a `#` and a backtick in it, which is what the
+    // escape exists for: a `describe` title is taken from the source verbatim.
     node(
-      'src/b.ts#describe("a#b").gamma',
       'src/b.ts',
-      'describe("a#b").gamma',
+      '`describe("a#b`` c")`().gamma().',
+      'describe("a#b` c").gamma',
       7,
     ),
   ],
   /** `alpha` is declared twice — an overload — and the row keeps the first offset. */
-  declarations: [{ file: 'src/a.ts', start: 21, id: 'src/a.ts#alpha' }],
+  declarations: [
+    { file: 'src/a.ts', start: 21, id: ID('src/a.ts', 'alpha().') },
+  ],
   callEdges: [
-    edge('src/b.ts#beta', 'src/a.ts#alpha', 'symbol', 9),
-    edge('src/b.ts', 'src/a.ts#alpha', 'file', 3),
+    edge(ID('src/b.ts', 'beta().'), ID('src/a.ts', 'alpha().'), 'symbol', 9),
+    edge('src/b.ts', ID('src/a.ts', 'alpha().'), 'file', 3),
   ],
   /** The same pair named without being called, which is a separate fact. */
   referenceEdges: [
-    reference('src/b.ts#beta', 'src/a.ts#alpha', 'typeReferences', 11),
+    reference(
+      ID('src/b.ts', 'beta().'),
+      ID('src/a.ts', 'alpha().'),
+      'typeReferences',
+      11,
+    ),
   ],
   unresolvedCalls: [
     { file: 'src/b.ts', line: 4, cause: 'external' as const, name: 'fetch' },

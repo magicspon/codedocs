@@ -8,6 +8,7 @@
 import type { Project } from 'typescript/unstable/sync'
 import type { SourceFile } from 'typescript/unstable/ast'
 
+import type { Naming } from '../../naming.ts'
 import type {
   CallEdge,
   FilePath,
@@ -134,6 +135,8 @@ export interface AnalysisSession {
 /** The view of the open projects that every extraction reads. */
 export interface View {
   readonly projects: readonly Project[]
+  /** How a `SymbolId` is built for a file, which needs the package that holds it. */
+  readonly naming: Naming
   /** Repository-relative config path of each open project, in the same order. */
   readonly configPaths: readonly FilePath[]
   /** Lower-cased program path to the canonical repository path. */

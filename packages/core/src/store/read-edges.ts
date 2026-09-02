@@ -1,6 +1,7 @@
 /** Reading call edges back, and `trace`'s batched breadth-first step. */
 
 import type { CallEdge, CallSite, CallSource, SymbolId } from '../model.ts'
+import type { Naming } from '../naming.ts'
 import { ATTRIBUTIONS, DERIVATIONS, named, PROVENANCES } from './enums.ts'
 import { compare, idOf } from './shared.ts'
 import type { Store } from './open.ts'
@@ -14,9 +15,9 @@ import { nodeId } from './statements.ts'
  */
 type EdgeRow = {
   from_path: string
-  from_qualified: string
+  from_descriptors: string
   to_path: string
-  to_qualified: string
+  to_descriptors: string
   attribution: number
   file_path: string
   line: number
@@ -25,8 +26,8 @@ type EdgeRow = {
 }
 
 const EDGE_SELECT = `select
-    fp.path as from_path, fn.qualified as from_qualified,
-    tp.path as to_path, tn.qualified as to_qualified,
+    fp.path as from_path, fn.descriptors as from_descriptors,
+    tp.path as to_path, tn.descriptors as to_descriptors,
     e.attribution, ep.path as file_path, e.line, e.provenance, e.derivation
   from call_edge e
   join node fn on fn.id = e.from_id
@@ -44,9 +45,9 @@ const toSite = (row: EdgeRow): CallSite => ({
   derivation: named(DERIVATIONS, row.derivation, 'derivation'),
 })
 
-const toEdge = (row: EdgeRow): CallEdge => ({
-  from: idOf(row.from_path, row.from_qualified),
-  to: idOf(row.to_path, row.to_qualified),
+const toEdge = (naming: Naming, row: EdgeRow): CallEdge => ({
+  from: idOf(naming, row.from_path, row.from_descriptors),
+  to: idOf(naming, row.to_path, row.to_descriptors),
   ...toSite(row),
 })
 
@@ -64,7 +65,7 @@ export function readCallersOf(store: Store, id: SymbolId): CallEdge[] {
   return (
     store.db.prepare(`${EDGE_SELECT} where e.to_id = ?`).all(to) as EdgeRow[]
   )
-    .map(toEdge)
+    .map((row) => toEdge(store.naming, row))
     .sort(byEndpoints)
 }
 
@@ -77,7 +78,7 @@ export function readCalleesOf(store: Store, id: CallSource): CallEdge[] {
       .prepare(`${EDGE_SELECT} where e.from_id = ?`)
       .all(from) as EdgeRow[]
   )
-    .map(toEdge)
+    .map((row) => toEdge(store.naming, row))
     .sort(byEndpoints)
 }
 
@@ -120,7 +121,7 @@ export function readCalleeSteps(
         `${EDGE_SELECT} where e.from_id in (${chunk.map(() => '?').join(',')})`,
       )
       .all(...chunk) as EdgeRow[]
-    for (const row of rows) edges.push(toEdge(row))
+    for (const row of rows) edges.push(toEdge(store.naming, row))
   }
   edges.sort(byEndpoints)
 

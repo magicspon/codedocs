@@ -2,9 +2,9 @@
  * The tables, and the version that gates them.
  *
  * **Every string the model repeats is interned here and nowhere else.** A
- * `SymbolId` is `path#qualified`, so storing it verbatim wrote the path three
- * times per symbol and twice more per edge; the tables below hold integers and
- * the reads rebuild the strings. That is invisible above this module — the
+ * `SymbolId` names a file and the descriptors under it, so storing it verbatim
+ * wrote the path three times per symbol and twice more per edge; the tables
+ * below hold integers and the reads rebuild the strings. That is invisible above this module — the
  * operations still see `SymbolId` and `FilePath`, and every answer is byte for
  * byte the one the skeleton gave — and it takes cal.com from 61 MB to 17.6 MB,
  * which is the 20 MB ADR 0004 measured. `microsoft/vscode`, the ceiling test,
@@ -18,7 +18,7 @@
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 9
+export const STORE_SCHEMA_VERSION = 10
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 export const TABLES: readonly string[] = [
@@ -50,11 +50,14 @@ create table if not exists path (
   path text not null unique
 ) strict;
 
+-- The descriptors below a file, which is the half of a \`SymbolId\` the path
+-- table does not already hold. A file node is the row whose descriptors are
+-- empty, so one table addresses both ends of a \`CallSource\`.
 create table if not exists node (
   id integer primary key,
   path_id integer not null,
-  qualified text not null,
-  unique (path_id, qualified)
+  descriptors text not null,
+  unique (path_id, descriptors)
 ) strict;
 
 create table if not exists project (

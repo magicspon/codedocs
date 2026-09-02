@@ -13,6 +13,7 @@
  */
 
 import type { CallEdge, Label, ReferenceEdge, ReferenceKind } from '../model.ts'
+import { shorthandOf } from '../symbol-id.ts'
 import type { FileReport } from './file.ts'
 import type { EvidenceReport } from './evidence.ts'
 
@@ -42,11 +43,17 @@ interface Candidate {
   readonly subjects: readonly string[]
 }
 
-/** One predicate over subjects alone, which is every claim but `hasLabel`. */
-const over = (name: string, ...subjects: readonly string[]): Candidate => ({
-  text: `${name}(${subjects.join(', ')})`,
-  subjects,
-})
+/**
+ * One predicate over subjects alone, which is every claim but `hasLabel`.
+ *
+ * Subjects are projected to ADR 0005's shorthand on the way in: a claim is
+ * written into a paragraph by hand, and ADR 0005 refused the `SymbolId` string
+ * for that job on the grounds that nobody will type one.
+ */
+const over = (name: string, ...ids: readonly string[]): Candidate => {
+  const subjects = ids.map(shorthandOf)
+  return { text: `${name}(${subjects.join(', ')})`, subjects }
+}
 
 /**
  * Restate one answer's facts as claim expressions, in the order they appear.
@@ -112,7 +119,10 @@ const referenceClaim = (edge: ReferenceEdge): Candidate | null =>
     : over(PREDICATES[edge.kind], edge.from, edge.to)
 
 /** `hasLabel`, the one claim whose arguments are not all subjects. */
-const labelClaim = (label: Label): Candidate => ({
-  text: `hasLabel(${label.node}, ${label.axis}, ${label.value})`,
-  subjects: [label.node],
-})
+const labelClaim = (label: Label): Candidate => {
+  const subject = shorthandOf(label.node)
+  return {
+    text: `hasLabel(${subject}, ${label.axis}, ${label.value})`,
+    subjects: [subject],
+  }
+}

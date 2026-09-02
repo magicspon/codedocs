@@ -12,6 +12,7 @@ import { describe, expect, it } from 'vitest'
 
 import { analyse } from '../src/adapter/ts7/index.ts'
 import type { CallEdge } from '../src/model.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 const fixture = (name: string): string =>
   join(dirname(fileURLToPath(import.meta.url)), 'fixtures', name)
@@ -19,14 +20,22 @@ const fixture = (name: string): string =>
 const root = fixture('basic')
 const result = analyse(root, ['tsconfig.json'])
 
+/**
+ * One edge, named by ADR 0005's shorthand at both ends.
+ *
+ * The `SymbolId` is a SCIP string with the fixture's package in it; what these
+ * cases are about is which declaration an edge reached, so they name it the way
+ * the renderers do.
+ */
 const edge = (from: string, to: string): CallEdge | undefined =>
   result.callEdges.find(
-    (candidate) => candidate.from === from && candidate.to === to,
+    (candidate) =>
+      shorthandOf(candidate.from) === from && shorthandOf(candidate.to) === to,
   )
 
 describe('the symbol sweep', () => {
   it('indexes every named declaration, including class members', () => {
-    const ids = new Set(result.symbols.map((symbol) => symbol.id))
+    const ids = new Set(result.symbols.map((symbol) => shorthandOf(symbol.id)))
     expect(ids).toContain('src/payments.ts#Gateway')
     expect(ids).toContain('src/payments.ts#StripeGateway')
     expect(ids).toContain('src/payments.ts#StripeGateway.capture')
@@ -35,20 +44,22 @@ describe('the symbol sweep', () => {
 
   it('indexes local bindings, and marks them not durable', () => {
     const local = result.symbols.find(
-      (symbol) => symbol.id === 'src/checkout.ts#settle.run',
+      (symbol) => shorthandOf(symbol.id) === 'src/checkout.ts#settle.run',
     )
     expect(local).toBeDefined()
     expect(local?.durable).toBe(false)
     // A top-level declaration in the same file is durable, so `durable` is
     // tracking scope rather than merely being false everywhere.
     expect(
-      result.symbols.find((s) => s.id === 'src/checkout.ts#settle')?.durable,
+      result.symbols.find((s) => shorthandOf(s.id) === 'src/checkout.ts#settle')
+        ?.durable,
     ).toBe(true)
   })
 
   it('records a line, so an answer can be shown to someone', () => {
     expect(
-      result.symbols.find((s) => s.id === 'src/payments.ts#charge')?.line,
+      result.symbols.find((s) => shorthandOf(s.id) === 'src/payments.ts#charge')
+        ?.line,
     ).toBe(11)
   })
 })

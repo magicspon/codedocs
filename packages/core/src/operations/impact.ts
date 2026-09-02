@@ -47,6 +47,7 @@ import {
   type Store,
 } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
+import { fileOf } from '../symbol-id.ts'
 
 /** How a symbol was reached from a change. */
 export type ImpactKind = 'changed' | 'calls' | ReferenceKind
@@ -120,7 +121,8 @@ export function impact(
   options: ImpactOptions,
 ): ImpactEnvelope {
   const choice = chooseBaseline(options.root, options.base)
-  const baseline = choice.used === null ? null : openBaseline(choice.used.path)
+  const baseline =
+    choice.used === null ? null : openBaseline(options.root, choice.used.path)
   try {
     const changes = changedFiles(options.root, store, baseline, choice)
     const seeds = seedSymbols(store, changes)
@@ -266,8 +268,5 @@ function spotsFor(
   }
   return spots
 }
-
-/** The file a `SymbolId` names, which is the node a label is filed against. */
-const fileOf = (id: SymbolId): string => id.split('#')[0] ?? id
 
 const compare = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)

@@ -18,6 +18,7 @@ import { callers } from '../src/operations/calls.ts'
 import { evidence, type EvidenceEnvelope } from '../src/operations/evidence.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -85,7 +86,7 @@ describe('evidence', () => {
   it('assembles every kind the index holds about one subject', () => {
     const found = report(ask('charge'))
 
-    expect(found.symbols.items.map((node) => node.id)).toEqual([
+    expect(found.symbols.items.map((node) => shorthandOf(node.id))).toEqual([
       'src/payments.ts#charge',
     ])
     // The file arrives with the fidelity and canonical project `file` gives it,
@@ -94,19 +95,21 @@ describe('evidence', () => {
     expect(found.files.items[0]?.path).toBe('src/payments.ts')
     expect(found.files.items[0]?.fidelity).toBe('typed')
 
-    expect(found.callers.items.map((edge) => edge.from)).toEqual([
+    expect(found.callers.items.map((edge) => shorthandOf(edge.from))).toEqual([
       'src/callers.ts#one',
       'src/callers.ts#three',
       'src/callers.ts#two',
     ])
-    expect(found.callees.items.map((edge) => edge.to)).toEqual([
+    expect(found.callees.items.map((edge) => shorthandOf(edge.to))).toEqual([
       'src/payments.ts#audit',
       'src/payments.ts#post',
     ])
 
     // The type the subject names and never calls, which is the half `callers`
     // cannot see and the reason `references` was built before this.
-    expect(found.references.items.map((edge) => [edge.to, edge.kind])).toEqual([
+    expect(
+      found.references.items.map((edge) => [shorthandOf(edge.to), edge.kind]),
+    ).toEqual([
       ['src/types.ts#Money', 'typeReferences'],
       ['src/types.ts#Money', 'typeReferences'],
     ])

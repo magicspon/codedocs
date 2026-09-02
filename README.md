@@ -514,7 +514,7 @@ $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getP
   "request": {
     "subject": "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData",
     "resolved": [
-      "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData"
+      "codedocs npm @calcom/app-store . `packages/app-store/_utils/payments/getPaymentAppData.ts`/getPaymentAppData()."
     ],
     "limit": null,
     "depth": null,
@@ -546,8 +546,8 @@ $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getP
   },
   "result": [
     {
-      "from": "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData",
-      "to": "packages/app-store/_utils/getEventTypeAppData.ts#getEventTypeAppData",
+      "from": "codedocs npm @calcom/app-store . `packages/app-store/_utils/payments/getPaymentAppData.ts`/getPaymentAppData().",
+      "to": "codedocs npm @calcom/app-store . `packages/app-store/_utils/getEventTypeAppData.ts`/getEventTypeAppData.",
       "attribution": "symbol",
       "file": "packages/app-store/_utils/payments/getPaymentAppData.ts",
       "line": 58,
@@ -577,6 +577,12 @@ which are the half that can quote your own code back at you.
 Four properties a caller can rely on:
 
 - **`request.resolved` echoes what your subject became**, which is how you feed an answer back in.
+  A symbol is named there by its `SymbolId` — a [SCIP](https://github.com/scip-code/scip) symbol
+  string, whose descriptor suffix says what kind of thing it is (`#` a type, `.` a term, `()` a
+  method, `/` a namespace) and whose version field is a fixed `.` for a workspace package, so a
+  `version` bump in a manifest cannot invalidate an index. A terminal prints the shorthand instead —
+  `path.ts#Descriptor.path`, which is what a document anchors to — and **both forms are accepted as a
+  subject**, so anything you read in either place can be passed straight back in.
 - **A total order, sorted on the data.** The same commit rebuilt gives byte-identical output, given
   the same environment and tool version.
 - **`--json` is explicit and unbounded by default.** It is never inferred from a TTY, because
@@ -838,9 +844,9 @@ is gated by the one above it.
 
 1. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
-Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
-(`TODO(#7)` in `model.ts`); ADR 0007's `shape-hash` and `path-prefix-rewrite` continuity signals,
-which need a per-symbol shape hash the index does not hold; and the `AGENTS.md` discovery block that tells an agent when to reach for codedocs
+Not tied to that order: ADR 0007's `shape-hash` and `path-prefix-rewrite` continuity signals, which
+need a per-symbol shape hash the index does not hold; and the `AGENTS.md` discovery block that tells
+an agent when to reach for codedocs
 ([#18](https://github.com/magicspon/codedocs/issues/18)).
 
 **`review` and `plan` are deleted.** `review` was `fallow`'s work plus `impact` and `docs affected`
