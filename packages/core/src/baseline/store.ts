@@ -230,10 +230,22 @@ export function openBaseline(root: string, path: string): Store | null {
   } catch {
     return null
   }
-  const row = db.prepare('pragma user_version').get() as
-    | { user_version?: number }
-    | undefined
-  if ((row?.user_version ?? 0) !== STORE_SCHEMA_VERSION) {
+  // The version read is guarded for the same reason the open is: sqlite opens
+  // the file lazily, so a `.db` that is not a database — a truncated copy, a
+  // half-written file left by a killed process — fails here rather than above.
+  // A baseline is optional, so an unreadable one degrades the answer to the
+  // no-baseline path rather than failing it.
+  let version: number
+  try {
+    const row = db.prepare('pragma user_version').get() as
+      | { user_version?: number }
+      | undefined
+    version = row?.user_version ?? 0
+  } catch {
+    db.close()
+    return null
+  }
+  if (version !== STORE_SCHEMA_VERSION) {
     db.close()
     return null
   }

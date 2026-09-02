@@ -9,7 +9,14 @@
  * listing the keys someone remembered to leave out.
  */
 
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import {
+  cpSync,
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -281,6 +288,153 @@ describe('--with-repository', () => {
     ).reproduction.error
     expect(error.code).toBe('limit-invalid')
     expect(error.params.value).toBe('lots')
+  })
+})
+
+describe('a repository with specifiers it could not resolve', () => {
+  let messy: string
+  let messyOut: string
+
+  beforeAll(() => {
+    messy = mkdtempSync(join(tmpdir(), 'codedocs-report-messy-'))
+    cpSync(fixture, messy, { recursive: true })
+    messyOut = join(messy, 'report.json')
+    writeFileSync(
+      join(messy, 'package.json'),
+      JSON.stringify({
+        name: 'messy-fixture',
+        private: true,
+        dependencies: { 'left-pad': '^1.0.0' },
+        // A range that is not a string is not a declared version, and a
+        // manifest is somebody else's file: it is read, never trusted.
+        devDependencies: { typescript: '^7.0.0', broken: 12 },
+      }),
+    )
+    // Two sites of one specifier, and a second specifier with another cause —
+    // which is what makes the per-specifier fold worth having.
+    writeFileSync(
+      join(messy, 'src', 'one.ts'),
+      "import 'left-pad'\nimport './nowhere.ts'\nexport const one = 1\n",
+    )
+    writeFileSync(
+      join(messy, 'src', 'two.ts'),
+      "import 'left-pad'\nexport const two = 2\n",
+    )
+  })
+
+  afterAll(() => {
+    rmSync(messy, { recursive: true, force: true })
+  })
+
+  const reportOn = (...flags: string[]): Record<string, unknown> => {
+    run([
+      'report-bug',
+      '--no-color',
+      ...flags,
+      '--out',
+      messyOut,
+      '--',
+      'symbol',
+      '*',
+      '--cwd',
+      messy,
+    ])
+    return JSON.parse(readFileSync(messyOut, 'utf8')) as Record<string, unknown>
+  }
+
+  it('reports one row per distinct specifier, with the sites it stands for', () => {
+    const report = reportOn('--with-repository') as unknown as {
+      index: { specifiers: { specifier: string; sites: number }[] }
+      dependencies: Record<string, string>
+    }
+    const rows = report.index.specifiers
+    expect(rows.map((one) => one.specifier)).toEqual([
+      './nowhere.ts',
+      'left-pad',
+    ])
+    expect(rows.find((one) => one.specifier === 'left-pad')?.sites).toBe(2)
+
+    // Both dependency blocks are read, and a range that is not a string is not
+    // a declared version.
+    expect(report.dependencies).toEqual({
+      'left-pad': '^1.0.0',
+      typescript: '^7.0.0',
+    })
+  })
+
+  it('counts what it carries, and counts nothing in the default shape', () => {
+    type Carried = {
+      carries: {
+        moduleSpecifiers: number
+        paths: number
+        symbolNames: number
+        blindSpotReasons: number
+      }
+    }
+    const included = reportOn('--with-repository') as unknown as Carried
+    expect(included.carries.moduleSpecifiers).toBeGreaterThan(0)
+    expect(included.carries.paths).toBeGreaterThan(0)
+    expect(included.carries.blindSpotReasons).toBeGreaterThan(0)
+
+    const excluded = reportOn() as unknown as Carried
+    // The reasons are codedocs' own words and stay; everything that names the
+    // repository is counted at zero because none of it is there.
+    expect(excluded.carries.blindSpotReasons).toBe(
+      included.carries.blindSpotReasons,
+    )
+    expect(excluded.carries.moduleSpecifiers).toBe(0)
+    expect(excluded.carries.paths).toBe(0)
+    expect(excluded.carries.symbolNames).toBe(0)
+  })
+})
+
+describe('a repository whose manifest cannot be read', () => {
+  it('reports no package manager and no dependencies, rather than failing', () => {
+    const bare = mkdtempSync(join(tmpdir(), 'codedocs-report-bare-'))
+    const bareOut = join(bare, 'report.json')
+    try {
+      cpSync(fixture, bare, { recursive: true })
+      // No `package.json` at all.
+      run([
+        'report-bug',
+        '--no-color',
+        '--with-repository',
+        '--out',
+        bareOut,
+        '--',
+        'symbol',
+        '*',
+        '--cwd',
+        bare,
+      ])
+      const absent = JSON.parse(readFileSync(bareOut, 'utf8')) as unknown as {
+        machine: { packageManager: { name: string | null } }
+        dependencies: Record<string, string>
+      }
+      expect(absent.machine.packageManager.name).toBeNull()
+      expect(absent.dependencies).toEqual({})
+
+      // And one that is there and is not JSON.
+      writeFileSync(join(bare, 'package.json'), '{ not json\n')
+      run([
+        'report-bug',
+        '--no-color',
+        '--with-repository',
+        '--out',
+        bareOut,
+        '--',
+        'symbol',
+        '*',
+        '--cwd',
+        bare,
+      ])
+      const unreadable = JSON.parse(
+        readFileSync(bareOut, 'utf8'),
+      ) as unknown as { dependencies: Record<string, string> }
+      expect(unreadable.dependencies).toEqual({})
+    } finally {
+      rmSync(bare, { recursive: true, force: true })
+    }
   })
 })
 

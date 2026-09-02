@@ -46,15 +46,17 @@ function plant(prepared: boolean): string {
 let root: string
 let unprepared: string
 let renamed: string
+let related: string
 
 beforeAll(() => {
   root = plant(true)
   unprepared = plant(false)
   renamed = plantRename()
+  related = plantRelations()
 })
 
 afterAll(() => {
-  for (const one of [root, unprepared, renamed]) {
+  for (const one of [root, unprepared, renamed, related]) {
     rmSync(one, { recursive: true, force: true })
   }
 })
@@ -300,6 +302,206 @@ describe('errors in the document', () => {
   })
 })
 
+describe('a document’s derived scope', () => {
+  /** The files one document's claims and links resolve to. */
+  const scopeOf = (body: string): readonly string[] => {
+    document(root, 'scoped', body)
+    return documentAt(check(), 'scoped')?.scope ?? []
+  }
+
+  it('reads a link relative to the document, and one written from the root', () => {
+    const scope = scopeOf(
+      [
+        '# Scoped',
+        '',
+        'See [up](../src/payments.ts), [rooted](/src/checkout.ts) and',
+        '[here](./payments.md).',
+        '',
+        '<!-- codedocs: exists(src/payments.ts#charge) -->',
+      ].join('\n'),
+    )
+    expect(scope).toContain('src/payments.ts')
+    expect(scope).toContain('src/checkout.ts')
+    expect(scope).toContain('docs/payments.md')
+  })
+
+  it('leaves a link out of this repository out of the scope', () => {
+    const scope = scopeOf(
+      [
+        '# Scoped',
+        '',
+        'See [the spec](https://example.test/spec).',
+        '',
+        '<!-- codedocs: exists(src/payments.ts#charge) -->',
+      ].join('\n'),
+    )
+    expect(scope).toEqual(['src/payments.ts'])
+  })
+
+  it('reads a path out of a claim’s text, and reads an axis as no path at all', () => {
+    // `role` and `source` are arguments, not files. The subject still reaches
+    // the scope, because it resolved to one.
+    expect(
+      scopeOf(
+        '# Scoped\n\n<!-- codedocs: hasLabel(charge, role, source) -->\n',
+      ),
+    ).toEqual(['src/payments.ts'])
+  })
+})
+
+describe('the relation predicates', () => {
+  /** Check one claim written into the relations fixture, by its predicate. */
+  const claimFor = (text: string) => {
+    document(
+      related,
+      'relations',
+      `# Relations\n\n<!-- codedocs: ${text} -->\n`,
+    )
+    return claimsOf(documentAt(check(related), 'relations'))[0]
+  }
+
+  it('reads each relation off its own edge kind', () => {
+    expect(claimFor('imports(src/checkout.ts, src/payments.ts)')?.verdict).toBe(
+      'verified',
+    )
+    expect(
+      claimFor('extends(src/shapes.ts#Journal, src/shapes.ts#Ledger)')?.verdict,
+    ).toBe('verified')
+    expect(
+      claimFor(
+        'implements(src/payments.ts#StripeGateway, src/types.ts#Gateway)',
+      )?.verdict,
+    ).toBe('verified')
+    expect(
+      claimFor('usesType(src/payments.ts#charge, src/types.ts#Money)')?.verdict,
+    ).toBe('verified')
+  })
+
+  it('falsifies a relation the index holds no edge for', () => {
+    const claim = claimFor('imports(src/types.ts, src/checkout.ts)')
+    expect(claim?.verdict).toBe('contradicted')
+    expect(claim?.reason).toBe('falsified')
+  })
+
+  it('walks a diamond once per symbol rather than once per path', () => {
+    // Nothing in `shapes.ts` reaches `charge`, so the walk runs to exhaustion —
+    // which is the only way it meets `sink` from both middles.
+    const claim = claimFor(
+      '!reaches(src/shapes.ts#head, src/payments.ts#charge)',
+    )
+    expect(claim?.verdict).toBe('verified')
+    expect(
+      claimFor('reaches(src/shapes.ts#head, src/shapes.ts#sink)')?.verdict,
+    ).toBe('verified')
+  })
+
+  it('doubts a missing edge where an import in the file resolved to nothing', () => {
+    // ADR 0001's rule in a *typed* project: an unresolved specifier can
+    // manufacture exactly the absence a failing claim rests on.
+    const claim = claimFor('calls(src/vendor.ts#report, src/payments.ts#audit)')
+    expect(claim?.verdict).toBe('unable-to-verify')
+    expect(claim?.reason).toBe('unresolved-specifier')
+  })
+
+  it('reports whichever end of a relation vanished, never a contradiction', () => {
+    const from = claimFor('calls(src/gone.ts#gone, src/payments.ts#audit)')
+    expect(from?.verdict).toBe('unable-to-verify')
+    expect(from?.reason).toBe('unresolved')
+
+    const to = claimFor('calls(src/payments.ts#charge, src/gone.ts#gone)')
+    expect(to?.verdict).toBe('unable-to-verify')
+    expect(to?.reason).toBe('unresolved')
+  })
+
+  it('reports an ambiguous end of a relation as an error in the document', () => {
+    document(
+      related,
+      'ambiguous',
+      [
+        '# Ambiguous',
+        '',
+        '<!-- codedocs: calls(capture, src/payments.ts#audit) -->',
+        '<!-- codedocs: calls(src/payments.ts#charge, capture) -->',
+      ].join('\n'),
+    )
+    const faults = documentAt(check(related), 'ambiguous')?.faults ?? []
+    expect(faults.map((one) => one.fault.code)).toEqual([
+      'ambiguous-subject',
+      'ambiguous-subject',
+    ])
+  })
+})
+
+describe('the other forms', () => {
+  const claimFor = (text: string) => {
+    document(related, 'forms', `# Forms\n\n<!-- codedocs: ${text} -->\n`)
+    return claimsOf(documentAt(check(related), 'forms'))[0]
+  }
+
+  const faultFor = (text: string) => {
+    document(related, 'forms', `# Forms\n\n<!-- codedocs: ${text} -->\n`)
+    return documentAt(check(related), 'forms')?.faults[0]?.fault
+  }
+
+  it('verifies a negated `exists` for a subject that is not there', () => {
+    // `exists` is the one predicate whose evaluation is the resolution, so an
+    // absent subject under a negation is the claim holding rather than a
+    // subject that vanished under it.
+    const claim = claimFor('!exists(src/gone.ts#gone)')
+    expect(claim?.verdict).toBe('verified')
+    expect(claim?.candidates).toEqual([])
+  })
+
+  it('resolves a subject with no descriptor to the file of that name', () => {
+    expect(claimFor('hasLabel(src/payments.ts, role, source)')?.verdict).toBe(
+      'verified',
+    )
+    expect(claimFor('hasLabel(src/payments.ts, role, test)')?.verdict).toBe(
+      'contradicted',
+    )
+  })
+
+  it('reports a label subject that names nothing the index holds', () => {
+    const claim = claimFor('hasLabel(src/gone.ts, role, source)')
+    expect(claim?.verdict).toBe('unable-to-verify')
+    expect(claim?.reason).toBe('unresolved')
+  })
+
+  it('reports an ambiguous label subject as an error in the document', () => {
+    expect(faultFor('hasLabel(capture, role, source)')?.code).toBe(
+      'ambiguous-subject',
+    )
+  })
+
+  it('takes a directory with or without its trailing slash', () => {
+    expect(claimFor('onlyCalledBy(src/payments.ts#audit, src)')?.verdict).toBe(
+      'verified',
+    )
+    expect(claimFor('onlyCalledBy(src/payments.ts#audit, src/)')?.verdict).toBe(
+      'verified',
+    )
+  })
+
+  it('falsifies a scope a caller sits outside of, and counts the callers', () => {
+    const claim = claimFor('onlyCalledBy(src/payments.ts#charge, docs/)')
+    expect(claim?.verdict).toBe('contradicted')
+    expect(claim?.observed).toBeGreaterThan(0)
+  })
+
+  it('reports a scoped or counted subject that vanished, and one that is ambiguous', () => {
+    expect(claimFor('onlyCalledBy(src/gone.ts#gone, src/)')?.reason).toBe(
+      'unresolved',
+    )
+    expect(faultFor('onlyCalledBy(capture, src/)')?.code).toBe(
+      'ambiguous-subject',
+    )
+    expect(claimFor('callers(src/gone.ts#gone) == 1')?.reason).toBe(
+      'unresolved',
+    )
+    expect(faultFor('callers(capture) == 1')?.code).toBe('ambiguous-subject')
+  })
+})
+
 describe('docs affected', () => {
   const affected = (
     drifted: readonly string[],
@@ -434,5 +636,63 @@ function plantRename(): string {
   git('commit', '--quiet', '-m', 'first')
   git('mv', 'src/old.ts', 'src/new.ts')
   git('commit', '--quiet', '-m', 'move it')
+  return at
+}
+
+/**
+ * A fourth fixture, holding the shapes the first one's three files do not.
+ *
+ * The relation predicates each read a different edge kind, and a claim checked
+ * against an edge kind nothing in the tree produces would pass for the wrong
+ * reason. The same goes for the two things that make a verdict `unable to
+ * verify` in a *typed* project: an import that resolved to nothing, and a
+ * subject that resolved to nothing.
+ */
+function plantRelations(): string {
+  const at = plant(true)
+  writeFileSync(
+    join(at, 'src', 'shapes.ts'),
+    [
+      '/** A base, so `extends` has an edge to read. */',
+      'export class Ledger {',
+      '  record(amount: number): string {',
+      '    return `ledger:${amount}`',
+      '  }',
+      '}',
+      '',
+      '/** Extends it. */',
+      'export class Journal extends Ledger {}',
+      '',
+      '/** A diamond: both middles reach `sink`, so the walk meets it twice. */',
+      'export function head(): number {',
+      '  return left() + right()',
+      '}',
+      '',
+      'export function left(): number {',
+      '  return sink()',
+      '}',
+      '',
+      'export function right(): number {',
+      '  return sink()',
+      '}',
+      '',
+      'export function sink(): number {',
+      '  return 1',
+      '}',
+      '',
+    ].join('\n'),
+  )
+  writeFileSync(
+    join(at, 'src', 'vendor.ts'),
+    [
+      "import { missing } from 'not-a-real-package'",
+      '',
+      '/** Everything it does goes through a specifier codedocs could not resolve. */',
+      'export function report(): unknown {',
+      '  return missing()',
+      '}',
+      '',
+    ].join('\n'),
+  )
   return at
 }

@@ -10,6 +10,7 @@
 
 import { execFileSync } from 'node:child_process'
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -20,7 +21,13 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { listBaselines } from '../src/baseline/index.ts'
+import { DatabaseSync } from 'node:sqlite'
+
+import {
+  BASELINE_DIR,
+  listBaselines,
+  openBaseline,
+} from '../src/baseline/index.ts'
 import { DEFAULT_CONFIG, parseConfig } from '../src/config/index.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { analyse } from '../src/operations/analyse.ts'
@@ -192,6 +199,89 @@ describe('retention', () => {
   })
 })
 
+describe('the listing', () => {
+  it('sorts a baseline git no longer knows last, whatever its file says', () => {
+    runAnalyse()
+    // A `.db` named after a commit this repository has never held: git can
+    // give it neither a date nor an ancestry, which is exactly the case the
+    // ordering has to survive.
+    const stranger = 'f'.repeat(40)
+    copyFileSync(
+      join(root, '.codedocs', BASELINE_DIR, `${head()}.db`),
+      join(root, '.codedocs', BASELINE_DIR, `${stranger}.db`),
+    )
+
+    const held = listBaselines(root)
+    expect(held).toHaveLength(2)
+    expect(held.at(-1)?.commit).toBe(stranger)
+    expect(held.at(-1)?.committedAt).toBeNull()
+    expect(held.at(-1)?.ancestor).toBe(false)
+    // And it is the first thing evicted, being an ancestor of nothing.
+    write('src/core.ts', 'export const core = (): number => 5\n')
+    git('add', '-A')
+    git('commit', '-qm', 'second')
+    const taken = runAnalyse(parseConfig('{"baselines": 2}'))
+    expect(taken.capture?.evicted).toEqual([stranger])
+  })
+
+  it('breaks a tie on ancestry, because two commits can share a second', () => {
+    // Commit dates have second granularity, so a fast test makes exactly the
+    // tie this rule exists for — and getting it backwards would evict the
+    // newest baseline.
+    runAnalyse()
+    const first = head()
+    write('src/core.ts', 'export const core = (): number => 7\n')
+    git('add', '-A')
+    git('commit', '-qm', 'second')
+    runAnalyse()
+    const second = head()
+
+    const held = listBaselines(root)
+    expect(held.map((one) => one.commit)).toEqual([second, first])
+  })
+
+  it('refuses a baseline written by another schema version, rather than migrating', () => {
+    runAnalyse()
+    const path = join(root, '.codedocs', BASELINE_DIR, `${head()}.db`)
+    const db = new DatabaseSync(path)
+    db.exec('pragma user_version = 1')
+    db.close()
+
+    expect(openBaseline(root, path)).toBeNull()
+  })
+
+  it('refuses a baseline it cannot read at all, rather than throwing', () => {
+    // Every way a `.db` can fail to be one: absent, and present but not a
+    // database — a truncated copy, or a half-written file left behind by a
+    // process that was killed mid-capture. sqlite opens lazily, so the second
+    // case fails on the first read rather than on the open.
+    expect(openBaseline(root, join(root, 'nowhere.db'))).toBeNull()
+
+    mkdirSync(join(root, '.codedocs', BASELINE_DIR), { recursive: true })
+    const broken = join(root, '.codedocs', BASELINE_DIR, `${'a'.repeat(40)}.db`)
+    writeFileSync(broken, 'not a database\n')
+    expect(openBaseline(root, broken)).toBeNull()
+  })
+
+  it('answers from git where the only baseline is unreadable', () => {
+    // ADR 0008: a missing baseline degrades an answer rather than blocking one,
+    // and a baseline that cannot be opened is a missing one.
+    runAnalyse()
+    writeFileSync(
+      join(root, '.codedocs', BASELINE_DIR, `${head()}.db`),
+      'not a database\n',
+    )
+    write('src/core.ts', 'export const core = (): number => 99\n')
+
+    const envelope = runImpact()
+    expect(envelope.result?.map((one) => shorthandOf(one.id))).toContain(
+      'src/core.ts#core',
+    )
+    // The comparison fell back to git, which names every path as `changed`.
+    expect(envelope.changes.map((one) => one.file)).toContain('src/core.ts')
+  })
+})
+
 describe('impact', () => {
   it('reaches what a change could reach, at the distance it reaches it', () => {
     runAnalyse()
@@ -263,6 +353,16 @@ describe('impact', () => {
     ])
   })
 
+  it('names a file that is gone as removed, not as changed', () => {
+    runAnalyse()
+    rmSync(join(root, 'src', 'outer.ts'))
+
+    const changes = runImpact().changes
+    expect(changes.map((one) => `${one.kind} ${one.file}`)).toContain(
+      'removed src/outer.ts',
+    )
+  })
+
   it('says plainly when nothing changed', () => {
     runAnalyse()
     const envelope = runImpact()
@@ -291,6 +391,23 @@ describe('a baseline built under other conditions', () => {
     expect(
       (envelope.result ?? []).map((one) => shorthandOf(one.id)),
     ).not.toContain('src/core.ts#core')
+  })
+})
+
+describe('a baseline built without types', () => {
+  it('leaves a file out in the other direction too, with no cause to name', () => {
+    // Analysed without `node_modules`, then with: the project rises to `typed`,
+    // and there is no precondition left to name for it.
+    rmSync(join(root, 'node_modules'), { recursive: true, force: true })
+    runAnalyse()
+    mkdirSync(join(root, 'node_modules'), { recursive: true })
+    write('src/core.ts', 'export const core = (): number => 99\n')
+
+    const excluded = runImpact().changes.filter((one) => one.excluded !== null)
+    expect(excluded.map((one) => one.file)).toContain('src/core.ts')
+    expect(excluded[0]?.excluded).toContain(
+      'analysed as `syntactic` in the baseline and `typed` now,',
+    )
   })
 })
 

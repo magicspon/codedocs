@@ -44,6 +44,24 @@ describe('parseConfig', () => {
     expect(config.discover.skip).toEqual(['repos'])
   })
 
+  it('reads a block comment, and one that is never closed', () => {
+    expect(
+      parseConfig('{/* a note */ "baselines": 2 /* and another */}').baselines,
+    ).toBe(2)
+    // An unterminated comment blanks the rest of the file rather than throwing
+    // somewhere a position could not be reported.
+    expect(parseConfig('{"baselines": 2}\n/* never closed').baselines).toBe(2)
+  })
+
+  it('keeps a comment marker that is inside a string, and an escaped quote', () => {
+    expect(
+      parseConfig('{"discover":{"skip":["a/* b"]}}').discover.skip,
+    ).toEqual(['a/* b'])
+    expect(
+      parseConfig('{"discover":{"skip":["a\\"b"]}}').discover.skip,
+    ).toEqual(['a"b'])
+  })
+
   it('keeps a // that is inside a string', () => {
     const config = parseConfig('{"discover":{"skip":["a//b"]}}')
 
@@ -118,14 +136,45 @@ describe('parseConfig', () => {
     )
   })
 
-  it('refuses a negative baselines count', () => {
+  it('refuses a baselines count that is not a whole number', () => {
     expect(refusal('{"baselines": -1}')).toContain('non-negative integer')
+    expect(refusal('{"baselines": 1.5}')).toContain('non-negative integer')
+    expect(parseConfig('{"baselines": 0}').baselines).toBe(0)
   })
 
   it('refuses text that is not JSONC at all', () => {
     expect(refusal('{ nope }')).toContain(
       'codedocs.jsonc: the file is not valid',
     )
+  })
+
+  it('names what it got, in the shape the user wrote it', () => {
+    // The description is a category, never the value itself: a config is the
+    // user's own text, and a message that echoes it tells a reader nothing they
+    // did not already write.
+    expect(refusal('{"discover": null}')).toContain('got `null`')
+    expect(refusal('{"discover": []}')).toContain('got an array')
+    expect(refusal('{"baselines": {}}')).toContain('got an object')
+    expect(refusal('{"baselines": true}')).toContain('got `true`')
+  })
+
+  it('refuses a discover list that is not a list of strings', () => {
+    expect(refusal('{"discover": {"skip": "node_modules"}}')).toContain(
+      'must be an array of strings',
+    )
+    expect(refusal('{"discover": {"skip": [12]}}')).toContain(
+      'must be a non-empty string',
+    )
+    expect(refusal('{"discover": {"skip": [""]}}')).toContain(
+      'must be a non-empty string',
+    )
+  })
+
+  it('refuses a remediation entry that is not an object with both halves', () => {
+    expect(refusal('{"remediations": ["pnpm generate"]}')).toContain(
+      'must be an object',
+    )
+    expect(refusal('{"remediations": [{"specifier": "a/*"}]}')).toContain('run')
   })
 })
 

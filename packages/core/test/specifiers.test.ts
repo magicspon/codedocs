@@ -111,6 +111,95 @@ describe('why a specifier resolved to nothing', () => {
   })
 })
 
+/** The cause a specifier is given where no project claims the file. */
+function unclaimedCause(specifier: string): PreconditionCause {
+  const [found] = classifySpecifiers(
+    root,
+    [{ file: 'src/app.ts', specifier, line: 1 }],
+    new Map(),
+  )
+  return found!.cause
+}
+
+/** Rewrite the fixture's tsconfig with `paths` and, where given, a `baseUrl`. */
+function mapPaths(paths: Record<string, string[]>, baseUrl?: string): void {
+  writeFileSync(
+    join(root, 'tsconfig.json'),
+    JSON.stringify({
+      compilerOptions: baseUrl === undefined ? { paths } : { baseUrl, paths },
+      include: ['src'],
+    }),
+  )
+}
+
+describe('a specifier that names no package', () => {
+  it('is read as an alias, whatever character it opens with', () => {
+    // `~/x` and `#internal` are aliases a bundler resolves, and `@/x` is an
+    // alias wearing a scope: a real scope has a name after the `@`.
+    for (const alias of ['~/components/x', '#internal/x', '@/components/x']) {
+      expect(causeOf(alias)).toBe('broken')
+    }
+  })
+
+  it('is read as an alias where the scope has no package after it', () => {
+    expect(causeOf('@scope')).toBe('broken')
+    expect(causeOf('@scope/')).toBe('broken')
+  })
+})
+
+describe('a package whose subpath is on disk', () => {
+  it('is `unmapped`: codedocs did not resolve what is in front of it', () => {
+    write('node_modules/@scope/pkg/package.json', '{"name":"@scope/pkg"}\n')
+    write('node_modules/@scope/pkg/enums.d.ts')
+    expect(causeOf('@scope/pkg/enums')).toBe('unmapped')
+  })
+})
+
+describe('what the project’s own `paths` say', () => {
+  it('is `unmapped` where the mapped directory is there', () => {
+    write('types/graphql.d.ts')
+    mapPaths({ 'types/*': ['./types/*'] }, '.')
+    expect(causeOf('types/graphql')).toBe('unmapped')
+  })
+
+  it('reads a pattern with no `*` as an exact specifier', () => {
+    mapPaths({ 'exactly-this': ['./generated/exactly-this'] }, '.')
+    expect(causeOf('exactly-this')).toBe('missing-generated')
+    // A different specifier does not match it, so the `paths` say nothing.
+    expect(causeOf('exactly-that')).toBe('broken')
+  })
+
+  it('passes over a pattern whose head or tail does not match', () => {
+    mapPaths({ 'types/*.gen': ['./types/*.gen'] }, '.')
+    // Right head, wrong tail.
+    expect(causeOf('types/graphql')).toBe('broken')
+    // Right tail, wrong head.
+    expect(causeOf('other/graphql.gen')).toBe('broken')
+  })
+
+  it('resolves a target against the config’s directory where there is no baseUrl', () => {
+    write('types/graphql.d.ts')
+    mapPaths({ 'types/*': ['./types/*'] })
+    expect(causeOf('types/graphql')).toBe('unmapped')
+  })
+
+  it('reads a target list that is not a list of strings as no target at all', () => {
+    // The pattern still matched, so the config claims to map it; nothing
+    // readable came back, so no directory is there — which is the codegen case.
+    mapPaths({ 'types/*': [12 as unknown as string] })
+    expect(causeOf('types/graphql')).toBe('missing-generated')
+  })
+})
+
+describe('a file no project claims', () => {
+  it('is decided without a config, so `paths` say nothing about it', () => {
+    write('app/page.tsx')
+    // The first-segment rule still applies, read against the repository root.
+    expect(unclaimedCause('app/_utils')).toBe('unmapped')
+    expect(unclaimedCause('never-heard-of-it')).toBe('broken')
+  })
+})
+
 describe('what an answer says about them', () => {
   it('reports one distinct specifier once, with the count of its sites', () => {
     write(

@@ -216,6 +216,47 @@ describe('codedocs.jsonc `classify`', () => {
     })
   })
 
+  it('reads the whole glob vocabulary, and a literal that is not one', () => {
+    write('src/deep/thing.ts')
+    write('src/a.ts')
+    write('src/plus+one.ts')
+
+    // `**` crosses separators, `*` stops at one, `?` is a single character, and
+    // a regex metacharacter in a path is a literal.
+    expect(
+      decide(
+        'src/deep/thing.ts',
+        config('{"classify": {"src/**": {"role": "config"}}}'),
+      )?.role,
+    ).toBe('config')
+    expect(
+      decide(
+        'src/deep/thing.ts',
+        config('{"classify": {"src/*.ts": {"role": "config"}}}'),
+      )?.role,
+    ).not.toBe('config')
+    expect(
+      decide(
+        'src/a.ts',
+        config('{"classify": {"src/?.ts": {"role": "config"}}}'),
+      )?.role,
+    ).toBe('config')
+    expect(
+      decide(
+        'src/plus+one.ts',
+        config('{"classify": {"src/plus+one.ts": {"role": "config"}}}'),
+      )?.role,
+    ).toBe('config')
+  })
+
+  it('leaves a file no rule matches to the signals entirely', () => {
+    write('src/plain.ts')
+    const rules = config('{"classify": {"other/**": {"role": "config"}}}')
+    expect(labelsOf('src/plain.ts', rules)).not.toContainEqual(
+      expect.objectContaining({ derivation: 'user-config' }),
+    )
+  })
+
   it('may set one axis and leave the other to the signals', () => {
     write('src/thing.test.ts')
     const rules = config(

@@ -252,6 +252,72 @@ describe('a tool call', () => {
 
   it('refuses a subject-less call to an operation that needs one', () => {
     expect(errorOf(call('callers', {}))['code']).toBe(-32602)
+    // An empty string and an empty list are the same absence.
+    expect(errorOf(call('callers', { subject: '' }))['code']).toBe(-32602)
+    expect(errorOf(call('report-bug', { command: [] }))['code']).toBe(-32602)
+  })
+
+  it('takes a call with no arguments at all for an operation that needs none', () => {
+    // `analyse` has no subject, so an omitted `arguments` is a complete call.
+    const reply = ask({
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'tools/call',
+      params: { name: 'analyse' },
+    })
+    expect(resultOf(reply)['isError']).toBe(false)
+  })
+
+  it('refuses `arguments` that is not an object', () => {
+    const failure = errorOf(
+      ask({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'tools/call',
+        params: { name: 'analyse', arguments: 'charge' },
+      }),
+    )
+    expect(failure['message']).toContain('`arguments` must be an object')
+  })
+
+  it('refuses a tool call naming no tool at all', () => {
+    const failure = errorOf(
+      ask({ jsonrpc: '2.0', id: 1, method: 'tools/call' }),
+    )
+    expect(failure['message']).toContain('unknown tool ``')
+  })
+
+  it('refuses a bound below the one its schema declares', () => {
+    const failure = errorOf(call('symbol', { pattern: '*', limit: -1 }))
+    expect(failure['message']).toContain('must be at least')
+  })
+
+  it('spells a boolean as the flag alone, and a false one as nothing', () => {
+    // `--no-update false` is not a thing the parser accepts; the absence of the
+    // flag is how "off" is spelled.
+    const off = JSON.parse(
+      textOf(call('symbol', { pattern: 'charge', 'no-update': false })),
+    ) as { request: { limit: number | null } }
+    expect(off.request.limit).toBeNull()
+
+    const on = textOf(call('symbol', { pattern: 'charge', 'no-update': true }))
+    expect(on).toContain('"operation"')
+  })
+
+  it('spells a repeatable flag once per value, so two filters stay two', () => {
+    const envelope = JSON.parse(
+      textOf(
+        call('symbol', {
+          pattern: '*',
+          label: ['role=source', 'authorship=authored'],
+        }),
+      ),
+    ) as { request: { scope: { include: readonly unknown[] } } }
+    expect(envelope.request.scope.include).toHaveLength(2)
+  })
+
+  it('refuses a subject that is not a string', () => {
+    expect(errorOf(call('callers', { subject: 12 }))['code']).toBe(-32602)
   })
 
   it('marks an answer that could not be given', () => {

@@ -15,7 +15,11 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
+import { execFileSync } from 'node:child_process'
+
+import { DEFAULT_CONFIG } from '../src/config/index.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
+import { analyse } from '../src/operations/analyse.ts'
 import { doctor, type DoctorEnvelope } from '../src/operations/doctor.ts'
 import { openSession } from '../src/session/index.ts'
 
@@ -57,9 +61,15 @@ function install(name = 'left-pad'): void {
   write(`node_modules/${name}/index.d.ts`, 'export {}\n')
 }
 
-/** Run `doctor` over a real session, exactly as the binding does. */
-function run(measure = false): DoctorEnvelope {
-  const session = openSession({ cwd: root, noUpdate: false })
+/**
+ * Run `doctor` over a real session, exactly as the binding does.
+ *
+ * `noUpdate` is what `--measure` is worth reading against: a session that
+ * repairs first re-analyses the project it is about to measure, so the tree and
+ * the index agree by construction and every signal is silent.
+ */
+function run(measure = false, noUpdate = false): DoctorEnvelope {
+  const session = openSession({ cwd: root, noUpdate })
   try {
     return doctor(session.store, session.context, null, {
       root: session.root,
@@ -255,6 +265,117 @@ describe('what the exit code follows', () => {
   })
 })
 
+describe('two projects', () => {
+  /** A second project, with a config of its own. */
+  const second = (): void => {
+    write('apps/web/src/app.ts', "import './nowhere'\nexport const app = 1\n")
+    writeFileSync(
+      join(root, 'apps', 'web', 'tsconfig.json'),
+      JSON.stringify({
+        compilerOptions: { target: 'ES2022', module: 'ESNext', noEmit: true },
+        include: ['src'],
+      }),
+    )
+  }
+
+  it('reports each project’s findings under its own row, ordered by path', () => {
+    install()
+    second()
+    write('src/app.ts', "import './also-nowhere'\nexport const app = 1\n")
+
+    const found = run().result ?? []
+    const projects = found.map((one) => one.project)
+    expect(projects).toEqual(['apps/web/tsconfig.json', 'tsconfig.json'])
+    // Both are `broken`, which nothing clears — so neither raises the exit code.
+    expect(found.every((one) => one.cause === 'broken')).toBe(true)
+    expect(run().remediable).toBe(0)
+  })
+
+  it('says nothing about a project that has nothing wrong with it', () => {
+    // The second project is healthy, so only the one with a finding appears.
+    install()
+    write('apps/web/src/app.ts', 'export const app = 1\n')
+    writeFileSync(
+      join(root, 'apps', 'web', 'tsconfig.json'),
+      JSON.stringify({
+        compilerOptions: { target: 'ES2022', module: 'ESNext', noEmit: true },
+        include: ['src'],
+      }),
+    )
+    write('src/app.ts', "import './nowhere'\nexport const app = 1\n")
+
+    expect((run().result ?? []).map((one) => one.project)).toEqual([
+      'tsconfig.json',
+    ])
+  })
+
+  it('counts two sites of one specifier once, however many files wrote it', () => {
+    install()
+    write('src/one.ts', "import './nowhere'\nexport const one = 1\n")
+    write('src/two.ts', "import './nowhere'\nexport const two = 2\n")
+
+    const found = run().result ?? []
+    expect(found).toHaveLength(1)
+    expect(found[0]?.specifiers).toHaveLength(1)
+    expect(found[0]?.specifiers[0]?.sites).toBe(2)
+    expect(found[0]?.specifiers[0]?.files).toEqual(['src/one.ts', 'src/two.ts'])
+  })
+})
+
+describe('the baselines it reports', () => {
+  /** Turn the fixture into a repository and capture one baseline from it. */
+  const commit = (): void => {
+    const git = (...args: string[]): void => {
+      execFileSync('git', args, { cwd: root, stdio: 'ignore' })
+    }
+    git('init', '-q')
+    git('config', 'user.email', 'fixture@example.com')
+    git('config', 'user.name', 'Fixture')
+    git('add', '-A')
+    git('commit', '-qm', 'first')
+  }
+
+  it('holds none outside a repository, and says so rather than counting zero', () => {
+    const report = run().baselines
+    expect(report.held).toEqual([])
+    expect(report.cap).toBe(3)
+    expect(report.distance).toBeNull()
+  })
+
+  it('names each baseline held and how far HEAD has moved from the newest', () => {
+    install()
+    commit()
+    // `analyse` over a clean tree is the only thing that captures one.
+    const session = openSession({ cwd: root, noUpdate: false })
+    try {
+      analyse(
+        session.store,
+        session.context,
+        null,
+        UNSCOPED,
+        session.repair,
+        session.labelPass,
+        { root, cap: DEFAULT_CONFIG.baselines },
+      )
+    } finally {
+      session.close()
+    }
+
+    const report = run().baselines
+    expect(report.held.length).toBeGreaterThan(0)
+    expect(report.held[0]?.ancestor).toBe(true)
+    expect(report.distance).toBe(0)
+    // The absolute path a baseline is stored at names the machine, so it is
+    // left out for the reason `impact` leaves it out.
+    expect(Object.keys(report.held[0] ?? {}).sort()).toEqual([
+      'ancestor',
+      'bytes',
+      'commit',
+      'committedAt',
+    ])
+  })
+})
+
 describe('--measure, against the working tree', () => {
   it('is absent unless it was asked for, and it is asked for by name', () => {
     expect(run().measured).toBeNull()
@@ -311,5 +432,144 @@ describe('--measure, against the working tree', () => {
     const measured = run(true).measured ?? []
     expect(measured[0]?.signal).toBe('tsconfig')
     expect(measured[0]?.measured).toContain('gone')
+  })
+
+  /** Which signals disagreed, in the order `--measure` reports them. */
+  const signals = (): readonly string[] =>
+    (run(true, true).measured ?? []).map((one) => one.signal)
+
+  it('sees an install that has gone entirely, and one that has arrived', () => {
+    install()
+    run()
+    rmSync(join(root, 'node_modules'), { recursive: true })
+
+    const gone = run(true, true).measured ?? []
+    expect(gone.map((one) => one.signal)).toContain('node_modules')
+    const one = gone.find((found) => found.signal === 'node_modules')
+    expect(one?.indexed).toBe('a node_modules above the project')
+    expect(one?.measured).toBe('none')
+
+    // And the other direction: analysed with nothing installed, measured with
+    // an install in place.
+    rmSync(join(root, '.codedocs'), { recursive: true, force: true })
+    run()
+    install()
+    const arrived = (run(true, true).measured ?? []).find(
+      (found) => found.signal === 'node_modules',
+    )
+    expect(arrived?.indexed).toBe('no node_modules')
+    expect(arrived?.measured).toBe('a node_modules above the project')
+  })
+
+  it('names three absent dependencies and counts the rest', () => {
+    const declared = ['a-pkg', 'b-pkg', 'c-pkg', 'd-pkg', 'e-pkg']
+    manifest(Object.fromEntries(declared.map((name) => [name, '^1.0.0'])))
+    for (const name of declared) install(name)
+    expect(run().conditions[0]?.fidelity).toBe('typed')
+
+    for (const name of declared) {
+      rmSync(join(root, 'node_modules', name), { recursive: true })
+    }
+    const found = (run(true).measured ?? []).find(
+      (one) => one.signal === 'dependencies',
+    )
+    expect(found?.measured).toContain('5 declared dependency(s) absent')
+    expect(found?.measured).toContain('a-pkg, b-pkg, c-pkg')
+    expect(found?.measured).toContain('and 2 more')
+    expect(found?.measured).not.toContain('e-pkg')
+  })
+
+  it('sees an install script declared since the index was built', () => {
+    install()
+    run()
+    writeFileSync(
+      join(root, 'package.json'),
+      JSON.stringify({
+        name: 'fixture',
+        private: true,
+        scripts: { postinstall: 'node generate.js' },
+      }),
+    )
+
+    const found = (run(true, true).measured ?? []).find(
+      (one) => one.signal === 'postinstall',
+    )
+    expect(found?.indexed).toBe('no install script')
+    expect(found?.measured).toBe('an install script')
+  })
+
+  it('sees an install script that has gone since the index was built', () => {
+    writeFileSync(
+      join(root, 'package.json'),
+      JSON.stringify({
+        name: 'fixture',
+        private: true,
+        scripts: { postinstall: 'node generate.js' },
+      }),
+    )
+    install()
+    run()
+    manifest()
+
+    const found = (run(true, true).measured ?? []).find(
+      (one) => one.signal === 'postinstall',
+    )
+    expect(found?.indexed).toBe('an install script')
+    expect(found?.measured).toBe('none')
+  })
+
+  it('sees a config that globs files where it globbed none before', () => {
+    // Analysed with nothing to glob — which is `missing-generated` — and
+    // measured after something wrote the files.
+    rmSync(join(root, 'src'), { recursive: true })
+    install()
+    run()
+    write('src/app.ts')
+
+    const found = (run(true, true).measured ?? []).find(
+      (one) => one.signal === 'globbed',
+    )
+    expect(found?.indexed).toBe('its config globbed nothing')
+    expect(found?.measured).toBe('it globs 1 file(s)')
+  })
+
+  it('sees a config that globbed files and now globs none', () => {
+    install()
+    run()
+    rmSync(join(root, 'src'), { recursive: true })
+
+    const found = (run(true, true).measured ?? []).find(
+      (one) => one.signal === 'globbed',
+    )
+    expect(found?.indexed).toBe('its config globbed files')
+    expect(found?.measured).toBe('it globs nothing')
+  })
+
+  it('reports the fingerprint last, because it is the sum of the others', () => {
+    install()
+    run()
+    rmSync(join(root, 'node_modules'), { recursive: true })
+    expect(signals().at(-1)).toBe('fingerprint')
+  })
+
+  it('orders disagreements by project, then by signal', () => {
+    // Two projects, so the comparison that decides the order is the path rather
+    // than the signal.
+    write('apps/web/src/app.ts', 'export const app = 1\n')
+    writeFileSync(
+      join(root, 'apps', 'web', 'tsconfig.json'),
+      JSON.stringify({
+        compilerOptions: { target: 'ES2022', module: 'ESNext', noEmit: true },
+        include: ['src'],
+      }),
+    )
+    install()
+    run()
+    rmSync(join(root, 'node_modules'), { recursive: true })
+
+    const measured = run(true, true).measured ?? []
+    const projects = measured.map((one) => one.project)
+    expect([...projects].sort()).toEqual(projects)
+    expect(new Set(projects).size).toBe(2)
   })
 })
