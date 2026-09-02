@@ -65,6 +65,8 @@ export interface Command {
   readonly scope: Scope
   /** `impact`: the commit to compare against. `null` means the merge base. */
   readonly base: string | null
+  /** `evidence`: restate the payload as ADR 0005 claim expressions. */
+  readonly claims: boolean
 }
 
 /** The default the human renderer applies when no `--limit` is given. */
@@ -82,6 +84,7 @@ const OPTIONS = {
   out: { type: 'string' },
   measure: { type: 'boolean' },
   base: { type: 'string' },
+  claims: { type: 'boolean' },
   // Repeatable: one flag per axis, because the two are orthogonal and a single
   // value could only ever filter one of them.
   label: { type: 'string', multiple: true },
@@ -126,6 +129,13 @@ export function parse(
   if (failed(perOperation)) return { ok: false, error: perOperation.error }
 
   const json = values.json === true
+  // ADR 0006 keeps claim expressions on the machine renderer alone, so the flag
+  // is refused rather than dropped: a caller who read a human answer believing
+  // it held claims would have been told nothing about their absence.
+  if (values.claims === true && !json) {
+    return { ok: false, error: { code: 'claims-requires-json', params: {} } }
+  }
+
   const limit = resolveLimit(values.limit, json, spec)
   if (failed(limit)) return { ok: false, error: limit.error }
 
@@ -152,6 +162,7 @@ export function parse(
       measure: values.measure === true,
       scope: scope.value,
       base: values.base ?? null,
+      claims: values.claims === true,
     },
   }
 }

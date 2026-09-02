@@ -72,6 +72,17 @@ export interface OperationSpec {
    * honoured.
    */
   readonly flags: readonly OperationFlag[]
+  /**
+   * How `result` is shaped, which is the one thing a binding must describe and
+   * cannot read off the other fields.
+   *
+   * `list` is a list of `unit`s. `report` is a single object with no unit for a
+   * limit to count. `kinds` is several lists at once, each bounded by its own
+   * `--limit` and reporting its own truncation — ADR 0006 singles `evidence`
+   * out for that, because a shared pool means adding a caller quietly evicts a
+   * document.
+   */
+  readonly shape: 'list' | 'report' | 'kinds'
   /** ADR 0006's result unit, which is what `--limit` counts. `null` where there is none. */
   readonly unit: string | null
   /** ADR 0006's sort key. Part of the contract, not an implementation detail. */
@@ -100,6 +111,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     subject: null,
     depth: false,
     flags: [],
+    shape: 'list',
     unit: 'project',
     sortedBy: 'tsconfig path',
   },
@@ -116,6 +128,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     },
     depth: false,
     flags: [],
+    shape: 'list',
     unit: 'node',
     sortedBy: 'SymbolId, then path',
   },
@@ -125,6 +138,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     subject: IDENTIFIER,
     depth: false,
     flags: [],
+    shape: 'list',
     unit: 'call edge',
     sortedBy: '(source, target, kind, site)',
   },
@@ -134,6 +148,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     subject: IDENTIFIER,
     depth: false,
     flags: [],
+    shape: 'list',
     unit: 'call edge',
     sortedBy: '(source, target, kind, site)',
   },
@@ -143,6 +158,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     subject: IDENTIFIER,
     depth: false,
     flags: [],
+    shape: 'list',
     unit: 'reference edge',
     sortedBy: '(source, target, kind, site)',
   },
@@ -159,6 +175,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     },
     depth: false,
     flags: [],
+    shape: 'list',
     unit: 'file',
     sortedBy: 'path',
   },
@@ -174,8 +191,32 @@ export const OPERATIONS: readonly OperationSpec[] = [
     },
     depth: true,
     flags: [],
+    shape: 'list',
     unit: 'path',
     sortedBy: 'the SymbolId sequence, lexically',
+  },
+  {
+    name: 'evidence',
+    summary: 'everything the index holds about one subject, assembled',
+    subject: IDENTIFIER,
+    depth: false,
+    flags: [
+      {
+        name: 'claims',
+        value: null,
+        summary: 'restate the facts as claim expressions (--json only)',
+        description:
+          'Restate the facts in the payload as ADR 0005 claim expressions, so ' +
+          'an agent writing a document never invents the syntax. Opt-in and ' +
+          'machine-only: a claim string is a restatement of a fact the answer ' +
+          'already carries, so sending it always would spend budget saying the ' +
+          'same thing twice. A claim whose subject is a local symbol is not ' +
+          'emitted — ADR 0005 refuses one at check time.',
+      },
+    ],
+    shape: 'kinds',
+    unit: 'fact',
+    sortedBy: 'each kind by its own key',
   },
   {
     name: 'impact',
@@ -196,6 +237,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
           'blind spot.',
       },
     ],
+    shape: 'list',
     unit: 'symbol',
     sortedBy: 'distance from the change, then SymbolId',
   },
@@ -217,6 +259,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
           'install that is present and incomplete.',
       },
     ],
+    shape: 'list',
     unit: 'precondition',
     sortedBy: 'project, then cause',
   },
@@ -255,6 +298,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
     ],
     // ADR 0006: a report is one object, so `--limit` has nothing to count and
     // there is no order to fix.
+    shape: 'report',
     unit: null,
     sortedBy: null,
   },

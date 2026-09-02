@@ -22,6 +22,7 @@ import {
   callers,
   ConfigError,
   doctor,
+  evidence,
   file,
   impact,
   openSession,
@@ -34,6 +35,7 @@ import {
   type AnswerContext,
   type Envelope,
   type EnvelopeError,
+  type EvidenceEnvelope,
   type OperationName,
   type ReportEnvelope,
   type Scoping,
@@ -48,6 +50,7 @@ import {
   renderAnalyse,
   renderDoctor,
   renderEdges,
+  renderEvidence,
   renderFile,
   renderImpact,
   renderReferences,
@@ -234,6 +237,16 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderFile(envelope, style))
+  },
+  evidence: (command, session, style) => {
+    const envelope: EvidenceEnvelope = evidence(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+      { scoping: scopingFor(command, session), claims: command.claims },
+    )
+    return emit(command.json, envelope, () => renderEvidence(envelope, style))
   },
   trace: (command, session, style) => {
     const envelope = trace(

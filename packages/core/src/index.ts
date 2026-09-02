@@ -19,6 +19,13 @@ export {
   type TraceStep,
 } from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
+export {
+  evidence,
+  type EvidenceEnvelope,
+  type EvidenceKind,
+  type EvidenceOptions,
+  type EvidenceReport,
+} from './operations/evidence.ts'
 export { references } from './operations/references.ts'
 export {
   impact,
@@ -75,6 +82,7 @@ export { scopeTo } from './operations/scope.ts'
 
 export {
   answer,
+  assembled,
   failure,
   SCHEMA_VERSION,
   type AnswerContext,

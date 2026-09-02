@@ -122,22 +122,36 @@ const DEPTH_ARGUMENT: ArgumentSchema = {
  */
 function describe(spec: OperationSpec): string {
   const call = `\`codedocs ${spec.name}${invocationSuffix(spec)} --json\``
-  // An operation with no result unit answers with one object rather than a list,
-  // so the two sentences about paging and blind spots would both be false.
-  if (spec.unit === null) {
+  const opening = [
+    `${spec.summary}.`,
+    `Returns the codedocs answer envelope as JSON — the same bytes ${call}`,
+  ].join(' ')
+  const honesty =
+    'Every answer also carries `snapshot`, `conditions`, `blindSpots` and ' +
+    '`budget`: read `blindSpots` before treating an answer as complete.'
+  // Read off the manifest's `shape` rather than guessed at from `unit`, because
+  // the three shapes make different promises: only a list can be paged, and only
+  // `kinds` bounds each of its lists separately.
+  if (spec.shape === 'report') {
     return [
-      `${spec.summary}.`,
-      `Returns the codedocs answer envelope as JSON — the same bytes ${call}`,
+      opening,
       'prints — whose `result` is the report. It is written to a file as well,',
       'unless `out` is `-`. The default shape names nothing in your code.',
     ].join(' ')
   }
+  if (spec.shape === 'kinds') {
+    return [
+      opening,
+      `prints. \`result\` holds one entry per kind of fact, sorted ${spec.sortedBy}.`,
+      '`limit` applies **per kind**, each reporting its own `budget`, so asking',
+      'about a symbol with many callers still returns its file, its labels and',
+      `its references. ${honesty}`,
+    ].join(' ')
+  }
   return [
-    `${spec.summary}.`,
-    `Returns the codedocs answer envelope as JSON — the same bytes ${call}`,
+    opening,
     `prints. \`result\` is a list of ${spec.unit}s, sorted by ${spec.sortedBy}.`,
-    `Every answer also carries \`snapshot\`, \`conditions\`, \`blindSpots\` and`,
-    `\`budget\`: read \`blindSpots\` before treating an answer as complete.`,
+    honesty,
   ].join(' ')
 }
 

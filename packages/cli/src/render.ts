@@ -19,9 +19,12 @@ import type {
   Disagreement,
   DoctorEnvelope,
   Envelope,
+  EvidenceEnvelope,
+  EvidenceKind,
   FileReport,
   ImpactEnvelope,
   ImportEdge,
+  Label,
   LabelPass,
   Precondition,
   ProjectConditions,
@@ -446,12 +449,17 @@ export function renderSymbols(
   envelope: Envelope<readonly SymbolNode[]>,
   style: Style,
 ): string {
-  const lines = (envelope.result ?? []).map((node) => {
-    const durability = node.durable ? '' : ` ${style.warn('local')}`
-    const where = style.dim(`${node.file}:${node.line}`)
-    return `  ${node.id}  ${style.dim(node.kind)}  ${where}${durability}`
-  })
+  const lines = (envelope.result ?? []).map(
+    (node) => `  ${symbolLine(node, style)}`,
+  )
   return finish(envelope, lines, style, 'symbols')
+}
+
+/** One symbol row, shared with `evidence` so the two cannot print it differently. */
+function symbolLine(node: SymbolNode, style: Style): string {
+  const durability = node.durable ? '' : ` ${style.warn('local')}`
+  const where = style.dim(`${node.file}:${node.line}`)
+  return `${node.id}  ${style.dim(node.kind)}  ${where}${durability}`
 }
 
 /**
@@ -484,15 +492,20 @@ export function renderReferences(
   envelope: Envelope<readonly ReferenceEdge[]>,
   style: Style,
 ): string {
-  const lines = (envelope.result ?? []).map((edge) => {
-    const where = style.dim(`${edge.file}:${edge.line}`)
-    const how =
-      edge.provenance === 'deterministic'
-        ? ''
-        : ` ${style.warn(`[${edge.provenance}: ${edge.derivation}]`)}`
-    return `  ${edge.from} ${style.warn(edge.kind)} ${edge.to}  ${where}${how}`
-  })
+  const lines = (envelope.result ?? []).map(
+    (edge) => `  ${referenceLine(edge, style)}`,
+  )
   return finish(envelope, lines, style, 'references')
+}
+
+/** One reference row, shared with `evidence`. Provenance is never dropped. */
+function referenceLine(edge: ReferenceEdge, style: Style): string {
+  const where = style.dim(`${edge.file}:${edge.line}`)
+  const how =
+    edge.provenance === 'deterministic'
+      ? ''
+      : ` ${style.warn(`[${edge.provenance}: ${edge.derivation}]`)}`
+  return `${edge.from} ${style.warn(edge.kind)} ${edge.to}  ${where}${how}`
 }
 
 /** How many symbols, imports or importers are named before the rest are counted. */
@@ -510,8 +523,22 @@ export function renderFile(
   envelope: Envelope<readonly FileReport[]>,
   style: Style,
 ): string {
-  const lines = (envelope.result ?? []).flatMap((report) => [
-    `  ${style.bold(report.path)}${fidelityNote(report, style)}`,
+  const lines = (envelope.result ?? []).flatMap((report) =>
+    fileLines(report, style).map((line) => `  ${line}`),
+  )
+  return finish(envelope, lines, style, 'files')
+}
+
+/**
+ * One file's row set, indented relative to wherever it is printed.
+ *
+ * Relative because `evidence` prints the same block one level deeper, under the
+ * heading for its own kind: the two operations report the same file facts, and
+ * a second copy of this would be a second thing to keep in step.
+ */
+function fileLines(report: FileReport, style: Style): string[] {
+  return [
+    `${style.bold(report.path)}${fidelityNote(report, style)}`,
     ...projectLines(report, style),
     ...listing(
       'declares',
@@ -522,8 +549,7 @@ export function renderFile(
     ),
     ...listing('imports', report.imports.map(importLine), style),
     ...listing('imported by', [...report.importers], style),
-  ])
-  return finish(envelope, lines, style, 'files')
+  ]
 }
 
 /** The fidelity the file was analysed at, with the cause where there is one. */
@@ -544,7 +570,7 @@ function projectLines(report: FileReport, style: Style): string[] {
   if (report.projects.length === 0) return []
   return [
     style.dim(
-      `    in ${report.projects
+      `  in ${report.projects
         .map((project) =>
           project === report.canonicalProject ? `${project} *` : project,
         )
@@ -573,11 +599,87 @@ function listing(
 ): string[] {
   const overflow = entries.length - FILE_LIST_LIMIT
   return [
-    style.dim(`    ${heading} (${entries.length})`),
-    ...entries.slice(0, FILE_LIST_LIMIT).map((entry) => `      ${entry}`),
-    ...(overflow > 0 ? [style.dim(`      …and ${overflow} more`)] : []),
+    style.dim(`  ${heading} (${entries.length})`),
+    ...entries.slice(0, FILE_LIST_LIMIT).map((entry) => `    ${entry}`),
+    ...(overflow > 0 ? [style.dim(`    …and ${overflow} more`)] : []),
   ]
 }
+
+/**
+ * Render an `evidence` answer, one heading per kind.
+ *
+ * Grouped because the kinds answer different questions, and headed even when a
+ * kind is empty: "no callers" is a fact about the subject, and silence would
+ * read as a kind that was dropped. Each heading carries that kind's own budget,
+ * because ADR 0006 gives this operation one `--limit` per kind and the
+ * envelope's single budget can only say that *something* was cut.
+ *
+ * `--claims` never reaches here. ADR 0006 keeps claim expressions on the machine
+ * renderer, and the parser refuses the flag without `--json` rather than letting
+ * this renderer quietly drop them.
+ */
+export function renderEvidence(
+  envelope: EvidenceEnvelope,
+  style: Style,
+): string {
+  const report = envelope.result
+  // An unresolved subject has no kinds worth heading — `finish` says that it
+  // matched nothing, which is a different fact from every kind being empty.
+  const lines =
+    report === undefined || envelope.request.resolved.length === 0
+      ? []
+      : [
+          ...kindLines('symbols', report.symbols, (node) => [
+            symbolLine(node, style),
+          ]),
+          ...kindLines('files', report.files, (file) => fileLines(file, style)),
+          ...kindLines('callers', report.callers, (edge) => [
+            `${edge.from}  ${renderSite(edge, style)}`,
+          ]),
+          ...kindLines('callees', report.callees, (edge) => [
+            `${edge.to}  ${renderSite(edge, style)}`,
+          ]),
+          ...kindLines('references', report.references, (edge) => [
+            referenceLine(edge, style),
+          ]),
+          ...kindLines('labels', report.labels, (label) => [
+            labelRow(label, style),
+          ]),
+        ]
+  return finish(envelope, lines, style, 'facts')
+}
+
+/**
+ * One kind under its heading, with the truncation that kind reports.
+ *
+ * @param lines - One kind's item as the lines it prints, relative to the
+ * heading, so a multi-line item like a file report indents with the rest.
+ */
+function kindLines<TItem>(
+  heading: string,
+  kind: EvidenceKind<TItem>,
+  lines: (item: TItem) => readonly string[],
+): string[] {
+  const { returned, available, truncated } = kind.budget
+  const counted = truncated
+    ? `showing ${returned} of ${available}`
+    : String(available)
+  return [
+    `  ${heading} (${counted})`,
+    ...kind.items.flatMap((item) => lines(item).map((line) => `    ${line}`)),
+  ]
+}
+
+/**
+ * One label row: what it says, and the rule that said it.
+ *
+ * The derivation is never dropped, for the reason `references` never drops
+ * provenance: `default` and `user-config` are the same value arrived at by
+ * guessing and by being told, and only the derivation tells them apart.
+ */
+const labelRow = (label: Label, style: Style): string =>
+  `${label.node}  ${label.axis}=${label.value}  ` +
+  style.dim(`[${label.provenance}: ${label.derivation}]`)
 
 /**
  * Render a `trace` answer as a tree, collapsing the prefix each path shares
