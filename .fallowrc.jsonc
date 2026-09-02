@@ -13,13 +13,16 @@
   // `RENOVATE_ALLOWED_COMMANDS`, neither of which is an import.
   // Run by hand, never imported: `node bench/run.ts` and the two scripts beside
   // it are roots of their own. Without this the whole benchmark reads as dead.
+  // `tsdown.config.ts` is read by tsdown when `pnpm build` runs, and is the file
+  // that decides what the published package contains.
   "dynamicallyLoaded": [
     "nano-staged.js",
     "scripts/renovate-changeset.mjs",
     "bench/run.ts",
     "bench/report.ts",
     "bench/freeze-cases.ts",
-    "scripts/no-network.ts"
+    "scripts/no-network.ts",
+    "packages/cli/tsdown.config.ts"
   ],
 
   // `packages/core/test/fixtures/specifiers` exists to prove the sweep reads a

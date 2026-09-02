@@ -27053,7 +27053,7 @@
       "confidence": "AMBIGUOUS",
       "confidence_score": 0.2,
       "source_file": ".github/workflows/release.yaml",
-      "source_location": "error message names homelync/mocker and the magicspon scope, not this repo",
+      "source_location": "error message names magicspon/mocker and the magicspon scope, not this repo",
       "weight": 1.0,
       "source": "workflows_release_pipeline",
       "target": "agents_issue_tracker_github"
@@ -27103,7 +27103,7 @@
       "confidence": "AMBIGUOUS",
       "confidence_score": 0.2,
       "source_file": ".github/workflows/renovate.yaml",
-      "source_location": "RENOVATE_REPOSITORIES targets homelync/mocker while docs name magicspon/codedocs - likely uncustomised template",
+      "source_location": "RENOVATE_REPOSITORIES targets magicspon/mocker while docs name magicspon/codedocs - likely uncustomised template",
       "weight": 1.0,
       "source": "workflows_renovate_schedule",
       "target": "agents_issue_tracker_github"

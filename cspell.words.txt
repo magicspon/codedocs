@@ -14,8 +14,6 @@ frontmatter
 gitdir
 graphify
 graphifyy
-HOMELINK
-homelync
 inspectable
 interner
 interners
@@ -28,6 +26,7 @@ magicspon
 manypkg
 mattpocock
 metacharacter
+mhmm
 npmjs
 pinnable
 predev
