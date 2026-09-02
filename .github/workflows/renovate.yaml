@@ -45,7 +45,7 @@ jobs:
         with:
           token: ${{ secrets.RENOVATE_TOKEN }}
         env:
-          RENOVATE_REPOSITORIES: homelync/mocker
+          RENOVATE_REPOSITORIES: magicspon/codedocs
           LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
           # Self-hosted-only settings: postUpgradeTasks commands run only if they
           # match this allowlist, and the allowlist is tested against the command

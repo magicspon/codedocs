@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "vitest run",
+    "build": "pnpm --filter @codedocs/cli build",
     "bench": "node bench/run.ts",
     "bench:report": "node bench/report.ts",
     "test:watch": "vitest",
@@ -19,7 +20,7 @@
     "check": "oxfmt --check && oxlint",
     "check:network": "node scripts/no-network.ts",
     "typecheck": "tsc --noEmit && pnpm -r typecheck",
-    "release": "changeset publish",
+    "release": "pnpm build && changeset publish",
     "version-packages": "changeset version && pnpm install --lockfile-only",
     "prepare": "husky"
   },
@@ -39,7 +40,7 @@
     "oxlint-tsgolint": "^7.0.2001",
     "tsdown": "^0.22.14",
     "tsx": "^4.23.12",
-    "typescript": "^7.0.2",
+    "typescript": "7.0.2",
     "vitest": "^4.1.10"
   }
 }

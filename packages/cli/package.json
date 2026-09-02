@@ -1,21 +1,48 @@
 {
   "name": "@codedocs/cli",
   "version": "0.0.0",
-  "private": true,
+  "description": "A local, deterministic index of a TypeScript repository: what calls what, where a declaration comes from, how execution flows out of a handler, and what a change reaches.",
   "type": "module",
-  "bin": {
-    "codedocs": "./src/bin.ts"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicspon/codedocs.git",
+    "directory": "packages/cli"
   },
-  "exports": {
-    ".": "./src/main.ts"
+  "homepage": "https://github.com/magicspon/codedocs#readme",
+  "bugs": "https://github.com/magicspon/codedocs/issues",
+  "keywords": [
+    "typescript",
+    "call-graph",
+    "code-intelligence",
+    "static-analysis",
+    "impact-analysis",
+    "monorepo",
+    "cli",
+    "mcp"
+  ],
+  "bin": {
+    "codedocs": "./dist/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=24.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
+    "prepack": "cp ../../README.md ../../LICENSE .",
+    "build": "tsdown",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@codedocs/core": "workspace:*"
+    "typescript": "7.0.2"
   },
   "devDependencies": {
+    "@codedocs/core": "workspace:*",
     "@types/node": "^24.13.3"
   }
 }

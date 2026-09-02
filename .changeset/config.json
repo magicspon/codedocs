@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
   "baseBranch": "main",
-  "access": "restricted",
+  "access": "public",
   "format": "auto",
   "changelog": [
     "@changesets/changelog-github",
@@ -10,7 +10,10 @@
     }
   ],
   "commit": false,
-  "privatePackages": { "version": false, "tag": false },
+  "privatePackages": {
+    "version": false,
+    "tag": false
+  },
   "ignore": [],
   "fixed": [],
   "updateInternalDependencies": "patch"

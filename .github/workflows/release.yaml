@@ -13,21 +13,26 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      # Publishing to GitHub Packages. Without this the job's GITHUB_TOKEN is
-      # read-only for packages and `changeset publish` fails on 403.
-      packages: write
+      # npm provenance signs the published tarball with this run's identity, so
+      # a reader can tie the package on the registry back to the commit here.
+      id-token: write
 
     steps:
-      # This workflow is not `workflow_call`, so it cannot declare
-      # `secrets: required: true` the way publish-package.yaml does. An org
-      # secret that is not granted to this repo resolves to an empty string, so
-      # assert it here rather than letting the release fail four steps later.
-      - name: Check bot PAT is available
+      # Two secrets do two different jobs, and neither substitutes for the
+      # other. An empty org secret resolves to an empty string rather than
+      # failing, so assert both here instead of letting the release fail four
+      # steps later with an authentication error that names neither.
+      - name: Check release secrets are available
         env:
-          PAT: ${{ secrets.NPM_TOKEN }}
+          GIT_PAT: ${{ secrets.RELEASE_PAT }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          if [ -z "$PAT" ]; then
-            echo "::error::NPM_TOKEN is empty. Grant the org secret to homelync/mocker."
+          if [ -z "$GIT_PAT" ]; then
+            echo "::error::RELEASE_PAT is empty. It needs contents + pull-requests scope on magicspon/codedocs."
+            exit 1
+          fi
+          if [ -z "$NPM_TOKEN" ]; then
+            echo "::error::NPM_TOKEN is empty. It needs publish rights on the @codedocs scope at registry.npmjs.org."
             exit 1
           fi
 
@@ -36,12 +41,11 @@ jobs:
         with:
           # Changesets needs full history to work out what has already been released.
           fetch-depth: 0
-          # A PAT (not GITHUB_TOKEN) so the version PR triggers downstream workflows
-          # — a branch pushed with GITHUB_TOKEN raises no pull_request event, so the
-          # required checks on the version PR would never start.
-          # NPM_TOKEN needs repo scope (contents + pull requests);
-          # the registry token stays registry-only and is never handed to git.
-          token: ${{ secrets.NPM_TOKEN }}
+          # A PAT rather than GITHUB_TOKEN, so the version PR triggers CI: a
+          # branch pushed with GITHUB_TOKEN raises no `pull_request` event, and
+          # the required checks on that PR would never start. This token is for
+          # git alone; the registry token below is never handed to git.
+          token: ${{ secrets.RELEASE_PAT }}
 
       - uses: pnpm/action-setup@v6
         with:
@@ -51,20 +55,26 @@ jobs:
         with:
           node-version: 24.19.0
           cache: pnpm
-          # We publish to GitHub Packages, not npmjs. This is what writes the
-          # `//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}` line, so the
-          # host here must match `publishConfig.registry` in every package or
-          # the publish goes out unauthenticated.
-          registry-url: https://npm.pkg.github.com
-          # Adds the `magicspon:registry` line as well, so installs during this
-          # job resolve the workspace scope to GitHub too.
-          scope: 'magicspon'
+          # npmjs, public. This writes the
+          # `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}` line, so this
+          # host has to match what `changeset publish` targets or the publish
+          # goes out unauthenticated. `@codedocs/cli` carries
+          # `publishConfig.access: public`, which is what makes a scoped package
+          # publishable without a paid plan.
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Node refuses to strip types inside `node_modules`, so the published
+      # package is a bundle and `dist/` has to exist before changesets publishes
+      # it. `pnpm release` builds again for the same reason; this step is here
+      # so a broken build fails before the version PR is touched.
       - name: Build
         run: pnpm build
+
+      - name: Verify no package reaches the network
+        run: pnpm check:network
 
       # With pending changesets: opens/updates the version PR.
       # With none (i.e. that PR just merged): publishes the versioned packages.
@@ -76,7 +86,7 @@ jobs:
           # v2 reads the token from this input only — setting a GITHUB_TOKEN env
           # var is silently ignored and the action falls back to the read-only
           # default token, which fails on "Resource not accessible by integration".
-          github-token: ${{ secrets.NPM_TOKEN }}
+          github-token: ${{ secrets.RELEASE_PAT }}
           # `version-packages`, not a bare `changeset version`: changeset version
           # writes package.json only, so the lockfile would keep reporting the
           # previous version forever. The script re-syncs it.
@@ -85,7 +95,5 @@ jobs:
           commit-message: 'chore: version packages'
           pr-title: 'changeset: cut release'
         env:
-          # GitHub Packages accepts the job's own token, so there is no npm
-          # secret to rotate. It can only write packages owned by this repo's
-          # owner — which is why the scope (`magicspon`) has to match the org.
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

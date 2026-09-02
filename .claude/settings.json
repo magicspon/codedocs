@@ -30,7 +30,7 @@
       "Bash(pnpm publish*)",
       "Bash(npm publish*)",
       "Bash(gh pr merge*)",
-      "Edit(//Users/homelync/.claude/**)"
+      "Edit(//Users/magicspon/.claude/**)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

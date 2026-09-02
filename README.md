@@ -41,26 +41,40 @@ TypeScript projects:
 
 ## Requirements
 
-Node **24.19** or newer. Node runs codedocs' TypeScript directly and provides `node:sqlite`, so there
-is no build step and no native module to compile.
+Node **24.19** or newer, and nothing else. The index is `node:sqlite` from the standard library, so
+there is no native module to compile and no post-install step.
 
 ## Install
+
+```sh
+npm install -g @codedocs/cli
+```
+
+That puts a `codedocs` command on your `PATH`:
+
+```sh
+codedocs analyse --cwd /path/to/your/repo
+```
+
+The package is scoped because the unscoped `codedocs` name on npm belongs to an unrelated project.
+The command it installs is `codedocs` either way, since `bin` names are not registry-wide.
+
+Every operation takes `--cwd`, so you never have to run codedocs from inside the repository it is
+reading. The examples below are written as `codedocs …`, as if you were standing in the repository
+being read.
+
+### From source
 
 ```sh
 git clone git@github.com:magicspon/codedocs.git
 cd codedocs
 pnpm install
-```
-
-`pnpm install` links the `codedocs` binary into `node_modules/.bin`, so run it from the repo root:
-
-```sh
+pnpm build
 ./node_modules/.bin/codedocs analyse --cwd /path/to/your/repo
 ```
 
-Every operation takes `--cwd`, so you never have to run codedocs from inside the repository it is
-reading. The examples below are written as `codedocs …`, as if the binary were on your `PATH` and you
-were standing in the repository being read.
+`pnpm build` is required here and not for a published install: Node refuses to strip types inside
+`node_modules`, so what ships is a bundle, and `bin` points into `dist/`.
 
 ## Quick start
 
@@ -600,7 +614,7 @@ stdio:
 {
   "mcpServers": {
     "codedocs": {
-      "command": "./node_modules/.bin/codedocs",
+      "command": "codedocs",
       "args": ["mcp"]
     }
   }
