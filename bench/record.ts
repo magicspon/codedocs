@@ -38,6 +38,7 @@ export function recordFrom(
     replicate,
     startedAt,
     model,
+    baseCommit: bench.base.commit,
     metrics,
     answer: extracted ? score(extracted, bench) : null,
     invalid: invalidReason(arm, metrics, extracted !== null, usedCodedocs),

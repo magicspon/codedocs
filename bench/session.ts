@@ -1,8 +1,10 @@
 /**
  * Runs the agent over (case, arm, replicate) and files what it produced.
  *
- * The stream lands on disk before anything is derived from it, so a run that is
- * refused partway through still leaves its evidence behind.
+ * Each run happens in its own worktree at the case's base commit, so the tree
+ * under test is the one the bug was reported against and nothing a run does to
+ * it reaches the next. The stream lands on disk before anything is derived from
+ * it, so a run that is refused partway through still leaves its evidence behind.
  */
 
 import { readFileSync, rmSync, writeFileSync } from 'node:fs'
@@ -13,30 +15,59 @@ import { buildPrompt } from './prompt.ts'
 import { RateLimited, recordFrom, verdictLine } from './record.ts'
 import { parseStream } from './stream.ts'
 import type { ArmName, BenchCase, RunRecord } from './types.ts'
+import { warmIndex } from './warm.ts'
+import { createWorktree } from './worktree.ts'
 
 /** The path stem both a run's record and its raw stream are written under. */
 function stemFor(caseId: string, arm: ArmName, replicate: number): string {
   return join(RESULTS, `${caseId}-${arm}-r${replicate}`)
 }
 
-/** Runs one (case, arm, replicate), writes its record and its raw stream. */
-async function executeRun(
+/** What one run produced, and what it cost to make the tree it read. */
+type Outcome = { lines: string[]; indexSeconds: number }
+
+/**
+ * Runs the agent once, in a worktree of its own, and returns its stream.
+ *
+ * The worktree goes whatever happened inside it: the next run has to start from
+ * the commit rather than from this run's leftovers.
+ */
+async function runInWorktree(
   bench: BenchCase,
   arm: ArmName,
   replicate: number,
   model: string,
-): Promise<void> {
-  const startedAt = new Date().toISOString()
-  process.stdout.write(`  ${`${bench.id}/${arm}/r${replicate}`.padEnd(28)}`)
+): Promise<Outcome> {
+  const worktree = createWorktree(
+    `${bench.id}-${arm}-r${replicate}`,
+    bench.base.commit,
+  )
+  try {
+    // Only the arm that is told about the index pays for one being there.
+    const indexSeconds = arm === 'codedocs' ? warmIndex(worktree.root) : 0
+    const prompt = buildPrompt(bench, arm, worktree.root)
+    return { lines: await runAgent(prompt, model, worktree.root), indexSeconds }
+  } finally {
+    worktree.remove()
+  }
+}
 
-  const lines = await runAgent(buildPrompt(bench, arm), model)
+/** Writes one run's record and its raw stream, and prints its verdict. */
+function fileRun(
+  outcome: Outcome,
+  bench: BenchCase,
+  arm: ArmName,
+  replicate: number,
+  model: string,
+  startedAt: string,
+): void {
   const stem = stemFor(bench.id, arm, replicate)
   // The stream lands first, so a refused run leaves the evidence behind.
-  writeFileSync(`${stem}.stream.jsonl`, `${lines.join('\n')}\n`, 'utf8')
+  writeFileSync(`${stem}.stream.jsonl`, `${outcome.lines.join('\n')}\n`, 'utf8')
 
   let record: RunRecord
   try {
-    record = recordFrom(lines, bench, arm, replicate, model, startedAt)
+    record = recordFrom(outcome.lines, bench, arm, replicate, model, startedAt)
   } catch (error) {
     // A refused run measured nothing. Drop any record a previous attempt left
     // behind, so the report counts a missing run rather than a failed search.
@@ -48,7 +79,23 @@ async function executeRun(
     `${JSON.stringify(record, null, '\t')}\n`,
     'utf8',
   )
-  console.log(verdictLine(record))
+  // The index build is printed beside the verdict, not folded into it: it is
+  // the harness's cost, and no part of what the run is measured on.
+  const index = outcome.indexSeconds ? `  (index ${outcome.indexSeconds}s)` : ''
+  console.log(`${verdictLine(record)}${index}`)
+}
+
+/** Runs one (case, arm, replicate), writes its record and its raw stream. */
+async function executeRun(
+  bench: BenchCase,
+  arm: ArmName,
+  replicate: number,
+  model: string,
+): Promise<void> {
+  const startedAt = new Date().toISOString()
+  process.stdout.write(`  ${`${bench.id}/${arm}/r${replicate}`.padEnd(28)}`)
+  const outcome = await runInWorktree(bench, arm, replicate, model)
+  fileRun(outcome, bench, arm, replicate, model, startedAt)
 }
 
 /**

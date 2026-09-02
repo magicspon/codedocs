@@ -50,10 +50,12 @@ can be parsed. The report prints how many were thrown out.
 Every case satisfies the same three conditions, each verified rather than
 assumed:
 
-1. **The fix landed upstream after the pinned checkout** (`736a3ed`,
-   2026-08-31), so it could not have leaked into the tree under test.
-2. **The bug is still present in that tree** — checked by grepping our checkout
-   for a distinctive line the fix added, and finding it absent.
+1. **The tree under test is the tree the bug was reported against.** A case
+   declares the commit immediately before its fix, and is run there, so the fix
+   cannot have leaked into what the agent reads.
+2. **That claim is checked against git, not trusted.** Before any quota is
+   spent, the harness resolves the fix's parent and refuses the case unless it
+   is the commit declared, and unless every file the fix touched exists in it.
 3. **The prompt is the issue, not the pull request.** Fix PRs on this repository
    routinely explain the root cause and name the method; using one as a prompt
    would be handing over the answer. Every prompt here is the underlying user
@@ -75,6 +77,35 @@ well win, and it is kept for exactly that reason.
 Ground truth is the non-test source files the upstream fix touched. Test files
 are excluded from both the truth and the answer, because an answer naming the
 test file would read as a miss to any human reviewer.
+
+## One tree per run
+
+Every run gets its own checkout: a detached `git worktree` at the case's base
+commit, created before the agent starts and removed when it ends. Four seconds
+and 550 MB, one at a time.
+
+Two things need that. A case is only a real bug at the commit under its fix, and
+the cases share no such commit — they were fixed over ten days, so no single
+checkout sits before all five fixes. And a tree the agent may write to has to be
+thrown away afterwards, or the next run reads the last one's edits. Localization
+edits nothing, so the second half is paid for and not yet used: it is what the
+fix task that follows this one needs.
+
+`repos/vscode` is a depth-1 clone and holds none of those commits until it is
+asked for one, so the harness fetches each case's fix at depth 2 — the fix, and
+the commit under it — before the first run. That is the only network a benchmark
+run touches, and what it asks for are immutable hashes.
+
+A fresh worktree has no index either, so the codedocs arm's index is built
+inside it before the agent starts, in a process the benchmark is not measuring —
+where the single pinned checkout used to be warmed. That is the price of the
+isolation: about four minutes a codedocs run, printed beside each verdict so
+what the harness spent stays visible.
+
+The figures quoted further down come from the run set measured before this
+change, when every case read one pinned checkout. They stand as what those runs
+cost; re-running the set at the per-case commits will move them, and each record
+now names the commit it was measured at.
 
 ## Difficulty levels
 
@@ -177,9 +208,11 @@ node bench/report.ts                 # the comparison table
 node bench/report.ts --json          # the same numbers, machine readable
 ```
 
-`run.ts` refuses to start if `repos/vscode` has moved off the pinned commit or
-is dirty, because either voids the ground truth. It warms the index first, so
-the codedocs arm pays the per-question cost rather than the cold build.
+`run.ts` refuses to start when a case's declared base is not the commit under
+its fix, or when a file that fix touched is missing from that tree, because
+either voids the ground truth. It fetches the commits the cases name, then
+builds each codedocs run's index in that run's worktree, so the arm pays the
+per-question cost rather than the cold build.
 
 `run.ts --rescore` rebuilds every record from the streams already on disk.
 Scoring and validity are pure functions of the stream, so a fix to either is
@@ -187,8 +220,9 @@ applied to past runs rather than paid for twice. `--resume` skips runs that
 already produced a measurement.
 
 `freeze-cases.ts` regenerates `cases/*.json` from GitHub. It exists for
-provenance and does not need to run: the cases are frozen so a benchmark run
-never depends on the network, or on someone editing an issue later.
+provenance and does not need to run: the cases are frozen, so a run asks GitHub
+for nothing but the commits they name — never for an issue body someone may
+have edited since.
 
 ## How the harness is laid out
 
@@ -197,17 +231,19 @@ process spawning:
 
 | Module          | What it holds                                                  |
 | --------------- | -------------------------------------------------------------- |
-| `paths.ts`      | where the benchmark reads and writes, and the pinned commit    |
+| `paths.ts`      | where the benchmark reads and writes                           |
 | `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
+| `worktree.ts`   | a run's own checkout at its case's commit, and its removal     |
+| `warm.ts`       | building the index that worktree does not come with            |
 | `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
 | `agent.ts`      | spawning `claude -p` and collecting its stream                 |
 | `tally.ts`      | what one run consumed: calls, steps, files, lines read, tokens |
 | `stream.ts`     | walking the stream and folding it into that tally              |
 | `score.ts`      | reading the answer block, scoring it, and deciding validity    |
 | `record.ts`     | the record one saved stream implies                            |
-| `session.ts`    | running (case, arm, replicate) and filing the results          |
+| `session.ts`    | running (case, arm, replicate) in a worktree, and filing it    |
 | `rescore.ts`    | rebuilding records from saved streams                          |
-| `preflight.ts`  | the checks that run before any quota is spent                  |
+| `preflight.ts`  | the ground-truth checks that run before any quota is spent     |
 | `run.ts`        | the command line                                               |
 | `difficulty.ts` | the levels, and the heading the report prints for each         |
 | `summarise.ts`  | the medians one arm's runs become                              |
@@ -222,11 +258,15 @@ process spawning:
   therefore missing. Installing would cost several gigabytes and make the
   benchmark far harder to reproduce. Read the result as a floor: typed fidelity
   can add edges, not remove them.
-- **The cold build is amortized out.** Indexing vscode costs 83 seconds and
-  12,519 files once — 527k symbols, 728k call edges. Every question after that
-  costs about two seconds. A single-question user never recovers the build; a
-  working session does, several times over. The per-run numbers assume the
-  session, and the build cost is stated here rather than buried in them.
+- **The index build is amortized out, and it is not free.** A fresh worktree
+  has no index, so one is built before every codedocs run: 223 seconds over
+  12,519 files, for 527k symbols and 728k call edges, in a process no metric
+  reads. Each question the run then asks costs about four seconds. Carrying one
+  run's index into the next would cut that, and is deliberately not done — an
+  index a run built is state the next run would inherit, which is what the
+  per-run worktree exists to prevent. A single-question user never recovers the
+  build; a working session does, several times over. The per-run numbers assume
+  the session, and the build cost is stated here rather than buried in them.
 - **One repository, one model, one task shape, three replicates.** Enough to see
   whether an effect is there and whether the spread swamps it. Not enough for a
   confidence interval, and not evidence about repositories unlike vscode.

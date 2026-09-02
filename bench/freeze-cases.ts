@@ -11,14 +11,17 @@ import { join } from 'node:path'
 import type { BenchCase, CaseShape } from './types.ts'
 
 /**
- * The case set, hand-picked and hand-verified. For every entry: the fix landed
- * on `main` after the pinned vscode checkout, and the buggy code is still in
- * the working tree — checked by grepping our tree for a distinctive added line.
+ * The case set, hand-picked and hand-verified. For every entry: the issue has a
+ * merged fix on `main`, and the tree the case runs against is the commit under
+ * that fix, which is where the bug still is.
+ *
+ * The base commit is not written here. It is read from GitHub as the fix's
+ * parent, because a hash typed twice is a hash that can disagree with itself.
  *
  * `truth` lists only non-test source files, because a localization answer that
  * named the test file would be scored as a miss by any reasonable reader.
  */
-const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl'>> = [
+const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl' | 'base'>> = [
   {
     id: '333230',
     issue: 333230,
@@ -151,6 +154,30 @@ function stripTemplateComments(body: string): string {
 
 type GhIssue = { title: string; body: string | null; url: string }
 
+/** Only the parent list is read: it is what says which tree the bug is still in. */
+type GhCommit = { parents: Array<{ sha: string }> }
+
+/**
+ * The commit a case is run against: the one immediately before its fix.
+ *
+ * Taken from GitHub rather than from the local clone, which is shallow and
+ * normally holds neither commit until the harness fetches them.
+ */
+function baseOf(fixCommit: string): BenchCase['base'] {
+  const raw = execFileSync(
+    'gh',
+    ['api', `repos/microsoft/vscode/commits/${fixCommit}`],
+    { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
+  )
+  const commit = JSON.parse(raw) as GhCommit
+  const parent = commit.parents[0]?.sha
+  if (!parent) throw new Error(`${fixCommit} has no parent to run against`)
+  return {
+    commit: parent,
+    url: `https://github.com/microsoft/vscode/commit/${parent}`,
+  }
+}
+
 /** Fetches every seeded issue and writes one frozen case file each. */
 export function freeze(): void {
   for (const seed of seeds) {
@@ -170,6 +197,7 @@ export function freeze(): void {
     const issue = JSON.parse(raw) as GhIssue
     const bench: BenchCase = {
       ...seed,
+      base: baseOf(seed.fix.commit),
       shape: seed.shape satisfies CaseShape,
       title: issue.title,
       issueUrl: issue.url,

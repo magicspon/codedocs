@@ -7,6 +7,10 @@
     "url": "https://github.com/microsoft/vscode/commit/c89822681aa2b6dd95f6ee4e329fed7dcc23d333",
     "landedAt": "2026-08-25T00:00:00Z"
   },
+  "base": {
+    "commit": "0d07085cd00247fd08528b00bda676ce4c8767ee",
+    "url": "https://github.com/microsoft/vscode/commit/0d07085cd00247fd08528b00bda676ce4c8767ee"
+  },
   "truth": {
     "files": ["src/vs/platform/agentHost/node/agentService.ts"],
     "symbols": [
