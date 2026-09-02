@@ -20,6 +20,10 @@
       "_doResumeSession"
     ]
   },
+  "difficulty": {
+    "level": 3,
+    "why": "Level 3. The answer spans two files in different layers — the agent host service and the Copilot provider behind it — and the call between them runs through the provider interface rather than by name. The reader has to hold both ends of a hang at once: metadata is requested in one layer and never resolved in the other. This is the edge a text search cannot see."
+  },
   "notes": "A hang, reported with log lines rather than a stack: \"restore: reading provider metadata\" arrives and \"restore: provider metadata resolved\" never does. The symbols are named, the files are not, and the answer spans two files in different layers. The case where a call graph should pay.",
   "title": "Agent Host session restore hangs after Copilot SDK/runtime bump",
   "issueUrl": "https://github.com/microsoft/vscode/issues/332885",

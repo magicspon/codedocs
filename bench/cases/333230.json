@@ -11,6 +11,10 @@
     "files": ["src/vs/base/browser/ui/list/listView.ts"],
     "symbols": ["getVisibleRange"]
   },
+  "difficulty": {
+    "level": 1,
+    "why": "Level 1. One file, one project, and the report names it on eight of the stack's frames. The cause is `getVisibleRange`, which appears on no frame, but it sits in the same file one data-flow hop from `probeDynamicHeights`: it produces the inverted range the thrower consumes. Nothing has to be crossed, and no lifetime has to be understood."
+  },
   "notes": "The control. A stack trace names listView.ts on eight frames, so both arms should find the file cheaply. The fix is in getVisibleRange, which appears on no frame — it produces the inverted range that probeDynamicHeights later throws on. Tests whether codedocs buys anything when the file is already given.",
   "title": "[Error] unhandlederror-Invalid array length",
   "issueUrl": "https://github.com/microsoft/vscode/issues/333230",

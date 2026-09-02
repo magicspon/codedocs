@@ -18,6 +18,10 @@
       "_finishConnectAttempt"
     ]
   },
+  "difficulty": {
+    "level": 2,
+    "why": "Level 2. The report names one private method and no file, so the search starts with a symbol lookup that settles the file on its own. What is left is local: which callers inside the same contribution reach `_resumeReconnects` when a window regains focus. One file, one project, no interface in between."
+  },
   "notes": "The issue names one private method, `_resumeReconnects`, and nothing else. A single symbol lookup should settle the file. The remaining work — which callers reach it on window focus — is what separates the arms.",
   "title": "Tunnel Agent Host retries offline cached tunnels on every window focus",
   "issueUrl": "https://github.com/microsoft/vscode/issues/331102",

@@ -1,68 +1,29 @@
 /**
- * Reads `bench/results/` and prints the arm comparison.
+ * Reads `bench/results/` and prints the arm comparison, grouped by difficulty.
  *
  *   node bench/report.ts            the table
  *   node bench/report.ts --json     the same numbers, machine readable
  *
- * Medians rather than means throughout: with three replicates one runaway
- * agent loop would drag a mean somewhere the typical run never goes.
+ * The grouping is the point of the table. The claim under test is that the
+ * benefit grows with structural complexity, and a delta pooled over every case
+ * cannot show that: it averages the case where the file was handed over with
+ * the case where the cause was three components away.
  */
 
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { casesById } from './cases.ts'
+import { levelName, LEVELS, levelOf } from './difficulty.ts'
 import { RESULTS } from './paths.ts'
-import type { ArmName, BenchCase, RunRecord } from './types.ts'
-
-/** The middle value, averaging the two middles on an even count. */
-function median(values: number[]): number {
-  if (values.length === 0) return 0
-  const sorted = [...values].sort((a, b) => a - b)
-  const mid = Math.floor(sorted.length / 2)
-  return sorted.length % 2 === 1
-    ? (sorted[mid] ?? 0)
-    : ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2
-}
-
-/** What one arm did on one case, across its replicates. */
-type Cell = {
-  runs: number
-  invalid: number
-  hits: number
-  symbolHits: number
-  tokens: number
-  toolCalls: number
-  files: number
-  seconds: number
-  costUsd: number
-}
-
-function summarise(records: RunRecord[]): Cell {
-  const valid = records.filter((r) => r.invalid === null)
-  return {
-    runs: records.length,
-    invalid: records.length - valid.length,
-    hits: valid.filter((r) => r.answer?.correct).length,
-    symbolHits: valid.filter((r) => r.answer?.symbolHit).length,
-    tokens: Math.round(median(valid.map((r) => r.metrics.tokensTotal))),
-    toolCalls: Math.round(median(valid.map((r) => r.metrics.toolCalls))),
-    files: Math.round(median(valid.map((r) => r.metrics.filesOpened.length))),
-    seconds: Math.round(median(valid.map((r) => r.metrics.durationMs / 1000))),
-    costUsd: median(valid.map((r) => r.metrics.costUsd)),
-  }
-}
-
-/** Reads a delta as a percentage change from baseline. Negative is a saving. */
-function delta(baseline: number, codedocs: number): string {
-  if (baseline === 0) return '—'
-  const change = ((codedocs - baseline) / baseline) * 100
-  const sign = change > 0 ? '+' : ''
-  return `${sign}${change.toFixed(0)}%`
-}
-
-function pad(value: string | number, width: number): string {
-  return String(value).padStart(width)
-}
+import { summarise } from './summarise.ts'
+import {
+  ARMS,
+  printArms,
+  printHeader,
+  printLevelHeading,
+  printTotals,
+} from './table.ts'
+import type { BenchCase, DifficultyLevel, RunRecord } from './types.ts'
 
 /** Every run record on disk. */
 function loadRecords(): RunRecord[] {
@@ -71,106 +32,93 @@ function loadRecords(): RunRecord[] {
     .map((f) => JSON.parse(readFileSync(join(RESULTS, f), 'utf8')) as RunRecord)
 }
 
-/** One arm's row. The case and shape columns print on the first arm only. */
-function armRow(
-  label: string,
-  shape: string,
-  arm: ArmName,
-  cell: Cell,
-): string {
-  const invalid = cell.invalid > 0 ? ` (${cell.invalid} invalid)` : ''
-  const counted = cell.runs - cell.invalid
-  return (
-    `  ${label.padEnd(10)}${shape.padEnd(15)}${arm.padEnd(11)}` +
-    `${pad(cell.tokens.toLocaleString(), 9)}${pad(cell.toolCalls, 7)}${pad(cell.files, 7)}${pad(cell.seconds, 6)}` +
-    `${pad(`${cell.hits}/${counted}`, 6)}${pad(`${cell.symbolHits}/${counted}`, 6)}${invalid}`
-  )
+/** One level's cases, in id order. `level` is null for records with no case file. */
+type Group = {
+  level: DifficultyLevel | null
+  ids: string[]
 }
 
-/** The delta row beneath a pair of arms. Negative is a saving. */
-function deltaRow(base: Cell, cd: Cell): string {
-  return (
-    `  ${''.padEnd(21)}${'delta'.padEnd(11)}${pad(delta(base.tokens, cd.tokens), 9)}` +
-    `${pad(delta(base.toolCalls, cd.toolCalls), 7)}${pad(delta(base.files, cd.files), 7)}` +
-    `${pad(delta(base.seconds, cd.seconds), 6)}`
-  )
-}
-
-const ARMS: ArmName[] = ['baseline', 'codedocs']
-
-/** Prints one case: a row per arm, then the delta between them. */
-function printCase(id: string, shape: string, records: RunRecord[]): void {
-  const cells = new Map<ArmName, Cell>()
-  for (const arm of ARMS) {
-    const runs = records.filter((r) => r.caseId === id && r.arm === arm)
-    if (runs.length === 0) continue
-    const cell = summarise(runs)
-    cells.set(arm, cell)
-    console.log(
-      armRow(
-        arm === 'baseline' ? id : '',
-        arm === 'baseline' ? shape : '',
-        arm,
-        cell,
-      ),
-    )
+/**
+ * Buckets the cases that have results into levels, lowest first.
+ *
+ * A level with no results is left out rather than printed empty, and a record
+ * whose case file has gone still has numbers in it, so it is grouped as
+ * unclassified rather than dropped.
+ */
+function groupByLevel(ids: string[], cases: Map<string, BenchCase>): Group[] {
+  const groups: Group[] = []
+  for (const { level } of LEVELS) {
+    const inLevel = ids.filter((id) => levelOf(cases.get(id)) === level)
+    if (inLevel.length > 0) groups.push({ level, ids: inLevel })
   }
-  const base = cells.get('baseline')
-  const cd = cells.get('codedocs')
-  if (base && cd) console.log(deltaRow(base, cd))
-  console.log('')
+  const unclassified = ids.filter((id) => levelOf(cases.get(id)) === null)
+  if (unclassified.length > 0) groups.push({ level: null, ids: unclassified })
+  return groups
 }
 
-/** The `--json` rendering: the same medians, without the table. */
-function printJson(
-  ids: string[],
+/** The heading above a group: the level and the exploration it demands. */
+function headingFor(group: Group): string {
+  const cases = `${group.ids.length} case${group.ids.length === 1 ? '' : 's'}`
+  return group.level === null
+    ? `unclassified · no case file on disk  (${cases})`
+    : `level ${group.level} · ${levelName(group.level)}  (${cases})`
+}
+
+/** One level: a block per case, then the level's own aggregate. */
+function printLevel(
+  group: Group,
   records: RunRecord[],
   cases: Map<string, BenchCase>,
 ): void {
-  const payload = ids.map((id) => ({
-    case: id,
-    shape: cases.get(id)?.shape ?? null,
-    arms: Object.fromEntries(
-      ARMS.map((arm) => [
-        arm,
-        summarise(records.filter((r) => r.caseId === id && r.arm === arm)),
-      ]),
-    ),
-  }))
-  console.log(JSON.stringify(payload, null, '\t'))
-}
-
-/** The pooled line across every case, and the delta beneath it. */
-function printTotals(records: RunRecord[]): void {
-  // Pooling every valid run means a case with more replicates carries
-  // proportionally more weight — which is what pooling should mean.
-  console.log(`  ${'-'.repeat(77)}`)
-  const totals = new Map<ArmName, Cell>()
-  for (const arm of ARMS) {
-    const cell = summarise(records.filter((r) => r.arm === arm))
-    if (cell.runs === 0) continue
-    totals.set(arm, cell)
-    console.log(armRow('ALL', '', arm, cell))
+  printLevelHeading(headingFor(group))
+  for (const id of group.ids) {
+    printArms(
+      id,
+      cases.get(id)?.shape ?? '?',
+      records.filter((r) => r.caseId === id),
+    )
+    console.log('')
   }
-  const base = totals.get('baseline')
-  const cd = totals.get('codedocs')
-  if (!base || !cd) return
-  console.log(deltaRow(base, cd))
-  console.log(
-    `\n  median cost per run: baseline $${base.costUsd.toFixed(3)}, codedocs $${cd.costUsd.toFixed(3)}`,
+  const label = group.level === null ? 'L?' : `L${group.level}`
+  printArms(
+    label,
+    'all cases',
+    records.filter((r) => group.ids.includes(r.caseId)),
   )
+  console.log('')
 }
 
-/** The table header, which fixes the column widths every row then follows. */
-function printHeader(): void {
+/** The `--json` rendering: the same medians, per case and per level. */
+function printJson(
+  groups: Group[],
+  records: RunRecord[],
+  cases: Map<string, BenchCase>,
+): void {
+  const arms = (of: RunRecord[]): Record<string, unknown> =>
+    Object.fromEntries(
+      ARMS.map((arm) => [arm, summarise(of.filter((r) => r.arm === arm))]),
+    )
   console.log(
-    '\ncodedocs localization benchmark — microsoft/vscode, medians per cell\n',
+    JSON.stringify(
+      {
+        cases: groups.flatMap((group) =>
+          group.ids.map((id) => ({
+            case: id,
+            shape: cases.get(id)?.shape ?? null,
+            level: group.level,
+            arms: arms(records.filter((r) => r.caseId === id)),
+          })),
+        ),
+        levels: groups.map((group) => ({
+          level: group.level,
+          cases: group.ids,
+          arms: arms(records.filter((r) => group.ids.includes(r.caseId))),
+        })),
+      },
+      null,
+      '\t',
+    ),
   )
-  console.log(
-    `  ${'case'.padEnd(10)}${'shape'.padEnd(15)}${'arm'.padEnd(11)}${pad('tokens', 9)}` +
-      `${pad('calls', 7)}${pad('files', 7)}${pad('sec', 6)}${pad('hit', 6)}${pad('sym', 6)}`,
-  )
-  console.log(`  ${'-'.repeat(77)}`)
 }
 
 function main(): void {
@@ -181,14 +129,15 @@ function main(): void {
   }
   const cases = casesById()
   const ids = [...new Set(records.map((r) => r.caseId))].sort()
+  const groups = groupByLevel(ids, cases)
 
   if (process.argv.includes('--json')) {
-    printJson(ids, records, cases)
+    printJson(groups, records, cases)
     return
   }
 
   printHeader()
-  for (const id of ids) printCase(id, cases.get(id)?.shape ?? '?', records)
+  for (const group of groups) printLevel(group, records, cases)
   printTotals(records)
   console.log('')
 }

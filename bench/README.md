@@ -59,13 +59,13 @@ assumed:
    would be handing over the answer. Every prompt here is the underlying user
    report, with only the issue-template HTML comments stripped.
 
-| Case                         | Shape          | The report gives you                                     | Truth                                |
-| ---------------------------- | -------------- | -------------------------------------------------------- | ------------------------------------ |
-| [#333230](cases/333230.json) | `file-named`   | a stack trace naming `listView.ts` on eight frames       | `listView.ts` · `getVisibleRange`    |
-| [#332885](cases/332885.json) | `symbol-named` | log lines that stop after "reading provider metadata"    | `agentService.ts`, `copilotAgent.ts` |
-| [#331452](cases/331452.json) | `symptom-only` | sessions vanished after an update; no identifiers at all | `agentService.ts`                    |
-| [#331102](cases/331102.json) | `symbol-named` | one private method name, `_resumeReconnects`             | `tunnelAgentHost.contribution.ts`    |
-| [#333085](cases/333085.json) | `symptom-only` | an agent created an automation nobody asked for          | `automationTools.ts`                 |
+| Case                         | Level | Shape          | The report gives you                                     | Truth                                |
+| ---------------------------- | ----- | -------------- | -------------------------------------------------------- | ------------------------------------ |
+| [#333230](cases/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames       | `listView.ts` · `getVisibleRange`    |
+| [#331102](cases/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`             | `tunnelAgentHost.contribution.ts`    |
+| [#333085](cases/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for          | `automationTools.ts`                 |
+| [#332885](cases/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"    | `agentService.ts`, `copilotAgent.ts` |
+| [#331452](cases/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all | `agentService.ts`                    |
 
 The spread is the point. `#333230` is a control: the file is handed over on a
 plate, so codedocs should buy little, and a benchmark whose every case favours
@@ -75,6 +75,25 @@ well win, and it is kept for exactly that reason.
 Ground truth is the non-test source files the upstream fix touched. Test files
 are excluded from both the truth and the answer, because an answer naming the
 test file would read as a miss to any human reviewer.
+
+## Difficulty levels
+
+Every case carries a level from 1 to 4, and the report groups by it. The level
+says how much of the repository an agent must understand to answer — files
+involved, projects crossed, call-graph depth, abstractions in the way, lifecycle
+relationships, and how far the symptom sits from the cause.
+
+It is not the size of the fix. Lines changed is explicitly rejected as a
+difficulty signal: `#331452` is answered by one file and is the hardest case in
+the set, while a mechanical rename could touch fifty and demand nothing.
+
+The rubric, and the reasoning behind each assignment, is
+[DIFFICULTY.md](DIFFICULTY.md). Each case also carries its own reasoning in its
+`difficulty.why` field.
+
+Grouping is what makes the central claim readable: the benefit is supposed to
+grow with structural complexity, and a delta pooled over every case averages the
+level 1 control together with the level 4 case and reports neither.
 
 ## What is measured
 
@@ -125,21 +144,24 @@ never depends on the network, or on someone editing an issue later.
 One module per seam, so a change to scoring does not sit in the same file as the
 process spawning:
 
-| Module         | What it holds                                               |
-| -------------- | ----------------------------------------------------------- |
-| `paths.ts`     | where the benchmark reads and writes, and the pinned commit |
-| `cases.ts`     | the frozen cases, read from `cases/*.json`                  |
-| `prompt.ts`    | the task, and the briefing the codedocs arm gets            |
-| `agent.ts`     | spawning `claude -p` and collecting its stream              |
-| `tally.ts`     | what one run consumed: tool calls, files opened, tokens     |
-| `stream.ts`    | walking the stream and folding it into that tally           |
-| `score.ts`     | reading the answer block, scoring it, and deciding validity |
-| `record.ts`    | the record one saved stream implies                         |
-| `session.ts`   | running (case, arm, replicate) and filing the results       |
-| `rescore.ts`   | rebuilding records from saved streams                       |
-| `preflight.ts` | the checks that run before any quota is spent               |
-| `run.ts`       | the command line                                            |
-| `report.ts`    | reading `results/` and printing the comparison              |
+| Module          | What it holds                                                  |
+| --------------- | -------------------------------------------------------------- |
+| `paths.ts`      | where the benchmark reads and writes, and the pinned commit    |
+| `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
+| `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
+| `agent.ts`      | spawning `claude -p` and collecting its stream                 |
+| `tally.ts`      | what one run consumed: tool calls, files opened, tokens        |
+| `stream.ts`     | walking the stream and folding it into that tally              |
+| `score.ts`      | reading the answer block, scoring it, and deciding validity    |
+| `record.ts`     | the record one saved stream implies                            |
+| `session.ts`    | running (case, arm, replicate) and filing the results          |
+| `rescore.ts`    | rebuilding records from saved streams                          |
+| `preflight.ts`  | the checks that run before any quota is spent                  |
+| `run.ts`        | the command line                                               |
+| `difficulty.ts` | the levels, and the heading the report prints for each         |
+| `summarise.ts`  | the medians one arm's runs become                              |
+| `table.ts`      | column widths, rows, and the delta beneath a pair of arms      |
+| `report.ts`     | reading `results/`, grouping by level, printing the comparison |
 
 ## What this does not show
 

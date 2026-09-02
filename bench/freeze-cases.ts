@@ -32,6 +32,10 @@ const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl'>> = [
       files: ['src/vs/base/browser/ui/list/listView.ts'],
       symbols: ['getVisibleRange'],
     },
+    difficulty: {
+      level: 1,
+      why: "Level 1. One file, one project, and the report names it on eight of the stack's frames. The cause is `getVisibleRange`, which appears on no frame, but it sits in the same file one data-flow hop from `probeDynamicHeights`: it produces the inverted range the thrower consumes. Nothing has to be crossed, and no lifetime has to be understood.",
+    },
     notes:
       'The control. A stack trace names listView.ts on eight frames, so both arms should find the file cheaply. The fix is in getVisibleRange, which appears on no frame — it produces the inverted range that probeDynamicHeights later throws on. Tests whether codedocs buys anything when the file is already given.',
   },
@@ -57,6 +61,10 @@ const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl'>> = [
         '_doResumeSession',
       ],
     },
+    difficulty: {
+      level: 3,
+      why: 'Level 3. The answer spans two files in different layers — the agent host service and the Copilot provider behind it — and the call between them runs through the provider interface rather than by name. The reader has to hold both ends of a hang at once: metadata is requested in one layer and never resolved in the other. This is the edge a text search cannot see.',
+    },
     notes:
       'A hang, reported with log lines rather than a stack: "restore: reading provider metadata" arrives and "restore: provider metadata resolved" never does. The symbols are named, the files are not, and the answer spans two files in different layers. The case where a call graph should pay.',
   },
@@ -76,6 +84,10 @@ const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl'>> = [
         '_withLiveSessionMetadata',
         'listSessions',
       ],
+    },
+    difficulty: {
+      level: 4,
+      why: 'Level 4. Nothing in the report is an identifier, and the cause is not a place: it is what the update path does when the agent catalog is unavailable, which it accepted as success and wrote back as an empty registry. Answering means reasoning about the states a window passes through across an update — ownership of the session registry, and when it is rewritten — not about which function calls which.',
     },
     notes:
       'Sessions vanish from a window after an update. The report is careful and detailed but names no code at all: the reader has to get from "the registry lost entries" to the migration path that accepted an unavailable catalog as success.',
@@ -100,6 +112,10 @@ const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl'>> = [
         '_finishConnectAttempt',
       ],
     },
+    difficulty: {
+      level: 2,
+      why: 'Level 2. The report names one private method and no file, so the search starts with a symbol lookup that settles the file on its own. What is left is local: which callers inside the same contribution reach `_resumeReconnects` when a window regains focus. One file, one project, no interface in between.',
+    },
     notes:
       'The issue names one private method, `_resumeReconnects`, and nothing else. A single symbol lookup should settle the file. The remaining work — which callers reach it on window focus — is what separates the arms.',
   },
@@ -115,6 +131,10 @@ const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl'>> = [
     truth: {
       files: ['src/vs/sessions/contrib/automations/browser/automationTools.ts'],
       symbols: ['getToolData', 'ConfigureAutomationTool'],
+    },
+    difficulty: {
+      level: 2,
+      why: 'Level 2. One file, one project, but nothing in the report is an identifier — the only anchor is a product noun, so the agent has to guess at vocabulary before it can look anything up. Once the tool is found the answer is a description string inside it, with no path to follow. Hard at the start of the search rather than in the middle of it.',
     },
     notes:
       'Behaviour only: an agent created a scheduled automation nobody asked for. Nothing in the text is a code identifier, and the fix is a tool-description string. The case where grep on a product noun may well beat a call graph — worth keeping for exactly that reason.',

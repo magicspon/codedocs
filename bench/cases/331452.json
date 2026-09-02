@@ -15,6 +15,10 @@
       "listSessions"
     ]
   },
+  "difficulty": {
+    "level": 4,
+    "why": "Level 4. Nothing in the report is an identifier, and the cause is not a place: it is what the update path does when the agent catalog is unavailable, which it accepted as success and wrote back as an empty registry. Answering means reasoning about the states a window passes through across an update — ownership of the session registry, and when it is rewritten — not about which function calls which."
+  },
   "notes": "Sessions vanish from a window after an update. The report is careful and detailed but names no code at all: the reader has to get from \"the registry lost entries\" to the migration path that accepted an unavailable catalog as success.",
   "title": "Agents Window: local Agent Host sessions disappeared after updating VS Code Insiders",
   "issueUrl": "https://github.com/microsoft/vscode/issues/331452",
