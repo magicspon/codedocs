@@ -111,9 +111,35 @@ node bench/report.ts --json          # the same numbers, machine readable
 is dirty, because either voids the ground truth. It warms the index first, so
 the codedocs arm pays the per-question cost rather than the cold build.
 
+`run.ts --rescore` rebuilds every record from the streams already on disk.
+Scoring and validity are pure functions of the stream, so a fix to either is
+applied to past runs rather than paid for twice. `--resume` skips runs that
+already produced a measurement.
+
 `freeze-cases.ts` regenerates `cases/*.json` from GitHub. It exists for
 provenance and does not need to run: the cases are frozen so a benchmark run
 never depends on the network, or on someone editing an issue later.
+
+## How the harness is laid out
+
+One module per seam, so a change to scoring does not sit in the same file as the
+process spawning:
+
+| Module         | What it holds                                               |
+| -------------- | ----------------------------------------------------------- |
+| `paths.ts`     | where the benchmark reads and writes, and the pinned commit |
+| `cases.ts`     | the frozen cases, read from `cases/*.json`                  |
+| `prompt.ts`    | the task, and the briefing the codedocs arm gets            |
+| `agent.ts`     | spawning `claude -p` and collecting its stream              |
+| `tally.ts`     | what one run consumed: tool calls, files opened, tokens     |
+| `stream.ts`    | walking the stream and folding it into that tally           |
+| `score.ts`     | reading the answer block, scoring it, and deciding validity |
+| `record.ts`    | the record one saved stream implies                         |
+| `session.ts`   | running (case, arm, replicate) and filing the results       |
+| `rescore.ts`   | rebuilding records from saved streams                       |
+| `preflight.ts` | the checks that run before any quota is spent               |
+| `run.ts`       | the command line                                            |
+| `report.ts`    | reading `results/` and printing the comparison              |
 
 ## What this does not show
 
