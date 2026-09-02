@@ -89,14 +89,42 @@ property of the analysis that ran, not of the machine as it is now — which mak
 environment fingerprint load-bearing rather than an optimisation, so it needs a definition that can
 be computed:
 
+- **signals 1 and 2** — whether `node_modules` is present at or above the project, and whether an
+  install script is declared;
 - the **lockfile hash**;
 - the project's **`compilerOptions`**;
-- the **count and set-hash of the files its config globs**.
+- whether the config **globs anything at all**, plus the **set-hash of the declaration files** among
+  what it globs.
 
-None of the three walks `node_modules`. The third is what catches codegen landing, which a lockfile
-hash misses entirely — `yarn rw g types` touches no lockfile, and ADR 0001 already measured that
-framework codegen is not an install step. The accepted blind spot: a hand-modified `node_modules`
-under an unchanged lockfile reads as unchanged, and `doctor --measure` is the escape hatch.
+None of the five walks `node_modules` — `existsSync` on a directory is not walking it. Together they
+catch codegen landing, which a lockfile hash misses entirely: `yarn rw g types` touches no lockfile,
+and ADR 0001 already measured that framework codegen is not an install step. The accepted blind spot:
+a hand-modified `node_modules` under an unchanged lockfile reads as unchanged, and `doctor --measure`
+is the escape hatch.
+
+The first and the last of those five are refinements this section originally lacked — it named three
+inputs, and implementing them found that the three both miss the case the fingerprint exists for and
+cost more than the design intends ([#49](https://github.com/magicspon/codedocs/issues/49)).
+
+**Signals 1 and 2 have to be inputs, or the fingerprint misses its own founding case.** ADR 0001
+asked for a fingerprint over exactly one scenario: analysing a fresh clone and then installing
+"leaves no file content changed, so an incremental pass would serve the syntactic answer forever".
+An install over a fresh clone changes **none** of the other three — the lockfile is committed already
+and its bytes do not move, no `compilerOptions` change, and no source file appears. Without signals 1
+and 2 the fingerprint reads identically before and after, and the defect that justified it survives
+its own remedy.
+
+**Only the declaration files of the glob set are hashed, not every path in it.** Hashing the whole
+set makes creating one ordinary source file a full re-analysis of its project — 2,316 files on
+cal.com's `apps/web` where [ADR 0004](0004-index-storage-and-invalidation.md)'s wave repairs one —
+and creating a file is among the commonest things a developer does. It also buys nothing there: a new
+module **is** content drift, which the wave repairs file by file by design, reaching that file's
+importers through the export-shape gate. What the wave cannot repair is a **declaration file**,
+because nothing imports it: it retypes files that never mention it, so the export-shape gate never
+fires and the project keeps its old facts. Every codegen ADR 0001 measured lands as declarations —
+Redwood's `.redwood/types`, Next's `next-env.d.ts` and `.next/types`, Prisma's generated client — so
+the narrowed set keeps the whole of the signal at the cost the design intended. "Globs anything at
+all" stays an input in its own right, because an empty glob set is signal 3.
 
 ## What `doctor` runs
 

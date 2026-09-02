@@ -39,7 +39,11 @@ as a confidence score.
 
 - **Detection is four generic signals**: `node_modules` absent or stale against the lockfile;
   `postinstall`/`prepare` declared; **`tsconfig` `include`/`files`/`rootDirs`/`paths` entries that
-  match no files**; and unresolved specifiers. Measured against the fixtures, the
+  match no files** — the config read against the _working tree_, never against the files the analysis
+  credited to that project, since a file two configs both glob is credited to one of them and that is
+  a fact about ownership rather than about types
+  ([#49](https://github.com/magicspon/codedocs/issues/49)); and unresolved specifiers. Measured
+  against the fixtures, the
   third is the load-bearing one: a full, successful install cleared every `unprepared` cause and
   (via `postinstall`) both Prisma codegens, yet left `redwood` with no `.redwood/` and `next` with
   no `next-env.d.ts` or `.next/types`. Framework codegen is not an install step. Signal 2 therefore
@@ -50,10 +54,14 @@ as a confidence score.
   before a program is open, so the fourth is a by-product of extraction — and a type checker's
   diagnostics are not a signal at all.
 - **The environment fingerprint joins the cache key**, per project. Its inputs are fixed by
-  [ADR 0009](0009-preflight-cost-and-signal-shapes.md): the lockfile hash, the project's
-  `compilerOptions`, and the count and set-hash of the files its config globs. Without it, analysing a fresh
-  clone and then running `pnpm install` leaves no file content changed, so an incremental pass would
-  serve the syntactic answer forever — confidently wrong by caching. A fingerprint change is a
+  [ADR 0009](0009-preflight-cost-and-signal-shapes.md): signals 1 and 2, the lockfile hash, the
+  project's `compilerOptions`, and whether its config globs anything plus the set-hash of the
+  declaration files among what it globs. Without it, analysing a fresh clone and then running
+  `pnpm install` leaves no file content changed, so an incremental pass would serve the syntactic
+  answer forever — confidently wrong by caching. Signals 1 and 2 are inputs _because_ of that
+  sentence: an install over a fresh clone moves none of the other three, so the first list ADR 0009
+  wrote would have left this bullet's own case undetected
+  ([#49](https://github.com/magicspon/codedocs/issues/49)). A fingerprint change is a
   legitimate full re-analysis of that project, and is reported as one.
 - **The model must carry provenance per fact and store unresolved specifiers as facts** (with their
   cause), not drop them. Answering "which callers might be missing" requires the gaps to be in the

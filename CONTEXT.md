@@ -65,10 +65,14 @@ _Avoid_: health, status, environment
 
 **Environment fingerprint**:
 A summary of everything outside a file's own contents that determines what the type checker can see
-of it: the lockfile hash, the project's `compilerOptions`, and the count and set-hash of the files
-its config globs. Held per project; a change to it means fidelity could rise. None of the three walks
-`node_modules`, so a hand-modified install under an unchanged lockfile reads as unchanged — the
-accepted blind spot, and what `doctor --measure` is for.
+of it: [[Preflight]]'s signals 1 and 2, the lockfile hash, the project's `compilerOptions`, and
+whether its config globs anything plus the set-hash of the declaration files among what it globs.
+Held per project; a change to it means fidelity could rise. Signals 1 and 2 are inputs because an
+install over a fresh clone moves none of the others. Declaration files alone, because a new source
+file is [[Drift]] the wave already repairs, while nothing imports a declaration file and so nothing
+carries its arrival to the project. None of the inputs walks `node_modules`, so a hand-modified
+install under an unchanged lockfile reads as unchanged — the accepted blind spot, and what
+`doctor --measure` is for.
 _Avoid_: env hash, install hash
 
 **Unresolved specifier**:

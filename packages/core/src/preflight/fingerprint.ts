@@ -10,25 +10,13 @@ const DECLARATION = /\.d\.[cm]?ts$/
 /**
  * The fingerprint inputs, hashed into one string.
  *
- * ADR 0009 names three: the lockfile hash, the project's `compilerOptions`, and
- * the count and set-hash of the files its config globs. Two refinements, both
- * forced by the shipped code rather than chosen:
- *
- * **Signals 1 and 2 join it.** An install over a fresh clone changes none of the
- * three — the lockfile is already committed, no config moves, no source file
- * appears — so the fingerprint would miss the one case ADR 0001 named when it
- * required a fingerprint at all. `existsSync` on `node_modules` is not walking
- * it, which is the constraint ADR 0009 actually placed on these inputs.
- *
- * **Only the declaration files of the glob set are hashed**, plus whether the
- * set is empty. Hashing every globbed path makes creating one ordinary file a
- * full re-analysis of its project — 2,316 files on cal.com's `apps/web` where
- * the wave repairs one — and a new module is content drift, which ADR 0004
- * repairs file by file by design. What the wave *cannot* repair is a declaration
- * file, because nothing imports it: it retypes files that never mention it, so
- * its arrival has to invalidate the project. Every codegen ADR 0001 measured —
- * Redwood's `.redwood/types`, Next's `next-env.d.ts` and `.next/types`, Prisma's
- * client — lands as declarations, so this is the same signal at a lower cost.
+ * ADR 0009 names five: preflight's signals 1 and 2, the lockfile hash, the
+ * project's `compilerOptions`, and whether the config globs anything plus the
+ * set-hash of the declaration files among what it globs. The two that are not
+ * obvious are argued there — signals 1 and 2 because an install over a fresh
+ * clone moves none of the others, and declarations alone because a new source
+ * file is drift the wave already repairs while nothing imports a declaration
+ * file.
  */
 export function fingerprintOf(
   signals: { installed: boolean; postinstall: boolean },
@@ -47,8 +35,11 @@ export function fingerprintOf(
   hash.update('\0')
   hash.update(globbed.length === 0 ? 'empty' : 'globbing')
   hash.update('\0')
-  for (const path of globbed) {
-    if (!DECLARATION.test(path)) continue
+  // Sorted, because `globbed` arrives in the drift walk's `readdirSync` order:
+  // unsorted, a directory reordering under an unchanged declaration set would
+  // read as a moved environment and re-analyse the project for nothing.
+  const declarations = globbed.filter((path) => DECLARATION.test(path)).sort()
+  for (const path of declarations) {
     hash.update(path)
     hash.update('\n')
   }
