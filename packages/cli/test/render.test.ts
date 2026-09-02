@@ -10,7 +10,9 @@
 import { describe, expect, it } from 'vitest'
 import type {
   CallSite,
+  DoctorEnvelope,
   Envelope,
+  Precondition,
   RepairReport,
   SymbolNode,
   TracePath,
@@ -18,6 +20,7 @@ import type {
 
 import {
   renderAnalyse,
+  renderDoctor,
   renderError,
   renderSymbols,
   renderTrace,
@@ -237,6 +240,144 @@ describe('a failure envelope', () => {
   it('falls back rather than printing `undefined` for an errorless failure', () => {
     const out = renderError(envelopeOf() as unknown as Envelope<never>, plain)
     expect(out).toContain('error: could not answer')
+  })
+})
+
+describe('the doctor report', () => {
+  const precondition = (
+    overrides: Partial<Precondition> = {},
+  ): Precondition => ({
+    project: 'tsconfig.json',
+    cause: 'unprepared',
+    fidelity: 'syntactic',
+    signal: true,
+    postinstall: false,
+    remediable: true,
+    remediations: [],
+    specifiers: [],
+    ...overrides,
+  })
+
+  const doctorEnvelope = (
+    result: readonly Precondition[],
+    overrides: Partial<DoctorEnvelope> = {},
+  ): DoctorEnvelope => ({
+    operation: 'doctor',
+    schemaVersion: 3,
+    request: { subject: null, resolved: [], limit: null, depth: null },
+    snapshot: {
+      commit: 'abc1234',
+      dirty: false,
+      analysedAt: '2026-01-01T00:00:00Z',
+    },
+    conditions: [],
+    blindSpots: [],
+    budget: {
+      returned: result.length,
+      available: result.length,
+      truncated: false,
+    },
+    result,
+    header: {
+      toolVersion: '0.0.0',
+      typescriptVersion: '7.0.0',
+      projects: 1,
+      files: 4,
+    },
+    remediable: result.filter((found) => found.remediable).length,
+    measured: null,
+    ...overrides,
+  })
+
+  it('names the project once, with every cause found under it', () => {
+    const out = renderDoctor(
+      doctorEnvelope([
+        precondition({ remediations: ['pnpm install'] }),
+        precondition({ cause: 'broken', remediable: false, signal: false }),
+      ]),
+      plain,
+    )
+
+    expect(
+      out.split('\n').filter((line) => line.includes('tsconfig.json')),
+    ).toHaveLength(1)
+    expect(out).toContain('unprepared')
+    expect(out).toContain('run `pnpm install`')
+    expect(out).toContain('broken')
+  })
+
+  it('offers no command for `broken`, and says none is known for a codegen', () => {
+    // ADR 0001: `broken` is rendered with no remediation at all — not even the
+    // line that tells a user one could be declared, because none could.
+    const broken = renderDoctor(
+      doctorEnvelope([
+        precondition({ cause: 'broken', remediable: false, signal: false }),
+      ]),
+      plain,
+    )
+    expect(broken).not.toContain('command')
+    expect(broken).not.toContain('run `')
+
+    const codegen = renderDoctor(
+      doctorEnvelope([
+        precondition({ cause: 'missing-generated', remediations: [] }),
+      ]),
+      plain,
+    )
+    expect(codegen).toContain(
+      'no command known — declare one in codedocs.jsonc',
+    )
+  })
+
+  it('counts the specifiers it did not name, rather than dropping them', () => {
+    const specifiers = Array.from({ length: 8 }, (_, at) => ({
+      specifier: `@scope/pkg/${at}`,
+      sites: at + 1,
+      files: ['src/app.ts'],
+      remediation: null,
+    }))
+    const out = renderDoctor(
+      doctorEnvelope([
+        precondition({ cause: 'missing-generated', signal: false, specifiers }),
+      ]),
+      plain,
+    )
+
+    expect(out).toContain('@scope/pkg/0 — 1 site in src/app.ts')
+    expect(out).toContain('…and 3 more specifier(s)')
+  })
+
+  it('reports the index header, so a stale tool version is discoverable', () => {
+    expect(renderDoctor(doctorEnvelope([]), plain)).toContain(
+      'built by codedocs 0.0.0 against TypeScript 7.0.0',
+    )
+  })
+
+  it('says the tree agrees, so `--measure` never answers with silence', () => {
+    expect(renderDoctor(doctorEnvelope([], { measured: [] }), plain)).toContain(
+      'the working tree agrees with the index',
+    )
+  })
+
+  it('names each disagreement with what the index held and what is there now', () => {
+    const out = renderDoctor(
+      doctorEnvelope([], {
+        measured: [
+          {
+            project: 'tsconfig.json',
+            signal: 'dependencies',
+            indexed: 'analysed as `typed`',
+            measured:
+              '1 declared dependency(s) absent from node_modules: left-pad',
+          },
+        ],
+      }),
+      plain,
+    )
+
+    expect(out).toContain('1 signal(s) disagree with the index')
+    expect(out).toContain('tsconfig.json dependencies')
+    expect(out).toContain('left-pad')
   })
 })
 

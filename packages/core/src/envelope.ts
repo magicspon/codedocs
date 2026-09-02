@@ -36,6 +36,7 @@ export type OperationName =
   | 'callers'
   | 'callees'
   | 'trace'
+  | 'doctor'
   | 'report-bug'
 
 /**

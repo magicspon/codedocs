@@ -153,6 +153,27 @@ export const OPERATIONS: readonly OperationSpec[] = [
     sortedBy: 'the SymbolId sequence, lexically',
   },
   {
+    name: 'doctor',
+    summary:
+      'every unmet precondition in the repository, and what would clear it',
+    subject: null,
+    depth: false,
+    flags: [
+      {
+        name: 'measure',
+        value: null,
+        summary: 'check the signals against the working tree',
+        description:
+          'Re-run the filesystem signals against the working tree and name ' +
+          'where they disagree with what the index stored. It opens no ' +
+          'program and analyses nothing, and it is the only way to see an ' +
+          'install that is present and incomplete.',
+      },
+    ],
+    unit: 'precondition',
+    sortedBy: 'project, then cause',
+  },
+  {
     name: 'report-bug',
     summary: 'reproduce a failing command and write a report you can paste',
     subject: {

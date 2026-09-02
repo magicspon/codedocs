@@ -7,7 +7,7 @@
  * caller having to parse the text.
  */
 
-import { cpSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -184,6 +184,84 @@ describe('the human renderer', () => {
 
   it('marks a call credited to the variable it initialises', () => {
     expect(invoke('callers', 'checkout').stdout).toContain('(variable)')
+  })
+})
+
+describe('doctor', () => {
+  it('exits 1 for a cause a command would clear', () => {
+    // The fixture has no `node_modules`, which is signal 1 and remediable.
+    const result = invoke('doctor')
+
+    expect(result.code).toBe(1)
+    expect(result.stdout).toContain('tsconfig.json')
+    expect(result.stdout).toContain('unprepared')
+  })
+
+  it('carries the header and the whole set in the envelope', () => {
+    const envelope = JSON.parse(invoke('doctor', '--json').stdout) as {
+      operation: string
+      header: { toolVersion: string; projects: number }
+      remediable: number
+      measured: unknown
+      result: { project: string; cause: string }[]
+    }
+
+    expect(envelope.operation).toBe('doctor')
+    expect(envelope.header.projects).toBe(1)
+    expect(envelope.remediable).toBe(1)
+    // Absent unless it was asked for: a diagnostic is never a hidden cost.
+    expect(envelope.measured).toBeNull()
+    expect(envelope.result[0]?.cause).toBe('unprepared')
+  })
+
+  it('names where the working tree disagrees with the index, when asked', () => {
+    expect(invoke('doctor', '--measure').stdout).toContain('working tree')
+  })
+
+  it('refuses `--measure` on an operation that does not take it', () => {
+    const result = invoke('symbol', '*', '--measure')
+
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain('--measure applies to `doctor`')
+  })
+
+  it('is byte-identical when the same question is asked twice', () => {
+    expect(invoke('doctor', '--json').stdout).toBe(
+      invoke('doctor', '--json').stdout,
+    )
+  })
+})
+
+describe('doctor over a repository with nothing to clear', () => {
+  let prepared: string
+
+  beforeAll(() => {
+    prepared = mkdtempSync(join(tmpdir(), 'codedocs-doctor-'))
+    cpSync(fixture, prepared, { recursive: true })
+    cpSync(join(here, 'package.fixture.json'), join(prepared, 'package.json'))
+    // Installed, so signal 1 is met; the only finding left is an import that
+    // names nothing, which no command would fix.
+    mkdirSync(join(prepared, 'node_modules', 'left-pad'), { recursive: true })
+    writeFileSync(
+      join(prepared, 'node_modules', 'left-pad', 'index.d.ts'),
+      'export {}\n',
+    )
+    writeFileSync(
+      join(prepared, 'src', 'app.ts'),
+      "import './nowhere'\nexport const app = (): number => 1\n",
+    )
+  })
+
+  afterAll(() => {
+    rmSync(prepared, { recursive: true, force: true })
+  })
+
+  it('exits 0, because a red build that cannot be cleared is noise', () => {
+    const result = run(['doctor', '--cwd', prepared, '--no-color'])
+
+    expect(result.code).toBe(0)
+    // Reported all the same: exit 0 is not silence.
+    expect(result.stdout).toContain('broken')
   })
 })
 

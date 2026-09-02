@@ -63,6 +63,33 @@ export function lockfileName(root: string, from: string = root): string | null {
 }
 
 /**
+ * The install command for the nearest lockfile, or `null` where there is none.
+ *
+ * ADR 0010 keeps this out of `codedocs.jsonc` because it is determinable: the
+ * lockfile names the package manager, so `unprepared`'s remediation is read
+ * rather than declared. A repository with no lockfile gets no command instead of
+ * a guessed one — ADR 0001 refuses a remediation that would send a user the
+ * wrong way.
+ */
+export function installCommand(
+  root: string,
+  from: string = root,
+): string | null {
+  const lockfile = lockfileName(root, from)
+  return lockfile === null ? null : (INSTALL_COMMANDS[lockfile] ?? null)
+}
+
+/** The command each lockfile implies. Keyed by the names in `LOCKFILES`. */
+const INSTALL_COMMANDS: Readonly<Record<string, string>> = {
+  'pnpm-lock.yaml': 'pnpm install',
+  'yarn.lock': 'yarn install',
+  'package-lock.json': 'npm install',
+  'npm-shrinkwrap.json': 'npm install',
+  'bun.lock': 'bun install',
+  'bun.lockb': 'bun install',
+}
+
+/**
  * One project's `compilerOptions`, with its relative `extends` chain followed.
  *
  * Exported for the [[Report]], which carries them behind `--with-repository`:

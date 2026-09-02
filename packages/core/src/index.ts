@@ -19,6 +19,19 @@ export {
 } from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
 export {
+  doctor,
+  type DoctorEnvelope,
+  type DoctorOptions,
+  type IndexReport,
+  type Precondition,
+  type SpecifierEvidence,
+} from './operations/doctor.ts'
+export {
+  measureProjects,
+  type Disagreement,
+  type MeasuredSignal,
+} from './operations/measure.ts'
+export {
   REPORT_FILE,
   reportBug,
   type BlindSpotReason,
@@ -109,7 +122,9 @@ export {
 } from './store/index.ts'
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
 export {
+  absentDependencies,
   fidelityOf,
+  installCommand,
   preflightProjects,
   type ProjectPreflight,
 } from './preflight/index.ts'

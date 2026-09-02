@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Six operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Seven operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -91,14 +91,15 @@ Then ask. There is no daemon and no watcher; each command is a one-shot process.
 
 Built:
 
-| Operation           | Answers                                | Result unit |
-| ------------------- | -------------------------------------- | ----------- |
-| `analyse`           | build or refresh the index             | project     |
-| `symbol <pattern>`  | every symbol whose name matches a glob | symbol      |
-| `callers <subject>` | every call edge into a subject         | call edge   |
-| `callees <subject>` | every call edge out of a subject       | call edge   |
-| `trace <root>`      | every path of calls out of a root      | path        |
-| `report-bug`        | a reproduced failure, safe to paste    | —           |
+| Operation           | Answers                                                       | Result unit  |
+| ------------------- | ------------------------------------------------------------- | ------------ |
+| `analyse`           | build or refresh the index                                    | project      |
+| `symbol <pattern>`  | every symbol whose name matches a glob                        | symbol       |
+| `callers <subject>` | every call edge into a subject                                | call edge    |
+| `callees <subject>` | every call edge out of a subject                              | call edge    |
+| `trace <root>`      | every path of calls out of a root                             | path         |
+| `doctor`            | every unmet precondition, and the command that would clear it | precondition |
+| `report-bug`        | a reproduced failure, safe to paste                           | —            |
 
 Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
 sets:
@@ -107,7 +108,6 @@ sets:
 | ---------------------- | ---------------------------------------------------- | -------------- |
 | `references <subject>` | everything that names a subject, types included      | reference edge |
 | `file <path>`          | what is in a file and what it reaches                | file           |
-| `doctor`               | why an answer was narrower than you wanted           | precondition   |
 | `impact`               | what a change could reach, against an earlier commit | symbol         |
 | `evidence <subject>`   | everything the index holds about one subject         | per kind       |
 | `docs check`           | which documented claims the code now contradicts     | document       |
@@ -196,6 +196,49 @@ line.
   silently cut.
 - Where `--depth` did cut a branch, that branch says so — `⇣ more calls beyond depth 3` — so a
   bounded answer can never be read as a whole one.
+
+### doctor
+
+Every unmet precondition in the repository, read whole — the same four signals every other answer
+reports for the projects _it_ touched, over the whole index and grouped so that one cause is one
+finding:
+
+```console
+$ codedocs doctor
+  tsconfig.json  typed
+    unprepared
+      left-pad — 1 site in src/app.ts
+      run `pnpm install`
+    missing-generated
+      @scope/pkg/enums — 1 site in src/app.ts
+      run `pnpm prisma generate`
+    broken
+      ./nowhere — 1 site in src/app.ts
+
+  1 project, 7 files, built by codedocs 0.0.0 against TypeScript 7.0.2
+```
+
+- **Static and instant.** It renders what the index already stored: no program is opened, nothing is
+  extracted, and no sweep of its own runs.
+- **One cause is one row**, whichever signal saw it. A project whose install never ran fires the
+  filesystem signal _and_ leaves every declared import unresolved; those are one finding at two
+  granularities, so they are reported once with both halves kept.
+- **A remediation, or an honest silence.** An install command is read from the lockfile and a codegen
+  command from [`codedocs.jsonc`](#configuration). `unmapped` and `broken` get no command at all —
+  none would help the first, and none _is_ a command for the second — and codedocs ships with no
+  built-in framework table, so a codegen it was not told about is named without a guess attached.
+- **`--measure`** re-runs the filesystem signals against the working tree and names where they
+  disagree with the index. It still opens no program: it is the escape hatch for the one thing the
+  stored signals cannot see, an install that is present and incomplete.
+
+```console
+$ codedocs doctor --measure
+  1 signal(s) disagree with the index:
+    tsconfig.json dependencies: indexed analysed as `typed`, now 1 declared dependency(s) absent from node_modules: left-pad
+```
+
+`doctor` is the **first operation that can exit 1**: it does so for a cause a command would clear, and
+never for `unmapped` or `broken`, because a red build that cannot be cleared is noise.
 
 ## Machine output: one envelope, every answer
 
@@ -355,14 +398,17 @@ fixed behind your back.
 --cwd <path>     run against another directory
 --color / --no-color
 
+`doctor` only:
+  --measure          check the signals against the working tree
+
 `report-bug` only:
   --with-repository  add the facts that name your code
   --out <path>       where to write it; `-` is stdout (default ./codedocs-report.json)
 ```
 
 Exit codes follow the `fallow` convention: **0** answered, **1** a negative finding, **2** could not
-answer. Nothing produces 1 yet — ADR 0006 assigns it to `docs check` finding a contradicted claim and
-to `doctor` finding an unmet precondition.
+answer. `doctor` produces 1 for an unmet precondition a command would clear; ADR 0006 assigns the
+only other one to `docs check` finding a contradicted claim.
 
 <!-- cspell:ignore exlucde -->
 
@@ -431,12 +477,13 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 240 tests, and measured against real repositories:
+Implemented, covered by 269 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
   nothing.
-- **Six operations.** `analyse`, `symbol`, `callers`, `callees`, `trace` and `report-bug`.
+- **Seven operations.** `analyse`, `symbol`, `callers`, `callees`, `trace`, `doctor` and
+  `report-bug`.
 - **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
   is held as data, so an operation cannot reach one renderer and miss the other.
 - **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
@@ -464,13 +511,11 @@ is gated by the one above it.
 
 1. **`references` and `file`** — the rest of the relationship set. `impact` cannot be honest without
    `references`, because a changed type reaches everything that names it.
-2. **`doctor`** — all four preflight signals are measured, stored and reported already; what has no
-   home is `doctor --measure`, and **exit code 1**, which nothing produces today.
-3. **The label layer** (ADR 0003), and with it the **scope channel** and `impact --label role=test`.
-4. **`impact`**, over baseline capture and retention (ADR 0008).
-5. **`evidence`**, once labels and fidelity exist for it to assemble.
-6. **`docs check` and `docs affected`** (ADR 0005).
-7. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+2. **The label layer** (ADR 0003), and with it the **scope channel** and `impact --label role=test`.
+3. **`impact`**, over baseline capture and retention (ADR 0008).
+4. **`evidence`**, once labels and fidelity exist for it to assemble.
+5. **`docs check` and `docs affected`** (ADR 0005).
+6. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
 (`TODO(#7)` in `model.ts`); the `classify` and `baselines` config keys, which parse and default but

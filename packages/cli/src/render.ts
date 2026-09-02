@@ -11,11 +11,15 @@ import type {
   AnalysisTotals,
   CallEdge,
   CallSite,
+  Disagreement,
+  DoctorEnvelope,
   Envelope,
+  Precondition,
   ProjectConditions,
   ProjectSummary,
   RepairReport,
   ReportEnvelope,
+  SpecifierEvidence,
   SymbolNode,
   TracePath,
 } from '@codedocs/core'
@@ -97,6 +101,128 @@ function repairLine(repair: RepairReport | null, style: Style): string | null {
 /** `1 project` / `3 projects`, for a line that counts something. */
 const count = (n: number, unit: string): string =>
   `${n} ${unit}${n === 1 ? '' : 's'}`
+
+/** How many distinct specifiers are named under one precondition. */
+const SPECIFIER_LIMIT = 5
+
+/**
+ * Render a `doctor` answer: every unmet precondition, grouped by project.
+ *
+ * The grouping is the renderer's own — ADR 0006 allows it — over rows the
+ * operation already deduplicated and sorted. Two things are never dropped: the
+ * cause, which says what is wrong, and the absence of a remediation, which is a
+ * fact about `unmapped` and `broken` rather than a gap in the output.
+ */
+export function renderDoctor(envelope: DoctorEnvelope, style: Style): string {
+  const lines: string[] = []
+  let project: string | null | undefined
+  for (const found of envelope.result ?? []) {
+    if (found.project !== project) {
+      project = found.project
+      lines.push(
+        `  ${style.bold(project ?? 'files no project claims')}${fidelityOf(found, style)}`,
+      )
+    }
+    lines.push(...precondition(found, style))
+  }
+  return [
+    finish(envelope, lines, style, 'unmet preconditions'),
+    ...measuredNote(envelope.measured, style),
+    ...headerNote(envelope, style),
+  ].join('\n')
+}
+
+/** The project's stored fidelity, shown once beside its name. */
+function fidelityOf(found: Precondition, style: Style): string {
+  if (found.fidelity === null) return ''
+  return found.fidelity === 'typed'
+    ? style.dim('  typed')
+    : style.warn('  syntactic')
+}
+
+/** One precondition: its cause, what evidenced it, and what would clear it. */
+function precondition(found: Precondition, style: Style): string[] {
+  const evidence = found.signal
+    ? [style.dim('      the project’s own signals')]
+    : []
+  const overflow = found.specifiers.length - SPECIFIER_LIMIT
+  return [
+    `    ${style.warn(found.cause)}${postinstallNote(found, style)}`,
+    ...evidence,
+    ...found.specifiers
+      .slice(0, SPECIFIER_LIMIT)
+      .map((seen) => style.dim(`      ${specifier(seen)}`)),
+    ...(overflow > 0
+      ? [style.dim(`      …and ${overflow} more specifier(s)`)]
+      : []),
+    ...remediationLines(found, style),
+  ]
+}
+
+/** One distinct specifier, its site count, and the files that wrote it. */
+function specifier(seen: SpecifierEvidence): string {
+  const files =
+    seen.files.length === 1
+      ? (seen.files[0] ?? '')
+      : `${seen.files.length} files`
+  return `${seen.specifier} — ${count(seen.sites, 'site')} in ${files}`
+}
+
+/**
+ * What would clear it, or the silence ADR 0001 requires.
+ *
+ * `unmapped` and `broken` are rendered with no remediation at all, and a
+ * `missing-generated` the config says nothing about is told it can be declared —
+ * codedocs ships knowing nothing about any framework, deliberately.
+ */
+function remediationLines(found: Precondition, style: Style): string[] {
+  if (found.remediations.length > 0) {
+    return found.remediations.map((command) => `      run \`${command}\``)
+  }
+  if (found.cause !== 'missing-generated') return []
+  return [style.dim('      no command known — declare one in codedocs.jsonc')]
+}
+
+/** Signal 2, which only sharpens `unprepared`: the install generates types too. */
+const postinstallNote = (found: Precondition, style: Style): string =>
+  found.cause === 'unprepared' && found.postinstall
+    ? style.dim(' — its postinstall generates types')
+    : ''
+
+/** What `--measure` found, which is never a precondition: it is a disagreement. */
+function measuredNote(
+  measured: readonly Disagreement[] | null,
+  style: Style,
+): Note {
+  if (measured === null) return []
+  if (measured.length === 0) {
+    return ['', style.dim('  the working tree agrees with the index')]
+  }
+  return [
+    '',
+    style.warn(`  ${measured.length} signal(s) disagree with the index:`),
+    ...measured.map((found) =>
+      style.dim(
+        `    ${found.project} ${found.signal}: indexed ${found.indexed}, now ${found.measured}`,
+      ),
+    ),
+  ]
+}
+
+/**
+ * The index header, which is where a user discovers that their index was built
+ * by another tool or TypeScript version (ADR 0004).
+ */
+function headerNote(envelope: DoctorEnvelope, style: Style): Note {
+  const { header } = envelope
+  return [
+    '',
+    style.dim(
+      `  ${count(header.projects, 'project')}, ${count(header.files, 'file')}, ` +
+        `built by codedocs ${header.toolVersion} against TypeScript ${header.typescriptVersion}`,
+    ),
+  ]
+}
 
 /** Render a `symbol` answer. */
 export function renderSymbols(
