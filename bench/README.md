@@ -1,49 +1,53 @@
-# The localization benchmark
+# The fix benchmark
 
-One question: **does codedocs let an agent reach the same answer while reading
-less of the repository?**
+One question: **does codedocs let an agent reach the same fix while reading less
+of the repository?**
 
 Not "is the agent smarter with it". Smarter is not measurable here. What is
-measurable is the cost of getting to a known-correct answer — tokens processed,
-tools called, exploration steps taken, files opened, lines of source read,
-seconds spent — and whether the arm holding codedocs pays less of it.
+measurable is the cost of getting to the code that has to change — tokens
+processed, tools called, exploration steps taken, files opened, lines of source
+read, seconds spent — and whether the arm holding codedocs pays less of it.
 
 ## The task
 
-Each case gives an agent a real VS Code bug report and asks one thing: name the
-files and symbols that must change. Nothing is edited, built or tested. The
-answer arrives as a fenced JSON block, so scoring is exact rather than a
-judgement:
+Each case gives an agent a real VS Code bug report and asks one thing: fix it.
+The agent gets edit tools inside a worktree of its own, the issue text, and
+nothing about the upstream fix. What it leaves behind is a patch, and the patch
+is the answer — the harness takes the diff out of the worktree with git, so a
+run is scored on what it actually changed and not on anything it said about its
+own work.
 
-```json
-{ "files": ["src/vs/some/path.ts"], "symbols": ["someMethod"] }
-```
+A run counts as a hit when its diff changed every non-test file the upstream fix
+changed, and the `sym` column says whether it changed a line that names one of
+the symbols that fix changed.
 
-Localization is deliberately narrower than fixing. A fix has many valid shapes
-and would need a judge model to score; localization has one true answer, written
-by the VS Code maintainers, and comparing arms on it isolates the thing codedocs
-actually claims to change — the cost of navigating an unfamiliar codebase.
+Whether the patch would work is deliberately not scored. That needs a judge
+model, and a judge is a second opinion in the measurement. Touching the right
+code is what codedocs claims to help with, and it is what can be checked exactly
+against a patch the VS Code maintainers wrote.
 
 ## The two arms
 
-|              | baseline                          | codedocs                                   |
-| ------------ | --------------------------------- | ------------------------------------------ |
-| Tools        | Read, Grep, Glob, Bash, TodoWrite | the same                                   |
-| Extra prompt | none                              | ~150 tokens describing the five operations |
-| Index        | ignored                           | already built                              |
+|              | baseline                                       | codedocs                                   |
+| ------------ | ---------------------------------------------- | ------------------------------------------ |
+| Tools        | Read, Grep, Glob, Bash, TodoWrite, Edit, Write | the same                                   |
+| Extra prompt | none                                           | ~150 tokens describing the five operations |
+| Index        | ignored                                        | already built                              |
 
 Both arms get `Bash`, because grep and find are how anyone searches a repository
-from a shell and taking it from the baseline would rig the result. Edits,
-subagents and the network are off in both: the task is read-only, and a
-subagent's tokens are accounted separately from the loop being measured.
+from a shell and taking it from the baseline would rig the result. Both may
+edit, because the task is to write the fix and the worktree each run writes to
+is thrown away afterwards. Subagents and the network are off in both: a
+subagent's tokens are accounted separately from the loop being measured, and a
+run that fetched the upstream fix would be measuring nothing.
 
 The codedocs briefing costs input tokens on every turn, and those tokens are
 charged to the codedocs arm. That is the real cost of putting a tool in front of
 an agent, and hiding it would flatter the tool.
 
 A run is thrown out, not silently counted, when the baseline reaches for
-`codedocs` anyway, when the codedocs arm never calls it, or when no answer block
-can be parsed. The report prints how many were thrown out.
+`codedocs` anyway, when the codedocs arm never calls it, or when the agent left
+no patch at all. The report prints how many were thrown out.
 
 ## The cases
 
@@ -75,8 +79,9 @@ the tool is a brochure. `#333085` is the case where grep on a product noun may
 well win, and it is kept for exactly that reason.
 
 Ground truth is the non-test source files the upstream fix touched. Test files
-are excluded from both the truth and the answer, because an answer naming the
-test file would read as a miss to any human reviewer.
+are excluded from the truth, and the prompt tells the agent not to write any:
+the truth is source, and a run that spent its turns on a test would be measured
+on work no case scores.
 
 ## One tree per run
 
@@ -86,10 +91,13 @@ and 550 MB, one at a time.
 
 Two things need that. A case is only a real bug at the commit under its fix, and
 the cases share no such commit — they were fixed over ten days, so no single
-checkout sits before all five fixes. And a tree the agent may write to has to be
-thrown away afterwards, or the next run reads the last one's edits. Localization
-edits nothing, so the second half is paid for and not yet used: it is what the
-fix task that follows this one needs.
+checkout sits before all five fixes. And a tree the agent writes to has to be
+thrown away afterwards, or the next run reads the last one's edits. The patch is
+read out of the tree with `git diff` against the case's base commit — after
+`git add -A -N`, so a file the agent created is in the diff, and against the
+commit rather than `HEAD`, so an agent that committed its work is measured the
+same way. Anything the repository ignores, a build output or an installed
+dependency, stays out.
 
 `repos/vscode` is a depth-1 clone and holds none of those commits until it is
 asked for one, so the harness fetches each case's fix at depth 2 — the fix, and
@@ -102,10 +110,12 @@ where the single pinned checkout used to be warmed. That is the price of the
 isolation: about four minutes a codedocs run, printed beside each verdict so
 what the harness spent stays visible.
 
-The figures quoted further down come from the run set measured before this
-change, when every case read one pinned checkout. They stand as what those runs
-cost; re-running the set at the per-case commits will move them, and each record
-now names the commit it was measured at.
+The figures quoted further down come from the run set measured on the earlier
+localization task, when the agent named files instead of changing them and every
+case read one pinned checkout. They are kept because they are the evidence
+behind decisions this harness still makes, and each is labelled where it
+appears. They are not fix-task results, and no fix-task set has been measured
+yet beyond the smoke run that proved the path.
 
 ## Difficulty levels
 
@@ -136,8 +146,8 @@ level 1 control together with the level 4 case and reports neither.
 | `files`  | distinct repository files opened, by `Read` or by a shell command that prints one |
 | `src`    | lines of repository content those inspections returned                            |
 | `sec`    | wall time                                                                         |
-| `hit`    | the answer named every ground-truth file                                          |
-| `sym`    | the answer named at least one ground-truth symbol                                 |
+| `hit`    | the patch changed every ground-truth file                                         |
+| `sym`    | the patch named at least one ground-truth symbol on a line it changed             |
 
 Cache reads are counted because a cached token is still a token the model read,
 and a shorter search is exactly what shrinks the number.
@@ -158,7 +168,8 @@ metric must not do.
 
 `steps` sits beside `calls` rather than replacing it, because the gap between
 them is itself worth seeing: it is what the agent spent on things that were not
-looking at the repository.
+looking at the repository. Writing the patch lives in that gap — an `Edit` is
+not a look at the repository, and the `Read` it needs first already counted.
 
 ### Lines of source read
 
@@ -177,10 +188,30 @@ content pulled into the context by a step, so they are charged to the codedocs
 arm exactly as its briefing tokens are. Over the runs on disk that is 1,891
 lines the arm has to carry.
 
+### What counts as touching a symbol
+
+**A ground-truth symbol is touched when its name appears on a line the patch
+changed, or in the `@@` header above one, inside a ground-truth file.**
+Unchanged context is deliberately excluded: a patch that edits one method three
+lines under a call to another would otherwise be credited with both, and the
+same method edited in the wrong file is not the code the fix changed.
+
+The rule is strict, and it is blind to a change buried deep inside a long method
+whose name appears nowhere near it. Applied to the five upstream fixes
+themselves, it names a ground-truth symbol in three of the five — so read `sym`
+as a floor on both arms, never as a hit rate. `hit` is the score; `sym` says
+whether the patch landed in the same code rather than merely the same file.
+
+A span-accurate rule would need the symbol boundaries of each ground-truth file,
+which means parsing the tree at scoring time. It is worth doing when the case
+pool is larger; it is not worth doing to sharpen a secondary column over five
+cases.
+
 ### Where the counts are wrong, and which way
 
-Three known undercounts. Each is stated with its direction, and none of them
-favours codedocs:
+Four known undercounts. Each is stated with its direction, and none of them
+favours codedocs. The figures in them were measured on the localization runs
+that preceded the fix task, and are the evidence the choices were made on:
 
 - **The shell-command parser is conservative.** It recognises commands that
   print a file — `cat`, `head`, `sed` and the rest — and a path it fails to spot
@@ -190,10 +221,14 @@ favours codedocs:
   against the codedocs arm's 1,017. Leaving searches out would have removed
   twice as much from the baseline as from codedocs and flattered the tool by
   roughly a thousand lines a set. Counting them keeps the comparison honest.
-- **`git log` and `wc` are not steps.** Across the runs on disk the two arms
-  spent almost the same on them — 13 calls against 11 over fifteen runs each — so
-  the exclusion takes about as much from one arm as the other, and the residue is
-  far too small to explain any gap the `steps` column shows.
+- **`git log` and `wc` are not steps.** Across those runs the two arms spent
+  almost the same on them — 13 calls against 11 over fifteen runs each — so the
+  exclusion takes about as much from one arm as the other, and the residue is far
+  too small to explain any gap the `steps` column shows.
+- **An in-place `sed` counts as a look.** The parser cannot tell `sed -n 1,40p`
+  from `sed -i`, so an agent that edits through the shell is charged a step and
+  the lines it printed. It over-charges whichever arm does it, which is the
+  direction that cannot flatter the tool.
 
 The residual bias therefore runs against the tool being sold, as it does for
 `files`.
@@ -214,8 +249,12 @@ either voids the ground truth. It fetches the commits the cases name, then
 builds each codedocs run's index in that run's worktree, so the arm pays the
 per-question cost rather than the cold build.
 
-`run.ts --rescore` rebuilds every record from the streams already on disk.
-Scoring and validity are pure functions of the stream, so a fix to either is
+Each run leaves three files in `bench/results/`: `<case>-<arm>-r<n>.json`, the
+record the report reads; `.stream.jsonl`, everything the agent did; and `.diff`,
+the patch it produced, readable and `git apply`-able as it stands.
+
+`run.ts --rescore` rebuilds every record from the streams and patches already on
+disk. Scoring and validity are pure functions of those two, so a fix to either is
 applied to past runs rather than paid for twice. `--resume` skips runs that
 already produced a measurement.
 
@@ -239,10 +278,11 @@ process spawning:
 | `agent.ts`      | spawning `claude -p` and collecting its stream                 |
 | `tally.ts`      | what one run consumed: calls, steps, files, lines read, tokens |
 | `stream.ts`     | walking the stream and folding it into that tally              |
-| `score.ts`      | reading the answer block, scoring it, and deciding validity    |
-| `record.ts`     | the record one saved stream implies                            |
+| `diff.ts`       | taking the patch out of a worktree, and reading it back        |
+| `score.ts`      | scoring one patch against the fix, and deciding validity       |
+| `record.ts`     | the record one saved stream and patch imply                    |
 | `session.ts`    | running (case, arm, replicate) in a worktree, and filing it    |
-| `rescore.ts`    | rebuilding records from saved streams                          |
+| `rescore.ts`    | rebuilding records from saved streams and patches              |
 | `preflight.ts`  | the ground-truth checks that run before any quota is spent     |
 | `run.ts`        | the command line                                               |
 | `difficulty.ts` | the levels, and the heading the report prints for each         |
@@ -270,5 +310,7 @@ process spawning:
 - **One repository, one model, one task shape, three replicates.** Enough to see
   whether an effect is there and whether the spread swamps it. Not enough for a
   confidence interval, and not evidence about repositories unlike vscode.
-- **Localization is not fixing.** An agent that finds the right file quickly may
-  still write the wrong patch. This measures the search, and only the search.
+- **Whether the fix is correct is not measured.** A run that changed every
+  ground-truth file may still have written the wrong change inside it, and it
+  scores as a hit. Judging the patch needs a judge model; this measures what the
+  patch touched, and what the search for it cost.

@@ -1,9 +1,9 @@
 /**
  * The task put to the agent, and the one difference between the two arms.
  *
- * Both arms read the same issue and are asked for the same fenced answer block.
- * The codedocs arm is additionally told the tool exists, and pays for that
- * briefing in input tokens on every turn.
+ * Both arms read the same issue and are asked for the same thing: the fix,
+ * left in the worktree. The codedocs arm is additionally told the tool exists,
+ * and pays for that briefing in input tokens on every turn.
  */
 
 import { CODEDOCS } from './paths.ts'
@@ -34,7 +34,15 @@ Use it as much or as little as you find useful.
 `.trim()
 }
 
-/** The task, identical in both arms. The fenced answer block is what makes scoring exact. */
+/**
+ * The task, identical in both arms.
+ *
+ * No answer is asked for, because the patch is the answer: the harness reads
+ * the diff out of the worktree, so there is nothing for the agent to report and
+ * nothing for it to claim. Tests are ruled out to keep the diffs comparable —
+ * the ground truth excludes test files, and a run that spent its turns on one
+ * would be measured on work no case is scored against.
+ */
 export function buildPrompt(
   bench: BenchCase,
   arm: ArmName,
@@ -43,8 +51,9 @@ export function buildPrompt(
   const briefing = arm === 'codedocs' ? `\n${codedocsBriefing(root)}\n` : ''
   return `You are working in the VS Code repository. Below is a bug report filed against it.
 
-Your job is to locate the code that must change to fix it. This is a localization
-task only: do not edit any file, do not write anything, and do not build or test.
+Your job is to fix it. Edit the source in this checkout and leave the fix in the
+working tree — do not commit it. This checkout has no dependencies installed, so
+nothing here builds, runs or tests; your patch will be judged by reading it.
 ${briefing}
 <issue>
 # ${bench.title}  (microsoft/vscode#${bench.issue})
@@ -52,14 +61,7 @@ ${briefing}
 ${bench.body}
 </issue>
 
-End your reply with exactly one fenced json block, and nothing after it:
-
-\`\`\`json
-{"files": ["src/vs/some/path.ts"], "symbols": ["someMethod"]}
-\`\`\`
-
-  files    the source files that must change, repository-relative, likeliest first
-  symbols  the functions, methods or classes inside them that must change
-
-Exclude test files from both lists. A directory is not an answer.`
+Change as little as the bug needs, and change only source: no tests, and no new
+files unless the fix cannot be written without one. When the patch is written,
+stop. There is nothing to report — the patch is the answer.`
 }

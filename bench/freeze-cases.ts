@@ -18,8 +18,8 @@ import type { BenchCase, CaseShape } from './types.ts'
  * The base commit is not written here. It is read from GitHub as the fix's
  * parent, because a hash typed twice is a hash that can disagree with itself.
  *
- * `truth` lists only non-test source files, because a localization answer that
- * named the test file would be scored as a miss by any reasonable reader.
+ * `truth` lists only non-test source files, because a patch is scored on the
+ * source it changed, and a run is told not to write tests.
  */
 const seeds: Array<Omit<BenchCase, 'title' | 'body' | 'issueUrl' | 'base'>> = [
   {

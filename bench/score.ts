@@ -1,66 +1,67 @@
 /**
- * Turns an agent's reply into a score, and decides whether the run counts.
+ * Turns the patch a run produced into a score, and decides whether the run counts.
  *
- * Scoring is exact rather than a judgement: the prompt asks for a fenced JSON
- * block, and the answer is compared against the files the upstream fix touched.
+ * Scoring is exact rather than a judgement: the diff is compared against the
+ * files and symbols the upstream fix touched. It says whether the run changed
+ * the right code, and nothing about whether the change is correct — a judge
+ * would be needed for that, and there is none here.
  */
 
-import { normalise } from './paths.ts'
-import type { ArmName, BenchCase, RunAnswer, RunMetrics } from './types.ts'
+import type { DiffFile } from './diff.ts'
+import type { ArmName, BenchCase, RunDiff, RunMetrics } from './types.ts'
 
-/** What the agent claimed, before it is compared with the fix. */
-export type Claim = { files: string[]; symbols: string[] }
-
-/** Reads the last fenced json block, which is where the prompt asked the answer to go. */
-export function extractAnswer(text: string): Claim | null {
-  const blocks = [...text.matchAll(/```json\s*([\s\S]*?)```/g)]
-  const last = blocks.at(-1)
-  if (!last?.[1]) return null
-  try {
-    const parsed = JSON.parse(last[1]) as { files?: unknown; symbols?: unknown }
-    const files = Array.isArray(parsed.files)
-      ? parsed.files.filter((f) => typeof f === 'string')
-      : []
-    const symbols = Array.isArray(parsed.symbols)
-      ? parsed.symbols.filter((s) => typeof s === 'string')
-      : []
-    return { files, symbols }
-  } catch {
-    return null
-  }
+/** Escapes a symbol name for use inside a regular expression. */
+function escape(name: string): string {
+  return name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 /**
- * Scores one answer against the fix commit.
+ * The lines of a hunk a symbol may be claimed from: the ones the patch changed,
+ * plus the `@@` header, which names the declaration the change sits under.
  *
- * A run is correct when it named every non-test file the fix touched. Extra
- * files are recorded but do not fail the run: a fix has one true set, while a
- * plausible neighbouring file is a judgement, not an error.
+ * Unchanged context is deliberately left out. A patch that edits one method and
+ * happens to have a call to another three lines above it would otherwise be
+ * credited with both. See the README for which way this errs.
  */
-export function score(answer: Claim, bench: BenchCase): RunAnswer {
-  const named = answer.files.map((f) => normalise(f))
-  const hit = bench.truth.files.filter((t) =>
-    named.some((n) => n === t || n.endsWith(`/${t}`) || t.endsWith(`/${n}`)),
-  )
-  const missed = bench.truth.files.filter((t) => !hit.includes(t))
-  const extra = named.filter(
-    (n) => !bench.truth.files.some((t) => t === n || t.endsWith(`/${n}`)),
-  )
-  const symbolHit = answer.symbols.some((s) =>
-    bench.truth.symbols.some(
-      (t) =>
-        t.toLowerCase() === s.toLowerCase() ||
-        s.toLowerCase().endsWith(`.${t.toLowerCase()}`),
-    ),
-  )
+function claimableLines(hunk: string): string {
+  return hunk
+    .split('\n')
+    .filter(
+      (line, at) => at === 0 || line.startsWith('+') || line.startsWith('-'),
+    )
+    .join('\n')
+}
+
+/** True when the lines a file's patch changed name a symbol. */
+function namesSymbol(hunks: string[], symbol: string): boolean {
+  const word = new RegExp(`\\b${escape(symbol)}\\b`)
+  return hunks.some((hunk) => word.test(claimableLines(hunk)))
+}
+
+/**
+ * Scores one run's diff against the upstream fix.
+ *
+ * A run is correct when its diff changed every non-test file the fix changed.
+ * Extra files are recorded but do not fail the run: the fix has one true set,
+ * while a plausible neighbouring change is a judgement, not an error.
+ */
+export function scoreDiff(changed: DiffFile[], bench: BenchCase): RunDiff {
+  const files = changed.map((file) => file.path)
+  const hit = bench.truth.files.filter((truth) => files.includes(truth))
+  // Only hunks inside ground-truth files can name a ground-truth symbol: the
+  // same method edited in the wrong file is not the code the fix changed.
+  const hunks = changed
+    .filter((file) => hit.includes(file.path))
+    .flatMap((file) => file.hunks)
   return {
-    files: answer.files,
-    symbols: answer.symbols,
+    files,
     filesHit: hit,
-    filesMissed: missed,
-    filesExtra: extra,
-    symbolHit,
-    correct: missed.length === 0,
+    filesMissed: bench.truth.files.filter((truth) => !hit.includes(truth)),
+    filesExtra: files.filter((file) => !bench.truth.files.includes(file)),
+    symbolsHit: bench.truth.symbols.filter((symbol) =>
+      namesSymbol(hunks, symbol),
+    ),
+    correct: hit.length === bench.truth.files.length,
   }
 }
 
@@ -71,10 +72,10 @@ export function score(answer: Claim, bench: BenchCase): RunAnswer {
 export function invalidReason(
   arm: ArmName,
   metrics: RunMetrics,
-  answered: boolean,
+  patched: boolean,
   usedCodedocs: boolean,
 ): string | null {
-  if (!answered) return 'no parseable answer block'
+  if (!patched) return 'the agent left no patch'
   if (arm === 'baseline' && usedCodedocs) return 'baseline reached for codedocs'
   if (arm === 'codedocs' && !usedCodedocs)
     return 'codedocs arm never called codedocs'
