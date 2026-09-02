@@ -56,7 +56,7 @@ answering one question is worse than either tool alone.
 
 **Not an LLM product.** codedocs contains no provider, no API key and no inference cost. It emits
 structured facts; anything that reads like prose was written by something else. `evidence` is the
-operation shaped for pasting into a prompt, and it is one operation among ten rather than the purpose
+operation shaped for pasting into a prompt, and it is one operation among thirteen rather than the purpose
 of the index.
 
 **Not an editor replacement.** Go-to-definition and find-references within one project are solved.
@@ -134,19 +134,20 @@ rest. See [ADR 0011](adr/0011-report-bug-payload.md).
 ## 9. Roadmap
 
 Built: the index, incremental repair, preflight and the environment fingerprint, symbol identity,
-five operations (`analyse`, `symbol`, `callers`, `callees`, `trace`), both renderers, and the MCP
-server.
+the label layer and the scope channel over it, baselines and their capture, all **thirteen
+operations** (`analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`, `evidence`,
+`docs check`, `docs affected`, `impact`, `doctor`, `report-bug`), both renderers, and the MCP server.
 
-Remaining, in the order [ADR 0012](adr/0012-audience-and-the-fallow-boundary.md) sets:
+That is the whole of the order [ADR 0012](adr/0012-audience-and-the-fallow-boundary.md) set, bar its
+last step. What remains:
 
-1. `references` and `file`
-2. `doctor`, and with it the first use of exit code `1`
-3. The label layer, and the scope channel it unblocks
-4. `impact`, with baseline capture and retention underneath it
-5. `evidence`
-6. `docs check` and `docs affected`
-7. `report-bug`
-8. Publishing to npm
+1. **Publishing to npm.** codedocs is cloned and run from `node_modules/.bin` today
+   ([#73](https://github.com/magicspon/codedocs/issues/73)).
+
+Not tied to that order, and not gating it: ADR 0007's `shape-hash` and `path-prefix-rewrite`
+continuity signals, which need a per-symbol shape hash the index does not hold; and the `AGENTS.md`
+discovery block that tells an agent when to reach for codedocs
+([#18](https://github.com/magicspon/codedocs/issues/18)).
 
 `review` and `plan` were specified in the original PRD and are deleted. Anything not on this list and
 not covered by `fallow` is not planned.
