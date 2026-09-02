@@ -37,8 +37,18 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      # Coverage rather than a bare `pnpm test`: same run, plus the thresholds
+      # in `vitest.config.ts`, so a drop fails here instead of going unnoticed.
       - name: Test
-        run: pnpm test
+        run: pnpm test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
 
       # ADR 0011's invariant over the dependency closure. Its own step so the
       # failure names itself: `pnpm test` covers it too, but a red "Test" says
