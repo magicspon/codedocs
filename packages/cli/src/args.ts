@@ -63,6 +63,8 @@ export interface Command {
   readonly measure: boolean
   /** The label filter the answer applies, or the default where none was named. */
   readonly scope: Scope
+  /** `impact`: the commit to compare against. `null` means the merge base. */
+  readonly base: string | null
 }
 
 /** The default the human renderer applies when no `--limit` is given. */
@@ -79,6 +81,7 @@ const OPTIONS = {
   'with-repository': { type: 'boolean' },
   out: { type: 'string' },
   measure: { type: 'boolean' },
+  base: { type: 'string' },
   // Repeatable: one flag per axis, because the two are orthogonal and a single
   // value could only ever filter one of them.
   label: { type: 'string', multiple: true },
@@ -148,6 +151,7 @@ export function parse(
       out: values.out ?? null,
       measure: values.measure === true,
       scope: scope.value,
+      base: values.base ?? null,
     },
   }
 }

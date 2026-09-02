@@ -8,6 +8,7 @@
 export {
   analyse,
   type AnalysisTotals,
+  type BaselineRequest,
   type ProjectSummary,
 } from './operations/analyse.ts'
 export { callees, callers } from './operations/calls.ts'
@@ -19,6 +20,15 @@ export {
 } from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
 export { references } from './operations/references.ts'
+export {
+  impact,
+  type BaselineUsed,
+  type ImpactedSymbol,
+  type ImpactEnvelope,
+  type ImpactKind,
+  type ImpactOptions,
+} from './operations/impact.ts'
+export { changedFiles, type Change } from './operations/changes.ts'
 export { file, type FileReport } from './operations/file.ts'
 export {
   classification,
@@ -30,6 +40,8 @@ export {
   doctor,
   type DoctorEnvelope,
   type DoctorOptions,
+  type BaselineReport,
+  type HeldBaseline,
   type IndexReport,
   type Precondition,
   type SpecifierEvidence,
@@ -149,6 +161,17 @@ export {
   type Scope,
   type Scoping,
 } from './labels/index.ts'
+
+export {
+  BASELINE_DIR,
+  capture,
+  chooseBaseline,
+  listBaselines,
+  openBaseline,
+  type BaselineChoice,
+  type Capture,
+  type StoredBaseline,
+} from './baseline/index.ts'
 
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
 export {

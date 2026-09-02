@@ -31,8 +31,10 @@ import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
 export const SCHEMA_VERSION: number = 4
 
 /**
- * The operation set. Phase 5's names are absent rather than reserved: the
- * skeleton ships four, and adding one is a manifest entry.
+ * The operation set, widened as each operation lands.
+ *
+ * `impact` is the only one of Phase 5's three to arrive: ADR 0012 deleted
+ * `review` and `plan`, so the enum grows by exactly the operations that exist.
  *
  * TODO(#10): widen to ADR 0006's full table as each operation lands.
  */
@@ -44,6 +46,7 @@ export type OperationName =
   | 'references'
   | 'file'
   | 'trace'
+  | 'impact'
   | 'doctor'
   | 'report-bug'
 

@@ -10,7 +10,7 @@
 
 import type { Config } from '../config/index.ts'
 import { loadConfig } from '../config/index.ts'
-import { findRepositoryRoot } from '../discovery.ts'
+import { currentCommit, findRepositoryRoot } from '../discovery.ts'
 import { detectDrift, driftedPaths, hasDrift, type Drift } from '../drift.ts'
 import type {
   AnswerContext,
@@ -134,6 +134,12 @@ export function openSession(options: SessionOptions): Session {
       ? null
       : relabel(root, store, config)
 
+  // Committing changes no file, so a session that found nothing to repair can
+  // still be looking at a different commit than the one the header records.
+  // Left alone, every answer would name the parent commit until something
+  // drifted — and a baseline would be captured under that name.
+  if (repair === null && !options.noUpdate) restamp(root, store)
+
   const current = readHeader(store)
   const snapshot: Snapshot = {
     commit: current.commit === '' ? null : current.commit,
@@ -158,6 +164,14 @@ export function openSession(options: SessionOptions): Session {
     labels: memoise(() => effective(readLabels(store))),
     close: () => store.close(),
   }
+}
+
+/** Record the commit the index now describes, where only the commit moved. */
+function restamp(root: string, store: Store): void {
+  const header = readHeader(store)
+  const commit = currentCommit(root)
+  if (commit === null || commit === header.commit) return
+  writeHeader(store, { ...header, commit })
 }
 
 /**

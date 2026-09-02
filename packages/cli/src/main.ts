@@ -23,6 +23,7 @@ import {
   ConfigError,
   doctor,
   file,
+  impact,
   openSession,
   REPORT_FILE,
   references,
@@ -48,6 +49,7 @@ import {
   renderDoctor,
   renderEdges,
   renderFile,
+  renderImpact,
   renderReferences,
   renderError,
   renderReport,
@@ -195,6 +197,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       scopingFor(command, session),
       session.repair,
       session.labelPass,
+      { root: session.root, cap: session.config.baselines },
     )
     return emit(command.json, envelope, () =>
       renderAnalyse(envelope as AnalyseEnvelope, style),
@@ -242,6 +245,20 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderTrace(envelope, style))
+  },
+  impact: (command, session, style) => {
+    const envelope = impact(
+      session.store,
+      session.context,
+      command.limit,
+      command.depth,
+      {
+        root: session.root,
+        base: command.base,
+        scoping: scopingFor(command, session),
+      },
+    )
+    return emit(command.json, envelope, () => renderImpact(envelope, style))
   },
   doctor: diagnosed,
   // Unreachable: `execute` routes `report-bug` before a session is opened. The

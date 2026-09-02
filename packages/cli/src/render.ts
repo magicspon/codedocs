@@ -9,13 +9,18 @@
 
 import type {
   AnalysisTotals,
+  BaselineReport,
+  BaselineUsed,
   CallEdge,
+  Capture,
+  Change,
   CallSite,
   Classification,
   Disagreement,
   DoctorEnvelope,
   Envelope,
   FileReport,
+  ImpactEnvelope,
   ImportEdge,
   LabelPass,
   Precondition,
@@ -57,6 +62,7 @@ export type AnalyseEnvelope = Envelope<readonly ProjectSummary[]> & {
   readonly totals: AnalysisTotals
   readonly repair: RepairReport | null
   readonly labels: LabelPass | null
+  readonly capture: Capture | null
 }
 
 /** Render an `analyse` answer. */
@@ -75,6 +81,7 @@ export function renderAnalyse(envelope: AnalyseEnvelope, style: Style): string {
   const notes = [
     repairLine(envelope.repair, style),
     labelLine(envelope.labels, style),
+    captureLine(envelope.capture, style),
   ].filter((line): line is string => line !== null)
   return finish(envelope, [...body, ...notes], style, 'projects')
 }
@@ -119,9 +126,109 @@ function labelLine(pass: LabelPass | null, style: Style): string | null {
   )
 }
 
+/**
+ * What was captured as a baseline, or why nothing was.
+ *
+ * Said out loud because it is a side effect: ADR 0008 gives capture no command
+ * of its own, and a 20 MB copy that happens silently is one a user cannot
+ * account for. The decline is printed too — "the tree is not clean" is the
+ * answer to "why is there no baseline to compare against".
+ */
+function captureLine(taken: Capture | null, style: Style): string | null {
+  if (taken === null) return null
+  if (taken.commit === null) {
+    return style.dim(`  no baseline captured — ${taken.declined ?? 'declined'}`)
+  }
+  const evicted =
+    taken.evicted.length === 0
+      ? ''
+      : `, evicting ${count(taken.evicted.length, 'baseline')}`
+  return style.dim(
+    `  captured a baseline for ${taken.commit.slice(0, 7)}` +
+      ` (${Math.round(taken.bytes / 1024)} KB)${evicted}`,
+  )
+}
+
 /** `1 project` / `3 projects`, for a line that counts something. */
 const count = (n: number, unit: string): string =>
   `${n} ${unit}${n === 1 ? '' : 's'}`
+
+/**
+ * Render an `impact` answer.
+ *
+ * Grouped by distance from the change, because that is the question a reader
+ * has: the seeds are what was edited, and each level out is one more hop of
+ * "would notice". The edge kind rides on every row — a symbol reached because a
+ * type it names moved is a different fact from one that calls it.
+ */
+export function renderImpact(envelope: ImpactEnvelope, style: Style): string {
+  const lines: string[] = []
+  let depth: number | undefined
+  for (const found of envelope.result ?? []) {
+    if (found.depth !== depth) {
+      depth = found.depth
+      lines.push(
+        style.bold(depth === 0 ? '  changed' : `  ${count(depth, 'step')} out`),
+      )
+    }
+    const through =
+      found.through === 'changed' ? '' : `  ${style.dim(found.through)}`
+    lines.push(`    ${found.id}${through}`)
+  }
+  return [
+    finish(envelope, lines, style, 'impacted symbols'),
+    ...changesNote(envelope.changes, style),
+    ...baselineChoiceNote(envelope.baseline, style),
+  ].join('\n')
+}
+
+/** How many changed files are named before the rest are counted. */
+const CHANGE_LIMIT = 10
+
+/** What the comparison found different, which is where the walk started. */
+function changesNote(changes: readonly Change[], style: Style): Note {
+  const counted = changes.filter((change) => change.excluded === null)
+  if (counted.length === 0) {
+    return ['', style.dim('  nothing changed against the baseline')]
+  }
+  const overflow = counted.length - CHANGE_LIMIT
+  return [
+    '',
+    style.dim(`  ${count(counted.length, 'file')} changed:`),
+    ...counted
+      .slice(0, CHANGE_LIMIT)
+      .map((change) => style.dim(`    ${change.file} (${change.kind})`)),
+    ...(overflow > 0 ? [style.dim(`    …and ${overflow} more`)] : []),
+  ]
+}
+
+/**
+ * Which baseline answered, and how far it is from the one asked for.
+ *
+ * Substitution is part of the request rather than a limitation of the answer, so
+ * it is stated plainly here and never filed as a blind spot: codedocs knows
+ * exactly which index it compared against.
+ */
+function baselineChoiceNote(choice: BaselineUsed, style: Style): Note {
+  const used = choice.commit
+  if (used === null) return []
+  const asked = choice.requested
+  if (asked === null || asked === used) {
+    return ['', style.dim(`  compared against ${used.slice(0, 7)}`)]
+  }
+  const away =
+    choice.distance === null
+      ? ''
+      : `, ${count(Math.abs(choice.distance), 'commit')} ` +
+        `${choice.distance < 0 ? 'behind' : 'ahead of'} it`
+  return [
+    '',
+    style.warn(
+      `  no baseline for ${asked.slice(0, 7)} — compared against ` +
+        `${used.slice(0, 7)}${away}`,
+    ),
+  ]
+}
 
 /** How many distinct specifiers are named under one precondition. */
 const SPECIFIER_LIMIT = 5
@@ -150,6 +257,7 @@ export function renderDoctor(envelope: DoctorEnvelope, style: Style): string {
     finish(envelope, lines, style, 'unmet preconditions'),
     ...measuredNote(envelope.measured, style),
     ...classificationNote(envelope.classification, style),
+    ...baselineNote(envelope.baselines, style),
     ...headerNote(envelope, style),
   ].join('\n')
 }
@@ -281,6 +389,40 @@ function classificationNote(found: Classification, style: Style): Note {
             ),
           ...(overflow > 0 ? [style.dim(`      …and ${overflow} more`)] : []),
         ]),
+  ]
+}
+
+/**
+ * The baselines held, and how far `HEAD` has moved from the newest.
+ *
+ * ADR 0008 calls its cap of three a guess and says so. With telemetry ruled out,
+ * this line is the only place the guess accrues evidence: a distance that keeps
+ * growing is a cap that is too small.
+ */
+function baselineNote(report: BaselineReport, style: Style): Note {
+  if (report.cap === 0) {
+    return ['', style.dim('  baselines are disabled (`baselines: 0`)')]
+  }
+  if (report.held.length === 0) {
+    return [
+      '',
+      style.dim(
+        '  no baselines held — one is captured by `analyse` over a clean tree',
+      ),
+    ]
+  }
+  const distance =
+    report.distance === null
+      ? ''
+      : `, HEAD is ${count(report.distance, 'commit')} ahead of the newest`
+  const usable = report.held.filter((one) => one.ancestor).length
+  return [
+    '',
+    style.dim(
+      `  ${count(report.held.length, 'baseline')} of ${report.cap} held` +
+        `${usable === report.held.length ? '' : ` (${usable} usable)`}` +
+        distance,
+    ),
   ]
 }
 
