@@ -32,11 +32,6 @@ function gitOk(args: string[]): boolean {
   }
 }
 
-/** True when the clone already holds the commit's objects. */
-export function hasCommit(commit: string): boolean {
-  return gitOk(['cat-file', '-e', `${commit}^{commit}`])
-}
-
 /** True when the commit names a file at that path. */
 export function hasFileAt(commit: string, path: string): boolean {
   return gitOk(['cat-file', '-e', `${commit}:${path}`])
