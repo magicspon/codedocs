@@ -5,8 +5,8 @@ less of the repository?**
 
 Not "is the agent smarter with it". Smarter is not measurable here. What is
 measurable is the cost of getting to a known-correct answer — tokens processed,
-tools called, files opened, seconds spent — and whether the arm holding codedocs
-pays less of it.
+tools called, exploration steps taken, files opened, lines of source read,
+seconds spent — and whether the arm holding codedocs pays less of it.
 
 ## The task
 
@@ -101,7 +101,9 @@ level 1 control together with the level 4 case and reports neither.
 | -------- | --------------------------------------------------------------------------------- |
 | `tokens` | every token the loop processed, cache reads included                              |
 | `calls`  | tool calls made                                                                   |
+| `steps`  | of those calls, the ones that inspected the repository                            |
 | `files`  | distinct repository files opened, by `Read` or by a shell command that prints one |
+| `src`    | lines of repository content those inspections returned                            |
 | `sec`    | wall time                                                                         |
 | `hit`    | the answer named every ground-truth file                                          |
 | `sym`    | the answer named at least one ground-truth symbol                                 |
@@ -109,12 +111,61 @@ level 1 control together with the level 4 case and reports neither.
 Cache reads are counted because a cached token is still a token the model read,
 and a shorter search is exactly what shrinks the number.
 
-Files opened is counted conservatively: the shell-command parser only recognises
-commands that print a file, and a path it fails to spot undercounts whichever
-arm ran the command. The bias therefore always runs against the tool being sold.
-
 Medians, not means. With three replicates one runaway agent loop would drag a
 mean somewhere no typical run goes.
+
+### An exploration step
+
+**One tool call that asked the repository something.** A `Read`, a `Grep`, a
+`Glob`, or a `Bash` command that prints a file, searches the tree, or queries
+codedocs. Everything else is not a step: `git log`, `wc`, `true`. Those are
+bookkeeping about the checkout rather than a look at what is in it.
+
+A read, a search and a codedocs query all count as one step each. Charging them
+differently would decide the comparison in advance, which is the one thing the
+metric must not do.
+
+`steps` sits beside `calls` rather than replacing it, because the gap between
+them is itself worth seeing: it is what the agent spent on things that were not
+looking at the repository.
+
+### Lines of source read
+
+**`src` counts what every step returned, in non-blank lines.** A `Read` of 90
+lines is 90; a `grep` that printed 12 matching lines is 12; a `codedocs symbol`
+answer of 19 lines is 19. Blank lines are dropped, so a sparsely spaced file
+does not score above the same code packed tighter — that is a fact about
+formatting, not about how much was read.
+
+This is the number `files` cannot give. Case `#333085` opens exactly one file on
+both arms, so `files` reads 0%; `src` reads −52%, because the baseline read
+1,167 lines of that file and the codedocs arm read 563.
+
+Counting the tool's own output is deliberate. `codedocs` answers are repository
+content pulled into the context by a step, so they are charged to the codedocs
+arm exactly as its briefing tokens are. Over the runs on disk that is 1,891
+lines the arm has to carry.
+
+### Where the counts are wrong, and which way
+
+Three known undercounts. Each is stated with its direction, and none of them
+favours codedocs:
+
+- **The shell-command parser is conservative.** It recognises commands that
+  print a file — `cat`, `head`, `sed` and the rest — and a path it fails to spot
+  undercounts `files`, `steps` and `src` for whichever arm ran the command.
+- **Excluding searches from `src` was rejected for this reason.** Search output
+  is repository content, and the baseline searched more of it: 2,072 lines
+  against the codedocs arm's 1,017. Leaving searches out would have removed
+  twice as much from the baseline as from codedocs and flattered the tool by
+  roughly a thousand lines a set. Counting them keeps the comparison honest.
+- **`git log` and `wc` are not steps.** Across the runs on disk the two arms
+  spent almost the same on them — 13 calls against 11 over fifteen runs each — so
+  the exclusion takes about as much from one arm as the other, and the residue is
+  far too small to explain any gap the `steps` column shows.
+
+The residual bias therefore runs against the tool being sold, as it does for
+`files`.
 
 ## Running it
 
@@ -150,7 +201,7 @@ process spawning:
 | `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
 | `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
 | `agent.ts`      | spawning `claude -p` and collecting its stream                 |
-| `tally.ts`      | what one run consumed: tool calls, files opened, tokens        |
+| `tally.ts`      | what one run consumed: calls, steps, files, lines read, tokens |
 | `stream.ts`     | walking the stream and folding it into that tally              |
 | `score.ts`      | reading the answer block, scoring it, and deciding validity    |
 | `record.ts`     | the record one saved stream implies                            |

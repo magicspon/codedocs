@@ -1,10 +1,10 @@
 /**
  * What one run consumed, accumulated as the stream is walked.
  *
- * A tally answers three questions about a run: which tools it called, which
- * repository files it opened, and whether it reached for codedocs. The first
- * two are what the benchmark compares; the third decides whether the run counts
- * as the arm it claims to be.
+ * A tally answers four questions about a run: which tools it called, which
+ * repository files it opened, how much of the repository those looks returned,
+ * and whether it reached for codedocs. The first three are what the benchmark
+ * compares; the last decides whether the run counts as the arm it claims to be.
  */
 
 import { normalise } from './paths.ts'
@@ -29,6 +29,17 @@ export type Tally = {
   files: Set<string>
   toolCalls: number
   outputChars: number
+  /** Lines of repository content the inspecting calls returned. */
+  sourceLines: number
+  /** Tool calls that inspected the repository. */
+  steps: number
+  /**
+   * The ids of inspecting calls still waiting for their result.
+   *
+   * A `tool_result` carries no hint of what it answers, so what a call was has
+   * to be remembered from the `tool_use` that opened it.
+   */
+  pending: Set<string>
   usedCodedocs: boolean
   /** Epoch seconds the quota frees up, set when the API refused the run outright. */
   rateLimitedUntil: number | null
@@ -41,6 +52,9 @@ export function emptyTally(): Tally {
     files: new Set<string>(),
     toolCalls: 0,
     outputChars: 0,
+    sourceLines: 0,
+    steps: 0,
+    pending: new Set<string>(),
     usedCodedocs: false,
     rateLimitedUntil: null,
   }
@@ -48,6 +62,14 @@ export function emptyTally(): Tally {
 
 /** Commands that put a file's contents into the transcript. `grep` is a search, not an open. */
 const READS_A_FILE = /\b(?:cat|bat|head|tail|less|more|nl|awk|sed)\b/
+
+/**
+ * Commands that ask the repository a question without opening a named file.
+ *
+ * Only `explorationSteps` and `sourceLinesRead` read this. `filesOpened` must
+ * not: a search names no file it opened, and counting one would inflate it.
+ */
+const SEARCHES_THE_REPO = /\b(?:grep|rg|ag|find|fd|ls|glob)\b/
 
 /**
  * Pulls repository-relative paths out of a shell command that reads files.
@@ -105,9 +127,30 @@ function callsCodedocs(name: string, args: Record<string, unknown>): boolean {
   )
 }
 
-/** Banks one `tool_use` block: the call itself, and any file it opened. */
+/**
+ * True when a call asked the repository something.
+ *
+ * A read, a search and a codedocs query are all one thing here — a look at the
+ * repository — because the benchmark is comparing the cost of looking, and
+ * charging a look differently depending on which tool performed it would decide
+ * the answer in advance. `git log`, `wc` and the rest are bookkeeping about the
+ * checkout rather than a look at its contents, so they are not steps.
+ */
+function inspectsRepo(name: string, args: Record<string, unknown>): boolean {
+  if (name === 'Read' || name === 'Grep' || name === 'Glob') return true
+  if (name !== 'Bash') return false
+  const command = args['command']
+  if (typeof command !== 'string') return false
+  return (
+    READS_A_FILE.test(command) ||
+    SEARCHES_THE_REPO.test(command) ||
+    INVOKES_CODEDOCS.test(command)
+  )
+}
+
+/** Banks one `tool_use` block: the call itself, any file it opened, and the look it took. */
 export function recordToolUse(
-  block: { name?: string; input?: Record<string, unknown> },
+  block: { id?: string; name?: string; input?: Record<string, unknown> },
   tally: Tally,
 ): void {
   if (!block.name) return
@@ -116,13 +159,42 @@ export function recordToolUse(
   tally.byName[block.name] = (tally.byName[block.name] ?? 0) + 1
   if (callsCodedocs(block.name, args)) tally.usedCodedocs = true
   for (const path of filesFromToolUse(block.name, args)) tally.files.add(path)
+  if (inspectsRepo(block.name, args)) {
+    tally.steps += 1
+    // The lines this look returns are banked when its result arrives.
+    if (block.id) tally.pending.add(block.id)
+  }
 }
 
 /** Characters of one tool result, which is what the next turn has to carry. */
-export function resultChars(body: unknown): number {
+function resultChars(body: unknown): number {
   return typeof body === 'string'
     ? body.length
     : JSON.stringify(body ?? '').length
+}
+
+/**
+ * Lines of one tool result. Blank lines are not counted: a read of a sparsely
+ * spaced file would otherwise score higher than the same code packed tighter,
+ * which is a fact about formatting and not about how much was read.
+ */
+function resultLines(body: unknown): number {
+  const text = typeof body === 'string' ? body : JSON.stringify(body ?? '')
+  return text.split('\n').filter((line) => line.length > 0).length
+}
+
+/**
+ * Banks one `tool_result`: what it costs the next turn, and — when it answers a
+ * look at the repository — how much of the repository it carried.
+ */
+export function recordToolResult(
+  block: { tool_use_id?: string; content?: unknown },
+  tally: Tally,
+): void {
+  tally.outputChars += resultChars(block.content)
+  if (block.tool_use_id && tally.pending.delete(block.tool_use_id)) {
+    tally.sourceLines += resultLines(block.content)
+  }
 }
 
 /**
@@ -149,6 +221,8 @@ export function metricsFrom(event: RunTotals, tally: Tally): RunMetrics {
     toolCalls: tally.toolCalls,
     toolCallsByName: tally.byName,
     filesOpened: [...tally.files].sort(),
+    sourceLinesRead: tally.sourceLines,
+    explorationSteps: tally.steps,
     toolOutputChars: tally.outputChars,
     turns: event.num_turns ?? 0,
     durationMs: event.duration_ms ?? 0,
@@ -166,6 +240,8 @@ export const NO_METRICS: RunMetrics = {
   toolCalls: 0,
   toolCallsByName: {},
   filesOpened: [],
+  sourceLinesRead: 0,
+  explorationSteps: 0,
   toolOutputChars: 0,
   turns: 0,
   durationMs: 0,

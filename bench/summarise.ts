@@ -15,7 +15,11 @@ export type Cell = {
   symbolHits: number
   tokens: number
   toolCalls: number
+  /** Tool calls that inspected the repository. */
+  steps: number
   files: number
+  /** Lines of repository content those inspections returned. */
+  sourceLines: number
   seconds: number
   costUsd: number
 }
@@ -40,7 +44,11 @@ export function summarise(records: RunRecord[]): Cell {
     symbolHits: valid.filter((r) => r.answer?.symbolHit).length,
     tokens: Math.round(median(valid.map((r) => r.metrics.tokensTotal))),
     toolCalls: Math.round(median(valid.map((r) => r.metrics.toolCalls))),
+    steps: Math.round(median(valid.map((r) => r.metrics.explorationSteps))),
     files: Math.round(median(valid.map((r) => r.metrics.filesOpened.length))),
+    sourceLines: Math.round(
+      median(valid.map((r) => r.metrics.sourceLinesRead)),
+    ),
     seconds: Math.round(median(valid.map((r) => r.metrics.durationMs / 1000))),
     costUsd: median(valid.map((r) => r.metrics.costUsd)),
   }

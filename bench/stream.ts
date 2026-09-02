@@ -10,8 +10,8 @@ import {
   emptyTally,
   metricsFrom,
   NO_METRICS,
+  recordToolResult,
   recordToolUse,
-  resultChars,
 } from './tally.ts'
 import type { Tally } from './tally.ts'
 import type { RunMetrics } from './types.ts'
@@ -19,8 +19,11 @@ import type { RunMetrics } from './types.ts'
 /** One content block inside a stream message. */
 type StreamBlock = {
   type: string
+  id?: string
   name?: string
   input?: Record<string, unknown>
+  /** Present on a `tool_result`: the `tool_use` it answers. */
+  tool_use_id?: string
   content?: unknown
 }
 
@@ -29,12 +32,7 @@ type StreamEvent = {
   type: string
   subtype?: string
   message?: {
-    content?: Array<{
-      type: string
-      name?: string
-      input?: Record<string, unknown>
-      content?: unknown
-    }>
+    content?: StreamBlock[]
     usage?: Record<string, number>
   }
   usage?: Record<string, number>
@@ -74,8 +72,7 @@ function applyAssistant(content: StreamBlock[], tally: Tally): void {
 /** Banks the tool output one user message carried back into the context. */
 function applyUser(content: StreamBlock[], tally: Tally): void {
   for (const block of content) {
-    if (block.type === 'tool_result')
-      tally.outputChars += resultChars(block.content)
+    if (block.type === 'tool_result') recordToolResult(block, tally)
   }
 }
 

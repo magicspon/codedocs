@@ -10,7 +10,7 @@ import { delta, summarise, type Cell } from './summarise.ts'
 import type { ArmName, RunRecord } from './types.ts'
 
 /** The width of the table body, which every rule spans. */
-const RULE = '-'.repeat(77)
+const RULE = '-'.repeat(92)
 
 export const ARMS: ArmName[] = ['baseline', 'codedocs']
 
@@ -29,16 +29,24 @@ function armRow(
   const counted = cell.runs - cell.invalid
   return (
     `  ${label.padEnd(10)}${shape.padEnd(15)}${arm.padEnd(11)}` +
-    `${pad(cell.tokens.toLocaleString(), 9)}${pad(cell.toolCalls, 7)}${pad(cell.files, 7)}${pad(cell.seconds, 6)}` +
+    `${pad(cell.tokens.toLocaleString(), 9)}${pad(cell.toolCalls, 7)}${pad(cell.steps, 7)}` +
+    `${pad(cell.files, 7)}${pad(cell.sourceLines.toLocaleString(), 8)}${pad(cell.seconds, 6)}` +
     `${pad(`${cell.hits}/${counted}`, 6)}${pad(`${cell.symbolHits}/${counted}`, 6)}${invalid}`
   )
 }
 
-/** The delta row beneath a pair of arms. Negative is a saving. */
+/**
+ * The delta row beneath a pair of arms. Negative is a saving.
+ *
+ * The 25 matches the label and shape columns an arm row prints (10 + 15), so
+ * the percentages land under the numbers they are about.
+ */
 function deltaRow(base: Cell, cd: Cell): string {
   return (
-    `  ${''.padEnd(21)}${'delta'.padEnd(11)}${pad(delta(base.tokens, cd.tokens), 9)}` +
-    `${pad(delta(base.toolCalls, cd.toolCalls), 7)}${pad(delta(base.files, cd.files), 7)}` +
+    `  ${''.padEnd(25)}${'delta'.padEnd(11)}${pad(delta(base.tokens, cd.tokens), 9)}` +
+    `${pad(delta(base.toolCalls, cd.toolCalls), 7)}${pad(delta(base.steps, cd.steps), 7)}` +
+    `${pad(delta(base.files, cd.files), 7)}` +
+    `${pad(delta(base.sourceLines, cd.sourceLines), 8)}` +
     `${pad(delta(base.seconds, cd.seconds), 6)}`
   )
 }
@@ -81,7 +89,8 @@ export function printHeader(): void {
   console.log('  cases grouped by difficulty level; see bench/DIFFICULTY.md\n')
   console.log(
     `  ${'case'.padEnd(10)}${'shape'.padEnd(15)}${'arm'.padEnd(11)}${pad('tokens', 9)}` +
-      `${pad('calls', 7)}${pad('files', 7)}${pad('sec', 6)}${pad('hit', 6)}${pad('sym', 6)}`,
+      `${pad('calls', 7)}${pad('steps', 7)}${pad('files', 7)}${pad('src', 8)}` +
+      `${pad('sec', 6)}${pad('hit', 6)}${pad('sym', 6)}`,
   )
 }
 

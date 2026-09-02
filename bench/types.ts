@@ -72,6 +72,13 @@ export type RunMetrics = {
   toolCallsByName: Record<string, number>
   /** Distinct repository files the run opened, by any means. */
   filesOpened: string[]
+  /**
+   * Lines of repository content every inspecting call pulled into context —
+   * file reads, searches and codedocs answers alike. See the README.
+   */
+  sourceLinesRead: number
+  /** Tool calls that inspected the repository, under the README's definition. */
+  explorationSteps: number
   /** Characters of tool output fed back into the context. */
   toolOutputChars: number
   turns: number
