@@ -57,7 +57,12 @@ export {
   readUnanalysedProjects,
 } from './read-projects.ts'
 
-export { readSymbol, readSymbolIdAt, readSymbols } from './read-symbols.ts'
+export {
+  readSymbol,
+  readSymbolIdAt,
+  readSymbols,
+  readSymbolsNamed,
+} from './read-symbols.ts'
 
 export {
   readCalleesOf,

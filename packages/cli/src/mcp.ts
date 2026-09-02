@@ -18,7 +18,7 @@
 
 import type { Readable, Writable } from 'node:stream'
 
-import { OPERATIONS, type OperationSpec } from '@codedocs/core'
+import { OPERATIONS, toolName, type OperationSpec } from '@codedocs/core'
 
 import { run } from './main.ts'
 
@@ -191,10 +191,17 @@ function schemaFor(spec: OperationSpec): Record<string, ArgumentSchema> {
   return Object.assign(properties, GLOBAL_ARGUMENTS)
 }
 
-/** The tool list, derived so it cannot fall behind the operation set. */
+/**
+ * The tool list, derived so it cannot fall behind the operation set.
+ *
+ * The name is the operation's, with the one transliteration ADR 0006's rule
+ * needs: a tool name may not carry a space, so `docs check` is published as
+ * `docs_check`. Derived from the manifest rather than declared here, so an
+ * operation cannot arrive under one name in this binding and another in the CLI.
+ */
 export function tools(): unknown[] {
   return OPERATIONS.map((spec) => ({
-    name: spec.name,
+    name: toolName(spec),
     description: describe(spec),
     inputSchema: {
       type: 'object',
@@ -320,7 +327,9 @@ function argvFor(
   const schema = schemaFor(spec)
   // A server's stdout is a protocol stream, so colour is refused rather than
   // left to a TTY check that would be wrong here.
-  const argv = [spec.name, '--json', '--no-color']
+  // Spelled as the CLI spells it, which for the two `docs` operations is two
+  // positionals: the argv is the command line a person would have typed.
+  const argv = [...spec.name.split(' '), '--json', '--no-color']
   let subject: string | readonly string[] | undefined
 
   for (const name of Object.keys(args)) {
@@ -354,7 +363,7 @@ const failed = (failure: Failure): Answer => ({ ok: false, failure })
 /** Answer one `tools/call`. */
 function callTool(params: Record<string, unknown>): Answer {
   const name = params['name']
-  const spec = OPERATIONS.find((entry) => entry.name === name)
+  const spec = OPERATIONS.find((entry) => toolName(entry) === name)
   if (spec === undefined) {
     return failed({
       code: -32602,

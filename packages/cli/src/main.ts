@@ -21,6 +21,8 @@ import {
   callees,
   callers,
   ConfigError,
+  docsAffected,
+  docsCheck,
   doctor,
   evidence,
   file,
@@ -33,6 +35,8 @@ import {
   symbol,
   trace,
   type AnswerContext,
+  type DocsEnvelope,
+  type DocsOptions,
   type Envelope,
   type EnvelopeError,
   type EvidenceEnvelope,
@@ -48,6 +52,7 @@ import { formatError } from './messages.ts'
 import { codedocsFrames } from './stack.ts'
 import {
   renderAnalyse,
+  renderDocs,
   renderDoctor,
   renderEdges,
   renderEvidence,
@@ -273,6 +278,26 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
     )
     return emit(command.json, envelope, () => renderImpact(envelope, style))
   },
+  'docs check': (command, session, style) => {
+    const envelope = docsCheck(
+      session.store,
+      session.context,
+      command.limit,
+      docsOptionsFor(command, session),
+    )
+    return documented(command, envelope, style)
+  },
+  'docs affected': (command, session, style) => {
+    const envelope = docsAffected(
+      session.store,
+      session.context,
+      command.limit,
+      docsOptionsFor(command, session),
+    )
+    // ADR 0006's table gives `docs affected` no exit 1: it says which documents
+    // a change reaches, and reaching one is not a finding.
+    return emit(command.json, envelope, () => renderDocs(envelope, style))
+  },
   doctor: diagnosed,
   // Unreachable: `execute` routes `report-bug` before a session is opened. The
   // entry is here so that adding an operation is a type error rather than a
@@ -282,6 +307,44 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       code: 'operation-failed',
       params: { detail: '`report-bug` opens no session' },
     }),
+}
+
+/**
+ * How the two `docs` operations are asked to run.
+ *
+ * The drift set comes from the session rather than from git, which is what lets
+ * `docs affected` with no arguments answer "what have I broken right now" in a
+ * checkout that is not a repository at all.
+ */
+const docsOptionsFor = (command: Command, session: Session): DocsOptions => ({
+  root: session.root,
+  config: session.config,
+  scoping: scopingFor(command, session),
+  labels: session.labels(),
+  drifted: [...session.drift.changed, ...session.drift.added],
+  failOn: command.failOn,
+  base: command.base,
+})
+
+/**
+ * `docs check`, which is the second operation whose answer can carry a finding.
+ *
+ * `contradicted` alone reaches exit 1 by default, and `--fail-on` adds one more
+ * verdict. A document carrying an error of its own reaches it too: an
+ * unparseable claim is not a verdict at all but a claim that checks nothing, and
+ * exiting 0 would let one typo disable a document's verification for ever.
+ */
+function documented(
+  command: Command,
+  envelope: DocsEnvelope,
+  style: Style,
+): Outcome {
+  return emit(
+    command.json,
+    envelope,
+    () => renderDocs(envelope, style),
+    envelope.failing > 0 || envelope.faulted > 0 ? 1 : 0,
+  )
 }
 
 /**

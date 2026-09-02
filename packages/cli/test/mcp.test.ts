@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url'
 import { PassThrough } from 'node:stream'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-import { OPERATIONS } from '@codedocs/core'
+import { OPERATIONS, toolName } from '@codedocs/core'
 
 import { run } from '../src/main.ts'
 import { handle, serve, tools } from '../src/mcp.ts'
@@ -71,7 +71,7 @@ describe('the tool list', () => {
     // operation nobody has written yet. A convenience tool would fail here, and
     // so would an operation that reached only the CLI.
     expect((tools() as { name: string }[]).map((tool) => tool.name)).toEqual(
-      OPERATIONS.map((operation) => operation.name),
+      OPERATIONS.map(toolName),
     )
   })
 

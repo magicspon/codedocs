@@ -28,6 +28,44 @@ export {
 } from './operations/evidence.ts'
 export { references } from './operations/references.ts'
 export {
+  docsAffected,
+  docsCheck,
+  type DocsEnvelope,
+  type DocsOptions,
+} from './operations/docs.ts'
+// The whole result type of both public functions, not just its outermost layer:
+// a caller of `discoverDocuments` that cannot name a `ParsedDocument`, or of
+// `parseClaim` that cannot name what it got back, has half an API.
+export {
+  discoverDocuments,
+  parseClaim,
+  type Claim,
+  type ClaimFault,
+  type ClaimReason,
+  type ClaimReport,
+  type ClaimSite,
+  type ClaimSyntaxError,
+  type CountPredicate,
+  type Coverage,
+  type DocumentFault,
+  type DocumentReport,
+  type DocumentScan,
+  type DocumentSection,
+  type LinkReport,
+  type ParsedClaim,
+  type ParsedDocument,
+  type ProseLink,
+  type RelationPredicate,
+  type SectionReport,
+  type Verdict,
+} from './docs/index.ts'
+export {
+  continuationOf,
+  CANDIDATE_LIMIT,
+  type Candidate,
+  type Continuation,
+} from './continuity/index.ts'
+export {
   impact,
   type BaselineUsed,
   type ImpactedSymbol,
@@ -104,6 +142,7 @@ export {
   OPERATIONS,
   operationSpec,
   operationsTaking,
+  toolName,
   type OperationFlag,
   type OperationSpec,
   type SubjectSpec,

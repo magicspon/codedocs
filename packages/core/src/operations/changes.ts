@@ -9,9 +9,8 @@
  * files and the answer goes on without the fidelity comparison.
  */
 
-import { execFileSync } from 'node:child_process'
-
 import type { BaselineChoice } from '../baseline/index.ts'
+import { changedPaths } from '../git.ts'
 import type { FilePath } from '../model.ts'
 import {
   readCanonicalProjects,
@@ -111,32 +110,13 @@ function fromGit(
   root: string,
   choice: BaselineChoice,
 ): { file: FilePath; kind: Change['kind'] }[] {
-  const names = new Set<FilePath>()
-  const collect = (args: readonly string[]): void => {
-    try {
-      const out = execFileSync('git', [...args], {
-        cwd: root,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-      })
-      for (const line of out.split('\n')) {
-        if (line !== '') names.add(line)
-      }
-    } catch {
-      // No git, or a commit it does not know: the answer degrades to the
-      // uncommitted half rather than failing.
-    }
-  }
-  if (choice.requested !== null) {
-    collect(['diff', '--name-only', `${choice.requested}...HEAD`])
-  }
-  collect(['diff', '--name-only', 'HEAD'])
-  collect(['ls-files', '--others', '--exclude-standard'])
-
   // Every path git names is reported as `changed`: without a baseline index
   // there is nothing to say whether it existed before, and guessing would put
   // an invented distinction in front of the user.
-  return [...names].map((file) => ({ file, kind: 'changed' as const }))
+  return changedPaths(root, choice.requested).map((file) => ({
+    file,
+    kind: 'changed' as const,
+  }))
 }
 
 /**

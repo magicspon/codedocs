@@ -134,3 +134,103 @@ export function defaultBranch(root: string): string | null {
   }
   return null
 }
+
+/**
+ * Git's rename detection limit, as a codedocs constant.
+ *
+ * ADR 0007: every git knob is a codedocs constant and is never read from the
+ * user's `gitconfig`, or the same question answers differently on two machines
+ * and ADR 0006's byte-identical reproducibility is a fiction. The default
+ * silently loses 39% of renames — over 2,000 cal.com commits git reports 352
+ * and prints `exhaustive rename detection was skipped`, where this finds 574 —
+ * at 1.9 s against 0.16 s, which is a cost continuity pays once per unresolved
+ * subject rather than once per answer.
+ */
+const RENAME_LIMIT = 20000
+
+/**
+ * The last commit that touched a path, which for a vanished path is the one
+ * that removed it.
+ *
+ * The first half of ADR 0007's two-step probe, measured at 14 ms on cal.com.
+ * `git log --follow` costs 465 ms and answers a different question.
+ */
+export const lastCommitTouching = (
+  root: string,
+  path: string,
+): string | null => {
+  const found = git(root, ['rev-list', '-1', 'HEAD', '--', path])
+  return found === null || found === '' ? null : found
+}
+
+/** One rename git reported, carrying git's own similarity score and never codedocs'. */
+export interface GitRename {
+  readonly from: string
+  readonly to: string
+  /** Git's `-M` score, 0-100. The one threshold codedocs inherits, named as git's. */
+  readonly similarity: number
+}
+
+/**
+ * Every rename one commit performed.
+ *
+ * The second half of the probe, 153 ms on cal.com. Asking one commit what it did
+ * returns the destination path with no stored state at all, which is what lets
+ * subject matching need no [[Baseline]].
+ */
+export function renamesIn(root: string, commit: string): GitRename[] {
+  const output = git(root, [
+    '-c',
+    `diff.renameLimit=${RENAME_LIMIT}`,
+    'show',
+    '--name-status',
+    '--diff-filter=R',
+    '--find-renames',
+    '--format=',
+    commit,
+  ])
+  if (output === null || output === '') return []
+  const renames: GitRename[] = []
+  for (const line of output.split('\n')) {
+    // `R075\told/path.ts\tnew/path.ts`
+    const [status, from, to] = line.split('\t')
+    if (status === undefined || from === undefined || to === undefined) continue
+    const score = Number(status.slice(1))
+    if (!Number.isInteger(score)) continue
+    renames.push({ from, to, similarity: score })
+  }
+  return renames
+}
+
+/**
+ * Every path git reports as different from `ref`, plus everything uncommitted.
+ *
+ * Both halves of the change: what the commits did, and what is uncommitted on
+ * top of them. A [[Snapshot]] is a commit plus whatever is uncommitted, so an
+ * answer that read only the first would miss the work in front of the user.
+ *
+ * A `null` ref asks only about the uncommitted half, which is what an operation
+ * that was given no base wants.
+ *
+ * **`--no-renames`, so a rename is both of its paths.** Git's rename detection
+ * would name only the destination, and the source is the path that a document's
+ * claim and an earlier index still hold — the case where the answer matters most
+ * is the one detection would hide. Pairing a rename is [[Continuity]]'s job and
+ * has its own probe; this set is only "which paths differ".
+ */
+export function changedPaths(root: string, ref: string | null): string[] {
+  const names = new Set<string>()
+  const collect = (args: readonly string[]): void => {
+    const out = git(root, args)
+    if (out === null) return
+    for (const line of out.split('\n')) {
+      if (line !== '') names.add(line)
+    }
+  }
+  if (ref !== null) {
+    collect(['diff', '--name-only', '--no-renames', `${ref}...HEAD`])
+  }
+  collect(['diff', '--name-only', '--no-renames', 'HEAD'])
+  collect(['ls-files', '--others', '--exclude-standard'])
+  return [...names].sort()
+}

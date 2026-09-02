@@ -44,6 +44,18 @@ export type Derivation =
   | 'tsconfig-exclude'
   /** Nothing else fired, which is what makes a file `source` and `authored`. */
   | 'default'
+  // ADR 0007's continuity signals, strongest first, appended for the same reason
+  // the label signals were: the stored code is a position, so the enum is
+  // append-only. None of these is ever stored — continuity persists nothing and
+  // caches nothing — but a `Derivation` is a `Derivation` wherever it is named.
+  | 'content-hash'
+  | 'path-prefix-rewrite'
+  | 'git-rename'
+  | 'shape-hash'
+  | 'descriptor-suffix'
+  | 'declared-name'
+  | 'name-in-head'
+  | 'call-site-overlap'
 
 /**
  * The closed edge set. Adding a variant is a model change, which is the cost we
