@@ -663,6 +663,10 @@ space.
 in one call, and `--claims` gives back the claim syntax for writing the result into a document that
 `docs check` will then keep honest.
 
+**[docs/agent-guide.md](docs/agent-guide.md)** is written for the agent rather than for you — which
+command to reach for, how to investigate without re-searching what codedocs has already answered, and
+how to read the honesty fields. Paste it into your `AGENTS.md` or `CLAUDE.md`.
+
 ## Reading an answer honestly
 
 An answer that cannot say what it missed is worse than no answer. codedocs separates three things
