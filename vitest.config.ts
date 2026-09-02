@@ -21,6 +21,37 @@ const config: ViteUserConfig = defineConfig({
       // without becoming a fact about that package instead.
       { test: { name: 'repo', include: ['test/**/*.test.ts'] } },
     ],
+
+    // Coverage belongs to the root run, not to a project: with `projects`,
+    // vitest reads one coverage config and reports the workspace as a whole.
+    coverage: {
+      // Every source file, not only the ones a test happened to import — an
+      // untested file reading 0% is the number worth seeing.
+      include: ['packages/*/src/**/*.ts', 'scripts/**/*.ts'],
+      exclude: [
+        // Type-only surface compiles to nothing; v8 would report it as
+        // uncovered lines that no test could ever reach.
+        '**/*.d.ts',
+        // Fixtures are inputs the tests read, never code under test.
+        '**/test/fixtures/**',
+        // The `codedocs` shim: argv parsing, a call into `run`, and the exit
+        // code. Importing it *is* running the CLI, so there is nothing a unit
+        // test can hold; `main.ts` and `mcp.ts` behind it are covered.
+        'packages/cli/src/bin.ts',
+      ],
+      // `lcovonly` rather than `lcov`: the latter writes a second HTML report
+      // under `coverage/lcov-report`, which `html` has already produced.
+      reporter: ['text', 'html', 'lcovonly'],
+      // Floors, not targets — set just under the numbers the suite already
+      // reaches, so a real regression fails CI while ordinary work does not
+      // have to chase the last percent. Raise them when the suite earns it.
+      thresholds: {
+        statements: 90,
+        branches: 76,
+        functions: 92,
+        lines: 92,
+      },
+    },
   },
 })
 

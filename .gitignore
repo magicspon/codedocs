@@ -16,6 +16,10 @@ todos.json
 storybook-static
 .fallow/
 
+# Vitest's coverage output: the HTML report and the lcov file are both derived
+# from a run anyone can repeat.
+coverage
+
 # Playwright's own run artefacts. The fixture store under `apps/e2e/tests/mocks`
 # is deliberately *not* here: those files are the answer the tests assert on, and
 # a fixture nobody can review is the failure this package exists to prevent.

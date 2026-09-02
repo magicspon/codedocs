@@ -51,6 +51,7 @@ unstub
 untallied
 uprn
 vinxi
+vitest
 wayfinder
 wayfinding
 worktree

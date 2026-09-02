@@ -743,6 +743,7 @@ Open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues)
 
 ```sh
 pnpm test           # vitest
+pnpm test:coverage  # vitest with v8 coverage, against the thresholds in vitest.config.ts
 pnpm typecheck      # tsc across the workspace
 pnpm lint           # oxlint
 pnpm check          # oxfmt --check && oxlint
