@@ -11,12 +11,14 @@ import { spawn } from 'node:child_process'
 /**
  * Tools both arms may use. `Bash` is on for both because grep and find are how
  * anyone searches a repository from a shell, and taking it from the baseline
- * would rig the comparison. Edits, subagents and the network are off: the task
- * is read-only, and a subagent's tokens are accounted separately from the loop
- * being measured.
+ * would rig the comparison. Editing is on because the task is to write the fix,
+ * and the worktree it writes to is thrown away afterwards. Subagents and the
+ * network stay off: a subagent's tokens are accounted separately from the loop
+ * being measured, and a run that fetched the upstream fix would be measuring
+ * nothing.
  */
-const ALLOWED = 'Read,Grep,Glob,Bash,TodoWrite'
-const DISALLOWED = 'Edit,Write,NotebookEdit,Task,WebFetch,WebSearch'
+const ALLOWED = 'Read,Grep,Glob,Bash,TodoWrite,Edit,Write'
+const DISALLOWED = 'NotebookEdit,Task,WebFetch,WebSearch'
 
 /** Spawns one agent run in `root` and returns its stream, line by line. */
 export function runAgent(

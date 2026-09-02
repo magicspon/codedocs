@@ -11,7 +11,9 @@ import type { RunRecord } from './types.ts'
 export type Cell = {
   runs: number
   invalid: number
+  /** Runs whose patch changed every ground-truth file. */
   hits: number
+  /** Runs whose patch named at least one ground-truth symbol. */
   symbolHits: number
   tokens: number
   toolCalls: number
@@ -40,8 +42,9 @@ export function summarise(records: RunRecord[]): Cell {
   return {
     runs: records.length,
     invalid: records.length - valid.length,
-    hits: valid.filter((r) => r.answer?.correct).length,
-    symbolHits: valid.filter((r) => r.answer?.symbolHit).length,
+    hits: valid.filter((r) => r.diff?.correct).length,
+    symbolHits: valid.filter((r) => (r.diff?.symbolsHit.length ?? 0) > 0)
+      .length,
     tokens: Math.round(median(valid.map((r) => r.metrics.tokensTotal))),
     toolCalls: Math.round(median(valid.map((r) => r.metrics.toolCalls))),
     steps: Math.round(median(valid.map((r) => r.metrics.explorationSteps))),

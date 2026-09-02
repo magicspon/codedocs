@@ -83,9 +83,7 @@ export function printArms(
 
 /** The title and column header, which fix the widths every row then follows. */
 export function printHeader(): void {
-  console.log(
-    '\ncodedocs localization benchmark — microsoft/vscode, medians per cell',
-  )
+  console.log('\ncodedocs fix benchmark — microsoft/vscode, medians per cell')
   console.log('  cases grouped by difficulty level; see bench/DIFFICULTY.md\n')
   console.log(
     `  ${'case'.padEnd(10)}${'shape'.padEnd(15)}${'arm'.padEnd(11)}${pad('tokens', 9)}` +

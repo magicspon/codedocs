@@ -1,5 +1,5 @@
 /**
- * Runs the localization benchmark: one agent, two arms, N replicates per case.
+ * Runs the fix benchmark: one agent, two arms, N replicates per case.
  *
  *   node bench/run.ts                      every case, 3 replicates
  *   node bench/run.ts --cases 333230       one case
@@ -8,10 +8,10 @@
  *   node bench/run.ts --resume             skip runs already measured
  *   node bench/run.ts --rescore            rebuild records from saved streams
  *
- * Each run is a fresh `claude -p` process with no memory of the last, reading a
+ * Each run is a fresh `claude -p` process with no memory of the last, writing a
  * throwaway vscode worktree at the commit before that case's fix. Results land
- * in `bench/results/` as one JSON file per run, plus the raw agent stream
- * beside it for auditing.
+ * in `bench/results/` as one JSON file per run, plus the raw agent stream and
+ * the patch the run produced beside it for auditing.
  */
 
 import { mkdirSync } from 'node:fs'
@@ -30,7 +30,7 @@ async function main(): Promise<void> {
   const arms = flag('arms', 'baseline,codedocs').split(',') as ArmName[]
 
   if (has('rescore')) {
-    console.log('rescoring saved streams; no agent is run\n')
+    console.log('rescoring saved runs; no agent is run\n')
     rescore(cases)
     return
   }

@@ -1,9 +1,9 @@
 /**
- * Shared shapes for the localization benchmark.
+ * Shared shapes for the fix benchmark.
  *
  * The benchmark asks one question: does codedocs let an agent reach the same
- * answer while reading less of the repository? Every type here exists to make
- * that comparison auditable — what was asked, what was allowed, what it cost.
+ * fix while reading less of the repository? Every type here exists to make that
+ * comparison auditable — what was asked, what was allowed, what it cost.
  */
 
 /** What the issue text hands the agent before it starts looking. */
@@ -95,18 +95,24 @@ export type RunMetrics = {
   costUsd: number
 }
 
-/** What the agent claimed, and whether it was right. */
-export type RunAnswer = {
+/**
+ * What the patch a run produced touched, and whether it reached the fix.
+ *
+ * Scored on the diff git took out of the run's worktree, never on anything the
+ * agent said about its own work.
+ */
+export type RunDiff = {
+  /** Every file the diff changed, repository-relative. */
   files: string[]
-  symbols: string[]
-  /** Every ground-truth file the answer named. */
+  /** Ground-truth files the diff changed. */
   filesHit: string[]
-  /** Ground-truth files the answer missed. */
+  /** Ground-truth files the diff left alone. */
   filesMissed: string[]
-  /** Files the answer named that the fix did not touch. */
+  /** Files the diff changed that the upstream fix did not. */
   filesExtra: string[]
-  symbolHit: boolean
-  /** True when every ground-truth file was named. */
+  /** Ground-truth symbols the diff's hunks name, inside ground-truth files. */
+  symbolsHit: string[]
+  /** True when the diff changed every ground-truth file. */
   correct: boolean
 }
 
@@ -125,7 +131,8 @@ export type RunRecord = {
    */
   baseCommit?: string
   metrics: RunMetrics
-  answer: RunAnswer | null
+  /** What the run's patch touched, or null when it left no patch at all. */
+  diff: RunDiff | null
   /** Set when the run cannot be counted, with the reason. */
   invalid: string | null
 }

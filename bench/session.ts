@@ -3,13 +3,16 @@
  *
  * Each run happens in its own worktree at the case's base commit, so the tree
  * under test is the one the bug was reported against and nothing a run does to
- * it reaches the next. The stream lands on disk before anything is derived from
- * it, so a run that is refused partway through still leaves its evidence behind.
+ * it reaches the next. The patch is taken out of that worktree before it is
+ * discarded, and both it and the stream land on disk before anything is derived
+ * from them, so a run that is refused partway through still leaves its evidence
+ * behind.
  */
 
 import { readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { runAgent } from './agent.ts'
+import { captureDiff } from './diff.ts'
 import { RESULTS } from './paths.ts'
 import { buildPrompt } from './prompt.ts'
 import { RateLimited, recordFrom, verdictLine } from './record.ts'
@@ -24,13 +27,20 @@ function stemFor(caseId: string, arm: ArmName, replicate: number): string {
 }
 
 /** What one run produced, and what it cost to make the tree it read. */
-type Outcome = { lines: string[]; indexSeconds: number }
+type Outcome = {
+  lines: string[]
+  /** The patch the run left in its worktree, as unified diff text. */
+  patch: string
+  indexSeconds: number
+}
 
 /**
- * Runs the agent once, in a worktree of its own, and returns its stream.
+ * Runs the agent once, in a worktree of its own, and returns its stream and its
+ * patch.
  *
  * The worktree goes whatever happened inside it: the next run has to start from
- * the commit rather than from this run's leftovers.
+ * the commit rather than from this run's leftovers. Which is why the patch is
+ * read out first — it is the only thing the run is scored on.
  */
 async function runInWorktree(
   bench: BenchCase,
@@ -46,13 +56,18 @@ async function runInWorktree(
     // Only the arm that is told about the index pays for one being there.
     const indexSeconds = arm === 'codedocs' ? warmIndex(worktree.root) : 0
     const prompt = buildPrompt(bench, arm, worktree.root)
-    return { lines: await runAgent(prompt, model, worktree.root), indexSeconds }
+    const lines = await runAgent(prompt, model, worktree.root)
+    return {
+      lines,
+      patch: captureDiff(worktree.root, bench.base.commit),
+      indexSeconds,
+    }
   } finally {
     worktree.remove()
   }
 }
 
-/** Writes one run's record and its raw stream, and prints its verdict. */
+/** Writes one run's record, its raw stream and its patch, and prints its verdict. */
 function fileRun(
   outcome: Outcome,
   bench: BenchCase,
@@ -62,12 +77,22 @@ function fileRun(
   startedAt: string,
 ): void {
   const stem = stemFor(bench.id, arm, replicate)
-  // The stream lands first, so a refused run leaves the evidence behind.
+  // The evidence lands first, so a refused run leaves it behind: the stream of
+  // what the agent did, and the patch it is scored on, both auditable by hand.
   writeFileSync(`${stem}.stream.jsonl`, `${outcome.lines.join('\n')}\n`, 'utf8')
+  writeFileSync(`${stem}.diff`, outcome.patch, 'utf8')
 
   let record: RunRecord
   try {
-    record = recordFrom(outcome.lines, bench, arm, replicate, model, startedAt)
+    record = recordFrom({
+      lines: outcome.lines,
+      patch: outcome.patch,
+      bench,
+      arm,
+      replicate,
+      model,
+      startedAt,
+    })
   } catch (error) {
     // A refused run measured nothing. Drop any record a previous attempt left
     // behind, so the report counts a missing run rather than a failed search.

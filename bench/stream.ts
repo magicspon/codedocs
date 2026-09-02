@@ -36,7 +36,6 @@ type StreamEvent = {
     usage?: Record<string, number>
   }
   usage?: Record<string, number>
-  result?: string
   num_turns?: number
   duration_ms?: number
   total_cost_usd?: number
@@ -47,7 +46,6 @@ type StreamEvent = {
 /** Everything one stream says about the run that produced it. */
 export type ParsedStream = {
   metrics: RunMetrics
-  text: string
   usedCodedocs: boolean
   rateLimitedUntil: number | null
 }
@@ -96,19 +94,14 @@ function applyEvent(event: StreamEvent, tally: Tally): RunMetrics | null {
 export function parseStream(lines: string[]): ParsedStream {
   const tally = emptyTally()
   let metrics = NO_METRICS
-  let text = ''
 
   for (const event of decode(lines)) {
     const final = applyEvent(event, tally)
-    if (final) {
-      metrics = final
-      text = event.result ?? ''
-    }
+    if (final) metrics = final
   }
 
   return {
     metrics,
-    text,
     usedCodedocs: tally.usedCodedocs,
     rateLimitedUntil: tally.rateLimitedUntil,
   }
