@@ -50,6 +50,17 @@
     "graphify-out/**"
   ],
 
+  "health": {
+    // CRAP is a coverage metric: CC^2 * (1 - cov)^3 + CC. `bench/` is outside
+    // the coverage config in `vitest.config.ts` on purpose — it is a research
+    // harness whose only real input is a paid agent run, so it reads as 0%
+    // covered and every function with five branches clears `maxCrap`. That
+    // says nothing about the code. Cyclomatic and cognitive limits still
+    // apply everywhere else, and the harness is held to the 300-line rule by
+    // review instead.
+    "ignore": ["bench/**"]
+  },
+
   "duplicates": {
     // Hide small-N clones; focus on widespread copy-paste worth refactoring.
     "minOccurrences": 4
