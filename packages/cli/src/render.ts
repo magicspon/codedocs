@@ -14,15 +14,20 @@ import type {
   Disagreement,
   DoctorEnvelope,
   Envelope,
+  FileReport,
+  ImportEdge,
   Precondition,
   ProjectConditions,
   ProjectSummary,
+  ReferenceEdge,
   RepairReport,
   ReportEnvelope,
   SpecifierEvidence,
   SymbolNode,
   TracePath,
 } from '@codedocs/core'
+
+import { operationSpec } from '@codedocs/core'
 
 import { formatError } from './messages.ts'
 
@@ -256,6 +261,113 @@ export function renderEdges(
 }
 
 /**
+ * Render a `references` answer.
+ *
+ * Both directions arrive in one list, so each line names both ends: unlike
+ * `callers`, the end the caller did not ask about is not the same end on every
+ * row. The kind is never dropped — `extends` and a type annotation are different
+ * facts about the same pair.
+ */
+export function renderReferences(
+  envelope: Envelope<readonly ReferenceEdge[]>,
+  style: Style,
+): string {
+  const lines = (envelope.result ?? []).map((edge) => {
+    const where = style.dim(`${edge.file}:${edge.line}`)
+    const how =
+      edge.provenance === 'deterministic'
+        ? ''
+        : ` ${style.warn(`[${edge.provenance}: ${edge.derivation}]`)}`
+    return `  ${edge.from} ${style.warn(edge.kind)} ${edge.to}  ${where}${how}`
+  })
+  return finish(envelope, lines, style, 'references')
+}
+
+/** How many symbols, imports or importers are named before the rest are counted. */
+const FILE_LIST_LIMIT = 10
+
+/**
+ * Render a `file` answer.
+ *
+ * Grouped under headings rather than flattened, because the four lists answer
+ * four questions and a caller reading one has no use for the other three
+ * interleaved. Each is capped and says what it capped, which is the renderer's
+ * only licence to withhold.
+ */
+export function renderFile(
+  envelope: Envelope<readonly FileReport[]>,
+  style: Style,
+): string {
+  const lines = (envelope.result ?? []).flatMap((report) => [
+    `  ${style.bold(report.path)}${fidelityNote(report, style)}`,
+    ...projectLines(report, style),
+    ...listing(
+      'declares',
+      report.symbols.map(
+        (node) => `${node.qualified}  ${style.dim(node.kind)}`,
+      ),
+      style,
+    ),
+    ...listing('imports', report.imports.map(importLine), style),
+    ...listing('imported by', [...report.importers], style),
+  ])
+  return finish(envelope, lines, style, 'files')
+}
+
+/** The fidelity the file was analysed at, with the cause where there is one. */
+function fidelityNote(report: FileReport, style: Style): string {
+  if (report.fidelity === null) return style.warn('  not analysed')
+  if (report.fidelity === 'typed') return style.dim('  typed')
+  const cause = report.cause === null ? '' : ` (${report.cause})`
+  return style.warn(`  syntactic${cause}`)
+}
+
+/**
+ * The projects that globbed the file, with the canonical one marked.
+ *
+ * Marked rather than listed alone: a file can belong to several, and which one
+ * produced its facts is what decides the fidelity on the line above.
+ */
+function projectLines(report: FileReport, style: Style): string[] {
+  if (report.projects.length === 0) return []
+  return [
+    style.dim(
+      `    in ${report.projects
+        .map((project) =>
+          project === report.canonicalProject ? `${project} *` : project,
+        )
+        .join(', ')}`,
+    ),
+  ]
+}
+
+/** One import: the specifier, and the file it resolved to or that it did not. */
+const importLine = (edge: ImportEdge): string =>
+  edge.to === null
+    ? `${edge.specifier} → unresolved`
+    : `${edge.specifier} → ${edge.to}`
+
+/**
+ * One capped list under its heading.
+ *
+ * The heading is printed even for an empty list: a file nothing imports is the
+ * answer to the question most often asked of this operation, and silence there
+ * reads as an answer withheld rather than as the count it is.
+ */
+function listing(
+  heading: string,
+  entries: readonly string[],
+  style: Style,
+): string[] {
+  const overflow = entries.length - FILE_LIST_LIMIT
+  return [
+    style.dim(`    ${heading} (${entries.length})`),
+    ...entries.slice(0, FILE_LIST_LIMIT).map((entry) => `      ${entry}`),
+    ...(overflow > 0 ? [style.dim(`      …and ${overflow} more`)] : []),
+  ]
+}
+
+/**
  * Render a `trace` answer as a tree, collapsing the prefix each path shares
  * with the one before it.
  *
@@ -481,9 +593,21 @@ function emptyLine(
 ): string {
   const { subject, resolved } = envelope.request
   if (subject !== null && resolved.length === 0) {
-    return style.warn(`  \`${subject}\` matched no symbol`)
+    return style.warn(`  \`${subject}\` matched no ${nounOf(envelope)}`)
   }
   return style.dim(`  no ${unit}`)
+}
+
+/**
+ * What an operation's subject names, so one that takes a path does not report
+ * that it matched no *symbol*.
+ *
+ * Read off the manifest rather than listed here, so an operation that arrives
+ * with a subject of its own cannot be forgotten in this sentence.
+ */
+const nounOf = (envelope: Envelope<unknown>): string => {
+  const named = operationSpec(envelope.operation)?.subject?.name ?? ''
+  return named === 'path' ? 'file' : 'symbol'
 }
 
 /** How many blind spots are named before the rest are counted. */

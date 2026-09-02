@@ -187,6 +187,69 @@ describe('the human renderer', () => {
   })
 })
 
+describe('references', () => {
+  it('answers with the envelope, and names both ends of each edge', () => {
+    const envelope = JSON.parse(
+      invoke('references', 'Gateway', '--json').stdout,
+    ) as {
+      operation: string
+      result: { from: string; to: string; kind: string }[]
+    }
+    expect(envelope.operation).toBe('references')
+    expect(envelope.result[0]).toMatchObject({
+      from: 'src/payments.ts#StripeGateway',
+      to: 'src/payments.ts#Gateway',
+      kind: 'implements',
+    })
+  })
+
+  it('reports a relationship the call operations cannot', () => {
+    // `Gateway` is implemented and never called: the two halves of the
+    // relationship set, kept apart.
+    expect(invoke('callers', 'Gateway').stdout).toContain('no call edges')
+    expect(invoke('references', 'Gateway').stdout).toContain('implements')
+  })
+
+  it('is byte-identical when the same question is asked twice', () => {
+    expect(invoke('references', 'Gateway', '--json').stdout).toBe(
+      invoke('references', 'Gateway', '--json').stdout,
+    )
+  })
+})
+
+describe('file', () => {
+  it('reports one file’s projects, symbols, imports and importers', () => {
+    const envelope = JSON.parse(
+      invoke('file', 'src/checkout.ts', '--json').stdout,
+    ) as {
+      result: {
+        path: string
+        projects: string[]
+        canonicalProject: string
+        symbols: unknown[]
+        imports: unknown[]
+        importers: string[]
+      }[]
+    }
+    const report = envelope.result[0]
+    expect(report?.path).toBe('src/checkout.ts')
+    expect(report?.projects).toEqual(['tsconfig.json'])
+    expect(report?.canonicalProject).toBe('tsconfig.json')
+    expect(report?.symbols.length).toBeGreaterThan(0)
+    expect(report?.imports.length).toBeGreaterThan(0)
+  })
+
+  it('accepts the tail of a path, as it prints one', () => {
+    expect(invoke('file', 'checkout.ts').stdout).toContain('src/checkout.ts')
+  })
+
+  it('says plainly when the index holds no such file', () => {
+    const result = invoke('file', 'src/nowhere.ts')
+    expect(result.code).toBe(0)
+    expect(result.stdout).toContain('`src/nowhere.ts` matched no file')
+  })
+})
+
 describe('doctor', () => {
   it('exits 1 for a cause a command would clear', () => {
     // The fixture has no `node_modules`, which is signal 1 and remediable.

@@ -17,7 +17,8 @@ import type {
   UnresolvedCallCause,
 } from '../../model.ts'
 import { attribute, descriptorPath } from './descriptors.ts'
-import { declarationKey, lineOf, nameOf } from './shared.ts'
+import { lookupDeclaration } from './lookup.ts'
+import { lineOf, nameOf } from './shared.ts'
 import type { DeclarationResolver, OwnedFile, View } from './types.ts'
 
 /** Call sites resolved per checker request. The spike's measured batch size. */
@@ -110,37 +111,6 @@ const record = (
 })
 
 /**
- * Match a checker symbol back to the symbol table through its declarations.
- *
- * The in-memory join covers the files this extraction swept; anything else falls
- * through to the index, which is what lets a wave of three files produce edges
- * into the thousands it did not look at.
- */
-function lookup(
-  project: Project,
-  symbol: CheckerSymbol,
-  view: View,
-  byDeclaration: ReadonlyMap<string, SymbolId>,
-  resolve: DeclarationResolver | undefined,
-): SymbolId | undefined {
-  for (const declaration of symbol.declarations) {
-    const node = declaration.resolve(project)
-    if (!node) continue
-    const sf = project.program.getSourceFile(declaration.path)
-    if (!sf) continue
-    const start = node.getStart(sf)
-    const hit = byDeclaration.get(declarationKey(declaration.path, start))
-    if (hit !== undefined) return hit
-    if (resolve === undefined) continue
-    const path = view.repoPathOf.get(String(declaration.path).toLowerCase())
-    if (path === undefined) continue
-    const stored = resolve(path, start)
-    if (stored !== undefined) return stored
-  }
-  return undefined
-}
-
-/**
  * Turn one resolved call site into an edge, or say why it produced none.
  *
  * An import or re-export alias resolves to the alias symbol, so a target absent
@@ -157,16 +127,13 @@ function resolveSite(
 ): { edge: CallEdge } | { cause: UnresolvedCallCause } {
   if (!symbol) return { cause: 'unresolvable' }
 
-  let target = lookup(project, symbol, view, byDeclaration, resolve)
-  if (target === undefined) {
-    try {
-      const aliased = project.checker.getAliasedSymbol(symbol)
-      if (aliased)
-        target = lookup(project, aliased, view, byDeclaration, resolve)
-    } catch {
-      // Not an alias, so the target is simply outside the repository.
-    }
-  }
+  const target = lookupDeclaration(
+    project,
+    symbol,
+    view,
+    byDeclaration,
+    resolve,
+  )
   if (target === undefined) return { cause: 'external' }
 
   const { owner, attribution } = attribute(site.site)

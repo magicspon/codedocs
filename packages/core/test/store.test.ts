@@ -12,7 +12,12 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import type { CallEdge, CallSite, SymbolNode } from '../src/model.ts'
+import type {
+  CallEdge,
+  CallSite,
+  ReferenceEdge,
+  SymbolNode,
+} from '../src/model.ts'
 import {
   ENUM_CODES,
   openStore,
@@ -57,6 +62,7 @@ describe('the stored enum codes', () => {
         'resolver',
       ],
       cause: ['external', 'unresolvable', 'dynamic'],
+      referenceKind: ['references', 'extends', 'implements', 'typeReferences'],
       fidelity: ['typed', 'syntactic'],
       preconditionCause: [
         'unprepared',
@@ -88,6 +94,7 @@ describe('interned ids', () => {
       symbols: WRITE.symbols,
       declarations: WRITE.declarations,
       callEdges: WRITE.callEdges,
+      referenceEdges: WRITE.referenceEdges,
       unresolvedCalls: WRITE.unresolvedCalls,
       importEdges: WRITE.importEdges,
       unresolvedSpecifiers: WRITE.unresolvedSpecifiers,
@@ -198,6 +205,22 @@ const edge = (
   derivation: 'checker-signature',
 })
 
+const reference = (
+  from: string,
+  to: string,
+  kind: ReferenceEdge['kind'],
+  line: number,
+): ReferenceEdge => ({
+  from,
+  to,
+  kind,
+  attribution: 'symbol',
+  file: 'src/b.ts',
+  line,
+  provenance: 'deterministic',
+  derivation: kind === 'references' ? 'checker-signature' : 'heritage-clause',
+})
+
 /** One hand-built analysis, small enough that every row above is nameable. */
 const WRITE = {
   projects: [
@@ -245,6 +268,10 @@ const WRITE = {
   callEdges: [
     edge('src/b.ts#beta', 'src/a.ts#alpha', 'symbol', 9),
     edge('src/b.ts', 'src/a.ts#alpha', 'file', 3),
+  ],
+  /** The same pair named without being called, which is a separate fact. */
+  referenceEdges: [
+    reference('src/b.ts#beta', 'src/a.ts#alpha', 'typeReferences', 11),
   ],
   unresolvedCalls: [
     { file: 'src/b.ts', line: 4, cause: 'external' as const, name: 'fetch' },

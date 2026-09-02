@@ -12,6 +12,7 @@ import type {
   CallEdge,
   FilePath,
   ImportEdge,
+  ReferenceEdge,
   SpecifierSite,
   SymbolId,
   SymbolNode,
@@ -52,6 +53,14 @@ export interface AdapterResult {
    */
   readonly declarations: readonly DeclarationSite[]
   readonly callEdges: readonly CallEdge[]
+  /**
+   * Every place a symbol is named without being called.
+   *
+   * A separate sweep rather than a flag on the call sweep, because ADR 0002
+   * keeps the two kinds apart: SCIP conflates them and that is why it was not
+   * chosen as the producer.
+   */
+  readonly referenceEdges: readonly ReferenceEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
   /**

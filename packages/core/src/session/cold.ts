@@ -91,6 +91,7 @@ export function rebuild(
         symbols: [],
         declarations: [],
         callEdges: [],
+        referenceEdges: [],
         unresolvedCalls: [],
         importEdges: [],
         unresolvedSpecifiers: [],
@@ -154,6 +155,7 @@ function extractProject(
     symbols: result.symbols,
     declarations: result.declarations,
     callEdges: result.callEdges,
+    referenceEdges: result.referenceEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
     unresolvedSpecifiers: classifySpecifiers(

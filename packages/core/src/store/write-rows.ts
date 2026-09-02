@@ -8,6 +8,7 @@ import type {
   FilePath,
   ImportEdge,
   ProjectNode,
+  ReferenceEdge,
   SymbolNode,
   UnresolvedCall,
   UnresolvedSpecifier,
@@ -22,6 +23,7 @@ import {
   KINDS,
   PRECONDITION_CAUSES,
   PROVENANCES,
+  REFERENCE_KINDS,
 } from './enums.ts'
 import { internerFor } from './interner.ts'
 import type { Store } from './open.ts'
@@ -34,6 +36,8 @@ export interface FileFacts {
   /** The declaration offsets the symbol rows cannot carry. See `declaration`. */
   readonly declarations: readonly DeclarationSite[]
   readonly callEdges: readonly CallEdge[]
+  /** Every non-call reference, per site, as `call_edge` holds every call. */
+  readonly referenceEdges: readonly ReferenceEdge[]
   readonly unresolvedCalls: readonly UnresolvedCall[]
   readonly importEdges: readonly ImportEdge[]
   /**
@@ -111,6 +115,7 @@ export function writeFileFacts(store: Store, facts: FileFacts): void {
   writeSymbols(store, facts.symbols)
   writeDeclarations(store, facts.declarations)
   writeCallEdges(store, facts.callEdges)
+  writeReferenceEdges(store, facts.referenceEdges)
   writeUnresolvedCalls(store, facts.unresolvedCalls)
   writeImportEdges(store, facts.importEdges)
   writeUnresolvedSpecifiers(store, facts.unresolvedSpecifiers)
@@ -199,6 +204,38 @@ function writeCallEdges(store: Store, callEdges: readonly CallEdge[]): void {
     edge.run(
       intern.node(row.from),
       intern.node(row.to),
+      code(ATTRIBUTIONS, row.attribution, 'attribution'),
+      intern.path(row.file),
+      row.line,
+      code(PROVENANCES, row.provenance, 'provenance'),
+      code(DERIVATIONS, row.derivation, 'derivation'),
+    )
+  }
+}
+
+/**
+ * The reference rows, which are the call rows plus a kind.
+ *
+ * A table of their own rather than a `kind` column on `call_edge`: every read
+ * of the call graph would then have to remember to filter it, and the one that
+ * forgot would answer `callers` with type annotations.
+ */
+function writeReferenceEdges(
+  store: Store,
+  referenceEdges: readonly ReferenceEdge[],
+): void {
+  const intern = internerFor(store)
+  const edge = store.db.prepare(
+    `insert into reference_edge
+       (from_id, to_id, kind, attribution, path_id, line, provenance,
+        derivation)
+       values (?, ?, ?, ?, ?, ?, ?, ?)`,
+  )
+  for (const row of referenceEdges) {
+    edge.run(
+      intern.node(row.from),
+      intern.node(row.to),
+      code(REFERENCE_KINDS, row.kind, 'reference kind'),
       code(ATTRIBUTIONS, row.attribution, 'attribution'),
       intern.path(row.file),
       row.line,

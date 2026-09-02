@@ -9,6 +9,7 @@ import type {
   FilePath,
   ImportEdge,
   ProjectNode,
+  ReferenceEdge,
   SymbolNode,
   UnresolvedCall,
   UnresolvedSpecifier,
@@ -97,6 +98,7 @@ function clearFile(store: Store, id: number): void {
   prepared(db, 'delete from symbol where path_id = ?').run(id)
   prepared(db, 'delete from declaration where path_id = ?').run(id)
   prepared(db, 'delete from call_edge where path_id = ?').run(id)
+  prepared(db, 'delete from reference_edge where path_id = ?').run(id)
   prepared(db, 'delete from unresolved_call where path_id = ?').run(id)
   prepared(db, 'delete from unresolved_specifier where path_id = ?').run(id)
   prepared(db, 'delete from file_import where from_id = ?').run(id)
@@ -242,6 +244,7 @@ interface FactGroup {
   symbols: SymbolNode[]
   declarations: DeclarationSite[]
   callEdges: CallEdge[]
+  referenceEdges: ReferenceEdge[]
   unresolvedCalls: UnresolvedCall[]
   importEdges: ImportEdge[]
   unresolvedSpecifiers: UnresolvedSpecifier[]
@@ -263,6 +266,7 @@ function groupByProject(
         symbols: [],
         declarations: [],
         callEdges: [],
+        referenceEdges: [],
         unresolvedCalls: [],
         importEdges: [],
         unresolvedSpecifiers: [],
@@ -277,13 +281,27 @@ function groupByProject(
     into.files.push(file)
     into.exportShapes.set(file.path, facts.exportShapes.get(file.path) ?? '')
   }
+  byFile(facts, group)
+  // The one family keyed by something else: an import edge belongs to the file
+  // that wrote the specifier.
+  for (const row of facts.importEdges) group(row.from).importEdges.push(row)
+  return groups
+}
+
+/**
+ * The fact families keyed by the file they describe.
+ *
+ * Apart from the rest because they share one key, which is what lets a family
+ * be added here as a line rather than as another branch of the split itself.
+ */
+function byFile(facts: FileFacts, group: (path: FilePath) => FactGroup): void {
   for (const row of facts.symbols) group(row.file).symbols.push(row)
   for (const row of facts.declarations) group(row.file).declarations.push(row)
   for (const row of facts.callEdges) group(row.file).callEdges.push(row)
+  for (const row of facts.referenceEdges)
+    group(row.file).referenceEdges.push(row)
   for (const row of facts.unresolvedCalls)
     group(row.file).unresolvedCalls.push(row)
-  for (const row of facts.importEdges) group(row.from).importEdges.push(row)
   for (const row of facts.unresolvedSpecifiers)
     group(row.file).unresolvedSpecifiers.push(row)
-  return groups
 }

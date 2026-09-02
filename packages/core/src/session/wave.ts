@@ -202,6 +202,7 @@ function runWave(
     symbols: result.symbols,
     declarations: result.declarations,
     callEdges: result.callEdges,
+    referenceEdges: result.referenceEdges,
     unresolvedCalls: result.unresolvedCalls,
     importEdges: result.importEdges,
     // The adapter measured which specifiers resolved to nothing; the cause is

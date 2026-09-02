@@ -18,7 +18,7 @@
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 7
+export const STORE_SCHEMA_VERSION = 8
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 export const TABLES: readonly string[] = [
@@ -33,6 +33,7 @@ export const TABLES: readonly string[] = [
   'symbol',
   'declaration',
   'call_edge',
+  'reference_edge',
   'unresolved_call',
   'unresolved_specifier',
 ]
@@ -121,6 +122,18 @@ create table if not exists call_edge (
   derivation integer not null
 ) strict;
 
+create table if not exists reference_edge (
+  rowid_ integer primary key autoincrement,
+  from_id integer not null,
+  to_id integer not null,
+  kind integer not null,
+  attribution integer not null,
+  path_id integer not null,
+  line integer not null,
+  provenance integer not null,
+  derivation integer not null
+) strict;
+
 create table if not exists unresolved_call (
   rowid_ integer primary key autoincrement,
   path_id integer not null,
@@ -142,6 +155,8 @@ create index if not exists symbol_name on symbol(name);
 create index if not exists symbol_site on symbol(path_id, start);
 create index if not exists call_edge_to on call_edge(to_id);
 create index if not exists call_edge_from on call_edge(from_id);
+create index if not exists reference_edge_to on reference_edge(to_id);
+create index if not exists reference_edge_from on reference_edge(from_id);
 `
 // There is no separate index on `symbol(path_id)`: `symbol_site` leads with that
 // column, so the file-scoped delete already uses it. The skeleton carried both,

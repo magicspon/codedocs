@@ -14,6 +14,7 @@ import type {
   Fidelity,
   PreconditionCause,
   Provenance,
+  ReferenceKind,
   SymbolKind,
   UnresolvedCallCause,
 } from '../model.ts'
@@ -52,6 +53,12 @@ export const CAUSES: readonly UnresolvedCallCause[] = [
   'unresolvable',
   'dynamic',
 ]
+export const REFERENCE_KINDS: readonly ReferenceKind[] = [
+  'references',
+  'extends',
+  'implements',
+  'typeReferences',
+]
 export const FIDELITIES: readonly Fidelity[] = ['typed', 'syntactic']
 export const PRECONDITION_CAUSES: readonly PreconditionCause[] = [
   'unprepared',
@@ -67,6 +74,7 @@ export interface EnumCodes {
   readonly provenance: readonly Provenance[]
   readonly derivation: readonly Derivation[]
   readonly cause: readonly UnresolvedCallCause[]
+  readonly referenceKind: readonly ReferenceKind[]
   readonly fidelity: readonly Fidelity[]
   readonly preconditionCause: readonly PreconditionCause[]
 }
@@ -78,6 +86,7 @@ export const ENUM_CODES: EnumCodes = {
   provenance: PROVENANCES,
   derivation: DERIVATIONS,
   cause: CAUSES,
+  referenceKind: REFERENCE_KINDS,
   fidelity: FIDELITIES,
   preconditionCause: PRECONDITION_CAUSES,
 }

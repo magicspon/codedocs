@@ -22,8 +22,10 @@ import {
   callers,
   ConfigError,
   doctor,
+  file,
   openSession,
   REPORT_FILE,
+  references,
   reportBug,
   SCHEMA_VERSION,
   symbol,
@@ -31,6 +33,7 @@ import {
   type AnswerContext,
   type Envelope,
   type EnvelopeError,
+  type OperationName,
   type ReportEnvelope,
   type Reproduction,
   type Session,
@@ -43,6 +46,8 @@ import {
   renderAnalyse,
   renderDoctor,
   renderEdges,
+  renderFile,
+  renderReferences,
   renderError,
   renderReport,
   renderSymbols,
@@ -158,45 +163,100 @@ function answered(command: Command, style: Style): Outcome {
  */
 const subjectOf = (command: Command): string => command.subject ?? ''
 
-/** One operation, and the renderer that goes with it. */
-function dispatch(command: Command, session: Session, style: Style): Outcome {
-  const { store, context } = session
-  const { depth, json, limit } = command
-  const subject = subjectOf(command)
+/** How one operation answers, given the session and the style to render with. */
+type Handler = (command: Command, session: Session, style: Style) => Outcome
 
-  switch (command.operation) {
-    case 'analyse': {
-      const envelope = analyse(store, context, limit, session.repair)
-      return emit(json, envelope, () =>
-        renderAnalyse(envelope as AnalyseEnvelope, style),
-      )
-    }
-    case 'symbol': {
-      const envelope = symbol(store, context, subject, limit)
-      return emit(json, envelope, () => renderSymbols(envelope, style))
-    }
-    case 'callers':
-    case 'callees': {
-      const operation = command.operation === 'callers' ? callers : callees
-      const envelope = operation(store, context, subject, limit)
-      return emit(json, envelope, () => renderEdges(envelope, style))
-    }
-    case 'trace': {
-      const envelope = trace(store, context, subject, limit, depth)
-      return emit(json, envelope, () => renderTrace(envelope, style))
-    }
-    case 'doctor':
-      return diagnosed(command, session, style)
-    // Unreachable: `execute` routes `report-bug` before a session is opened.
-    // The case is here so that adding an operation is a type error rather than a
-    // silent fall through — and if it ever did run, it did fail.
-    case 'report-bug':
-      return failed(command, style, {
-        code: 'operation-failed',
-        params: { detail: '`report-bug` opens no session' },
-      })
+/**
+ * One handler per operation, as a table rather than a switch.
+ *
+ * `Record<OperationName, …>` is what keeps ADR 0006's one-to-one binding
+ * checkable: an operation added to the manifest and forgotten here is a type
+ * error, exactly as a missing `case` was, and the table says at a glance that
+ * nothing in this binding composes two operations.
+ */
+const HANDLERS: Readonly<Record<OperationName, Handler>> = {
+  analyse: ({ json, limit }, session, style) => {
+    const envelope = analyse(
+      session.store,
+      session.context,
+      limit,
+      session.repair,
+    )
+    return emit(json, envelope, () =>
+      renderAnalyse(envelope as AnalyseEnvelope, style),
+    )
+  },
+  symbol: (command, session, style) => {
+    const envelope = symbol(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+    )
+    return emit(command.json, envelope, () => renderSymbols(envelope, style))
+  },
+  callers: edges(callers),
+  callees: edges(callees),
+  references: (command, session, style) => {
+    const envelope = references(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+    )
+    return emit(command.json, envelope, () => renderReferences(envelope, style))
+  },
+  file: (command, session, style) => {
+    const envelope = file(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+    )
+    return emit(command.json, envelope, () => renderFile(envelope, style))
+  },
+  trace: (command, session, style) => {
+    const envelope = trace(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+      command.depth,
+    )
+    return emit(command.json, envelope, () => renderTrace(envelope, style))
+  },
+  doctor: diagnosed,
+  // Unreachable: `execute` routes `report-bug` before a session is opened. The
+  // entry is here so that adding an operation is a type error rather than a
+  // silent fall through — and if it ever did run, it did fail.
+  'report-bug': (command, _session, style) =>
+    failed(command, style, {
+      code: 'operation-failed',
+      params: { detail: '`report-bug` opens no session' },
+    }),
+}
+
+/**
+ * `callers` and `callees`, which differ only in which column they read.
+ *
+ * Written once because the renderer already reads the operation name off the
+ * envelope to decide which end of an edge to print.
+ */
+function edges(read: typeof callers): Handler {
+  return (command, session, style) => {
+    const envelope = read(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+    )
+    return emit(command.json, envelope, () => renderEdges(envelope, style))
   }
 }
+
+/** One operation, and the renderer that goes with it. */
+const dispatch = (command: Command, session: Session, style: Style): Outcome =>
+  HANDLERS[command.operation](command, session, style)
 
 /**
  * `doctor`, which is the one operation whose answer can carry a finding.
