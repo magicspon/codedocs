@@ -29,7 +29,8 @@ import type {
   SpecifierSite,
   UnresolvedSpecifier,
 } from '../model.ts'
-import { asRecord, asStrings, readJsonc, upward } from './fs.ts'
+import { declaredDependencies, installedPackage } from './dependencies.ts'
+import { asRecord, asStrings } from './fs.ts'
 import { type ProjectConfig, readConfig } from './tsconfig.ts'
 
 export function classifySpecifiers(
@@ -129,7 +130,7 @@ function packageCause(
     const subpath = site.specifier.slice(packageName.length + 1)
     return resolves(join(installed, subpath)) ? 'unmapped' : 'missing-generated'
   }
-  return dependencyNames(root, from, lookups.declared).has(packageName)
+  return declaredDependencies(root, from, lookups.declared).has(packageName)
     ? 'unprepared'
     : null
 }
@@ -224,25 +225,6 @@ function packageOf(specifier: string): string | null {
   return segments[0] === '' ? null : segments[0]!
 }
 
-/** Whether a package is on disk in any `node_modules` above the importer. */
-function installedPackage(
-  root: string,
-  from: string,
-  packageName: string,
-  cache: Map<string, string | false>,
-): string | false {
-  const key = `${from} ${packageName}`
-  const cached = cache.get(key)
-  if (cached !== undefined) return cached
-  const found =
-    upward(root, from, (directory) => {
-      const absolute = join(directory, 'node_modules', packageName)
-      return existsSync(absolute) ? absolute : undefined
-    }) ?? false
-  cache.set(key, found)
-  return found
-}
-
 /** The extensions a subpath may be spelled without. */
 const IMPLIED: readonly string[] = [
   '',
@@ -275,27 +257,4 @@ function baseOf(
   return typeof baseUrl === 'string'
     ? posix.normalize(posix.join(directory, baseUrl))
     : directory
-}
-
-/** Every dependency the nearest `package.json` declares, by name. */
-function dependencyNames(
-  root: string,
-  from: string,
-  cache: Map<string, ReadonlySet<string>>,
-): ReadonlySet<string> {
-  const cached = cache.get(from)
-  if (cached !== undefined) return cached
-  const found =
-    upward(root, from, (directory) => {
-      const manifest = readJsonc(join(directory, 'package.json'))
-      if (manifest === undefined) return undefined
-      return new Set([
-        ...Object.keys(asRecord(manifest['dependencies'])),
-        ...Object.keys(asRecord(manifest['devDependencies'])),
-        ...Object.keys(asRecord(manifest['peerDependencies'])),
-        ...Object.keys(asRecord(manifest['optionalDependencies'])),
-      ])
-    }) ?? new Set<string>()
-  cache.set(from, found)
-  return found
 }

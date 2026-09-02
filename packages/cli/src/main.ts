@@ -21,6 +21,7 @@ import {
   callees,
   callers,
   ConfigError,
+  doctor,
   openSession,
   REPORT_FILE,
   reportBug,
@@ -40,6 +41,7 @@ import { formatError } from './messages.ts'
 import { codedocsFrames } from './stack.ts'
 import {
   renderAnalyse,
+  renderDoctor,
   renderEdges,
   renderError,
   renderReport,
@@ -148,16 +150,19 @@ function answered(command: Command, style: Style): Outcome {
 }
 
 /**
- * One operation, and the renderer that goes with it.
+ * The subject an operation was given.
  *
- * The subject is coalesced once: the parser has already refused an operation
- * that needs one and was given none, so the fallback is unreachable and exists
- * only because the type says it can be `null` for `analyse`.
+ * Coalesced once: the parser has already refused an operation that needs one and
+ * was given none, so the fallback is unreachable and exists only because the type
+ * says it can be `null` for the operations that take no subject.
  */
+const subjectOf = (command: Command): string => command.subject ?? ''
+
+/** One operation, and the renderer that goes with it. */
 function dispatch(command: Command, session: Session, style: Style): Outcome {
   const { store, context } = session
   const { depth, json, limit } = command
-  const subject = command.subject ?? ''
+  const subject = subjectOf(command)
 
   switch (command.operation) {
     case 'analyse': {
@@ -180,6 +185,8 @@ function dispatch(command: Command, session: Session, style: Style): Outcome {
       const envelope = trace(store, context, subject, limit, depth)
       return emit(json, envelope, () => renderTrace(envelope, style))
     }
+    case 'doctor':
+      return diagnosed(command, session, style)
     // Unreachable: `execute` routes `report-bug` before a session is opened.
     // The case is here so that adding an operation is a type error rather than a
     // silent fall through — and if it ever did run, it did fail.
@@ -189,6 +196,28 @@ function dispatch(command: Command, session: Session, style: Style): Outcome {
         params: { detail: '`report-bug` opens no session' },
       })
   }
+}
+
+/**
+ * `doctor`, which is the one operation whose answer can carry a finding.
+ *
+ * Kept out of the switch because the exit code is the operation's own: ADR 0006
+ * gives `doctor` exit 1 for an unmet cause a command would clear, and the count
+ * it reads is taken over the whole set rather than the part `--limit` returned.
+ */
+function diagnosed(command: Command, session: Session, style: Style): Outcome {
+  const envelope = doctor(session.store, session.context, command.limit, {
+    root: session.root,
+    config: session.config,
+    measure: command.measure,
+    seenFiles: session.seenFiles,
+  })
+  return emit(
+    command.json,
+    envelope,
+    () => renderDoctor(envelope, style),
+    envelope.remediable > 0 ? 1 : 0,
+  )
 }
 
 /**
@@ -350,16 +379,21 @@ function failed(
  * The human renderer is built lazily so that `--json` cannot pay for formatting
  * it will not print — and so that a bug in the human renderer cannot corrupt a
  * machine answer.
+ *
+ * @param code - The exit code the operation reached. An answer is `0` unless
+ * ADR 0006's table gives the operation a negative finding, and the operation
+ * decides that over its whole result rather than the part `--limit` returned.
  */
 function emit(
   json: boolean,
   envelope: Envelope<unknown>,
   human: () => string,
+  code: 0 | 1 = 0,
 ): Outcome {
   return {
     stdout: json ? JSON.stringify(envelope, null, 2) : human(),
     stderr: '',
-    code: 0,
+    code,
     envelope,
     error: null,
   }

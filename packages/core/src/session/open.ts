@@ -48,6 +48,14 @@ export interface Session {
   /** The repository's own `codedocs.jsonc`, or the defaults it did not override. */
   readonly config: Config
   readonly context: AnswerContext
+  /**
+   * Every source file this session's drift walk saw.
+   *
+   * Carried so `doctor --measure` can re-run signal 3 without a sweep of its
+   * own: the walk has just happened, and walking cal.com's 5,064 files twice
+   * costs 69 ms to learn what the session already knows.
+   */
+  readonly seenFiles: readonly FilePath[]
   /** What the repair actually did, for a test to pin and for `analyse` to report. */
   readonly repair: RepairReport | null
   close(): void
@@ -112,6 +120,7 @@ export function openSession(options: SessionOptions): Session {
       conditions: projects.map(toConditions),
       blindSpots,
     },
+    seenFiles: outstanding.drift.seenFiles,
     repair,
     close: () => store.close(),
   }

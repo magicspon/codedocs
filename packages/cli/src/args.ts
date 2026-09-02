@@ -55,6 +55,8 @@ export interface Command {
   readonly withRepository: boolean
   /** `report-bug`: where to write the report. `null` means the default path. */
   readonly out: string | null
+  /** `doctor`: re-run the filesystem signals against the working tree (ADR 0009). */
+  readonly measure: boolean
 }
 
 /** The default the human renderer applies when no `--limit` is given. */
@@ -70,6 +72,7 @@ const OPTIONS = {
   'no-color': { type: 'boolean' },
   'with-repository': { type: 'boolean' },
   out: { type: 'string' },
+  measure: { type: 'boolean' },
   help: { type: 'boolean', short: 'h' },
 } as const
 
@@ -130,6 +133,7 @@ export function parse(
       color: resolveColor(values.color, values['no-color']),
       withRepository: values['with-repository'] === true,
       out: values.out ?? null,
+      measure: values.measure === true,
     },
   }
 }

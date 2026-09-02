@@ -10,7 +10,8 @@
  * reproduces which files a config globs (signal 3), `signals.ts` is signals 1
  * and 2 plus the lockfile facts they share with the fingerprint,
  * `fingerprint.ts` is the environment fingerprint that stops a stored fidelity
- * being a lie, `specifiers.ts` causes each unresolved specifier (signal 4), and
+ * being a lie, `dependencies.ts` is what a manifest declares against what is on
+ * disk, `specifiers.ts` causes each unresolved specifier (signal 4), and
  * `project.ts` is `preflightProjects` and `fidelityOf` — the entry points that
  * assemble the rest.
  *
@@ -22,5 +23,6 @@ export {
   preflightProjects,
   type ProjectPreflight,
 } from './project.ts'
-export { compilerOptionsOf, lockfileName } from './signals.ts'
+export { absentDependencies } from './dependencies.ts'
+export { compilerOptionsOf, installCommand, lockfileName } from './signals.ts'
 export { classifySpecifiers } from './specifiers.ts'
