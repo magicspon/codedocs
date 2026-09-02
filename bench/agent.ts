@@ -2,12 +2,11 @@
  * Spawns the agent under test.
  *
  * One fresh `claude -p` process per run, with no memory of the last, reading
- * the pinned checkout. Nothing here differs between the arms — the only
- * difference is the prompt.
+ * the worktree that run was given. Nothing here differs between the arms — the
+ * only difference is the prompt.
  */
 
 import { spawn } from 'node:child_process'
-import { TARGET } from './paths.ts'
 
 /**
  * Tools both arms may use. `Bash` is on for both because grep and find are how
@@ -19,8 +18,12 @@ import { TARGET } from './paths.ts'
 const ALLOWED = 'Read,Grep,Glob,Bash,TodoWrite'
 const DISALLOWED = 'Edit,Write,NotebookEdit,Task,WebFetch,WebSearch'
 
-/** Spawns one agent run and returns its stream, line by line. */
-export function runAgent(prompt: string, model: string): Promise<string[]> {
+/** Spawns one agent run in `root` and returns its stream, line by line. */
+export function runAgent(
+  prompt: string,
+  model: string,
+  root: string,
+): Promise<string[]> {
   return new Promise((done, fail) => {
     const child = spawn(
       'claude',
@@ -41,7 +44,7 @@ export function runAgent(prompt: string, model: string): Promise<string[]> {
         '--permission-mode',
         'bypassPermissions',
       ],
-      { cwd: TARGET, stdio: ['ignore', 'pipe', 'pipe'] },
+      { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] },
     )
     const lines: string[] = []
     let buffer = ''

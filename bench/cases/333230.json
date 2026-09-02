@@ -7,6 +7,10 @@
     "url": "https://github.com/microsoft/vscode/commit/0f7b8aef913e61b9e39b80929695d214acdda2ad",
     "landedAt": "2026-08-31T22:47:13Z"
   },
+  "base": {
+    "commit": "8853be931dfb182c2497ecd99768a9442e4b7019",
+    "url": "https://github.com/microsoft/vscode/commit/8853be931dfb182c2497ecd99768a9442e4b7019"
+  },
   "truth": {
     "files": ["src/vs/base/browser/ui/list/listView.ts"],
     "symbols": ["getVisibleRange"]

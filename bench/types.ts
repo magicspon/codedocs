@@ -42,8 +42,17 @@ export type BenchCase = {
   fix: {
     commit: string
     url: string
-    /** ISO date the fix reached `main`, which is after the pinned checkout. */
+    /** ISO date the fix reached `main`. */
     landedAt: string
+  }
+  /**
+   * The repository state the case is run against: the commit immediately before
+   * its fix. The harness materialises it as a throwaway worktree per run, so
+   * the tree under test is the tree the bug was reported against.
+   */
+  base: {
+    commit: string
+    url: string
   }
   /** What a correct answer names. Test files are excluded on both sides. */
   truth: {
@@ -108,6 +117,13 @@ export type RunRecord = {
   replicate: number
   startedAt: string
   model: string
+  /**
+   * The commit the worktree this run read was cut from. Recorded so a result
+   * says which tree produced it: two runs of one case are only comparable when
+   * they read the same one. Absent on records written before per-case
+   * worktrees, which all read a single pinned checkout.
+   */
+  baseCommit?: string
   metrics: RunMetrics
   answer: RunAnswer | null
   /** Set when the run cannot be counted, with the reason. */

@@ -7,6 +7,10 @@
     "url": "https://github.com/microsoft/vscode/commit/8853be931dfb182c2497ecd99768a9442e4b7019",
     "landedAt": "2026-08-31T00:00:00Z"
   },
+  "base": {
+    "commit": "47d9a624f8f50ba8493bf24c61563c0fb710bd20",
+    "url": "https://github.com/microsoft/vscode/commit/47d9a624f8f50ba8493bf24c61563c0fb710bd20"
+  },
   "truth": {
     "files": ["src/vs/sessions/contrib/automations/browser/automationTools.ts"],
     "symbols": ["getToolData", "ConfigureAutomationTool"]

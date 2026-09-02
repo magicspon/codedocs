@@ -8,9 +8,10 @@
  *   node bench/run.ts --resume             skip runs already measured
  *   node bench/run.ts --rescore            rebuild records from saved streams
  *
- * Each run is a fresh `claude -p` process with no memory of the last, reading
- * the pinned vscode checkout. Results land in `bench/results/` as one JSON file
- * per run, plus the raw agent stream beside it for auditing.
+ * Each run is a fresh `claude -p` process with no memory of the last, reading a
+ * throwaway vscode worktree at the commit before that case's fix. Results land
+ * in `bench/results/` as one JSON file per run, plus the raw agent stream
+ * beside it for auditing.
  */
 
 import { mkdirSync } from 'node:fs'
@@ -34,7 +35,7 @@ async function main(): Promise<void> {
     return
   }
 
-  preflight()
+  preflight(cases)
   mkdirSync(RESULTS, { recursive: true })
   console.log(
     `${cases.length} case(s) x ${arms.length} arm(s) x ${replicates} replicate(s) on ${model}\n`,

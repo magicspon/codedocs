@@ -6,7 +6,7 @@
  * briefing in input tokens on every turn.
  */
 
-import { CODEDOCS, TARGET } from './paths.ts'
+import { CODEDOCS } from './paths.ts'
 import type { ArmName, BenchCase } from './types.ts'
 
 /**
@@ -14,11 +14,12 @@ import type { ArmName, BenchCase } from './types.ts'
  * in input tokens is charged to the codedocs arm on every turn, which is the
  * real cost of putting a tool in front of an agent.
  */
-const CODEDOCS_BRIEFING = `
+function codedocsBriefing(root: string): string {
+  return `
 This repository has a codedocs index already built. codedocs answers structural
 questions about the code without you opening files. Run it as:
 
-  ${CODEDOCS} <operation> <subject> --cwd ${TARGET}
+  ${CODEDOCS} <operation> <subject> --cwd ${root}
 
   symbol <glob>      every symbol whose name matches, with file:line
   callers <subject>  every call edge into a subject
@@ -31,10 +32,15 @@ match several symbols — an ambiguous name is answered, not rejected. Add
 
 Use it as much or as little as you find useful.
 `.trim()
+}
 
 /** The task, identical in both arms. The fenced answer block is what makes scoring exact. */
-export function buildPrompt(bench: BenchCase, arm: ArmName): string {
-  const briefing = arm === 'codedocs' ? `\n${CODEDOCS_BRIEFING}\n` : ''
+export function buildPrompt(
+  bench: BenchCase,
+  arm: ArmName,
+  root: string,
+): string {
+  const briefing = arm === 'codedocs' ? `\n${codedocsBriefing(root)}\n` : ''
   return `You are working in the VS Code repository. Below is a bug report filed against it.
 
 Your job is to locate the code that must change to fix it. This is a localization

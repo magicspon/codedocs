@@ -7,6 +7,10 @@
     "url": "https://github.com/microsoft/vscode/commit/ebaaae902157f381f02fc8f9cdf73cd571c7bb96",
     "landedAt": "2026-08-22T00:00:00Z"
   },
+  "base": {
+    "commit": "c38c9ed1cf710a7c68acadd18db22fec795267d5",
+    "url": "https://github.com/microsoft/vscode/commit/c38c9ed1cf710a7c68acadd18db22fec795267d5"
+  },
   "truth": {
     "files": [
       "src/vs/sessions/contrib/providers/remoteAgentHost/browser/tunnelAgentHost.contribution.ts"
