@@ -24,10 +24,10 @@ jobs:
       # assert it here rather than letting the release fail four steps later.
       - name: Check bot PAT is available
         env:
-          PAT: ${{ secrets.HOMELINK_BOT_WORKFLOWS_PAT }}
+          PAT: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ -z "$PAT" ]; then
-            echo "::error::HOMELINK_BOT_WORKFLOWS_PAT is empty. Grant the org secret to homelync/mocker."
+            echo "::error::NPM_TOKEN is empty. Grant the org secret to homelync/mocker."
             exit 1
           fi
 
@@ -39,9 +39,9 @@ jobs:
           # A PAT (not GITHUB_TOKEN) so the version PR triggers downstream workflows
           # — a branch pushed with GITHUB_TOKEN raises no pull_request event, so the
           # required checks on the version PR would never start.
-          # HOMELINK_BOT_WORKFLOWS_PAT needs repo scope (contents + pull requests);
+          # NPM_TOKEN needs repo scope (contents + pull requests);
           # the registry token stays registry-only and is never handed to git.
-          token: ${{ secrets.HOMELINK_BOT_WORKFLOWS_PAT }}
+          token: ${{ secrets.NPM_TOKEN }}
 
       - uses: pnpm/action-setup@v6
         with:
@@ -56,9 +56,9 @@ jobs:
           # host here must match `publishConfig.registry` in every package or
           # the publish goes out unauthenticated.
           registry-url: https://npm.pkg.github.com
-          # Adds the `@homelync:registry` line as well, so installs during this
+          # Adds the `magicspon:registry` line as well, so installs during this
           # job resolve the workspace scope to GitHub too.
-          scope: '@homelync'
+          scope: 'magicspon'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -76,7 +76,7 @@ jobs:
           # v2 reads the token from this input only — setting a GITHUB_TOKEN env
           # var is silently ignored and the action falls back to the read-only
           # default token, which fails on "Resource not accessible by integration".
-          github-token: ${{ secrets.HOMELINK_BOT_WORKFLOWS_PAT }}
+          github-token: ${{ secrets.NPM_TOKEN }}
           # `version-packages`, not a bare `changeset version`: changeset version
           # writes package.json only, so the lockfile would keep reporting the
           # previous version forever. The script re-syncs it.
@@ -87,5 +87,5 @@ jobs:
         env:
           # GitHub Packages accepts the job's own token, so there is no npm
           # secret to rotate. It can only write packages owned by this repo's
-          # owner — which is why the scope (`@homelync`) has to match the org.
+          # owner — which is why the scope (`magicspon`) has to match the org.
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
