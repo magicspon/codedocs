@@ -5,9 +5,7 @@
 // and hides duplicates that differ only in case. Sorting on commit means the
 // diff for a new word is one line in one predictable place.
 //
-// Comparison is case-insensitive, so `Aico` sorts next to `attero` rather than
-// ahead of every lowercase entry. Ties (same word, different case) fall back to
-// a code-point compare for a stable order.
+// Comparison is case-insensitive
 //
 // Run by nano-staged when the word list is staged, or by hand:
 //

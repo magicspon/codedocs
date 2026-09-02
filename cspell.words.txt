@@ -1,4 +1,3 @@
-Aico
 attero
 calcom
 callees
@@ -29,6 +28,7 @@ metacharacter
 mhmm
 npmjs
 pinnable
+Pocock
 predev
 remediations
 renovatebot

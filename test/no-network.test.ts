@@ -10,7 +10,7 @@
  */
 
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { afterAll, describe, expect, it } from 'vitest'
@@ -20,6 +20,8 @@ import {
   findNetworkUses,
   isAllowed,
   report,
+  scanPackage,
+  type NetworkAudit,
 } from '../scripts/no-network.ts'
 
 const root = resolve(import.meta.dirname, '..')
@@ -130,5 +132,101 @@ describe('the lint half', () => {
 
   it('allows a module name that only appears in a comment', () => {
     expect(lint(`// never node:http\nexport const x = 1\n`)).toBe('')
+  })
+})
+
+describe('scanPackage', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'codedocs-scan-'))
+
+  afterAll(() => {
+    rmSync(directory, { recursive: true, force: true })
+  })
+
+  it('reads a package’s own code and nothing it merely ships beside it', () => {
+    writeFileSync(join(directory, 'index.js'), "const net = require('net')\n")
+    writeFileSync(
+      join(directory, 'index.d.ts'),
+      'export declare const x: number\n',
+    )
+    writeFileSync(join(directory, 'README.md'), '`require("node:http")`\n')
+    mkdirSync(join(directory, 'lib'), { recursive: true })
+    writeFileSync(join(directory, 'lib', 'deep.mjs'), 'await fetch(url)\n')
+    // A package nested inside another is that package's to answer for, and the
+    // closure walk reaches it on its own.
+    mkdirSync(join(directory, 'node_modules', 'nested'), { recursive: true })
+    writeFileSync(
+      join(directory, 'node_modules', 'nested', 'index.js'),
+      "require('node:dgram')\n",
+    )
+
+    const uses = scanPackage(directory)
+    expect(uses.map((use) => use.file).sort()).toEqual([
+      'index.js',
+      'lib/deep.mjs',
+    ])
+  })
+})
+
+describe('the report', () => {
+  const use = (line: number) => ({
+    file: 'index.js',
+    line,
+    evidence: `require("node:net") // ${line}`,
+  })
+
+  const audited = (result: Partial<NetworkAudit>): string =>
+    report({ reach: [], unread: [], ...result })
+
+  it('says plainly that nothing reaches the network', () => {
+    expect(audited({})).toBe('No codedocs package reaches the network.')
+  })
+
+  it('names the dependency, the chain that pulled it in, and where', () => {
+    const text = audited({
+      reach: [
+        {
+          dependency: 'chatty@1.0.0',
+          path: '/somewhere/chatty',
+          chain: ['@codedocs/core', 'chatty'],
+          uses: [use(3)],
+        },
+      ],
+    })
+    expect(text).toContain('1 runtime dependency reaches the network:')
+    expect(text).toContain('chatty@1.0.0  via @codedocs/core → chatty')
+    expect(text).toContain('index.js:3')
+    // The refusal names the ADR, so the fix is a decision rather than a patch.
+    expect(text).toContain('ADR 0011')
+  })
+
+  it('counts the evidence it did not print, rather than filling a terminal', () => {
+    // A minified bundle can match hundreds of times, and the hundredth match
+    // tells a reader nothing the first did not.
+    const text = audited({
+      reach: [
+        {
+          dependency: 'chatty@1.0.0',
+          path: '/somewhere/chatty',
+          chain: ['chatty'],
+          uses: Array.from({ length: 8 }, (_, at) => use(at + 1)),
+        },
+        {
+          dependency: 'also@2.0.0',
+          path: '/somewhere/also',
+          chain: ['also'],
+          uses: [use(1)],
+        },
+      ],
+    })
+    expect(text).toContain('2 runtime dependencies reach the network:')
+    expect(text).toContain('…and 3 more')
+  })
+
+  it('names what this platform could not read, so a pass is not read as a proof', () => {
+    const text = audited({
+      unread: ['@esbuild/win32-x64@0.1.0', '@esbuild/linux-arm@0.1.0'],
+    })
+    expect(text).toContain('Not read: 2 optional packages')
+    expect(text).toContain('@esbuild/win32-x64@0.1.0')
   })
 })

@@ -45,11 +45,19 @@ const config: ViteUserConfig = defineConfig({
       // Floors, not targets — set just under the numbers the suite already
       // reaches, so a real regression fails CI while ordinary work does not
       // have to chase the last percent. Raise them when the suite earns it.
+      //
+      // Branches sits lower than the other three on purpose. v8 counts every
+      // `??`, `?.` and defensive `catch` as a branch, and this codebase is
+      // written with a lot of them — `result ?? []` in a renderer an error
+      // envelope never reaches, `if (!sf) continue` inside the adapter, a guard
+      // against a store row that cannot exist. Reaching those would mean
+      // corrupting a store or mocking the type checker, which asserts nothing
+      // about behaviour. What is left uncovered is that, not untested paths.
       thresholds: {
-        statements: 90,
-        branches: 76,
-        functions: 92,
-        lines: 92,
+        statements: 97,
+        branches: 90,
+        functions: 98,
+        lines: 98,
       },
     },
   },

@@ -1,4 +1,12 @@
-# codedocs
+> [!CAUTION]
+> This is currently pre alpha and unreleased. This is using TypeScript 7 unstable API
+
+> [!IMPORTANT]
+> This started as an idea with beer. I had a chat with ChatGPT. We wrote a [REQUIREMENTS](docs/REQUIREMENTS.md) document. I then used the [wayfinder](https://www.aihero.dev/skills-wayfinder) skill by [Matt Pocock](https://github.com/mattpocock/skills) to write Architectural Decision Records (ADRs). I then set Claude Code off. I have not written a single line of code, documentation, issue, or pull request. To be honest, this is above my level, I now need to learn how it works! You can read how it all works [here](docs/REQUIREMENTS.md). The only dependency is TypeScript 7. I have probably used about a weeks worth of tokens.
+
+---
+
+# codedocs (working title)
 
 A local codebase index for TypeScript, built for the questions an editor cannot answer.
 

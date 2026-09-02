@@ -208,6 +208,49 @@ describe('the footer', () => {
   it('says plainly when an answer has nothing in it', () => {
     expect(render({ result: [] })).toContain('no symbols')
   })
+
+  it('names an ambiguity even where the envelope carries no subject text', () => {
+    const out = render({
+      request: {
+        subject: null,
+        resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
+        limit: null,
+        depth: null,
+        scope: DEFAULT_SCOPE,
+      },
+    })
+    expect(out).toContain('is ambiguous — 2 symbols')
+  })
+
+  it('tells the two causes of a syntactic project apart, and says nothing for a third', () => {
+    const causes = (
+      cause: 'unprepared' | 'missing-generated' | 'broken',
+      postinstall = false,
+    ): string =>
+      render({
+        conditions: [
+          {
+            project: 'tsconfig.json',
+            fidelity: 'syntactic',
+            analysedAt: '2026-01-01T00:00:00Z',
+            cause,
+            postinstall,
+          },
+        ],
+      })
+
+    expect(causes('unprepared')).toContain('install the dependencies')
+    expect(causes('unprepared', true)).toContain(
+      'its postinstall generates types',
+    )
+    expect(causes('missing-generated')).toContain(
+      'globs no files, so something has yet to generate them',
+    )
+    // ADR 0001 refuses a remediation that would send a user the wrong way, and
+    // nothing a user could run clears a `broken` import.
+    expect(causes('broken')).toContain('tsconfig.json')
+    expect(causes('broken')).not.toContain(' — ')
+  })
 })
 
 describe('a failure envelope', () => {
@@ -652,6 +695,23 @@ describe('a traced path', () => {
       },
     ])
     expect(out).toContain('[inferred: jsx-element-rule]')
+  })
+
+  it('names the bound as a bare word where the envelope carries no depth', () => {
+    // Only a caller's own `--depth` produces this terminus, so the number is
+    // always there in practice; the fallback is for a hand-built envelope.
+    const out = traced(
+      [
+        {
+          root: 'a',
+          steps: [{ to: 'b', sites: [site(1)] }],
+          terminus: 'depth',
+        },
+      ],
+      null as unknown as number,
+    )
+    expect(out).toContain('⇣ more calls beyond depth')
+    expect(out).not.toContain('depth 1')
   })
 
   it('says plainly when a root produced no paths at all', () => {

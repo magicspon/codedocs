@@ -20,9 +20,17 @@ import { openSession } from '../src/session/index.ts'
 import { openStore, STORE_SCHEMA_VERSION } from '../src/store/index.ts'
 import { resolveSubject } from '../src/operations/subject.ts'
 import {
+  ABSENT_PACKAGE,
   classOfKind,
   coarseClassOf,
+  descriptor,
+  dottedOf,
+  fileOf,
+  isSymbolId,
+  NPM,
+  parseSymbolId,
   shorthandOf,
+  splitShorthand,
   symbolId,
   WORKSPACE_VERSION,
 } from '../src/symbol-id.ts'
@@ -123,6 +131,38 @@ describe('the scheme', () => {
   })
 })
 
+describe('the package a file is in', () => {
+  it('reads a file at the repository root, which has no directory above it', () => {
+    write(
+      'root-level.ts',
+      'export function atRoot(): number {\n  return 1\n}\n',
+    )
+    writeFileSync(
+      join(root, 'tsconfig.json'),
+      JSON.stringify({
+        compilerOptions: { target: 'ES2022', module: 'ESNext', noEmit: true },
+        include: ['.'],
+      }),
+    )
+    expect(idOf('root-level.ts#atRoot')).toContain('`root-level.ts`/')
+  })
+
+  it('stops at a manifest that declares no name, rather than borrowing one above it', () => {
+    // A manifest is a package boundary whether or not it is a published one:
+    // borrowing the name above would put the file in a package that does not
+    // hold it.
+    mkdirSync(join(root, 'src', 'nested'), { recursive: true })
+    write(
+      'src/nested/thing.ts',
+      'export function nested(): number {\n  return 1\n}\n',
+    )
+    write('src/nested/package.json', '{"private":true}')
+    expect(idOf('src/nested/thing.ts#nested')).toContain(
+      `codedocs ${NPM} ${ABSENT_PACKAGE} `,
+    )
+  })
+})
+
 describe("ADR 0002's version normalisation", () => {
   it('leaves every id alone when a workspace version is bumped', () => {
     const before = [...sweep().values()].map((node) => node.id).sort()
@@ -218,5 +258,95 @@ describe('a store from another schema version', () => {
     } finally {
       session.close()
     }
+  })
+})
+
+/**
+ * Reading an id back, which ADR 0006 needs to be total over the scheme's own
+ * output — a full id pasted back from `--json` has to find the symbol it names.
+ *
+ * Asserted on strings rather than through a session: the failure cases are the
+ * point, and no repository can be planted that produces a malformed id.
+ */
+describe('reading an id back', () => {
+  const workspace = {
+    manager: NPM,
+    name: '@app/web',
+    version: WORKSPACE_VERSION,
+  }
+
+  it('splits an id into its package, its file and its descriptors', () => {
+    const id = symbolId(workspace, 'src/pay.ts', 'charge().')
+    expect(parseSymbolId(id)).toEqual({
+      package: { manager: NPM, name: '@app/web', version: WORKSPACE_VERSION },
+      file: 'src/pay.ts',
+      descriptors: 'charge().',
+    })
+  })
+
+  it('reads a space inside a field, which SCIP writes doubled', () => {
+    const id = `codedocs ${NPM} a  name 1.0.0 \`src/pay.ts\`/charge().`
+    expect(parseSymbolId(id)?.package.name).toBe('a name')
+  })
+
+  it('refuses anything that is not an id in this scheme', () => {
+    expect(isSymbolId('src/pay.ts#charge')).toBe(false)
+    expect(parseSymbolId('src/pay.ts#charge')).toBeUndefined()
+    // Too few fields to be one.
+    expect(parseSymbolId('codedocs npm @app/web')).toBeUndefined()
+    // The first descriptor must be the file, and a file is a namespace.
+    expect(parseSymbolId('codedocs npm . . charge().')).toBeUndefined()
+    expect(parseSymbolId('codedocs npm . . 9')).toBeUndefined()
+    // An unterminated escaped name is not a descriptor at all.
+    expect(parseSymbolId('codedocs npm . . `src/pay.ts')).toBeUndefined()
+  })
+
+  it('answers for a file and for a symbol alike, which `CallSource` needs', () => {
+    const id = symbolId(workspace, 'src/pay.ts', 'charge().')
+    expect(fileOf(id)).toBe('src/pay.ts')
+    // A `File` is its own path, so it answers as itself rather than as nothing.
+    expect(fileOf('src/pay.ts')).toBe('src/pay.ts')
+  })
+
+  it('projects a shorthand, and passes a string that is not an id straight through', () => {
+    const id = symbolId(workspace, 'src/pay.ts', 'Gateway#capture().')
+    expect(shorthandOf(id)).toBe('src/pay.ts#Gateway.capture')
+    // A file's id carries no descriptors, so its shorthand is the path alone.
+    expect(shorthandOf(symbolId(workspace, 'src/pay.ts', ''))).toBe(
+      'src/pay.ts',
+    )
+    expect(shorthandOf('src/pay.ts#charge')).toBe('src/pay.ts#charge')
+  })
+
+  it('projects nothing out of descriptors it cannot read', () => {
+    expect(dottedOf('Gateway#capture().')).toBe('Gateway.capture')
+    expect(dottedOf('not descriptors')).toBe('')
+  })
+
+  it('has no coarse class for a file, or for a string that is not an id', () => {
+    expect(coarseClassOf(symbolId(workspace, 'src/pay.ts', ''))).toBeUndefined()
+    expect(coarseClassOf('src/pay.ts')).toBeUndefined()
+    expect(coarseClassOf('codedocs npm . . `src/pay.ts`/nope')).toBeUndefined()
+  })
+
+  it('escapes a name the grammar calls anything but simple, doubling a backtick', () => {
+    expect(descriptor('charge', 'method')).toBe('charge().')
+    expect(descriptor('with space', 'term')).toBe('`with space`.')
+    expect(descriptor('back`tick', 'type')).toBe('`back``tick`#')
+    // And reads it back, which is what makes the escape worth writing.
+    const id = symbolId(
+      { manager: NPM, name: ABSENT_PACKAGE, version: WORKSPACE_VERSION },
+      'src/pay.ts',
+      descriptor('back`tick', 'type'),
+    )
+    expect(shorthandOf(id)).toBe('src/pay.ts#back`tick')
+  })
+
+  it('splits a shorthand on its first `#`, and a bare name into no path at all', () => {
+    expect(splitShorthand('src/pay.ts#Gateway.capture')).toEqual([
+      'src/pay.ts',
+      'Gateway.capture',
+    ])
+    expect(splitShorthand('charge')).toEqual(['charge', ''])
   })
 })

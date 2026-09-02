@@ -17,6 +17,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { walkSourceFiles } from '../src/drift.ts'
 import { preflightProjects } from '../src/preflight/index.ts'
+import { readConfig } from '../src/preflight/tsconfig.ts'
 import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
@@ -191,6 +192,50 @@ describe('the fingerprint itself', () => {
         'tsconfig.json',
       )!.fingerprint
     expect(of()).toBe(of())
+  })
+
+  it('follows a relative `extends` and ignores a bare one', () => {
+    // A bare specifier resolves inside `node_modules`, which nothing in
+    // preflight may walk — and a change to it is a change to the lockfile the
+    // fingerprint already hashes.
+    // `extends` without a `.json` suffix, which TypeScript adds for you.
+    writeFileSync(
+      join(root, 'tsconfig.base.json'),
+      JSON.stringify({ compilerOptions: { strict: true } }),
+    )
+    writeFileSync(
+      join(root, 'tsconfig.json'),
+      JSON.stringify({ extends: './tsconfig.base', include: ['src'] }),
+    )
+    expect(
+      readConfig(join(root, 'tsconfig.json')).compilerOptions['strict'],
+    ).toBe(true)
+
+    // A bare specifier is not followed at all, so nothing is inherited.
+    writeFileSync(
+      join(root, 'tsconfig.json'),
+      JSON.stringify({ extends: '@tsconfig/node24', include: ['src'] }),
+    )
+    expect(
+      readConfig(join(root, 'tsconfig.json')).compilerOptions['strict'],
+    ).toBeUndefined()
+  })
+
+  it('stops on a cyclic `extends`, which is the repository’s bug and not ours', () => {
+    writeFileSync(
+      join(root, 'tsconfig.a.json'),
+      JSON.stringify({ extends: './tsconfig.b.json' }),
+    )
+    writeFileSync(
+      join(root, 'tsconfig.b.json'),
+      JSON.stringify({
+        extends: './tsconfig.a.json',
+        compilerOptions: { strict: true },
+      }),
+    )
+    expect(
+      readConfig(join(root, 'tsconfig.a.json')).compilerOptions['strict'],
+    ).toBe(true)
   })
 
   it('reads a config the project does not glob, so a shared base counts', () => {
