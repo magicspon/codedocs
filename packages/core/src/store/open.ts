@@ -15,12 +15,29 @@ import { DatabaseSync } from 'node:sqlite'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
+import { namingFor, type Naming } from '../naming.ts'
 import { DDL, STORE_SCHEMA_VERSION, TABLES } from './schema.ts'
 
 /** A handle on one working tree's index. */
 export interface Store {
   readonly db: DatabaseSync
   readonly directory: string
+  /**
+   * How a read rebuilds a `SymbolId` from the two halves the tables hold.
+   *
+   * Held on the store because every read that returns an id needs it and none
+   * of them has the repository root: the package a file belongs to is not
+   * stored, since it is a fact about the working tree the index describes.
+   */
+  readonly naming: Naming
+  /**
+   * The schema version this index was found at and discarded for, or `null`.
+   *
+   * ADR 0004 refuses migrations, so a mismatch is a full re-analysis. What was
+   * found is kept so the rebuild can say why it happened rather than reporting
+   * an index that is merely empty.
+   */
+  readonly discarded: number | null
   close(): void
 }
 
@@ -50,7 +67,8 @@ export function openStore(root: string): Store {
   db.exec('pragma foreign_keys = on')
 
   const found = readUserVersion(db)
-  if (found !== 0 && found !== STORE_SCHEMA_VERSION) {
+  const discarded = found !== 0 && found !== STORE_SCHEMA_VERSION ? found : null
+  if (discarded !== null) {
     // Discarded, never migrated. Dropping the tables is enough for correctness:
     // the caller's next `analyse` rebuilds, and a rebuild is unconditionally
     // correct.
@@ -69,6 +87,8 @@ export function openStore(root: string): Store {
   return {
     db,
     directory,
+    naming: namingFor(root),
+    discarded,
     close: () => db.close(),
   }
 }

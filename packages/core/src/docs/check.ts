@@ -20,6 +20,7 @@
 import { existsAt } from './discover.ts'
 import type { Candidate } from '../continuity/index.ts'
 import type { FilePath, Provenance } from '../model.ts'
+import { fileOf } from '../symbol-id.ts'
 import {
   checkClaim,
   type CheckContext,
@@ -270,8 +271,6 @@ function resolveRelative(from: FilePath, target: FilePath): FilePath {
   }
   return segments.join('/')
 }
-
-const fileOf = (id: string): FilePath => id.split('#')[0] ?? id
 
 /**
  * The files a document touches, read from its text rather than from the index.

@@ -30,6 +30,7 @@ import {
   typescriptVersion,
 } from '../src/session/index.ts'
 import { beginAnalysis, commitProject, openStore } from '../src/store/index.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -65,19 +66,19 @@ function dump(): string {
     const { db } = session.store
     const rows = (sql: string): string => JSON.stringify(db.prepare(sql).all())
     return [
-      rows(`select p.path, n.qualified, s.name, s.kind, s.start, s.line
+      rows(`select p.path, n.descriptors, s.name, s.kind, s.start, s.line
             from symbol s
             join node n on n.id = s.node_id
             join path p on p.id = s.path_id
-            order by p.path, n.qualified, s.start`),
-      rows(`select fp.path as from_path, fn.qualified as from_qualified,
-              tp.path as to_path, tn.qualified as to_qualified, e.line
+            order by p.path, n.descriptors, s.start`),
+      rows(`select fp.path as from_path, fn.descriptors as from_descriptors,
+              tp.path as to_path, tn.descriptors as to_descriptors, e.line
             from call_edge e
             join node fn on fn.id = e.from_id
             join path fp on fp.id = fn.path_id
             join node tn on tn.id = e.to_id
             join path tp on tp.id = tn.path_id
-            order by from_path, from_qualified, to_path, to_qualified, e.line`),
+            order by from_path, from_descriptors, to_path, to_descriptors, e.line`),
       rows(`select f.path as file, c.path as project, r.root_file_count
             from project r
             join path c on c.id = r.path_id
@@ -169,7 +170,7 @@ describe('a call that leaves its project', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toEqual([
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toEqual([
         'b-app/src/checkout.ts#go',
       ])
     } finally {

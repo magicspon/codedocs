@@ -11,6 +11,7 @@ import { SyntaxKind } from 'typescript/unstable/ast'
 
 import type {
   CallEdge,
+  CallSource,
   FilePath,
   SymbolId,
   UnresolvedCall,
@@ -18,7 +19,7 @@ import type {
 } from '../../model.ts'
 import { attribute, descriptorPath } from './descriptors.ts'
 import { lookupDeclaration } from './lookup.ts'
-import { lineOf, nameOf } from './shared.ts'
+import { declarationKey, lineOf, nameOf } from './shared.ts'
 import type { DeclarationResolver, OwnedFile, View } from './types.ts'
 
 /** Call sites resolved per checker request. The spike's measured batch size. */
@@ -29,6 +30,8 @@ interface CallSite {
   readonly callee: Node
   readonly site: Node
   readonly path: FilePath
+  /** The program's own spelling of the file, which keys the declaration join. */
+  readonly programPath: string
   readonly sf: SourceFile
   readonly jsx: boolean
 }
@@ -77,7 +80,7 @@ function collectCallSites(
   files: readonly OwnedFile[],
 ): Map<Project, CallSite[]> {
   const byProject = new Map<Project, CallSite[]>()
-  for (const { path, sf, project } of files) {
+  for (const { path, programPath, sf, project } of files) {
     const sites = byProject.get(project) ?? []
     const walk = (node: Node): void => {
       const callee = calleeOf(node)
@@ -86,6 +89,7 @@ function collectCallSites(
           callee,
           site: node,
           path,
+          programPath,
           sf,
           jsx:
             node.kind === SyntaxKind.JsxOpeningElement ||
@@ -137,10 +141,7 @@ function resolveSite(
   if (target === undefined) return { cause: 'external' }
 
   const { owner, attribution } = attribute(site.site)
-  const from =
-    owner === undefined
-      ? site.path
-      : `${site.path}#${descriptorPath(owner, site.sf)}`
+  const from = callerOf(site, owner, view, byDeclaration)
 
   return {
     edge: {
@@ -156,6 +157,29 @@ function resolveSite(
       derivation: site.jsx ? 'jsx-element-rule' : 'checker-signature',
     },
   }
+}
+
+/**
+ * The node a site's edge is credited to.
+ *
+ * Through the symbol table rather than rebuilt from the owner, because the two
+ * can disagree: a merged `interface Foo`/`const Foo` is one node under the first
+ * declaration's descriptors, and an edge credited to the other half would name
+ * an id no row holds. A file caller keeps the path as its identity, per ADR
+ * 0002's node table — only a `Symbol` is ever a SCIP string.
+ */
+function callerOf(
+  site: { path: FilePath; programPath: string; sf: SourceFile },
+  owner: Node | undefined,
+  view: View,
+  byDeclaration: ReadonlyMap<string, SymbolId>,
+): CallSource {
+  if (owner === undefined) return site.path
+  const start = owner.getStart(site.sf)
+  return (
+    byDeclaration.get(declarationKey(site.programPath, start)) ??
+    view.naming.idOf(site.path, descriptorPath(owner, site.sf))
+  )
 }
 
 /** One checker round trip, and the edges or causes its answers produced. */

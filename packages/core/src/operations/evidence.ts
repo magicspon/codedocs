@@ -41,6 +41,7 @@ import type {
   SymbolNode,
 } from '../model.ts'
 import { readLabels, readSymbols, type Store } from '../store/index.ts'
+import { fileOf, shorthandOf } from '../symbol-id.ts'
 import { callEdgesOf } from './calls.ts'
 import { claimsFor } from './claims.ts'
 import { fileReport, type FileReport } from './file.ts'
@@ -244,8 +245,6 @@ const durableIds = (store: Store): ReadonlySet<string> =>
   new Set(
     readSymbols(store)
       .filter((node) => node.durable)
-      .map((node) => node.id),
+      // As shorthands, because that is the form a claim names a subject in.
+      .map((node) => shorthandOf(node.id)),
   )
-
-/** The file a node id names, which is the node a label is filed against. */
-const fileOf = (node: string): FilePath => node.split('#')[0] ?? node

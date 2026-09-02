@@ -1,6 +1,7 @@
 /** Reading reference edges back — the relationship set minus `calls`. */
 
 import type { CallSource, ReferenceEdge, SymbolId } from '../model.ts'
+import type { Naming } from '../naming.ts'
 import {
   ATTRIBUTIONS,
   DERIVATIONS,
@@ -15,9 +16,9 @@ import { nodeId } from './statements.ts'
 /** One `reference_edge` row with both endpoints rejoined to their atoms. */
 type ReferenceRow = {
   from_path: string
-  from_qualified: string
+  from_descriptors: string
   to_path: string
-  to_qualified: string
+  to_descriptors: string
   kind: number
   attribution: number
   file_path: string
@@ -27,8 +28,8 @@ type ReferenceRow = {
 }
 
 const REFERENCE_SELECT = `select
-    fp.path as from_path, fn.qualified as from_qualified,
-    tp.path as to_path, tn.qualified as to_qualified,
+    fp.path as from_path, fn.descriptors as from_descriptors,
+    tp.path as to_path, tn.descriptors as to_descriptors,
     e.kind, e.attribution, ep.path as file_path, e.line, e.provenance,
     e.derivation
   from reference_edge e
@@ -38,9 +39,9 @@ const REFERENCE_SELECT = `select
   join path tp on tp.id = tn.path_id
   join path ep on ep.id = e.path_id`
 
-const toReference = (row: ReferenceRow): ReferenceEdge => ({
-  from: idOf(row.from_path, row.from_qualified),
-  to: idOf(row.to_path, row.to_qualified),
+const toReference = (naming: Naming, row: ReferenceRow): ReferenceEdge => ({
+  from: idOf(naming, row.from_path, row.from_descriptors),
+  to: idOf(naming, row.to_path, row.to_descriptors),
   kind: named(REFERENCE_KINDS, row.kind, 'reference kind'),
   attribution: named(ATTRIBUTIONS, row.attribution, 'attribution'),
   file: row.file_path,
@@ -72,7 +73,7 @@ export function readReferencesTo(store: Store, id: SymbolId): ReferenceEdge[] {
       .prepare(`${REFERENCE_SELECT} where e.to_id = ?`)
       .all(to) as ReferenceRow[]
   )
-    .map(toReference)
+    .map((row) => toReference(store.naming, row))
     .sort(byReference)
 }
 
@@ -88,6 +89,6 @@ export function readReferencesFrom(
       .prepare(`${REFERENCE_SELECT} where e.from_id = ?`)
       .all(from) as ReferenceRow[]
   )
-    .map(toReference)
+    .map((row) => toReference(store.naming, row))
     .sort(byReference)
 }

@@ -7,15 +7,13 @@
  */
 
 /**
- * A symbol's name in the index.
+ * A symbol's name in the index: ADR 0002's normalised SCIP symbol string.
  *
- * The skeleton uses ADR 0005's shorthand — `src/auth/service.ts#AuthService.login`
- * — rather than ADR 0002's SCIP string. The shorthand is already the form both
- * renderers print and accept, and ADR 0004 makes a schema change a cold rebuild
- * rather than a migration, so the SCIP scheme stays cheap to add later.
- *
- * TODO(#7): replace with the normalised SCIP symbol string once documents or
- * continuity need a durable, cross-package name.
+ * ``codedocs npm @codedocs/core . `src/auth/service.ts`/AuthService#login().``
+ * — deterministic and snapshot-scoped, so it says what a symbol is called in
+ * this working tree at this commit and nothing about the past. `symbol-id.ts`
+ * owns the scheme; ADR 0005's shorthand is a projection of it, and is what both
+ * renderers print and what a document anchors to.
  */
 export type SymbolId = string
 

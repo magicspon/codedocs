@@ -19,6 +19,7 @@ import { callers } from '../src/operations/calls.ts'
 import { file, type FileReport } from '../src/operations/file.ts'
 import { references } from '../src/operations/references.ts'
 import type { ReferenceEdge } from '../src/model.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
 
@@ -58,8 +59,21 @@ function ask<T>(
   }
 }
 
+/**
+ * Endpoints as ADR 0005's shorthand, which is the form both renderers print.
+ *
+ * These cases are about which declaration an edge reached; naming it by the
+ * `SymbolId` would put the fixture's package and scheme in every assertion
+ * without making one of them sharper.
+ */
+const named = (edge: ReferenceEdge): ReferenceEdge => ({
+  ...edge,
+  from: shorthandOf(edge.from),
+  to: shorthandOf(edge.to),
+})
+
 const referencesTo = (subject: string): readonly ReferenceEdge[] =>
-  ask<ReferenceEdge>(references, subject).result ?? []
+  (ask<ReferenceEdge>(references, subject).result ?? []).map(named)
 
 const fileReport = (subject: string): FileReport | undefined =>
   (ask<FileReport>(file, subject).result ?? [])[0]
@@ -157,22 +171,26 @@ describe('references', () => {
     // `Wallet` names two symbols, and one of them names the other. Read out of
     // the source and into the target, that is the same fact twice.
     const envelope = ask<ReferenceEdge>(references, 'Wallet')
-    expect(envelope.request.resolved).toEqual([
+    // `resolved` carries the `SymbolId` itself: ADR 0006 makes it what an agent
+    // feeds back in, and only the id round-trips.
+    expect(envelope.request.resolved.map(shorthandOf)).toEqual([
       'src/alias.ts#Wallet',
       'src/wallet.ts#Wallet',
     ])
-    const between = (envelope.result ?? []).filter(
-      (edge) =>
-        edge.from === 'src/alias.ts#Wallet' &&
-        edge.to === 'src/wallet.ts#Wallet',
-    )
+    const between = (envelope.result ?? [])
+      .map(named)
+      .filter(
+        (edge) =>
+          edge.from === 'src/alias.ts#Wallet' &&
+          edge.to === 'src/wallet.ts#Wallet',
+      )
     expect(between).toHaveLength(1)
   })
 
   it('says which symbols a subject resolved to', () => {
-    expect(ask<ReferenceEdge>(references, 'Money').request.resolved).toEqual([
-      'src/types.ts#Money',
-    ])
+    expect(
+      ask<ReferenceEdge>(references, 'Money').request.resolved.map(shorthandOf),
+    ).toEqual(['src/types.ts#Money'])
   })
 })
 

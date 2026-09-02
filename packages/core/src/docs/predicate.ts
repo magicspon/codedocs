@@ -34,6 +34,7 @@ import type {
   SymbolNode,
 } from '../model.ts'
 import { resolveSubject } from '../operations/subject.ts'
+import { shorthandOf } from '../symbol-id.ts'
 import {
   readCalleeSteps,
   readCallersOf,
@@ -141,7 +142,9 @@ function resolveOne(
     return {
       code: 'ambiguous-subject',
       subject,
-      resolved: symbols.map((node) => node.id),
+      // Shorthands: the author has to rewrite the claim to one of these, and
+      // ADR 0005 refused the `SymbolId` string for exactly that job.
+      resolved: symbols.map((node) => shorthandOf(node.id)),
     }
   }
   const only = symbols[0]

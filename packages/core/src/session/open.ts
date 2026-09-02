@@ -35,6 +35,7 @@ import {
   readSeenFiles,
   readUnanalysedProjects,
   replaceLabels,
+  STORE_SCHEMA_VERSION,
   writeHeader,
   type Store,
 } from '../store/index.ts'
@@ -112,7 +113,11 @@ export function openSession(options: SessionOptions): Session {
   const indexed = readFiles(store)
   const outstanding: Outstanding = {
     drift: detectDrift(root, indexed, readSeenFiles(store)),
-    stale: staleReason(readHeader(store), indexed.length === 0),
+    stale: staleReason(
+      readHeader(store),
+      indexed.length === 0,
+      store.discarded,
+    ),
     // A build that was interrupted between two of its per-project commits. Not
     // drift — these files never changed, they were never analysed — so it is its
     // own reason to repair and its own kind of blind spot.
@@ -282,14 +287,24 @@ function withheld(root: string, outstanding: Outstanding): BlindSpot[] {
 /**
  * Why the whole index must be rebuilt rather than repaired, or `null`.
  *
- * ADR 0004's index-wide invalidations. The schema version is not checked here:
- * `openStore` has already dropped the tables on a mismatch, which arrives at
- * this function as an empty index.
+ * ADR 0004's index-wide invalidations. `openStore` has already dropped the
+ * tables on a schema mismatch, so that arrives here as an empty index — but it
+ * arrives with the version it was discarded for, because "the index is empty"
+ * is not a reason anyone can act on and ADR 0004 requires the rebuild to say
+ * why it happened.
  */
 function staleReason(
   header: ReturnType<typeof readHeader>,
   empty: boolean,
+  discarded: number | null,
 ): string | null {
+  if (discarded !== null) {
+    return (
+      `the index was built against store schema ${discarded}, not ` +
+      `${STORE_SCHEMA_VERSION}, and ADR 0004 discards rather than migrates` +
+      ' — any stored baselines went with it'
+    )
+  }
   if (empty) return 'the index is empty'
   if (header.toolVersion !== TOOL_VERSION) {
     return `the index was built by codedocs ${header.toolVersion}, not ${TOOL_VERSION}`

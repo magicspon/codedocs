@@ -35,8 +35,8 @@
 
 import { lastCommitTouching, renamesIn, type GitRename } from '../git.ts'
 import type { Derivation, FilePath, SymbolNode } from '../model.ts'
-import { partsOf } from '../store/shared.ts'
 import { readSymbolsNamed, type Store } from '../store/index.ts'
+import { shorthandOf, splitShorthand } from '../symbol-id.ts'
 
 /**
  * One possible continuation of a subject, with the derivations that produced it.
@@ -46,7 +46,13 @@ import { readSymbolsNamed, type Store } from '../store/index.ts'
  * the only honest answer.
  */
 export interface Candidate {
-  /** Where the subject appears to have gone: a `SymbolId`, or a path alone. */
+  /**
+   * Where the subject appears to have gone, in the form a claim is written in:
+   * ADR 0005's shorthand, or a path alone.
+   *
+   * The shorthand rather than the `SymbolId`, because the whole output of this
+   * layer is something an author rewrites a claim's subject to.
+   */
   readonly id: string
   readonly file: FilePath
   /** Every derivation that fired, strongest first. */
@@ -108,7 +114,7 @@ export function continuationOf(
   store: Store,
   subject: string,
 ): Continuation {
-  const [path, qualified] = partsOf(subject)
+  const [path, qualified] = splitShorthand(subject)
   const found = new Map<string, Candidate>()
 
   if (qualified !== '') {
@@ -122,7 +128,7 @@ export function continuationOf(
 
   for (const named of namedInHead(store, qualified === '' ? path : qualified)) {
     merge(found, {
-      id: named.id,
+      id: shorthandOf(named.id),
       file: named.file,
       derivations: ['name-in-head'],
       commit: null,

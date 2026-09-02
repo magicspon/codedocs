@@ -26,6 +26,7 @@ import { UNSCOPED } from '../src/labels/index.ts'
 import { analyse } from '../src/operations/analyse.ts'
 import { impact } from '../src/operations/impact.ts'
 import { openSession } from '../src/session/index.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 let root: string
 
@@ -197,7 +198,7 @@ describe('impact', () => {
     write('src/core.ts', 'export const core = (): number => 99\n')
 
     const found = runImpact().result ?? []
-    expect(found.map((one) => `${one.depth} ${one.id}`)).toEqual([
+    expect(found.map((one) => `${one.depth} ${shorthandOf(one.id)}`)).toEqual([
       '0 src/core.ts#core',
       '1 src/uses.ts#uses',
       '2 src/outer.ts#outer',
@@ -209,10 +210,9 @@ describe('impact', () => {
     runAnalyse()
     write('src/core.ts', 'export const core = (): number => 99\n')
 
-    expect((runImpact(null, 1).result ?? []).map((one) => one.id)).toEqual([
-      'src/core.ts#core',
-      'src/uses.ts#uses',
-    ])
+    expect(
+      (runImpact(null, 1).result ?? []).map((one) => shorthandOf(one.id)),
+    ).toEqual(['src/core.ts#core', 'src/uses.ts#uses'])
   })
 
   it('answers with no baseline at all, naming the absence', () => {
@@ -225,7 +225,7 @@ describe('impact', () => {
     expect(envelope.blindSpots.map((spot) => spot.subject)).toContain(
       'baseline',
     )
-    expect((envelope.result ?? []).map((one) => one.id)).toContain(
+    expect((envelope.result ?? []).map((one) => shorthandOf(one.id))).toContain(
       'src/core.ts#core',
     )
   })
@@ -288,9 +288,9 @@ describe('a baseline built under other conditions', () => {
     expect(envelope.blindSpots.map((spot) => spot.subject)).toContain(
       'src/core.ts',
     )
-    expect((envelope.result ?? []).map((one) => one.id)).not.toContain(
-      'src/core.ts#core',
-    )
+    expect(
+      (envelope.result ?? []).map((one) => shorthandOf(one.id)),
+    ).not.toContain('src/core.ts#core')
   })
 })
 
@@ -319,9 +319,9 @@ describe('affected tests', () => {
           labels: session.labels(),
         },
       })
-      expect((envelope.result ?? []).map((one) => one.id)).toEqual([
-        'src/core.test.ts#spec',
-      ])
+      expect((envelope.result ?? []).map((one) => shorthandOf(one.id))).toEqual(
+        ['src/core.test.ts#spec'],
+      )
       expect(envelope.request.scope.excluded).toBeGreaterThan(0)
     } finally {
       session.close()

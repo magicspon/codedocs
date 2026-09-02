@@ -13,6 +13,7 @@ import { callers } from '../src/operations/calls.ts'
 import { symbol } from '../src/operations/symbol.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -48,7 +49,7 @@ describe('openSession', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toContain(
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
         'src/checkout.ts#checkout',
       )
     } finally {
@@ -82,7 +83,7 @@ describe('openSession', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toContain(
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
         'src/extra.ts#again',
       )
     } finally {

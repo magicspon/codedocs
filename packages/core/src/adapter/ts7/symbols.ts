@@ -7,6 +7,8 @@
 import type { Node } from 'typescript/unstable/ast'
 
 import type { SymbolId, SymbolNode } from '../../model.ts'
+import type { Naming } from '../../naming.ts'
+import { dottedOf } from '../../symbol-id.ts'
 import {
   declarationSpace,
   descriptorPath,
@@ -33,6 +35,8 @@ export interface SymbolSweep {
 /** One declaration's claim on an id, and the space it claimed it from. */
 interface Claim {
   readonly space: Node | undefined
+  /** The program's own spelling of the file, which keys the declaration join. */
+  readonly programPath: string
   readonly row: SymbolNode
 }
 
@@ -44,24 +48,36 @@ interface Claim {
  * leaving the store's `insert or ignore` to merge them silently, which reported
  * the union of 69 unrelated bindings' callers as `deterministic`.
  */
-export function sweepSymbols(files: readonly OwnedFile[]): SymbolSweep {
+export function sweepSymbols(
+  files: readonly OwnedFile[],
+  naming: Naming,
+): SymbolSweep {
   const nodes: SymbolNode[] = []
   const byDeclaration = new Map<string, SymbolId>()
   const declarations: DeclarationSite[] = []
 
   for (const { programPath, path, sf } of files) {
-    // Per file, because an id carries its file: two files can never claim one id.
-    const claimed = new Map<SymbolId, Claim[]>()
+    // Per file, because an id carries its file: two files can never claim one
+    // id. Keyed by the **shorthand** rather than by the descriptors, so ADR
+    // 0002's collapse still happens where the two disagree: `interface Foo`
+    // beside `const Foo` is one merged declaration the language gives two
+    // descriptor suffixes, and splitting it would make the shorthand every
+    // document anchors to ambiguous.
+    const claimed = new Map<string, Claim[]>()
 
     const walk = (node: Node): void => {
       const kind = NAMED_DECLARATION.get(node.kind)
       const name = nameOf(node)
       if (kind !== undefined && name !== undefined) {
         const start = node.getStart(sf)
-        const qualified = descriptorPath(node, sf)
-        const id = `${path}#${qualified}`
+        const descriptors = descriptorPath(node, sf)
+        const id = naming.idOf(path, descriptors)
+        // ADR 0005's shorthand, projected off the descriptors rather than built
+        // beside them: two ways of spelling one name can disagree.
+        const qualified = dottedOf(descriptors)
         const claim: Claim = {
           space: declarationSpace(node),
+          programPath,
           row: {
             id,
             name,
@@ -75,12 +91,9 @@ export function sweepSymbols(files: readonly OwnedFile[]): SymbolSweep {
             collisions: 0,
           },
         }
-        const claims = claimed.get(id)
-        if (claims === undefined) claimed.set(id, [claim])
+        const claims = claimed.get(qualified)
+        if (claims === undefined) claimed.set(qualified, [claim])
         else claims.push(claim)
-        // Every declaration joins, not only the one that became the node: an
-        // edge into the third overload has to find the id the first one claimed.
-        byDeclaration.set(declarationKey(programPath, start), id)
       }
       node.forEachChild(walk)
     }
@@ -94,6 +107,16 @@ export function sweepSymbols(files: readonly OwnedFile[]): SymbolSweep {
       nodes.push(
         spaces.size > 1 ? { ...first, collisions: claims.length } : first,
       )
+      // Every declaration joins to the id the first one claimed, not only the
+      // one that became the node: an edge into the third overload — or into the
+      // `const` half of a merged declaration, whose own descriptors carry a
+      // different suffix — has to find the id the row was written under.
+      for (const claim of claims) {
+        byDeclaration.set(
+          declarationKey(claim.programPath, claim.row.start),
+          first.id,
+        )
+      }
       // The rest lose the row but keep the id, and a call site may land on any
       // of them. Recorded so a later extraction that has none of this file in
       // memory can still join against the one it hit.

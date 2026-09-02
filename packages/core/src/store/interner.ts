@@ -35,10 +35,10 @@ function makeInterner(db: DatabaseSync): Interner {
   const selectPath = db.prepare('select id from path where path = ?')
   const insertPath = db.prepare('insert into path (path) values (?)')
   const selectNode = db.prepare(
-    'select id from node where path_id = ? and qualified = ?',
+    'select id from node where path_id = ? and descriptors = ?',
   )
   const insertNode = db.prepare(
-    'insert into node (path_id, qualified) values (?, ?)',
+    'insert into node (path_id, descriptors) values (?, ?)',
   )
 
   const path = (text: FilePath): number => {
@@ -53,13 +53,13 @@ function makeInterner(db: DatabaseSync): Interner {
   const node = (id: CallSource): number => {
     const cached = nodes.get(id)
     if (cached !== undefined) return cached
-    const [file, qualified] = partsOf(id)
+    const [file, descriptors] = partsOf(id)
     const pathId = path(file)
-    const found = selectNode.get(pathId, qualified) as
+    const found = selectNode.get(pathId, descriptors) as
       | { id: number }
       | undefined
     const nodeId =
-      found?.id ?? Number(insertNode.run(pathId, qualified).lastInsertRowid)
+      found?.id ?? Number(insertNode.run(pathId, descriptors).lastInsertRowid)
     nodes.set(id, nodeId)
     return nodeId
   }

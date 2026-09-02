@@ -24,6 +24,7 @@ import { callers } from '../src/operations/calls.ts'
 import { symbol } from '../src/operations/symbol.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession, type RepairReport } from '../src/session/index.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 
 const fixture = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -108,7 +109,7 @@ describe('a body-only edit', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toContain(
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
         'src/checkout.ts#checkout',
       )
     } finally {
@@ -156,7 +157,7 @@ describe('an export-shape change', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toContain(
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
         'src/lazy.ts#loadPayments',
       )
     } finally {
@@ -242,7 +243,7 @@ describe('a new file', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toContain(
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
         'src/extra.ts#again',
       )
     } finally {
@@ -271,7 +272,7 @@ describe('a new file', () => {
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => edge.from)).toContain(
+      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
         'src/extra.ts#soon',
       )
     } finally {
@@ -306,7 +307,7 @@ describe('a deleted file', () => {
         null,
         UNSCOPED,
       )
-      const from = envelope.result?.map((edge) => edge.from) ?? []
+      const from = envelope.result?.map((edge) => shorthandOf(edge.from)) ?? []
       expect(from).not.toContain('src/extra.ts#again')
       expect(from).toContain('src/checkout.ts#checkout')
     } finally {
@@ -336,14 +337,14 @@ describe('a wave and a cold build', () => {
       const rows = (sql: string): string =>
         JSON.stringify(db.prepare(sql).all())
       return [
-        rows(`select p.path, n.qualified, s.name, s.kind, s.start, s.line,
+        rows(`select p.path, n.descriptors, s.name, s.kind, s.start, s.line,
                 s.durable, s.callable, s.collisions
               from symbol s
               join node n on n.id = s.node_id
               join path p on p.id = s.path_id
-              order by p.path, n.qualified, s.start`),
-        rows(`select fp.path as from_path, fn.qualified as from_qualified,
-                tp.path as to_path, tn.qualified as to_qualified,
+              order by p.path, n.descriptors, s.start`),
+        rows(`select fp.path as from_path, fn.descriptors as from_descriptors,
+                tp.path as to_path, tn.descriptors as to_descriptors,
                 e.attribution, ep.path as file, e.line, e.provenance, e.derivation
               from call_edge e
               join node fn on fn.id = e.from_id
@@ -351,7 +352,7 @@ describe('a wave and a cold build', () => {
               join node tn on tn.id = e.to_id
               join path tp on tp.id = tn.path_id
               join path ep on ep.id = e.path_id
-              order by from_path, from_qualified, to_path, to_qualified, file, e.line`),
+              order by from_path, from_descriptors, to_path, to_descriptors, file, e.line`),
         rows(`select p.path, u.line, u.cause, u.name
               from unresolved_call u join path p on p.id = u.path_id
               order by p.path, u.line, u.cause, u.name`),

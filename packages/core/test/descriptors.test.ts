@@ -15,6 +15,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { analyse } from '../src/adapter/ts7/index.ts'
 import type { SymbolNode } from '../src/model.ts'
+import { shorthandOf } from '../src/symbol-id.ts'
 import { callers } from '../src/operations/calls.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
@@ -27,12 +28,17 @@ const fixtureRoot = join(
 const result = analyse(fixtureRoot, ['tsconfig.json'])
 
 const file = 'src/descriptors.ts'
+/** By the shorthand, which is what a document and a reader both name. */
 const at = (qualified: string): SymbolNode | undefined =>
-  result.symbols.find((symbol) => symbol.id === `${file}#${qualified}`)
+  result.symbols.find(
+    (symbol) => shorthandOf(symbol.id) === `${file}#${qualified}`,
+  )
 
 /** Every declaration the sweep saw, so a collapse can be told from a drop. */
 const claiming = (qualified: string): number =>
-  result.symbols.filter((symbol) => symbol.id === `${file}#${qualified}`).length
+  result.symbols.filter(
+    (symbol) => shorthandOf(symbol.id) === `${file}#${qualified}`,
+  ).length
 
 describe('the descriptor path', () => {
   it('tells sibling callbacks apart by the name their call was given', () => {

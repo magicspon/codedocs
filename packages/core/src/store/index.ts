@@ -62,6 +62,7 @@ export {
   readSymbolIdAt,
   readSymbols,
   readSymbolsNamed,
+  readSymbolsShorthand,
 } from './read-symbols.ts'
 
 export {

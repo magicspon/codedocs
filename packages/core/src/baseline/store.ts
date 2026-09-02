@@ -22,6 +22,7 @@ import {
   isCleanTree,
   resolveRef,
 } from '../git.ts'
+import { namingFor } from '../naming.ts'
 import { STORE_SCHEMA_VERSION, type Store } from '../store/index.ts'
 
 /** Where baselines live, beside the index they were copied from. */
@@ -222,7 +223,7 @@ function evict(root: string, cap: number): string[] {
  * refused rather than migrated: an upgrade discards every baseline, and that
  * cost is stated rather than engineered away.
  */
-export function openBaseline(path: string): Store | null {
+export function openBaseline(root: string, path: string): Store | null {
   let db: DatabaseSync
   try {
     db = new DatabaseSync(path, { readOnly: true })
@@ -239,7 +240,16 @@ export function openBaseline(path: string): Store | null {
   // Handed back as a `Store` so every existing read works against a baseline
   // unchanged: an index is an index, and the only thing that makes this one
   // different is that nothing may write to it.
-  return { db, directory: dirname(path), close: () => db.close() }
+  // The naming comes from the working tree rather than from the baseline: a
+  // baseline holds the same two halves of an id, and the manifests that say
+  // which package a file is in are the ones on disk now.
+  return {
+    db,
+    directory: dirname(path),
+    naming: namingFor(root),
+    discarded: null,
+    close: () => db.close(),
+  }
 }
 
 const message = (error: unknown): string =>

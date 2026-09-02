@@ -1,6 +1,6 @@
 /**
- * Building a symbol's descriptor path — the dotted name from the file root —
- * and the call-attribution walk that shares its declaration-kind tables.
+ * Building a symbol's descriptor path — the SCIP descriptors from the file root
+ * — and the call-attribution walk that shares its declaration-kind tables.
  *
  * ADR 0002's "descriptor path rather than ordinal" taken literally: every
  * segment is taken from what the author wrote, so it survives a sibling being
@@ -15,6 +15,11 @@ import {
 } from 'typescript/unstable/ast'
 
 import type { CallerAttribution, SymbolKind } from '../../model.ts'
+import {
+  classOfKind,
+  descriptor,
+  type DescriptorClass,
+} from '../../symbol-id.ts'
 import { nameOf } from './shared.ts'
 
 /**
@@ -179,28 +184,57 @@ function callSegment(fn: Node, sf: SourceFile): string | undefined {
   return `${callee}()`
 }
 
+/** One scope's contribution: the name the author wrote, and what it names. */
+interface Segment {
+  readonly name: string
+  readonly class: DescriptorClass
+}
+
+/**
+ * The class a node's own declaration kind gives it.
+ *
+ * The stored `SymbolKind` decides, never the initialiser: `const f = () => {}`
+ * is a term like every other `const`, so rewriting it as `const f =
+ * memo(() => {})` does not rename it.
+ */
+function classOf(node: Node): DescriptorClass | undefined {
+  const kind = NAMED_DECLARATION.get(node.kind)
+  return kind === undefined ? undefined : classOfKind(kind)
+}
+
 /** The segment one node contributes to a descriptor path, if any. */
-function segmentOf(node: Node, sf: SourceFile): string | undefined {
+function segmentOf(node: Node, sf: SourceFile): Segment | undefined {
   const name = nameOf(node)
-  if (name !== undefined && NAMED_DECLARATION.has(node.kind)) return name
+  const held = classOf(node)
+  if (name !== undefined && held !== undefined) return { name, class: held }
   // An object-literal key is the author's own name for the scope beneath it,
   // and it is what tells six sibling arrow functions that each declare a
   // `field` apart.
-  if (node.kind === SyntaxKind.PropertyAssignment) return name
+  if (node.kind === SyntaxKind.PropertyAssignment && name !== undefined) {
+    return { name, class: 'term' }
+  }
+  // A constructor and a static block are scopes that run, so they are methods —
+  // the class a callback's call gets for the same reason.
   const member = UNNAMED_MEMBER.get(node.kind)
-  if (member !== undefined) return member
-  if (ANONYMOUS_FUNCTION.has(node.kind)) return callSegment(node, sf)
+  if (member !== undefined) return { name: member, class: 'method' }
+  if (ANONYMOUS_FUNCTION.has(node.kind)) {
+    const call = callSegment(node, sf)
+    return call === undefined ? undefined : { name: call, class: 'method' }
+  }
   return undefined
 }
 
 /**
- * The dotted descriptor path from the file root, e.g. `AuthService.login`.
+ * The SCIP descriptors from the file root, e.g. `AuthService#login().`.
  *
  * Every scope between the file and the declaration contributes a segment taken
  * from what the author wrote — a declared name, an object-literal key, or the
  * call an anonymous callback is an argument to. This is ADR 0002's "descriptor
  * path rather than ordinal" taken literally: a segment derived from content
  * survives a sibling being inserted above it, where an ordinal does not.
+ *
+ * The file itself is not here: the store interns it separately, and
+ * `symbol-id.ts` puts the two together.
  */
 export function descriptorPath(node: Node, sf: SourceFile): string {
   const parts: string[] = []
@@ -208,11 +242,26 @@ export function descriptorPath(node: Node, sf: SourceFile): string {
   while (current) {
     // A declaration contributes its own name; only ancestors contribute the
     // scope segments, so the subject is never named twice.
-    const part = current === node ? nameOf(current) : segmentOf(current, sf)
-    if (part !== undefined) parts.unshift(part)
+    const part = current === node ? ownSegment(current) : segmentOf(current, sf)
+    if (part !== undefined) parts.unshift(descriptor(part.name, part.class))
     current = current.parent
   }
-  return parts.join('.')
+  return parts.join('')
+}
+
+/**
+ * The segment the subject itself contributes.
+ *
+ * Only a named declaration is ever a subject — both sweeps ask about one — so a
+ * node with no declaration kind contributes nothing rather than borrowing the
+ * scope rules its ancestors follow.
+ */
+function ownSegment(node: Node): Segment | undefined {
+  const name = nameOf(node)
+  const held = classOf(node)
+  return name === undefined || held === undefined
+    ? undefined
+    : { name, class: held }
 }
 
 /** The declaration space a node sits in — its identity, not its kind. */

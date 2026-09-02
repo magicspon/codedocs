@@ -119,6 +119,16 @@ export { resolveSubject } from './operations/subject.ts'
 export { scopeTo } from './operations/scope.ts'
 
 export {
+  coarseClassOf,
+  fileOf,
+  isSymbolId,
+  shorthandOf,
+  splitShorthand,
+  type DescriptorClass,
+  type PackageRef,
+} from './symbol-id.ts'
+
+export {
   answer,
   assembled,
   failure,

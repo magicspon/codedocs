@@ -45,12 +45,12 @@ export function pathId(db: DatabaseSync, path: FilePath): number | undefined {
 
 /** The id of an already-interned node, or `undefined`. Never inserts. */
 export function nodeId(db: DatabaseSync, id: CallSource): number | undefined {
-  const [file, qualified] = partsOf(id)
+  const [file, descriptors] = partsOf(id)
   const found = prepared(
     db,
     `select n.id from node n join path p on p.id = n.path_id
-     where p.path = ? and n.qualified = ?`,
-  ).get(file, qualified) as { id: number } | undefined
+     where p.path = ? and n.descriptors = ?`,
+  ).get(file, descriptors) as { id: number } | undefined
   return found?.id
 }
 

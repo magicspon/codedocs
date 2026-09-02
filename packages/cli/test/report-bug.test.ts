@@ -261,7 +261,9 @@ describe('--with-repository', () => {
     }
     expect(report.repositoryFacts).toBe('included')
     expect(report.reproduction.command).toContain('checkout')
-    expect(report.reproduction.resolved).toEqual(['src/checkout.ts#checkout'])
+    expect(report.reproduction.resolved).toEqual([
+      'codedocs npm codedocs-cli-fixture . `src/checkout.ts`/checkout().',
+    ])
     expect(report.reproduction.conditions[0]?.project).toBe('tsconfig.json')
     expect(report.index.environment[0]?.project).toBe('tsconfig.json')
     expect(report).toHaveProperty('dependencies')

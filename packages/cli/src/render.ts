@@ -43,7 +43,7 @@ import type {
   TracePath,
 } from '@codedocs/core'
 
-import { operationSpec } from '@codedocs/core'
+import { operationSpec, shorthandOf } from '@codedocs/core'
 
 import { formatError } from './messages.ts'
 
@@ -182,7 +182,7 @@ export function renderImpact(envelope: ImpactEnvelope, style: Style): string {
     }
     const through =
       found.through === 'changed' ? '' : `  ${style.dim(found.through)}`
-    lines.push(`    ${found.id}${through}`)
+    lines.push(`    ${shorthandOf(found.id)}${through}`)
   }
   return [
     finish(envelope, lines, style, 'impacted symbols'),
@@ -465,7 +465,7 @@ export function renderSymbols(
 function symbolLine(node: SymbolNode, style: Style): string {
   const durability = node.durable ? '' : ` ${style.warn('local')}`
   const where = style.dim(`${node.file}:${node.line}`)
-  return `${node.id}  ${style.dim(node.kind)}  ${where}${durability}`
+  return `${shorthandOf(node.id)}  ${style.dim(node.kind)}  ${where}${durability}`
 }
 
 /**
@@ -481,7 +481,7 @@ export function renderEdges(
   const showTarget = envelope.operation === 'callees'
   const lines = (envelope.result ?? []).map((edge) => {
     const subject = showTarget ? edge.to : edge.from
-    return `  ${subject}  ${renderSite(edge, style)}`
+    return `  ${shorthandOf(subject)}  ${renderSite(edge, style)}`
   })
   return finish(envelope, lines, style, 'call edges')
 }
@@ -511,7 +511,8 @@ function referenceLine(edge: ReferenceEdge, style: Style): string {
     edge.provenance === 'deterministic'
       ? ''
       : ` ${style.warn(`[${edge.provenance}: ${edge.derivation}]`)}`
-  return `${edge.from} ${style.warn(edge.kind)} ${edge.to}  ${where}${how}`
+  const from = shorthandOf(edge.from)
+  return `${from} ${style.warn(edge.kind)} ${shorthandOf(edge.to)}  ${where}${how}`
 }
 
 /** How many symbols, imports or importers are named before the rest are counted. */
@@ -640,10 +641,10 @@ export function renderEvidence(
           ]),
           ...kindLines('files', report.files, (file) => fileLines(file, style)),
           ...kindLines('callers', report.callers, (edge) => [
-            `${edge.from}  ${renderSite(edge, style)}`,
+            `${shorthandOf(edge.from)}  ${renderSite(edge, style)}`,
           ]),
           ...kindLines('callees', report.callees, (edge) => [
-            `${edge.to}  ${renderSite(edge, style)}`,
+            `${shorthandOf(edge.to)}  ${renderSite(edge, style)}`,
           ]),
           ...kindLines('references', report.references, (edge) => [
             referenceLine(edge, style),
@@ -888,9 +889,13 @@ export function renderTrace(
   const lines: string[] = []
   let previous: readonly string[] = []
   for (const path of envelope.result ?? []) {
-    const sequence = [path.root, ...path.steps.map((step) => step.to)]
+    // Projected to the shorthand once, and compared in that form: a shorthand
+    // names one symbol per file, so a shared prefix is the same either way.
+    const sequence = [path.root, ...path.steps.map((step) => step.to)].map(
+      shorthandOf,
+    )
     const shared = sharedPrefix(previous, sequence)
-    if (shared === 0) lines.push(`  ${path.root}`)
+    if (shared === 0) lines.push(`  ${sequence[0]}`)
     for (let at = Math.max(shared, 1); at <= path.steps.length; at += 1) {
       const step = path.steps[at - 1]
       if (step === undefined) continue
@@ -899,7 +904,7 @@ export function renderTrace(
           ? ` ${style.warn('↺ cycle')}`
           : ''
       const sites = renderSites(step.sites, style)
-      lines.push(`${indent(at)}→ ${step.to}  ${sites}${closes}`)
+      lines.push(`${indent(at)}→ ${sequence[at]}  ${sites}${closes}`)
     }
     lines.push(...terminusNote(path, envelope.request.depth, style))
     previous = sequence
@@ -1168,7 +1173,7 @@ function ambiguityNote(envelope: Envelope<unknown>, style: Style): Note {
     style.warn(
       `  \`${subject ?? ''}\` is ambiguous — ${resolved.length} symbols:`,
     ),
-    ...resolved.map((id) => style.dim(`    ${id}`)),
+    ...resolved.map((id) => style.dim(`    ${shorthandOf(id)}`)),
   ]
 }
 

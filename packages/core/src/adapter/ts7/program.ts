@@ -17,6 +17,7 @@ import { API, type Project } from 'typescript/unstable/sync'
 
 import { toRepoPath } from '../../discovery.ts'
 import type { FilePath } from '../../model.ts'
+import { namingFor } from '../../naming.ts'
 import { sweepCallEdges } from './calls.ts'
 import { sweepReferenceEdges } from './references.ts'
 import { sweepExportShapes } from './export-shapes.ts'
@@ -80,6 +81,9 @@ export function openAnalysis(root: string): InternalSession {
   const api = new API({ cwd: root })
   const opened = new Set<string>()
   const adopted = new Set<string>()
+  // One per open backend: the manifests it reads do not move under an
+  // extraction, and a cold build asks it once per file.
+  const naming = namingFor(root)
   let view: View | undefined
 
   /**
@@ -142,6 +146,7 @@ export function openAnalysis(root: string): InternalSession {
 
     view = {
       projects,
+      naming,
       configPaths,
       repoPathOf,
       programPathOf,
@@ -255,7 +260,10 @@ function extractFrom(
 ): AdapterResult {
   const { files, canonicalOf } = ownedFiles(root, view, request)
 
-  const { nodes, byDeclaration, declarations } = sweepSymbols(files)
+  const { nodes, byDeclaration, declarations } = sweepSymbols(
+    files,
+    view.naming,
+  )
   const { callEdges, unresolvedCalls } = sweepCallEdges(
     files,
     view,

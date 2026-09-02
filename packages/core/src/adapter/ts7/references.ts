@@ -23,7 +23,7 @@ import type {
 } from '../../model.ts'
 import { attribute, descriptorPath } from './descriptors.ts'
 import { lookupDeclaration } from './lookup.ts'
-import { lineOf } from './shared.ts'
+import { declarationKey, lineOf } from './shared.ts'
 import type { DeclarationResolver, OwnedFile, View } from './types.ts'
 
 /** Identifiers resolved per checker request. The call sweep's measured size. */
@@ -34,6 +34,8 @@ interface ReferenceSite {
   readonly identifier: Node
   readonly kind: ReferenceKind
   readonly path: FilePath
+  /** The program's own spelling of the file, which keys the declaration join. */
+  readonly programPath: string
   readonly sf: SourceFile
 }
 
@@ -170,7 +172,7 @@ function collectReferenceSites(
   files: readonly OwnedFile[],
 ): Map<Project, ReferenceSite[]> {
   const byProject = new Map<Project, ReferenceSite[]>()
-  for (const { path, sf, project } of files) {
+  for (const { path, programPath, sf, project } of files) {
     const sites = byProject.get(project) ?? []
     const walk = (node: Node): void => {
       if (node.kind === SyntaxKind.Identifier) {
@@ -179,7 +181,9 @@ function collectReferenceSites(
           parent !== undefined && isCallee(node, parent)
             ? undefined
             : kindOf(node)
-        if (kind !== undefined) sites.push({ identifier: node, kind, path, sf })
+        if (kind !== undefined) {
+          sites.push({ identifier: node, kind, path, programPath, sf })
+        }
       }
       node.forEachChild(walk)
     }
@@ -213,10 +217,16 @@ function resolveSite(
   if (target === undefined) return undefined
 
   const { owner, attribution } = attribute(site.identifier)
+  // Through the symbol table rather than rebuilt from the owner, for the reason
+  // `callerOf` gives in the call sweep: a merged declaration is one node under
+  // the first declaration's descriptors, and the other half would name an id no
+  // row holds. A file caller keeps the path as its identity, per ADR 0002.
   const from =
     owner === undefined
       ? site.path
-      : `${site.path}#${descriptorPath(owner, site.sf)}`
+      : (byDeclaration.get(
+          declarationKey(site.programPath, owner.getStart(site.sf)),
+        ) ?? view.naming.idOf(site.path, descriptorPath(owner, site.sf)))
   // A reference into the symbol it is written in says only that a declaration
   // mentions its own name — a recursive type, a class naming itself.
   if (from === target) return undefined

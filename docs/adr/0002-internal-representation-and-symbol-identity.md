@@ -67,7 +67,7 @@ them here would discard the reason the backend was chosen.
 - **`local N` ordinals, or Glean's path-prefixed variant.** Rejected: prefixing the document path
   fixes uniqueness but not stability — the ordinal still shifts when a binding is inserted above it.
   Locals are named by their descriptor path from the nearest global ancestor instead
-  (``src/`page.ts`/renderPage().t.``), which SCIP's grammar permits and which nothing above it can
+  (`` `src/page.ts`/renderPage().t. ``), which SCIP's grammar permits and which nothing above it can
   disturb.
 - **Excluding local symbols from the index**, as the prior art recommends. Rejected on measurement:
   **25 of the Next.js fixture's 175 call edges** are calls to local bindings (`const t =
@@ -111,7 +111,22 @@ useTranslations()` and then `t(...)`), and the per-symbol method structurally ca
   `<version>` field is a fixed placeholder for workspace packages (a routine `version` bump would
   otherwise invalidate every symbol in a package and every cross-package reference to it), and locals
   are named by descriptor path rather than by ordinal. Third-party symbols keep their real version,
-  where it carries information.
+  where it carries information. In full:
+  ``codedocs npm @fixture/pages . `src/page.ts`/renderPage().t.`` — scheme, manager, package,
+  placeholder version, then the descriptors. The placeholder is `.`, SCIP's own convention for a
+  field carrying no information, and it is also the `<package>` of a file no manifest above it names.
+- **The file is one backtick-escaped namespace descriptor**, rather than one per path segment. The
+  segmented form reads better and cannot be parsed: a `declare module "foo/bar"` is a namespace
+  descriptor whose name needs escaping too, so no rule over the leading run separates the path from
+  the descriptors below it. Reading a `SymbolId` back has to be total, because ADR 0006 accepts one
+  as input, and the `Package → File → Symbol` containment this ADR refuses to store twice is encoded
+  either way.
+- **A descriptor's suffix comes from the declaration's kind, never from its initialiser.** `const f =
+() => {}` is a term like every other `const`; reading the initialiser would make rewriting it as
+  `const f = memo(() => {})` a rename, which is the churn on a body-only edit that offsets were
+  rejected for. The consequence is that a merged `interface Foo` beside a `const Foo` would take two
+  descriptors for one declaration, so **the collapse above is decided on the shorthand** — otherwise
+  the form every document anchors to would be ambiguous for a pattern the language encourages.
 - **A descriptor path segment is taken from what the author wrote**, which is what makes it survive a
   sibling being inserted above it where an ordinal does not. Four things name a scope: a declared
   name, an object-literal key, `constructor` or `static` for the one unnamed member a class may hold,
