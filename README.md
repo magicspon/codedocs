@@ -4,40 +4,29 @@ A local codebase index for TypeScript, built for the questions an editor cannot 
 
 Your editor tells you who calls one function, inside one project. codedocs indexes the whole
 repository — every symbol, every call edge, every project — into a single SQLite file beside your
-working tree, then answers questions **across** it.
+working tree, then answers questions **across** it, from the command line or from an agent.
 
-Two kinds of question. **Relationship** questions are about the repository as it stands: what calls
-this from anywhere, where a declaration actually comes from behind a barrel and a re-export, and what
-path of calls leads out of this handler. **Change** questions compare the working tree against an
-earlier commit: what a change could reach, which tests it reaches, and which documents it
-contradicts.
+```sh
+codedocs callers 'AuthService.login'          # who calls this, from anywhere
+codedocs trace 'handleCancelBooking.ts#handler' # what actually happens when this runs
+codedocs impact --label role=test             # which tests does my change reach
+codedocs docs check                           # which docs does my change contradict
+```
 
-Three things shape everything else:
+No LLM, no API key, no network, no daemon. Every answer is deterministic, and every answer says what
+the analysis could not see.
 
-- **The CLI is the product.** Every operation has a human renderer and a `--json` renderer over one
-  fixed envelope, and every answer says what the analysis could not see.
-- **No LLM.** codedocs emits deterministic structured facts and never prose. There is no provider, no
-  API key and no inference cost anywhere in it. If you want prose, `evidence` gives your own agent
-  the facts to write it from — one operation among thirteen, not the point of the tool.
-- **It stops where `fallow` starts.** Dead code, cycles, duplication, complexity and boundary
-  violations are `fallow`'s and are not reimplemented here. See
-  [codedocs and fallow](#codedocs-and-fallow).
+> **Pre-release.** Thirteen operations, both renderers and the MCP server work end to end on real
+> repositories. The first npm release is pending; until it lands, install [from
+> source](#from-source).
 
-## Status
+## Contents
 
-Pre-release, and not published to npm. Thirteen operations, both renderers and the MCP server work end
-to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
-[What is built](#what-is-built) and [What is left](#what-is-left).
-
-Measured on [cal.com](https://github.com/calcom/cal.com) at commit `176037d` — 4,827 files across 28
-TypeScript projects:
-
-| Operation                                         | Cost                                         |
-| ------------------------------------------------- | -------------------------------------------- |
-| Cold build                                        | **17 s** → 48,069 symbols, 26,091 call edges |
-| One-file edit, repaired on the next question      | **0.8 s**                                    |
-| Answering a warm question, process start included | **~0.3 s**                                   |
-| Index on disk                                     | 17 MB                                        |
+- [Requirements](#requirements) · [Install](#install) · [Quick start](#quick-start)
+- [Commands](#commands) — [analyse](#analyse) · [symbol](#symbol) · [callers / callees](#callers-and-callees) · [references](#references) · [file](#file) · [trace](#trace) · [evidence](#evidence) · [impact](#impact) · [docs check](#docs-check) · [docs affected](#docs-affected) · [doctor](#doctor) · [report-bug](#report-bug)
+- [Naming a subject](#naming-a-subject) · [Filtering an answer](#filtering-an-answer) · [Flags](#flags) · [Exit codes](#exit-codes)
+- [Configuration](#configuration) · [JSON output](#json-output) · [Using it from an agent](#using-it-from-an-agent)
+- [Reading an answer honestly](#reading-an-answer-honestly) · [codedocs and fallow](#codedocs-and-fallow) · [Troubleshooting](#troubleshooting)
 
 ## Requirements
 
@@ -50,18 +39,17 @@ there is no native module to compile and no post-install step.
 npm install -g @codedocs/cli
 ```
 
-That puts a `codedocs` command on your `PATH`:
+That puts a `codedocs` command on your `PATH`. The package is scoped because the unscoped `codedocs`
+name on npm belongs to an unrelated project; the command it installs is `codedocs` either way.
+
+Every command takes `--cwd`, so you never have to run codedocs from inside the repository it is
+reading:
 
 ```sh
 codedocs analyse --cwd /path/to/your/repo
 ```
 
-The package is scoped because the unscoped `codedocs` name on npm belongs to an unrelated project.
-The command it installs is `codedocs` either way, since `bin` names are not registry-wide.
-
-Every operation takes `--cwd`, so you never have to run codedocs from inside the repository it is
-reading. The examples below are written as `codedocs …`, as if you were standing in the repository
-being read.
+The examples below are written as if you were standing in the repository being read.
 
 ### From source
 
@@ -74,11 +62,11 @@ pnpm build
 ```
 
 `pnpm build` is required here and not for a published install: Node refuses to strip types inside
-`node_modules`, so what ships is a bundle, and `bin` points into `dist/`.
+`node_modules`, so what ships is a bundle and `bin` points into `dist/`.
 
 ## Quick start
 
-Build the index. One row per TypeScript project, and totals underneath:
+**1. Build the index.** One row per TypeScript project, and totals underneath:
 
 ```console
 $ codedocs analyse --limit 6
@@ -95,17 +83,33 @@ $ codedocs analyse --limit 6
   showing 6 of 28 — pass --limit for more
 ```
 
-You do not have to run `analyse` again. **Every question repairs the index before it answers**, so an
-edit costs the repair and not a rebuild. `analyse` exists so a cold build in CI can be a step that
-fails on its own, rather than a hidden cost inside the first question.
+That is [cal.com](https://github.com/calcom/cal.com) — 4,827 files across 28 projects — in 17
+seconds, for a 17 MB index.
 
-Then ask. There is no daemon and no watcher; each command is a one-shot process.
+**2. Ask.** You do not have to run `analyse` again. **Every command repairs the index before it
+answers**, so an edit costs the repair (about 0.8 s for one file) and not a rebuild. A warm question
+takes roughly 0.3 s including process start.
 
-## The operations
+```console
+$ codedocs symbol 'getPaymentAppData'
+  packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData  function  packages/app-store/_utils/payments/getPaymentAppData.ts:11
 
-Built:
+$ codedocs callers 'getPaymentAppData' --limit 3
+  apps/web/app/(use-page-wrapper)/payment/[uid]/PaymentPage.tsx#PaymentPage  apps/web/app/(use-page-wrapper)/payment/[uid]/PaymentPage.tsx:70
+  apps/web/components/booking/BookingListItem.tsx#BookingListItem  apps/web/components/booking/BookingListItem.tsx:178
+  apps/web/modules/bookings/components/AvailableTimes.tsx#SlotItem  apps/web/modules/bookings/components/AvailableTimes.tsx:105
 
-| Operation              | Answers                                                       | Result unit    |
+  showing 3 of 14 — pass --limit for more
+```
+
+`analyse` exists so a cold build in CI can be a step that fails on its own, rather than a hidden cost
+inside the first question.
+
+There is no daemon and no watcher. Each command is a one-shot process.
+
+## Commands
+
+| Command                | Answers                                                       | Result unit    |
 | ---------------------- | ------------------------------------------------------------- | -------------- |
 | `analyse`              | build or refresh the index                                    | project        |
 | `symbol <pattern>`     | every symbol whose name matches a glob                        | symbol         |
@@ -115,39 +119,34 @@ Built:
 | `file <path>`          | what the index holds about one file                           | file           |
 | `trace <root>`         | every path of calls out of a root                             | path           |
 | `evidence <subject>`   | everything the index holds about one subject                  | per kind       |
+| `impact`               | every symbol a change could reach, against an earlier commit  | symbol         |
 | `docs check`           | which documented claims the code now contradicts              | document       |
 | `docs affected`        | which documents a change reaches                              | document       |
-| `impact`               | every symbol a change could reach, against an earlier commit  | symbol         |
 | `doctor`               | every unmet precondition, and the command that would clear it | precondition   |
 | `report-bug`           | a reproduced failure, safe to paste                           | —              |
 
-That is the whole set [ADR 0006](docs/adr/0006-operation-set-and-renderer-contract.md) specifies.
+### analyse
 
-There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
-because a second traversal is a second thing to keep correct.
+Build the index, or bring it up to date. Reports what it did — a cold build, a repair, or nothing —
+and captures a [baseline](#impact) if the tree is clean.
 
-### Naming a subject
-
-Whatever codedocs prints as an identifier, it accepts as input. Three forms:
-
-```
-packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData   exact
-getPaymentAppData                                                          may match several
+```sh
+codedocs analyse
+codedocs analyse --limit 40      # show more than the default 20 projects
 ```
 
-An ambiguous name is **not an error** — the answer covers every symbol it matched and the envelope
-names them, because making you ask again costs a round trip to learn something the answer already
-contains.
+### symbol
 
-Start from `symbol` when you do not know the path:
+Find a symbol when you do not know its path. The only command that takes a glob, matched against both
+the declared name and the qualified name:
 
-```console
-$ codedocs symbol 'getPaymentAppData'
-  packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData  function  packages/app-store/_utils/payments/getPaymentAppData.ts:11
+```sh
+codedocs symbol 'AuthService.login'
+codedocs symbol '*Repository'
+codedocs symbol '*'              # everything
 ```
 
-`symbol` is the only operation that takes a glob. It does no ranking, ever: a ranking is a judgement,
-and a judgement cannot also be the guarantee that the same commit gives the same answer.
+It does no ranking, ever. Results are sorted, never scored.
 
 ### callers and callees
 
@@ -155,136 +154,33 @@ and a judgement cannot also be the guarantee that the same commit gives the same
 $ codedocs callers 'getPaymentAppData' --limit 5
   apps/web/app/(use-page-wrapper)/payment/[uid]/PaymentPage.tsx#PaymentPage  apps/web/app/(use-page-wrapper)/payment/[uid]/PaymentPage.tsx:70
   apps/web/components/booking/BookingListItem.tsx#BookingListItem  apps/web/components/booking/BookingListItem.tsx:178
-  apps/web/modules/bookings/components/AvailableTimes.tsx#SlotItem  apps/web/modules/bookings/components/AvailableTimes.tsx:105
   apps/web/modules/bookings/components/BookEventForm/BookEventForm.tsx#BookEventForm  apps/web/modules/bookings/components/BookEventForm/BookEventForm.tsx:83
   apps/web/modules/bookings/components/BookEventForm/BookEventForm.tsx#BookEventForm  apps/web/modules/bookings/components/BookEventForm/BookEventForm.tsx:89
 
-  showing 5 of 14 — pass --limit for more
+  showing 4 of 14 — pass --limit for more
 ```
 
-Two lines for one caller is not a duplicate: they are two call sites, and each carries its own
-`file:line` and its own honesty fields. Calls that resolve through barrel files and renamed
-re-exports are followed to the real declaration.
-
-### trace
-
-The one no editor offers. `trace` walks outward from a root and returns **paths**, drawn as a tree
-with the prefix each path shares collapsed onto the one before it:
-
-```console
-$ codedocs trace 'packages/features/bookings/lib/handleCancelBooking.ts#handler' --limit 8
-  packages/features/bookings/lib/handleCancelBooking.ts#handler
-    → packages/emails/email-manager.ts#sendCancelledEmailsAndSMS  packages/features/bookings/lib/handleCancelBooking.ts:509
-      → packages/emails/email-manager.ts#eventTypeDisableHostEmail  packages/emails/email-manager.ts:519
-      → packages/emails/email-manager.ts#fetchOrganizationEmailSettings  packages/emails/email-manager.ts:510
-      → packages/emails/email-manager.ts#sendEmail  packages/emails/email-manager.ts:520,525,534
-        → packages/emails/templates/_base-email.ts#BaseEmail.sendEmail  packages/emails/email-manager.ts:54
-          → packages/emails/lib/sanitizeDisplayName.ts#sanitizeDisplayName  packages/emails/templates/_base-email.ts:61,62
-            → packages/emails/lib/sanitizeDisplayName.ts#sanitize  packages/emails/lib/sanitizeDisplayName.ts:5
-          → packages/emails/templates/_base-email.ts#BaseEmail.getMailerOptions  packages/emails/templates/_base-email.ts:66,76
-          → packages/emails/templates/_base-email.ts#BaseEmail.getNodeMailerPayload  packages/emails/templates/_base-email.ts:44,51
-          → packages/emails/templates/_base-email.ts#BaseEmail.printNodeMailerError  packages/emails/templates/_base-email.ts:81
-          → packages/features/flags/features.repository.ts#FeaturesRepository  packages/emails/templates/_base-email.ts:33
-          → packages/features/flags/features.repository.ts#FeaturesRepository.checkIfFeatureIsEnabledGlobally  packages/emails/templates/_base-email.ts:34
-            → packages/features/flags/features.repository.ts#FeaturesRepository.getAllFeatures  packages/features/flags/features.repository.ts:105
-
-  showing 8 of 250 — pass --limit for more
-```
-
-Eight paths, five files, and the shape of what cancelling a booking actually does — including that
-sending one email reads a feature flag. That is the point.
-
-Note that `--limit` counts **paths**, not lines. These eight paths draw thirteen steps, because the
-tree prints a shared prefix once: `sendCancelledEmailsAndSMS` is on all eight and appears on one
-line.
-
-- The walk is **unbounded unless you bound it** with `--depth`. Measured: an unbounded walk from
-  every one of cal.com's 5,217 call-graph roots yields 50,580 paths in 1.1 s, and the worst root
-  exhausts at 16 steps. Only a quarter of a repository's call sites stay inside it, so a walk meets
-  `node_modules` long before it meets combinatorics.
-- **Cycles terminate and are reported**, marked `↺ cycle` on the step that closed the loop, never
-  silently cut.
-- Where `--depth` did cut a branch, that branch says so — `⇣ more calls beyond depth 3` — so a
-  bounded answer can never be read as a whole one.
-
-### doctor
-
-Every unmet precondition in the repository, read whole — the same four signals every other answer
-reports for the projects _it_ touched, over the whole index and grouped so that one cause is one
-finding:
-
-```console
-$ codedocs doctor
-  tsconfig.json  typed
-    unprepared
-      left-pad — 1 site in src/app.ts
-      run `pnpm install`
-    missing-generated
-      @scope/pkg/enums — 1 site in src/app.ts
-      run `pnpm prisma generate`
-    broken
-      ./nowhere — 1 site in src/app.ts
-
-  1 project, 7 files, built by codedocs 0.0.0 against TypeScript 7.0.2
-```
-
-- **Static and instant.** It renders what the index already stored: no program is opened, nothing is
-  extracted, and no sweep of its own runs.
-- **One cause is one row**, whichever signal saw it. A project whose install never ran fires the
-  filesystem signal _and_ leaves every declared import unresolved; those are one finding at two
-  granularities, so they are reported once with both halves kept.
-- **A remediation, or an honest silence.** An install command is read from the lockfile and a codegen
-  command from [`codedocs.jsonc`](#configuration). `unmapped` and `broken` get no command at all —
-  none would help the first, and none _is_ a command for the second — and codedocs ships with no
-  built-in framework table, so a codegen it was not told about is named without a guess attached.
-- **`--measure`** re-runs the filesystem signals against the working tree and names where they
-  disagree with the index. It still opens no program: it is the escape hatch for the one thing the
-  stored signals cannot see, an install that is present and incomplete.
-
-```console
-$ codedocs doctor --measure
-  1 signal(s) disagree with the index:
-    tsconfig.json dependencies: indexed analysed as `typed`, now 1 declared dependency(s) absent from node_modules: left-pad
-```
-
-`doctor` is the **first operation that can exit 1**: it does so for a cause a command would clear, and
-never for `unmapped` or `broken`, because a red build that cannot be cleared is noise.
+The same caller twice is not a duplicate — those are two call sites, each with its own `file:line`.
+Calls that go through barrel files and renamed re-exports are followed to the real declaration.
 
 ### references
 
-The other half of the relationship set. A type named in a signature is not a call, and `callers`
-cannot see it — which is why `impact` is gated on this operation rather than the other way round:
+Everything that **names** a subject without calling it — a type in a signature, a class in an
+`extends`, a value passed by name. `callers` cannot see any of it.
 
-```console
-$ codedocs references ProjectPreflight --limit 6
-  packages/core/src/operations/measure.ts#compare typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:96
-  packages/core/src/operations/measure.ts#fingerprint typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:213
-  packages/core/src/operations/measure.ts#globbed typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:196
-  packages/core/src/operations/measure.ts#incomplete typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:158
-  packages/core/src/operations/measure.ts#nodeModules typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:135
-  packages/core/src/operations/measure.ts#postinstall typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:182
-
-  showing 6 of 20 — pass --limit for more
+```sh
+codedocs references 'Money'
 ```
 
-- **Four kinds, kept apart**: `extends`, `implements`, `typeReferences`, and plain `references` for a
-  name used as a value. SCIP conflates references with calls — `IdentifierFunction` is documented as
-  "function references, including calls" — and that conflation is why it was not chosen as the
-  producer.
-- **A call is never also a reference.** The two sweeps split every identifier between them, so a call
-  site appears in `callers` and nowhere else.
-- **An import is not a reference either.** It is already an `imports` edge against the file, and
-  counting it twice would make every re-export two facts about one line.
-- Both directions come back in one answer, because "what names `Money`" and "what does `price` name"
-  are the same edge read from two ends.
+Four kinds are kept apart: `extends`, `implements`, `typeReferences`, and plain `references`. A call
+is never also a reference, and an import is neither — that is already an `imports` edge on the file.
 
-References outnumber calls, and the sweep is not free: this repository's own 112 files hold 1,425
-call edges and 3,838 reference edges, which takes a cold build from 0.61 s to 0.88 s and the index
-from 528 KB to 713 KB.
+Both directions come back in one answer: "what names `Money`" and "what does `price` name" are the
+same edge read from two ends.
 
 ### file
 
-What the index holds about one file — previously readable only by guessing a symbol name first:
+What the index holds about one file, without having to guess a symbol name first:
 
 ```console
 $ codedocs file src/types.ts
@@ -301,15 +197,48 @@ $ codedocs file src/types.ts
       src/wallet.ts
 ```
 
-The projects are all of them, with the canonical one — the project its facts were produced in, and so
-the one whose fidelity applies — marked `*`. It takes a repository-relative path or the tail of one,
-so `codedocs file types.ts` finds the same file, and a tail matching several answers about each.
+It takes a repository-relative path or the tail of one, so `codedocs file types.ts` finds the same
+file. The `*` marks the canonical project — the one the file's facts were produced in, and so the one
+whose fidelity applies.
+
+### trace
+
+The one no editor offers. `trace` walks outward from a root and returns **paths**, drawn as a tree
+with each shared prefix collapsed onto the line before it:
+
+```console
+$ codedocs trace 'packages/features/bookings/lib/handleCancelBooking.ts#handler' --limit 8
+  packages/features/bookings/lib/handleCancelBooking.ts#handler
+    → packages/emails/email-manager.ts#sendCancelledEmailsAndSMS  packages/features/bookings/lib/handleCancelBooking.ts:509
+      → packages/emails/email-manager.ts#eventTypeDisableHostEmail  packages/emails/email-manager.ts:519
+      → packages/emails/email-manager.ts#fetchOrganizationEmailSettings  packages/emails/email-manager.ts:510
+      → packages/emails/email-manager.ts#sendEmail  packages/emails/email-manager.ts:520,525,534
+        → packages/emails/templates/_base-email.ts#BaseEmail.sendEmail  packages/emails/email-manager.ts:54
+          → packages/emails/lib/sanitizeDisplayName.ts#sanitizeDisplayName  packages/emails/templates/_base-email.ts:61,62
+            → packages/emails/lib/sanitizeDisplayName.ts#sanitize  packages/emails/lib/sanitizeDisplayName.ts:5
+          → packages/emails/templates/_base-email.ts#BaseEmail.getMailerOptions  packages/emails/templates/_base-email.ts:66,76
+          → packages/features/flags/features.repository.ts#FeaturesRepository  packages/emails/templates/_base-email.ts:33
+          → packages/features/flags/features.repository.ts#FeaturesRepository.checkIfFeatureIsEnabledGlobally  packages/emails/templates/_base-email.ts:34
+
+  showing 8 of 250 — pass --limit for more
+```
+
+Eight paths, five files, and the shape of what cancelling a booking actually does — including that
+sending one email reads a feature flag.
+
+Three things worth knowing:
+
+- **`--limit` counts paths, not lines.** These eight paths draw thirteen steps, because a shared
+  prefix is printed once.
+- **The walk is unbounded unless you bound it** with `--depth`. Where `--depth` cut a branch, that
+  branch says so (`⇣ more calls beyond depth 3`), so a bounded answer can never be read as a whole
+  one.
+- **Cycles terminate and are reported**, marked `↺ cycle` on the step that closed the loop.
 
 ### evidence
 
-Every kind of fact the index holds about one subject, assembled in one answer so an agent — or a
-person — writing a document has them all without asking six questions. It generates nothing: there
-is no prose here, and never will be.
+Every kind of fact the index holds about one subject, in one answer — so an agent, or a person,
+writing a document has them all without asking six questions:
 
 ```console
 $ codedocs evidence 'scopeTo' --limit 3
@@ -318,43 +247,28 @@ $ codedocs evidence 'scopeTo' --limit 3
   files (1)
     packages/core/src/operations/scope.ts  typed
       in packages/cli/tsconfig.json *
-      declares (9)
-        …
       imports (3)
         ../envelope.ts → packages/core/src/envelope.ts
         ../model.ts → packages/core/src/model.ts
         ../store/index.ts → packages/core/src/store/index.ts
-      imported by (9)
-        …
   callers (showing 3 of 6)
     packages/core/src/operations/calls.ts#collect  packages/core/src/operations/calls.ts:98
     packages/core/src/operations/file.ts#file  packages/core/src/operations/file.ts:75
     packages/core/src/operations/impact.ts#impact  packages/core/src/operations/impact.ts:145
   callees (3)
-    packages/core/src/operations/scope.ts#specifierSpots  packages/core/src/operations/scope.ts:42
-    packages/core/src/store/read-projects.ts#readProjectsForFiles  packages/core/src/operations/scope.ts:36
-    packages/core/src/store/read-specifiers.ts#readUnresolvedSpecifiers  packages/core/src/operations/scope.ts:42
-  references (showing 3 of 5)
     …
   labels (3)
     packages/core/src/operations/scope.ts  role=source  [inferred: default]
     packages/core/src/operations/scope.ts  authorship=authored  [deterministic: git-untracked]
-    packages/core/src/operations/scope.ts  authorship=authored  [inferred: default]
 
   showing 14 of 19 — pass --limit for more
 ```
 
-- **`--limit` applies per kind**, and each kind reports its own truncation. A shared pool would let a
-  fourth caller quietly evict the file, the labels or a document.
-- **Each kind keeps its own sort key** — the one that kind has in its own operation — so two answers
-  about the same subject cannot disagree about order.
-- **Labels ride on what they describe.** A symbol does not inherit its file's labels; the rows say
-  which node each label was filed against, and the rule that decided it.
-- **`--claims`** restates the facts in the payload as [ADR
-  0005](docs/adr/0005-document-claims-and-verdicts.md) claim expressions, so an agent writing a
-  document never invents the syntax. It is opt-in and `--json` only — a claim string is a restatement
-  of a fact the answer already carries, and sending it always would spend budget saying the same
-  thing twice. A claim anchored to a local symbol is never emitted, because ADR 0005 refuses one.
+It generates nothing — there is no prose here, and never will be. `--limit` applies **per kind**, and
+each kind reports its own truncation, so a fourth caller cannot quietly evict the file or the labels.
+
+`--claims` (with `--json`) restates the facts as claim expressions, so an agent writing a document
+never has to invent the syntax:
 
 ```console
 $ codedocs evidence 'scopeTo' --claims --json | jq -r '.claims[0:3][]'
@@ -363,102 +277,10 @@ imports(packages/core/src/operations/scope.ts, packages/core/src/envelope.ts)
 imports(packages/core/src/operations/scope.ts, packages/core/src/model.ts)
 ```
 
-There is no `context` command that bundles several subjects for a prompt, and there will not be one:
-it is `evidence` with a loop above it, which is composition above an operation. ADR 0006 names one
-more kind than this holds — the documents whose claims name the subject — and it is a known gap: it
-would put a repository-wide Markdown scan behind every `evidence` answer, and nobody has asked for it
-yet.
-
-### docs check and docs affected
-
-A **document** is any Markdown file in the repository carrying at least one **claim** — a checkable
-assertion written in an HTML comment immediately after the prose it justifies. It is invisible on
-GitHub and in every editor preview, plain text in a diff, and its position is what lets a verdict name
-a contradicted _section_ rather than a whole file.
-
-```markdown
-Checkout charges through the payment service before it writes the order.
-
-<!-- codedocs: calls(src/checkout/service.ts#CheckoutService.charge,
-                     src/payments/service.ts#PaymentService.capture) -->
-```
-
-Writing a claim is how a file opts in. There is no configuration and no `docs/**` convention:
-discovery is a repository-wide scan for the marker, 46 ms over cal.com's 380 Markdown files.
-
-```console
-$ codedocs docs check
-  docs/payments.md  contradicted, 3 of 5 sections covered
-    Charging  verified  :6
-      calls(src/payments.ts#charge, src/payments.ts#audit)  verified  :10
-    Gateways  contradicted  :17
-      implementations(src/types.ts#Gateway) == 3  contradicted  (index holds 2)  :21
-    Links  contradicted  :24
-      ../src/gone.ts → no such file  :26
-
-  scanned 33 Markdown files in 3 ms, finding 1 document
-```
-
-The predicates are a closed set: `exists`, `calls`, `reaches`, `references`, `imports`, `extends`,
-`implements`, `usesType` and `hasLabel`, plus **negation** (`!calls(a, b)`), the scoped
-`onlyCalledBy(x, dir/)` — encapsulation is the assertion architectural documentation actually makes —
-and **counts** (`implementations(x) == 3`, `callers(x) == 0`), which catch the fourth implementation
-being added as no per-instance claim ever will. ADR 0005 also names `exports` and `dependsOn`; the
-index holds no export edges and no package nodes, so a claim using one is **refused with that reason**
-rather than quietly passing.
-
-There are four verdicts and each has exactly one producer. Nothing blends them, and there is no score.
-
-| Verdict             | Produced by       | Means                                                      |
-| ------------------- | ----------------- | ---------------------------------------------------------- |
-| `verified`          | claims            | every claim in the document checks out                     |
-| `contradicted`      | claims            | a claim is **falsified**, or a prose link names no file    |
-| `potentially stale` | the derived scope | every claim holds, and a file the document touches changed |
-| `unable to verify`  | blind spots       | the subject is in a `syntactic` file, or did not resolve   |
-
-- **`contradicted` requires a claim to be falsified, never merely unresolved.** Of the symbols whose
-  id vanished over 20 commits of the Next.js fixture, **12 of 20 have the same name elsewhere at
-  `HEAD`**; over 60 commits it is **95 of 105**. A vanished subject is `unable to verify` carrying
-  [continuity](docs/adr/0007-cross-commit-continuity.md)'s rename candidates — _"a symbol of that name
-  is now at `src/new.ts#relocated`, moved in `ab21c7f`"_ — which is the exact text needed to repair
-  the claim. The hint is never a verdict, and an empty candidate list never means "deleted".
-- **A blind spot can only turn a would-be `contradicted` into `unable to verify`, never a `verified`
-  into one.** A claim that holds rests on a fact that is _present_, and nothing codedocs failed to see
-  can remove one; a claim that fails rests on an _absence_, which is exactly what a `syntactic` file
-  can manufacture. Under a negation the rule inverts by itself.
-- **No verdict renders without claim coverage.** _"verified, 3 of 5 sections covered"_ — without it,
-  `verified` silently means "the checkable part is true", which is the completeness failure the
-  honesty layer exists to prevent. Coverage is not a confidence score, is never combined with a
-  verdict, and is a different thing from completeness.
-- **An ambiguous shorthand is an error in the document**, reported with its candidates, not an
-  `unable to verify`. A committed artefact must mean one thing — deliberately unlike a question asked
-  at a prompt, which may reasonably be vague. So is a claim anchored to a local symbol.
-- **`contradicted` alone exits 1**, plus an error in the document itself: an unparseable claim checks
-  nothing, and exiting 0 would let one typo disable a document's verification for ever.
-  `potentially stale` does not — pointer signals of exactly that character measured at 59–77% false
-  alarms, and wiring that to a red build is the change that would get this removed from CI within a
-  month. **`--fail-on <verdict>`** raises the bar for teams that want it.
-- **codedocs never writes to a document.** No verification stamp — a committed lie the moment anyone
-  edits the code — and no unattended repair after a rename, which would put an `inferred` fact into a
-  committed file.
-
-`docs affected` answers the change half of the same question, and **needs one index, not two**:
-
-```console
-$ codedocs docs affected            # the drift set: what have I broken right now
-$ codedocs docs affected --base main
-```
-
-With no argument the changed set is the drift codedocs already computes before every answer, so it
-needs no git and no configuration and is usable inside a pre-commit hook. It intersects that set with
-each document's **derived** scope — its claims' files plus the files its prose links to, never a
-declared pointer — and re-checks those documents. It never exits 1: reaching a document is not a
-finding.
-
 ### impact
 
-The only operation that composes: a [baseline](#baselines) to say what changed, and a walk **inward**
-through call and reference edges to say what would notice.
+What a change could reach: a walk **inward** through call and reference edges, from the symbols your
+working tree edited.
 
 ```console
 $ codedocs impact --depth 2
@@ -475,230 +297,155 @@ $ codedocs impact --depth 2
   compared against fb130c4
 ```
 
-- **Which tests does this change reach** is `codedocs impact --label role=test`, over the same walk.
-  There is no `affected-tests` command and there will not be one: a second traversal is a second thing
-  to keep correct.
-- **A change in fidelity is never a finding.** A file that was `syntactic` in the baseline and is
-  `typed` now has not changed — the analysis has. Those files leave the comparison and are named as
-  blind spots, per project.
-- **A missing baseline degrades the answer, it does not block it.** The edits still come from git and
-  the walk still runs; what is lost is the fidelity comparison. It is a blind spot at exit 0, never a
-  failure.
-- **`--base <ref>`** names the commit to compare against. The default is the merge base with the
-  default branch.
+```sh
+codedocs impact                        # against the merge base with the default branch
+codedocs impact --base main            # against a named commit
+codedocs impact --label role=test      # which tests does this change reach
+```
 
-## Baselines
+**Which tests does this change reach** is `impact --label role=test`. There is no `affected-tests`
+command and there will not be one — a second traversal is a second thing to keep correct.
 
-A baseline is an index codedocs kept from a commit it once analysed. It is **recorded by normal use,
-never constructed, and never leaves the machine**: rebuilding one is not slow, it is _impossible at
-usable fidelity_, because a `git worktree` of an old commit has no `node_modules` and codedocs will
-not run your install — so every file in it would be `syntactic`, diffed against a typed working tree.
+`impact` compares against a **baseline**: an index codedocs kept from a commit it once analysed.
+Baselines are recorded as a side effect of `analyse` over a clean tree, never built on demand, and
+never leave the machine. Three are kept. If there is no usable baseline, the answer still comes back
+— the edits still come from git and the walk still runs — with the missing comparison named as a
+blind spot at exit 0.
+
+### docs check
+
+A **document** is any Markdown file in the repository carrying at least one **claim**: a checkable
+assertion written in an HTML comment, immediately after the prose it justifies. It is invisible on
+GitHub and in every editor preview, and plain text in a diff.
+
+```markdown
+Checkout charges through the payment service before it writes the order.
+
+<!-- codedocs: calls(src/checkout/service.ts#CheckoutService.charge,
+                     src/payments/service.ts#PaymentService.capture) -->
+```
+
+Writing a claim is how a file opts in. There is no configuration and no `docs/**` convention —
+discovery is a repository-wide scan for the marker, 46 ms over cal.com's 380 Markdown files.
 
 ```console
-$ codedocs analyse
-  …
-  captured a baseline for fb130c4 (132 KB)
+$ codedocs docs check
+  docs/payments.md  contradicted, 3 of 5 sections covered
+    Charging  verified  :6
+      calls(src/payments.ts#charge, src/payments.ts#audit)  verified  :10
+    Gateways  contradicted  :17
+      implementations(src/types.ts#Gateway) == 3  contradicted  (index holds 2)  :21
+    Links  contradicted  :24
+      ../src/gone.ts → no such file  :26
+
+  scanned 33 Markdown files in 3 ms, finding 1 document
 ```
 
-- **Capture is a side effect of `analyse` over a clean tree**, and there is no `baseline save`
-  command. An explicit save asks you to predict, a week in advance, which commit you will later want
-  to compare against.
-- **A dirty tree captures nothing.** A snapshot is a commit plus whatever is uncommitted on top of it;
-  a baseline is an index for a commit.
-- **Three are kept**, evicting anything that is not an ancestor of `HEAD` first, then the oldest by
-  commit date. Evicting non-ancestors first _is_ the whole branch-switching story — yesterday's
-  abandoned branch tip is an ancestor of nothing — which is why there is no branch tracking anywhere.
-  `baselines: 0` in [`codedocs.jsonc`](#configuration) disables capture entirely.
-- **Three is a guess**, and the ADR says so. `codedocs doctor` reports how many are held and how far
-  `HEAD` has moved from the newest, which is the only place that guess accrues evidence.
-- An answer uses **the newest stored baseline that is an ancestor of `HEAD`**. When that is not the
-  commit you asked for, the envelope names the one requested, the one used, and the distance between
-  them — as part of the request, never as a blind spot.
+**The predicates**, a closed set: `exists`, `calls`, `reaches`, `references`, `imports`, `extends`,
+`implements`, `usesType` and `hasLabel`; negation (`!calls(a, b)`); the scoped `onlyCalledBy(x,
+dir/)`; and counts (`implementations(x) == 3`, `callers(x) == 0`), which catch a fourth implementation
+being added as no per-instance claim ever will.
 
-## Machine output: one envelope, every answer
+**Four verdicts**, each with exactly one producer. Nothing blends them, and there is no score.
 
-Pass `--json` and every operation returns the same shape, success or failure. This is what CI, a
-script and an agent all read — there is no separate agent surface:
+| Verdict             | Means                                                      |
+| ------------------- | ---------------------------------------------------------- |
+| `verified`          | every claim in the document checks out                     |
+| `contradicted`      | a claim is falsified, or a prose link names no file        |
+| `potentially stale` | every claim holds, and a file the document touches changed |
+| `unable to verify`  | the subject is in a `syntactic` file, or did not resolve   |
+
+A vanished symbol is `unable to verify`, never `contradicted` — and the answer carries rename
+candidates (_"a symbol of that name is now at `src/new.ts#relocated`, moved in `ab21c7f`"_), which is
+the text you need to repair the claim.
+
+**Only `contradicted` exits 1**, plus an error in the document itself. `potentially stale` does not:
+signals of that character measure at 59–77% false alarms, and wiring one to a red build is how this
+gets removed from CI within a month. Raise the bar with `--fail-on <verdict>` if you want it.
+
+codedocs never writes to a document — no verification stamp, and no unattended repair after a rename.
+
+### docs affected
+
+The change half of the same question, and it needs no baseline:
+
+```sh
+codedocs docs affected              # what have I broken right now
+codedocs docs affected --base main  # everything since this commit
+```
+
+With no argument the changed set is the drift codedocs already computes before every answer, so it
+needs no git and no configuration — usable inside a pre-commit hook. It never exits 1: reaching a
+document is not a finding.
+
+### doctor
+
+Every unmet precondition in the repository, grouped so that one cause is one finding:
 
 ```console
-$ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData' --json
-{
-  "operation": "callees",
-  "schemaVersion": 4,
-  "request": {
-    "subject": "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData",
-    "resolved": [
-      "codedocs npm @calcom/app-store . `packages/app-store/_utils/payments/getPaymentAppData.ts`/getPaymentAppData()."
-    ],
-    "limit": null,
-    "depth": null,
-    "scope": {
-      "include": [{ "axis": "authorship", "value": "authored" }],
-      "exclude": [],
-      "excluded": 0
-    }
-  },
-  "snapshot": {
-    "commit": "176037d0afbe572f870a3c702985e7cd83fe6c0c",
-    "dirty": false,
-    "analysedAt": "2026-08-31T13:30:49.529Z"
-  },
-  "conditions": [
-    {
-      "project": "apps/api/v2/tsconfig.json",
-      "fidelity": "typed",
-      "analysedAt": "2026-08-31T13:30:49.529Z",
-      "cause": null,
-      "postinstall": false
-    }
-  ],
-  "blindSpots": [],
-  "budget": {
-    "returned": 1,
-    "available": 1,
-    "truncated": false
-  },
-  "result": [
-    {
-      "from": "codedocs npm @calcom/app-store . `packages/app-store/_utils/payments/getPaymentAppData.ts`/getPaymentAppData().",
-      "to": "codedocs npm @calcom/app-store . `packages/app-store/_utils/getEventTypeAppData.ts`/getEventTypeAppData.",
-      "attribution": "symbol",
-      "file": "packages/app-store/_utils/payments/getPaymentAppData.ts",
-      "line": 58,
-      "provenance": "deterministic",
-      "derivation": "checker-signature"
-    }
-  ]
-}
+$ codedocs doctor
+  tsconfig.json  typed
+    unprepared
+      left-pad — 1 site in src/app.ts
+      run `pnpm install`
+    missing-generated
+      @scope/pkg/enums — 1 site in src/app.ts
+      run `pnpm prisma generate`
+    broken
+      ./nowhere — 1 site in src/app.ts
+
+  1 project, 7 files, built by codedocs 0.0.0 against TypeScript 7.0.2
 ```
 
-Only `result` differs between operations. A failure carries `error` **instead of** `result`, so a
-parser never meets a second shape:
+- **Static and instant.** It renders what the index already stored. No program is opened and no sweep
+  of its own runs.
+- **A remediation, or an honest silence.** An install command is read from the lockfile and a codegen
+  command from [`codedocs.jsonc`](#configuration). `unmapped` and `broken` get no command — none
+  would help the first, and none _is_ a command for the second.
+- **`--measure`** re-runs the filesystem signals against the working tree and names where they
+  disagree with the index. It is the escape hatch for the one thing stored signals cannot see: an
+  install that is present and incomplete.
 
-```jsonc
-"error": {
-  "code": "config-invalid",
-  "params": { "key": "exlucde", "expectation": "is not a key codedocs knows — did you mean `exclude`?" },
-}
+`doctor` exits 1 for a cause a command would clear, and never for `unmapped` or `broken` — a red
+build that cannot be cleared is noise.
+
+### report-bug
+
+Reproduce a failing command and write one file you can attach to an issue:
+
+```sh
+codedocs report-bug -- callers 'Thing.method'
+codedocs report-bug --with-repository -- trace 'src/app.ts#main'
+codedocs report-bug --out - -- doctor          # to stdout
 ```
 
-An error is a **code and typed parameters, never a sentence**. Branch on `code` — it is a closed set
-— rather than matching on English that may be reworded. The human renderer builds the line it always
-printed from the same two fields, so nothing changes in a terminal. The split is what lets
-`report-bug` carry every code into a report you can paste in public while dropping the parameters,
-which are the half that can quote your own code back at you.
+The default report carries facts about codedocs and your machine alone, so it is **safe to paste in
+public unread**. `--with-repository` adds the facts that name your code. Nothing is logged and
+nothing is transmitted — codedocs writes the file, and you decide where it goes.
 
-Four properties a caller can rely on:
+## Naming a subject
 
-- **`request.resolved` echoes what your subject became**, which is how you feed an answer back in.
-  A symbol is named there by its `SymbolId` — a [SCIP](https://github.com/scip-code/scip) symbol
-  string, whose descriptor suffix says what kind of thing it is (`#` a type, `.` a term, `()` a
-  method, `/` a namespace) and whose version field is a fixed `.` for a workspace package, so a
-  `version` bump in a manifest cannot invalidate an index. A terminal prints the shorthand instead —
-  `path.ts#Descriptor.path`, which is what a document anchors to — and **both forms are accepted as a
-  subject**, so anything you read in either place can be passed straight back in.
-- **A total order, sorted on the data.** The same commit rebuilt gives byte-identical output, given
-  the same environment and tool version.
-- **`--json` is explicit and unbounded by default.** It is never inferred from a TTY, because
-  sniffing a pipe makes the same command behave differently depending on where it runs — and a capped
-  answer an agent reads as whole is a wrong answer with a footnote.
-- **`--limit`'s default belongs to the renderer, not the operation.** Humans get 20 and a note saying
-  how many were withheld; `--json` gets everything.
+Whatever codedocs prints as an identifier, it accepts as input. Two forms:
 
-### Over MCP
-
-If shelling out is the wrong shape for your agent, `codedocs mcp` serves the same operations over
-stdio:
-
-```json
-{
-  "mcpServers": {
-    "codedocs": {
-      "command": "codedocs",
-      "args": ["mcp"]
-    }
-  }
-}
+```
+packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData   exact
+getPaymentAppData                                                          may match several
 ```
 
-One tool per operation, same name, same arguments, returning the envelope above verbatim — and no
-tool that is not an operation. The tool list is derived from the same manifest the CLI parser reads,
-and a call is answered by handing an argv to the function `codedocs` itself calls, so the bytes are
-the bytes `--json` produces by construction. `mcp` is not an operation: it owes no envelope and
-appears in no tool list.
+An ambiguous name is **not an error**. The answer covers every symbol it matched, and
+`request.resolved` names them — making you ask again costs a round trip to learn something the answer
+already contains.
 
-## codedocs and fallow
+Start from `symbol` when you do not know the path.
 
-This repository uses both, and the split is deliberate rather than incidental. **codedocs implements
-no analysis `fallow` already ships** — not because the overlap would be hard, but because two tools
-answering one question about one repository will disagree, and you would have no way to decide which
-is right.
+## Filtering an answer
 
-| You want to know                             | Reach for                                     |
-| -------------------------------------------- | --------------------------------------------- |
-| Is this export used anywhere?                | `fallow dead-code`, then `--trace` to confirm |
-| Are there import cycles?                     | `fallow dead-code`                            |
-| Is this logic duplicated?                    | `fallow dupes`                                |
-| Which files are complexity hotspots?         | `fallow health`                               |
-| Did this branch cross an architecture layer? | `fallow audit --base main`                    |
-| What calls this, across every project?       | `codedocs callers`                            |
-| What actually happens when this runs?        | `codedocs trace`                              |
-| What does this change reach?                 | `codedocs impact`                             |
-| Which tests does this change reach?          | `codedocs impact --label role=test`           |
-| Which docs does this change contradict?      | `codedocs docs check`                         |
+Every file carries two labels, on axes that are deliberately independent:
 
-The line is the shape of the question. `fallow` reads the repository's text and reports its hygiene;
-codedocs resolves its symbols and reports its relationships and what a change to them reaches. The
-reasoning is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md).
+- `role` — `source`, `test` or `config`
+- `authorship` — `authored` or `generated`
 
-## Three kinds of honesty, kept apart
-
-An answer that cannot say what it missed is worse than no answer. codedocs separates three things
-that are usually blurred into one score:
-
-| Channel        | Means                    | Does codedocs know what it missed? |
-| -------------- | ------------------------ | ---------------------------------- |
-| **Blind spot** | could not see it         | no — that is why it is named       |
-| **Truncation** | withheld it deliberately | yes, exactly                       |
-| **Scope**      | you excluded it          | it was part of the question        |
-
-Blind spots and truncation are live in the envelope today; scope has no flag yet, and arrives with the
-label layer.
-
-`conditions` carries the **fidelity** of only the projects the answer touched — `typed` where the
-type checker ran, `syntactic` where a precondition was unmet — because cal.com has 28 projects and 27
-of them have nothing to say about one `callers` answer.
-
-Fidelity is never a percentage and never a grade. It says which analysis ran, not how good the
-codebase is. **codedocs never executes your repository's code**, under any flag, so a missing install
-or a codegen step that has not been run lowers a file's fidelity and names the cost, rather than being
-fixed behind your back.
-
-## Scope: the labels, and what an answer excluded
-
-Every file carries two labels, on axes that are deliberately **orthogonal**: `role`
-(`source | test | config`) and `authorship` (`authored | generated`). A single exclusive enum
-misclassifies every interesting file in the fixtures and always in the same direction — it drops real
-source out of the graph. `next.config.ts` is config _and_ type-checked source;
-`apps.metadata.generated.ts` is generated _and_ real source.
-
-| Axis         | Signal                                                           | Provenance      |
-| ------------ | ---------------------------------------------------------------- | --------------- |
-| both         | a `classify` glob in `codedocs.jsonc`                            | `deterministic` |
-| `authorship` | whether git tracks the file                                      | `deterministic` |
-| `authorship` | an `@generated` sentinel in the first five lines                 | `syntactic`     |
-| `authorship` | `*.generated.*`, `next-env.d.ts`, `.next/types/**`, `.prisma/**` | `inferred`      |
-| `role`       | `*.test.*`, `*.spec.*`, `__tests__/`, `__mocks__/`, `*.config.*` | `inferred`      |
-
-**Every signal that fires is stored**, with its own provenance and derivation, and precedence decides
-only which one an answer acts on. That is what lets `codedocs doctor` report where two signals
-disagreed — the `@generated` header without the matching name, the `.test.ts` inside `src/` — which is
-how you discover that `classify` in [`codedocs.jsonc`](#configuration) exists and which file needs it.
-
-`role` is mostly `inferred` and `authorship` mostly `deterministic`. That asymmetry is the honest
-report, not a defect: git knows what it tracks, and nothing but convention knows what a test is.
-
-Filter any answer with one generic pair, rather than bespoke flags like `--no-tests`:
+Filter any answer with the same generic pair, rather than bespoke flags like `--no-tests`:
 
 ```console
 $ codedocs callers charge --exclude-label role=test
@@ -706,16 +453,14 @@ $ codedocs callers charge --exclude-label role=test
   scope authorship=authored, not role=test — 4 excluded by it
 ```
 
-- **The default scope is `authorship: authored`, with no filter on `role`.** Test callers stay in by
-  default: hiding them makes tested-but-unreferenced code look dead, which is the Redwood Cells trap
-  the backend spike found and named.
-- **An exclusion is a count, never a blind spot.** codedocs knows exactly what it withheld; a blind
-  spot is by definition what it could not see, and filing one as the other teaches readers that blind
-  spots are routine — the one thing that would destroy the signal.
-- `--label` on an axis replaces the default for that axis alone, so `--label authorship=generated`
-  asks about exactly what the default hides.
-- The whole layer is recomputed whenever the index is repaired or `classify` changes, never
-  invalidated file by file: 127 files in 13 ms here, which is what makes the simple rule affordable.
+- **The default scope is `authorship=authored`, with no filter on `role`.** Test callers stay in by
+  default: hiding them makes tested-but-unreferenced code look dead.
+- **`--label` on an axis replaces the default for that axis alone**, so `--label
+authorship=generated` asks about exactly what the default hides.
+- **An exclusion is a count, never a blind spot.** codedocs knows exactly what it withheld, and the
+  applied scope is echoed on every answer.
+
+Both flags are repeatable, one per axis.
 
 ## Flags
 
@@ -727,37 +472,46 @@ $ codedocs callers charge --exclude-label role=test
 --cwd <path>     run against another directory
 --color / --no-color
 
+--label <axis>=<value>          keep only results whose file carries it
+--exclude-label <axis>=<value>  drop results whose file carries it
+
 `evidence` only:
-  --claims           restate the facts as claim expressions (--json only)
+  --claims             restate the facts as claim expressions (--json only)
 
 `docs check` only:
   --fail-on <verdict>  also exit 1 for this verdict (default: contradicted alone)
 
 `docs affected` only:
-  --base <ref>       widen the changed set to everything since this commit
+  --base <ref>         widen the changed set to everything since this commit
 
 `impact` only:
-  --base <ref>       the commit to compare against (default: the merge base)
+  --base <ref>         the commit to compare against (default: the merge base)
 
 `doctor` only:
-  --measure          check the signals against the working tree
+  --measure            check the signals against the working tree
 
 `report-bug` only:
-  --with-repository  add the facts that name your code
-  --out <path>       where to write it; `-` is stdout (default ./codedocs-report.json)
+  --with-repository    add the facts that name your code
+  --out <path>         where to write it; `-` is stdout (default ./codedocs-report.json)
 ```
 
-Exit codes follow the `fallow` convention: **0** answered, **1** a negative finding, **2** could not
-answer. `doctor` produces 1 for an unmet precondition a command would clear, and `docs check` for a
-contradicted claim or an error in a document.
+A per-command flag passed to another command is **refused**, never ignored: `callers --depth 2` is an
+error, because otherwise you would read a one-hop answer as a bounded walk.
 
-<!-- cspell:ignore exlucde -->
+## Exit codes
+
+| Code | Means              | Produced by                                                      |
+| ---- | ------------------ | ---------------------------------------------------------------- |
+| `0`  | answered           | everything                                                       |
+| `1`  | a negative finding | `doctor` (a clearable precondition), `docs check` (contradicted) |
+| `2`  | could not answer   | a bad command line, an invalid config, an unreadable index       |
+
+The convention matches [`fallow`](#codedocs-and-fallow), so both can sit in the same CI script.
 
 ## Configuration
 
-Optional. `codedocs.jsonc` at the repository root — the nearest enclosing `.git` — holds the facts
-about a repository codedocs cannot determine and must be told. Every key has a default, so a fresh
-clone needs no file at all.
+Optional. `codedocs.jsonc` at the repository root holds the facts about a repository codedocs cannot
+determine and must be told. Every key has a default, so a fresh clone needs no file at all.
 
 ```jsonc
 {
@@ -783,107 +537,207 @@ clone needs no file at all.
 | `remediations` | `[]`                         | The command that clears a `missing-generated` specifier, first match wins |
 
 Both `discover` keys are **additive**. `discover.projects` is added to the `tsconfig.json` files the
-walk found; `discover.skip` is added to the skip list, so `node_modules` cannot be removed from it. A
-config key that appears to control something hard-coded elsewhere is a config that lies.
-
-Neither key decides membership: a file is in the index if and only if a project globs it.
+walk already found; `discover.skip` is added to the skip list, so `node_modules` cannot be removed
+from it. Neither decides membership: a file is in the index if and only if a project globs it.
 
 **It holds facts, never preferences.** A default `--limit`, an output format, a colour setting —
-codedocs can determine all of them, so none may enter. Nor may a key change what is reported about
-what was analysed: no blind spot, truncation, fidelity label or provenance can be configured away.
+codedocs can determine all of them, so none may enter. Nor may a key change what is _reported_ about
+what was analysed: no blind spot, truncation, fidelity or provenance can be configured away.
 
 **Parsing is strict.** Comments and trailing commas are read, as `.jsonc` promises. A file that is
-absent is normal and silent; a file that exists and is wrong exits 2 naming the file, the key and
-what was expected, and never falls back to the defaults. An unknown key is an error, naming a near
+absent is normal and silent; a file that exists and is wrong exits 2 naming the file, the key and what
+was expected, and never falls back to the defaults. An unknown key is an error, naming a near
 neighbour where there is one — `exlucde` parsing to nothing, silently, is the failure this buys out.
-So is a second `codedocs.jsonc` below the root: codedocs reads one, because ADR 0004 gives one index
-per working tree.
 
-The rule about what may enter the file is
-[ADR 0010](docs/adr/0010-configuration-file-and-what-may-enter-it.md).
+<!-- cspell:ignore exlucde -->
 
-## The index
+## JSON output
 
-One SQLite file per working tree, at `.codedocs/index.db`, holding one snapshot. It writes its own
-`.gitignore` inside `.codedocs/`, so `git status` stays clean without you editing anything, and the
-directory is always safe to delete — that is the supported way to force a cold build.
+Pass `--json` and every command returns the same shape, success or failure. This is what CI, a script
+and an agent all read — there is no separate agent surface.
 
-It is **not** committed. Measured: it is binary, so git cannot delta it, and six commits of about a
-hundred rows grew `.git` by 25 MB.
+```jsonc
+{
+  "operation": "callees",
+  "schemaVersion": 4,
+  "request": {
+    "subject": "…#getPaymentAppData",
+    "resolved": [
+      "codedocs npm @calcom/app-store . `…/getPaymentAppData.ts`/getPaymentAppData().",
+    ],
+    "limit": null,
+    "depth": null,
+    "scope": {
+      "include": [{ "axis": "authorship", "value": "authored" }],
+      "exclude": [],
+      "excluded": 0,
+    },
+  },
+  "snapshot": {
+    "commit": "176037d0…",
+    "dirty": false,
+    "analysedAt": "2026-08-31T13:30:49.529Z",
+  },
+  "conditions": [
+    {
+      "project": "apps/api/v2/tsconfig.json",
+      "fidelity": "typed",
+      "cause": null,
+      "postinstall": false,
+    },
+  ],
+  "blindSpots": [],
+  "budget": { "returned": 1, "available": 1, "truncated": false },
+  "result": [
+    {
+      "from": "…/getPaymentAppData().",
+      "to": "…/getEventTypeAppData.",
+      "attribution": "symbol",
+      "file": "packages/app-store/_utils/payments/getPaymentAppData.ts",
+      "line": 58,
+      "provenance": "deterministic",
+      "derivation": "checker-signature",
+    },
+  ],
+}
+```
 
-Drift is detected by stat and a tree walk rather than by `git status` — faster, and it sees the
-untracked files a `tsconfig` globs that git does not. A branch switch, a rebase and a dirty tree are
-then all just files whose signature changed. When a changed file's exported shape moves, the repair
-propagates to its direct importers and no further; when it does not, the repair stops at that file.
+Only `result` differs between commands. A failure carries `error` **instead of** `result`, so a
+parser never meets a second shape:
 
-## What is built
+```jsonc
+"error": {
+  "code": "config-invalid",
+  "params": { "key": "exlucde", "expectation": "is not a key codedocs knows — did you mean `exclude`?" },
+}
+```
 
-Implemented, covered by 371 tests, and measured against real repositories:
+An error is a **code and typed parameters, never a sentence**. Branch on `code` — it is a closed set —
+rather than matching English that may be reworded.
 
-- **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
-  committed one project at a time — so an interrupted cold build leaves a partial index rather than
-  nothing.
-- **Thirteen operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
-  `evidence`, `docs check`, `docs affected`, `impact`, `doctor` and `report-bug`.
-- **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
-  is held as data, so an operation cannot reach one renderer and miss the other.
-- **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
-  direct importers only. The import graph follows every specifier form — `import`, `export`,
-  `import()` and `import x = require()` — so a route or a lazily loaded component is not missed.
-- **Two honesty channels.** Blind spots and truncation in the envelope, plus `conditions` narrowed to
-  only the projects an answer touched.
-- **Baselines, and `impact` over them.** Capture as a side effect of a clean-tree `analyse`,
-  retention at three with non-ancestors evicted first, and the one composed operation: what a change
-  reaches, inward through calls and references, with a fidelity change excluded rather than reported.
-- **The label layer, and the scope channel over it.** Two orthogonal axes per file, every signal that
-  fired stored with its provenance, `--label` / `--exclude-label` on every operation, and the applied
-  scope echoed on every answer with the count it withheld.
-- **Preflight, and the environment fingerprint.** All four of ADR 0001's signals: whether the
-  dependencies are installed, whether an install script is declared, whether a config globs anything,
-  and every specifier that resolved to nothing, each with the cause behind it. A project whose
-  environment moved — an install landed, a codegen wrote the directory a tsconfig already globbed —
-  is re-analysed rather than answered from facts extracted on a machine that is gone.
-- **Symbol identity.** A descriptor path naming every enclosing scope, with the ids that still
-  collide reported rather than silently merged.
-- **A bug report you can paste.** `report-bug` re-runs the failing command and writes one file whose
-  default shape carries codedocs and machine facts alone. Nothing is logged, nothing is transmitted,
-  and the split is by reader rather than by sensitivity (ADR 0011).
-- **An MCP server.** `codedocs mcp`, one tool per operation, derived from the manifest the CLI parser
-  reads.
+Four things you can rely on:
 
-## What is left
+- **`request.resolved` echoes what your subject became**, which is how you feed an answer back in. A
+  terminal prints the shorthand (`path.ts#Descriptor.path`) and `--json` prints the full
+  [SCIP](https://github.com/scip-code/scip) symbol string; **both are accepted as a subject**.
+- **A total order, sorted on the data.** The same commit rebuilt gives byte-identical output, given
+  the same environment and tool version.
+- **`--json` is explicit and unbounded by default.** It is never inferred from a TTY: sniffing a pipe
+  makes the same command behave differently depending on where it runs, and a capped answer an agent
+  reads as whole is a wrong answer with a footnote.
+- **`--limit`'s default belongs to the renderer.** Humans get 20 and a note saying how many were
+  withheld; `--json` gets everything.
 
-In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
-is gated by the one above it.
+## Using it from an agent
 
-1. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+Two ways, and they return the same bytes.
 
-Not tied to that order: ADR 0007's `shape-hash` and `path-prefix-rewrite` continuity signals, which
-need a per-symbol shape hash the index does not hold; and the `AGENTS.md` discovery block that tells
-an agent when to reach for codedocs
-([#18](https://github.com/magicspon/codedocs/issues/18)).
+**Shell out** to `codedocs <command> --json` and parse the envelope above.
 
-**`review` and `plan` are deleted.** `review` was `fallow`'s work plus `impact` and `docs affected`
-printed together, and `plan` was a ranking — which cannot also be a determinism guarantee, the same
-reason `search` went. Anything not on this page and not covered by `fallow` is not planned.
+**Or speak MCP.** `codedocs mcp` serves the same commands over stdio:
 
-All open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
+```json
+{
+  "mcpServers": {
+    "codedocs": {
+      "command": "codedocs",
+      "args": ["mcp"]
+    }
+  }
+}
+```
 
-## Design documents
+One tool per command, same name, same arguments, returning the envelope verbatim — and no tool that
+is not a command. `docs check` is published as `docs_check`, because a tool name may not carry a
+space.
 
-The architecture is written down before it is built, and the reasoning is usually more useful than
-the code:
+`evidence` is the command written for this: it hands over every fact the index holds about a subject
+in one call, and `--claims` gives back the claim syntax for writing the result into a document that
+`docs check` will then keep honest.
 
+## Reading an answer honestly
+
+An answer that cannot say what it missed is worse than no answer. codedocs separates three things
+that are usually blurred into one score, and every answer carries all three:
+
+| Channel        | Means                    | Does codedocs know what it missed? |
+| -------------- | ------------------------ | ---------------------------------- |
+| **Blind spot** | could not see it         | no — that is why it is named       |
+| **Truncation** | withheld it deliberately | yes, exactly                       |
+| **Scope**      | you excluded it          | it was part of the question        |
+
+`conditions` carries the **fidelity** of only the projects your answer touched — `typed` where the
+type checker ran, `syntactic` where a precondition was unmet. Fidelity is never a percentage and never
+a grade: it says which analysis ran, not how good your code is.
+
+**codedocs never executes your repository's code**, under any flag. A missing install or an un-run
+codegen step lowers a file's fidelity and names the cost, rather than being fixed behind your back.
+Run `codedocs doctor` to see what would clear it.
+
+## codedocs and fallow
+
+[`fallow`](https://docs.fallow.tools) reads a repository's text and reports its hygiene.
+codedocs resolves its symbols and reports its relationships. **codedocs implements no analysis
+`fallow` already ships** — not because the overlap would be hard, but because two tools answering one
+question about one repository will disagree, and you would have no way to decide which is right.
+
+| You want to know                             | Reach for                                     |
+| -------------------------------------------- | --------------------------------------------- |
+| Is this export used anywhere?                | `fallow dead-code`, then `--trace` to confirm |
+| Are there import cycles?                     | `fallow dead-code`                            |
+| Is this logic duplicated?                    | `fallow dupes`                                |
+| Which files are complexity hotspots?         | `fallow health`                               |
+| Did this branch cross an architecture layer? | `fallow audit --base main`                    |
+| What calls this, across every project?       | `codedocs callers`                            |
+| What actually happens when this runs?        | `codedocs trace`                              |
+| What does this change reach?                 | `codedocs impact`                             |
+| Which tests does this change reach?          | `codedocs impact --label role=test`           |
+| Which docs does this change contradict?      | `codedocs docs check`                         |
+
+## Troubleshooting
+
+**Everything says `syntactic`.** A precondition is unmet — usually an install that has not run, or a
+codegen step. `codedocs doctor` names each one and the command that would clear it. codedocs will not
+run your install for you.
+
+**A `missing-generated` specifier has no remediation.** codedocs ships with no built-in framework
+table, so it will not guess a codegen command. Tell it once in
+[`codedocs.jsonc`](#configuration) under `remediations`.
+
+**The first question after `git pull` is slow.** That is the repair, and it is doing the work
+`analyse` would have done. Put `codedocs analyse` in your post-checkout hook or your CI setup step if
+you would rather pay it visibly.
+
+**A symbol I can see is not in the index.** A file is in the index if and only if a `tsconfig` globs
+it. Check with `codedocs file <path>` — `matched no file` means no project globs it, so add the
+project under `discover.projects`.
+
+**I want to force a cold build.** Delete `.codedocs/`. It is a derived artefact and always safe to
+remove — codedocs recreates it, `.gitignore` and all.
+
+**An answer looks wrong.** `codedocs report-bug -- <the command that failed>` reproduces it and
+writes a file you can attach to an issue. The default shape names nothing about your code.
+
+**Should I commit `.codedocs/`?** No. It is binary, so git cannot delta it: six commits of about a
+hundred rows grew `.git` by 25 MB in testing.
+
+## Where the design lives
+
+The architecture is written down before it is built, and the reasoning is usually more useful than the
+code:
+
+- **[`docs/solution.md`](docs/solution.md)** — how codedocs works: the two packages, the path of one
+  command, the index, and the map of the source tree.
 - **[`CONTEXT.md`](CONTEXT.md)** — the glossary. One meaning per term, and the words to avoid.
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
   cross-commit continuity, baseline retention, what preflight measures, what may enter the
   configuration file, what a bug report may carry, and where codedocs stops and `fallow` starts.
-- **[`docs/research/`](docs/research)** — the measurements the ADRs rest on, including the call-graph
-  backend spike that chose TypeScript 7 over TypeScript 6 on evidence.
-- **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and
-  what it will not do. The original PRD it replaced is frozen at
-  [`docs/PRD-v1.md`](docs/PRD-v1.md), because the ADRs cite it by section number.
+- **[`docs/research/`](docs/research)** — the measurements the ADRs rest on.
+- **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and what
+  it will not do.
+
+Open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
 
 ## Development
 
@@ -898,5 +752,9 @@ pnpm spell-check    # cspell
 ```
 
 Every performance claim in this README is measured against fixture repositories cloned into `repos/`,
-with full history so change-impact work has something real to read. That directory is gitignored, so
-you will not have it after a clone — cal.com is the one the numbers above come from.
+with full history. That directory is gitignored, so you will not have it after a clone — cal.com is
+the one the numbers above come from.
+
+## Licence
+
+[MIT](LICENSE)
