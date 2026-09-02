@@ -7,6 +7,7 @@ import type {
   FileNode,
   FilePath,
   ImportEdge,
+  Label,
   ProjectNode,
   ReferenceEdge,
   SymbolNode,
@@ -21,6 +22,8 @@ import {
   DERIVATIONS,
   FIDELITIES,
   KINDS,
+  LABEL_AXES,
+  LABEL_VALUES,
   PRECONDITION_CAUSES,
   PROVENANCES,
   REFERENCE_KINDS,
@@ -107,6 +110,33 @@ export function writeMembershipPaths(
     'insert or ignore into file_project (file_id, project_id, canonical) values (?, ?, 1)',
   )
   for (const path of paths) membership.run(intern.path(path), project)
+}
+
+/**
+ * Replace the whole label set.
+ *
+ * Wholesale rather than per file, because ADR 0003 recomputes the layer on every
+ * analysis rather than invalidating it: incremental invalidation buys under a
+ * second on cal.com and costs a staleness bug, where an edited `codedocs.jsonc`
+ * leaves old labels behind.
+ */
+export function writeLabels(store: Store, labels: readonly Label[]): void {
+  const intern = internerFor(store)
+  store.db.exec('delete from label')
+  const row = store.db.prepare(
+    `insert or replace into label
+       (node_id, axis, value, provenance, derivation)
+       values (?, ?, ?, ?, ?)`,
+  )
+  for (const label of labels) {
+    row.run(
+      intern.node(label.node),
+      code(LABEL_AXES, label.axis, 'label axis'),
+      code(LABEL_VALUES, label.value, 'label value'),
+      code(PROVENANCES, label.provenance, 'provenance'),
+      code(DERIVATIONS, label.derivation, 'derivation'),
+    )
+  }
 }
 
 /** One project's facts, in one transaction. */

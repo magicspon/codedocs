@@ -19,6 +19,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { PreconditionCause } from '../src/model.ts'
 import { symbol } from '../src/operations/symbol.ts'
 import { classifySpecifiers } from '../src/preflight/index.ts'
+import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
@@ -125,7 +126,13 @@ describe('what an answer says about them', () => {
     try {
       // `*`, so the answer's files are every file in the fixture: `symbol`
       // takes a glob, and the two importers are what carry the specifier.
-      const envelope = symbol(session.store, session.context, '*', null)
+      const envelope = symbol(
+        session.store,
+        session.context,
+        '*',
+        null,
+        UNSCOPED,
+      )
       const spots = envelope.blindSpots.filter(
         (spot) => spot.subject === 'left-pad',
       )
@@ -145,7 +152,13 @@ describe('what an answer says about them', () => {
 
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = symbol(session.store, session.context, 'charge', null)
+      const envelope = symbol(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.blindSpots).toEqual([])
     } finally {
       session.close()

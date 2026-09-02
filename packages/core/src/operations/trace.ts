@@ -14,6 +14,7 @@
  */
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import { excludedBy, type Scope, type Scoping } from '../labels/index.ts'
 import type { CallSite, FilePath, SymbolId } from '../model.ts'
 import { readCalleeSteps, type CalleeStep, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
@@ -68,13 +69,16 @@ export function trace(
   subject: string,
   limit: number | null,
   depth: number | null,
+  scoping: Scoping,
 ): Envelope<readonly TracePath[]> {
   const resolved = resolveSubject(store, subject)
-  const paths = walk(
+  const walked = walk(
     store,
     resolved.map((node) => node.id),
     depth,
+    scoping,
   )
+  const paths = walked.paths
   paths.sort((a, b) => compareSequences(sequenceOf(a), sequenceOf(b)))
 
   return answer(
@@ -84,6 +88,7 @@ export function trace(
       resolved: resolved.map((node) => node.id),
       limit,
       depth,
+      scope: walked.scope,
     },
     noteCollisions(
       scopeTo(store, context, [
@@ -111,13 +116,21 @@ interface Walk {
  * is what makes "path" mean the usual thing and what makes the result set finite.
  * A repeat is *reported*, not cut: the closing step is kept so the reader can see
  * which symbol closed the loop.
+ *
+ * The scope is applied **during** the walk rather than to its result, because a
+ * path is not a thing a filter can be applied to afterwards: an excluded callee
+ * hides everything beyond it, and a path that ran through one and was then
+ * dropped would take honest steps down with it. The count is of the steps not
+ * taken, which is what was withheld.
  */
 function walk(
   store: Store,
   roots: readonly SymbolId[],
   depth: number | null,
-): TracePath[] {
+  scoping: Scoping,
+): { paths: TracePath[]; scope: Scope } {
   const finished: TracePath[] = []
+  let excluded = 0
   let live: Walk[] = roots.map((root) => ({
     root,
     steps: [],
@@ -128,7 +141,11 @@ function walk(
     const outgoing = readCalleeSteps(store, [...new Set(live.map(tailOf))])
     const next: Walk[] = []
     for (const path of live) {
-      const callees = outgoing.get(tailOf(path)) ?? []
+      const reachable = outgoing.get(tailOf(path)) ?? []
+      const callees = reachable.filter(
+        (step) => !excludedBy(scoping.scope, scoping.labels, fileOfId(step.to)),
+      )
+      excluded += reachable.length - callees.length
       const terminus = terminusOf(path, callees, depth)
       if (terminus !== null) {
         finished.push(finish(path, terminus))
@@ -143,8 +160,11 @@ function walk(
     }
     live = next
   }
-  return finished
+  return { paths: finished, scope: { ...scoping.scope, excluded } }
 }
+
+/** The file a `SymbolId` names, which is the node a label is filed against. */
+const fileOfId = (id: SymbolId): FilePath => id.split('#')[0] ?? id
 
 /** Why this path ends here, or `null` where it continues. */
 function terminusOf(

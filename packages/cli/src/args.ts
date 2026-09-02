@@ -13,9 +13,13 @@ import {
   OPERATION_FLAGS,
   OPERATIONS,
   operationSpec,
+  parseFilter,
+  scopeOf,
   type EnvelopeError,
   type OperationName,
+  type LabelFilter,
   type OperationSpec,
+  type Scope,
 } from '@codedocs/core'
 
 /**
@@ -57,6 +61,8 @@ export interface Command {
   readonly out: string | null
   /** `doctor`: re-run the filesystem signals against the working tree (ADR 0009). */
   readonly measure: boolean
+  /** The label filter the answer applies, or the default where none was named. */
+  readonly scope: Scope
 }
 
 /** The default the human renderer applies when no `--limit` is given. */
@@ -73,6 +79,10 @@ const OPTIONS = {
   'with-repository': { type: 'boolean' },
   out: { type: 'string' },
   measure: { type: 'boolean' },
+  // Repeatable: one flag per axis, because the two are orthogonal and a single
+  // value could only ever filter one of them.
+  label: { type: 'string', multiple: true },
+  'exclude-label': { type: 'string', multiple: true },
   help: { type: 'boolean', short: 'h' },
 } as const
 
@@ -119,6 +129,9 @@ export function parse(
   const depth = resolveDepth(values.depth, spec)
   if (failed(depth)) return { ok: false, error: depth.error }
 
+  const scope = resolveScope(values.label, values['exclude-label'])
+  if (failed(scope)) return { ok: false, error: scope.error }
+
   return {
     ok: true,
     command: {
@@ -134,6 +147,7 @@ export function parse(
       withRepository: values['with-repository'] === true,
       out: values.out ?? null,
       measure: values.measure === true,
+      scope: scope.value,
     },
   }
 }
@@ -375,6 +389,43 @@ function resolveDepth(
   return { value: depth }
 }
 
+/**
+ * The label filters, read into the scope one answer applies.
+ *
+ * A typo is refused rather than silently matching nothing: a filter that quietly
+ * excludes every result is the worst failure this flag can have, and the one a
+ * caller is least likely to notice.
+ */
+function resolveScope(
+  include: readonly string[] | undefined,
+  exclude: readonly string[] | undefined,
+): Step<Scope> {
+  const read = (
+    raw: readonly string[] | undefined,
+    flag: string,
+  ): Step<LabelFilter[]> => {
+    const filters: LabelFilter[] = []
+    for (const entry of raw ?? []) {
+      const parsed = parseFilter(entry)
+      if ('expected' in parsed) {
+        return {
+          error: {
+            code: 'label-invalid' as const,
+            params: { flag, value: entry, expectation: parsed.expected },
+          },
+        }
+      }
+      filters.push(parsed.filter)
+    }
+    return { value: filters }
+  }
+  const included = read(include, 'label')
+  if (failed(included)) return { error: included.error }
+  const excluded = read(exclude, 'exclude-label')
+  if (failed(excluded)) return { error: excluded.error }
+  return { value: scopeOf(included.value, excluded.value) }
+}
+
 /** Colour is a renderer concern, and the machine renderer never uses it. */
 function resolveColor(
   color: boolean | undefined,
@@ -427,6 +478,11 @@ export function usage(): string {
       .join(', ')} only: cap the steps per path (default none)`,
     '  --cwd <path>     run against another directory',
     '  --color / --no-color',
+    '',
+    'Scope (repeatable, one per axis; the default is authorship=authored):',
+    '  --label <axis>=<value>          keep only results whose file carries it',
+    '  --exclude-label <axis>=<value>  drop results whose file carries it',
+    '  role=source|test|config, authorship=authored|generated',
     // Per-operation flags are listed with the operation that takes them, so the
     // closed global set stays readable as a closed set.
     ...OPERATIONS.filter((entry) => entry.flags.length > 0).flatMap((entry) => [

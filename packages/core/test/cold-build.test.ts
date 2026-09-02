@@ -15,6 +15,8 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
+import { UNSCOPED } from '../src/labels/index.ts'
+
 import { analyse } from '../src/adapter/ts7/index.ts'
 import { DEFAULT_CONFIG } from '../src/config/index.ts'
 import { discoverProjects } from '../src/discovery.ts'
@@ -107,6 +109,7 @@ function halfBuild(): void {
         analysedAt: new Date().toISOString(),
         toolVersion: TOOL_VERSION,
         typescriptVersion: typescriptVersion(),
+        classifyHash: '',
       },
     })
 
@@ -159,7 +162,13 @@ describe('a call that leaves its project', () => {
     // holding.
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = callers(session.store, session.context, CHARGE, null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        CHARGE,
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toEqual([
         'b-app/src/checkout.ts#go',
       ])
@@ -198,7 +207,7 @@ describe('a build interrupted between two projects', () => {
         },
       ])
       expect(
-        callers(session.store, session.context, CHARGE, null).result,
+        callers(session.store, session.context, CHARGE, null, UNSCOPED).result,
       ).toEqual([])
     } finally {
       session.close()

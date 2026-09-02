@@ -11,6 +11,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { callers } from '../src/operations/calls.ts'
 import { symbol } from '../src/operations/symbol.ts'
+import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
@@ -40,7 +41,13 @@ describe('openSession', () => {
   it('builds the index on first use, and answers from it', () => {
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = callers(session.store, session.context, 'charge', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toContain(
         'src/checkout.ts#checkout',
       )
@@ -68,7 +75,13 @@ describe('openSession', () => {
 
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = callers(session.store, session.context, 'charge', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toContain(
         'src/extra.ts#again',
       )
@@ -84,7 +97,13 @@ describe('openSession', () => {
     const session = openSession({ cwd: root, noUpdate: true })
     try {
       // The answer is still given — silence is the one behaviour ruled out.
-      const envelope = symbol(session.store, session.context, 'charge', null)
+      const envelope = symbol(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result).toHaveLength(1)
       expect(session.context.blindSpots.map((spot) => spot.subject)).toContain(
         'src/extra.ts',
@@ -98,7 +117,7 @@ describe('openSession', () => {
   it('reports truncation rather than silently withholding', () => {
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = symbol(session.store, session.context, '*', 2)
+      const envelope = symbol(session.store, session.context, '*', 2, UNSCOPED)
       expect(envelope.budget.returned).toBe(2)
       expect(envelope.budget.truncated).toBe(true)
       expect(envelope.budget.available).toBeGreaterThan(2)

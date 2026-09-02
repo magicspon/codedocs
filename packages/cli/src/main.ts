@@ -35,6 +35,7 @@ import {
   type EnvelopeError,
   type OperationName,
   type ReportEnvelope,
+  type Scoping,
   type Reproduction,
   type Session,
 } from '@codedocs/core'
@@ -163,6 +164,17 @@ function answered(command: Command, style: Style): Outcome {
  */
 const subjectOf = (command: Command): string => command.subject ?? ''
 
+/**
+ * The scope an answer applies, and the labels to apply it against.
+ *
+ * The labels are read on first use, so an answer that filters nothing pays no
+ * table scan for the flag it was not given.
+ */
+const scopingFor = (command: Command, session: Session): Scoping => ({
+  scope: command.scope,
+  labels: session.labels(),
+})
+
 /** How one operation answers, given the session and the style to render with. */
 type Handler = (command: Command, session: Session, style: Style) => Outcome
 
@@ -175,14 +187,16 @@ type Handler = (command: Command, session: Session, style: Style) => Outcome
  * nothing in this binding composes two operations.
  */
 const HANDLERS: Readonly<Record<OperationName, Handler>> = {
-  analyse: ({ json, limit }, session, style) => {
+  analyse: (command, session, style) => {
     const envelope = analyse(
       session.store,
       session.context,
-      limit,
+      command.limit,
+      scopingFor(command, session),
       session.repair,
+      session.labelPass,
     )
-    return emit(json, envelope, () =>
+    return emit(command.json, envelope, () =>
       renderAnalyse(envelope as AnalyseEnvelope, style),
     )
   },
@@ -192,6 +206,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       session.context,
       subjectOf(command),
       command.limit,
+      scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderSymbols(envelope, style))
   },
@@ -203,6 +218,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       session.context,
       subjectOf(command),
       command.limit,
+      scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderReferences(envelope, style))
   },
@@ -212,6 +228,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       session.context,
       subjectOf(command),
       command.limit,
+      scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderFile(envelope, style))
   },
@@ -222,6 +239,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       subjectOf(command),
       command.limit,
       command.depth,
+      scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderTrace(envelope, style))
   },
@@ -249,6 +267,7 @@ function edges(read: typeof callers): Handler {
       session.context,
       subjectOf(command),
       command.limit,
+      scopingFor(command, session),
     )
     return emit(command.json, envelope, () => renderEdges(envelope, style))
   }
@@ -271,6 +290,7 @@ function diagnosed(command: Command, session: Session, style: Style): Outcome {
     config: session.config,
     measure: command.measure,
     seenFiles: session.seenFiles,
+    scoping: scopingFor(command, session),
   })
   return emit(
     command.json,
@@ -413,6 +433,7 @@ function failed(
       resolved: [],
       limit: command.limit,
       depth: command.depth,
+      scope: command.scope,
     },
     snapshot: context?.snapshot ?? {
       commit: null,

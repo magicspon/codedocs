@@ -16,6 +16,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { analyse } from '../src/adapter/ts7/index.ts'
 import type { SymbolNode } from '../src/model.ts'
 import { callers } from '../src/operations/calls.ts'
+import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
 
 const fixtureRoot = join(
@@ -127,6 +128,7 @@ describe('an answer over a collided id', () => {
         session.context,
         `${file}#retry.report`,
         null,
+        UNSCOPED,
       )
       // Two catch clauses declare a `report`, and both are called. The edges are
       // the union, which is the over-report the blind spot exists to declare.
@@ -147,6 +149,7 @@ describe('an answer over a collided id', () => {
         session.context,
         `${file}#retry`,
         null,
+        UNSCOPED,
       )
       expect(envelope.blindSpots).toEqual([])
     } finally {

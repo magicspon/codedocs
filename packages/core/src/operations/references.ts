@@ -13,6 +13,7 @@
  */
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import { applyScope, type Scoping } from '../labels/index.ts'
 import type { ReferenceEdge } from '../model.ts'
 import {
   byReference,
@@ -34,6 +35,7 @@ export function references(
   context: AnswerContext,
   subject: string,
   limit: number | null,
+  scoping: Scoping,
 ): Envelope<readonly ReferenceEdge[]> {
   const resolved = resolveSubject(store, subject)
   const subjects = new Set(resolved.map((node) => node.id))
@@ -51,11 +53,21 @@ export function references(
 
   // Re-sorted after the union: each read arrives sorted, and the concatenation
   // of sorted lists is not.
-  const edges = [...outgoing, ...incoming].sort(byReference)
+  const { kept: edges, scope } = applyScope(
+    scoping,
+    [...outgoing, ...incoming].sort(byReference),
+    (edge) => edge.file,
+  )
 
   return answer(
     'references',
-    { subject, resolved: resolved.map((node) => node.id), limit, depth: null },
+    {
+      subject,
+      resolved: resolved.map((node) => node.id),
+      limit,
+      depth: null,
+      scope,
+    },
     noteCollisions(
       scopeTo(store, context, [
         ...resolved.map((node) => node.file),

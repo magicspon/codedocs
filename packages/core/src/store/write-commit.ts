@@ -8,6 +8,7 @@ import type {
   FileNode,
   FilePath,
   ImportEdge,
+  Label,
   ProjectNode,
   ReferenceEdge,
   SymbolNode,
@@ -23,6 +24,7 @@ import { type IndexHeader, writeMeta } from './header.ts'
 import {
   type FileFacts,
   writeFileFacts,
+  writeLabels,
   writeMembership,
   writeMembershipPaths,
   writeProject,
@@ -209,6 +211,18 @@ export function applyWave(store: Store, write: WaveWrite): void {
   }
 
   writeHeader(store, write.header)
+}
+
+/**
+ * Replace the label set, in one transaction.
+ *
+ * Its own commit rather than part of a project's: the layer is computed over
+ * every file the index holds, so it belongs to no single project and a partial
+ * label set would be worse than none — a file with no rows reads as `source` and
+ * `authored`, which is exactly what a half-written pass would claim.
+ */
+export function replaceLabels(store: Store, labels: readonly Label[]): void {
+  transaction(store, () => writeLabels(store, labels))
 }
 
 /** Stamp the index header. Its own transaction, so a repair that extracted

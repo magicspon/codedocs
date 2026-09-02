@@ -6,6 +6,7 @@
  * learns the honesty fields once rather than once per operation.
  */
 
+import type { Scope } from './labels/scope.ts'
 import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
 
 /**
@@ -19,10 +20,15 @@ import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
  * gone from the wire, so a caller branches on the code rather than parsing
  * English, and a [[Report]] can carry the code while dropping the parameters.
  *
+ * 4: `request` gained the [[Scope]] applied and the count it excluded. ADR 0006
+ * always listed the scope as part of the request; it had nothing to hold until
+ * the label layer existed, and an answer that filters silently is the one thing
+ * the honesty channels exist to prevent.
+ *
  * An operation arriving does not bump it: ADR 0006 makes the operation enum
  * additive, so a caller written against 3 still reads every field it knew.
  */
-export const SCHEMA_VERSION: number = 3
+export const SCHEMA_VERSION: number = 4
 
 /**
  * The operation set. Phase 5's names are absent rather than reserved: the
@@ -98,6 +104,15 @@ export interface ResolvedRequest {
    * answer from a whole one.
    */
   readonly depth: number | null
+  /**
+   * The label filter this answer applied, and how much it withheld.
+   *
+   * Echoed on every answer, including when nothing was excluded: a caller must
+   * be able to tell "no test callers" from "test callers, hidden by the default
+   * scope". The count is never a blind spot and never truncation — codedocs
+   * knows exactly what it withheld, and a blind spot is what it could not see.
+   */
+  readonly scope: Scope
 }
 
 /** Results returned against results available, and whether any were withheld. */
@@ -147,6 +162,13 @@ export interface ErrorParams {
     readonly operation: string
   }
   readonly 'limit-invalid': { readonly value: string }
+  /** A `--label` or `--exclude-label` that is not an `axis=value` codedocs knows. */
+  readonly 'label-invalid': {
+    /** The flag as spelled, without its `--`. */
+    readonly flag: string
+    readonly value: string
+    readonly expectation: string
+  }
   readonly 'depth-invalid': { readonly value: string }
   /** `codedocs.jsonc` exists and cannot be used. `key` is `''` for the file. */
   readonly 'config-invalid': {

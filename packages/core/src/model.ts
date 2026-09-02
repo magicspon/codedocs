@@ -34,6 +34,16 @@ export type Derivation =
   | 'shared-method-name'
   | 'manifest'
   | 'resolver'
+  // ADR 0003's label signals, in precedence order. Appended rather than
+  // interleaved: the stored code is a position, so the enum is append-only.
+  | 'user-config'
+  | 'git-untracked'
+  | 'generated-header'
+  | 'codegen-path'
+  | 'path-convention'
+  | 'tsconfig-exclude'
+  /** Nothing else fired, which is what makes a file `source` and `authored`. */
+  | 'default'
 
 /**
  * The closed edge set. Adding a variant is a model change, which is the cost we
@@ -110,6 +120,36 @@ export type PreconditionCause =
   | 'missing-generated'
   | 'unmapped'
   | 'broken'
+
+/**
+ * ADR 0003's two axes, as the name of one.
+ *
+ * Orthogonal because a single exclusive enum misclassifies every interesting
+ * file in the fixtures, and always in the same direction — it drops real source
+ * out of the graph. `next.config.ts` is config *and* type-checked source;
+ * `apps.metadata.generated.ts` is generated *and* real source.
+ */
+export type LabelAxis = 'role' | 'authorship'
+
+/** One axis's value, which is a `Role` for `role` and an `Authorship` for `authorship`. */
+export type LabelValue = Role | Authorship
+
+/**
+ * One classification fact about a node: an axis, its value, and where it came
+ * from.
+ *
+ * The third kind of thing the index holds, alongside nodes and edges — never a
+ * node itself, which would be a node whose entire existence is one edge back to
+ * its subject. Keyed by node id, so it labels a `Symbol` as readily as a `File`.
+ */
+export interface Label {
+  /** The node it classifies: a `FilePath` today, a `SymbolId` when one is labelled. */
+  readonly node: string
+  readonly axis: LabelAxis
+  readonly value: LabelValue
+  readonly provenance: Provenance
+  readonly derivation: Derivation
+}
 
 /** One TypeScript project: a single tsconfig and the files it globs. */
 export interface ProjectNode {

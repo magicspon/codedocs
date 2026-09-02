@@ -18,19 +18,28 @@ import type {
   ProjectConditions,
   Snapshot,
 } from '../envelope.ts'
+import {
+  effective,
+  labelFiles,
+  type EffectiveLabels,
+  type LabelPass,
+} from '../labels/index.ts'
 import type { FilePath, ProjectNode } from '../model.ts'
 import { preflightProjects, type ProjectPreflight } from '../preflight/index.ts'
 import {
   openStore,
   readFiles,
   readHeader,
+  readLabels,
   readProjects,
   readSeenFiles,
   readUnanalysedProjects,
+  replaceLabels,
+  writeHeader,
   type Store,
 } from '../store/index.ts'
 import { rebuild } from './cold.ts'
-import type { RepairReport } from './shared.ts'
+import { classifyHash, type RepairReport } from './shared.ts'
 import { TOOL_VERSION, typescriptVersion } from './version.ts'
 import { repairWave } from './wave.ts'
 
@@ -58,6 +67,21 @@ export interface Session {
   readonly seenFiles: readonly FilePath[]
   /** What the repair actually did, for a test to pin and for `analyse` to report. */
   readonly repair: RepairReport | null
+  /**
+   * What the label pass cost, or `null` where the stored labels still stood.
+   *
+   * Reported rather than hidden for the same reason a repair is: ADR 0003 chose
+   * to recompute the whole layer on the strength of one measurement, and a
+   * number nobody can see is an assumption rather than a measurement.
+   */
+  readonly labelPass: LabelPass | null
+  /**
+   * Every node's effective labels, read on first use.
+   *
+   * Lazy because most answers never filter: an operation that applies no scope
+   * beyond the default still pays a table scan it has no use for.
+   */
+  labels(): ReadonlyMap<FilePath, EffectiveLabels>
   close(): void
 }
 
@@ -102,6 +126,14 @@ export function openSession(options: SessionOptions): Session {
   const blindSpots = options.noUpdate ? withheld(root, outstanding) : []
   const projects = readProjects(store)
 
+  // ADR 0003 recomputes the layer rather than invalidating it. A repair is one
+  // trigger; the other is the `classify` block itself, which changes nothing in
+  // the tree and would otherwise leave the old labels standing for ever.
+  const labelPass =
+    repair === null && readHeader(store).classifyHash === classifyHash(config)
+      ? null
+      : relabel(root, store, config)
+
   const current = readHeader(store)
   const snapshot: Snapshot = {
     commit: current.commit === '' ? null : current.commit,
@@ -122,8 +154,37 @@ export function openSession(options: SessionOptions): Session {
     },
     seenFiles: outstanding.drift.seenFiles,
     repair,
+    labelPass,
+    labels: memoise(() => effective(readLabels(store))),
     close: () => store.close(),
   }
+}
+
+/**
+ * Recompute every label, and record the `classify` block it was computed under.
+ *
+ * The whole set, never a slice: a partial pass would leave files with no rows,
+ * and a file with no rows reads as `source` and `authored` — which is exactly
+ * what a half-written pass would be claiming.
+ */
+function relabel(root: string, store: Store, config: Config): LabelPass {
+  const pass = labelFiles(
+    root,
+    readFiles(store).map((file) => file.path),
+    config,
+  )
+  replaceLabels(store, pass.labels)
+  writeHeader(store, {
+    ...readHeader(store),
+    classifyHash: classifyHash(config),
+  })
+  return pass
+}
+
+/** Run once, then answer from what the first call produced. */
+function memoise<T>(compute: () => T): () => T {
+  let held: T | undefined
+  return () => (held ??= compute())
 }
 
 /** Everything a session found out of date before it decided what to do. */

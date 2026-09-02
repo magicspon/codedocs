@@ -12,6 +12,8 @@ import type {
   CallerAttribution,
   Derivation,
   Fidelity,
+  LabelAxis,
+  LabelValue,
   PreconditionCause,
   Provenance,
   ReferenceKind,
@@ -47,6 +49,13 @@ export const DERIVATIONS: readonly Derivation[] = [
   'shared-method-name',
   'manifest',
   'resolver',
+  'user-config',
+  'git-untracked',
+  'generated-header',
+  'codegen-path',
+  'path-convention',
+  'tsconfig-exclude',
+  'default',
 ]
 export const CAUSES: readonly UnresolvedCallCause[] = [
   'external',
@@ -58,6 +67,15 @@ export const REFERENCE_KINDS: readonly ReferenceKind[] = [
   'extends',
   'implements',
   'typeReferences',
+]
+export const LABEL_AXES: readonly LabelAxis[] = ['role', 'authorship']
+/** Both axes' values in one list: a label row holds an axis and a value, and the axis says which half applies. */
+export const LABEL_VALUES: readonly LabelValue[] = [
+  'source',
+  'test',
+  'config',
+  'authored',
+  'generated',
 ]
 export const FIDELITIES: readonly Fidelity[] = ['typed', 'syntactic']
 export const PRECONDITION_CAUSES: readonly PreconditionCause[] = [
@@ -75,6 +93,8 @@ export interface EnumCodes {
   readonly derivation: readonly Derivation[]
   readonly cause: readonly UnresolvedCallCause[]
   readonly referenceKind: readonly ReferenceKind[]
+  readonly labelAxis: readonly LabelAxis[]
+  readonly labelValue: readonly LabelValue[]
   readonly fidelity: readonly Fidelity[]
   readonly preconditionCause: readonly PreconditionCause[]
 }
@@ -87,6 +107,8 @@ export const ENUM_CODES: EnumCodes = {
   derivation: DERIVATIONS,
   cause: CAUSES,
   referenceKind: REFERENCE_KINDS,
+  labelAxis: LABEL_AXES,
+  labelValue: LABEL_VALUES,
   fidelity: FIDELITIES,
   preconditionCause: PRECONDITION_CAUSES,
 }

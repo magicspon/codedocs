@@ -32,9 +32,12 @@ export {
   beginAnalysis,
   commitProject,
   refreshProjects,
+  replaceLabels,
   retireFiles,
   writeHeader,
 } from './write-commit.ts'
+
+export { readLabels } from './read-labels.ts'
 
 export {
   readBrokenImporters,

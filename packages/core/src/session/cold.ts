@@ -11,7 +11,7 @@
 
 import { type AnalysisSession, openAnalysis } from '../adapter/ts7/index.ts'
 import type { Config } from '../config/index.ts'
-import { currentCommit, discoverProjects } from '../discovery.ts'
+import { discoverProjects } from '../discovery.ts'
 import { statFile, walkSourceFiles } from '../drift.ts'
 import type { FileNode, FilePath } from '../model.ts'
 import {
@@ -25,8 +25,7 @@ import {
   readSymbolIdAt,
   type Store,
 } from '../store/index.ts'
-import { projectRow } from './shared.ts'
-import { TOOL_VERSION, typescriptVersion } from './version.ts'
+import { projectRow, stamp } from './shared.ts'
 
 /**
  * Re-analyse every project and replace the index contents.
@@ -61,12 +60,7 @@ export function rebuild(
     beginAnalysis(store, {
       seenFiles,
       filesByProject: byProject,
-      header: {
-        commit: currentCommit(root),
-        analysedAt: new Date().toISOString(),
-        toolVersion: TOOL_VERSION,
-        typescriptVersion: typescriptVersion(),
-      },
+      header: stamp(root, config),
     })
 
     // Named explicitly rather than left to the adapter's own tie-break, so the

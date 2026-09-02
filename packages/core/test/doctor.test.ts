@@ -15,6 +15,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
+import { UNSCOPED } from '../src/labels/index.ts'
 import { doctor, type DoctorEnvelope } from '../src/operations/doctor.ts'
 import { openSession } from '../src/session/index.ts'
 
@@ -65,6 +66,7 @@ function run(measure = false): DoctorEnvelope {
       config: session.config,
       measure,
       seenFiles: session.seenFiles,
+      scoping: UNSCOPED,
     })
   } finally {
     session.close()
@@ -242,6 +244,7 @@ describe('what the exit code follows', () => {
         config: session.config,
         measure: false,
         seenFiles: session.seenFiles,
+        scoping: UNSCOPED,
       })
       expect(envelope.result).toEqual([])
       expect(envelope.budget.truncated).toBe(true)

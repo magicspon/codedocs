@@ -139,9 +139,9 @@ _Avoid_: stable, permanent, persistent, canonical
 The rule that produced a fact, named on the fact itself: `checker-signature`,
 `checker-base-types`, `heritage-clause`, `jsx-element-rule`, `shared-method-name`, `manifest`,
 `resolver` for edges; `user-config`, `git-untracked`, `generated-header`, `codegen-path`,
-`path-convention`, `tsconfig-exclude` for [[Label]]s; `content-hash`, `path-prefix-rewrite`,
-`git-rename`, `shape-hash`, `descriptor-suffix`, `declared-name`, `name-in-head`, `call-site-overlap`
-for [[Candidate]]s, in that order of strength. What makes an `inferred` fact actionable rather than
+`path-convention`, `tsconfig-exclude` for [[Label]]s, with `default` for an axis no signal fired on;
+`content-hash`, `path-prefix-rewrite`, `git-rename`, `shape-hash`, `descriptor-suffix`,
+`declared-name`, `name-in-head`, `call-site-overlap` for [[Candidate]]s, in that order of strength. What makes an `inferred` fact actionable rather than
 merely hedged.
 _Avoid_: method, source, strategy, origin
 
