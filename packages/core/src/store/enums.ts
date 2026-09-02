@@ -56,6 +56,16 @@ export const DERIVATIONS: readonly Derivation[] = [
   'path-convention',
   'tsconfig-exclude',
   'default',
+  // ADR 0007's continuity signals. Listed so the table and the type stay one
+  // set; no row carries one, because continuity persists nothing.
+  'content-hash',
+  'path-prefix-rewrite',
+  'git-rename',
+  'shape-hash',
+  'descriptor-suffix',
+  'declared-name',
+  'name-in-head',
+  'call-site-overlap',
 ]
 export const CAUSES: readonly UnresolvedCallCause[] = [
   'external',

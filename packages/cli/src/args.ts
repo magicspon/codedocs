@@ -18,8 +18,10 @@ import {
   type EnvelopeError,
   type OperationName,
   type LabelFilter,
+  type OperationFlag,
   type OperationSpec,
   type Scope,
+  type Verdict,
 } from '@codedocs/core'
 
 /**
@@ -63,8 +65,15 @@ export interface Command {
   readonly measure: boolean
   /** The label filter the answer applies, or the default where none was named. */
   readonly scope: Scope
-  /** `impact`: the commit to compare against. `null` means the merge base. */
+  /**
+   * The commit to compare against. `null` means the operation's own default.
+   *
+   * `impact` defaults it to the merge base; `docs affected` defaults it to
+   * nothing at all and answers from the drift set instead.
+   */
   readonly base: string | null
+  /** `docs check`: a verdict to exit 1 for beyond `contradicted`. */
+  readonly failOn: Verdict | null
   /** `evidence`: restate the payload as ADR 0005 claim expressions. */
   readonly claims: boolean
 }
@@ -85,6 +94,7 @@ const OPTIONS = {
   measure: { type: 'boolean' },
   base: { type: 'string' },
   claims: { type: 'boolean' },
+  'fail-on': { type: 'string' },
   // Repeatable: one flag per axis, because the two are orthogonal and a single
   // value could only ever filter one of them.
   label: { type: 'string', multiple: true },
@@ -145,6 +155,9 @@ export function parse(
   const scope = resolveScope(values.label, values['exclude-label'])
   if (failed(scope)) return { ok: false, error: scope.error }
 
+  const failOn = resolveVerdict(values['fail-on'])
+  if (failed(failOn)) return { ok: false, error: failOn.error }
+
   return {
     ok: true,
     command: {
@@ -163,6 +176,7 @@ export function parse(
       scope: scope.value,
       base: values.base ?? null,
       claims: values.claims === true,
+      failOn: failOn.value,
     },
   }
 }
@@ -262,16 +276,31 @@ function resolveInvocation(
   own: readonly string[],
   trailing: readonly string[],
 ): Step<Invocation> {
-  const name = own[0] ?? trailing[0]
-  const spec = name === undefined ? undefined : operationSpec(name)
-  if (spec === undefined) {
-    return {
-      error: { code: 'unknown-operation', params: { name: name ?? '' } },
-    }
+  const matched = named([...own, ...trailing])
+  if (matched === null) {
+    const name = own[0] ?? trailing[0] ?? ''
+    return { error: { code: 'unknown-operation', params: { name } } }
   }
-  return spec.subject?.variadic === true
-    ? resolveVariadic(spec, own, trailing)
-    : resolveSubject(spec, [...own, ...trailing])
+  return matched.spec.subject?.variadic === true
+    ? resolveVariadic(matched.spec, own, trailing)
+    : resolveSubject(matched.spec, [...own, ...trailing], matched.words)
+}
+
+/**
+ * The operation the leading positionals name, and how many of them it took.
+ *
+ * Two words are tried before one, because ADR 0006 spells two operations as
+ * `docs check` and `docs affected` and there is no operation called `docs`: a
+ * one-word attempt would refuse them before the two-word form was reached.
+ */
+function named(
+  positionals: readonly string[],
+): { spec: OperationSpec; words: number } | null {
+  const two = positionals.slice(0, 2).join(' ')
+  const pair = operationSpec(two)
+  if (pair !== undefined) return { spec: pair, words: 2 }
+  const one = operationSpec(positionals[0] ?? '')
+  return one === undefined ? null : { spec: one, words: 1 }
 }
 
 /**
@@ -310,14 +339,15 @@ function resolveVariadic(
 function resolveSubject(
   spec: OperationSpec,
   positionals: readonly string[],
+  words: number,
 ): Step<Invocation> {
   const noun = spec.subject === null ? 'argument' : spec.subject.name
-  const [, subject, ...rest] = positionals
+  const [subject, ...rest] = positionals.slice(words)
   if (rest.length > 0) {
     return {
       error: {
         code: 'too-many-arguments',
-        params: { operation: spec.name, noun, got: positionals.length - 1 },
+        params: { operation: spec.name, noun, got: positionals.length - words },
       },
     }
   }
@@ -441,6 +471,35 @@ function resolveScope(
   return { value: scopeOf(included.value, excluded.value) }
 }
 
+/**
+ * The verdicts `--fail-on` accepts.
+ *
+ * `verified` is not among them: a build that fails when a document checks out
+ * is a build nobody would keep. `contradicted` is not either — it always exits
+ * 1, so naming it would be asking for what you already have.
+ */
+const FAIL_ON: readonly Verdict[] = ['potentially-stale', 'unable-to-verify']
+
+/**
+ * Read `--fail-on`, or say why it is not a verdict.
+ *
+ * The vocabulary is closed, and spelled with hyphens: ADR 0005 writes
+ * `potentially stale` in prose, and a flag value with a space in it is a value
+ * every shell would have to be told about.
+ */
+function resolveVerdict(raw: string | undefined): Step<Verdict | null> {
+  if (raw === undefined) return { value: null }
+  if (!FAIL_ON.includes(raw as Verdict)) {
+    return {
+      error: {
+        code: 'verdict-invalid',
+        params: { value: raw, expectation: FAIL_ON.join(' or ') },
+      },
+    }
+  }
+  return { value: raw as Verdict }
+}
+
 /** Colour is a renderer concern, and the machine renderer never uses it. */
 function resolveColor(
   color: boolean | undefined,
@@ -452,6 +511,20 @@ function resolveColor(
     return false
   return process.stdout.isTTY === true
 }
+
+/** One per-operation flag as `--help` spells it, without its summary. */
+const spelled = (flag: OperationFlag): string =>
+  `  --${flag.name}${flag.value === null ? '' : ` <${flag.value}>`}`
+
+/**
+ * The widest per-operation flag, so the summaries line up in one column.
+ *
+ * Derived rather than a constant: a flag whose name is one character longer than
+ * the widest is a flag whose summary runs into it, and nobody would notice until
+ * they read the help.
+ */
+const flagWidth = (): number =>
+  Math.max(...OPERATION_FLAGS.map((flag) => spelled(flag).length))
 
 /** How one operation is invoked, as `--help` spells it. */
 function invocation(spec: OperationSpec): string {
@@ -503,10 +576,9 @@ export function usage(): string {
     ...OPERATIONS.filter((entry) => entry.flags.length > 0).flatMap((entry) => [
       '',
       `\`${entry.name}\` only:`,
-      ...entry.flags.map((flag) => {
-        const left = `  --${flag.name}${flag.value === null ? '' : ` <${flag.value}>`}`
-        return `${left.padEnd(21)}${flag.summary}`
-      }),
+      ...entry.flags.map(
+        (flag) => `${spelled(flag).padEnd(flagWidth() + 2)}${flag.summary}`,
+      ),
     ]),
     '',
     'Exit codes: 0 answered, 1 negative finding, 2 could not answer.',

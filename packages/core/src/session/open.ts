@@ -65,6 +65,15 @@ export interface Session {
    * costs 69 ms to learn what the session already knows.
    */
   readonly seenFiles: readonly FilePath[]
+  /**
+   * What this session found different from the stored snapshot, before it acted.
+   *
+   * Kept after a repair rather than discarded: it is the changed set `docs
+   * affected` answers "what have I broken right now" from, with no git and no
+   * configuration, which is what makes that operation usable inside a
+   * pre-commit hook.
+   */
+  readonly drift: Drift
   /** What the repair actually did, for a test to pin and for `analyse` to report. */
   readonly repair: RepairReport | null
   /**
@@ -159,6 +168,7 @@ export function openSession(options: SessionOptions): Session {
       blindSpots,
     },
     seenFiles: outstanding.drift.seenFiles,
+    drift: outstanding.drift,
     repair,
     labelPass,
     labels: memoise(() => effective(readLabels(store))),

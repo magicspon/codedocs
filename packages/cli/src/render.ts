@@ -16,8 +16,13 @@ import type {
   Change,
   CallSite,
   Classification,
+  Candidate,
+  ClaimReport,
   Disagreement,
+  DocsEnvelope,
   DoctorEnvelope,
+  DocumentFault,
+  DocumentReport,
   Envelope,
   EvidenceEnvelope,
   EvidenceKind,
@@ -31,6 +36,7 @@ import type {
   ProjectSummary,
   ReferenceEdge,
   RepairReport,
+  SectionReport,
   ReportEnvelope,
   SpecifierEvidence,
   SymbolNode,
@@ -680,6 +686,189 @@ function kindLines<TItem>(
 const labelRow = (label: Label, style: Style): string =>
   `${label.node}  ${label.axis}=${label.value}  ` +
   style.dim(`[${label.provenance}: ${label.derivation}]`)
+
+/** How a verdict is spelled for a person, and how it is coloured. */
+const VERDICTS: Readonly<Record<string, string>> = {
+  verified: 'verified',
+  contradicted: 'contradicted',
+  'potentially-stale': 'potentially stale',
+  'unable-to-verify': 'unable to verify',
+}
+
+/**
+ * Render a `docs check` or `docs affected` answer.
+ *
+ * A verdict never renders without its [[Claim coverage]]: without it, `verified`
+ * silently means "the checkable part is true", which is exactly the completeness
+ * failure ADR 0001 exists to prevent. Coverage is not a confidence score and is
+ * never combined with the verdict into one — they sit side by side because they
+ * are answers to different questions.
+ *
+ * Sections are printed under their document because the per-section verdict is
+ * the whole reason claims live inline: a document-level verdict alone would send
+ * a reader to re-read a file whose contradiction is in one paragraph.
+ */
+export function renderDocs(envelope: DocsEnvelope, style: Style): string {
+  const lines = (envelope.result ?? []).flatMap((report) =>
+    documentLines(report, style),
+  )
+  return [
+    finish(envelope, lines, style, 'documents'),
+    ...scanNote(envelope, style),
+  ].join('\n')
+}
+
+/** One document: its verdict, its coverage, and the sections that assert anything. */
+function documentLines(report: DocumentReport, style: Style): string[] {
+  const { covered, sections } = report.coverage
+  const verdict = verdictText(report.verdict, style)
+  return [
+    `  ${style.bold(report.path)}  ${verdict}` +
+      style.dim(`, ${covered} of ${sections} sections covered`),
+    ...report.sections
+      .filter((section) => section.verdict !== null)
+      .flatMap((section) => sectionLines(section, style)),
+    ...report.faults.flatMap((fault) => faultLines(fault, style)),
+  ]
+}
+
+/** A verdict, warned about unless it is the one that needs no attention. */
+const verdictText = (verdict: string, style: Style): string => {
+  const spelled = VERDICTS[verdict] ?? verdict
+  return verdict === 'verified' ? style.dim(spelled) : style.warn(spelled)
+}
+
+function sectionLines(section: SectionReport, style: Style): string[] {
+  const heading = section.heading ?? '(preamble)'
+  const verdict =
+    section.verdict === null ? '' : verdictText(section.verdict, style)
+  return [
+    `    ${heading}  ${verdict}  ${style.dim(`:${section.line}`)}`,
+    ...section.claims.flatMap((claim) => claimLines(claim, style)),
+    ...section.links
+      .filter((link) => link.broken)
+      .map((link) =>
+        style.warn(`      ${link.target} → no such file  :${link.line}`),
+      ),
+  ]
+}
+
+/**
+ * One claim, with what decided it.
+ *
+ * A verified claim prints its provenance only when it is not `deterministic`:
+ * ADR 0005 has provenance ride on the verdict rather than multiply it, and a
+ * checker-resolved edge saying so on every line would bury the ones that are
+ * inferred.
+ */
+function claimLines(claim: ClaimReport, style: Style): string[] {
+  const provenance =
+    claim.provenance === null || claim.provenance === 'deterministic'
+      ? ''
+      : ` ${style.warn(`[${claim.provenance}]`)}`
+  // The observed number is only news when the claim is wrong: a verified
+  // `== 2` already prints the two, and repeating it on every line would bury
+  // the ones that differ.
+  const counted =
+    claim.observed === null || claim.verdict === 'verified'
+      ? ''
+      : style.dim(`  (index holds ${claim.observed})`)
+  return [
+    `      ${claim.text}  ${verdictText(claim.verdict, style)}${provenance}${counted}` +
+      style.dim(`  :${claim.line}`),
+    ...candidateLines(claim.candidates, style),
+  ]
+}
+
+/**
+ * Where a vanished subject appears to have gone.
+ *
+ * A fixed template over the candidate's fields rather than a sentence codedocs
+ * composed: ADR 0006 deleted `docs generate` on the principle that codedocs
+ * writes no prose, and an agent repairing a claim wants the fields anyway,
+ * since it has to rewrite a shorthand rather than read English.
+ *
+ * An empty list prints nothing at all, and never "deleted": an absence with no
+ * candidate is indistinguishable from a move the matcher failed to see.
+ */
+function candidateLines(
+  candidates: readonly Candidate[],
+  style: Style,
+): string[] {
+  return candidates.map((candidate) => {
+    const how = candidate.derivations.join(', ')
+    const where =
+      candidate.commit === null ? '' : ` in ${candidate.commit.slice(0, 7)}`
+    const score =
+      candidate.similarity === null
+        ? ''
+        : ` (git similarity ${candidate.similarity}%)`
+    return style.dim(
+      `        candidate: ${candidate.id}${where} [${how}]${score}`,
+    )
+  })
+}
+
+/**
+ * An error in the document itself, which is the author's to fix.
+ *
+ * Never a verdict: ADR 0005 makes an ambiguous shorthand an error reported at
+ * check time rather than an `unable to verify`, because a document is a
+ * committed artefact that must mean one thing.
+ */
+function faultLines(fault: DocumentFault, style: Style): string[] {
+  return [
+    style.warn(`    ${fault.text}  :${fault.line}`),
+    style.warn(`      ${faultText(fault)}`),
+  ]
+}
+
+/** What one fault says, from the closed set of codes rather than a sentence on the wire. */
+function faultText(entry: DocumentFault): string {
+  const fault = entry.fault
+  switch (fault.code) {
+    case 'unparseable':
+      return 'not a claim expression'
+    case 'unknown-predicate':
+      return `\`${fault.predicate}\` is not one of the claim predicates`
+    case 'no-backend':
+      return (
+        `\`${fault.predicate}\` has no backend: the index holds no export ` +
+        'edges and no package nodes, so nothing could check it'
+      )
+    case 'arity':
+      return `\`${fault.predicate}\` takes ${fault.expected} arguments, got ${fault.got}`
+    case 'count-invalid':
+      return fault.detail
+    case 'ambiguous-subject':
+      return (
+        `\`${fault.subject}\` names ${fault.resolved.length} symbols — ` +
+        `${fault.resolved.join(', ')}. A claim must mean one thing.`
+      )
+    case 'local-subject':
+      return `\`${fault.subject}\` is a local symbol, and nothing durable may anchor to one`
+    case 'label-invalid':
+      return `\`${fault.axis}=${fault.value}\` is not a label codedocs knows`
+  }
+}
+
+/**
+ * What the marker scan found and cost.
+ *
+ * Printed because ADR 0005 rests document discovery on a measurement — 46 ms
+ * over cal.com's 380 Markdown files — and a number nobody can see is an
+ * assumption.
+ */
+function scanNote(envelope: DocsEnvelope, style: Style): Note {
+  const { documents, scanned, durationMs } = envelope.scan
+  return [
+    '',
+    style.dim(
+      `  scanned ${count(scanned, 'Markdown file')} in ${durationMs} ms, ` +
+        `finding ${count(documents, 'document')}`,
+    ),
+  ]
+}
 
 /**
  * Render a `trace` answer as a tree, collapsing the prefix each path shares

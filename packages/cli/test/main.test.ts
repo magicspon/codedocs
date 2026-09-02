@@ -7,7 +7,14 @@
  * caller having to parse the text.
  */
 
-import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import {
+  appendFileSync,
+  cpSync,
+  mkdirSync,
+  mkdtempSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -224,6 +231,157 @@ describe('evidence', () => {
   })
 })
 
+describe('docs', () => {
+  beforeAll(() => {
+    writeFileSync(
+      join(root, 'verified.md'),
+      [
+        '# Checkout',
+        '',
+        'Checkout charges through the payments module.',
+        '',
+        '<!-- codedocs: calls(src/checkout.ts#checkout,',
+        '                     src/payments.ts#charge) -->',
+        '',
+        '## Uncovered',
+        '',
+        'Prose with nothing checkable in it.',
+      ].join('\n'),
+    )
+    // A broken prose link is "a contradiction with no inference in it", and the
+    // one that does not depend on the fixture's fidelity: this project has no
+    // `node_modules`, so a missing *edge* would honestly read as unverifiable.
+    writeFileSync(
+      join(root, 'wrong.md'),
+      [
+        '# Wrong',
+        '',
+        'See [the gateway](src/gone.ts).',
+        '',
+        '<!-- codedocs: exists(src/payments.ts#charge) -->',
+      ].join('\n'),
+    )
+  })
+
+  it('takes a two-word operation name as one operation', () => {
+    const envelope = JSON.parse(invoke('docs', 'check', '--json').stdout) as {
+      operation: string
+    }
+    expect(envelope.operation).toBe('docs check')
+  })
+
+  it('exits 1 for a contradicted document', () => {
+    expect(invoke('docs', 'check').code).toBe(1)
+
+    const envelope = JSON.parse(invoke('docs', 'check', '--json').stdout) as {
+      result: {
+        path: string
+        verdict: string
+        sections: { claims: { verdict: string }[] }[]
+      }[]
+    }
+    const found = new Map(envelope.result.map((one) => [one.path, one]))
+    expect(found.get('wrong.md')?.verdict).toBe('contradicted')
+    // A present fact decides its claim whatever the fidelity, so the verified
+    // half is verified even in a project analysed without types.
+    expect(
+      found
+        .get('verified.md')
+        ?.sections.flatMap((one) => one.claims)
+        .map((claim) => claim.verdict),
+    ).toEqual(['verified'])
+  })
+
+  it('never renders a verdict without its coverage', () => {
+    // Without coverage, `verified` silently means "the checkable part is true".
+    expect(invoke('docs', 'check').stdout).toContain('of 2 sections covered')
+  })
+
+  it('refuses a `--fail-on` that is not a verdict', () => {
+    const result = invoke('docs', 'check', '--fail-on', 'nonsense')
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain('--fail-on takes a verdict')
+  })
+
+  it('refuses `--fail-on` on an operation that has no verdicts', () => {
+    expect(invoke('callers', 'charge', '--fail-on', 'contradicted').code).toBe(
+      2,
+    )
+  })
+
+  it('never exits 1 for reaching a document', () => {
+    // `docs affected` reports reach, and reaching a document is not a finding.
+    expect(invoke('docs', 'affected').code).toBe(0)
+  })
+
+  it('reports what the marker scan cost, so the measurement stays visible', () => {
+    expect(invoke('docs', 'check').stdout).toMatch(
+      /scanned \d+ Markdown files? in \d+ ms/,
+    )
+  })
+
+  describe('--fail-on', () => {
+    // Its own checkout: the shared root holds a contradicted document, and this
+    // is about the exit code a repository reaches when nothing is contradicted.
+    let stale: string
+
+    beforeAll(() => {
+      stale = mkdtempSync(join(tmpdir(), 'codedocs-stale-'))
+      cpSync(fixture, stale, { recursive: true })
+      cpSync(join(here, 'package.fixture.json'), join(stale, 'package.json'))
+      writeFileSync(
+        join(stale, 'stale.md'),
+        [
+          '# Payments',
+          '',
+          'Charging is where the money moves.',
+          '',
+          '<!-- codedocs: exists(src/payments.ts#charge) -->',
+        ].join('\n'),
+      )
+      // Build the index first, so the edit below reads as drift rather than as
+      // the cold build every file of a new checkout would be.
+      run(['analyse', '--cwd', stale, '--no-color'])
+    })
+
+    afterAll(() => {
+      rmSync(stale, { recursive: true, force: true })
+    })
+
+    /**
+     * Ask, having just changed a file the document touches.
+     *
+     * The touch has to happen before every run: each session repairs the drift
+     * it found, so the second run of a pair would otherwise see a clean tree.
+     */
+    const askAfterTouching = (...args: string[]): ReturnType<typeof run> => {
+      appendFileSync(join(stale, 'src', 'payments.ts'), '\n// touched\n')
+      return run([...args, '--cwd', stale, '--no-color'])
+    }
+
+    it('leaves a potentially stale document at exit 0 by default', () => {
+      const result = askAfterTouching('docs', 'check', '--json')
+      const envelope = JSON.parse(result.stdout) as {
+        result: { path: string; verdict: string }[]
+      }
+      expect(
+        envelope.result.find((one) => one.path === 'stale.md')?.verdict,
+      ).toBe('potentially-stale')
+      // ADR 0005 measured pointer signals of this character at 59–77% false
+      // alarms; wiring that to a red build is what gets `docs check` removed
+      // from CI within a month.
+      expect(result.code).toBe(0)
+    })
+
+    it('raises the exit code when asked to fail on it', () => {
+      expect(
+        askAfterTouching('docs', 'check', '--fail-on', 'potentially-stale')
+          .code,
+      ).toBe(1)
+    })
+  })
+})
+
 describe('the human renderer', () => {
   it('caps by default and says how many it withheld', () => {
     const result = invoke('symbol', '*', '--limit', '2')
@@ -336,7 +494,10 @@ describe('impact', () => {
     expect(invoke('impact', '--base', 'HEAD', '--depth', '2').code).toBe(0)
     const refused = invoke('symbol', '*', '--base', 'HEAD')
     expect(refused.code).toBe(2)
-    expect(refused.stderr).toContain('--base applies to `impact`')
+    // Derived from the manifest, so the sentence names every operation that
+    // takes it rather than the one this test is about.
+    expect(refused.stderr).toContain('`impact`')
+    expect(refused.stderr).toContain('not `symbol`')
   })
 })
 

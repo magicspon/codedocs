@@ -64,6 +64,23 @@ export function readSymbol(store: Store, id: SymbolId): SymbolNode | undefined {
 }
 
 /**
+ * Every symbol whose declared name is `name`, sorted by id then path.
+ *
+ * The keyed lookup ADR 0007 requires of the store for subject matching: a
+ * linear scan would break the promise that continuity's cost is proportional to
+ * the question rather than to the repository, so this reads through the
+ * `symbol_name` index and the absence of that index should fail review.
+ */
+export function readSymbolsNamed(store: Store, name: string): SymbolNode[] {
+  const rows = (
+    prepared(store.db, `${SYMBOL_SELECT} where s.name = ?`).all(
+      name,
+    ) as SymbolRow[]
+  ).map(toSymbol)
+  return rows.sort((a, b) => compare(a.id, b.id) || compare(a.file, b.file))
+}
+
+/**
  * The `SymbolId` declared at one file offset, or `undefined`.
  *
  * The join a bounded extraction needs: a call from a re-extracted file into an

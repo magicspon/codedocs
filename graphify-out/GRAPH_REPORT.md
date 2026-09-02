@@ -1,16 +1,16 @@
 # Graph Report - codedocs  (2026-09-02)
 
 ## Corpus Check
-- 246 files · ~175,620 words
+- 261 files · ~192,263 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1735 nodes · 3954 edges · 128 communities (111 shown, 17 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 56 edges (avg confidence: 0.85)
+- 1903 nodes · 4454 edges · 131 communities (114 shown, 17 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 58 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `033ef494`
+- Built from commit: `bd5b8049`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -138,26 +138,28 @@
 - [[_COMMUNITY_Community 125|Community 125]]
 - [[_COMMUNITY_Community 126|Community 126]]
 - [[_COMMUNITY_Community 127|Community 127]]
+- [[_COMMUNITY_Community 128|Community 128]]
+- [[_COMMUNITY_Community 129|Community 129]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `FilePath` - 76 edges
-2. `openSession()` - 43 edges
-3. `Store` - 33 edges
-4. `SymbolNode` - 26 edges
+1. `FilePath` - 89 edges
+2. `openSession()` - 45 edges
+3. `Store` - 37 edges
+4. `SymbolNode` - 28 edges
 5. `run` - 23 edges
-6. `compilerOptions` - 21 edges
-7. `execute()` - 20 edges
-8. `SymbolId` - 20 edges
-9. `Envelope` - 19 edges
-10. `scopeTo()` - 19 edges
+6. `scopeTo()` - 21 edges
+7. `compilerOptions` - 21 edges
+8. `execute()` - 20 edges
+9. `Envelope` - 20 edges
+10. `answer()` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `graphify` --semantically_similar_to--> `Code Graph`  [INFERRED] [semantically similar]
-  AGENTS.md → docs/REQUIREMENTS.md
 - `fallow` --semantically_similar_to--> `Static Analysis Layer`  [INFERRED] [semantically similar]
   AGENTS.md → docs/REQUIREMENTS.md
 - `Fallow PR Audit Workflow` --semantically_similar_to--> `AI Code Review / Verification`  [INFERRED] [semantically similar]
   .github/workflows/fallow.yml → docs/REQUIREMENTS.md
+- `graphify` --semantically_similar_to--> `Code Graph`  [INFERRED] [semantically similar]
+  AGENTS.md → docs/REQUIREMENTS.md
 - `Fallow Is Syntactic, Not Semantic` --semantically_similar_to--> `Deterministic vs Inferred Results`  [INFERRED] [semantically similar]
   AGENTS.md → docs/REQUIREMENTS.md
 - `version-packages Lockfile Resync` --shares_data_with--> `pnpm Workspace Configuration`  [INFERRED]
@@ -171,7 +173,7 @@
 - **Codebase Intelligence Substrate** — docs_requirements_static_analysis_layer, docs_requirements_code_graph, docs_requirements_document_layer, docs_requirements_internal_representation, docs_requirements_adapter_pattern [EXTRACTED 1.00]
 - **Pull Request Quality Gate** — workflows_ci_pipeline, workflows_fallow_audit, agents_fallow, cspell_words_dictionary, pnpm_workspace_config [INFERRED 0.85]
 
-## Communities (128 total, 17 thin omitted)
+## Communities (131 total, 17 thin omitted)
 
 ### Community 0 - "Release & CI Workflows"
 Cohesion: 0.32
@@ -194,8 +196,8 @@ Cohesion: 0.13
 Nodes (15): scripts, bench, bench:report, check, check:network, format, lint, prepare (+7 more)
 
 ### Community 5 - "Static Analysis Principles"
-Cohesion: 0.22
-Nodes (9): ast-grep, Do Not Reinvent The Wheel, Graphify (tool), Incremental Analysis And Caching, Permissive Licensing Policy, No Custom Static-Analysis Engine, Oxc, Static Analysis Layer (+1 more)
+Cohesion: 0.29
+Nodes (7): ast-grep, Do Not Reinvent The Wheel, Incremental Analysis And Caching, No Custom Static-Analysis Engine, Oxc, Static Analysis Layer, TypeScript Compiler APIs
 
 ### Community 6 - "CodeGuide Product Architecture"
 Cohesion: 0.28
@@ -230,24 +232,24 @@ Cohesion: 0.33
 Nodes (4): alreadyRecorded, changesetDir, [packageFile, depType, depName], RELEASABLE_DEP_TYPES
 
 ### Community 14 - "Yalc Local Publish Script"
-Cohesion: 0.12
-Nodes (33): at(), compare(), fingerprint(), globbed(), incomplete(), MeasuredSignal, nodeModules(), postinstall() (+25 more)
+Cohesion: 0.08
+Nodes (51): installFor(), resolve(), at(), compare(), Disagreement, fingerprint(), globbed(), incomplete() (+43 more)
 
 ### Community 19 - "Community 19"
 Cohesion: 0.15
 Nodes (12): codedocs never transmits it, and that is checked, Consequences, Considered Options, Exit codes, Free text is the hole no field rule closes, Hashing is not on the table, `report-bug` reproduces the failure, writes two shapes, and the safe one is the default, The field list (+4 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.23
-Nodes (13): CallSite, collectCallSites(), record(), resolveBatch(), resolveSite(), sweepCallEdges(), lookup(), lookupDeclaration() (+5 more)
+Cohesion: 0.32
+Nodes (10): CallSite, collectCallSites(), record(), resolveBatch(), resolveSite(), sweepCallEdges(), attribute(), lookupDeclaration() (+2 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.09
-Nodes (47): Scope, ProjectSummary, Precondition, EvidenceKind, AnswerFacts, BlindSpotReason, byCause(), CodedocsFacts (+39 more)
+Nodes (44): Change, EvidenceKind, EvidenceOptions, BaselineUsed, ImpactedSymbol, ImpactEnvelope, ImpactKind, ImpactOptions (+36 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.08
-Nodes (45): ambiguityNote(), annotate(), baselineChoiceNote(), baselineNote(), blindSpotNote(), captureLine(), changesNote(), classificationNote() (+37 more)
+Cohesion: 0.07
+Nodes (39): ambiguityNote(), annotate(), blindSpotNote(), candidateLines(), claimLines(), documentLines(), emptyLine(), ESC (+31 more)
 
 ### Community 23 - "Community 23"
 Cohesion: 0.15
@@ -306,8 +308,8 @@ Cohesion: 0.20
 Nodes (9): Claim coverage, Consequences, Considered Options, Discovery, and `docs affected`, Documents make claims, and every verdict has exactly one source, Pointers cannot decide staleness, measured, The four verdicts, What a claim is (+1 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.20
-Nodes (9): Agent skills, codedocs, Comments, Domain docs, Graph Outputs Are Derived Artifacts, graphify, Issue tracker, Triage labels (+1 more)
+Cohesion: 0.25
+Nodes (7): Agent skills, codedocs, Comments, Domain docs, Issue tracker, Triage labels, No network
 
 ### Community 39 - "Community 39"
 Cohesion: 0.22
@@ -331,11 +333,11 @@ Nodes (6): Consequences, Considered Options, Continuity is two inferred matchers
 
 ### Community 44 - "Community 44"
 Cohesion: 0.06
-Nodes (61): freeze(), GhIssue, seeds, stripTemplateComments(), armRow(), ARMS, Cell, delta() (+53 more)
+Nodes (62): freeze(), GhIssue, seeds, stripTemplateComments(), armRow(), ARMS, Cell, delta() (+54 more)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.07
-Nodes (27): Baselines, callers and callees, codedocs, codedocs and fallow, Configuration, Design documents, Development, doctor (+19 more)
+Nodes (28): Baselines, callers and callees, codedocs, codedocs and fallow, Configuration, Design documents, Development, docs check and docs affected (+20 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.33
@@ -358,20 +360,20 @@ Cohesion: 0.40
 Nodes (4): compilerOptions, types, extends, include
 
 ### Community 51 - "Community 51"
-Cohesion: 0.10
-Nodes (33): CallSource, ATTRIBUTIONS, KINDS, named(), PRECONDITION_CAUSES, Interner, interners, makeInterner() (+25 more)
+Cohesion: 0.06
+Nodes (76): AXIS_VALUES, checkClaim(), Checked, cloudedBy(), countClaim(), decide(), durable(), Endpoint (+68 more)
 
 ### Community 52 - "Community 52"
 Cohesion: 0.50
 Nodes (3): Consequences, Considered Options, Preconditions lower fidelity; honesty is evidence, not a score
 
 ### Community 53 - "Community 53"
-Cohesion: 0.19
-Nodes (22): extractProject(), rebuild(), projectRow(), stamp(), currentCommit(), discoverProjects(), expandProjectGlobs(), SKIP_DIRS (+14 more)
+Cohesion: 0.18
+Nodes (16): discoverProjects(), expandProjectGlobs(), SKIP_DIRS, detectDrift(), hashFile(), SKIP_DIRS, statFile(), walkSourceFiles() (+8 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.19
-Nodes (23): BaselineChoice, chooseBaseline(), requestedCommit(), byAncestry(), byNewest(), capture, directoryFor(), evict() (+15 more)
+Cohesion: 0.11
+Nodes (38): BaselineChoice, chooseBaseline(), requestedCommit(), byAncestry(), byNewest(), capture, directoryFor(), evict() (+30 more)
 
 ### Community 56 - "Community 56"
 Cohesion: 0.22
@@ -386,8 +388,8 @@ Cohesion: 0.15
 Nodes (12): 10. What changes, 1. Two discovery rules, and they see the same files, 2. How much cal.com's projects overlap, 3. The 81,888, decomposed, 4. Every call site, on both sides, 5. Edge for edge, not count for count, 6. The two edges canonicalisation cannot see, 7. A single-project control (+4 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.36
-Nodes (8): AI Code Review / Verification, AI Context Efficiency, Change Impact Analysis, Code Graph, Documentation Impact Analysis, CodeGuide MCP Server, MVP Phases, MVP Success Criteria
+Cohesion: 0.23
+Nodes (12): Graph Outputs Are Derived Artifacts, graphify, AI Code Review / Verification, AI Context Efficiency, Change Impact Analysis, Code Graph, Documentation Impact Analysis, Graphify (tool) (+4 more)
 
 ### Community 67 - "Community 67"
 Cohesion: 0.25
@@ -395,23 +397,23 @@ Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, in
 
 ### Community 68 - "Community 68"
 Cohesion: 0.09
-Nodes (34): Answer, answered(), ArgumentSchema, argvFor(), callTool(), DEPTH_ARGUMENT, describe(), dispatch() (+26 more)
+Nodes (35): toolName(), Answer, answered(), ArgumentSchema, argvFor(), callTool(), DEPTH_ARGUMENT, describe() (+27 more)
 
 ### Community 69 - "Community 69"
 Cohesion: 0.18
 Nodes (10): `codedocs.jsonc` holds facts codedocs cannot determine, and nothing else, Consequences, Considered Options, `discover`, which is what `discovery.ts`'s project-path TODO actually wanted, Discovery, and a repository root that means one thing, Parsing, versioning, and unknown keys, `remediations`, which is [#17](https://github.com/magicspon/codedocs/issues/17)'s residue, The file (+2 more)
 
 ### Community 70 - "Community 70"
-Cohesion: 0.16
-Nodes (22): DEFAULTS, EffectiveLabels, labelsOf(), PRECEDENCE, valueOf(), configured(), LabelPass, labelsFor() (+14 more)
+Cohesion: 0.30
+Nodes (10): configured(), labelsFor(), matches(), CODEGEN_PATHS, CONFIG_PATHS, hasGeneratedHeader(), isCodegenPath(), roleFromPath() (+2 more)
 
 ### Community 71 - "Community 71"
 Cohesion: 0.21
 Nodes (5): eager(), lazily(), Typed, reexported(), statically()
 
 ### Community 72 - "Community 72"
-Cohesion: 0.15
-Nodes (15): effective(), rank(), labelFiles(), classification, countPairs(), Disagreement, disagreementsIn(), group() (+7 more)
+Cohesion: 0.19
+Nodes (10): labelFiles(), classification, countPairs(), disagreementsIn(), group(), ask(), decide(), fixture (+2 more)
 
 ### Community 73 - "Community 73"
 Cohesion: 0.25
@@ -426,44 +428,44 @@ Cohesion: 0.25
 Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, include
 
 ### Community 80 - "Community 80"
-Cohesion: 0.28
-Nodes (8): DEFAULT_SCOPE, AnalyseEnvelope, renderSymbols(), styleFor(), envelopeOf(), node, plain, render()
+Cohesion: 0.19
+Nodes (10): trace(), TracePath, AnalyseEnvelope, renderSymbols(), envelopeOf(), node, plain, render() (+2 more)
 
 ### Community 81 - "Community 81"
 Cohesion: 0.10
-Nodes (29): unfiltered(), analyse(), AnalysisTotals, BaselineRequest, add(), assemble(), BaselineReport, CAUSE_ORDER (+21 more)
+Nodes (31): unfiltered(), UNSCOPED, analyse(), AnalysisTotals, BaselineRequest, ProjectSummary, add(), assemble() (+23 more)
 
 ### Community 82 - "Community 82"
-Cohesion: 0.16
-Nodes (14): extend(), filesOf(), finish(), PathTerminus, tailOf(), terminusOf(), TracePath, TraceStep (+6 more)
+Cohesion: 0.21
+Nodes (10): extend(), filesOf(), finish(), PathTerminus, tailOf(), terminusOf(), TraceStep, Walk (+2 more)
 
 ### Community 83 - "Community 83"
 Cohesion: 0.20
 Nodes (9): Consequences, Considered Options, How preflight reaches an answer, Preflight is filesystem work, and the type checker's diagnostics were never a signal, Preflight's two halves, The environment fingerprint, made computable, The four signals, and the shape of the fourth, What `doctor` runs (+1 more)
 
 ### Community 84 - "Community 84"
-Cohesion: 0.14
-Nodes (26): callEdgesOf(), callees(), callers(), collect(), claimsFor(), bound(), durableIds(), evidence() (+18 more)
+Cohesion: 0.13
+Nodes (27): applyScope(), callEdgesOf(), callees(), collect(), claimsFor(), assemble(), bound(), durableIds() (+19 more)
 
 ### Community 85 - "Community 85"
-Cohesion: 0.16
-Nodes (23): parseFilter(), scopeOf(), checkFlags(), failed(), Invocation, OPTIONS, parse(), ParsedArgs (+15 more)
+Cohesion: 0.14
+Nodes (25): parseFilter(), Scope, scopeOf(), checkFlags(), Command, FAIL_ON, failed(), Invocation (+17 more)
 
 ### Community 86 - "Community 86"
 Cohesion: 0.25
 Nodes (7): Running it, The cases, The localization benchmark, The task, The two arms, What is measured, What this does not show
 
 ### Community 87 - "Community 87"
-Cohesion: 0.20
-Nodes (16): CallerAttribution, Derivation, EdgeKind, Provenance, ReferenceKind, SymbolKind, UnresolvedCallCause, CAUSES (+8 more)
+Cohesion: 0.06
+Nodes (73): Candidate, checkDocument(), checkSection(), ClaimReport, DocumentFault, DocumentReport, fileOf(), LinkReport (+65 more)
 
 ### Community 88 - "Community 88"
 Cohesion: 0.29
 Nodes (7): 32. Initial MVP, Phase 1 — Analysis, Phase 2 — CLI, Phase 3 — Documentation, Phase 4 — AI, Phase 5 — AI coding assistance, Phase 6 — Desktop
 
 ### Community 89 - "Community 89"
-Cohesion: 0.09
-Nodes (46): ConfigError, ConfigRefusal, configSentence(), invalid(), misplacedConfig(), blank(), blankComments(), blankTrailingCommas() (+38 more)
+Cohesion: 0.12
+Nodes (39): ConfigError, ConfigRefusal, configSentence(), invalid(), misplacedConfig(), blank(), blankComments(), blankTrailingCommas() (+31 more)
 
 ### Community 90 - "Community 90"
 Cohesion: 0.33
@@ -486,20 +488,20 @@ Cohesion: 0.67
 Nodes (3): 31. Pricing, CodeGuide CLI, CodeGuide Desktop
 
 ### Community 95 - "Community 95"
-Cohesion: 0.14
-Nodes (31): Reproduction, trace(), flagsIn(), EnvelopeError, answered(), diagnosed(), dispatch(), edges() (+23 more)
+Cohesion: 0.17
+Nodes (30): flagsIn(), answered(), diagnosed(), dispatch(), docsOptionsFor(), documented(), edges(), emit() (+22 more)
 
 ### Community 96 - "Community 96"
-Cohesion: 0.24
-Nodes (20): openFor(), reanalyse(), repairWave(), runWave(), seedFrontier(), touchedProjects(), readBrokenImporters(), readExportShapes() (+12 more)
+Cohesion: 0.11
+Nodes (28): repairWave(), seedFrontier(), ProjectNode, ENUM_CODES, PRECONDITION_CAUSES, IndexHeader, writeMeta(), Store (+20 more)
 
 ### Community 97 - "Community 97"
 Cohesion: 0.24
-Nodes (9): codedocsFrames(), nameIn(), OWN, OwnPackage, ownPackages(), packageAt(), relativise(), resolveQuietly() (+1 more)
+Nodes (8): nameIn(), OWN, OwnPackage, ownPackages(), packageAt(), relativise(), resolveQuietly(), coreEntry
 
 ### Community 98 - "Community 98"
-Cohesion: 0.25
-Nodes (3): ENUM_CODES, readCalleesOf(), WRITE
+Cohesion: 0.17
+Nodes (16): baselineChoiceNote(), baselineNote(), captureLine(), changesNote(), classificationNote(), count(), fidelityOf(), headerNote() (+8 more)
 
 ### Community 99 - "Community 99"
 Cohesion: 0.25
@@ -510,92 +512,100 @@ Cohesion: 0.29
 Nodes (8): fallow, Fallow Exit Code Convention, Fallow Is Syntactic, Not Semantic, Deterministic vs Inferred Results, Fallow PR Audit Workflow, New-Only Fallow Gate, Pinned Fallow Version, Sticky PR Comment Upsert
 
 ### Community 101 - "Community 101"
-Cohesion: 0.22
-Nodes (13): applyScope(), UNSCOPED, file(), resolvePath(), MEANING, scopeTo(), specifierSpots(), globToRegExp() (+5 more)
+Cohesion: 0.24
+Nodes (7): callers(), globToRegExp(), symbol(), answer(), fixture, fixture, repair()
 
 ### Community 102 - "Community 102"
 Cohesion: 0.21
 Nodes (6): Money, Wallet, Ledger, Spendable, ledgers, Wallet
 
 ### Community 103 - "Community 103"
-Cohesion: 0.32
-Nodes (16): code(), internerFor(), writeCallEdges(), writeDeclarations(), writeFileFacts(), writeFileRows(), writeImportEdges(), writeLabels() (+8 more)
+Cohesion: 0.21
+Nodes (13): DEFAULTS, effective(), labelsOf(), PRECEDENCE, rank(), valueOf(), AXIS_VALUES, DEFAULT_SCOPE (+5 more)
 
 ### Community 104 - "Community 104"
 Cohesion: 0.25
 Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, include
 
 ### Community 105 - "Community 105"
-Cohesion: 0.40
-Nodes (3): fixture, here, reproduce()
+Cohesion: 0.19
+Nodes (6): fixture, here, invoke(), fixture, here, reproduce()
 
 ### Community 106 - "Community 106"
-Cohesion: 0.13
-Nodes (20): canonical(), fingerprintOf(), upward(), DEFAULT_EXCLUDES, globbedFiles(), outputDirectories(), fidelityOf(), preflightProject() (+12 more)
+Cohesion: 0.25
+Nodes (6): audit(), charge(), StripeGateway, Money, TestGateway, Gateway
 
 ### Community 107 - "Community 107"
 Cohesion: 0.18
-Nodes (14): Config, ProjectPreflight, ProjectSlice, Outstanding, Session, SessionOptions, RepairReport, require (+6 more)
+Nodes (24): Config, fidelityOf(), preflightProjects(), ProjectPreflight, classifySpecifiers(), extractProject(), ProjectSlice, rebuild() (+16 more)
 
 ### Community 108 - "Community 108"
-Cohesion: 0.21
-Nodes (10): exportShapeOf(), sweepExportShapes(), sweepImports(), extractFrom(), InternalSession, ownedFiles(), pickProject(), sweepSymbols() (+2 more)
+Cohesion: 0.22
+Nodes (10): toRepoPath(), exportShapeOf(), sweepExportShapes(), sweepImports(), extractFrom(), InternalSession, ownedFiles(), pickProject() (+2 more)
 
 ### Community 109 - "Community 109"
-Cohesion: 0.27
-Nodes (10): ProjectNode, IndexHeader, writeMeta(), openStore(), readUserVersion(), Store, TABLES, AnalysisStart (+2 more)
+Cohesion: 0.22
+Nodes (8): IDENTIFIER, OPERATION_FLAGS, OPERATION_NAMES, OperationFlag, OPERATIONS, operationsTaking(), SubjectSpec, variadic()
 
 ### Community 110 - "Community 110"
 Cohesion: 0.17
-Nodes (18): ANONYMOUS_FUNCTION, attribute(), CALLABLE_KIND, callSegment(), DECLARATION_SPACE, declarationSpace(), descriptorPath(), FUNCTION_INITIALISER (+10 more)
+Nodes (17): ANONYMOUS_FUNCTION, CALLABLE_KIND, callSegment(), DECLARATION_SPACE, declarationSpace(), descriptorPath(), FUNCTION_INITIALISER, isCallable() (+9 more)
 
 ### Community 111 - "Community 111"
-Cohesion: 0.45
-Nodes (10): CallEdge, ImportEdge, ReferenceEdge, SpecifierSite, UnresolvedCall, UnresolvedSpecifier, FactGroup, FileFacts (+2 more)
+Cohesion: 0.14
+Nodes (26): callClaim(), Candidate, over(), PREDICATES, referenceClaim(), EvidenceReport, CallEdge, CallerAttribution (+18 more)
 
 ### Community 112 - "Community 112"
-Cohesion: 0.20
-Nodes (14): collectReferenceSites(), firstChild(), heritageKind(), isCallee(), isDeclaredName(), kindOf(), lastIdentifier(), NOT_A_REFERENCE (+6 more)
+Cohesion: 0.23
+Nodes (12): collectReferenceSites(), firstChild(), heritageKind(), isCallee(), isDeclaredName(), kindOf(), lastIdentifier(), NOT_A_REFERENCE (+4 more)
 
 ### Community 113 - "Community 113"
-Cohesion: 0.39
-Nodes (7): collectSpecifiers(), dynamicSpecifier(), moduleFileOf(), requiredSpecifier(), sweepFileImports(), typePositionSpecifier(), View
+Cohesion: 0.48
+Nodes (6): collectSpecifiers(), dynamicSpecifier(), moduleFileOf(), requiredSpecifier(), sweepFileImports(), typePositionSpecifier()
 
 ### Community 114 - "Community 114"
 Cohesion: 0.25
 Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, include
 
 ### Community 115 - "Community 115"
-Cohesion: 0.32
-Nodes (5): callClaim(), Candidate, over(), PREDICATES, referenceClaim()
+Cohesion: 0.33
+Nodes (8): SymbolId, lookup(), declarationKey(), SymbolSweep, DeclarationResolver, DeclarationSite, ExtractRequest, View
 
 ### Community 116 - "Community 116"
 Cohesion: 0.60
-Nodes (3): charge(), Gateway, StripeGateway
+Nodes (3): charge(), StripeGateway, Gateway
 
 ### Community 117 - "Community 117"
 Cohesion: 0.83
-Nodes (3): charge(), audit(), post()
+Nodes (3): audit(), charge(), post()
 
 ### Community 121 - "Community 121"
-Cohesion: 0.15
-Nodes (18): Scoping, Change, DoctorOptions, EvidenceOptions, BaselineUsed, fileOf(), impact(), ImpactedSymbol (+10 more)
+Cohesion: 0.21
+Nodes (11): fileOf(), impact(), published(), seedSymbols(), spotsFor(), walk(), advance(), git() (+3 more)
 
 ### Community 122 - "Community 122"
-Cohesion: 0.23
-Nodes (17): anythingOutstanding(), memoise(), movedProjects(), openSession(), relabel(), repairFor(), restamp(), staleReason() (+9 more)
+Cohesion: 0.14
+Nodes (24): LabelPass, anythingOutstanding(), memoise(), movedProjects(), openSession(), Outstanding, relabel(), repairFor() (+16 more)
 
 ### Community 123 - "Community 123"
-Cohesion: 0.38
-Nodes (6): ReportEnvelope, Envelope, ask(), fileReport(), fixture, referencesTo()
+Cohesion: 0.24
+Nodes (14): file(), fileReport, resolvePath(), FileMembership, readImportsOf(), readIndexedFiles(), readMembershipOf(), readSymbolsIn() (+6 more)
 
 ### Community 124 - "Community 124"
-Cohesion: 0.53
-Nodes (4): changedFiles(), fidelities(), fromGit(), fromIndexes()
+Cohesion: 0.39
+Nodes (7): changedFiles(), fidelities(), fromGit(), fromIndexes(), changedPaths(), readCanonicalProjects(), readProjects()
 
 ### Community 125 - "Community 125"
-Cohesion: 0.50
-Nodes (3): classifySpecifiers(), causeOf(), fixture
+Cohesion: 0.25
+Nodes (7): compilerOptions, module, moduleResolution, noEmit, strict, target, include
+
+### Community 127 - "Community 127"
+Cohesion: 0.28
+Nodes (5): fixtureRoot, result, analyse(), openAnalysis(), AnalysisSession
+
+### Community 128 - "Community 128"
+Cohesion: 0.33
+Nodes (5): Charging, Gateways, Payments, Uncovered, What does not happen
 
 ## Ambiguous Edges - Review These
 - `Release Workflow` → `GitHub Issue Tracker Convention`  [AMBIGUOUS]
@@ -604,7 +614,7 @@ Nodes (3): classifySpecifiers(), causeOf(), fixture
   .github/workflows/renovate.yaml · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **616 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+611 more)
+- **643 isolated node(s):** `$schema`, `baseBranch`, `access`, `format`, `changelog` (+638 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -615,13 +625,13 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Renovate Workflow` and `GitHub Issue Tracker Convention`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `Token` connect `Community 85` to `Community 44`?**
+- **Why does `Token` connect `Community 44` to `Community 85`?**
   _High betweenness centrality (0.051) - this node is a cross-community bridge._
-- **Why does `metricsFrom()` connect `Community 44` to `Community 85`?**
-  _High betweenness centrality (0.050) - this node is a cross-community bridge._
-- **Why does `FilePath` connect `Community 107` to `Yalc Local Publish Script`, `Community 20`, `Community 21`, `Community 51`, `Community 53`, `Community 70`, `Community 72`, `Community 81`, `Community 82`, `Community 84`, `Community 87`, `Community 96`, `Community 101`, `Community 103`, `Community 106`, `Community 108`, `Community 109`, `Community 111`, `Community 112`, `Community 113`, `Community 121`, `Community 122`, `Community 124`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+- **Why does `FilePath` connect `Community 87` to `Yalc Local Publish Script`, `Community 20`, `Community 21`, `Community 51`, `Community 53`, `Community 55`, `Community 70`, `Community 72`, `Community 81`, `Community 82`, `Community 84`, `Community 96`, `Community 103`, `Community 107`, `Community 108`, `Community 111`, `Community 112`, `Community 113`, `Community 115`, `Community 122`, `Community 123`, `Community 124`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
 - **What connects `$schema`, `baseBranch`, `access` to the rest of the system?**
-  _629 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _656 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `TypeScript Compiler Config` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+- **Should `Dev Tooling Dependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._

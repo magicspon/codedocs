@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Eleven operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Thirteen operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -101,17 +101,13 @@ Built:
 | `file <path>`          | what the index holds about one file                           | file           |
 | `trace <root>`         | every path of calls out of a root                             | path           |
 | `evidence <subject>`   | everything the index holds about one subject                  | per kind       |
+| `docs check`           | which documented claims the code now contradicts              | document       |
+| `docs affected`        | which documents a change reaches                              | document       |
 | `impact`               | every symbol a change could reach, against an earlier commit  | symbol         |
 | `doctor`               | every unmet precondition, and the command that would clear it | precondition   |
 | `report-bug`           | a reproduced failure, safe to paste                           | —              |
 
-Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
-sets:
-
-| Operation       | Answers                                          | Result unit |
-| --------------- | ------------------------------------------------ | ----------- |
-| `docs check`    | which documented claims the code now contradicts | document    |
-| `docs affected` | which documents a change touches                 | document    |
+That is the whole set [ADR 0006](docs/adr/0006-operation-set-and-renderer-contract.md) specifies.
 
 There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
 because a second traversal is a second thing to keep correct.
@@ -354,9 +350,96 @@ imports(packages/core/src/operations/scope.ts, packages/core/src/model.ts)
 ```
 
 There is no `context` command that bundles several subjects for a prompt, and there will not be one:
-it is `evidence` with a loop above it, which is composition above an operation. The documents whose
-claims name a subject become a kind of their own when `docs check` lands; an empty list today would
-read as "nothing documents this" when the truth is that codedocs holds no documents at all.
+it is `evidence` with a loop above it, which is composition above an operation. ADR 0006 names one
+more kind than this holds — the documents whose claims name the subject — and it is a known gap: it
+would put a repository-wide Markdown scan behind every `evidence` answer, and nobody has asked for it
+yet.
+
+### docs check and docs affected
+
+A **document** is any Markdown file in the repository carrying at least one **claim** — a checkable
+assertion written in an HTML comment immediately after the prose it justifies. It is invisible on
+GitHub and in every editor preview, plain text in a diff, and its position is what lets a verdict name
+a contradicted _section_ rather than a whole file.
+
+```markdown
+Checkout charges through the payment service before it writes the order.
+
+<!-- codedocs: calls(src/checkout/service.ts#CheckoutService.charge,
+                     src/payments/service.ts#PaymentService.capture) -->
+```
+
+Writing a claim is how a file opts in. There is no configuration and no `docs/**` convention:
+discovery is a repository-wide scan for the marker, 46 ms over cal.com's 380 Markdown files.
+
+```console
+$ codedocs docs check
+  docs/payments.md  contradicted, 3 of 5 sections covered
+    Charging  verified  :6
+      calls(src/payments.ts#charge, src/payments.ts#audit)  verified  :10
+    Gateways  contradicted  :17
+      implementations(src/types.ts#Gateway) == 3  contradicted  (index holds 2)  :21
+    Links  contradicted  :24
+      ../src/gone.ts → no such file  :26
+
+  scanned 33 Markdown files in 3 ms, finding 1 document
+```
+
+The predicates are a closed set: `exists`, `calls`, `reaches`, `references`, `imports`, `extends`,
+`implements`, `usesType` and `hasLabel`, plus **negation** (`!calls(a, b)`), the scoped
+`onlyCalledBy(x, dir/)` — encapsulation is the assertion architectural documentation actually makes —
+and **counts** (`implementations(x) == 3`, `callers(x) == 0`), which catch the fourth implementation
+being added as no per-instance claim ever will. ADR 0005 also names `exports` and `dependsOn`; the
+index holds no export edges and no package nodes, so a claim using one is **refused with that reason**
+rather than quietly passing.
+
+There are four verdicts and each has exactly one producer. Nothing blends them, and there is no score.
+
+| Verdict             | Produced by       | Means                                                      |
+| ------------------- | ----------------- | ---------------------------------------------------------- |
+| `verified`          | claims            | every claim in the document checks out                     |
+| `contradicted`      | claims            | a claim is **falsified**, or a prose link names no file    |
+| `potentially stale` | the derived scope | every claim holds, and a file the document touches changed |
+| `unable to verify`  | blind spots       | the subject is in a `syntactic` file, or did not resolve   |
+
+- **`contradicted` requires a claim to be falsified, never merely unresolved.** Of the symbols whose
+  id vanished over 20 commits of the Next.js fixture, **12 of 20 have the same name elsewhere at
+  `HEAD`**; over 60 commits it is **95 of 105**. A vanished subject is `unable to verify` carrying
+  [continuity](docs/adr/0007-cross-commit-continuity.md)'s rename candidates — _"a symbol of that name
+  is now at `src/new.ts#relocated`, moved in `ab21c7f`"_ — which is the exact text needed to repair
+  the claim. The hint is never a verdict, and an empty candidate list never means "deleted".
+- **A blind spot can only turn a would-be `contradicted` into `unable to verify`, never a `verified`
+  into one.** A claim that holds rests on a fact that is _present_, and nothing codedocs failed to see
+  can remove one; a claim that fails rests on an _absence_, which is exactly what a `syntactic` file
+  can manufacture. Under a negation the rule inverts by itself.
+- **No verdict renders without claim coverage.** _"verified, 3 of 5 sections covered"_ — without it,
+  `verified` silently means "the checkable part is true", which is the completeness failure the
+  honesty layer exists to prevent. Coverage is not a confidence score, is never combined with a
+  verdict, and is a different thing from completeness.
+- **An ambiguous shorthand is an error in the document**, reported with its candidates, not an
+  `unable to verify`. A committed artefact must mean one thing — deliberately unlike a question asked
+  at a prompt, which may reasonably be vague. So is a claim anchored to a local symbol.
+- **`contradicted` alone exits 1**, plus an error in the document itself: an unparseable claim checks
+  nothing, and exiting 0 would let one typo disable a document's verification for ever.
+  `potentially stale` does not — pointer signals of exactly that character measured at 59–77% false
+  alarms, and wiring that to a red build is the change that would get this removed from CI within a
+  month. **`--fail-on <verdict>`** raises the bar for teams that want it.
+- **codedocs never writes to a document.** No verification stamp — a committed lie the moment anyone
+  edits the code — and no unattended repair after a rename, which would put an `inferred` fact into a
+  committed file.
+
+`docs affected` answers the change half of the same question, and **needs one index, not two**:
+
+```console
+$ codedocs docs affected            # the drift set: what have I broken right now
+$ codedocs docs affected --base main
+```
+
+With no argument the changed set is the drift codedocs already computes before every answer, so it
+needs no git and no configuration and is usable inside a pre-commit hook. It intersects that set with
+each document's **derived** scope — its claims' files plus the files its prose links to, never a
+declared pointer — and re-checks those documents. It never exits 1: reaching a document is not a
+finding.
 
 ### impact
 
@@ -627,6 +710,12 @@ $ codedocs callers charge --exclude-label role=test
 `evidence` only:
   --claims           restate the facts as claim expressions (--json only)
 
+`docs check` only:
+  --fail-on <verdict>  also exit 1 for this verdict (default: contradicted alone)
+
+`docs affected` only:
+  --base <ref>       widen the changed set to everything since this commit
+
 `impact` only:
   --base <ref>       the commit to compare against (default: the merge base)
 
@@ -639,8 +728,8 @@ $ codedocs callers charge --exclude-label role=test
 ```
 
 Exit codes follow the `fallow` convention: **0** answered, **1** a negative finding, **2** could not
-answer. `doctor` produces 1 for an unmet precondition a command would clear; ADR 0006 assigns the
-only other one to `docs check` finding a contradicted claim.
+answer. `doctor` produces 1 for an unmet precondition a command would clear, and `docs check` for a
+contradicted claim or an error in a document.
 
 <!-- cspell:ignore exlucde -->
 
@@ -709,13 +798,13 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 346 tests, and measured against real repositories:
+Implemented, covered by 371 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
   nothing.
-- **Eleven operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
-  `evidence`, `impact`, `doctor` and `report-bug`.
+- **Thirteen operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
+  `evidence`, `docs check`, `docs affected`, `impact`, `doctor` and `report-bug`.
 - **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
   is held as data, so an operation cannot reach one renderer and miss the other.
 - **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
@@ -747,8 +836,7 @@ Implemented, covered by 346 tests, and measured against real repositories:
 In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
 is gated by the one above it.
 
-1. **`docs check` and `docs affected`** (ADR 0005).
-2. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+1. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
 (`TODO(#7)` in `model.ts`); ADR 0007's `shape-hash` and `path-prefix-rewrite` continuity signals,

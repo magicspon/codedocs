@@ -50,6 +50,10 @@ export interface OperationFlag {
 
 /** One operation's surface. */
 export interface OperationSpec {
+  /**
+   * As ADR 0006's table spells it, which for the two `docs` operations is two
+   * words. The CLI takes them as two positionals; `tool` is what MCP calls them.
+   */
   readonly name: OperationName
   /** One line. `--help` prints it and the MCP tool list carries it. */
   readonly summary: string
@@ -83,6 +87,15 @@ export interface OperationSpec {
    * document.
    */
   readonly shape: 'list' | 'report' | 'kinds'
+  /**
+   * The name the MCP binding publishes, which is the CLI's with spaces replaced.
+   *
+   * ADR 0006's rule is one tool per operation under the *same name*, and this is
+   * its one documented exception: a tool name may not carry a space, so `docs
+   * check` is published as `docs_check`. Derived rather than declared per
+   * operation, so an operation cannot arrive with a name in one binding and a
+   * different one in the other.
+   */
   /** ADR 0006's result unit, which is what `--limit` counts. `null` where there is none. */
   readonly unit: string | null
   /** ADR 0006's sort key. Part of the contract, not an implementation detail. */
@@ -219,6 +232,50 @@ export const OPERATIONS: readonly OperationSpec[] = [
     sortedBy: 'each kind by its own key',
   },
   {
+    name: 'docs check',
+    summary: 'every document, and which of its claims the code now contradicts',
+    subject: null,
+    depth: false,
+    flags: [
+      {
+        name: 'fail-on',
+        value: 'verdict',
+        summary: 'also exit 1 for this verdict (default: contradicted alone)',
+        description:
+          'Also exit 1 for documents reaching this verdict, on top of ' +
+          '`contradicted`, which always does. One of `potentially-stale` or ' +
+          '`unable-to-verify`. The default is deliberate: ADR 0005 measured ' +
+          'pointer signals of `potentially stale`’s character at 59-77% false ' +
+          'alarms, and wiring that to a red build is the change that would get ' +
+          'this removed from CI within a month.',
+      },
+    ],
+    shape: 'list',
+    unit: 'document',
+    sortedBy: 'path, then section order',
+  },
+  {
+    name: 'docs affected',
+    summary: 'which documents a change reaches, re-checked against the index',
+    subject: null,
+    depth: false,
+    flags: [
+      {
+        name: 'base',
+        value: 'ref',
+        summary: 'widen the changed set to everything since this commit',
+        description:
+          'Widen the changed set to everything that differs from this commit. ' +
+          'With no argument the changed set is the drift the session already ' +
+          'computed, so the zero-argument case answers "what have I broken ' +
+          'right now" with no git and no configuration.',
+      },
+    ],
+    shape: 'list',
+    unit: 'document',
+    sortedBy: 'path',
+  },
+  {
     name: 'impact',
     summary: 'every symbol a change could reach, against an earlier commit',
     subject: null,
@@ -303,6 +360,15 @@ export const OPERATIONS: readonly OperationSpec[] = [
     sortedBy: null,
   },
 ]
+
+/**
+ * The name a binding that cannot take a space publishes an operation under.
+ *
+ * One rule rather than a second field: `docs check` becomes `docs_check`, and
+ * every other operation is its own name unchanged.
+ */
+export const toolName = (spec: OperationSpec): string =>
+  spec.name.replace(/ /g, '_')
 
 /** Every operation name, for a binding that only needs the list. */
 export const OPERATION_NAMES: readonly OperationName[] = OPERATIONS.map(

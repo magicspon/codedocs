@@ -35,7 +35,9 @@ export const SCHEMA_VERSION: number = 4
  *
  * `impact` is the only one of Phase 5's three to arrive: ADR 0012 deleted
  * `review` and `plan`, so the enum grows by exactly the operations that exist.
- * `evidence` is what `explain` was renamed to and what is left of `plan`.
+ * `evidence` is what `explain` was renamed to and what is left of `plan`. The
+ * two `docs` names carry a space because ADR 0006's table spells them that way
+ * and the CLI takes them as two words; the MCP binding transliterates.
  *
  * TODO(#10): widen to ADR 0006's full table as each operation lands.
  */
@@ -48,6 +50,8 @@ export type OperationName =
   | 'file'
   | 'trace'
   | 'evidence'
+  | 'docs check'
+  | 'docs affected'
   | 'impact'
   | 'doctor'
   | 'report-bug'
@@ -183,6 +187,11 @@ export interface ErrorParams {
     readonly expectation: string
   }
   readonly 'depth-invalid': { readonly value: string }
+  /** `--fail-on` given something that is not one of ADR 0005's verdicts. */
+  readonly 'verdict-invalid': {
+    readonly value: string
+    readonly expectation: string
+  }
   /** `codedocs.jsonc` exists and cannot be used. `key` is `''` for the file. */
   readonly 'config-invalid': {
     readonly key: string

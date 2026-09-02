@@ -83,6 +83,13 @@ export function formatError(error: EnvelopeError): string {
       return `--limit must be a non-negative integer, got \`${error.params.value}\``
     case 'depth-invalid':
       return `--depth must be a non-negative integer, got \`${error.params.value}\``
+    case 'verdict-invalid': {
+      const { value, expectation } = error.params
+      return (
+        `--fail-on takes a verdict, got \`${value}\` — expected ${expectation}. ` +
+        '`contradicted` always exits 1 and needs no flag.'
+      )
+    }
     case 'config-invalid':
     case 'config-misplaced':
       // The config's own sentence, built by `core` from the same parameters, so
