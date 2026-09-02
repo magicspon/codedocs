@@ -18,6 +18,7 @@ import { API, type Project } from 'typescript/unstable/sync'
 import { toRepoPath } from '../../discovery.ts'
 import type { FilePath } from '../../model.ts'
 import { sweepCallEdges } from './calls.ts'
+import { sweepReferenceEdges } from './references.ts'
 import { sweepExportShapes } from './export-shapes.ts'
 import { sweepImports } from './imports.ts'
 import { isRepoFile } from './shared.ts'
@@ -262,6 +263,13 @@ function extractFrom(
     request.resolve,
   )
 
+  const referenceEdges = sweepReferenceEdges(
+    files,
+    view,
+    byDeclaration,
+    request.resolve,
+  )
+
   const imports = sweepImports(files, view)
 
   return {
@@ -271,6 +279,7 @@ function extractFrom(
     symbols: nodes,
     declarations,
     callEdges,
+    referenceEdges,
     unresolvedCalls,
     importEdges: imports.edges,
     unresolvedSpecifiers: imports.unresolved,

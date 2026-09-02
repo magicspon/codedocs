@@ -18,6 +18,8 @@ export {
   type TraceStep,
 } from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
+export { references } from './operations/references.ts'
+export { file, type FileReport } from './operations/file.ts'
 export {
   doctor,
   type DoctorEnvelope,
@@ -106,6 +108,8 @@ export type {
   PreconditionCause,
   ProjectNode,
   Provenance,
+  ReferenceEdge,
+  ReferenceKind,
   Role,
   SymbolId,
   SymbolKind,

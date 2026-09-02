@@ -68,4 +68,17 @@ export {
   readUnresolvedSpecifiers,
 } from './read-specifiers.ts'
 
+export {
+  byReference,
+  readReferencesFrom,
+  readReferencesTo,
+} from './read-references.ts'
+
+export {
+  readImportsOf,
+  readIndexedFiles,
+  readMembershipOf,
+  readSymbolsIn,
+} from './read-file-facts.ts'
+
 export { counts } from './stats.ts'

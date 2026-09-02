@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Seven operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Nine operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -91,27 +91,27 @@ Then ask. There is no daemon and no watcher; each command is a one-shot process.
 
 Built:
 
-| Operation           | Answers                                                       | Result unit  |
-| ------------------- | ------------------------------------------------------------- | ------------ |
-| `analyse`           | build or refresh the index                                    | project      |
-| `symbol <pattern>`  | every symbol whose name matches a glob                        | symbol       |
-| `callers <subject>` | every call edge into a subject                                | call edge    |
-| `callees <subject>` | every call edge out of a subject                              | call edge    |
-| `trace <root>`      | every path of calls out of a root                             | path         |
-| `doctor`            | every unmet precondition, and the command that would clear it | precondition |
-| `report-bug`        | a reproduced failure, safe to paste                           | —            |
+| Operation              | Answers                                                       | Result unit    |
+| ---------------------- | ------------------------------------------------------------- | -------------- |
+| `analyse`              | build or refresh the index                                    | project        |
+| `symbol <pattern>`     | every symbol whose name matches a glob                        | symbol         |
+| `callers <subject>`    | every call edge into a subject                                | call edge      |
+| `callees <subject>`    | every call edge out of a subject                              | call edge      |
+| `references <subject>` | everything that names a subject without calling it            | reference edge |
+| `file <path>`          | what the index holds about one file                           | file           |
+| `trace <root>`         | every path of calls out of a root                             | path           |
+| `doctor`               | every unmet precondition, and the command that would clear it | precondition   |
+| `report-bug`           | a reproduced failure, safe to paste                           | —              |
 
 Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
 sets:
 
-| Operation              | Answers                                              | Result unit    |
-| ---------------------- | ---------------------------------------------------- | -------------- |
-| `references <subject>` | everything that names a subject, types included      | reference edge |
-| `file <path>`          | what is in a file and what it reaches                | file           |
-| `impact`               | what a change could reach, against an earlier commit | symbol         |
-| `evidence <subject>`   | everything the index holds about one subject         | per kind       |
-| `docs check`           | which documented claims the code now contradicts     | document       |
-| `docs affected`        | which documents a change touches                     | document       |
+| Operation            | Answers                                              | Result unit |
+| -------------------- | ---------------------------------------------------- | ----------- |
+| `impact`             | what a change could reach, against an earlier commit | symbol      |
+| `evidence <subject>` | everything the index holds about one subject         | per kind    |
+| `docs check`         | which documented claims the code now contradicts     | document    |
+| `docs affected`      | which documents a change touches                     | document    |
 
 There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
 because a second traversal is a second thing to keep correct.
@@ -239,6 +239,61 @@ $ codedocs doctor --measure
 
 `doctor` is the **first operation that can exit 1**: it does so for a cause a command would clear, and
 never for `unmapped` or `broken`, because a red build that cannot be cleared is noise.
+
+### references
+
+The other half of the relationship set. A type named in a signature is not a call, and `callers`
+cannot see it — which is why `impact` is gated on this operation rather than the other way round:
+
+```console
+$ codedocs references ProjectPreflight --limit 6
+  packages/core/src/operations/measure.ts#compare typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:96
+  packages/core/src/operations/measure.ts#fingerprint typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:213
+  packages/core/src/operations/measure.ts#globbed typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:196
+  packages/core/src/operations/measure.ts#incomplete typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:158
+  packages/core/src/operations/measure.ts#nodeModules typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:135
+  packages/core/src/operations/measure.ts#postinstall typeReferences packages/core/src/preflight/project.ts#ProjectPreflight  packages/core/src/operations/measure.ts:182
+
+  showing 6 of 20 — pass --limit for more
+```
+
+- **Four kinds, kept apart**: `extends`, `implements`, `typeReferences`, and plain `references` for a
+  name used as a value. SCIP conflates references with calls — `IdentifierFunction` is documented as
+  "function references, including calls" — and that conflation is why it was not chosen as the
+  producer.
+- **A call is never also a reference.** The two sweeps split every identifier between them, so a call
+  site appears in `callers` and nowhere else.
+- **An import is not a reference either.** It is already an `imports` edge against the file, and
+  counting it twice would make every re-export two facts about one line.
+- Both directions come back in one answer, because "what names `Money`" and "what does `price` name"
+  are the same edge read from two ends.
+
+References outnumber calls, and the sweep is not free: this repository's own 112 files hold 1,425
+call edges and 3,838 reference edges, which takes a cold build from 0.61 s to 0.88 s and the index
+from 528 KB to 713 KB.
+
+### file
+
+What the index holds about one file — previously readable only by guessing a symbol name first:
+
+```console
+$ codedocs file src/types.ts
+  src/types.ts  typed
+    in tsconfig.json *
+    declares (5)
+      Ledger  class
+      Ledger.record  method
+      Money  interface
+      Spendable  interface
+      Spendable.spend  method
+    imports (0)
+    imported by (1)
+      src/wallet.ts
+```
+
+The projects are all of them, with the canonical one — the project its facts were produced in, and so
+the one whose fidelity applies — marked `*`. It takes a repository-relative path or the tail of one,
+so `codedocs file types.ts` finds the same file, and a tail matching several answers about each.
 
 ## Machine output: one envelope, every answer
 
@@ -477,13 +532,13 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 269 tests, and measured against real repositories:
+Implemented, covered by 288 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
   nothing.
-- **Seven operations.** `analyse`, `symbol`, `callers`, `callees`, `trace`, `doctor` and
-  `report-bug`.
+- **Nine operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
+  `doctor` and `report-bug`.
 - **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
   is held as data, so an operation cannot reach one renderer and miss the other.
 - **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
@@ -509,13 +564,11 @@ Implemented, covered by 269 tests, and measured against real repositories:
 In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
 is gated by the one above it.
 
-1. **`references` and `file`** — the rest of the relationship set. `impact` cannot be honest without
-   `references`, because a changed type reaches everything that names it.
-2. **The label layer** (ADR 0003), and with it the **scope channel** and `impact --label role=test`.
-3. **`impact`**, over baseline capture and retention (ADR 0008).
-4. **`evidence`**, once labels and fidelity exist for it to assemble.
-5. **`docs check` and `docs affected`** (ADR 0005).
-6. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+1. **The label layer** (ADR 0003), and with it the **scope channel** and `impact --label role=test`.
+2. **`impact`**, over baseline capture and retention (ADR 0008).
+3. **`evidence`**, once labels and fidelity exist for it to assemble.
+4. **`docs check` and `docs affected`** (ADR 0005).
+5. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
 (`TODO(#7)` in `model.ts`); the `classify` and `baselines` config keys, which parse and default but

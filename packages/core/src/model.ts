@@ -250,6 +250,43 @@ export interface CallEdge extends CallSite {
   readonly to: SymbolId
 }
 
+/**
+ * The kinds of edge a reference produces, which are ADR 0002's edge enum minus
+ * `calls`.
+ *
+ * `calls` and `references` stay separate, and that separation is why this
+ * backend was chosen: SCIP conflates them — `IdentifierFunction` is documented
+ * as "function references, including calls" — while `Checker` hands the
+ * distinction over. Collapsing them here would discard the reason.
+ */
+export type ReferenceKind =
+  | 'references'
+  | 'extends'
+  | 'implements'
+  | 'typeReferences'
+
+/**
+ * One place a symbol is named without being called.
+ *
+ * Carries its own `provenance` and `derivation` for the same reason a call site
+ * does: ADR 0002 puts both on the edge *instance*, so an edge may never inherit
+ * them from its kind. A heritage clause and a type annotation are both resolved
+ * by the checker and are the same kind of fact at different granularity, which
+ * is what `derivation` says and `kind` does not.
+ */
+export interface ReferenceEdge {
+  /** The symbol or file the reference is written in. */
+  readonly from: CallSource
+  readonly to: SymbolId
+  readonly kind: ReferenceKind
+  /** Which node the reference is credited to, by the same walk a call uses. */
+  readonly attribution: CallerAttribution
+  readonly file: FilePath
+  readonly line: number
+  readonly provenance: Provenance
+  readonly derivation: Derivation
+}
+
 /** A call site that produced no edge, stored as a fact with its cause. */
 export interface UnresolvedCall {
   readonly file: FilePath

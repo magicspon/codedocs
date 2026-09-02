@@ -139,6 +139,7 @@ function halfBuild(): void {
       symbols: result.symbols.filter((row) => mine.has(row.file)),
       declarations: result.declarations.filter((row) => mine.has(row.file)),
       callEdges: result.callEdges.filter((row) => mine.has(row.file)),
+      referenceEdges: result.referenceEdges.filter((row) => mine.has(row.file)),
       unresolvedCalls: result.unresolvedCalls.filter((row) =>
         mine.has(row.file),
       ),

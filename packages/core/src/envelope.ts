@@ -35,6 +35,8 @@ export type OperationName =
   | 'symbol'
   | 'callers'
   | 'callees'
+  | 'references'
+  | 'file'
   | 'trace'
   | 'doctor'
   | 'report-bug'

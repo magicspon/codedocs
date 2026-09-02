@@ -138,6 +138,31 @@ export const OPERATIONS: readonly OperationSpec[] = [
     sortedBy: '(source, target, kind, site)',
   },
   {
+    name: 'references',
+    summary: 'everything that names a subject without calling it',
+    subject: IDENTIFIER,
+    depth: false,
+    flags: [],
+    unit: 'reference edge',
+    sortedBy: '(source, target, kind, site)',
+  },
+  {
+    name: 'file',
+    summary: 'what the index holds about one file',
+    subject: {
+      name: 'path',
+      description:
+        'A repository-relative path, or the tail of one: `checkout.ts` finds ' +
+        '`src/checkout.ts`. A tail matching several files answers about each, ' +
+        'and `request.resolved` names them.',
+      variadic: false,
+    },
+    depth: false,
+    flags: [],
+    unit: 'file',
+    sortedBy: 'path',
+  },
+  {
     name: 'trace',
     summary: 'every path of calls out of a root',
     subject: {
