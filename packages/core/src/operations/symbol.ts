@@ -8,6 +8,7 @@
  */
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import { applyScope, type Scoping } from '../labels/index.ts'
 import type { SymbolNode } from '../model.ts'
 import { readSymbols, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
@@ -28,10 +29,18 @@ export function symbol(
   context: AnswerContext,
   pattern: string,
   limit: number | null,
+  scoping: Scoping,
 ): Envelope<readonly SymbolNode[]> {
   const matcher = globToRegExp(pattern)
-  const matches = readSymbols(store).filter(
+  const found = readSymbols(store).filter(
     (node) => matcher.test(node.name) || matcher.test(node.qualified),
+  )
+  // A symbol does not inherit its file's labels; the scope joins to the file it
+  // is declared in, which its `SymbolId` already names.
+  const { kept: matches, scope } = applyScope(
+    scoping,
+    found,
+    (node) => node.file,
   )
   return answer(
     'symbol',
@@ -40,6 +49,7 @@ export function symbol(
       resolved: matches.map((node) => node.id),
       limit,
       depth: null,
+      scope,
     },
     scopeTo(
       store,

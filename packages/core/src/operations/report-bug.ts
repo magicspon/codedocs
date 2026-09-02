@@ -17,6 +17,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { release } from 'node:os'
 import { join } from 'node:path'
 
+import { DEFAULT_SCOPE } from '../labels/index.ts'
 import { configFacts, type ConfigFacts } from '../config/index.ts'
 import { findRepositoryRoot } from '../discovery.ts'
 import {
@@ -315,7 +316,14 @@ export function reportBug(
     // The command it reproduced is in the result, where the shape rule
     // classifies it. Echoing it here would put a subject the user typed outside
     // the one rule that decides whether a subject may travel.
-    request: { subject: null, resolved: [], limit: null, depth: null },
+    request: {
+      subject: null,
+      resolved: [],
+      limit: null,
+      depth: null,
+      // The report is one object about a failure, not a filtered result set.
+      scope: DEFAULT_SCOPE,
+    },
     // Deliberately empty, and the one envelope where that is not an omission:
     // this answer is a file, not a question about the code, and every honesty
     // field it could fill is a repository fact the report has already sorted.

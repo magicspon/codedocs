@@ -12,6 +12,15 @@ export interface IndexHeader {
   readonly analysedAt: string | null
   readonly toolVersion: string
   readonly typescriptVersion: string
+  /**
+   * A hash of the `classify` block the labels were computed under.
+   *
+   * ADR 0003 recomputes the label layer rather than invalidating it, and names
+   * the staleness bug it is avoiding: an edited `codedocs.jsonc` that leaves old
+   * labels behind. Nothing in the tree changes when that file does, so the
+   * config has to say so itself.
+   */
+  readonly classifyHash: string
 }
 
 /** Read the index header. */
@@ -28,6 +37,7 @@ export function readHeader(store: Store): IndexHeader {
     analysedAt: meta.get('analysedAt') ?? null,
     toolVersion: meta.get('toolVersion') ?? 'unknown',
     typescriptVersion: meta.get('typescriptVersion') ?? 'unknown',
+    classifyHash: meta.get('classifyHash') ?? '',
   }
 }
 
@@ -40,4 +50,5 @@ export function writeMeta(db: DatabaseSync, header: IndexHeader): void {
   meta.run('analysedAt', header.analysedAt ?? '')
   meta.run('toolVersion', header.toolVersion)
   meta.run('typescriptVersion', header.typescriptVersion)
+  meta.run('classifyHash', header.classifyHash)
 }

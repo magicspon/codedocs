@@ -18,7 +18,7 @@
  * rebuilds cold — TypeScript's own builder does exactly this, and a migration's
  * failure mode is a subtly wrong index against a rebuild's failure mode of a wait.
  */
-export const STORE_SCHEMA_VERSION = 8
+export const STORE_SCHEMA_VERSION = 9
 
 /** Every table the index holds, for the drop-and-rebuild path and for clearing. */
 export const TABLES: readonly string[] = [
@@ -34,6 +34,7 @@ export const TABLES: readonly string[] = [
   'declaration',
   'call_edge',
   'reference_edge',
+  'label',
   'unresolved_call',
   'unresolved_specifier',
 ]
@@ -132,6 +133,15 @@ create table if not exists reference_edge (
   line integer not null,
   provenance integer not null,
   derivation integer not null
+) strict;
+
+create table if not exists label (
+  node_id integer not null,
+  axis integer not null,
+  value integer not null,
+  provenance integer not null,
+  derivation integer not null,
+  primary key (node_id, axis, derivation)
 ) strict;
 
 create table if not exists unresolved_call (

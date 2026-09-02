@@ -304,14 +304,19 @@ script and an agent all read — there is no separate agent surface:
 $ codedocs callees 'packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData' --json
 {
   "operation": "callees",
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "request": {
     "subject": "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData",
     "resolved": [
       "packages/app-store/_utils/payments/getPaymentAppData.ts#getPaymentAppData"
     ],
     "limit": null,
-    "depth": null
+    "depth": null,
+    "scope": {
+      "include": [{ "axis": "authorship", "value": "authored" }],
+      "exclude": [],
+      "excluded": 0
+    }
   },
   "snapshot": {
     "commit": "176037d0afbe572f870a3c702985e7cd83fe6c0c",
@@ -443,6 +448,49 @@ codebase is. **codedocs never executes your repository's code**, under any flag,
 or a codegen step that has not been run lowers a file's fidelity and names the cost, rather than being
 fixed behind your back.
 
+## Scope: the labels, and what an answer excluded
+
+Every file carries two labels, on axes that are deliberately **orthogonal**: `role`
+(`source | test | config`) and `authorship` (`authored | generated`). A single exclusive enum
+misclassifies every interesting file in the fixtures and always in the same direction — it drops real
+source out of the graph. `next.config.ts` is config _and_ type-checked source;
+`apps.metadata.generated.ts` is generated _and_ real source.
+
+| Axis         | Signal                                                           | Provenance      |
+| ------------ | ---------------------------------------------------------------- | --------------- |
+| both         | a `classify` glob in `codedocs.jsonc`                            | `deterministic` |
+| `authorship` | whether git tracks the file                                      | `deterministic` |
+| `authorship` | an `@generated` sentinel in the first five lines                 | `syntactic`     |
+| `authorship` | `*.generated.*`, `next-env.d.ts`, `.next/types/**`, `.prisma/**` | `inferred`      |
+| `role`       | `*.test.*`, `*.spec.*`, `__tests__/`, `__mocks__/`, `*.config.*` | `inferred`      |
+
+**Every signal that fires is stored**, with its own provenance and derivation, and precedence decides
+only which one an answer acts on. That is what lets `codedocs doctor` report where two signals
+disagreed — the `@generated` header without the matching name, the `.test.ts` inside `src/` — which is
+how you discover that `classify` in [`codedocs.jsonc`](#configuration) exists and which file needs it.
+
+`role` is mostly `inferred` and `authorship` mostly `deterministic`. That asymmetry is the honest
+report, not a defect: git knows what it tracks, and nothing but convention knows what a test is.
+
+Filter any answer with one generic pair, rather than bespoke flags like `--no-tests`:
+
+```console
+$ codedocs callers charge --exclude-label role=test
+  …
+  scope authorship=authored, not role=test — 4 excluded by it
+```
+
+- **The default scope is `authorship: authored`, with no filter on `role`.** Test callers stay in by
+  default: hiding them makes tested-but-unreferenced code look dead, which is the Redwood Cells trap
+  the backend spike found and named.
+- **An exclusion is a count, never a blind spot.** codedocs knows exactly what it withheld; a blind
+  spot is by definition what it could not see, and filing one as the other teaches readers that blind
+  spots are routine — the one thing that would destroy the signal.
+- `--label` on an axis replaces the default for that axis alone, so `--label authorship=generated`
+  asks about exactly what the default hides.
+- The whole layer is recomputed whenever the index is repaired or `classify` changes, never
+  invalidated file by file: 127 files in 13 ms here, which is what makes the simple rule affordable.
+
 ## Flags
 
 ```
@@ -532,7 +580,7 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 288 tests, and measured against real repositories:
+Implemented, covered by 315 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
@@ -546,6 +594,9 @@ Implemented, covered by 288 tests, and measured against real repositories:
   `import()` and `import x = require()` — so a route or a lazily loaded component is not missed.
 - **Two honesty channels.** Blind spots and truncation in the envelope, plus `conditions` narrowed to
   only the projects an answer touched.
+- **The label layer, and the scope channel over it.** Two orthogonal axes per file, every signal that
+  fired stored with its provenance, `--label` / `--exclude-label` on every operation, and the applied
+  scope echoed on every answer with the count it withheld.
 - **Preflight, and the environment fingerprint.** All four of ADR 0001's signals: whether the
   dependencies are installed, whether an install script is declared, whether a config globs anything,
   and every specifier that resolved to nothing, each with the cause behind it. A project whose
@@ -564,16 +615,16 @@ Implemented, covered by 288 tests, and measured against real repositories:
 In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
 is gated by the one above it.
 
-1. **The label layer** (ADR 0003), and with it the **scope channel** and `impact --label role=test`.
-2. **`impact`**, over baseline capture and retention (ADR 0008).
-3. **`evidence`**, once labels and fidelity exist for it to assemble.
-4. **`docs check` and `docs affected`** (ADR 0005).
-5. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+1. **`impact`**, over baseline capture and retention (ADR 0008) — and with it
+   `impact --label role=test`, which is what "which tests does this change reach" is.
+2. **`evidence`**, once fidelity and labels are assembled into one answer.
+3. **`docs check` and `docs affected`** (ADR 0005).
+4. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
-(`TODO(#7)` in `model.ts`); the `classify` and `baselines` config keys, which parse and default but
-have no consumer until steps 3 and 4; and the `AGENTS.md` discovery block that tells an agent when to
-reach for codedocs ([#18](https://github.com/magicspon/codedocs/issues/18)).
+(`TODO(#7)` in `model.ts`); the `baselines` config key, which parses and defaults but has no consumer
+until step 1; and the `AGENTS.md` discovery block that tells an agent when to reach for codedocs
+([#18](https://github.com/magicspon/codedocs/issues/18)).
 
 **`review` and `plan` are deleted.** `review` was `fallow`'s work plus `impact` and `docs affected`
 printed together, and `plan` was a ranking — which cannot also be a determinism guarantee, the same

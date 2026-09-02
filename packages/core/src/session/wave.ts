@@ -100,6 +100,7 @@ export function repairWave(
       for (const path of pending) visited.add(path)
 
       const wave = runWave(root, store, analysis, {
+        config,
         pending,
         canonicalOf,
         shapes,
@@ -121,7 +122,7 @@ export function repairWave(
     // A repair that extracted nothing still happened: without the stamp, a lone
     // deletion would leave `analysedAt` reporting an older snapshot than the one
     // the index now holds.
-    if (waves === 0) writeHeader(store, stamp(root))
+    if (waves === 0) writeHeader(store, stamp(root, config))
 
     return {
       kind: 'wave',
@@ -164,6 +165,8 @@ function seedFrontier(
 /** What one round of the wave needs, beyond the files it is extracting. */
 interface WaveContext {
   readonly pending: readonly FilePath[]
+  /** The repository's config, which the header stamp hashes for the label layer. */
+  readonly config: Config
   /** Every file's project, as the index credits it. Ownership never moves here. */
   readonly canonicalOf: ReadonlyMap<FilePath, FilePath>
   /** Per file, the export-shape hash the last extraction produced. */
@@ -181,7 +184,7 @@ function runWave(
   analysis: AnalysisSession,
   context: WaveContext,
 ): { extracted: number; reshaped: FilePath[] } {
-  const { pending, canonicalOf, shapes } = context
+  const { config, pending, canonicalOf, shapes } = context
   openFor(analysis, pending, canonicalOf)
   const result = analysis.extract({
     files: pending,
@@ -213,7 +216,7 @@ function runWave(
       result.canonicalOf,
     ),
     projects: touchedProjects(store, result.canonicalOf, context),
-    header: stamp(root),
+    header: stamp(root, config),
   })
 
   // The gate. A file whose export surface is unchanged cannot have changed what

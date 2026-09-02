@@ -7,6 +7,7 @@
  */
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import { unfiltered, type LabelPass, type Scoping } from '../labels/index.ts'
 import type { Fidelity, FilePath } from '../model.ts'
 import type { RepairReport } from '../session/index.ts'
 import {
@@ -44,10 +45,13 @@ export function analyse(
   store: Store,
   context: AnswerContext,
   limit: number | null,
+  scoping: Scoping,
   repair: RepairReport | null = null,
+  labelPass: LabelPass | null = null,
 ): Envelope<readonly ProjectSummary[]> & {
   readonly totals: AnalysisTotals
   readonly repair: RepairReport | null
+  readonly labels: LabelPass | null
 } {
   const summaries: ProjectSummary[] = readProjects(store).map((project) => ({
     project: project.configPath,
@@ -68,7 +72,15 @@ export function analyse(
   return {
     ...answer(
       'analyse',
-      { subject: null, resolved: [], limit, depth: null },
+      // A project is not a file, so no label joins to it: the scope is echoed
+      // as given, with nothing excluded, rather than quietly not applying.
+      {
+        subject: null,
+        resolved: [],
+        limit,
+        depth: null,
+        scope: unfiltered(scoping),
+      },
       whole,
       summaries,
     ),
@@ -81,5 +93,9 @@ export function analyse(
     // difference between a 3 ms answer and a 16 s one, and ADR 0004 makes the
     // cost of an answer part of the answer.
     repair,
+    // The same rule applied to the label layer. ADR 0003 skipped incremental
+    // invalidation on the strength of one measurement, and a measurement nobody
+    // can see is an assumption.
+    labels: labelPass,
   }
 }

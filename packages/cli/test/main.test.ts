@@ -108,7 +108,7 @@ describe('the machine renderer', () => {
     const envelope = JSON.parse(invoke('symbol', '*', '--json').stdout) as {
       schemaVersion: number
     }
-    expect(envelope.schemaVersion).toBe(3)
+    expect(envelope.schemaVersion).toBe(4)
   })
 
   it('is byte-identical when the same question is asked twice', () => {
@@ -250,6 +250,59 @@ describe('file', () => {
   })
 })
 
+describe('the scope channel', () => {
+  it('echoes the scope it applied on every answer', () => {
+    const envelope = JSON.parse(invoke('symbol', '*', '--json').stdout) as {
+      request: {
+        scope: {
+          include: { axis: string; value: string }[]
+          exclude: unknown[]
+          excluded: number
+        }
+      }
+    }
+    expect(envelope.request.scope.include).toEqual([
+      { axis: 'authorship', value: 'authored' },
+    ])
+    expect(envelope.request.scope.exclude).toEqual([])
+  })
+
+  it('filters by label, and reports the count rather than a blind spot', () => {
+    const envelope = JSON.parse(
+      invoke('symbol', '*', '--exclude-label', 'role=test', '--json').stdout,
+    ) as {
+      request: { scope: { excluded: number } }
+      blindSpots: unknown[]
+    }
+    expect(envelope.request.scope.excluded).toBeGreaterThanOrEqual(0)
+    expect(envelope.blindSpots).toEqual([])
+  })
+
+  it('refuses a filter it does not know rather than matching nothing', () => {
+    const result = invoke('symbol', '*', '--label', 'role=nope')
+    expect(result.code).toBe(2)
+    expect(result.stderr).toContain('--label takes `axis=value`')
+  })
+
+  it('takes one flag per axis, because the axes are orthogonal', () => {
+    const envelope = JSON.parse(
+      invoke(
+        'symbol',
+        '*',
+        '--label',
+        'role=source',
+        '--label',
+        'authorship=authored',
+        '--json',
+      ).stdout,
+    ) as { request: { scope: { include: { axis: string }[] } } }
+    expect(envelope.request.scope.include.map((one) => one.axis)).toEqual([
+      'role',
+      'authorship',
+    ])
+  })
+})
+
 describe('doctor', () => {
   it('exits 1 for a cause a command would clear', () => {
     // The fixture has no `node_modules`, which is signal 1 and remediable.
@@ -258,6 +311,16 @@ describe('doctor', () => {
     expect(result.code).toBe(1)
     expect(result.stdout).toContain('tsconfig.json')
     expect(result.stdout).toContain('unprepared')
+  })
+
+  it('reports what the label layer decided', () => {
+    const envelope = JSON.parse(invoke('doctor', '--json').stdout) as {
+      classification: {
+        counts: { role: string; authorship: string; files: number }[]
+      }
+    }
+    expect(envelope.classification.counts.length).toBeGreaterThan(0)
+    expect(invoke('doctor').stdout).toContain('classification')
   })
 
   it('carries the header and the whole set in the envelope', () => {

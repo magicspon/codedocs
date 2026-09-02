@@ -14,6 +14,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
+import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession, type Session } from '../src/session/index.ts'
 import { trace, type TracePath } from '../src/operations/trace.ts'
 
@@ -47,7 +48,8 @@ const paths = (
   subject: string,
   depth: number | null = null,
 ): readonly TracePath[] =>
-  trace(session.store, session.context, subject, null, depth).result ?? []
+  trace(session.store, session.context, subject, null, depth, UNSCOPED)
+    .result ?? []
 
 /** A path written the way the sort key reads it, which is how a test can name one. */
 const sequenceOf = (path: TracePath): string =>
@@ -82,6 +84,7 @@ describe('the walk', () => {
       'NoSuchSymbol',
       null,
       null,
+      UNSCOPED,
     )
     expect(envelope.request.resolved).toEqual([])
     expect(envelope.result).toEqual([])
@@ -142,7 +145,14 @@ describe('the depth bound', () => {
   })
 
   it('echoes the bound the caller set, so a bounded answer cannot read as a whole one', () => {
-    const bounded = trace(session.store, session.context, 'checkout', null, 2)
+    const bounded = trace(
+      session.store,
+      session.context,
+      'checkout',
+      null,
+      2,
+      UNSCOPED,
+    )
     expect(bounded.request.depth).toBe(2)
   })
 
@@ -156,6 +166,7 @@ describe('the depth bound', () => {
       'checkout',
       null,
       null,
+      UNSCOPED,
     )
     expect(envelope.request.depth).toBeNull()
     expect(envelope.result?.some((path) => path.terminus === 'depth')).toBe(

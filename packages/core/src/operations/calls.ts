@@ -7,6 +7,7 @@
  */
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import { applyScope, type Scoping } from '../labels/index.ts'
 import type { CallEdge } from '../model.ts'
 import { readCalleesOf, readCallersOf, type Store } from '../store/index.ts'
 import { scopeTo } from './scope.ts'
@@ -24,8 +25,9 @@ export function callers(
   context: AnswerContext,
   subject: string,
   limit: number | null,
+  scoping: Scoping,
 ): Envelope<readonly CallEdge[]> {
-  return collect(store, context, subject, limit, 'callers')
+  return collect(store, context, subject, limit, scoping, 'callers')
 }
 
 /** Every call edge out of the subject. */
@@ -34,8 +36,9 @@ export function callees(
   context: AnswerContext,
   subject: string,
   limit: number | null,
+  scoping: Scoping,
 ): Envelope<readonly CallEdge[]> {
-  return collect(store, context, subject, limit, 'callees')
+  return collect(store, context, subject, limit, scoping, 'callees')
 }
 
 function collect(
@@ -43,11 +46,15 @@ function collect(
   context: AnswerContext,
   subject: string,
   limit: number | null,
+  scoping: Scoping,
   direction: 'callers' | 'callees',
 ): Envelope<readonly CallEdge[]> {
   const resolved = resolveSubject(store, subject)
   const read = direction === 'callers' ? readCallersOf : readCalleesOf
-  const edges = resolved.flatMap((node) => read(store, node.id))
+  const found = resolved.flatMap((node) => read(store, node.id))
+  // The site's file is the join: for `callers` that is the caller's own file,
+  // which is what "which of these callers are in test files" asks about.
+  const { kept: edges, scope } = applyScope(scoping, found, (edge) => edge.file)
 
   // Re-sorted after the union because each symbol's rows arrive already sorted
   // but the concatenation of two sorted lists is not.
@@ -61,7 +68,13 @@ function collect(
 
   return answer(
     direction,
-    { subject, resolved: resolved.map((node) => node.id), limit, depth: null },
+    {
+      subject,
+      resolved: resolved.map((node) => node.id),
+      limit,
+      depth: null,
+      scope,
+    },
     noteCollisions(
       scopeTo(store, context, [
         ...resolved.map((node) => node.file),

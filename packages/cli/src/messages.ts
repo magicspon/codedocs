@@ -65,6 +65,10 @@ export function formatError(error: EnvelopeError): string {
       )
       return `--depth applies to ${takes.join(', ')}, not \`${error.params.operation}\``
     }
+    case 'label-invalid': {
+      const { flag, value, expectation } = error.params
+      return `--${flag} takes \`axis=value\`, got \`${value}\` — expected ${expectation}`
+    }
     case 'limit-invalid':
       return `--limit must be a non-negative integer, got \`${error.params.value}\``
     case 'depth-invalid':

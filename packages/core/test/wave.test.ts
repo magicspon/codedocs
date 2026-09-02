@@ -22,6 +22,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { callers } from '../src/operations/calls.ts'
 import { symbol } from '../src/operations/symbol.ts'
+import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession, type RepairReport } from '../src/session/index.ts'
 
 const fixture = join(
@@ -100,7 +101,13 @@ describe('a body-only edit', () => {
     try {
       // The edge into `charge` lives in `checkout.ts`, which the wave never
       // re-extracted. If a bounded extraction dropped it, this is where it shows.
-      const envelope = callers(session.store, session.context, 'charge', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toContain(
         'src/checkout.ts#checkout',
       )
@@ -142,7 +149,13 @@ describe('an export-shape change', () => {
     try {
       // Re-extracted, so its call into `charge` is the current one rather than
       // the one the cold build recorded against the old signature.
-      const envelope = callers(session.store, session.context, 'charge', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toContain(
         'src/lazy.ts#loadPayments',
       )
@@ -162,7 +175,13 @@ describe('an export-shape change', () => {
     // numbers the cold build gave them.
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = symbol(session.store, session.context, 'Badge', null)
+      const envelope = symbol(
+        session.store,
+        session.context,
+        'Badge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.[0]?.line).toBe(1)
     } finally {
       session.close()
@@ -216,7 +235,13 @@ describe('a new file', () => {
     try {
       // The edge points into `payments.ts`, which the wave never opened as a
       // file: it was joined through the index.
-      const envelope = callers(session.store, session.context, 'charge', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toContain(
         'src/extra.ts#again',
       )
@@ -239,7 +264,13 @@ describe('a new file', () => {
 
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = callers(session.store, session.context, 'later', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'later',
+        null,
+        UNSCOPED,
+      )
       expect(envelope.result?.map((edge) => edge.from)).toContain(
         'src/extra.ts#soon',
       )
@@ -265,10 +296,16 @@ describe('a deleted file', () => {
     try {
       expect(session.repair).toBeNull() // The tree and the index agree again.
       expect(
-        symbol(session.store, session.context, 'again', null).result,
+        symbol(session.store, session.context, 'again', null, UNSCOPED).result,
       ).toEqual([])
       // The edge from the deleted file is gone; the pre-existing one is not.
-      const envelope = callers(session.store, session.context, 'charge', null)
+      const envelope = callers(
+        session.store,
+        session.context,
+        'charge',
+        null,
+        UNSCOPED,
+      )
       const from = envelope.result?.map((edge) => edge.from) ?? []
       expect(from).not.toContain('src/extra.ts#again')
       expect(from).toContain('src/checkout.ts#checkout')

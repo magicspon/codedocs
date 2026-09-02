@@ -3,6 +3,9 @@
  * and the header a repair stamps on the index.
  */
 
+import { createHash } from 'node:crypto'
+
+import type { Config } from '../config/index.ts'
 import { currentCommit } from '../discovery.ts'
 import type { FilePath, ProjectNode } from '../model.ts'
 import { fidelityOf, type ProjectPreflight } from '../preflight/index.ts'
@@ -55,9 +58,20 @@ export function projectRow(
 }
 
 /** The header one repair stamps on the index. */
-export const stamp = (root: string): IndexHeader => ({
+export const stamp = (root: string, config: Config): IndexHeader => ({
   commit: currentCommit(root),
   analysedAt: new Date().toISOString(),
   toolVersion: TOOL_VERSION,
   typescriptVersion: typescriptVersion(),
+  classifyHash: classifyHash(config),
 })
+
+/**
+ * A hash of the `classify` block, which is the one input to the label layer that
+ * leaves no trace in the working tree.
+ *
+ * Order is part of the meaning — ADR 0003 makes the last matching rule win — so
+ * the rules are hashed as written rather than as a set.
+ */
+export const classifyHash = (config: Config): string =>
+  createHash('sha256').update(JSON.stringify(config.classify)).digest('hex')

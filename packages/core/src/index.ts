@@ -21,6 +21,12 @@ export { symbol } from './operations/symbol.ts'
 export { references } from './operations/references.ts'
 export { file, type FileReport } from './operations/file.ts'
 export {
+  classification,
+  type Classification,
+  type ClassificationCount,
+  type Disagreement as ClassificationDisagreement,
+} from './operations/classification.ts'
+export {
   doctor,
   type DoctorEnvelope,
   type DoctorOptions,
@@ -104,6 +110,9 @@ export type {
   Fidelity,
   FileNode,
   FilePath,
+  Label,
+  LabelAxis,
+  LabelValue,
   ImportEdge,
   PreconditionCause,
   ProjectNode,
@@ -124,6 +133,23 @@ export {
   type IndexHeader,
   type Store,
 } from './store/index.ts'
+export {
+  applyScope,
+  DEFAULT_SCOPE,
+  effective,
+  excludedBy,
+  labelFiles,
+  parseFilter,
+  scopeOf,
+  unfiltered,
+  UNSCOPED,
+  type EffectiveLabels,
+  type LabelFilter,
+  type LabelPass,
+  type Scope,
+  type Scoping,
+} from './labels/index.ts'
+
 export { detectDrift, hasDrift, type Drift } from './drift.ts'
 export {
   absentDependencies,

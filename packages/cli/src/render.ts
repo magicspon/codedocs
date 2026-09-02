@@ -11,11 +11,13 @@ import type {
   AnalysisTotals,
   CallEdge,
   CallSite,
+  Classification,
   Disagreement,
   DoctorEnvelope,
   Envelope,
   FileReport,
   ImportEdge,
+  LabelPass,
   Precondition,
   ProjectConditions,
   ProjectSummary,
@@ -54,6 +56,7 @@ export function styleFor(color: boolean): Style {
 export type AnalyseEnvelope = Envelope<readonly ProjectSummary[]> & {
   readonly totals: AnalysisTotals
   readonly repair: RepairReport | null
+  readonly labels: LabelPass | null
 }
 
 /** Render an `analyse` answer. */
@@ -69,13 +72,11 @@ export function renderAnalyse(envelope: AnalyseEnvelope, style: Style): string {
     `${style.bold(String(callEdges))} call edges, ` +
     `${unresolvedCalls} call sites unresolved`
   const body = lines.length > 0 ? [...lines, '', totals] : []
-  const repair = repairLine(envelope.repair, style)
-  return finish(
-    envelope,
-    repair === null ? body : [...body, repair],
-    style,
-    'projects',
-  )
+  const notes = [
+    repairLine(envelope.repair, style),
+    labelLine(envelope.labels, style),
+  ].filter((line): line is string => line !== null)
+  return finish(envelope, [...body, ...notes], style, 'projects')
 }
 
 /**
@@ -101,6 +102,21 @@ function repairLine(repair: RepairReport | null, style: Style): string | null {
     return style.dim(`  repaired ${files} in ${waves}${environment}`)
   }
   return style.warn(`  rebuilt cold (${repair.files} files): ${repair.reason}`)
+}
+
+/**
+ * What the label pass cost, when one ran.
+ *
+ * ADR 0003 recomputes the whole layer rather than invalidating it, on the
+ * strength of ~0.9 s over cal.com's 5,025 files. Printing the number is what
+ * keeps that a measurement rather than an assumption.
+ */
+function labelLine(pass: LabelPass | null, style: Style): string | null {
+  if (pass === null) return null
+  const git = pass.tracked ? '' : ', git absent'
+  return style.dim(
+    `  labelled ${count(pass.files, 'file')} in ${pass.durationMs} ms${git}`,
+  )
 }
 
 /** `1 project` / `3 projects`, for a line that counts something. */
@@ -133,6 +149,7 @@ export function renderDoctor(envelope: DoctorEnvelope, style: Style): string {
   return [
     finish(envelope, lines, style, 'unmet preconditions'),
     ...measuredNote(envelope.measured, style),
+    ...classificationNote(envelope.classification, style),
     ...headerNote(envelope, style),
   ].join('\n')
 }
@@ -211,6 +228,59 @@ function measuredNote(
         `    ${found.project} ${found.signal}: indexed ${found.indexed}, now ${found.measured}`,
       ),
     ),
+  ]
+}
+
+/** How many disagreeing files are named before the rest are counted. */
+const DISAGREEMENT_LIMIT = 5
+
+/**
+ * What the label layer decided, and where it is least sure.
+ *
+ * The disagreements are the point of the section: `classify` in
+ * `codedocs.jsonc` is the escape hatch, and this list is how a user discovers
+ * both that it exists and which file needs it.
+ */
+function classificationNote(found: Classification, style: Style): Note {
+  const pairs = found.counts.map((row) =>
+    style.dim(
+      `    ${row.role}, ${row.authorship}: ${count(row.files, 'file')} ` +
+        `(${row.derivations.join(', ')})`,
+    ),
+  )
+  if (pairs.length === 0) return []
+  const overflow = found.disagreements.length - DISAGREEMENT_LIMIT
+  return [
+    '',
+    style.bold('  classification'),
+    ...pairs,
+    ...(found.inferred.length === 0
+      ? []
+      : [
+          style.dim(
+            `    ${count(found.inferred.length, 'file')} classified by ` +
+              'convention rather than evidence',
+          ),
+        ]),
+    ...(found.disagreements.length === 0
+      ? []
+      : [
+          style.warn(
+            `    ${count(found.disagreements.length, 'file')} where two ` +
+              'signals disagree — set `classify` in codedocs.jsonc:',
+          ),
+          ...found.disagreements
+            .slice(0, DISAGREEMENT_LIMIT)
+            .map((row) =>
+              style.dim(
+                `      ${row.file} ${row.axis}: ` +
+                  row.values
+                    .map((held) => `${held.value} (${held.derivation})`)
+                    .join(' vs '),
+              ),
+            ),
+          ...(overflow > 0 ? [style.dim(`      …and ${overflow} more`)] : []),
+        ]),
   ]
 }
 
@@ -569,6 +639,7 @@ function finish(
   const body = lines.length > 0 ? lines : [emptyLine(envelope, style, unit)]
   return [
     ...body,
+    ...scopeNote(envelope, style),
     ...truncationNote(envelope, style),
     ...ambiguityNote(envelope, style),
     ...syntacticNote(envelope, style),
@@ -615,6 +686,31 @@ const BLIND_SPOT_LIMIT = 10
 
 /** Each note is empty or opens with a blank line, so `finish` never spaces them itself. */
 type Note = readonly string[]
+
+/**
+ * The label filter this answer applied, and what it withheld.
+ *
+ * Printed when it bit or when the caller named it, and silent for a default
+ * scope that excluded nothing — which is the "no news" ADR 0006 lets the human
+ * renderer omit. `--json` carries the scope on every answer regardless, because
+ * a machine reader cannot infer a default it was never told about.
+ *
+ * Never phrased as a blind spot: codedocs knows exactly what it withheld here.
+ */
+function scopeNote(envelope: Envelope<unknown>, style: Style): Note {
+  const { scope } = envelope.request
+  const named = scope.exclude.length > 0 || scope.include.length > 1
+  if (scope.excluded === 0 && !named) return []
+  const applied = [
+    ...scope.include.map((filter) => `${filter.axis}=${filter.value}`),
+    ...scope.exclude.map((filter) => `not ${filter.axis}=${filter.value}`),
+  ].join(', ')
+  const withheld =
+    scope.excluded === 0
+      ? 'nothing excluded'
+      : `${scope.excluded} excluded by it`
+  return ['', style.dim(`  scope ${applied} — ${withheld}`)]
+}
 
 function truncationNote(envelope: Envelope<unknown>, style: Style): Note {
   const { budget } = envelope

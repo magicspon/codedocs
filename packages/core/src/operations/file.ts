@@ -10,6 +10,7 @@
  */
 
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import { applyScope, type Scoping } from '../labels/index.ts'
 import type {
   Fidelity,
   FilePath,
@@ -59,13 +60,18 @@ export function file(
   context: AnswerContext,
   subject: string,
   limit: number | null,
+  scoping: Scoping,
 ): Envelope<readonly FileReport[]> {
-  const paths = resolvePath(store, subject)
+  const { kept: paths, scope } = applyScope(
+    scoping,
+    resolvePath(store, subject),
+    (path) => path,
+  )
   const reports = paths.map((path) => report(store, context, path))
 
   return answer(
     'file',
-    { subject, resolved: paths, limit, depth: null },
+    { subject, resolved: paths, limit, depth: null, scope },
     scopeTo(store, context, paths),
     reports,
   )

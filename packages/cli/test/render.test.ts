@@ -8,6 +8,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
+import { DEFAULT_SCOPE } from '@codedocs/core'
 import type {
   CallSite,
   DoctorEnvelope,
@@ -54,6 +55,7 @@ const envelopeOf = (
     resolved: ['src/payments.ts#charge'],
     limit: null,
     depth: null,
+    scope: DEFAULT_SCOPE,
   },
   snapshot: {
     commit: 'abc1234',
@@ -98,6 +100,7 @@ describe('the footer', () => {
         resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
         limit: null,
         depth: null,
+        scope: DEFAULT_SCOPE,
       },
     })
     expect(out).toContain('`charge` is ambiguous — 2 symbols')
@@ -113,6 +116,7 @@ describe('the footer', () => {
           resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
           limit: null,
           depth: null,
+          scope: DEFAULT_SCOPE,
         },
       }),
       plain,
@@ -264,7 +268,13 @@ describe('the doctor report', () => {
   ): DoctorEnvelope => ({
     operation: 'doctor',
     schemaVersion: 3,
-    request: { subject: null, resolved: [], limit: null, depth: null },
+    request: {
+      subject: null,
+      resolved: [],
+      limit: null,
+      depth: null,
+      scope: DEFAULT_SCOPE,
+    },
     snapshot: {
       commit: 'abc1234',
       dirty: false,
@@ -286,6 +296,7 @@ describe('the doctor report', () => {
     },
     remediable: result.filter((found) => found.remediable).length,
     measured: null,
+    classification: { counts: [], inferred: [], disagreements: [] },
     ...overrides,
   })
 
@@ -393,7 +404,13 @@ describe('the repair note', () => {
   const analyseEnvelope = (repair: RepairReport | null): AnalyseEnvelope => ({
     operation: 'analyse',
     schemaVersion: 1,
-    request: { subject: null, resolved: [], limit: null, depth: null },
+    request: {
+      subject: null,
+      resolved: [],
+      limit: null,
+      depth: null,
+      scope: DEFAULT_SCOPE,
+    },
     snapshot: {
       commit: 'abc1234',
       dirty: false,
@@ -412,6 +429,7 @@ describe('the repair note', () => {
     ],
     totals: { symbols: 10, callEdges: 5, unresolvedCalls: 1 },
     repair,
+    labels: null,
   })
 
   it('says how far a wave reached', () => {
@@ -467,7 +485,13 @@ describe('a traced path', () => {
       {
         operation: 'trace',
         schemaVersion: 1,
-        request: { subject: 'checkout', resolved: ['a'], limit: null, depth },
+        request: {
+          subject: 'checkout',
+          resolved: ['a'],
+          limit: null,
+          depth,
+          scope: DEFAULT_SCOPE,
+        },
         snapshot: { commit: 'abc1234', dirty: false, analysedAt: null },
         conditions: [],
         blindSpots: [],

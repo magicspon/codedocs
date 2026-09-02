@@ -84,6 +84,24 @@ const GLOBAL_ARGUMENTS: Readonly<Record<string, ArgumentSchema>> = {
       'Answer from the stored snapshot instead of bringing the index up to ' +
       'date first. The drifted files are then named in `blindSpots`.',
   },
+  label: {
+    type: 'array',
+    items: { type: 'string' },
+    description:
+      'Keep only results whose file carries this label, as `axis=value`: ' +
+      '`role=source|test|config` or `authorship=authored|generated`. The ' +
+      'default is `authorship=authored` with no filter on role. Repeatable, ' +
+      'one per axis; `request.scope` echoes what was applied and how many ' +
+      'results it excluded.',
+  },
+  'exclude-label': {
+    type: 'array',
+    items: { type: 'string' },
+    description:
+      'Drop results whose file carries this label, in the same `axis=value` ' +
+      'form. An exclusion is a count in `request.scope`, never a blind spot: ' +
+      'codedocs knows exactly what it withheld.',
+  },
 }
 
 /** The `depth` argument, added only for the operations the manifest says take it. */
@@ -227,15 +245,21 @@ function readArgument(
  * How one non-subject argument is spelled as argv.
  *
  * A boolean is the flag alone, and a false one is nothing at all: `--no-update`
- * off is the absence of the flag, not `--no-update false`.
+ * off is the absence of the flag, not `--no-update false`. A repeatable flag is
+ * spelled once per value.
  */
 function flagFor(
   name: string,
   schema: ArgumentSchema,
   value: string | number | boolean | readonly string[],
 ): string[] {
-  if (schema.type !== 'boolean') return [`--${name}`, String(value)]
-  return value === true ? [`--${name}`] : []
+  if (schema.type === 'boolean') return value === true ? [`--${name}`] : []
+  // A repeatable flag is one flag per entry: joining them would make one value
+  // out of two filters, and the parser would refuse it.
+  if (Array.isArray(value)) {
+    return value.flatMap((entry) => [`--${name}`, String(entry)])
+  }
+  return [`--${name}`, String(value)]
 }
 
 /**

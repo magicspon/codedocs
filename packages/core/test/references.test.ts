@@ -19,6 +19,7 @@ import { callers } from '../src/operations/calls.ts'
 import { file, type FileReport } from '../src/operations/file.ts'
 import { references } from '../src/operations/references.ts'
 import type { ReferenceEdge } from '../src/model.ts'
+import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
 
 const fixture = join(
@@ -51,7 +52,7 @@ function ask<T>(
 ): Envelope<readonly T[]> {
   const session = openSession({ cwd: root, noUpdate: false })
   try {
-    return run(session.store, session.context, subject, null)
+    return run(session.store, session.context, subject, null, UNSCOPED)
   } finally {
     session.close()
   }
@@ -76,7 +77,13 @@ describe('references', () => {
     // The half SCIP conflates: the same symbol has no call edge at all.
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const called = callers(session.store, session.context, 'Money', null)
+      const called = callers(
+        session.store,
+        session.context,
+        'Money',
+        null,
+        UNSCOPED,
+      )
       expect(called.result).toEqual([])
     } finally {
       session.close()
@@ -118,7 +125,13 @@ describe('references', () => {
     expect(referencesTo('Ledger.record')).toEqual([])
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const called = callers(session.store, session.context, 'record', null)
+      const called = callers(
+        session.store,
+        session.context,
+        'record',
+        null,
+        UNSCOPED,
+      )
       expect(called.result?.length).toBe(1)
     } finally {
       session.close()
