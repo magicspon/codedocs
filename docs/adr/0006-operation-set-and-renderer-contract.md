@@ -36,9 +36,11 @@ implementation detail.
 | `doctor`              | precondition   | project, then cause                | an unmet **remediable** precondition |
 | `report-bug`          | —              | —                                  | —                                    |
 
-`mcp` is in PRD §20 but is **not an operation**: it is a server that binds them. `impact`, `review`
-and `plan` are Phase 5 — named in the schema's operation enum from day one so their arrival is
-additive, and specified elsewhere.
+`mcp` is in PRD §20 but is **not an operation**: it is a server that binds them. `impact` is Phase 5
+— named in the schema's operation enum from day one so its arrival is additive, and specified
+elsewhere. This sentence originally named `review` and `plan` beside it;
+[ADR 0012](0012-audience-and-the-fallow-boundary.md) deleted both, and the Consequences below record
+why.
 
 `analyse` survives even though ADR 0004 makes every query update before it answers, because a cold
 build in CI wants to be a step that can fail on its own rather than a hidden cost inside the first
