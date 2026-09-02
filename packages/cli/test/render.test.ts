@@ -297,6 +297,7 @@ describe('the doctor report', () => {
     remediable: result.filter((found) => found.remediable).length,
     measured: null,
     classification: { counts: [], inferred: [], disagreements: [] },
+    baselines: { held: [], cap: 3, distance: null },
     ...overrides,
   })
 
@@ -430,6 +431,7 @@ describe('the repair note', () => {
     totals: { symbols: 10, callEdges: 5, unresolvedCalls: 1 },
     repair,
     labels: null,
+    capture: null,
   })
 
   it('says how far a wave reached', () => {

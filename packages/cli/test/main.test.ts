@@ -250,6 +250,34 @@ describe('file', () => {
   })
 })
 
+describe('impact', () => {
+  it('answers without a baseline, at exit 0, naming the absence', () => {
+    // The CLI fixture is not a git repository and has no baseline: a missing
+    // one degrades an answer rather than blocking it.
+    const result = invoke('impact')
+    expect(result.code).toBe(0)
+    expect(result.stdout).toContain('baseline')
+  })
+
+  it('carries the comparison in the envelope', () => {
+    const envelope = JSON.parse(invoke('impact', '--json').stdout) as {
+      operation: string
+      baseline: { commit: string | null; absent: string | null }
+      changes: unknown[]
+    }
+    expect(envelope.operation).toBe('impact')
+    expect(envelope.baseline.commit).toBeNull()
+    expect(envelope.baseline.absent).toContain('no baseline')
+  })
+
+  it('takes `--base`, and `--depth`, and refuses `--base` elsewhere', () => {
+    expect(invoke('impact', '--base', 'HEAD', '--depth', '2').code).toBe(0)
+    const refused = invoke('symbol', '*', '--base', 'HEAD')
+    expect(refused.code).toBe(2)
+    expect(refused.stderr).toContain('--base applies to `impact`')
+  })
+})
+
 describe('the scope channel', () => {
   it('echoes the scope it applied on every answer', () => {
     const envelope = JSON.parse(invoke('symbol', '*', '--json').stdout) as {

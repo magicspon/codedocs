@@ -178,6 +178,28 @@ export const OPERATIONS: readonly OperationSpec[] = [
     sortedBy: 'the SymbolId sequence, lexically',
   },
   {
+    name: 'impact',
+    summary: 'every symbol a change could reach, against an earlier commit',
+    subject: null,
+    depth: true,
+    flags: [
+      {
+        name: 'base',
+        value: 'ref',
+        summary: 'the commit to compare against (default: the merge base)',
+        description:
+          'The commit to compare against. The default is the merge base with ' +
+          'the default branch, and the answer uses the newest stored baseline ' +
+          'that is an ancestor of HEAD — `baseline` in the envelope names the ' +
+          'one asked for, the one used, and the distance between them. A ' +
+          'repository with no baseline still answers, with the absence as a ' +
+          'blind spot.',
+      },
+    ],
+    unit: 'symbol',
+    sortedBy: 'distance from the change, then SymbolId',
+  },
+  {
     name: 'doctor',
     summary:
       'every unmet precondition in the repository, and what would clear it',

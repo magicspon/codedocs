@@ -25,7 +25,7 @@ Three things shape everything else:
 
 ## Status
 
-Pre-release, and not published to npm. Nine operations, both renderers and the MCP server work end
+Pre-release, and not published to npm. Ten operations, both renderers and the MCP server work end
 to end on real repositories. The rest of the design is settled in the ADRs and unbuilt. See
 [What is built](#what-is-built) and [What is left](#what-is-left).
 
@@ -100,18 +100,18 @@ Built:
 | `references <subject>` | everything that names a subject without calling it            | reference edge |
 | `file <path>`          | what the index holds about one file                           | file           |
 | `trace <root>`         | every path of calls out of a root                             | path           |
+| `impact`               | every symbol a change could reach, against an earlier commit  | symbol         |
 | `doctor`               | every unmet precondition, and the command that would clear it | precondition   |
 | `report-bug`           | a reproduced failure, safe to paste                           | —              |
 
 Designed and unbuilt, in the order [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
 sets:
 
-| Operation            | Answers                                              | Result unit |
-| -------------------- | ---------------------------------------------------- | ----------- |
-| `impact`             | what a change could reach, against an earlier commit | symbol      |
-| `evidence <subject>` | everything the index holds about one subject         | per kind    |
-| `docs check`         | which documented claims the code now contradicts     | document    |
-| `docs affected`      | which documents a change touches                     | document    |
+| Operation            | Answers                                          | Result unit |
+| -------------------- | ------------------------------------------------ | ----------- |
+| `evidence <subject>` | everything the index holds about one subject     | per kind    |
+| `docs check`         | which documented claims the code now contradicts | document    |
+| `docs affected`      | which documents a change touches                 | document    |
 
 There is no `affected-tests` command and there will not be one: it is `impact --label role=test`,
 because a second traversal is a second thing to keep correct.
@@ -294,6 +294,66 @@ $ codedocs file src/types.ts
 The projects are all of them, with the canonical one — the project its facts were produced in, and so
 the one whose fidelity applies — marked `*`. It takes a repository-relative path or the tail of one,
 so `codedocs file types.ts` finds the same file, and a tail matching several answers about each.
+
+### impact
+
+The only operation that composes: a [baseline](#baselines) to say what changed, and a walk **inward**
+through call and reference edges to say what would notice.
+
+```console
+$ codedocs impact --depth 2
+  changed
+    src/core.ts#core
+  1 step out
+    src/uses.ts#uses  calls
+  2 steps out
+    src/outer.ts#outer  calls
+
+  1 file changed:
+    src/core.ts (changed)
+
+  compared against fb130c4
+```
+
+- **Which tests does this change reach** is `codedocs impact --label role=test`, over the same walk.
+  There is no `affected-tests` command and there will not be one: a second traversal is a second thing
+  to keep correct.
+- **A change in fidelity is never a finding.** A file that was `syntactic` in the baseline and is
+  `typed` now has not changed — the analysis has. Those files leave the comparison and are named as
+  blind spots, per project.
+- **A missing baseline degrades the answer, it does not block it.** The edits still come from git and
+  the walk still runs; what is lost is the fidelity comparison. It is a blind spot at exit 0, never a
+  failure.
+- **`--base <ref>`** names the commit to compare against. The default is the merge base with the
+  default branch.
+
+## Baselines
+
+A baseline is an index codedocs kept from a commit it once analysed. It is **recorded by normal use,
+never constructed, and never leaves the machine**: rebuilding one is not slow, it is _impossible at
+usable fidelity_, because a `git worktree` of an old commit has no `node_modules` and codedocs will
+not run your install — so every file in it would be `syntactic`, diffed against a typed working tree.
+
+```console
+$ codedocs analyse
+  …
+  captured a baseline for fb130c4 (132 KB)
+```
+
+- **Capture is a side effect of `analyse` over a clean tree**, and there is no `baseline save`
+  command. An explicit save asks you to predict, a week in advance, which commit you will later want
+  to compare against.
+- **A dirty tree captures nothing.** A snapshot is a commit plus whatever is uncommitted on top of it;
+  a baseline is an index for a commit.
+- **Three are kept**, evicting anything that is not an ancestor of `HEAD` first, then the oldest by
+  commit date. Evicting non-ancestors first _is_ the whole branch-switching story — yesterday's
+  abandoned branch tip is an ancestor of nothing — which is why there is no branch tracking anywhere.
+  `baselines: 0` in [`codedocs.jsonc`](#configuration) disables capture entirely.
+- **Three is a guess**, and the ADR says so. `codedocs doctor` reports how many are held and how far
+  `HEAD` has moved from the newest, which is the only place that guess accrues evidence.
+- An answer uses **the newest stored baseline that is an ancestor of `HEAD`**. When that is not the
+  commit you asked for, the envelope names the one requested, the one used, and the distance between
+  them — as part of the request, never as a blind spot.
 
 ## Machine output: one envelope, every answer
 
@@ -580,13 +640,13 @@ propagates to its direct importers and no further; when it does not, the repair 
 
 ## What is built
 
-Implemented, covered by 315 tests, and measured against real repositories:
+Implemented, covered by 333 tests, and measured against real repositories:
 
 - **The index.** SQLite at `.codedocs/index.db`, one snapshot, every repeated string interned, and
   committed one project at a time — so an interrupted cold build leaves a partial index rather than
   nothing.
-- **Nine operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
-  `doctor` and `report-bug`.
+- **Ten operations.** `analyse`, `symbol`, `callers`, `callees`, `references`, `file`, `trace`,
+  `impact`, `doctor` and `report-bug`.
 - **Two renderers over one envelope.** Human and `--json`, from the same operation. The operation set
   is held as data, so an operation cannot reach one renderer and miss the other.
 - **Incremental repair.** Drift by stat and tree walk, and a signature-gated wave that propagates to
@@ -594,6 +654,9 @@ Implemented, covered by 315 tests, and measured against real repositories:
   `import()` and `import x = require()` — so a route or a lazily loaded component is not missed.
 - **Two honesty channels.** Blind spots and truncation in the envelope, plus `conditions` narrowed to
   only the projects an answer touched.
+- **Baselines, and `impact` over them.** Capture as a side effect of a clean-tree `analyse`,
+  retention at three with non-ancestors evicted first, and the one composed operation: what a change
+  reaches, inward through calls and references, with a fidelity change excluded rather than reported.
 - **The label layer, and the scope channel over it.** Two orthogonal axes per file, every signal that
   fired stored with its provenance, `--label` / `--exclude-label` on every operation, and the applied
   scope echoed on every answer with the count it withheld.
@@ -615,15 +678,13 @@ Implemented, covered by 315 tests, and measured against real repositories:
 In build order, which is [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)'s. Each step
 is gated by the one above it.
 
-1. **`impact`**, over baseline capture and retention (ADR 0008) — and with it
-   `impact --label role=test`, which is what "which tests does this change reach" is.
-2. **`evidence`**, once fidelity and labels are assembled into one answer.
-3. **`docs check` and `docs affected`** (ADR 0005).
-4. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
+1. **`evidence`**, once fidelity and labels are assembled into one answer.
+2. **`docs check` and `docs affected`** (ADR 0005).
+3. **Publishing** — codedocs is not on npm, so today it is cloned and run from `node_modules/.bin`.
 
 Not tied to that order: normalised SCIP symbol strings in place of today's descriptor path
-(`TODO(#7)` in `model.ts`); the `baselines` config key, which parses and defaults but has no consumer
-until step 1; and the `AGENTS.md` discovery block that tells an agent when to reach for codedocs
+(`TODO(#7)` in `model.ts`); ADR 0007's `shape-hash` and `path-prefix-rewrite` continuity signals,
+which need a per-symbol shape hash the index does not hold; and the `AGENTS.md` discovery block that tells an agent when to reach for codedocs
 ([#18](https://github.com/magicspon/codedocs/issues/18)).
 
 **`review` and `plan` are deleted.** `review` was `fallow`'s work plus `impact` and `docs affected`

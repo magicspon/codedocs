@@ -215,7 +215,8 @@ describe('a tool call', () => {
   })
 
   it('refuses a tool that is not an operation', () => {
-    const failure = errorOf(call('impact', {}))
+    // `review` is not pending: ADR 0012 deleted it, so it can never become one.
+    const failure = errorOf(call('review', {}))
     expect(failure['code']).toBe(-32602)
     expect(failure['message']).toContain('unknown tool')
   })

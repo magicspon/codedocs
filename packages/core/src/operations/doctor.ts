@@ -17,6 +17,7 @@
 
 import { dirname, join } from 'node:path'
 
+import { listBaselines } from '../baseline/index.ts'
 import type { Config } from '../config/index.ts'
 import { remediationFor } from '../config/index.ts'
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
@@ -28,6 +29,7 @@ import type {
   ProjectNode,
   UnresolvedSpecifier,
 } from '../model.ts'
+import { distance } from '../git.ts'
 import { installCommand } from '../preflight/index.ts'
 import {
   counts,
@@ -136,6 +138,32 @@ export type DoctorEnvelope = Envelope<readonly Precondition[]> & {
    * to discover that it exists.
    */
   readonly classification: Classification
+  /**
+   * The baselines held, and how far `HEAD` is from the newest.
+   *
+   * ADR 0008 calls its cap of three a guess and says so; PRD §28 rules out
+   * telemetry, so this line is the only place the guess can be observed
+   * accruing evidence.
+   */
+  readonly baselines: BaselineReport
+}
+
+/** One held baseline, without the absolute path that names the machine. */
+export interface HeldBaseline {
+  readonly commit: string
+  readonly committedAt: string | null
+  /** Whether it is an ancestor of `HEAD`, which is what makes it usable. */
+  readonly ancestor: boolean
+  readonly bytes: number
+}
+
+/** What `doctor` says about the baselines on disk. */
+export interface BaselineReport {
+  readonly held: readonly HeldBaseline[]
+  /** The cap in force, from `codedocs.jsonc`. `0` means capture is disabled. */
+  readonly cap: number
+  /** Commits between `HEAD` and the newest usable baseline, where git can say. */
+  readonly distance: number | null
 }
 
 /**
@@ -182,6 +210,28 @@ export function doctor(
       ? measureProjects(options.root, projects, options.seenFiles)
       : null,
     classification: classification(readLabels(store)),
+    baselines: baselineReport(options),
+  }
+}
+
+/** The baselines held, newest first, with the distance to the newest usable one. */
+function baselineReport(options: DoctorOptions): BaselineReport {
+  const held = listBaselines(options.root)
+  const newest = held.find((one) => one.ancestor)
+  return {
+    // The path is left out for the reason `impact` leaves it out: it is
+    // absolute, so it names the machine rather than the repository.
+    held: held.map(({ commit, committedAt, ancestor, bytes }) => ({
+      commit,
+      committedAt,
+      ancestor,
+      bytes,
+    })),
+    cap: options.config.baselines,
+    distance:
+      newest === undefined
+        ? null
+        : distance(options.root, newest.commit, 'HEAD'),
   }
 }
 

@@ -6,6 +6,7 @@
  * than a hidden cost inside the first question.
  */
 
+import { capture, type Capture } from '../baseline/index.ts'
 import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
 import { unfiltered, type LabelPass, type Scoping } from '../labels/index.ts'
 import type { Fidelity, FilePath } from '../model.ts'
@@ -24,6 +25,13 @@ export interface ProjectSummary {
   readonly fidelity: Fidelity
   readonly files: number
   readonly analysedAt: string
+}
+
+/** What `analyse` needs to capture a baseline, which only it does. */
+export interface BaselineRequest {
+  readonly root: string
+  /** `codedocs.jsonc`'s `baselines`. `0` disables capture entirely. */
+  readonly cap: number
 }
 
 /** The totals an `analyse` answer carries alongside its per-project rows. */
@@ -48,10 +56,12 @@ export function analyse(
   scoping: Scoping,
   repair: RepairReport | null = null,
   labelPass: LabelPass | null = null,
+  baselines: BaselineRequest | null = null,
 ): Envelope<readonly ProjectSummary[]> & {
   readonly totals: AnalysisTotals
   readonly repair: RepairReport | null
   readonly labels: LabelPass | null
+  readonly capture: Capture | null
 } {
   const summaries: ProjectSummary[] = readProjects(store).map((project) => ({
     project: project.configPath,
@@ -97,5 +107,11 @@ export function analyse(
     // invalidation on the strength of one measurement, and a measurement nobody
     // can see is an assumption.
     labels: labelPass,
+    // ADR 0008: capture is a side effect of this operation and of no other, and
+    // it happens here — after every project has committed, and before anything
+    // else writes — so the copy is an index for exactly the commit it is named
+    // after.
+    capture:
+      baselines === null ? null : capture(baselines.root, store, baselines.cap),
   }
 }
