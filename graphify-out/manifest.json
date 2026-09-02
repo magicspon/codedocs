@@ -185,8 +185,8 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1788355174.4205244,
-    "ast_hash": "dcbf0e97af2226680f6c39da59507df4",
+    "mtime": 1788355420.6392741,
+    "ast_hash": "0b176c50d8d81d47ccd2ca0f5c435920",
     "semantic_hash": ""
   },
   "cspell.words.txt": {
@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "CONTEXT.md": {
-    "mtime": 1788333911.1611323,
-    "ast_hash": "fe435986ac7f5c9da4312294da1bf4c1",
+    "mtime": 1788363546.1389892,
+    "ast_hash": "bcd0ca6a54fe5fe748d8e2185a3f786c",
     "semantic_hash": ""
   },
   "docs/adr/0001-analysis-preconditions-and-answer-honesty.md": {
-    "mtime": 1788199871.0722363,
-    "ast_hash": "61118ef662724cd07f8ccef62ea8f0fe",
+    "mtime": 1788363595.7012286,
+    "ast_hash": "aae2da581316c382cb91f30f53820296",
     "semantic_hash": ""
   },
   "docs/adr/0002-internal-representation-and-symbol-identity.md": {
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "docs/adr/0009-preflight-cost-and-signal-shapes.md": {
-    "mtime": 1788199871.0729887,
-    "ast_hash": "6d1a8e536b098e612c95fd484b70ddf1",
+    "mtime": 1788363527.2711651,
+    "ast_hash": "53793edf8379ab990bb6d42d020400b7",
     "semantic_hash": ""
   },
   "packages/core/test/preflight.test.ts": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "packages/core/src/preflight/fingerprint.ts": {
-    "mtime": 1788327287.9358366,
-    "ast_hash": "687f5d89f5b3e3189b100900caf3ffaf",
+    "mtime": 1788363649.9197485,
+    "ast_hash": "8b64b883cde230a20769c4dcb43152d1",
     "semantic_hash": ""
   },
   "packages/core/src/preflight/fs.ts": {
@@ -1335,8 +1335,8 @@
     "semantic_hash": ""
   },
   "packages/core/src/naming.ts": {
-    "mtime": 1788355174.450516,
-    "ast_hash": "e0dc2e105192130ab364e50d9a5cce3e",
+    "mtime": 1788355368.43469,
+    "ast_hash": "242b0b3f36befc170db179cc3257c008",
     "semantic_hash": ""
   },
   "packages/core/src/symbol-id.ts": {

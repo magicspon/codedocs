@@ -7542,7 +7542,7 @@
       "label": "declaredName()",
       "file_type": "code",
       "source_file": "packages/core/src/naming.ts",
-      "source_location": "L65",
+      "source_location": "L80",
       "_origin": "ast",
       "id": "src_naming_declaredname",
       "community": 14,
@@ -9192,7 +9192,7 @@
       "label": "fingerprintOf()",
       "file_type": "code",
       "source_file": "packages/core/src/preflight/fingerprint.ts",
-      "source_location": "L33",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "preflight_fingerprint_fingerprintof",
       "community": 14,
@@ -9202,7 +9202,7 @@
       "label": "canonical()",
       "file_type": "code",
       "source_file": "packages/core/src/preflight/fingerprint.ts",
-      "source_location": "L59",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "preflight_fingerprint_canonical",
       "community": 14,
@@ -14912,7 +14912,7 @@
       "label": "The internal representation",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L94",
+      "source_location": "L98",
       "_origin": "ast",
       "id": "context_the_internal_representation",
       "community": 35,
@@ -14922,7 +14922,7 @@
       "label": "Classification",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L162",
+      "source_location": "L166",
       "_origin": "ast",
       "id": "context_classification",
       "community": 35,
@@ -14932,7 +14932,7 @@
       "label": "What the index holds",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L181",
+      "source_location": "L185",
       "_origin": "ast",
       "id": "context_what_the_index_holds",
       "community": 35,
@@ -14942,7 +14942,7 @@
       "label": "The index on disk",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L220",
+      "source_location": "L224",
       "_origin": "ast",
       "id": "context_the_index_on_disk",
       "community": 35,
@@ -14952,7 +14952,7 @@
       "label": "Documentation",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L264",
+      "source_location": "L268",
       "_origin": "ast",
       "id": "context_documentation",
       "community": 35,
@@ -14962,7 +14962,7 @@
       "label": "The operation surface",
       "file_type": "document",
       "source_file": "CONTEXT.md",
-      "source_location": "L291",
+      "source_location": "L295",
       "_origin": "ast",
       "id": "context_the_operation_surface",
       "community": 35,
@@ -16722,7 +16722,7 @@
       "label": "What `doctor` runs",
       "file_type": "document",
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
-      "source_location": "L101",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "adr_0009_preflight_cost_and_signal_shapes_what_doctor_runs",
       "community": 83,
@@ -16732,7 +16732,7 @@
       "label": "How preflight reaches an answer",
       "file_type": "document",
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
-      "source_location": "L122",
+      "source_location": "L150",
       "_origin": "ast",
       "id": "adr_0009_preflight_cost_and_signal_shapes_how_preflight_reaches_an_answer",
       "community": 83,
@@ -16742,7 +16742,7 @@
       "label": "Considered Options",
       "file_type": "document",
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
-      "source_location": "L147",
+      "source_location": "L175",
       "_origin": "ast",
       "id": "adr_0009_preflight_cost_and_signal_shapes_considered_options",
       "community": 83,
@@ -16752,7 +16752,7 @@
       "label": "Consequences",
       "file_type": "document",
       "source_file": "docs/adr/0009-preflight-cost-and-signal-shapes.md",
-      "source_location": "L181",
+      "source_location": "L209",
       "_origin": "ast",
       "id": "adr_0009_preflight_cost_and_signal_shapes_consequences",
       "community": 83,
@@ -26270,9 +26270,9 @@
       "source_file": "packages/cli/src/render.ts",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_render",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports_from",
@@ -26688,9 +26688,9 @@
       "source_file": "packages/cli/src/render.ts",
       "source_location": "L468",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_render_symbolline",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -26721,9 +26721,9 @@
       "source_file": "packages/cli/src/render.ts",
       "source_location": "L514",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_render_referenceline",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -27084,9 +27084,9 @@
       "source_file": "packages/cli/src/render.ts",
       "source_location": "L1176",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_render_ambiguitynote",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "contains",
@@ -27798,9 +27798,9 @@
       "source_file": "packages/core/src/adapter/ts7/calls.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_calls",
-      "target": "src_model_callsource",
-      "confidence_score": 1.0
+      "target": "src_model_callsource"
     },
     {
       "relation": "imports",
@@ -27862,9 +27862,9 @@
       "source_file": "packages/core/src/adapter/ts7/calls.ts",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_calls",
-      "target": "ts7_calls_callerof",
-      "confidence_score": 1.0
+      "target": "ts7_calls_callerof"
     },
     {
       "relation": "contains",
@@ -28153,9 +28153,9 @@
       "source_file": "packages/core/src/adapter/ts7/calls.ts",
       "source_location": "L144",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_calls_resolvesite",
-      "target": "ts7_calls_callerof",
-      "confidence_score": 1.0
+      "target": "ts7_calls_callerof"
     },
     {
       "relation": "calls",
@@ -28208,9 +28208,9 @@
       "source_file": "packages/core/src/adapter/ts7/calls.ts",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_calls_callerof",
-      "target": "ts7_descriptors_descriptorpath",
-      "confidence_score": 1.0
+      "target": "ts7_descriptors_descriptorpath"
     },
     {
       "relation": "calls",
@@ -28219,9 +28219,9 @@
       "source_file": "packages/core/src/adapter/ts7/calls.ts",
       "source_location": "L180",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_calls_callerof",
-      "target": "ts7_shared_declarationkey",
-      "confidence_score": 1.0
+      "target": "ts7_shared_declarationkey"
     },
     {
       "relation": "calls",
@@ -28296,9 +28296,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -28307,9 +28307,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors",
-      "target": "src_symbol_id_classofkind",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_classofkind"
     },
     {
       "relation": "imports",
@@ -28318,9 +28318,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors",
-      "target": "src_symbol_id_descriptor",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_descriptor"
     },
     {
       "relation": "imports",
@@ -28329,9 +28329,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors",
-      "target": "src_symbol_id_descriptorclass",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_descriptorclass"
     },
     {
       "relation": "contains",
@@ -28379,9 +28379,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L200",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors",
-      "target": "ts7_descriptors_classof",
-      "confidence_score": 1.0
+      "target": "ts7_descriptors_classof"
     },
     {
       "relation": "contains",
@@ -28459,9 +28459,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L259",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors",
-      "target": "ts7_descriptors_ownsegment",
-      "confidence_score": 1.0
+      "target": "ts7_descriptors_ownsegment"
     },
     {
       "relation": "contains",
@@ -28598,9 +28598,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L190",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors_segment",
-      "target": "src_symbol_id_descriptorclass",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_descriptorclass"
     },
     {
       "relation": "calls",
@@ -28620,9 +28620,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L202",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors_classof",
-      "target": "src_symbol_id_classofkind",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_classofkind"
     },
     {
       "relation": "calls",
@@ -28631,9 +28631,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L261",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors_ownsegment",
-      "target": "ts7_descriptors_classof",
-      "confidence_score": 1.0
+      "target": "ts7_descriptors_classof"
     },
     {
       "relation": "calls",
@@ -28642,9 +28642,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L208",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors_segmentof",
-      "target": "ts7_descriptors_classof",
-      "confidence_score": 1.0
+      "target": "ts7_descriptors_classof"
     },
     {
       "relation": "calls",
@@ -28675,9 +28675,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L245",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors_descriptorpath",
-      "target": "ts7_descriptors_ownsegment",
-      "confidence_score": 1.0
+      "target": "ts7_descriptors_ownsegment"
     },
     {
       "relation": "calls",
@@ -28730,9 +28730,9 @@
       "source_file": "packages/core/src/adapter/ts7/descriptors.ts",
       "source_location": "L260",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_descriptors_ownsegment",
-      "target": "ts7_shared_nameof",
-      "confidence_score": 1.0
+      "target": "ts7_shared_nameof"
     },
     {
       "relation": "imports",
@@ -29279,9 +29279,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "ts7_index",
-      "confidence_score": 1.0
+      "target": "ts7_index"
     },
     {
       "relation": "re_exports",
@@ -29563,9 +29563,9 @@
       "source_file": "packages/core/src/adapter/ts7/program.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_program",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports",
@@ -29574,9 +29574,9 @@
       "source_file": "packages/core/src/adapter/ts7/program.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_program",
-      "target": "src_naming_namingfor",
-      "confidence_score": 1.0
+      "target": "src_naming_namingfor"
     },
     {
       "relation": "contains",
@@ -29832,9 +29832,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "ts7_program_analyse",
-      "confidence_score": 1.0
+      "target": "ts7_program_analyse"
     },
     {
       "relation": "calls",
@@ -29843,9 +29843,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test_sweep",
-      "target": "ts7_program_analyse",
-      "confidence_score": 1.0
+      "target": "ts7_program_analyse"
     },
     {
       "relation": "calls",
@@ -30181,9 +30181,9 @@
       "source_file": "packages/core/src/adapter/ts7/references.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_references",
-      "target": "ts7_shared_declarationkey",
-      "confidence_score": 1.0
+      "target": "ts7_shared_declarationkey"
     },
     {
       "relation": "imports",
@@ -30335,9 +30335,9 @@
       "source_file": "packages/core/src/adapter/ts7/references.ts",
       "source_location": "L228",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_references_resolvesite",
-      "target": "ts7_shared_declarationkey",
-      "confidence_score": 1.0
+      "target": "ts7_shared_declarationkey"
     },
     {
       "relation": "calls",
@@ -30506,9 +30506,9 @@
       "source_file": "packages/core/src/adapter/ts7/symbols.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_symbols",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports",
@@ -30517,9 +30517,9 @@
       "source_file": "packages/core/src/adapter/ts7/symbols.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_symbols",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports_from",
@@ -30528,9 +30528,9 @@
       "source_file": "packages/core/src/adapter/ts7/symbols.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_symbols",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -30539,9 +30539,9 @@
       "source_file": "packages/core/src/adapter/ts7/symbols.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_symbols",
-      "target": "src_symbol_id_dottedof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_dottedof"
     },
     {
       "relation": "contains",
@@ -30756,9 +30756,9 @@
       "source_file": "packages/core/src/adapter/ts7/types.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_types",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports",
@@ -30767,9 +30767,9 @@
       "source_file": "packages/core/src/adapter/ts7/types.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_types",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "contains",
@@ -31035,9 +31035,9 @@
       "source_file": "packages/core/src/adapter/ts7/types.ts",
       "source_location": "L139",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ts7_types_view",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "references",
@@ -31626,9 +31626,9 @@
       "source_file": "packages/core/src/baseline/store.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "baseline_store",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports",
@@ -31637,9 +31637,9 @@
       "source_file": "packages/core/src/baseline/store.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "baseline_store",
-      "target": "src_naming_namingfor",
-      "confidence_score": 1.0
+      "target": "src_naming_namingfor"
     },
     {
       "relation": "imports_from",
@@ -34137,9 +34137,9 @@
       "source_file": "packages/core/src/continuity/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "continuity_index",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -34148,9 +34148,9 @@
       "source_file": "packages/core/src/continuity/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "continuity_index",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -34159,9 +34159,9 @@
       "source_file": "packages/core/src/continuity/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "continuity_index",
-      "target": "src_symbol_id_splitshorthand",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_splitshorthand"
     },
     {
       "relation": "imports_from",
@@ -35338,9 +35338,9 @@
       "source_file": "packages/core/src/docs/check.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_check",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -35349,9 +35349,9 @@
       "source_file": "packages/core/src/docs/check.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_check",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "re_exports",
@@ -35668,9 +35668,9 @@
       "source_file": "packages/core/src/docs/check.ts",
       "source_location": "L239",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_check_scopeof",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "calls",
@@ -37343,9 +37343,9 @@
       "source_file": "packages/core/src/docs/predicate.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_predicate",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -37354,9 +37354,9 @@
       "source_file": "packages/core/src/docs/predicate.ts",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_predicate",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports_from",
@@ -37739,9 +37739,9 @@
       "source_file": "packages/core/src/docs/predicate.ts",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_predicate_resolveone",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -41663,9 +41663,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "re_exports",
@@ -41674,9 +41674,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_coarseclassof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_coarseclassof"
     },
     {
       "relation": "re_exports",
@@ -41685,9 +41685,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_descriptorclass",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_descriptorclass"
     },
     {
       "relation": "re_exports",
@@ -41696,9 +41696,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "re_exports",
@@ -41707,9 +41707,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_issymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_issymbolid"
     },
     {
       "relation": "re_exports",
@@ -41718,9 +41718,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_packageref",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_packageref"
     },
     {
       "relation": "re_exports",
@@ -41729,9 +41729,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "re_exports",
@@ -41740,9 +41740,9 @@
       "source_file": "packages/core/src/index.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_index",
-      "target": "src_symbol_id_splitshorthand",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_splitshorthand"
     },
     {
       "relation": "re_exports",
@@ -44380,9 +44380,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_model",
-      "confidence_score": 1.0
+      "target": "src_model"
     },
     {
       "relation": "imports_from",
@@ -44391,9 +44391,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_model",
-      "confidence_score": 1.0
+      "target": "src_model"
     },
     {
       "relation": "imports_from",
@@ -44622,9 +44622,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_model",
-      "confidence_score": 1.0
+      "target": "src_model"
     },
     {
       "relation": "imports",
@@ -44710,9 +44710,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_model_symbolid",
-      "confidence_score": 1.0
+      "target": "src_model_symbolid"
     },
     {
       "relation": "imports",
@@ -44721,9 +44721,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_model_symbolid",
-      "confidence_score": 1.0
+      "target": "src_model_symbolid"
     },
     {
       "relation": "imports",
@@ -45183,9 +45183,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "imports",
@@ -45194,9 +45194,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "references",
@@ -45205,9 +45205,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_symbolparts",
-      "target": "src_model_filepath",
-      "confidence_score": 1.0
+      "target": "src_model_filepath"
     },
     {
       "relation": "imports",
@@ -45436,9 +45436,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_model_symbolkind",
-      "confidence_score": 1.0
+      "target": "src_model_symbolkind"
     },
     {
       "relation": "imports",
@@ -46558,9 +46558,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_model_symbolnode",
-      "confidence_score": 1.0
+      "target": "src_model_symbolnode"
     },
     {
       "relation": "imports",
@@ -46569,9 +46569,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_model_callsource",
-      "confidence_score": 1.0
+      "target": "src_model_callsource"
     },
     {
       "relation": "imports",
@@ -47031,9 +47031,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "preflight_fs",
-      "confidence_score": 1.0
+      "target": "preflight_fs"
     },
     {
       "relation": "imports",
@@ -47042,9 +47042,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "preflight_fs_readjsonc",
-      "confidence_score": 1.0
+      "target": "preflight_fs_readjsonc"
     },
     {
       "relation": "imports",
@@ -47053,9 +47053,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "preflight_fs_upward",
-      "confidence_score": 1.0
+      "target": "preflight_fs_upward"
     },
     {
       "relation": "contains",
@@ -47063,9 +47063,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_naming_declaredname",
-      "confidence_score": 1.0
+      "target": "src_naming_declaredname"
     },
     {
       "relation": "contains",
@@ -47073,9 +47073,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "contains",
@@ -47083,9 +47083,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_naming_namingfor",
-      "confidence_score": 1.0
+      "target": "src_naming_namingfor"
     },
     {
       "relation": "imports_from",
@@ -47094,9 +47094,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -47105,9 +47105,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_symbol_id_packageref",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_packageref"
     },
     {
       "relation": "imports",
@@ -47116,9 +47116,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming",
-      "target": "src_symbol_id_symbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_symbolid"
     },
     {
       "relation": "imports_from",
@@ -47127,9 +47127,9 @@
       "source_file": "packages/core/src/store/open.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_open",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports_from",
@@ -47138,9 +47138,9 @@
       "source_file": "packages/core/src/store/read-edges.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_edges",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports_from",
@@ -47149,9 +47149,9 @@
       "source_file": "packages/core/src/store/read-labels.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_labels",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports_from",
@@ -47160,9 +47160,9 @@
       "source_file": "packages/core/src/store/read-references.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_references",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports_from",
@@ -47171,9 +47171,9 @@
       "source_file": "packages/core/src/store/read-symbols.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_symbols",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports_from",
@@ -47182,9 +47182,9 @@
       "source_file": "packages/core/src/store/shared.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_shared",
-      "target": "src_naming",
-      "confidence_score": 1.0
+      "target": "src_naming"
     },
     {
       "relation": "imports",
@@ -47193,9 +47193,9 @@
       "source_file": "packages/core/src/store/open.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_open",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "references",
@@ -47204,9 +47204,9 @@
       "source_file": "packages/core/src/store/open.ts",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_open_store",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports",
@@ -47215,9 +47215,9 @@
       "source_file": "packages/core/src/store/read-edges.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_edges",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports",
@@ -47226,9 +47226,9 @@
       "source_file": "packages/core/src/store/read-labels.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_labels",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports",
@@ -47237,9 +47237,9 @@
       "source_file": "packages/core/src/store/read-references.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_references",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports",
@@ -47248,9 +47248,9 @@
       "source_file": "packages/core/src/store/read-symbols.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_symbols",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports",
@@ -47259,9 +47259,9 @@
       "source_file": "packages/core/src/store/shared.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_shared",
-      "target": "src_naming_naming",
-      "confidence_score": 1.0
+      "target": "src_naming_naming"
     },
     {
       "relation": "imports",
@@ -47270,9 +47270,9 @@
       "source_file": "packages/core/src/store/open.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_open",
-      "target": "src_naming_namingfor",
-      "confidence_score": 1.0
+      "target": "src_naming_namingfor"
     },
     {
       "relation": "calls",
@@ -47292,9 +47292,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming_declaredname",
-      "target": "preflight_fs_readjsonc",
-      "confidence_score": 1.0
+      "target": "preflight_fs_readjsonc"
     },
     {
       "relation": "calls",
@@ -47303,9 +47303,9 @@
       "source_file": "packages/core/src/naming.ts",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_naming_declaredname",
-      "target": "preflight_fs_upward",
-      "confidence_score": 1.0
+      "target": "preflight_fs_upward"
     },
     {
       "relation": "contains",
@@ -48292,9 +48292,9 @@
       "source_file": "packages/core/src/operations/claims.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_claims",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -48303,9 +48303,9 @@
       "source_file": "packages/core/src/operations/claims.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_claims",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -48358,9 +48358,9 @@
       "source_file": "packages/core/src/operations/claims.ts",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_claims_labelclaim",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "contains",
@@ -49515,9 +49515,9 @@
       "source_file": "packages/core/src/operations/evidence.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_evidence",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -49526,9 +49526,9 @@
       "source_file": "packages/core/src/operations/evidence.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_evidence",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "imports",
@@ -49537,9 +49537,9 @@
       "source_file": "packages/core/src/operations/evidence.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_evidence",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports_from",
@@ -49768,9 +49768,9 @@
       "source_file": "packages/core/src/operations/evidence.ts",
       "source_location": "L249",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_evidence_durableids",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -50171,9 +50171,9 @@
       "source_file": "packages/core/src/operations/impact.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_impact",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -50182,9 +50182,9 @@
       "source_file": "packages/core/src/operations/impact.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_impact",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "imports_from",
@@ -50358,9 +50358,9 @@
       "source_file": "packages/core/src/operations/impact.ts",
       "source_location": "L217",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_impact_walk",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "calls",
@@ -51741,9 +51741,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -51752,9 +51752,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "src_symbol_id_issymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_issymbolid"
     },
     {
       "relation": "imports",
@@ -51763,9 +51763,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -51774,9 +51774,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "src_symbol_id_splitshorthand",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_splitshorthand"
     },
     {
       "relation": "imports_from",
@@ -51829,9 +51829,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "store_read_symbols_readsymbolsshorthand",
-      "confidence_score": 1.0
+      "target": "store_read_symbols_readsymbolsshorthand"
     },
     {
       "relation": "imports_from",
@@ -51840,9 +51840,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "store_shared",
-      "confidence_score": 1.0
+      "target": "store_shared"
     },
     {
       "relation": "imports",
@@ -51851,9 +51851,9 @@
       "source_file": "packages/core/src/operations/subject.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_subject",
-      "target": "store_shared_compare",
-      "confidence_score": 1.0
+      "target": "store_shared_compare"
     },
     {
       "relation": "imports_from",
@@ -51873,9 +51873,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "operations_subject",
-      "confidence_score": 1.0
+      "target": "operations_subject"
     },
     {
       "relation": "calls",
@@ -51961,9 +51961,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "operations_subject_resolvesubject",
-      "confidence_score": 1.0
+      "target": "operations_subject_resolvesubject"
     },
     {
       "relation": "imports",
@@ -52277,9 +52277,9 @@
       "source_file": "packages/core/src/operations/trace.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_trace",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -52288,9 +52288,9 @@
       "source_file": "packages/core/src/operations/trace.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_trace",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "imports_from",
@@ -52453,9 +52453,9 @@
       "source_file": "packages/core/src/operations/trace.ts",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "operations_trace_walk",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "calls",
@@ -54770,9 +54770,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "session_index",
-      "confidence_score": 1.0
+      "target": "session_index"
     },
     {
       "relation": "imports_from",
@@ -55538,9 +55538,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "session_open_opensession",
-      "confidence_score": 1.0
+      "target": "session_open_opensession"
     },
     {
       "relation": "imports",
@@ -57719,9 +57719,9 @@
       "source_file": "packages/core/src/store/index.ts",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_index",
-      "target": "store_read_symbols_readsymbolsshorthand",
-      "confidence_score": 1.0
+      "target": "store_read_symbols_readsymbolsshorthand"
     },
     {
       "relation": "re_exports",
@@ -57873,9 +57873,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "store_index",
-      "confidence_score": 1.0
+      "target": "store_index"
     },
     {
       "relation": "contains",
@@ -58526,9 +58526,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "store_open_openstore",
-      "confidence_score": 1.0
+      "target": "store_open_openstore"
     },
     {
       "relation": "contains",
@@ -59294,9 +59294,9 @@
       "source_file": "packages/core/src/store/read-symbols.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_symbols",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -59305,9 +59305,9 @@
       "source_file": "packages/core/src/store/read-symbols.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_symbols",
-      "target": "src_symbol_id_dottedof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_dottedof"
     },
     {
       "relation": "contains",
@@ -59355,9 +59355,9 @@
       "source_file": "packages/core/src/store/read-symbols.ts",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_symbols",
-      "target": "store_read_symbols_readsymbolsshorthand",
-      "confidence_score": 1.0
+      "target": "store_read_symbols_readsymbolsshorthand"
     },
     {
       "relation": "contains",
@@ -59474,9 +59474,9 @@
       "source_file": "packages/core/src/store/read-symbols.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_read_symbols_tosymbol",
-      "target": "src_symbol_id_dottedof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_dottedof"
     },
     {
       "relation": "calls",
@@ -59627,9 +59627,9 @@
       "source_file": "packages/core/src/store/shared.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_shared",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -59638,9 +59638,9 @@
       "source_file": "packages/core/src/store/shared.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "store_shared",
-      "target": "src_symbol_id_parsesymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsesymbolid"
     },
     {
       "relation": "contains",
@@ -60523,9 +60523,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_class_of_kind",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_class_of_kind"
     },
     {
       "relation": "contains",
@@ -60533,9 +60533,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L109",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_classofkind",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_classofkind"
     },
     {
       "relation": "contains",
@@ -60543,9 +60543,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L213",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_coarseclassof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_coarseclassof"
     },
     {
       "relation": "contains",
@@ -60553,9 +60553,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_descriptor",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_descriptor"
     },
     {
       "relation": "contains",
@@ -60563,9 +60563,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_descriptorclass",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_descriptorclass"
     },
     {
       "relation": "contains",
@@ -60573,9 +60573,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_dottedof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_dottedof"
     },
     {
       "relation": "contains",
@@ -60583,9 +60583,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L184",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_fileof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_fileof"
     },
     {
       "relation": "contains",
@@ -60593,9 +60593,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_issymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_issymbolid"
     },
     {
       "relation": "contains",
@@ -60603,9 +60603,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_packageref",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_packageref"
     },
     {
       "relation": "contains",
@@ -60613,9 +60613,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L165",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_parsedescriptors",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsedescriptors"
     },
     {
       "relation": "contains",
@@ -60623,9 +60623,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_parsesymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsesymbolid"
     },
     {
       "relation": "contains",
@@ -60633,9 +60633,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L267",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_readdescriptor",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readdescriptor"
     },
     {
       "relation": "contains",
@@ -60643,9 +60643,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L301",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_readescapedname",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readescapedname"
     },
     {
       "relation": "contains",
@@ -60653,9 +60653,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L291",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_readsimplename",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readsimplename"
     },
     {
       "relation": "contains",
@@ -60663,9 +60663,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L195",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "contains",
@@ -60673,9 +60673,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L240",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_splitfields",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_splitfields"
     },
     {
       "relation": "contains",
@@ -60683,9 +60683,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_splitshorthand",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_splitshorthand"
     },
     {
       "relation": "contains",
@@ -60693,9 +60693,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_suffix",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_suffix"
     },
     {
       "relation": "contains",
@@ -60703,9 +60703,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L127",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_symbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_symbolid"
     },
     {
       "relation": "contains",
@@ -60713,9 +60713,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id",
-      "target": "src_symbol_id_symbolparts",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_symbolparts"
     },
     {
       "relation": "imports_from",
@@ -60724,9 +60724,9 @@
       "source_file": "packages/core/test/adapter.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_adapter_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60735,9 +60735,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60746,9 +60746,9 @@
       "source_file": "packages/core/test/descriptors.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_descriptors_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60757,9 +60757,9 @@
       "source_file": "packages/core/test/evidence.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_evidence_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60768,9 +60768,9 @@
       "source_file": "packages/core/test/impact.test.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_impact_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60779,9 +60779,9 @@
       "source_file": "packages/core/test/references.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_references_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60790,9 +60790,9 @@
       "source_file": "packages/core/test/session.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_session_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60801,9 +60801,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60812,9 +60812,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60823,9 +60823,9 @@
       "source_file": "packages/core/test/trace.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_trace_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports_from",
@@ -60834,9 +60834,9 @@
       "source_file": "packages/core/test/wave.test.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_wave_test",
-      "target": "src_symbol_id",
-      "confidence_score": 1.0
+      "target": "src_symbol_id"
     },
     {
       "relation": "imports",
@@ -60845,9 +60845,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_symbol_id_classofkind",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_classofkind"
     },
     {
       "relation": "calls",
@@ -60856,9 +60856,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L144",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_parsesymbolid",
-      "target": "src_symbol_id_issymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_issymbolid"
     },
     {
       "relation": "imports",
@@ -60867,9 +60867,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "src_symbol_id_symbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_symbolid"
     },
     {
       "relation": "calls",
@@ -60878,9 +60878,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L210",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test_id",
-      "target": "src_symbol_id_symbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_symbolid"
     },
     {
       "relation": "imports",
@@ -60889,9 +60889,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_symbol_id_symbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_symbolid"
     },
     {
       "relation": "calls",
@@ -60900,9 +60900,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L214",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_coarseclassof",
-      "target": "src_symbol_id_parsesymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsesymbolid"
     },
     {
       "relation": "calls",
@@ -60911,9 +60911,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L185",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_fileof",
-      "target": "src_symbol_id_parsesymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsesymbolid"
     },
     {
       "relation": "calls",
@@ -60922,9 +60922,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L154",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_parsesymbolid",
-      "target": "src_symbol_id_readdescriptor",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readdescriptor"
     },
     {
       "relation": "calls",
@@ -60933,9 +60933,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L145",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_parsesymbolid",
-      "target": "src_symbol_id_splitfields",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_splitfields"
     },
     {
       "relation": "calls",
@@ -60944,9 +60944,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L196",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_shorthandof",
-      "target": "src_symbol_id_parsesymbolid",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsesymbolid"
     },
     {
       "relation": "calls",
@@ -60955,9 +60955,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L216",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_coarseclassof",
-      "target": "src_symbol_id_parsedescriptors",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsedescriptors"
     },
     {
       "relation": "calls",
@@ -60966,9 +60966,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L204",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_dottedof",
-      "target": "src_symbol_id_parsedescriptors",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_parsedescriptors"
     },
     {
       "relation": "calls",
@@ -60977,9 +60977,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L169",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_parsedescriptors",
-      "target": "src_symbol_id_readdescriptor",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readdescriptor"
     },
     {
       "relation": "calls",
@@ -60988,9 +60988,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L198",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_shorthandof",
-      "target": "src_symbol_id_dottedof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_dottedof"
     },
     {
       "relation": "imports",
@@ -60999,9 +60999,9 @@
       "source_file": "packages/core/test/adapter.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_adapter_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -61010,9 +61010,9 @@
       "source_file": "packages/core/test/adapter.test.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_adapter_test_edge",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61021,9 +61021,9 @@
       "source_file": "packages/core/test/cold-build.test.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_cold_build_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61032,9 +61032,9 @@
       "source_file": "packages/core/test/descriptors.test.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_descriptors_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -61043,9 +61043,9 @@
       "source_file": "packages/core/test/descriptors.test.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_descriptors_test_at",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -61054,9 +61054,9 @@
       "source_file": "packages/core/test/descriptors.test.ts",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_descriptors_test_claiming",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61065,9 +61065,9 @@
       "source_file": "packages/core/test/evidence.test.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_evidence_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61076,9 +61076,9 @@
       "source_file": "packages/core/test/impact.test.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_impact_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61087,9 +61087,9 @@
       "source_file": "packages/core/test/references.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_references_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -61098,9 +61098,9 @@
       "source_file": "packages/core/test/references.test.ts",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_references_test_named",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61109,9 +61109,9 @@
       "source_file": "packages/core/test/session.test.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_session_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61120,9 +61120,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "calls",
@@ -61131,9 +61131,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L83",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test_sweep",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61142,9 +61142,9 @@
       "source_file": "packages/core/test/trace.test.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_trace_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61153,9 +61153,9 @@
       "source_file": "packages/core/test/wave.test.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_wave_test",
-      "target": "src_symbol_id_shorthandof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_shorthandof"
     },
     {
       "relation": "imports",
@@ -61164,9 +61164,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "src_symbol_id_coarseclassof",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_coarseclassof"
     },
     {
       "relation": "calls",
@@ -61175,9 +61175,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L272",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_readdescriptor",
-      "target": "src_symbol_id_readescapedname",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readescapedname"
     },
     {
       "relation": "calls",
@@ -61186,9 +61186,9 @@
       "source_file": "packages/core/src/symbol-id.ts",
       "source_location": "L272",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_symbol_id_readdescriptor",
-      "target": "src_symbol_id_readsimplename",
-      "confidence_score": 1.0
+      "target": "src_symbol_id_readsimplename"
     },
     {
       "relation": "contains",
@@ -63249,9 +63249,9 @@
       "source_file": "packages/core/test/references.test.ts",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_references_test",
-      "target": "test_references_test_named",
-      "confidence_score": 1.0
+      "target": "test_references_test_named"
     },
     {
       "relation": "contains",
@@ -63341,9 +63341,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L209",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test",
-      "target": "test_store_test_id",
-      "confidence_score": 1.0
+      "target": "test_store_test_id"
     },
     {
       "relation": "contains",
@@ -63392,9 +63392,9 @@
       "source_file": "packages/core/test/store.test.ts",
       "source_location": "L222",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_store_test_node",
-      "target": "test_store_test_id",
-      "confidence_score": 1.0
+      "target": "test_store_test_id"
     },
     {
       "relation": "contains",
@@ -63402,9 +63402,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "test_symbol_id_test_idof",
-      "confidence_score": 1.0
+      "target": "test_symbol_id_test_idof"
     },
     {
       "relation": "contains",
@@ -63412,9 +63412,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "test_symbol_id_test_manifest",
-      "confidence_score": 1.0
+      "target": "test_symbol_id_test_manifest"
     },
     {
       "relation": "contains",
@@ -63422,9 +63422,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L81",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "test_symbol_id_test_sweep",
-      "confidence_score": 1.0
+      "target": "test_symbol_id_test_sweep"
     },
     {
       "relation": "contains",
@@ -63432,9 +63432,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test",
-      "target": "test_symbol_id_test_write",
-      "confidence_score": 1.0
+      "target": "test_symbol_id_test_write"
     },
     {
       "relation": "calls",
@@ -63443,9 +63443,9 @@
       "source_file": "packages/core/test/symbol-id.test.ts",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_symbol_id_test_idof",
-      "target": "test_symbol_id_test_sweep",
-      "confidence_score": 1.0
+      "target": "test_symbol_id_test_sweep"
     },
     {
       "relation": "contains",
@@ -69116,5 +69116,5 @@
       "source_file": ".github/workflows/ci.yaml"
     }
   ],
-  "built_at_commit": "4ac4710538c4ac14ddbeb34cb898bef1345bb542"
+  "built_at_commit": "69f51b704f6a427a6543774a5c27b899ecb54c35"
 }
