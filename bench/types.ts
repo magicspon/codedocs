@@ -15,6 +15,20 @@ export type CaseShape =
   /** Behaviour only. Nothing in the text points at code. */
   | 'symptom-only'
 
+/**
+ * How much of the repository an agent must understand to answer, from 1 to 4.
+ * Defined by exploration, never by the size of the eventual patch. The rubric
+ * is `bench/DIFFICULTY.md`.
+ */
+export type DifficultyLevel = 1 | 2 | 3 | 4
+
+/** A case's level, and why it sits there. */
+export type Difficulty = {
+  level: DifficultyLevel
+  /** The reasoning, in the rubric's terms: what has to be crossed, followed or held in mind. */
+  why: string
+}
+
 /** One benchmark case: a real issue, and the upstream fix that answers it. */
 export type BenchCase = {
   /** Stable id, and the directory name results are filed under. */
@@ -36,6 +50,8 @@ export type BenchCase = {
     files: string[]
     symbols: string[]
   }
+  /** How hard the search is, and why. See `bench/DIFFICULTY.md`. */
+  difficulty: Difficulty
   /** Why this case is worth running, and what it is expected to discriminate. */
   notes: string
 }

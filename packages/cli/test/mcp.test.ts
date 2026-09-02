@@ -272,14 +272,23 @@ describe('a tool call', () => {
   })
 
   it('takes a call with no arguments at all for an operation that needs none', () => {
-    // `analyse` has no subject, so an omitted `arguments` is a complete call.
-    const reply = ask({
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'tools/call',
-      params: { name: 'analyse' },
-    })
-    expect(resultOf(reply)['isError']).toBe(false)
+    // Omitting `arguments` also omits `cwd`, so the call runs against the
+    // working directory. Standing in the fixture keeps that a four-file build
+    // rather than a cold index of whatever repository the suite was started in.
+    const standing = process.cwd()
+    process.chdir(root)
+    try {
+      // `analyse` has no subject, so an omitted `arguments` is a complete call.
+      const reply = ask({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'tools/call',
+        params: { name: 'analyse' },
+      })
+      expect(resultOf(reply)['isError']).toBe(false)
+    } finally {
+      process.chdir(standing)
+    }
   })
 
   it('refuses `arguments` that is not an object', () => {

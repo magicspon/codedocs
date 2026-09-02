@@ -87,6 +87,38 @@ export type SessionPlan = {
 }
 
 /**
+ * Runs one cell of the plan, and says whether the session may continue.
+ *
+ * Returns false only when the API refused the run. Every other failure throws,
+ * because a bug in the harness must stop the session loudly rather than be
+ * mistaken for a quota that will come back.
+ */
+async function runOne(
+  bench: BenchCase,
+  arm: ArmName,
+  replicate: number,
+  plan: SessionPlan,
+): Promise<boolean> {
+  if (plan.resume && alreadyMeasured(bench, arm, replicate)) {
+    console.log(
+      `  ${`${bench.id}/${arm}/r${replicate}`.padEnd(28)}already measured, skipped`,
+    )
+    return true
+  }
+  try {
+    await executeRun(bench, arm, replicate, plan.model)
+    return true
+  } catch (error) {
+    if (!(error instanceof RateLimited)) throw error
+    console.error(`\n${error.message}`)
+    console.error(
+      'stopping. Re-run with --resume once the quota is back to finish the rest.',
+    )
+    return false
+  }
+}
+
+/**
  * Runs the whole plan, replicate by replicate.
  *
  * Returns false when the API refused a run: every later run would be refused
@@ -94,29 +126,15 @@ export type SessionPlan = {
  * stops while the results are honest.
  */
 export async function runSession(plan: SessionPlan): Promise<boolean> {
-  const { cases, arms, replicates, model, resume } = plan
+  const { cases, arms, replicates } = plan
   for (let replicate = 1; replicate <= replicates; replicate += 1) {
     for (const bench of cases) {
       // The arm order alternates so that any drift over the session — rate
       // limits, machine load — lands on both arms rather than on one.
       const order = replicate % 2 === 0 ? [...arms].reverse() : arms
       for (const arm of order) {
-        if (resume && alreadyMeasured(bench, arm, replicate)) {
-          console.log(
-            `  ${`${bench.id}/${arm}/r${replicate}`.padEnd(28)}already measured, skipped`,
-          )
-          continue
-        }
-        try {
-          await executeRun(bench, arm, replicate, model)
-        } catch (error) {
-          if (!(error instanceof RateLimited)) throw error
-          console.error(`\n${(error as Error).message}`)
-          console.error(
-            'stopping. Re-run with --resume once the quota is back to finish the rest.',
-          )
-          return false
-        }
+        const carryOn = await runOne(bench, arm, replicate, plan)
+        if (!carryOn) return false
       }
     }
   }
