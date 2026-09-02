@@ -10,9 +10,9 @@
 
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { casesById } from './cases.ts'
+import { RESULTS } from './paths.ts'
 import type { ArmName, BenchCase, RunRecord } from './types.ts'
-
-const BENCH = import.meta.dirname
 
 /** The middle value, averaging the two middles on an even count. */
 function median(values: number[]): number {
@@ -66,28 +66,9 @@ function pad(value: string | number, width: number): string {
 
 /** Every run record on disk. */
 function loadRecords(): RunRecord[] {
-  return readdirSync(join(BENCH, 'results'))
+  return readdirSync(RESULTS)
     .filter((f) => f.endsWith('.json') && !f.endsWith('.stream.jsonl'))
-    .map(
-      (f) =>
-        JSON.parse(
-          readFileSync(join(BENCH, 'results', f), 'utf8'),
-        ) as RunRecord,
-    )
-}
-
-/** Every case on disk, by id, so the table can print what each report gave away. */
-function loadCases(): Map<string, BenchCase> {
-  const cases = new Map<string, BenchCase>()
-  for (const file of readdirSync(join(BENCH, 'cases')).filter((f) =>
-    f.endsWith('.json'),
-  )) {
-    const bench = JSON.parse(
-      readFileSync(join(BENCH, 'cases', file), 'utf8'),
-    ) as BenchCase
-    cases.set(bench.id, bench)
-  }
-  return cases
+    .map((f) => JSON.parse(readFileSync(join(RESULTS, f), 'utf8')) as RunRecord)
 }
 
 /** One arm's row. The case and shape columns print on the first arm only. */
@@ -198,7 +179,7 @@ function main(): void {
     console.log('no results yet — run `node bench/run.ts` first')
     return
   }
-  const cases = loadCases()
+  const cases = casesById()
   const ids = [...new Set(records.map((r) => r.caseId))].sort()
 
   if (process.argv.includes('--json')) {
