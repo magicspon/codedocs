@@ -296,7 +296,9 @@ _Avoid_: coverage score, doc quality, verification percentage
 A Markdown file codedocs writes about one subject: its facts, and for each the [[Claim]] that fact
 would support — as a **candidate**, marked `codedocs?:`, which the document scan does not read. Never
 prose, never written over a file that already exists, and not a [[Document]] until a person deletes a
-`?`. What ADR 0006's deleted `docs generate` becomes once the endorsement is somebody's to give.
+`?`. It lands beside the code it is about, in a `docs/` folder next to the file the subject is
+declared in, unless `--out` says otherwise. What ADR 0006's deleted `docs generate` becomes once the
+endorsement is somebody's to give.
 _Avoid_: generated doc, skeleton, template, scaffold, stub
 
 ### The operation surface

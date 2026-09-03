@@ -439,9 +439,15 @@ $ codedocs docs draft src/checkout/service.ts --limit 5 --out docs/checkout.md
   showing 5 of 9 — pass --limit for more
 ```
 
-With no `--out` the draft is stdout and the note above goes to stderr, so a redirect captures the
-Markdown alone. `--out` **never overwrites**: an existing file is refused, exit 2, with the draft
-still on stdout so you lose nothing by moving the file out of the way. There is no `--force`.
+**With no `--out` the draft lands beside the code it is about**, in a `docs/` folder next to the
+file the subject is declared in — `src/checkout/service.ts#CheckoutService.charge` drafts
+`src/checkout/docs/service.CheckoutService.charge.md`, and the folder is created if it is not there
+yet. A file subject drops the symbol part: `src/checkout/docs/service.md`. `--out <path>` overrides
+it and `--out -` writes to stdout with the note on stderr, so a redirect captures the Markdown
+alone.
+
+Wherever it writes, a draft **never overwrites**: an existing file is refused, exit 2, with the
+draft still on stdout so you lose nothing by moving the file out of the way. There is no `--force`.
 
 `--limit` bounds sections and nothing inside one. A subject with 176 callers drafts 176 bullets —
 narrow the subject, or `--exclude-label role=test`, both of which are part of the question rather
@@ -560,7 +566,7 @@ Both flags are repeatable, one per axis.
   --measure            check the signals against the working tree
 
 `docs draft` only:
-  --out <path>         write the draft here instead of to stdout
+  --out <path>         write the draft here; `-` is stdout
 
 `report-bug` only:
   --with-repository    add the facts that name your code

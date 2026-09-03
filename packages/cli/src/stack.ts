@@ -126,3 +126,13 @@ function relativise(frame: string): string | null {
   }
   return null
 }
+
+/**
+ * The thrown message, kept as a parameter rather than as the error itself.
+ *
+ * It is free text out of `node:fs` or the adapter and can name a path, which is
+ * exactly why it is a parameter: ADR 0011's default report drops parameters and
+ * keeps codes.
+ */
+export const messageOf = (error: unknown): string =>
+  error instanceof Error ? error.message : String(error)

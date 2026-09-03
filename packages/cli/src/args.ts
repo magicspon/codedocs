@@ -64,7 +64,7 @@ export interface Command {
    *
    * Shared by two operations and defaulted differently by each: `report-bug`
    * writes `./codedocs-report.json` unless told otherwise, and `docs draft`
-   * writes nothing at all unless told to.
+   * derives a path beside the code it drafted about.
    */
   readonly out: string | null
   /** `doctor`: re-run the filesystem signals against the working tree (ADR 0009). */
