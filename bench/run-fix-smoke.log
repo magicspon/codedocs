@@ -1,0 +1,32 @@
+waiting until 1788399120 (Thu  3 Sep 2026 01:32:00 UTC)
+1 case(s) x 2 arm(s) x 1 replicate(s) on claude-sonnet-5
+
+  333230/baseline/r1            1166168 tok   21 calls    2 files   1 patched   226s  hit
+  333230/codedocs/r1            3042329 tok   40 calls    6 files   1 patched   668s  hit  (index 3716s)
+
+wrote /Users/magicspon/dev/projects/codedocs/bench/results. Run `node bench/report.ts` for the comparison.
+
+codedocs fix benchmark — microsoft/vscode, medians per cell
+  cases grouped by difficulty level; see bench/DIFFICULTY.md
+
+  case      shape          arm           tokens  calls  steps  files     src   sec   hit   sym
+  --------------------------------------------------------------------------------------------
+  level 1 · local — the report points at the code  (1 case)
+
+  333230    file-named     baseline   1,166,168     21     20      2     620   226   1/1   0/1
+                           codedocs   3,042,329     40     39      6   1,249   668   1/1   0/1
+                           delta          +161%   +90%   +95%  +200%   +101% +196%
+
+  L1        all cases      baseline   1,166,168     21     20      2     620   226   1/1   0/1
+                           codedocs   3,042,329     40     39      6   1,249   668   1/1   0/1
+                           delta          +161%   +90%   +95%  +200%   +101% +196%
+
+  --------------------------------------------------------------------------------------------
+  ALL       every case     baseline   1,166,168     21     20      2     620   226   1/1   0/1
+                           codedocs   3,042,329     40     39      6   1,249   668   1/1   0/1
+                           delta          +161%   +90%   +95%  +200%   +101% +196%
+
+  median cost per run: baseline $0.632, codedocs $1.401
+
+
+[process exited while detached; exit code unknown]
