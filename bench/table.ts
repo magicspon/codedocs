@@ -7,11 +7,11 @@
  */
 
 import { armsIn } from './arms.ts'
-import { delta, summarise, type Cell } from './summarise.ts'
-import type { Arm, RunRecord } from './types.ts'
+import { delta, judgeSpend, summarise, type Cell } from './summarise.ts'
+import type { Arm, RunRecord, Similarity } from './types.ts'
 
 /** The width of the table body, which every rule spans. */
-const RULE = '-'.repeat(103)
+const RULE = '-'.repeat(119)
 
 /** The label and shape columns an arm row prints before the arm's own name. */
 const LEAD = 25
@@ -20,15 +20,28 @@ function pad(value: string | number, width: number): string {
   return String(value).padStart(width)
 }
 
+/** The similarity grades, short enough for a column. */
+const SHORT: Record<Similarity, string> = {
+  'same-change': '=chg',
+  'same-mechanism': '=mech',
+  'same-area': '=area',
+  unrelated: '≠',
+}
+
 /** One arm's row. The label and shape columns print on the first arm only. */
 function armRow(label: string, shape: string, arm: string, cell: Cell): string {
   const invalid = cell.invalid > 0 ? ` (${cell.invalid} invalid)` : ''
   const counted = cell.runs - cell.invalid
+  // `fix` reads against the runs a judge actually read, not against the runs
+  // that counted: an unjudged run is missing evidence, not a failed fix.
+  const fix = cell.judged === 0 ? '—' : `${cell.fixes}/${cell.judged}`
   return (
     `  ${label.padEnd(10)}${shape.padEnd(15)}${arm.padEnd(22)}` +
     `${pad(cell.tokens.toLocaleString(), 9)}${pad(cell.toolCalls, 7)}${pad(cell.steps, 7)}` +
     `${pad(cell.files, 7)}${pad(cell.sourceLines.toLocaleString(), 8)}${pad(cell.seconds, 6)}` +
-    `${pad(`${cell.hits}/${counted}`, 6)}${pad(`${cell.symbolHits}/${counted}`, 6)}${invalid}`
+    `${pad(`${cell.hits}/${counted}`, 6)}${pad(`${cell.symbolHits}/${counted}`, 6)}` +
+    `${pad(fix, 7)}${pad(cell.similarity ? SHORT[cell.similarity] : '—', 7)}` +
+    `${pad(cell.judged === 0 ? '—' : cell.agreement.toFixed(2), 6)}${invalid}`
   )
 }
 
@@ -85,12 +98,16 @@ export function printHeader(reference: Arm | undefined): void {
   console.log('\ncodedocs fix benchmark — microsoft/vscode, medians per cell')
   console.log('  cases grouped by difficulty level; see bench/DIFFICULTY.md')
   console.log(
-    `  an arm is a toolset and a model; deltas are against ${reference?.id ?? 'the first arm'}\n`,
+    `  an arm is a toolset and a model; deltas are against ${reference?.id ?? 'the first arm'}`,
+  )
+  console.log(
+    '  hit and sym are exact, against the upstream fix; fix, sim and agree are a judge\n',
   )
   console.log(
     `  ${'case'.padEnd(10)}${'shape'.padEnd(15)}${'arm'.padEnd(22)}${pad('tokens', 9)}` +
       `${pad('calls', 7)}${pad('steps', 7)}${pad('files', 7)}${pad('src', 8)}` +
-      `${pad('sec', 6)}${pad('hit', 6)}${pad('sym', 6)}`,
+      `${pad('sec', 6)}${pad('hit', 6)}${pad('sym', 6)}${pad('fix', 7)}` +
+      `${pad('sim', 7)}${pad('agree', 6)}`,
   )
 }
 
@@ -114,5 +131,17 @@ export function printTotals(
   )
   if (costs.length > 0) {
     console.log(`\n  median cost per run: ${costs.join(', ')}`)
+  }
+  // The judge's spend is stated on its own line and never enters the row above.
+  // It is the cost of measuring the runs, not a cost either arm incurred, and
+  // folding it in would charge an arm for being graded.
+  const judgements = records.flatMap((record) =>
+    record.judgement ? [record.judgement] : [],
+  )
+  if (judgements.length > 0) {
+    console.log(
+      `  judging, charged to neither arm: $${judgeSpend(judgements).toFixed(2)} ` +
+        `over ${judgements.length} judged run(s)`,
+    )
   }
 }

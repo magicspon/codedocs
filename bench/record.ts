@@ -9,7 +9,7 @@
 import { parseDiff } from './diff.ts'
 import { invalidReason, scoreDiff } from './score.ts'
 import { parseStream } from './stream.ts'
-import type { Arm, BenchCase, RunRecord } from './types.ts'
+import type { Arm, BenchCase, RunJudgement, RunRecord } from './types.ts'
 
 /** Raised when the API refuses a run, so the session stops instead of filing empty records. */
 export class RateLimited extends Error {
@@ -31,6 +31,12 @@ export type RunInputs = {
   arm: Arm
   replicate: number
   startedAt: string
+  /**
+   * What a judge made of the patch, where one has been obtained. Passed in
+   * rather than fetched here: judging is asynchronous and costs money, and this
+   * function has to stay a pure fold so `--rescore` can replay it for nothing.
+   */
+  judgement?: RunJudgement | null
 }
 
 /** Folds one run's stream and patch into the record the report reads. */
@@ -53,21 +59,28 @@ export function recordFrom(inputs: RunInputs): RunRecord {
       changed.length > 0,
       usedCodedocs,
     ),
+    judgement: inputs.judgement ?? null,
   }
 }
 
 /** The one-line summary printed as each run lands. */
 export function verdictLine(record: RunRecord): string {
-  const { metrics, diff, invalid } = record
+  const { metrics, diff, invalid, judgement } = record
   const verdict = invalid
     ? `INVALID (${invalid})`
     : diff?.correct
       ? 'hit'
       : 'miss'
+  // The judge's two grades sit behind the structural verdict rather than
+  // replacing it: one says the patch changed the right code, the other says the
+  // change is right, and the benchmark reports both.
+  const judged = judgement
+    ? ` · ${judgement.correctness}/${judgement.similarity}`
+    : ''
   return (
     `${String(metrics.tokensTotal).padStart(9)} tok  ${String(metrics.toolCalls).padStart(3)} calls  ` +
     `${String(metrics.filesOpened.length).padStart(3)} files  ` +
     `${String(diff?.files.length ?? 0).padStart(2)} patched  ` +
-    `${String(Math.round(metrics.durationMs / 1000)).padStart(4)}s  ${verdict}`
+    `${String(Math.round(metrics.durationMs / 1000)).padStart(4)}s  ${verdict}${judged}`
   )
 }

@@ -13,6 +13,8 @@ import { readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { runAgent } from './agent.ts'
 import { captureDiff } from './diff.ts'
+import { JudgeFailed } from './judge.ts'
+import { judgeRun, type JudgePlan } from './judgement.ts'
 import { RESULTS } from './paths.ts'
 import { buildPrompt } from './prompt.ts'
 import { RateLimited, recordFrom, verdictLine } from './record.ts'
@@ -78,14 +80,42 @@ async function runInWorktree(
   }
 }
 
+/**
+ * Attaches what a judge made of the run's patch.
+ *
+ * Only a run that counts is judged: an invalid run is thrown out of the report
+ * whatever its patch says, and paying to grade one buys nothing. A judge that
+ * fails leaves the record unjudged rather than unfiled — the run's own
+ * measurement is what the quota was spent on, and `--judge` fills the gap
+ * afterwards for the price of the judgement alone.
+ */
+async function withJudgement(
+  record: RunRecord,
+  bench: BenchCase,
+  patch: string,
+  plan: JudgePlan,
+): Promise<RunRecord> {
+  if (!plan.enabled || record.invalid !== null || record.diff === null) {
+    return record
+  }
+  try {
+    return { ...record, judgement: await judgeRun(bench, patch, plan) }
+  } catch (error) {
+    if (!(error instanceof JudgeFailed)) throw error
+    console.log(`\n  the judge failed (${error.message}); re-run with --judge`)
+    return record
+  }
+}
+
 /** Writes one run's record, its raw stream and its patch, and prints its verdict. */
-function fileRun(
+async function fileRun(
   outcome: Outcome,
   bench: BenchCase,
   arm: Arm,
   replicate: number,
   startedAt: string,
-): void {
+  judging: JudgePlan,
+): Promise<void> {
   const stem = stemFor(bench.id, arm, replicate)
   // The evidence lands first, so a refused run leaves it behind: the stream of
   // what the agent did, and the patch it is scored on, both auditable by hand.
@@ -108,6 +138,7 @@ function fileRun(
     rmSync(`${stem}.json`, { force: true })
     throw error
   }
+  record = await withJudgement(record, bench, outcome.patch, judging)
   writeFileSync(
     `${stem}.json`,
     `${JSON.stringify(record, null, '\t')}\n`,
@@ -124,11 +155,12 @@ async function executeRun(
   bench: BenchCase,
   arm: Arm,
   replicate: number,
+  judging: JudgePlan,
 ): Promise<void> {
   const startedAt = new Date().toISOString()
   process.stdout.write(`  ${cellName(bench, arm, replicate)}`)
   const outcome = await runInWorktree(bench, arm, replicate)
-  fileRun(outcome, bench, arm, replicate, startedAt)
+  await fileRun(outcome, bench, arm, replicate, startedAt, judging)
 }
 
 /** The cell's name as the console prints it, padded to the verdict column. */
@@ -174,6 +206,8 @@ export type SessionPlan = {
   replicates: number
   /** Skip any run that already produced a measurement. */
   resume: boolean
+  /** How each run's patch is judged once it lands. */
+  judging: JudgePlan
 }
 
 /**
@@ -194,7 +228,7 @@ async function runOne(
     return true
   }
   try {
-    await executeRun(bench, arm, replicate)
+    await executeRun(bench, arm, replicate, plan.judging)
     return true
   } catch (error) {
     if (!(error instanceof RateLimited)) throw error
