@@ -1,0 +1,8 @@
+2 case(s) x 1 replicate(s) x 2 arm(s): baseline@sonnet-5, codedocs@sonnet-5; judged by claude-opus-5 x3
+
+  333230/baseline@sonnet-5/r1       already measured, skipped
+  333230/codedocs@sonnet-5/r1       already measured, skipped
+  329610/baseline@sonnet-5/r1          430963 tok   11 calls    1 files   1 patched    49s  hit · correct/same-mechanism
+  329610/codedocs@sonnet-5/r1          442281 tok   11 calls    1 files   1 patched    55s  INVALID (codedocs arm never called codedocs)  (index 204s)
+
+wrote /Users/magicspon/dev/projects/codedocs/bench/results. Run `node bench/report.ts` for the comparison.

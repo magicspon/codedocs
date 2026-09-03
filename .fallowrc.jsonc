@@ -21,6 +21,7 @@
     "bench/run.ts",
     "bench/report.ts",
     "bench/freeze-cases.ts",
+    "bench/verify-cache.ts",
     "scripts/no-network.ts",
     "packages/cli/tsdown.config.ts"
   ],

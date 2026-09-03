@@ -8,6 +8,17 @@ measurable is the cost of getting to the code that has to change — tokens
 processed, tools called, exploration steps taken, files opened, lines of source
 read, seconds spent — and whether the arm holding codedocs pays less of it.
 
+**Where this sits.** [ADR 0012](../docs/adr/0012-audience-and-the-fallow-boundary.md)
+makes the reader of codedocs a developer, and an agent one more caller of the
+same operations. So what this benchmark measures is not the product's validation
+criterion — that is [#21](https://github.com/magicspon/codedocs/issues/21), a
+developer question answered correctly that ripgrep and an editor could not
+answer at all, and it was deliberately rescoped away from the agent-against-agent
+framing used here. This is a second measurement, of a second claim, and it
+carries a confound #21 names: it depends on a model and a prompt, neither of
+which this project controls. Read it as evidence about agents holding the tool,
+never as evidence that the tool is correct or useful to a person.
+
 ## The task
 
 Each case gives an agent a real VS Code bug report and asks one thing: fix it.
@@ -21,10 +32,11 @@ A run counts as a hit when its diff changed every non-test file the upstream fix
 changed, and the `sym` column says whether it changed a line that names one of
 the symbols that fix changed.
 
-Whether the patch would work is deliberately not scored. That needs a judge
-model, and a judge is a second opinion in the measurement. Touching the right
-code is what codedocs claims to help with, and it is what can be checked exactly
-against a patch the VS Code maintainers wrote.
+That is measured exactly, against a patch the VS Code maintainers wrote, and it
+says only what the run _touched_. Whether the change is right is a separate
+question with no exact answer, because a correct fix has many valid shapes — so
+it is put to a judge, and the judge's verdict is reported beside the exact score
+rather than in place of it. See [Judging the fix](#judging-the-fix).
 
 ## What an arm is
 
@@ -61,7 +73,18 @@ an agent, and hiding it would flatter the tool.
 
 A run is thrown out, not silently counted, when the baseline reaches for
 `codedocs` anyway, when the codedocs arm never calls it, or when the agent left
-no patch at all. The report prints how many were thrown out.
+no patch at all. The report prints how many were thrown out, and why.
+
+**That third rule has a bias in it, and it runs towards the tool.** On an easy
+case the right move is not to reach for codedocs — the stack trace names the
+file, so the agent opens it and fixes it — and that run is then discarded. So
+the surviving codedocs runs are not a random sample of codedocs runs: they are
+the ones where the agent judged the tool worth using. The alternative is worse,
+because counting a run with no tool in it as evidence about the tool measures
+nothing at all, but the effect is real and it is strongest on exactly the
+control cases that exist to keep the benchmark honest. `#329610` is the first
+case to show it: both arms grepped, opened one file and fixed it, and the
+codedocs run was discarded for never calling codedocs.
 
 Every delta in the report is read against one **reference arm**, named under the
 table's header: the baseline arm with the most runs behind it — a run with no
@@ -71,8 +94,25 @@ reference did not run in prints no delta rather than a misleading one.
 
 ## The cases
 
-Every case satisfies the same three conditions, each verified rather than
-assumed:
+**Prospects and the running set.** Every researched case is frozen into
+`prospects/`. Only the ones `active.ts` names are run, preflighted or reported
+on — `node bench/writeup.ts` counts the running set, not the pool.
+
+The split is about cost, not about quality. Every codedocs run needs an index of
+its own fresh worktree, and building one on vscode is minutes with a long tail.
+The [index cache](#the-index-cache) means a case costs one build however many
+times it is run — but that is still a cost per case, so the pool is researched
+wide and run narrow, and prospects are promoted as there is budget to index and
+run them.
+
+The running set today is `#333230` and `#329610` — both level 1 controls, both
+cases where the file is handed over in the stack trace and codedocs should
+therefore buy little. Starting where the tool is least likely to look good is
+deliberate. The write-up says in its own words that a set inside one level
+cannot show the gradient the whole hypothesis is about.
+
+Every case, run or not, satisfies the same three conditions, each verified
+rather than assumed:
 
 1. **The tree under test is the tree the bug was reported against.** A case
    declares the commit immediately before its fix, and is run there, so the fix
@@ -85,20 +125,20 @@ assumed:
    would be handing over the answer. Every prompt here is the underlying user
    report, with only the issue-template HTML comments stripped.
 
-| Case                         | Level | Shape          | The report gives you                                      | Truth                                         |
-| ---------------------------- | ----- | -------------- | --------------------------------------------------------- | --------------------------------------------- |
-| [#333230](cases/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames        | `listView.ts`                                 |
-| [#329610](cases/329610.json) | 1     | `file-named`   | a stack landing inside the guilty function                | `chatAttachmentWidgets.ts`                    |
-| [#331914](cases/331914.json) | 1     | `file-named`   | the file, the method and the mechanism, from the reporter | `mainThreadEditorTabs.ts`                     |
-| [#331102](cases/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`              | `tunnelAgentHost.contribution.ts`             |
-| [#333085](cases/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for           | `automationTools.ts`                          |
-| [#327194](cases/327194.json) | 2     | `symbol-named` | a settings key, `extensions.allowed`, and a warning       | `extensionManagement.ts`                      |
-| [#332885](cases/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"     | `agentService.ts`, `copilotAgent.ts`          |
-| [#332146](cases/332146.json) | 3     | `symptom-only` | a keyboard covering a chat input on Android               | `mobileVisualViewport.ts`, `workbench.ts`     |
-| [#326185](cases/326185.json) | 3     | `symbol-named` | a settings key, `http.noProxy`, that is not what is read  | `copilotAgent.ts`, `copilotCliEnvironment.ts` |
-| [#331452](cases/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all  | `agentService.ts`                             |
-| [#329074](cases/329074.json) | 4     | `symbol-named` | dictation failing in a floating window                    | `code/electron-main/app.ts`                   |
-| [#329326](cases/329326.json) | 4     | `symptom-only` | a quick pick that closes itself when opened from a menu   | `contextview.ts`                              |
+| Case                             | Level | Shape          | The report gives you                                      | Truth                                         |
+| -------------------------------- | ----- | -------------- | --------------------------------------------------------- | --------------------------------------------- |
+| [#333230](prospects/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames        | `listView.ts`                                 |
+| [#329610](prospects/329610.json) | 1     | `file-named`   | a stack landing inside the guilty function                | `chatAttachmentWidgets.ts`                    |
+| [#331914](prospects/331914.json) | 1     | `file-named`   | the file, the method and the mechanism, from the reporter | `mainThreadEditorTabs.ts`                     |
+| [#331102](prospects/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`              | `tunnelAgentHost.contribution.ts`             |
+| [#333085](prospects/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for           | `automationTools.ts`                          |
+| [#327194](prospects/327194.json) | 2     | `symbol-named` | a settings key, `extensions.allowed`, and a warning       | `extensionManagement.ts`                      |
+| [#332885](prospects/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"     | `agentService.ts`, `copilotAgent.ts`          |
+| [#332146](prospects/332146.json) | 3     | `symptom-only` | a keyboard covering a chat input on Android               | `mobileVisualViewport.ts`, `workbench.ts`     |
+| [#326185](prospects/326185.json) | 3     | `symbol-named` | a settings key, `http.noProxy`, that is not what is read  | `copilotAgent.ts`, `copilotCliEnvironment.ts` |
+| [#331452](prospects/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all  | `agentService.ts`                             |
+| [#329074](prospects/329074.json) | 4     | `symbol-named` | dictation failing in a floating window                    | `code/electron-main/app.ts`                   |
+| [#329326](prospects/329326.json) | 4     | `symptom-only` | a quick pick that closes itself when opened from a menu   | `contextview.ts`                              |
 
 Three cases per level, and the spread is the point. `#333230` and `#329610` are
 controls: the file is handed over on a plate, so codedocs should buy little, and
@@ -140,12 +180,44 @@ asked for one, so the harness fetches each case's fix at depth 2 — the fix, an
 the commit under it — before the first run. That is the only network a benchmark
 run touches, and what it asks for are immutable hashes.
 
-A fresh worktree has no index either, so the codedocs arm's index is built
-inside it before the agent starts, in a process the benchmark is not measuring —
-where the single pinned checkout used to be warmed. That is the price of the
-isolation, and it is not a stable number: 223 seconds on the pinned checkout,
-3,716 seconds on the first fix-task run. It is printed beside each verdict so
-what the harness spent stays visible, and no metric reads it.
+### The index cache
+
+A fresh worktree has no index either, so the codedocs arm's has to be put there
+before the agent starts, in a process the benchmark is not measuring.
+
+Building it every time is the same work over and over. An index is a pure
+function of the tree it describes, and every replicate of a case reads the same
+commit — so the build happens **once per commit**, into
+`repos/.index-cache/<commit>/`, and later runs at that commit copy it in.
+
+```sh
+node bench/run.ts --warm     # build the cache for the running set, run no agent
+```
+
+This is not the state leak the per-run worktree exists to prevent. A cached
+index is only ever taken from a tree no agent has touched — the warm step runs
+before the agent starts and copies out the moment the build finishes — so what
+a later run receives is what a fresh build at that commit would have produced,
+and never anything an earlier run wrote.
+
+Restoring is not free either, and the reason is worth knowing: `git worktree
+add` writes every file with a new mtime, so every file's stat signature differs
+from the one the index recorded and codedocs hashes each to find the content
+identical. That pass costs seconds where a build costs minutes, and it happens
+in the warm step, so the run under test never pays it.
+
+Both numbers are printed beside the verdict and named — `index built 213s` or
+`index restored 5s` — because they differ by orders of magnitude and an
+unlabelled number invites the wrong one to be quoted. No metric reads either.
+
+The cache trades disk for time: one commit's index of vscode is 254 MB, so the
+full twelve-case pool would be around 3 GB. It lives under `repos/`, which is
+git-ignored, and deleting it costs only the rebuild.
+
+`node bench/verify-cache.ts` checks the trade is real — that each case restores
+rather than silently rebuilding, and that the restored index still answers for a
+ground-truth symbol. A cache that is present but stale would otherwise look
+exactly like a repository in which codedocs can find nothing.
 
 The figures quoted further down come from the run set measured on the earlier
 localization task, when the agent named files instead of changing them and every
@@ -153,8 +225,9 @@ case read one pinned checkout. They are kept because they are the evidence
 behind decisions this harness still makes, and each is labelled where it
 appears. They are not fix-task results. The only fix-task runs so far are one
 replicate of `#333230` on each arm, which proved the path end to end: both hit,
-and the codedocs arm cost more on every axis. One replicate of the control case
-is a smoke test, not a result.
+both were judged `correct`, the codedocs patch graded `same-change` against the
+baseline's `same-area`, and the codedocs arm cost more on every axis. One
+replicate of the control case is a smoke test, not a result.
 
 ## Difficulty levels
 
@@ -187,6 +260,14 @@ level 1 control together with the level 4 case and reports neither.
 | `sec`    | wall time                                                                         |
 | `hit`    | the patch changed every ground-truth file                                         |
 | `sym`    | the patch named at least one ground-truth symbol on a line it changed             |
+| `fix`    | runs a judge read as fixing the bug, over the runs it read                        |
+| `sim`    | how close those patches sat to the upstream fix                                   |
+| `agree`  | how much the judge's own readings agreed with each other                          |
+
+The first six are the cost of getting to the code. `hit` and `sym` are exact,
+computed from the patch and the upstream fix. `fix`, `sim` and `agree` are a
+judge's opinion, and the table says so in its header so the two are never read
+as one kind of number.
 
 Cache reads are counted because a cached token is still a token the model read,
 and a shorter search is exactly what shrinks the number.
@@ -281,6 +362,128 @@ that preceded the fix task, and are the evidence the choices were made on:
 The residual bias therefore runs against the tool being sold, as it does for
 `files`.
 
+## Judging the fix
+
+`hit` cannot tell a correct fix from a plausible edit in the right file, and a
+correct fix has many valid shapes — which is why the benchmark avoided the fix
+task until there was a judge for it.
+
+Every valid run's patch is read by a model that is shown exactly three things:
+the issue the agent was given, the fix the maintainers wrote over the case's
+ground-truth files, and the patch itself. It returns two grades and its
+reasoning.
+
+**correctness** — does the patch fix the reported bug?
+
+| Grade       | Meaning                                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------- |
+| `correct`   | the reported failure no longer happens, and nothing the report calls working is broken      |
+| `partial`   | part of the failure, or one path of several — or the symptom stopped while the cause stands |
+| `incorrect` | the failure remains, or the change introduces a new fault                                   |
+
+**similarity** — how close is it to the fix the maintainers wrote?
+
+| Grade            | Meaning                                                       |
+| ---------------- | ------------------------------------------------------------- |
+| `same-change`    | the same edit, allowing for naming, formatting and comments   |
+| `same-mechanism` | the same cause at the same point, by a different edit         |
+| `same-area`      | the code involved, acted on at a different point in the chain |
+| `unrelated`      | neither the cause nor the place                               |
+
+The two axes are separate on purpose. The judge is shown the upstream fix, so
+the rubric tells it in as many words that a patch reaching the same result by
+another mechanism is still `correct` — otherwise "not what the maintainers
+wrote" would collapse into "wrong", and the second axis would have nothing left
+to say.
+
+`#333230` is what the pair buys. Both arms hit, and both were judged `correct`.
+The codedocs patch graded `same-change`: it is the maintainers' edit. The
+baseline patch graded `same-area`, and the judge's own reasoning says why —
+_"the candidate guards at the point of consumption in `probeDynamicHeights` …
+inverted ranges could still flow to other consumers of `getVisibleRange`."_
+
+### What the judge cannot see
+
+The blinding is structural rather than a convention. The prompt is built from a
+type holding an issue, an upstream fix and a patch; there is no arm, model or
+run id in scope to leak into it, and both arms produce the same shape of input.
+
+The judge has **no tools**. Not for tidiness — a judge that could read the
+repository could find the fix, the tests around it, or the commit that landed
+it, and would be grading its own search rather than the patch in front of it.
+
+One tell survives, and it is a property of the diff rather than of the harness:
+a patch that names `codedocs` in its own text says which arm wrote it. That is
+recorded on the judgement as `selfIdentifying` rather than scrubbed out, because
+a scrubbed diff is no longer the run's answer.
+
+### Three readings, and what they disagree about
+
+A single grade says nothing about how stable it is, and a result reported from
+an unstable judge is a result about the judge. So each patch is read three
+times. The consensus is the grade most readings gave; a tie breaks toward the
+more conservative grade, so a split judgement never reads as the favourable one.
+`agree` is the share of readings that matched, on whichever axis was the weaker.
+
+The first two runs measured read 1.00 on similarity for both arms, and 0.67 on
+correctness for the baseline patch: two readings called it `correct`, one called
+it `partial`. That is the genuinely arguable case — it stops the crash without
+fixing the inverted range — and the number records the disagreement instead of
+hiding it behind a majority.
+
+Every reading is kept: the grades, the reasoning, the tokens and the cost, in
+`bench/judgements/`.
+
+### What judging costs, and who pays
+
+**Not the arms.** The judge's spend is printed on its own line under the table
+and never enters either arm's cost per run. It is the price of measuring the
+runs, not a cost either arm incurred, and folding it in would charge an arm for
+being graded.
+
+A first reading costs about $0.15 to $0.19; the two after it hit the prompt
+cache and cost about $0.02 each, so three readings of one patch come to roughly
+$0.20. A full twelve-case, two-arm, three-replicate set is therefore around $15
+of judging on top of the runs themselves.
+
+Judgements are filed under a hash of everything the judge was shown — the issue,
+the upstream fix, the patch, the judge model and the rubric version. Two runs
+that produced an identical patch share one judgement and it is paid for once,
+which is why the report counts the bill per judgement and not per run. Revising
+the rubric changes the key, so old grades are dropped rather than quietly mixed
+in with new ones.
+
+## The write-up
+
+[RESULTS.md](RESULTS.md) is what the benchmark exists to produce, and
+`node bench/writeup.ts` generates it from the records in `results/`. It is a
+derived artefact and is never edited by hand.
+
+Generated rather than written for one reason: there is no path through the
+generator for a number that was not measured. A write-up that appears only once
+the numbers are flattering is a brochure, and the way not to write one is to
+have no way to. The prose that frames the tables — how much the set on disk
+supports, how big the sample is — is computed from those same records, so a
+caveat cannot go stale while the data underneath it changes.
+
+**The two questions are reported in separate blocks**, never pooled:
+
+- **like for like** — one model, holding the tool and not holding it. The claim
+  codedocs is sold on.
+- **a cheaper model holding the tool** — a different model on each side. Its
+  deltas carry the models' difference as well as the toolset's, which is exactly
+  why averaging the two blocks together would answer neither.
+
+Each block gives every case a row per arm and the change between them, groups
+those into difficulty levels, and covers requests, input, output and total
+tokens, cost, tool calls, files, lines of source read, time, and correctness on
+both the exact and the judged reading. Runs that were thrown out are counted
+with their reasons rather than folded into a total.
+
+`report.ts` remains the quick console view. It reads every delta against a
+single reference arm, which is only sound while one model ran — past that it
+says so, and points here.
+
 ## Running it
 
 ```sh
@@ -291,6 +494,13 @@ node bench/run.ts --model claude-opus-5          # the default model for every a
 node bench/run.ts --arms baseline,codedocs@claude-haiku-4-5-20251001
 node bench/report.ts                 # the comparison table
 node bench/report.ts --json          # the same numbers, machine readable
+node bench/writeup.ts                # regenerate RESULTS.md from the records
+
+node bench/run.ts --warm             # build the index cache, run no agent
+node bench/run.ts --judge            # judge the patches already on disk
+node bench/run.ts --no-judge         # measure now, grade later
+node bench/run.ts --judge-replicates 1           # one reading instead of three
+node bench/run.ts --judge-model claude-sonnet-5  # a cheaper judge
 ```
 
 `run.ts` refuses to start when a case's declared base is not the commit under
@@ -301,48 +511,78 @@ per-question cost rather than the cold build.
 
 Each run leaves three files in `bench/results/`: `<case>-<arm>-r<n>.json`, the
 record the report reads, where `<arm>` is the arm's `toolset@model` id; `.stream.jsonl`, everything the agent did; and `.diff`,
-the patch it produced, readable and `git apply`-able as it stands.
+the patch it produced, readable and `git apply`-able as it stands. The
+judgements it earns land separately, in `bench/judgements/`, under a hash of
+what the judge was shown.
 
 `run.ts --rescore` rebuilds every record from the streams and patches already on
 disk. Scoring and validity are pure functions of those two, so a fix to either is
-applied to past runs rather than paid for twice. `--resume` skips runs that
-already produced a measurement.
+applied to past runs rather than paid for twice. Judgements survive it: the
+record's grades are looked up again from the cache rather than copied across, so
+a patch that has changed, or a rubric that has been revised, reads as unjudged
+instead of carrying a stale verdict. `--resume` skips runs that already produced
+a measurement.
 
-`freeze-cases.ts` regenerates `cases/*.json` from the pool in `seeds/`, fetching
-each issue body and each fix's parent commit from GitHub. It exists for
+`run.ts --judge` grades every valid patch on disk that is not yet graded, and
+tops up any judgement that has fewer readings than asked for. A run and its
+judgement are bought separately, so a judge that failed, a session that ran
+`--no-judge`, or a set measured before there was a judge can each be brought up
+to date for the price of the judging alone. Readings already cached are reused,
+so it is safe to re-run.
+
+`freeze-cases.ts` regenerates `prospects/*.json` from the pool in `seeds/`,
+fetching each issue body and each fix's parent commit from GitHub. It exists for
 provenance and does not need to run: the cases are frozen, so a run asks GitHub
 for nothing but the commits they name — never for an issue body someone may
 have edited since. Adding a case means adding a seed to `seeds/level<N>.ts` and
-running the freezer; nothing under `cases/` is edited by hand.
+running the freezer; nothing under `prospects/` is edited by hand.
+
+Freezing a case does not run it. `active.ts` names the running set, and putting
+a prospect in it is a deliberate act with hours of indexing attached — never a
+side effect of researching a good case.
 
 ## How the harness is laid out
 
 One module per seam, so a change to scoring does not sit in the same file as the
 process spawning:
 
-| Module          | What it holds                                                  |
-| --------------- | -------------------------------------------------------------- |
-| `paths.ts`      | where the benchmark reads and writes                           |
-| `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
-| `seeds/`        | the pool the freezer works from, one file per difficulty level |
-| `worktree.ts`   | a run's own checkout at its case's commit, and its removal     |
-| `arms.ts`       | an arm: parsing it, ordering it, and widening an older record  |
-| `warm.ts`       | building the index that worktree does not come with            |
-| `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
-| `agent.ts`      | spawning `claude -p` and collecting its stream                 |
-| `tally.ts`      | what one run consumed: calls, steps, files, lines read, tokens |
-| `stream.ts`     | walking the stream and folding it into that tally              |
-| `diff.ts`       | taking the patch out of a worktree, and reading it back        |
-| `score.ts`      | scoring one patch against the fix, and deciding validity       |
-| `record.ts`     | the record one saved stream and patch imply                    |
-| `session.ts`    | running (case, arm, replicate) in a worktree, and filing it    |
-| `rescore.ts`    | rebuilding records from saved streams and patches              |
-| `preflight.ts`  | the ground-truth checks that run before any quota is spent     |
-| `run.ts`        | the command line                                               |
-| `difficulty.ts` | the levels, and the heading the report prints for each         |
-| `summarise.ts`  | the medians one arm's runs become                              |
-| `table.ts`      | column widths, rows, and the delta beneath a non-reference arm |
-| `report.ts`     | reading `results/`, grouping by level, printing the comparison |
+| Module              | What it holds                                                  |
+| ------------------- | -------------------------------------------------------------- |
+| `paths.ts`          | where the benchmark reads and writes                           |
+| `prospects/`        | every researched case, frozen                                  |
+| `active.ts`         | which prospects are in the running set, and why it is small    |
+| `cases.ts`          | the running set, and the whole pool behind it                  |
+| `seeds/`            | the pool the freezer works from, one file per difficulty level |
+| `worktree.ts`       | a run's own checkout at its case's commit, and its removal     |
+| `arms.ts`           | an arm: parsing it, ordering it, and widening an older record  |
+| `warm.ts`           | the index cache: build once per commit, restore into each run  |
+| `prewarm.ts`        | filling that cache ahead of any run                            |
+| `verify-cache.ts`   | proving a restored index is one a build would have produced    |
+| `prompt.ts`         | the task, and the briefing the codedocs arm gets               |
+| `agent.ts`          | spawning `claude -p` and collecting its stream                 |
+| `tally.ts`          | what one run consumed: calls, steps, files, lines read, tokens |
+| `stream.ts`         | walking the stream and folding it into that tally              |
+| `diff.ts`           | taking the patch out of a worktree, and reading it back        |
+| `score.ts`          | scoring one patch against the fix, and deciding validity       |
+| `record.ts`         | the record one saved stream and patch imply                    |
+| `session.ts`        | running (case, arm, replicate) in a worktree, and filing it    |
+| `rescore.ts`        | rebuilding records from saved streams and patches              |
+| `preflight.ts`      | the ground-truth checks that run before any quota is spent     |
+| `upstream.ts`       | the fix the maintainers wrote, as the judge is shown it        |
+| `rubric.ts`         | the two scales, their definitions, and the blind prompt        |
+| `judge.ts`          | spawning a judge with no tools, and reading one verdict back   |
+| `judgement.ts`      | the judgement cache, the consensus and the agreement figure    |
+| `rejudge.ts`        | filling in the judgements the runs on disk are missing         |
+| `run.ts`            | the command line                                               |
+| `difficulty.ts`     | the levels, and the heading the report prints for each         |
+| `summarise.ts`      | the medians one arm's runs become                              |
+| `comparisons.ts`    | the two questions — like-for-like, and across models           |
+| `table.ts`          | column widths, rows, and the delta beneath a non-reference arm |
+| `report.ts`         | reading `results/`, grouping by level, printing the comparison |
+| `markdown.ts`       | markdown tables, padded so the output is formatter-stable      |
+| `writeup-tables.ts` | the tables `RESULTS.md` is made of                             |
+| `writeup-prose.ts`  | the parts of `RESULTS.md` that are not numbers                 |
+| `writeup.ts`        | assembling `RESULTS.md` from the records on disk               |
 
 ## What this does not show
 
@@ -352,22 +592,32 @@ process spawning:
   therefore missing. Installing would cost several gigabytes and make the
   benchmark far harder to reproduce. Read the result as a floor: typed fidelity
   can add edges, not remove them.
-- **The index build is amortized out, and it is not free.** A fresh worktree
-  has no index, so one is built before every codedocs run: 12,519 files, 527k
-  symbols and 728k call edges, in a process no metric reads. It took 223 seconds
-  on the pinned checkout and 3,716 seconds on the first fix-task run, so treat
-  it as minutes to an hour rather than as a constant. Each question the run then asks costs about four seconds. Carrying one
-  run's index into the next would cut that, and is deliberately not done — an
-  index a run built is state the next run would inherit, which is what the
-  per-run worktree exists to prevent. A single-question user never recovers the
-  build; a working session does, several times over. The per-run numbers assume
-  the session, and the build cost is stated here rather than buried in them.
+- **The index build is amortized out, and it is not free.** Indexing vscode is
+  12,519 files, 527k symbols and 728k call edges, in a process no metric reads.
+  Five builds have been timed: four between 186 and 223 seconds, and one at
+  3,716. That outlier is unexplained, so treat the cost as minutes with a long
+  tail rather than as a constant, and the restore that replaces it as 5. The harness builds each commit once and restores it into
+  later worktrees, so what a run pays is the restore, and each question it then
+  asks costs about four seconds. A single-question user recovers none of the
+  build; a working session recovers it several times over. The per-run numbers
+  assume the session, and the build cost is stated here rather than buried in
+  them.
 - **One repository, one task shape, three replicates.** Enough to see whether an
   effect is there and whether the spread swamps it. Not enough for a confidence
   interval, and not evidence about repositories unlike vscode. An arm carries its
   own model, so a session may vary that too — but every result on disk so far
   was measured on one.
-- **Whether the fix is correct is not measured.** A run that changed every
-  ground-truth file may still have written the wrong change inside it, and it
-  scores as a hit. Judging the patch needs a judge model; this measures what the
-  patch touched, and what the search for it cost.
+- **Whether the fix is correct is one model's opinion.** `hit` and `sym` are
+  exact; `fix` and `sim` are not, and never can be — a correct fix has many
+  valid shapes, and deciding between them is a judgement. What the harness can
+  do it does: the judge is blind to which arm wrote a patch, it has no tools to
+  go looking with, it reads each patch three times, and the reasoning behind
+  every grade is on disk to be argued with. What it cannot do is make the grades
+  a measurement. Read `agree` beside them — where it is below 1.00, the judge
+  disagreed with itself, and the honest reading of that cell is that the case is
+  arguable rather than that the grade is wrong.
+- **One judge, one rubric.** Every grade on disk comes from `claude-opus-5`
+  under one set of definitions. A second judge model would say how much of a
+  grade is the rubric and how much is the reader; nothing here has asked one.
+  The rubric version travels with each judgement, so a revision drops the old
+  grades rather than mixing them in.

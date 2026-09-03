@@ -133,6 +133,76 @@ export type RunDiff = {
   correct: boolean
 }
 
+/**
+ * Whether a candidate patch fixes the bug it was given.
+ *
+ * Independent of resemblance to the upstream fix: a patch that reaches the same
+ * result by another mechanism is `correct`. Resemblance is `Similarity`.
+ */
+export type Correctness =
+  /** Resolves the reported failure without breaking what the report describes. */
+  | 'correct'
+  /** Addresses part of it, or one path of several the report covers. */
+  | 'partial'
+  /** Does not resolve it, or introduces a new fault. */
+  | 'incorrect'
+
+/**
+ * How close a candidate patch sits to the fix the maintainers wrote.
+ *
+ * `same-area` is the grade the benchmark exists to separate from a hit: the
+ * right code, acted on at the wrong point in the chain.
+ */
+export type Similarity =
+  /** The same edit, allowing for naming and formatting. */
+  | 'same-change'
+  /** The same root cause at the same point, by a different edit. */
+  | 'same-mechanism'
+  /** Touches the code involved, but acts at a different point in the chain. */
+  | 'same-area'
+  /** Neither the cause nor the place. */
+  | 'unrelated'
+
+/** One reading of one patch: two grades, the reasoning behind them, and what it cost. */
+export type JudgeVerdict = {
+  correctness: Correctness
+  similarity: Similarity
+  /** Why each grade was given, naming the code that decided it. Kept for auditing. */
+  why: string
+  judgedAt: string
+  /** The judge's own spend on this reading. Never folded into the run's cost. */
+  costUsd: number
+  tokensTotal: number
+}
+
+/**
+ * The judgement standing against one run: the consensus of several readings of
+ * its patch, and the spread behind that consensus.
+ */
+export type RunJudgement = {
+  /** The judge model. Fixed across arms, so the judge is never a variable in the comparison. */
+  model: string
+  /** Hash of everything the judge was shown. The judgement cache is keyed by it. */
+  key: string
+  /** Which rubric produced these grades. A new rubric is a new key, not a mixed table. */
+  rubric: number
+  correctness: Correctness
+  similarity: Similarity
+  /** Share of readings agreeing with the consensus, per axis. 1 is unanimous. */
+  agreement: { correctness: number; similarity: number }
+  /** Every reading behind the consensus, in the order they were made. */
+  replicates: JudgeVerdict[]
+  /** What judging this run cost in total, reported apart from the run under test. */
+  costUsd: number
+  tokensTotal: number
+  /**
+   * True when the patch names codedocs in its own text — the one way a diff can
+   * tell the judge which arm wrote it. Recorded rather than scrubbed: a scrubbed
+   * diff is no longer the run's answer.
+   */
+  selfIdentifying: boolean
+}
+
 /** One (case, arm, replicate) execution. */
 export type RunRecord = {
   caseId: string
@@ -156,4 +226,12 @@ export type RunRecord = {
   diff: RunDiff | null
   /** Set when the run cannot be counted, with the reason. */
   invalid: string | null
+  /**
+   * What a judge made of the patch, or null when it has not been judged.
+   *
+   * Null covers three cases the report keeps apart from a bad grade: a record
+   * written before there was a judge, a run too invalid to be worth grading,
+   * and a judge call that failed. `run.ts --judge` fills in the last of them.
+   */
+  judgement?: RunJudgement | null
 }

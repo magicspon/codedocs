@@ -3,3 +3,6 @@ results/
 # The retired localization runs, kept as evidence for the figures the README
 # quotes from them. They measure a different task, so the report never reads them.
 results-localization/
+# Judgements, filed by a hash of what the judge was shown. Paid output like the
+# runs themselves, and `node bench/run.ts --judge` fills in any that are missing.
+judgements/

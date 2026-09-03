@@ -10,6 +10,7 @@
 import { readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { readRecord } from './arms.ts'
+import { cachedJudgement } from './judgement.ts'
 import { RESULTS } from './paths.ts'
 import { recordFrom, verdictLine } from './record.ts'
 import type { Arm, BenchCase, RunRecord, Toolset } from './types.ts'
@@ -24,7 +25,12 @@ const STREAM_FILE =
   /^(.+?)-(baseline|codedocs)(?:@(.+))?-r(\d+)\.stream\.jsonl$/
 
 /** What the original run recorded about itself, which rescoring must not invent. */
-type Provenance = { startedAt: string; arm: Arm }
+type Provenance = {
+  startedAt: string
+  arm: Arm
+  /** The model that judged this run, where one did. Needed to find its judgement again. */
+  judgeModel: string | null
+}
 
 /**
  * Keeps whatever the original record said about when and as what it ran; only
@@ -36,10 +42,31 @@ type Provenance = { startedAt: string; arm: Arm }
 function provenanceOf(stem: string): Provenance | null {
   try {
     const prior = readRecord(readFileSync(`${stem}.json`, 'utf8'))
-    return { startedAt: prior.startedAt, arm: prior.arm }
+    return {
+      startedAt: prior.startedAt,
+      arm: prior.arm,
+      judgeModel: prior.judgement?.model ?? null,
+    }
   } catch {
     return null
   }
+}
+
+/**
+ * The judgement this run already has, looked up again rather than copied over.
+ *
+ * Looking it up is what makes rescoring honest: the key covers the patch and the
+ * rubric, so a judgement made against a patch that has since changed, or under a
+ * rubric that has since been revised, is not found and the run reads as
+ * unjudged until `--judge` grades it again. Copying the old grades across would
+ * have carried a stale verdict into the table for nothing.
+ */
+function judgementFor(
+  bench: BenchCase,
+  patch: string,
+  judgeModel: string | null,
+): ReturnType<typeof cachedJudgement> {
+  return judgeModel === null ? null : cachedJudgement(bench, patch, judgeModel)
 }
 
 /**
@@ -99,6 +126,7 @@ export function rescore(cases: BenchCase[]): void {
         arm,
         replicate: Number(replicate),
         startedAt: provenance.startedAt,
+        judgement: judgementFor(bench, patch, provenance.judgeModel),
       })
     } catch (error) {
       // A refused run has no measurement in it to rescore. Drop the record so

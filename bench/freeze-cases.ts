@@ -1,6 +1,10 @@
 /**
- * Writes `bench/cases/*.json` from GitHub, once, so a benchmark run never
+ * Writes `bench/prospects/*.json` from GitHub, once, so a benchmark run never
  * depends on the network or on an issue being edited later.
+ *
+ * The freezer writes the whole pool. Which of those prospects is actually run
+ * is `active.ts`, and promoting one is a deliberate act with a cost attached —
+ * not a side effect of researching a case.
  *
  * Run with `node bench/freeze-cases.ts`. Needs an authenticated `gh`.
  */
@@ -8,6 +12,7 @@
 import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { PROSPECTS } from './paths.ts'
 import { seeds } from './seeds/index.ts'
 import type { BenchCase, CaseShape } from './types.ts'
 
@@ -70,7 +75,7 @@ export function freeze(): void {
       issueUrl: issue.url,
       body: stripTemplateComments(issue.body ?? ''),
     }
-    const path = join(import.meta.dirname, 'cases', `${seed.id}.json`)
+    const path = join(PROSPECTS, `${seed.id}.json`)
     writeFileSync(path, `${JSON.stringify(bench, null, '\t')}\n`, 'utf8')
     console.log(`froze ${seed.id}  ${bench.title}`)
   }
