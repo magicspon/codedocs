@@ -82,17 +82,36 @@ case in the set.
 ## The current cases
 
 Each case records its own reasoning in the `difficulty.why` field of its
-`cases/*.json`. The short version:
+`cases/*.json`, and the seed it was written from lives in `seeds/level<N>.ts`.
+The short version:
 
-| Case      | Level | What sets the level                                                                    |
-| --------- | ----- | -------------------------------------------------------------------------------------- |
-| `#333230` | 1     | the stack trace names the file on eight frames; the cause is one hop away inside it    |
-| `#331102` | 2     | one private symbol named, no file; the rest is callers within one contribution         |
-| `#333085` | 2     | one file, but nothing in the report is an identifier — the anchor is a product noun    |
-| `#332885` | 3     | two files in different layers, joined through a provider interface                     |
-| `#331452` | 4     | a migration's treatment of an unavailable catalog: lifecycle, and no identifier at all |
+| Case      | Level | What sets the level                                                                        |
+| --------- | ----- | ------------------------------------------------------------------------------------------ |
+| `#333230` | 1     | the stack trace names the file on eight frames; the cause is one hop away inside it        |
+| `#329610` | 1     | the stack lands inside the guilty function; one rule of one abstraction to apply           |
+| `#331914` | 1     | the reporter names the file, permalinks the method and states the mechanism                |
+| `#331102` | 2     | one private symbol named, no file; the rest is callers within one contribution             |
+| `#333085` | 2     | one file, but nothing in the report is an identifier — the anchor is a product noun        |
+| `#327194` | 2     | the anchor is a settings key; the answer is a schema declaration nothing calls             |
+| `#332885` | 3     | two files in different layers, joined through a provider interface                         |
+| `#332146` | 3     | two files joined by a browser event: a viewport part and the layout pass that ignores it   |
+| `#326185` | 3     | a configured value followed across a process boundary into a child process's environment   |
+| `#331452` | 4     | a migration's treatment of an unavailable catalog: lifecycle, and no identifier at all     |
+| `#329074` | 4     | a window's identity across two processes; every word of the report points at the wrong one |
+| `#329326` | 4     | ordering: a closing view outlives its own disposal and takes focus back                    |
 
-Five cases over four levels is a spread, not a sample. Level 2 holds two cases
-that are hard for different reasons — one starts from a symbol, the other from a
-noun — and level 4 holds one. Read a per-level delta as a direction, and read
-the case rows underneath it before believing the direction.
+Twelve cases, three per level. That is a pilot, not a sample: three cases can
+show a direction and cannot establish an effect size, so read a per-level delta
+as a direction and read the case rows underneath it before believing it.
+
+The spread within a level is deliberate. Level 1 holds one case whose file is
+handed over by a crash and one whose file is handed over by a reporter who had
+already done the search, because those are different kinds of free. Level 2
+holds three anchors that behave differently under search — a symbol, a product
+noun and a settings key. Level 4 holds two single-file cases and one that is
+single-file only because the migration it concerns lives in one service.
+
+The pool also spreads across the repository — `base/`, `code/electron-main/`,
+`platform/extensionManagement/`, `platform/agentHost/`, `sessions/` and three
+different `workbench/` areas — because a pool that repeatedly tests one corner
+measures that corner rather than the repository.

@@ -1,0 +1,26 @@
+{
+  "id": "329326",
+  "issue": 329326,
+  "shape": "symptom-only",
+  "fix": {
+    "commit": "b966285933b27aaa9be0904c1c6f2bbe666aefa9",
+    "url": "https://github.com/microsoft/vscode/commit/b966285933b27aaa9be0904c1c6f2bbe666aefa9",
+    "landedAt": "2026-08-06T09:33:50Z"
+  },
+  "truth": {
+    "files": ["src/vs/base/browser/ui/contextview/contextview.ts"],
+    "symbols": ["hide", "completeHideAnimation"]
+  },
+  "difficulty": {
+    "level": 4,
+    "why": "Level 4. Ordering, not location. A close animation defers the context view's disposal, and during that interval the dying menu is still in the document and still focusable, so its own mouse-out handling can take focus back from the quick pick that has just opened; the quick pick sees a blur and closes itself. Three components are involved and the fix is in none of the two the reporter describes — it is one file, reached by reasoning about what is alive when."
+  },
+  "notes": "The report explains the interaction and still does not give the address: it describes the menu taking focus back, and the fix makes the closing view inert instead. A second single-file level 4, in `base/`, which keeps the level from being defined by agent-host lifecycle bugs. The report names the regressing commit, which the shallow benchmark checkout cannot resolve — the agent gets the sentence, not the diff.",
+  "base": {
+    "commit": "25b1304d168d1a916dd9b12ab0ce4b18b7b2a7ca",
+    "url": "https://github.com/microsoft/vscode/commit/25b1304d168d1a916dd9b12ab0ce4b18b7b2a7ca"
+  },
+  "title": "Toolbar commands immediately close newly opened quick picks",
+  "issueUrl": "https://github.com/microsoft/vscode/issues/329326",
+  "body": "### Type of Bug\n\nRegression\n\n### Reproduction\n\n1. Run a current VS Code Insiders build with the modern UI/style override and motion enabled.\n2. Open Source Control.\n3. Open a toolbar **More Actions...** menu for a repository.\n4. Open **Branch** and invoke **Create Branch From...**.\n5. Observe the quick pick.\n\nThis also reproduces with other commands invoked from workbench toolbars that open a quick pick. Invoking the same commands from the Command Center does not reproduce the problem.\n\n### Expected Behavior\n\nThe command's quick pick remains open and focused.\n\n### Actual Behavior\n\nThe Command Center/quick-pick surface briefly opens, then immediately closes and focus returns to the toolbar menu.\n\n### Regression Details\n\nThe regression was introduced by c5f02db50896ef310d3c909628e651675644fcef (\"Add open/close motion to button menus in workbench chrome\", #325190).\n\nAnimated context views delay disposal for the close animation. During that interval, the closing toolbar menu remains focusable. Its existing mouse-out handling can focus the menu's `actions-container` after the command has opened and focused a quick pick. The quick pick then receives a blur event and closes.\n\nThe issue only appears when the context-view close animation is active, which explains why it reproduces on machines enrolled in the modern UI/style override but not necessarily on every machine running the same Insiders version.\n\n### VS Code Version\n\nCurrent VS Code Insiders (1.133 development cycle); regression is also present on the 1.132 release branch."
+}

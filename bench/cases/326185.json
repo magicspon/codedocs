@@ -1,0 +1,34 @@
+{
+  "id": "326185",
+  "issue": 326185,
+  "shape": "symbol-named",
+  "fix": {
+    "commit": "9f9213b45855b326a6cd8427fe4a34945ea2f625",
+    "url": "https://github.com/microsoft/vscode/commit/9f9213b45855b326a6cd8427fe4a34945ea2f625",
+    "landedAt": "2026-09-01T15:37:11Z"
+  },
+  "truth": {
+    "files": [
+      "src/vs/platform/agentHost/node/copilot/copilotAgent.ts",
+      "src/vs/platform/agentHost/node/copilot/copilotCliEnvironment.ts"
+    ],
+    "symbols": [
+      "invokeWithTemporaryProxyEnvironment",
+      "createCopilotCliEnvironment",
+      "_readNoProxy",
+      "_createCopilotCliEnvironment"
+    ]
+  },
+  "difficulty": {
+    "level": 3,
+    "why": "Level 3. The report names `http.noProxy`, and that setting is not what the fix reads: the agent host keeps its own proxy configuration, and the value has to reach a child process as environment variables. The path runs configuration → agent → CLI environment builder → spawned process, so the reader has to follow a value across a process boundary and establish that the no-proxy half of it is dropped on the way."
+  },
+  "notes": "A user setting that the agent host ignores. The trap is the obvious one: `http.noProxy` is a workbench setting with plenty of hits, and none of them is where the fix goes. Tests whether a structural interface helps an agent follow a value rather than a name.",
+  "base": {
+    "commit": "0ff22af8bb3bcb430239e6cf0b2db579c6888177",
+    "url": "https://github.com/microsoft/vscode/commit/0ff22af8bb3bcb430239e6cf0b2db579c6888177"
+  },
+  "title": "http.noProxy config not work for agent host when request BYOK model",
+  "issueUrl": "https://github.com/microsoft/vscode/issues/326185",
+  "body": "Does this issue occur when all extensions are disabled?: Yes/No\n\n- VS Code Version:  1.129\n- OS Version: Windows 11\n\nSteps to Reproduce:\n\n1. Set the http.noProxy list, add value 127.0.0.1, localhost\n\n<img width=\"511\" height=\"297\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f4932ad7-ee88-4589-8edc-852fcbc38bff\" />\n\n2. Select the agent host harness in chat window/ agent window \n\n<img width=\"479\" height=\"205\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ebfdd104-0f1d-428b-8567-4580490b0f8c\" />\n\n4. Ask something. \n5. The request to 127.0.0.1 transfered to the proxy\n<img width=\"1395\" height=\"146\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/a00fc198-4fb4-4f3a-8c92-d5825074c84b\" />\n\nAs expectation it should request local in the device, not transfer data to proxy\n\n<img width=\"949\" height=\"200\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d995f020-36d5-4da3-89bd-14874a31aff5\" />\n\n<img width=\"1022\" height=\"109\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/839a537a-0fb1-4514-bad5-5e3275f49803\" />"
+}
