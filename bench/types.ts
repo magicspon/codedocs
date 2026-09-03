@@ -224,6 +224,17 @@ export type RunRecord = {
   metrics: RunMetrics
   /** What the run's patch touched, or null when it left no patch at all. */
   diff: RunDiff | null
+  /**
+   * Whether the run called codedocs at all.
+   *
+   * Recorded for both arms, not only the one it invalidates. On the codedocs
+   * arm it is the take-up figure the report prints, and take-up is a result in
+   * its own right: on an easy case declining to reach for the tool is the
+   * correct move, and a discard on its own throws that finding away. Absent on
+   * records written before it was recorded — `run.ts --rescore` fills those in
+   * from the stream saved beside them, for nothing.
+   */
+  usedCodedocs?: boolean
   /** Set when the run cannot be counted, with the reason. */
   invalid: string | null
   /**

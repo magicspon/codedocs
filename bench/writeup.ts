@@ -40,13 +40,13 @@ import {
   standing,
 } from './writeup-prose.ts'
 import {
-  discardedTable,
   headlineTable,
   judgeTable,
   levelHeading,
   levelsWithRuns,
   levelTable,
 } from './writeup-tables.ts'
+import { discardedTable, pooledBasis, takeUpTable } from './writeup-honesty.ts'
 import type { RunRecord } from './types.ts'
 
 /** Every run record on disk. */
@@ -98,16 +98,24 @@ function comparisonSection(
     ...runsOf(records, comparison.reference),
     ...runsOf(records, comparison.contender),
   ]
-  const levels = levelsWithRuns(mine, cases).map((group) =>
-    sections([
+  const headline = pooledBasis(mine, comparison)
+  const levels = levelsWithRuns(mine, cases).map((group) => {
+    const here = mine.filter((r) => group.ids.includes(r.caseId))
+    // Only a level holding more than one case prints a pooled row, so only
+    // that one can pool the two arms over different sets of cases. A set inside
+    // one level says the same thing twice, so the level defers to the headline.
+    const basis = group.ids.length > 1 ? pooledBasis(here, comparison) : null
+    return sections([
       heading(4, levelHeading(group.level, group.ids)),
       levelTable(group.level, group.ids, mine, comparison),
-    ]),
-  )
+      basis === headline ? '' : (basis ?? ''),
+    ])
+  })
   return sections([
     heading(3, comparison.id),
     `_${questionOf(comparison.kind)}._`,
     headlineTable(mine, comparison),
+    headline ?? '',
     ...levels,
   ])
 }
@@ -163,12 +171,26 @@ never averaged with it: pooled together, the two answer neither question.`,
       records,
       cases,
     ),
+    heading(2, 'Tool take-up'),
+    `How often each arm reached for codedocs at all. On the codedocs arm this is
+take-up, and a rate below 1 is a result rather than a hole: the agent held the
+tool and did not want it, which on a level 1 control is the _correct_ move. On
+the baseline arm the same figure is contamination, and anything above 0 is a run
+that was never the arm it claimed to be.`,
+    `This table exists because the discard rule below has a bias in it that runs
+towards codedocs — the runs it throws out are the ones where the agent judged
+the tool unnecessary, so the runs that survive are the ones where it judged the
+tool worth using. Reporting take-up does not remove that bias. It makes the
+thing the discard was hiding into a measurement, and it is the figure to read
+before any pooled delta.`,
+    takeUpTable(records, cases) ||
+      '_No run has recorded whether it called codedocs._',
     heading(2, 'Discarded runs'),
     `A run is thrown out, never silently counted, when the baseline reached for
 codedocs anyway, when the codedocs arm never called it, or when the agent left
 no patch at all. Each of those means the comparison would have stopped being
 between the two things it claims to compare.`,
-    discardedTable(records) || '_No run has been discarded._',
+    discardedTable(records, cases) || '_No run has been discarded._',
     heading(2, 'The judge'),
     judgeTable(records) || '_No run has been judged._',
     limits(coverage),

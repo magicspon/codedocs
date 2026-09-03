@@ -9,7 +9,15 @@
 
 import { type Comparison, runsOf } from './comparisons.ts'
 import { levelName, LEVELS, levelOf } from './difficulty.ts'
-import { change, num, ratio, type Row, table, usd } from './markdown.ts'
+import {
+  byLeadingColumns,
+  change,
+  num,
+  ratio,
+  type Row,
+  table,
+  usd,
+} from './markdown.ts'
 import { type Cell, counted, summarise } from './summarise.ts'
 import type { BenchCase, RunRecord } from './types.ts'
 
@@ -224,36 +232,6 @@ export function headlineTable(
   )
 }
 
-/**
- * Orders the rows of the per-arm tables: by arm, then by whatever the second
- * column holds. Stated rather than left to the default, which would sort on the
- * whole row coerced to a string and put `10` before `2`.
- */
-function byArmThenReason(a: Row, b: Row): number {
-  return (
-    (a[0] ?? '').localeCompare(b[0] ?? '') ||
-    (a[1] ?? '').localeCompare(b[1] ?? '')
-  )
-}
-
-/**
- * Runs that were thrown out, and why.
- *
- * Counted per arm and per reason, because the total alone hides the difference
- * that matters: an arm that left no patch failed at the task, and an arm that
- * reached for the wrong toolset was never the arm it claimed to be.
- */
-export function discardedTable(records: RunRecord[]): string {
-  const rows: Row[] = []
-  for (const arm of new Set(records.map((r) => r.arm.id))) {
-    const cell = summarise(records.filter((r) => r.arm.id === arm))
-    for (const [reason, count] of Object.entries(cell.invalidReasons)) {
-      rows.push([arm, reason, String(count), String(cell.runs)])
-    }
-  }
-  return table(['arm', 'reason', 'runs', 'out of'], rows.sort(byArmThenReason))
-}
-
 /** What the judge cost, and how much it agreed with itself. */
 export function judgeTable(records: RunRecord[]): string {
   const rows: Row[] = []
@@ -269,6 +247,6 @@ export function judgeTable(records: RunRecord[]): string {
   }
   return table(
     ['arm', 'runs judged', 'median agreement', 'judging cost'],
-    rows.sort(byArmThenReason),
+    rows.sort(byLeadingColumns),
   )
 }

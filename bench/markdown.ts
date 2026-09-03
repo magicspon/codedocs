@@ -59,6 +59,19 @@ export function ratio(part: number, whole: number): string {
   return whole === 0 ? '—' : `${part}/${whole}`
 }
 
+/**
+ * Orders rows by their first two columns, in that order.
+ *
+ * Stated rather than left to the default sort, which would coerce the whole row
+ * to a string and put `10` before `2`.
+ */
+export function byLeadingColumns(a: Row, b: Row): number {
+  return (
+    (a[0] ?? '').localeCompare(b[0] ?? '') ||
+    (a[1] ?? '').localeCompare(b[1] ?? '')
+  )
+}
+
 /** A heading at the given level. */
 export function heading(level: number, text: string): string {
   return `${'#'.repeat(level)} ${text}`

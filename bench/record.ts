@@ -53,6 +53,7 @@ export function recordFrom(inputs: RunInputs): RunRecord {
     baseCommit: bench.base.commit,
     metrics,
     diff: changed.length > 0 ? scoreDiff(changed, bench) : null,
+    usedCodedocs,
     invalid: invalidReason(
       arm.toolset,
       metrics,
