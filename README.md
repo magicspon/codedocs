@@ -748,6 +748,12 @@ code:
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on.
 - **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and what
   it will not do.
+- **[`bench/`](bench)** — the fix benchmark: whether an agent holding codedocs reaches the same fix
+  for less. [`bench/README.md`](bench/README.md) is the method,
+  [`bench/RESULTS.md`](bench/RESULTS.md) the generated write-up. Read it as a second measurement
+  rather than as the product's validation criterion — [ADR 0012](docs/adr/0012-audience-and-the-fallow-boundary.md)
+  makes the reader a developer, so what codedocs has to establish is a developer question answered
+  correctly that ripgrep and an editor could not answer at all.
 
 Open work lives in [GitHub issues](https://github.com/magicspon/codedocs/issues).
 

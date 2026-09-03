@@ -8,6 +8,17 @@ measurable is the cost of getting to the code that has to change — tokens
 processed, tools called, exploration steps taken, files opened, lines of source
 read, seconds spent — and whether the arm holding codedocs pays less of it.
 
+**Where this sits.** [ADR 0012](../docs/adr/0012-audience-and-the-fallow-boundary.md)
+makes the reader of codedocs a developer, and an agent one more caller of the
+same operations. So what this benchmark measures is not the product's validation
+criterion — that is [#21](https://github.com/magicspon/codedocs/issues/21), a
+developer question answered correctly that ripgrep and an editor could not
+answer at all, and it was deliberately rescoped away from the agent-against-agent
+framing used here. This is a second measurement, of a second claim, and it
+carries a confound #21 names: it depends on a model and a prompt, neither of
+which this project controls. Read it as evidence about agents holding the tool,
+never as evidence that the tool is correct or useful to a person.
+
 ## The task
 
 Each case gives an agent a real VS Code bug report and asks one thing: fix it.
