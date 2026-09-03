@@ -153,6 +153,17 @@ function shaped(spec: OperationSpec, opening: string, honesty: string): string {
       'unless `out` is `-`. The default shape names nothing in your code.',
     ].join(' ')
   }
+  if (spec.shape === 'document') {
+    return [
+      opening,
+      'prints. `result.markdown` is the draft and `result.sections` names what',
+      `each ${spec.unit} offers to assert, sorted by ${spec.sortedBy}. \`limit\``,
+      `counts ${spec.unit}s and nothing inside one. Every claim it writes is a`,
+      'candidate under a `codedocs?:` marker that `docs_check` does not read, so',
+      'nothing here is checked until a person deletes the `?`. It writes no file',
+      `unless \`out\` names one. ${honesty}`,
+    ].join(' ')
+  }
   if (spec.shape === 'kinds') {
     return [
       opening,

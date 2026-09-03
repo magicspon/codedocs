@@ -20,12 +20,28 @@ export {
 } from './operations/trace.ts'
 export { symbol } from './operations/symbol.ts'
 export {
+  assembleEvidence,
+  durableIds,
   evidence,
+  type EvidenceAssembly,
   type EvidenceEnvelope,
   type EvidenceKind,
   type EvidenceOptions,
   type EvidenceReport,
 } from './operations/evidence.ts'
+export {
+  draft,
+  type DraftOptions,
+  type DraftReport,
+  type DraftSection,
+} from './operations/draft.ts'
+export {
+  CANDIDATE_MARKER,
+  type DraftBlindSpot,
+  type DraftBody,
+  type DraftFactGroup,
+  type DraftHeader,
+} from './operations/draft-markdown.ts'
 export { references } from './operations/references.ts'
 export {
   docsAffected,

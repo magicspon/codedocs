@@ -13,7 +13,7 @@
  * has to be logged for a report to exist.
  */
 
-import { writeFileSync } from 'node:fs'
+import { existsSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import {
@@ -24,6 +24,7 @@ import {
   docsAffected,
   docsCheck,
   doctor,
+  draft,
   evidence,
   file,
   impact,
@@ -37,6 +38,7 @@ import {
   type AnswerContext,
   type DocsEnvelope,
   type DocsOptions,
+  type DraftReport,
   type Envelope,
   type EnvelopeError,
   type EvidenceEnvelope,
@@ -54,6 +56,7 @@ import {
   renderAnalyse,
   renderDocs,
   renderDoctor,
+  renderDraft,
   renderEdges,
   renderEvidence,
   renderFile,
@@ -298,6 +301,16 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
     // a change reaches, and reaching one is not a finding.
     return emit(command.json, envelope, () => renderDocs(envelope, style))
   },
+  'docs draft': (command, session, style) => {
+    const envelope = draft(
+      session.store,
+      session.context,
+      subjectOf(command),
+      command.limit,
+      { scoping: scopingFor(command, session) },
+    )
+    return drafted(command, envelope, style)
+  },
   doctor: diagnosed,
   // Unreachable: `execute` routes `report-bug` before a session is opened. The
   // entry is here so that adding an operation is a type error rather than a
@@ -345,6 +358,83 @@ function documented(
     () => renderDocs(envelope, style),
     envelope.failing > 0 || envelope.faulted > 0 ? 1 : 0,
   )
+}
+
+/**
+ * `docs draft`: put the Markdown where it was asked to go, and say what it holds.
+ *
+ * With no `--out` the draft is stdout — a draft is meant to be piped or pasted —
+ * so the note about it moves to stderr, exactly as `report-bug --out -` does. An
+ * existing file is never overwritten and ADR 0013 gives no flag that would: the
+ * draft is already on stdout by the time this refuses, so nothing is lost.
+ */
+function drafted(
+  command: Command,
+  envelope: Envelope<DraftReport>,
+  style: Style,
+): Outcome {
+  const out = command.out
+  // A subject that matched nothing drafts a file saying so, and a file saying so
+  // is not worth creating. Refused rather than written and disowned: the note
+  // beside it already reports that the subject matched nothing.
+  const empty = (envelope.result?.sections.length ?? 0) === 0
+  if (out === null || out === '-' || empty) {
+    return toStdout(command, envelope, style, 0)
+  }
+
+  // Relative to the directory the user is standing in, not to `--cwd`: `--cwd`
+  // names the repository to draft about, and a file the user is meant to open
+  // belongs where they typed the command.
+  const path = resolve(process.cwd(), out)
+  const refusal = writeDraft(path, out, envelope.result?.markdown ?? '')
+  // The draft was answered and only the writing failed, so the envelope keeps
+  // its `result` and the draft goes to stdout: a caller who has to move a file
+  // out of the way should not have to compute the answer twice.
+  if (refusal !== null) {
+    return {
+      ...toStdout(command, envelope, style, 2),
+      stderr: formatError(refusal),
+      error: refusal,
+    }
+  }
+  return emit(command.json, envelope, () => renderDraft(envelope, path, style))
+}
+
+/** The draft on stdout, with the note beside it on stderr. */
+function toStdout(
+  command: Command,
+  envelope: Envelope<DraftReport>,
+  style: Style,
+  code: 0 | 2,
+): Outcome {
+  return {
+    stdout: command.json
+      ? JSON.stringify(envelope, null, 2)
+      : (envelope.result?.markdown ?? ''),
+    stderr: command.json ? '' : renderDraft(envelope, null, style),
+    code,
+    envelope,
+    error: null,
+  }
+}
+
+/** Write the draft, or say why it was not written. */
+function writeDraft(
+  path: string,
+  out: string,
+  markdown: string,
+): EnvelopeError | null {
+  if (existsSync(path)) return { code: 'draft-exists', params: { out } }
+  try {
+    writeFileSync(path, markdown)
+  } catch (error) {
+    return {
+      code: 'draft-unwritable',
+      params: { out, detail: messageOf(error) },
+      stack: codedocsFrames(error),
+    }
+  }
+  return null
 }
 
 /**

@@ -59,7 +59,13 @@ export interface Command {
   readonly color: boolean
   /** `report-bug`: add the facts that name the user's code (ADR 0011). */
   readonly withRepository: boolean
-  /** `report-bug`: where to write the report. `null` means the default path. */
+  /**
+   * Where to write what an operation produces, or `null` for its own default.
+   *
+   * Shared by two operations and defaulted differently by each: `report-bug`
+   * writes `./codedocs-report.json` unless told otherwise, and `docs draft`
+   * writes nothing at all unless told to.
+   */
   readonly out: string | null
   /** `doctor`: re-run the filesystem signals against the working tree (ADR 0009). */
   readonly measure: boolean

@@ -177,6 +177,10 @@ the sentence "this was verified before your change", at 22.9 s to build on cal.c
   document on every run; an unattended repair writes an `inferred` fact into a committed file, which is
   the silent-wrong-answer failure the honesty layer exists to prevent. ADR 0001's rule is unchanged —
   codedocs reports what would fix it and never does the fixing.
+  [ADR 0013](0013-drafting-a-document.md) narrows this to what it was aimed at — an **unattended write
+  into a file someone else owns**. `docs draft` writes one **new** file, asked for by name, refusing to
+  overwrite, and what it writes are candidate claims under a marker `docs check` does not read. No
+  document is edited, and no unreviewed fact becomes a claim.
 - **codedocs inferring claims from prose.** Ruled out by settled constraint 2 before this ticket
   started: it would require an LLM. What it can do is hand back the facts an answer already rests on,
   as candidate claims, which is what makes agent-written claims practical.

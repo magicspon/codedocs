@@ -98,9 +98,10 @@ export interface OperationSpec {
    * limit to count. `kinds` is several lists at once, each bounded by its own
    * `--limit` and reporting its own truncation — ADR 0006 singles `evidence`
    * out for that, because a shared pool means adding a caller quietly evicts a
-   * document.
+   * document. `document` is Markdown plus what went into it: one object, and a
+   * unit `--limit` counts, because ADR 0013 bounds a draft by section.
    */
-  readonly shape: 'list' | 'report' | 'kinds'
+  readonly shape: 'list' | 'report' | 'kinds' | 'document'
   /**
    * The name the MCP binding publishes, which is the CLI's with spaces replaced.
    *
@@ -335,6 +336,40 @@ export const OPERATIONS: readonly OperationSpec[] = [
     shape: 'list',
     unit: 'document',
     sortedBy: 'path',
+  },
+  {
+    name: 'docs draft',
+    summary: 'a Markdown draft of one subject, prefilled with its facts',
+    selection:
+      'Reach for this when you are about to write documentation and want the ' +
+      'facts already laid out — it is `evidence` shaped as the file you were ' +
+      'going to open anyway. It writes no prose and no claims, only ' +
+      'candidates: nothing it produces is checked until you delete a `?`. Use ' +
+      '`evidence` instead when you want the facts and not a file.',
+    subject: {
+      name: 'subject',
+      description:
+        'A symbol in either form a subject takes, or a repository-relative ' +
+        'path: `src/auth/service.ts` drafts the file and a section per durable ' +
+        'symbol in it, `AuthService.login` drafts that symbol alone. A path ' +
+        'wins where a subject names both, because a path is the exact form.',
+      variadic: false,
+    },
+    depth: false,
+    flags: [
+      {
+        name: 'out',
+        value: 'path',
+        summary: 'write the draft here instead of to stdout',
+        description:
+          'Write the draft to this path instead of stdout. It refuses to ' +
+          'overwrite an existing file and there is no flag to make it: the ' +
+          'file it would destroy is a document somebody wrote by hand.',
+      },
+    ],
+    shape: 'document',
+    unit: 'section',
+    sortedBy: 'the file, then SymbolId',
   },
   {
     name: 'impact',

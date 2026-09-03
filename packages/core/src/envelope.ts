@@ -52,6 +52,7 @@ export type OperationName =
   | 'evidence'
   | 'docs check'
   | 'docs affected'
+  | 'docs draft'
   | 'impact'
   | 'doctor'
   | 'report-bug'
@@ -215,6 +216,20 @@ export interface ErrorParams {
    * exit 2 — the reproduced failure is a field, never a reason to fail.
    */
   readonly 'report-unwritable': {
+    readonly out: string
+    readonly detail: string
+  }
+  /**
+   * `docs draft --out` was pointed at a path that already holds a file.
+   *
+   * ADR 0013 gives it no `--force`: the file it would destroy is a document
+   * somebody wrote by hand, and deleting one is a gesture that names its own
+   * consequence. The draft itself is on stdout by the time this is raised, so
+   * nothing that was computed is lost.
+   */
+  readonly 'draft-exists': { readonly out: string }
+  /** `docs draft --out` could not write, for a reason `node:fs` gave. */
+  readonly 'draft-unwritable': {
     readonly out: string
     readonly detail: string
   }

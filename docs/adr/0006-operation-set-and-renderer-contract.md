@@ -17,6 +17,11 @@ into `trace`**. `docs generate` **does not exist**: strip the prose it cannot wr
 is `evidence` plus a file write ADR 0005 forbids. Two more go for reasons unrelated to the LLM
 constraint — `init` has nothing left to initialise, and `search` is `symbol` with a pattern.
 
+[ADR 0013](0013-drafting-a-document.md) reverses the `docs generate` half of that paragraph and adds
+`docs draft <subject>` to the table below, on the strength of a marker that keeps a drafted claim out
+of [[Claim coverage]] until a person endorses it. The prose ban is untouched: a draft holds facts,
+markers and headings, and no sentence about what the code is for.
+
 ## The operation set
 
 Phases 1–4. `--limit` counts the result unit; the sort key is part of the contract, not an
@@ -214,7 +219,11 @@ so `doctor` deduplicates causes across signals
 - **`docs generate` emitting a skeleton** — headings from a trace, claims populated, prose blank.
   Rejected twice over: it is codedocs writing a document, which ADR 0005 refused because an unattended
   write puts an unreviewed fact into a committed file; and it inverts the coverage measure, which
-  exists to say "this prose is unchecked", not "these claims have no prose".
+  exists to say "this prose is unchecked", not "these claims have no prose". **Superseded by
+  [ADR 0013](0013-drafting-a-document.md)**, which answers the first with a write that is asked for by
+  name and refuses to overwrite, and the second with a candidate marker `docs check` does not read —
+  so a drafted file is not a document and has no coverage to overstate. The headings-from-a-trace half
+  is rejected there too.
 - **Candidate claims on every answer by default.** ADR 0005's consequence says rendering facts as
   claim expressions "costs nothing". Trimmed to an opt-in **`--claims`**, machine renderer only: the
   claim string is pure restatement of a fact already in the payload, so always-on spends budget to
