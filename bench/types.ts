@@ -66,7 +66,24 @@ export type BenchCase = {
 }
 
 /** Which tools the agent under test may use, and what it is told about them. */
-export type ArmName = 'baseline' | 'codedocs'
+export type Toolset = 'baseline' | 'codedocs'
+
+/**
+ * One side of a comparison: a toolset paired with the model that holds it.
+ *
+ * The model belongs to the arm rather than to the session because the parent
+ * issue asks whether a cheaper model with structural facts can do what a more
+ * expensive one does without them. That question is a comparison between two
+ * arms that differ in both halves, and it cannot be posed while the model is
+ * fixed across the session.
+ */
+export type Arm = {
+  /** `codedocs@haiku-4-5`. Names the arm on disk and in the report. */
+  id: string
+  toolset: Toolset
+  /** The full model id, as passed to the agent. */
+  model: string
+}
 
 /** Everything one run consumed, parsed from the agent's stream. */
 export type RunMetrics = {
@@ -119,10 +136,14 @@ export type RunDiff = {
 /** One (case, arm, replicate) execution. */
 export type RunRecord = {
   caseId: string
-  arm: ArmName
+  /**
+   * The toolset and model this run was made with. Records written before an arm
+   * carried its model name the toolset alone, and are widened on read using the
+   * session model saved beside them — see `arms.ts`.
+   */
+  arm: Arm
   replicate: number
   startedAt: string
-  model: string
   /**
    * The commit the worktree this run read was cut from. Recorded so a result
    * says which tree produced it: two runs of one case are only comparable when

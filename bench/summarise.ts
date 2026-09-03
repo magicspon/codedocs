@@ -57,10 +57,10 @@ export function summarise(records: RunRecord[]): Cell {
   }
 }
 
-/** Reads a delta as a percentage change from baseline. Negative is a saving. */
-export function delta(baseline: number, codedocs: number): string {
-  if (baseline === 0) return '—'
-  const change = ((codedocs - baseline) / baseline) * 100
+/** Reads a delta as a percentage change from the reference arm. Negative is a saving. */
+export function delta(reference: number, arm: number): string {
+  if (reference === 0) return '—'
+  const change = ((arm - reference) / reference) * 100
   const sign = change > 0 ? '+' : ''
   return `${sign}${change.toFixed(0)}%`
 }

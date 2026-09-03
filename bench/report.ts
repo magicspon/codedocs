@@ -12,24 +12,24 @@
 
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { armsIn, readRecord, referenceArm } from './arms.ts'
 import { casesById } from './cases.ts'
 import { levelName, LEVELS, levelOf } from './difficulty.ts'
 import { RESULTS } from './paths.ts'
 import { summarise } from './summarise.ts'
 import {
-  ARMS,
   printArms,
   printHeader,
   printLevelHeading,
   printTotals,
 } from './table.ts'
-import type { BenchCase, DifficultyLevel, RunRecord } from './types.ts'
+import type { Arm, BenchCase, DifficultyLevel, RunRecord } from './types.ts'
 
 /** Every run record on disk. */
 function loadRecords(): RunRecord[] {
   return readdirSync(RESULTS)
     .filter((f) => f.endsWith('.json') && !f.endsWith('.stream.jsonl'))
-    .map((f) => JSON.parse(readFileSync(join(RESULTS, f), 'utf8')) as RunRecord)
+    .map((f) => readRecord(readFileSync(join(RESULTS, f), 'utf8')))
 }
 
 /** One level's cases, in id order. `level` is null for records with no case file. */
@@ -69,6 +69,7 @@ function printLevel(
   group: Group,
   records: RunRecord[],
   cases: Map<string, BenchCase>,
+  reference: Arm | undefined,
 ): void {
   printLevelHeading(headingFor(group))
   for (const id of group.ids) {
@@ -76,6 +77,7 @@ function printLevel(
       id,
       cases.get(id)?.shape ?? '?',
       records.filter((r) => r.caseId === id),
+      reference,
     )
     console.log('')
   }
@@ -84,6 +86,7 @@ function printLevel(
     label,
     'all cases',
     records.filter((r) => group.ids.includes(r.caseId)),
+    reference,
   )
   console.log('')
 }
@@ -94,13 +97,22 @@ function printJson(
   records: RunRecord[],
   cases: Map<string, BenchCase>,
 ): void {
+  const all = armsIn(records)
   const arms = (of: RunRecord[]): Record<string, unknown> =>
     Object.fromEntries(
-      ARMS.map((arm) => [arm, summarise(of.filter((r) => r.arm === arm))]),
+      all.map((arm) => [
+        arm.id,
+        {
+          toolset: arm.toolset,
+          model: arm.model,
+          ...summarise(of.filter((r) => r.arm.id === arm.id)),
+        },
+      ]),
     )
   console.log(
     JSON.stringify(
       {
+        reference: referenceArm(records)?.id ?? null,
         cases: groups.flatMap((group) =>
           group.ids.map((id) => ({
             case: id,
@@ -136,9 +148,12 @@ function main(): void {
     return
   }
 
-  printHeader()
-  for (const group of groups) printLevel(group, records, cases)
-  printTotals(records)
+  // One reference for the whole report, so every delta in it means the same
+  // thing.
+  const reference = referenceArm(records)
+  printHeader(reference)
+  for (const group of groups) printLevel(group, records, cases, reference)
+  printTotals(records, reference)
   console.log('')
 }
 

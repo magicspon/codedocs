@@ -9,7 +9,7 @@
 import { parseDiff } from './diff.ts'
 import { invalidReason, scoreDiff } from './score.ts'
 import { parseStream } from './stream.ts'
-import type { ArmName, BenchCase, RunRecord } from './types.ts'
+import type { Arm, BenchCase, RunRecord } from './types.ts'
 
 /** Raised when the API refuses a run, so the session stops instead of filing empty records. */
 export class RateLimited extends Error {
@@ -28,15 +28,14 @@ export type RunInputs = {
   /** The patch left in the run's worktree, as unified diff text. */
   patch: string
   bench: BenchCase
-  arm: ArmName
+  arm: Arm
   replicate: number
-  model: string
   startedAt: string
 }
 
 /** Folds one run's stream and patch into the record the report reads. */
 export function recordFrom(inputs: RunInputs): RunRecord {
-  const { lines, patch, bench, arm, replicate, model, startedAt } = inputs
+  const { lines, patch, bench, arm, replicate, startedAt } = inputs
   const { metrics, usedCodedocs, rateLimitedUntil } = parseStream(lines)
   if (rateLimitedUntil !== null) throw new RateLimited(rateLimitedUntil)
   const changed = parseDiff(patch)
@@ -45,11 +44,15 @@ export function recordFrom(inputs: RunInputs): RunRecord {
     arm,
     replicate,
     startedAt,
-    model,
     baseCommit: bench.base.commit,
     metrics,
     diff: changed.length > 0 ? scoreDiff(changed, bench) : null,
-    invalid: invalidReason(arm, metrics, changed.length > 0, usedCodedocs),
+    invalid: invalidReason(
+      arm.toolset,
+      metrics,
+      changed.length > 0,
+      usedCodedocs,
+    ),
   }
 }
 
