@@ -1,0 +1,33 @@
+{
+  "id": "332146",
+  "issue": 332146,
+  "shape": "symptom-only",
+  "fix": {
+    "commit": "fd811a4543cba4ee8c40f32dff736bcc560abdcb",
+    "url": "https://github.com/microsoft/vscode/commit/fd811a4543cba4ee8c40f32dff736bcc560abdcb",
+    "landedAt": "2026-08-23T22:51:05Z"
+  },
+  "truth": {
+    "files": [
+      "src/vs/sessions/browser/parts/mobile/mobileVisualViewport.ts",
+      "src/vs/sessions/browser/workbench.ts"
+    ],
+    "symbols": [
+      "getMobileViewportDimension",
+      "layout",
+      "registerLayoutListeners"
+    ]
+  },
+  "difficulty": {
+    "level": 3,
+    "why": "Level 3. Two files joined by a browser event, not a call: the layout host sizes itself from the layout viewport, while the fact that the keyboard has shrunk the usable area lives in the visual-viewport part. The reader has to connect a `resize` on `window.visualViewport` to the workbench's own `layout()`, and establish that neither end knows about the other today. Nothing in the report is an identifier."
+  },
+  "notes": "Reported on Android: the on-screen keyboard covers the chat composer. The answer is a viewport helper plus the layout pass that must consult it, and the connection between them is an event on a platform object rather than an import. Also the pool's only web/mobile-layout case, which keeps level 3 from being two agent-host cases.",
+  "base": {
+    "commit": "953f23e499b4ff6b0d68425cbaedf6b144bee0df",
+    "url": "https://github.com/microsoft/vscode/commit/953f23e499b4ff6b0d68425cbaedf6b144bee0df"
+  },
+  "title": "Agents chat input is covered by the on-screen keyboard on Android",
+  "issueUrl": "https://github.com/microsoft/vscode/issues/332146",
+  "body": "## Type of issue\nBug\n\n## Description\nIn the web Agents window on Android, focusing the chat composer opens the on-screen keyboard, but the composer remains positioned at the bottom of the full layout viewport. The keyboard overlays it, so the text being entered is not visible.\n\n## Steps to reproduce\n1. Open the `/agents` page in Chrome on Android.\n2. Open a chat session.\n3. Focus the chat input to open the on-screen keyboard.\n4. Type into the input.\n\n## Expected\nThe chat composer remains visible above the on-screen keyboard while typing.\n\n## Actual\nThe keyboard covers the composer and entered text.\n\n## Local reproduction\nReproduced against the current development Agents window with a Pixel 7 Pro viewport (412 × 915 CSS pixels). The focused input remained at y=793–813 while the simulated keyboard began at y=515, placing the input fully inside the keyboard-occluded region.\n\nThe fix should be validated on both Android/Chromium and iPhone/WebKit viewport behavior."
+}

@@ -7,10 +7,6 @@
     "url": "https://github.com/microsoft/vscode/commit/ebaaae902157f381f02fc8f9cdf73cd571c7bb96",
     "landedAt": "2026-08-22T00:00:00Z"
   },
-  "base": {
-    "commit": "c38c9ed1cf710a7c68acadd18db22fec795267d5",
-    "url": "https://github.com/microsoft/vscode/commit/c38c9ed1cf710a7c68acadd18db22fec795267d5"
-  },
   "truth": {
     "files": [
       "src/vs/sessions/contrib/providers/remoteAgentHost/browser/tunnelAgentHost.contribution.ts"
@@ -27,6 +23,10 @@
     "why": "Level 2. The report names one private method and no file, so the search starts with a symbol lookup that settles the file on its own. What is left is local: which callers inside the same contribution reach `_resumeReconnects` when a window regains focus. One file, one project, no interface in between."
   },
   "notes": "The issue names one private method, `_resumeReconnects`, and nothing else. A single symbol lookup should settle the file. The remaining work — which callers reach it on window focus — is what separates the arms.",
+  "base": {
+    "commit": "c38c9ed1cf710a7c68acadd18db22fec795267d5",
+    "url": "https://github.com/microsoft/vscode/commit/c38c9ed1cf710a7c68acadd18db22fec795267d5"
+  },
   "title": "Tunnel Agent Host retries offline cached tunnels on every window focus",
   "issueUrl": "https://github.com/microsoft/vscode/issues/331102",
   "body": "Does this issue occur when all extensions are disabled?: Yes\n\n- VS Code Version: Insiders/main containing 731506386b35\n- OS Version: macOS\n\nSteps to Reproduce:\n\n1. Keep a previously discovered Agent Host dev tunnel cached while its remote host is offline.\n2. Focus or refocus the VS Code window.\n3. Observe `[TunnelAgentHost] Connect to <host> failed: Error: No hosts are currently accepting connections for the tunnel.` in the developer console.\n4. Refocus again after the 10-second rate limit and observe another connection attempt and warning.\n\nExpected: An offline tunnel remains paused until tunnel discovery confirms that its host is online.\n\nActual: `_resumeReconnects('focus')` iterates every cached disconnected tunnel, clears any pause, and schedules an immediate connection. It does not distinguish `hostOffline`, authentication, and exhausted-backoff pauses, so normal focus changes repeatedly retry known-offline hosts. This behavior was introduced by #329306 when desktop focus became a reconnect recovery signal."

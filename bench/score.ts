@@ -16,20 +16,42 @@ function escape(name: string): string {
 }
 
 /**
- * The lines of a hunk a symbol may be claimed from: the ones the patch changed,
- * plus the `@@` header, which names the declaration the change sits under.
+ * A context line that declares something, rather than continuing a statement.
  *
- * Unchanged context is deliberately left out. A patch that edits one method and
- * happens to have a call to another three lines above it would otherwise be
- * credited with both. See the README for which way this errs.
+ * An identifier followed by `(` or `<`, optionally behind the modifiers a
+ * declaration carries. Control-flow keywords are ruled out, because `if (` and
+ * `for (` fit that shape and are not what anything is declared as.
+ */
+const DECLARES =
+  /^[\t ]*(?:(?:export|public|private|protected|static|readonly|async|abstract|override|declare|function|class|interface|enum|namespace|const|let|var|get|set)\s+)*[A-Za-z_$#][\w$]*\s*[(<]/
+const CONTROL =
+  /^[\t ]*(?:if|for|while|switch|catch|do|return|else|await|new|throw|yield|typeof|delete)\b/
+
+/**
+ * The lines of a hunk a symbol may be claimed from: the ones the patch changed,
+ * the `@@` header, and the declaration the change sits under.
+ *
+ * The declaration is the nearest context line above the first changed line that
+ * looks like one, which is how a change inside a method is credited to the
+ * method rather than to the class the header names. Everything else in the
+ * context is excluded: a patch that edits one method three lines under a call
+ * to another would otherwise be credited with both.
  */
 function claimableLines(hunk: string): string {
-  return hunk
-    .split('\n')
-    .filter(
-      (line, at) => at === 0 || line.startsWith('+') || line.startsWith('-'),
-    )
-    .join('\n')
+  const lines = hunk.split('\n')
+  const changed = (line: string): boolean =>
+    line.startsWith('+') || line.startsWith('-')
+  const first = lines.findIndex((line, at) => at > 0 && changed(line))
+  const kept = [lines[0] ?? '']
+  for (let at = first - 1; at > 0; at -= 1) {
+    // Context lines carry a leading space that the patterns must not see.
+    const line = (lines[at] ?? '').slice(1)
+    if (DECLARES.test(line) && !CONTROL.test(line)) {
+      kept.push(line)
+      break
+    }
+  }
+  return [...kept, ...lines.filter(changed)].join('\n')
 }
 
 /** True when the lines a file's patch changed name a symbol. */

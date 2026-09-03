@@ -1,0 +1,31 @@
+{
+  "id": "327194",
+  "issue": 327194,
+  "shape": "symbol-named",
+  "fix": {
+    "commit": "8d032eaa87d7f59484f6d6128dc84853849399dd",
+    "url": "https://github.com/microsoft/vscode/commit/8d032eaa87d7f59484f6d6128dc84853849399dd",
+    "landedAt": "2026-09-01T12:56:21Z"
+  },
+  "truth": {
+    "files": [
+      "src/vs/platform/extensionManagement/common/extensionManagement.ts"
+    ],
+    "symbols": [
+      "EXTENSION_IDENTIFIER_PATTERN",
+      "EXTENSION_PUBLISHER_IDENTIFIER_PATTERN"
+    ]
+  },
+  "difficulty": {
+    "level": 2,
+    "why": "Level 2. One file, one project, and the anchor is a setting name rather than a symbol: `extensions.allowed` leads to the configuration contribution that declares its schema. From there the work is local and textual — two `patternProperties` regexes where the publisher-only one is unanchored, so it also matches the tail of a full identifier and wins. No layer is crossed and no call is followed."
+  },
+  "notes": "A third level 2 anchored on neither a symbol nor a product noun but a settings key, which is the shape a call graph has least to say about — the answer is a JSON-schema declaration nothing calls. A genuine external user report, and the one case in the pool whose fix is a regex.",
+  "base": {
+    "commit": "c1604869bc2ca975ca63a53ae67ca5ea4bb9c8c0",
+    "url": "https://github.com/microsoft/vscode/commit/c1604869bc2ca975ca63a53ae67ca5ea4bb9c8c0"
+  },
+  "title": "Settings.json incorrectly marks permitted extension versions as not accepted",
+  "issueUrl": "https://github.com/microsoft/vscode/issues/327194",
+  "body": "### Description\n\nIn 1.129.1, it was possible to allow specific versions or platforms when specifying a list of approved extensions, as documented here: https://code.visualstudio.com/docs/enterprise/extensions#_allow-specific-versions-or-platforms\nIn 1.130.0 this feature no longer displays properly, instead showing the warning:\n    \"Incorrect type. Expected one of boolean, string.\n    Value is not accepted. Valid values: true, false, \"stable\".(1)\"\n\nThis is the warning given when the following settings snippet is placed in my settings.json file; where the `\"1.31.3\"` is marked with a yellow underline.\n```\n\"extensions.allowed\": {\n    \"GitHub.copilot-chat\" : \"stable\",\n    \"ms-vscode.cpptools\" : [\"1.31.4\"],\n...\n}\n```\n\nIn spite of this warning, the extensions with versions specified still work as normal, so I suspect this is a format/display issue more than the core functionality not supporting this anymore.\n\n### Issue Details\n\nItem|Value\n---|---\nIssue Category|Bug\nTarget|Visual Studio Code\nVS Code Version|Code 1.130.0 (1b6a188127eeaf9194f945eb6eb89a657e93c54c, 2026-07-22T14:55:04Z)\nOS Version|Windows_NT x64 10.0.26200\n\n<details>\n<summary>System Info</summary>\n\nItem|Value\n---|---\nVS Code Version|Code 1.130.0 (1b6a188127eeaf9194f945eb6eb89a657e93c54c, 2026-07-22T14:55:04Z)\nOS Version|Windows_NT x64 10.0.26200\nCPUs|Intel(R) Core(TM) Ultra 7 155U (14 x 2688)\nGPU Status|2d_canvas: enabled<br>GPU0: VENDOR= 0x8086, DEVICE=0x7d45 [Intel(R) Graphics], DRIVER_VENDOR=Intel, DRIVER_VERSION=32.0.101.8860 *ACTIVE*<br>GPU1: VENDOR= 0x8086, DEVICE=0x7d45 [Intel(R) Graphics], DRIVER_VERSION=32.0.101.8860<br>GPU2: VENDOR= 0x1414, DEVICE=0x008c [Microsoft Basic Render Driver], DRIVER_VERSION=10.0.26100.8875<br>Machine model name: <br>Machine model version: <br>direct_rendering_display_compositor: disabled_off_ok<br>gpu_compositing: enabled<br>multiple_raster_threads: enabled_on<br>opengl: enabled_on<br>rasterization: enabled<br>raw_draw: disabled_off_ok<br>skia_graphite: disabled_off<br>trees_in_viz: disabled_off<br>video_decode: enabled<br>video_encode: enabled<br>webgl: enabled<br>webgpu: enabled<br>webnn: disabled_off\nLoad (avg)|\nMemory (System)|31.47GB (8.36GB free)\nProcess Argv|--crash-reporter-id 49b52df3-3859-40d5-ae2a-b634022346e7\nScreen Reader|no\nUser Agent|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.130.0 Chrome/148.0.7778.280 Electron/42.6.0 Safari/537.36\nInstallation pure|true\n\n</details>"
+}

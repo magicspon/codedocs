@@ -1,0 +1,31 @@
+{
+  "id": "329610",
+  "issue": 329610,
+  "shape": "file-named",
+  "fix": {
+    "commit": "be6741dd559c6f87d4c7575d1cee6e7b52aa1734",
+    "url": "https://github.com/microsoft/vscode/commit/be6741dd559c6f87d4c7575d1cee6e7b52aa1734",
+    "landedAt": "2026-08-18T22:18:30Z"
+  },
+  "truth": {
+    "files": [
+      "src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts"
+    ],
+    "symbols": [
+      "hookUpSymbolAttachmentDragAndContextMenu",
+      "setResourceContext"
+    ]
+  },
+  "difficulty": {
+    "level": 1,
+    "why": "Level 1. Four frames, three of them in one file, and the changed line is inside the function the deepest frame names. The reader has to know that a `ServicesAccessor` is only valid inside the call it was handed to — a rule of one abstraction, not a relationship between several — and then wrap the call. Nothing is crossed and nothing is followed."
+  },
+  "notes": "A second level 1 in a different subsystem, so the control is not one file in `base/`. The stack lands inside the guilty function itself, which makes this the cheapest search in the pool: if codedocs cannot pay here, that is the expected result, not a failure.",
+  "base": {
+    "commit": "2b3436e5ec8776f5435a66b6ecfa52d367022cd8",
+    "url": "https://github.com/microsoft/vscode/commit/2b3436e5ec8776f5435a66b6ecfa52d367022cd8"
+  },
+  "title": "[Error] unhandlederror-Illegal state: service accessor is only valid during the invocation of its target met...",
+  "issueUrl": "https://github.com/microsoft/vscode/issues/329610",
+  "body": "## Error Message\n````\nunhandlederror-Illegal state: service accessor is only valid during the invocation of its target method\n````\n\n## Stack Trace\n&nbsp;&nbsp;&nbsp;&nbsp;at LEe ([./src/vs/base/common/errors.ts:266:9](https://github.com/microsoft/vscode/blob/df53daabb18cd157bdb08c7f01c34df936cf12f4/src/vs/base/common/errors.ts#L266))  \n&nbsp;&nbsp;&nbsp;&nbsp;at illegalState ([./src/vs/platform/instantiation/common/instantiationService.ts:99:12](https://github.com/microsoft/vscode/blob/df53daabb18cd157bdb08c7f01c34df936cf12f4/src/vs/platform/instantiation/common/instantiationService.ts#L99))  \n&nbsp;&nbsp;&nbsp;&nbsp;at e2o ([./src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts:2007:0](https://github.com/microsoft/vscode/blob/df53daabb18cd157bdb08c7f01c34df936cf12f4/src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts#L2007))  \n&nbsp;&nbsp;&nbsp;&nbsp;at setResourceContext ([./src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts:1951:0](https://github.com/microsoft/vscode/blob/df53daabb18cd157bdb08c7f01c34df936cf12f4/src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts#L1951))  \n&nbsp;&nbsp;&nbsp;&nbsp;at ensureContextKeyService ([./src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts:1985:0](https://github.com/microsoft/vscode/blob/df53daabb18cd157bdb08c7f01c34df936cf12f4/src/vs/workbench/contrib/chat/browser/attachments/chatAttachmentWidgets.ts#L1985))\n\n<details>\n<summary>Raw Stack Trace (minified)</summary>\n\n````\nError: Illegal state: service accessor is only valid during the invocation of its target method     at LEe (out/vs/workbench/workbench.desktop.main.js:411:1767)     at Object.get (out/vs/workbench/workbench.desktop.main.js:2139:966)     at e2o (out/vs/workbench/workbench.desktop.main.js:2753:7801)     at g (out/vs/workbench/workbench.desktop.main.js:2753:7058)     at HTMLAnchorElement.<anonymous> (out/vs/workbench/workbench.desktop.main.js:2753:7595)\n````\n\n</details>\n\n## Details\n| Property | Value |\n| --- | --- |\n| Bucket ID | [`14741f25-8324-4d0c-c5a7-e983ecded756`](https://errors.code.visualstudio.com/bucket/14741f25-8324-4d0c-c5a7-e983ecded756?product=VSCode&extension=core&commit=df53daabb18cd157bdb08c7f01c34df936cf12f4) |\n| Version | 1.132.0 |\n| Commit | [`df53daab`](https://insiders.vscode.dev/github/microsoft/vscode/tree/df53daabb18cd157bdb08c7f01c34df936cf12f4) |\n| Last Seen | Wed Aug 05 2026 23:56:57 GMT+0000 (Coordinated Universal Time) |\n| Platforms | Windows, Mac, Linux |\n| Product | VSCode |\n\n---\n*This issue was automatically created from the VS Code Errors Dashboard*"
+}

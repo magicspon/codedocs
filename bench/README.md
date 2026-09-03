@@ -65,21 +65,37 @@ assumed:
    would be handing over the answer. Every prompt here is the underlying user
    report, with only the issue-template HTML comments stripped.
 
-| Case                         | Level | Shape          | The report gives you                                     | Truth                                |
-| ---------------------------- | ----- | -------------- | -------------------------------------------------------- | ------------------------------------ |
-| [#333230](cases/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames       | `listView.ts` · `getVisibleRange`    |
-| [#331102](cases/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`             | `tunnelAgentHost.contribution.ts`    |
-| [#333085](cases/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for          | `automationTools.ts`                 |
-| [#332885](cases/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"    | `agentService.ts`, `copilotAgent.ts` |
-| [#331452](cases/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all | `agentService.ts`                    |
+| Case                         | Level | Shape          | The report gives you                                      | Truth                                         |
+| ---------------------------- | ----- | -------------- | --------------------------------------------------------- | --------------------------------------------- |
+| [#333230](cases/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames        | `listView.ts`                                 |
+| [#329610](cases/329610.json) | 1     | `file-named`   | a stack landing inside the guilty function                | `chatAttachmentWidgets.ts`                    |
+| [#331914](cases/331914.json) | 1     | `file-named`   | the file, the method and the mechanism, from the reporter | `mainThreadEditorTabs.ts`                     |
+| [#331102](cases/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`              | `tunnelAgentHost.contribution.ts`             |
+| [#333085](cases/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for           | `automationTools.ts`                          |
+| [#327194](cases/327194.json) | 2     | `symbol-named` | a settings key, `extensions.allowed`, and a warning       | `extensionManagement.ts`                      |
+| [#332885](cases/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"     | `agentService.ts`, `copilotAgent.ts`          |
+| [#332146](cases/332146.json) | 3     | `symptom-only` | a keyboard covering a chat input on Android               | `mobileVisualViewport.ts`, `workbench.ts`     |
+| [#326185](cases/326185.json) | 3     | `symbol-named` | a settings key, `http.noProxy`, that is not what is read  | `copilotAgent.ts`, `copilotCliEnvironment.ts` |
+| [#331452](cases/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all  | `agentService.ts`                             |
+| [#329074](cases/329074.json) | 4     | `symbol-named` | dictation failing in a floating window                    | `code/electron-main/app.ts`                   |
+| [#329326](cases/329326.json) | 4     | `symptom-only` | a quick pick that closes itself when opened from a menu   | `contextview.ts`                              |
 
-The spread is the point. `#333230` is a control: the file is handed over on a
-plate, so codedocs should buy little, and a benchmark whose every case favours
-the tool is a brochure. `#333085` is the case where grep on a product noun may
-well win, and it is kept for exactly that reason.
+Three cases per level, and the spread is the point. `#333230` and `#329610` are
+controls: the file is handed over on a plate, so codedocs should buy little, and
+a benchmark whose every case favours the tool is a brochure. `#333085` is the
+case where grep on a product noun may well win, and it is kept for exactly that
+reason. `#329074` is the opposite extreme — every word of the report points at
+speech code and the answer is in the main process.
 
-Ground truth is the non-test source files the upstream fix touched. Test files
-are excluded from the truth, and the prompt tells the agent not to write any:
+The pool spreads across `base/`, `code/electron-main/`,
+`platform/extensionManagement/`, `platform/agentHost/`, `sessions/` and three
+`workbench/` areas, because a pool that repeatedly tests one corner of the
+repository measures that corner rather than the repository. Seeds live in
+`seeds/level<N>.ts`, one file per level; `DIFFICULTY.md` says what each level
+means and why each case sits where it does.
+
+Ground truth is the non-test source files the upstream fix _modified_. Test
+files are excluded, and the prompt tells the agent not to write any:
 the truth is source, and a run that spent its turns on a test would be measured
 on work no case scores.
 
@@ -90,8 +106,8 @@ commit, created before the agent starts and removed when it ends. Four seconds
 and 550 MB, one at a time.
 
 Two things need that. A case is only a real bug at the commit under its fix, and
-the cases share no such commit — they were fixed over ten days, so no single
-checkout sits before all five fixes. And a tree the agent writes to has to be
+the cases share no such commit — they were fixed over seven weeks, so no single
+checkout sits before all twelve fixes. And a tree the agent writes to has to be
 thrown away afterwards, or the next run reads the last one's edits. The patch is
 read out of the tree with `git diff` against the case's base commit — after
 `git add -A -N`, so a file the agent created is in the diff, and against the
@@ -107,15 +123,18 @@ run touches, and what it asks for are immutable hashes.
 A fresh worktree has no index either, so the codedocs arm's index is built
 inside it before the agent starts, in a process the benchmark is not measuring —
 where the single pinned checkout used to be warmed. That is the price of the
-isolation: about four minutes a codedocs run, printed beside each verdict so
-what the harness spent stays visible.
+isolation, and it is not a stable number: 223 seconds on the pinned checkout,
+3,716 seconds on the first fix-task run. It is printed beside each verdict so
+what the harness spent stays visible, and no metric reads it.
 
 The figures quoted further down come from the run set measured on the earlier
 localization task, when the agent named files instead of changing them and every
 case read one pinned checkout. They are kept because they are the evidence
 behind decisions this harness still makes, and each is labelled where it
-appears. They are not fix-task results, and no fix-task set has been measured
-yet beyond the smoke run that proved the path.
+appears. They are not fix-task results. The only fix-task runs so far are one
+replicate of `#333230` on each arm, which proved the path end to end: both hit,
+and the codedocs arm cost more on every axis. One replicate of the control case
+is a smoke test, not a result.
 
 ## Difficulty levels
 
@@ -191,20 +210,29 @@ lines the arm has to carry.
 ### What counts as touching a symbol
 
 **A ground-truth symbol is touched when its name appears on a line the patch
-changed, or in the `@@` header above one, inside a ground-truth file.**
-Unchanged context is deliberately excluded: a patch that edits one method three
-lines under a call to another would otherwise be credited with both, and the
-same method edited in the wrong file is not the code the fix changed.
+changed, in the `@@` header above one, or in the declaration that change sits
+under — inside a ground-truth file.** The declaration is the nearest context
+line above the first changed line that looks like one, which is how a change
+inside a method is credited to the method rather than to the class the hunk
+header names. The rest of the context is excluded: a patch that edits one method
+three lines under a call to another would otherwise be credited with both, and
+the same method edited in the wrong file is not the code the fix changed.
 
-The rule is strict, and it is blind to a change buried deep inside a long method
-whose name appears nowhere near it. Applied to the five upstream fixes
-themselves, it names a ground-truth symbol in three of the five — so read `sym`
-as a floor on both arms, never as a hit rate. `hit` is the score; `sym` says
-whether the patch landed in the same code rather than merely the same file.
+`sym` is what separates landing in the same code from landing in the same file,
+and on `#333230` it does exactly that. Both arms changed `listView.ts` and both
+score a hit. The codedocs run clamped the range inside `getVisibleRange`, which
+is where the maintainers fixed it; the baseline run clamped the array length
+downstream in `probeDynamicHeights`, one hop from the cause. `sym` reads 1 and 0.
+
+The rule is still blind to a change buried deep inside a long method whose
+declaration is further above it than the hunk's context reaches. Applied to the
+twelve upstream fixes themselves it names a ground-truth symbol in ten of the
+twelve, so read `sym` as a floor on both arms rather than as a hit rate. `hit`
+remains the score.
 
 A span-accurate rule would need the symbol boundaries of each ground-truth file,
 which means parsing the tree at scoring time. It is worth doing when the case
-pool is larger; it is not worth doing to sharpen a secondary column over five
+pool is larger; it is not worth doing to sharpen a secondary column over twelve
 cases.
 
 ### Where the counts are wrong, and which way
@@ -258,10 +286,12 @@ disk. Scoring and validity are pure functions of those two, so a fix to either i
 applied to past runs rather than paid for twice. `--resume` skips runs that
 already produced a measurement.
 
-`freeze-cases.ts` regenerates `cases/*.json` from GitHub. It exists for
+`freeze-cases.ts` regenerates `cases/*.json` from the pool in `seeds/`, fetching
+each issue body and each fix's parent commit from GitHub. It exists for
 provenance and does not need to run: the cases are frozen, so a run asks GitHub
 for nothing but the commits they name — never for an issue body someone may
-have edited since.
+have edited since. Adding a case means adding a seed to `seeds/level<N>.ts` and
+running the freezer; nothing under `cases/` is edited by hand.
 
 ## How the harness is laid out
 
@@ -272,6 +302,7 @@ process spawning:
 | --------------- | -------------------------------------------------------------- |
 | `paths.ts`      | where the benchmark reads and writes                           |
 | `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
+| `seeds/`        | the pool the freezer works from, one file per difficulty level |
 | `worktree.ts`   | a run's own checkout at its case's commit, and its removal     |
 | `warm.ts`       | building the index that worktree does not come with            |
 | `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
@@ -299,9 +330,10 @@ process spawning:
   benchmark far harder to reproduce. Read the result as a floor: typed fidelity
   can add edges, not remove them.
 - **The index build is amortized out, and it is not free.** A fresh worktree
-  has no index, so one is built before every codedocs run: 223 seconds over
-  12,519 files, for 527k symbols and 728k call edges, in a process no metric
-  reads. Each question the run then asks costs about four seconds. Carrying one
+  has no index, so one is built before every codedocs run: 12,519 files, 527k
+  symbols and 728k call edges, in a process no metric reads. It took 223 seconds
+  on the pinned checkout and 3,716 seconds on the first fix-task run, so treat
+  it as minutes to an hour rather than as a constant. Each question the run then asks costs about four seconds. Carrying one
   run's index into the next would cut that, and is deliberately not done — an
   index a run built is state the next run would inherit, which is what the
   per-run worktree exists to prevent. A single-question user never recovers the
