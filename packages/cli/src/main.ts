@@ -13,8 +13,8 @@
  * has to be logged for a report to exist.
  */
 
-import { existsSync, writeFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { writeFileSync } from 'node:fs'
+import { relative, resolve } from 'node:path'
 
 import {
   analyse,
@@ -39,6 +39,7 @@ import {
   type DocsEnvelope,
   type DocsOptions,
   type DraftReport,
+  type DraftSection,
   type Envelope,
   type EnvelopeError,
   type EvidenceEnvelope,
@@ -50,8 +51,9 @@ import {
 } from '@codedocs/core'
 
 import { flagsIn, parse, type Command, type ParsedArgs } from './args.ts'
+import { derivedDraftPath, writeDraft } from './draft-out.ts'
 import { formatError } from './messages.ts'
-import { codedocsFrames } from './stack.ts'
+import { codedocsFrames, messageOf } from './stack.ts'
 import {
   renderAnalyse,
   renderDocs,
@@ -309,7 +311,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
       command.limit,
       { scoping: scopingFor(command, session) },
     )
-    return drafted(command, envelope, style)
+    return drafted(command, session, envelope, style)
   },
   doctor: diagnosed,
   // Unreachable: `execute` routes `report-bug` before a session is opened. The
@@ -361,32 +363,35 @@ function documented(
 }
 
 /**
- * `docs draft`: put the Markdown where it was asked to go, and say what it holds.
+ * `docs draft`: put the Markdown where it belongs, and say what it holds.
  *
- * With no `--out` the draft is stdout — a draft is meant to be piped or pasted —
- * so the note about it moves to stderr, exactly as `report-bug --out -` does. An
- * existing file is never overwritten and ADR 0013 gives no flag that would: the
- * draft is already on stdout by the time this refuses, so nothing is lost.
+ * ADR 0013 gives the draft a derived default — `<dir>/docs/<file>.<symbol>.md`,
+ * beside the code it is about — so writing is what a draft does and stdout is
+ * what `--out -` asks for. An existing file is never overwritten and there is no
+ * flag that would: the draft is already on stdout by the time this refuses, so
+ * nothing is lost.
  */
 function drafted(
   command: Command,
+  session: Session,
   envelope: Envelope<DraftReport>,
   style: Style,
 ): Outcome {
-  const out = command.out
+  const sections = envelope.result?.sections ?? []
   // A subject that matched nothing drafts a file saying so, and a file saying so
   // is not worth creating. Refused rather than written and disowned: the note
   // beside it already reports that the subject matched nothing.
-  const empty = (envelope.result?.sections.length ?? 0) === 0
-  if (out === null || out === '-' || empty) {
+  if (command.out === '-' || sections.length === 0) {
     return toStdout(command, envelope, style, 0)
   }
 
-  // Relative to the directory the user is standing in, not to `--cwd`: `--cwd`
-  // names the repository to draft about, and a file the user is meant to open
-  // belongs where they typed the command.
-  const path = resolve(process.cwd(), out)
-  const refusal = writeDraft(path, out, envelope.result?.markdown ?? '')
+  const target = targetFor(command, session, sections)
+  const refusal = writeDraft(
+    target.path,
+    target.out,
+    envelope.result?.markdown ?? '',
+    command.out === null,
+  )
   // The draft was answered and only the writing failed, so the envelope keeps
   // its `result` and the draft goes to stdout: a caller who has to move a file
   // out of the way should not have to compute the answer twice.
@@ -397,7 +402,35 @@ function drafted(
       error: refusal,
     }
   }
-  return emit(command.json, envelope, () => renderDraft(envelope, path, style))
+  return emit(command.json, envelope, () =>
+    renderDraft(envelope, target.path, style),
+  )
+}
+
+/**
+ * Where this draft goes: the path to write, and how to name it in a refusal.
+ *
+ * An `--out` resolves against the directory the user is standing in, not against
+ * `--cwd`: `--cwd` names the repository to draft about, and a file the user
+ * typed the path of belongs where they typed it. A derived path is the other way
+ * round, because it is derived from a repository-relative subject.
+ *
+ * `out` is the spelling a refusal quotes back, so it is what the user typed
+ * where they typed one and the repository-relative path where codedocs chose it.
+ * The note that reports a written file quotes the absolute path either way,
+ * because that is the one spelling a reader can open from anywhere.
+ */
+function targetFor(
+  command: Command,
+  session: Session,
+  sections: readonly DraftSection[],
+): { path: string; out: string } {
+  if (command.out !== null) {
+    return { path: resolve(process.cwd(), command.out), out: command.out }
+  }
+  // Non-null by construction: a draft with no section reached stdout above.
+  const path = derivedDraftPath(sections, session.root)!
+  return { path, out: relative(session.root, path) }
 }
 
 /** The draft on stdout, with the note beside it on stderr. */
@@ -416,25 +449,6 @@ function toStdout(
     envelope,
     error: null,
   }
-}
-
-/** Write the draft, or say why it was not written. */
-function writeDraft(
-  path: string,
-  out: string,
-  markdown: string,
-): EnvelopeError | null {
-  if (existsSync(path)) return { code: 'draft-exists', params: { out } }
-  try {
-    writeFileSync(path, markdown)
-  } catch (error) {
-    return {
-      code: 'draft-unwritable',
-      params: { out, detail: messageOf(error) },
-      stack: codedocsFrames(error),
-    }
-  }
-  return null
 }
 
 /**
@@ -679,13 +693,3 @@ function unavailable(error: unknown): EnvelopeError {
     stack,
   }
 }
-
-/**
- * The thrown message, kept as a parameter rather than as the error itself.
- *
- * It is free text out of `node:fs` or the adapter and can name a path, which is
- * exactly why it is a parameter: ADR 0011's default report drops parameters and
- * keeps codes.
- */
-const messageOf = (error: unknown): string =>
-  error instanceof Error ? error.message : String(error)

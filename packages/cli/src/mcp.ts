@@ -160,8 +160,10 @@ function shaped(spec: OperationSpec, opening: string, honesty: string): string {
       `each ${spec.unit} offers to assert, sorted by ${spec.sortedBy}. \`limit\``,
       `counts ${spec.unit}s and nothing inside one. Every claim it writes is a`,
       'candidate under a `codedocs?:` marker that `docs_check` does not read, so',
-      'nothing here is checked until a person deletes the `?`. It writes no file',
-      `unless \`out\` names one. ${honesty}`,
+      'nothing here is checked until a person deletes the `?`. It also writes',
+      'the draft to a file — `docs/<file>.<symbol>.md` beside the code, unless',
+      '`out` names a path or is `-` for no file — and never over an existing',
+      `one. ${honesty}`,
     ].join(' ')
   }
   if (spec.shape === 'kinds') {

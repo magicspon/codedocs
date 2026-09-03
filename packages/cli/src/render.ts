@@ -692,10 +692,10 @@ const labelRow = (label: Label, style: Style): string =>
 /**
  * What a `docs draft` run says about itself, which is never the draft.
  *
- * The Markdown is the answer and it goes where it was asked to go — stdout, or
- * the file `--out` named. This is the note beside it, and it follows
- * `report-bug`'s rule: where the payload is stdout, the note moves to stderr
- * rather than into the bytes somebody is piping into a file.
+ * The Markdown is the answer and it goes where it belongs — the file beside the
+ * code, the file `--out` named, or stdout for `--out -`. This is the note beside
+ * it, and it follows `report-bug`'s rule: where the payload is stdout, the note
+ * moves to stderr rather than into the bytes somebody is piping into a file.
  *
  * @param path - Where the draft was written, or `null` where it went to stdout.
  */
@@ -712,7 +712,7 @@ export function renderDraft(
   )
   const landed =
     path === null
-      ? '  nothing written — pass --out <path> to write this draft to a file'
+      ? '  nothing written — the draft is on stdout'
       : `  wrote ${count(sections.length, 'section')} to ${path}`
   return finish(
     envelope,

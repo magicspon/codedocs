@@ -23,10 +23,10 @@ the one this decision has to answer in full.
 examples it gave say what it was refusing: a verification timestamp, which is "a committed lie the
 moment anyone edits the code", and a claim repaired after a rename, which "writes an `inferred` fact
 into a committed file". Both are **unattended writes into a file someone else already owns**. A draft
-is neither. It is asked for by name, it goes to stdout unless `--out` names a path, and it **refuses
-to write over an existing file** — there is no flag to make it. codedocs still never edits a document;
-`report-bug --out` is the existing precedent for an operation that writes the one file it was asked
-for and nothing else.
+is neither. It is asked for by name, it lands at a path derived from the subject, and it **refuses to
+write over an existing file** — there is no flag to make it. codedocs still never edits a document;
+`report-bug`, which writes `./codedocs-report.json` unless told otherwise, is the existing precedent
+for an operation that writes the one file it was asked for and nothing else.
 
 **"It inverts the coverage measure."** This is the real one. Coverage exists to say _this prose is
 unchecked_; a skeleton whose every section carries a claim and no prose reports `14 of 14 sections
@@ -45,6 +45,40 @@ coverage counts exactly those. The measure is not inverted; it is moved to where
 
 The marker is a question mark for the reason the claim marker is an HTML comment: it is invisible in
 every preview, plain text in a diff, one character to remove, and impossible to remove by accident.
+
+## Where a draft lands
+
+**Beside the code it is about**, in a `docs/` folder next to the file the subject is declared in:
+
+| Subject                                          | Draft                                                 |
+| ------------------------------------------------ | ----------------------------------------------------- |
+| `src/checkout/service.ts#CheckoutService.charge` | `src/checkout/docs/service.CheckoutService.charge.md` |
+| `src/checkout/service.ts`                        | `src/checkout/docs/service.md`                        |
+
+`--out <path>` overrides it, and `--out -` writes to stdout and no file.
+
+The default is a path rather than stdout because **a draft is a file about to be edited**, and the
+edit happens in an editor, not in a pipe. A default of stdout makes the first thing every caller
+does a shell redirect — the one write codedocs cannot refuse, over a file it cannot see, which is
+the loss this ADR built the overwrite refusal to prevent. Making the write the default moves that
+gesture inside the refusal.
+
+**The folder, not the source directory.** A `docs/` sibling keeps prose out of a directory listing
+of code while staying one hop from it, so a draft is found by looking where the code is rather than
+by remembering a convention at the repository root. It is created if it is not there; creating a
+folder is not editing anybody's file.
+
+**The name carries both parts** — the file stem, then the dotted descriptor path — because a
+directory of drafts is read as a list, and `charge.md` beside `capture.md` says nothing about which
+file either is about. It also makes collision structural rather than lucky: two symbols of one file
+differ in the second part, and the same symbol name in two files differs in the first.
+
+An ambiguous subject still drafts **one** file, named after the first match, because it produces one
+Markdown answer. The note beside it reports the ambiguity, as everywhere else.
+
+Only the derived path is repository-relative. An `--out` resolves against the directory the user is
+standing in: `--cwd` names the repository to draft _about_, and a path somebody typed belongs where
+they typed it.
 
 ## What a draft contains
 
@@ -87,6 +121,16 @@ byte-identical output, and a drafted-at line would break it on every run for no 
   the safer half of this decision. Rejected because the refusal to overwrite is what makes the write
   safe, and a shell redirect has no such refusal — `> notes.md` over an existing file is the loss the
   design was trying to prevent, moved into the user's shell where codedocs cannot decline it.
+- **Stdout by default, with `--out` to write.** The first shape of this decision, and rejected for
+  the reason above turned one step further: if the redirect is the unsafe path, defaulting to the
+  output that _needs_ a redirect makes the unsafe path the ordinary one. `--out -` keeps stdout for
+  the caller who wants to pipe.
+- **A single `docs/` tree at the repository root.** Rejected: it puts the document a directory tree
+  away from the code, so nothing about opening one file suggests where the other is, and every
+  repository that already has a `docs/` for something else gets drafts mixed into it.
+- **The source directory itself**, with no `docs/` folder. Rejected on the directory listing: a
+  package of eight modules would list eight more Markdown files between them, and the folder costs
+  one path segment to avoid that.
 - **Endorsed claims by default, with a `--candidates` flag to soften them.** Rejected: it makes the
   overstating shape the default and the honest one opt-in, and the first drafted file committed
   unread would report `verified` over prose nobody wrote.
@@ -111,8 +155,16 @@ byte-identical output, and a drafted-at line would break it on every run for no 
   construction rather than by rule — the discovery scan tests for `<!-- codedocs:`, which
   `<!-- codedocs?:` is not a case of — so nothing has to remember to keep them apart.
 - **`--out` is a second operation's flag now.** ADR 0006 keeps per-operation flags additive, so the
-  spelling is shared and the defaults are not: `report-bug` writes a file unless told otherwise, and
-  `docs draft` writes nothing unless told to.
+  spelling is shared and the defaults are not: `report-bug` writes `./codedocs-report.json`, and
+  `docs draft` writes a path derived from its subject. Both take `-` for stdout.
+- **The overwrite refusal is load-bearing, not a courtesy.** It was the guard on a flag somebody had
+  to pass; it is now the guard on what happens when nobody says anything. A change that ever softens
+  it — a `--force`, an "only if unchanged", a silent skip — is a change to the default behaviour of
+  the command, and reopens this ADR.
+- **`docs_draft` over MCP writes into the tree.** The MCP binding runs the same command line, so an
+  agent that asks for a draft gets a file, which is what an agent about to write documentation
+  wants. It cannot destroy one: the same refusal applies, and an agent that meant to replace a
+  document has to delete it first, which is a gesture a person can see in the diff.
 - **A draft can be re-run and diffed.** Byte-identical output at the same commit means a draft taken
   again after an edit is a diff against the file on disk, which is the closest thing to updating a
   document that codedocs may do without editing one.

@@ -360,11 +360,13 @@ export const OPERATIONS: readonly OperationSpec[] = [
       {
         name: 'out',
         value: 'path',
-        summary: 'write the draft here instead of to stdout',
+        summary: 'write the draft here; `-` is stdout',
         description:
-          'Write the draft to this path instead of stdout. It refuses to ' +
-          'overwrite an existing file and there is no flag to make it: the ' +
-          'file it would destroy is a document somebody wrote by hand.',
+          'Write the draft to this path instead of the derived default, which ' +
+          'is `docs/<file>.<symbol>.md` beside the file the subject is ' +
+          'declared in. `-` writes to stdout and no file. Either way it ' +
+          'refuses to overwrite an existing file and there is no flag to make ' +
+          'it: the file it would destroy is a document somebody wrote by hand.',
       },
     ],
     shape: 'document',
