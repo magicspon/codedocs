@@ -7,7 +7,7 @@
  */
 
 import { CODEDOCS } from './paths.ts'
-import type { ArmName, BenchCase } from './types.ts'
+import type { Arm, BenchCase } from './types.ts'
 
 /**
  * The extra briefing the codedocs arm gets, and the baseline does not. Its cost
@@ -43,12 +43,9 @@ Use it as much or as little as you find useful.
  * the ground truth excludes test files, and a run that spent its turns on one
  * would be measured on work no case is scored against.
  */
-export function buildPrompt(
-  bench: BenchCase,
-  arm: ArmName,
-  root: string,
-): string {
-  const briefing = arm === 'codedocs' ? `\n${codedocsBriefing(root)}\n` : ''
+export function buildPrompt(bench: BenchCase, arm: Arm, root: string): string {
+  const briefing =
+    arm.toolset === 'codedocs' ? `\n${codedocsBriefing(root)}\n` : ''
   return `You are working in the VS Code repository. Below is a bug report filed against it.
 
 Your job is to fix it. Edit the source in this checkout and leave the fix in the

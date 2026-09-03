@@ -17,13 +17,24 @@ import { RESULTS } from './paths.ts'
 import { buildPrompt } from './prompt.ts'
 import { RateLimited, recordFrom, verdictLine } from './record.ts'
 import { parseStream } from './stream.ts'
-import type { ArmName, BenchCase, RunRecord } from './types.ts'
+import type { Arm, BenchCase, RunRecord } from './types.ts'
 import { warmIndex } from './warm.ts'
 import { createWorktree } from './worktree.ts'
 
 /** The path stem both a run's record and its raw stream are written under. */
-function stemFor(caseId: string, arm: ArmName, replicate: number): string {
-  return join(RESULTS, `${caseId}-${arm}-r${replicate}`)
+function stemFor(caseId: string, arm: Arm, replicate: number): string {
+  return join(RESULTS, `${caseId}-${arm.id}-r${replicate}`)
+}
+
+/**
+ * The stem a run of this cell would have had before an arm carried its model.
+ *
+ * Only `--resume` reads it. Those runs are still on disk under the toolset
+ * alone, and re-running them because the naming changed would spend quota to
+ * reproduce a measurement that is already there.
+ */
+function legacyStemFor(caseId: string, arm: Arm, replicate: number): string {
+  return join(RESULTS, `${caseId}-${arm.toolset}-r${replicate}`)
 }
 
 /** What one run produced, and what it cost to make the tree it read. */
@@ -44,19 +55,19 @@ type Outcome = {
  */
 async function runInWorktree(
   bench: BenchCase,
-  arm: ArmName,
+  arm: Arm,
   replicate: number,
-  model: string,
 ): Promise<Outcome> {
   const worktree = createWorktree(
-    `${bench.id}-${arm}-r${replicate}`,
+    `${bench.id}-${arm.id}-r${replicate}`,
     bench.base.commit,
   )
   try {
     // Only the arm that is told about the index pays for one being there.
-    const indexSeconds = arm === 'codedocs' ? warmIndex(worktree.root) : 0
+    const indexSeconds =
+      arm.toolset === 'codedocs' ? warmIndex(worktree.root) : 0
     const prompt = buildPrompt(bench, arm, worktree.root)
-    const lines = await runAgent(prompt, model, worktree.root)
+    const lines = await runAgent(prompt, arm.model, worktree.root)
     return {
       lines,
       patch: captureDiff(worktree.root, bench.base.commit),
@@ -71,9 +82,8 @@ async function runInWorktree(
 function fileRun(
   outcome: Outcome,
   bench: BenchCase,
-  arm: ArmName,
+  arm: Arm,
   replicate: number,
-  model: string,
   startedAt: string,
 ): void {
   const stem = stemFor(bench.id, arm, replicate)
@@ -90,7 +100,6 @@ function fileRun(
       bench,
       arm,
       replicate,
-      model,
       startedAt,
     })
   } catch (error) {
@@ -113,14 +122,18 @@ function fileRun(
 /** Runs one (case, arm, replicate), writes its record and its raw stream. */
 async function executeRun(
   bench: BenchCase,
-  arm: ArmName,
+  arm: Arm,
   replicate: number,
-  model: string,
 ): Promise<void> {
   const startedAt = new Date().toISOString()
-  process.stdout.write(`  ${`${bench.id}/${arm}/r${replicate}`.padEnd(28)}`)
-  const outcome = await runInWorktree(bench, arm, replicate, model)
-  fileRun(outcome, bench, arm, replicate, model, startedAt)
+  process.stdout.write(`  ${cellName(bench, arm, replicate)}`)
+  const outcome = await runInWorktree(bench, arm, replicate)
+  fileRun(outcome, bench, arm, replicate, startedAt)
+}
+
+/** The cell's name as the console prints it, padded to the verdict column. */
+function cellName(bench: BenchCase, arm: Arm, replicate: number): string {
+  return `${bench.id}/${arm.id}/r${replicate}`.padEnd(34)
 }
 
 /**
@@ -133,27 +146,32 @@ async function executeRun(
  */
 function alreadyMeasured(
   bench: BenchCase,
-  arm: ArmName,
+  arm: Arm,
   replicate: number,
 ): boolean {
-  try {
-    const path = `${stemFor(bench.id, arm, replicate)}.stream.jsonl`
-    const lines = readFileSync(path, 'utf8')
-      .split('\n')
-      .filter((l) => l.trim())
-    const { metrics, rateLimitedUntil } = parseStream(lines)
-    return rateLimitedUntil === null && metrics.tokensTotal > 0
-  } catch {
-    return false
-  }
+  const stems = [
+    stemFor(bench.id, arm, replicate),
+    legacyStemFor(bench.id, arm, replicate),
+  ]
+  return stems.some((stem) => {
+    try {
+      const lines = readFileSync(`${stem}.stream.jsonl`, 'utf8')
+        .split('\n')
+        .filter((l) => l.trim())
+      const { metrics, rateLimitedUntil } = parseStream(lines)
+      return rateLimitedUntil === null && metrics.tokensTotal > 0
+    } catch {
+      return false
+    }
+  })
 }
 
 /** What one session covers. */
 export type SessionPlan = {
   cases: BenchCase[]
-  arms: ArmName[]
+  /** Every arm to run, each carrying its own model. Two or twenty. */
+  arms: Arm[]
   replicates: number
-  model: string
   /** Skip any run that already produced a measurement. */
   resume: boolean
 }
@@ -167,18 +185,16 @@ export type SessionPlan = {
  */
 async function runOne(
   bench: BenchCase,
-  arm: ArmName,
+  arm: Arm,
   replicate: number,
   plan: SessionPlan,
 ): Promise<boolean> {
   if (plan.resume && alreadyMeasured(bench, arm, replicate)) {
-    console.log(
-      `  ${`${bench.id}/${arm}/r${replicate}`.padEnd(28)}already measured, skipped`,
-    )
+    console.log(`  ${cellName(bench, arm, replicate)}already measured, skipped`)
     return true
   }
   try {
-    await executeRun(bench, arm, replicate, plan.model)
+    await executeRun(bench, arm, replicate)
     return true
   } catch (error) {
     if (!(error instanceof RateLimited)) throw error
@@ -202,7 +218,7 @@ export async function runSession(plan: SessionPlan): Promise<boolean> {
   for (let replicate = 1; replicate <= replicates; replicate += 1) {
     for (const bench of cases) {
       // The arm order alternates so that any drift over the session — rate
-      // limits, machine load — lands on both arms rather than on one.
+      // limits, machine load — lands on every arm rather than on one.
       const order = replicate % 2 === 0 ? [...arms].reverse() : arms
       for (const arm of order) {
         const carryOn = await runOne(bench, arm, replicate, plan)

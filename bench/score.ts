@@ -8,7 +8,7 @@
  */
 
 import type { DiffFile } from './diff.ts'
-import type { ArmName, BenchCase, RunDiff, RunMetrics } from './types.ts'
+import type { BenchCase, RunDiff, RunMetrics, Toolset } from './types.ts'
 
 /** Escapes a symbol name for use inside a regular expression. */
 function escape(name: string): string {
@@ -92,14 +92,15 @@ export function scoreDiff(changed: DiffFile[], bench: BenchCase): RunDiff {
  * being between the two things it claims to compare.
  */
 export function invalidReason(
-  arm: ArmName,
+  toolset: Toolset,
   metrics: RunMetrics,
   patched: boolean,
   usedCodedocs: boolean,
 ): string | null {
   if (!patched) return 'the agent left no patch'
-  if (arm === 'baseline' && usedCodedocs) return 'baseline reached for codedocs'
-  if (arm === 'codedocs' && !usedCodedocs)
+  if (toolset === 'baseline' && usedCodedocs)
+    return 'baseline reached for codedocs'
+  if (toolset === 'codedocs' && !usedCodedocs)
     return 'codedocs arm never called codedocs'
   if (metrics.turns === 0) return 'agent produced no turns'
   return null

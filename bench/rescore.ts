@@ -9,27 +9,36 @@
 
 import { readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { readRecord } from './arms.ts'
 import { RESULTS } from './paths.ts'
 import { recordFrom, verdictLine } from './record.ts'
-import type { ArmName, BenchCase, RunRecord } from './types.ts'
-
-/** The (case, arm, replicate) a saved stream belongs to. */
-const STREAM_FILE = /^(.+)-(baseline|codedocs)-r(\d+)\.stream\.jsonl$/
-
-/** What the original run recorded about itself, which rescoring must not invent. */
-type Provenance = { startedAt: string; model: string }
+import type { Arm, BenchCase, RunRecord, Toolset } from './types.ts'
 
 /**
- * Keeps whatever the original record said about when and on what it ran; only
- * the derived fields are recomputed. The stream and the patch are the source of
- * truth for everything else, so an unreadable record is not an error.
+ * The (case, arm, replicate) a saved stream belongs to.
+ *
+ * The model half of the arm is optional because runs made before an arm carried
+ * one are named by their toolset alone, and rescoring must still reach them.
  */
-function provenanceOf(stem: string): Provenance {
+const STREAM_FILE =
+  /^(.+?)-(baseline|codedocs)(?:@(.+))?-r(\d+)\.stream\.jsonl$/
+
+/** What the original run recorded about itself, which rescoring must not invent. */
+type Provenance = { startedAt: string; arm: Arm }
+
+/**
+ * Keeps whatever the original record said about when and as what it ran; only
+ * the derived fields are recomputed. The stream and the patch are the source of
+ * truth for everything else, so an unreadable record is not an error — but the
+ * model is only in the record, so a run whose record has gone is left alone
+ * rather than rescored as some other arm.
+ */
+function provenanceOf(stem: string): Provenance | null {
   try {
-    const prior = JSON.parse(readFileSync(`${stem}.json`, 'utf8')) as RunRecord
-    return { startedAt: prior.startedAt, model: prior.model }
+    const prior = readRecord(readFileSync(`${stem}.json`, 'utf8'))
+    return { startedAt: prior.startedAt, arm: prior.arm }
   } catch {
-    return { startedAt: new Date(0).toISOString(), model: 'unknown' }
+    return null
   }
 }
 
@@ -55,21 +64,32 @@ export function rescore(cases: BenchCase[]): void {
   for (const file of readdirSync(RESULTS).sort()) {
     const match = STREAM_FILE.exec(file)
     if (!match) continue
-    const [, caseId, arm, replicate] = match as unknown as [
+    const [, caseId, toolset, , replicate] = match as unknown as [
       string,
       string,
-      ArmName,
+      Toolset,
+      string | undefined,
       string,
     ]
     const bench = byId.get(caseId)
     if (!bench) continue
-    const stem = join(RESULTS, `${caseId}-${arm}-r${replicate}`)
+    const stem = join(RESULTS, file.replace(/\.stream\.jsonl$/, ''))
+    // The model is only ever in the record. Without one there is no arm to
+    // rescore as, and inventing one would file the run under an arm that was
+    // never run, so the stream is left exactly as it is.
+    const provenance = provenanceOf(stem)
+    if (!provenance) {
+      const cell = `${caseId}/${toolset}/r${replicate}`
+      console.log(`  ${cell.padEnd(34)}no record beside the stream, skipped`)
+      skipped += 1
+      continue
+    }
+    const arm = provenance.arm
     const lines = readFileSync(`${stem}.stream.jsonl`, 'utf8')
       .split('\n')
       .filter((l) => l.trim())
     const patch = patchOf(stem)
-    const { startedAt, model } = provenanceOf(stem)
-    process.stdout.write(`  ${`${caseId}/${arm}/r${replicate}`.padEnd(28)}`)
+    process.stdout.write(`  ${`${caseId}/${arm.id}/r${replicate}`.padEnd(34)}`)
     let record: RunRecord
     try {
       record = recordFrom({
@@ -78,8 +98,7 @@ export function rescore(cases: BenchCase[]): void {
         bench,
         arm,
         replicate: Number(replicate),
-        model,
-        startedAt,
+        startedAt: provenance.startedAt,
       })
     } catch (error) {
       // A refused run has no measurement in it to rescore. Drop the record so

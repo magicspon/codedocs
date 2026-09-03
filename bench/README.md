@@ -26,13 +26,27 @@ model, and a judge is a second opinion in the measurement. Touching the right
 code is what codedocs claims to help with, and it is what can be checked exactly
 against a patch the VS Code maintainers wrote.
 
-## The two arms
+## What an arm is
+
+An arm is a **toolset paired with a model**, named `toolset@model` — for
+instance `codedocs@haiku-4-5`. Any number of them run in one invocation.
 
 |              | baseline                                       | codedocs                                   |
 | ------------ | ---------------------------------------------- | ------------------------------------------ |
 | Tools        | Read, Grep, Glob, Bash, TodoWrite, Edit, Write | the same                                   |
 | Extra prompt | none                                           | ~150 tokens describing the five operations |
 | Index        | ignored                                        | already built                              |
+
+The model belongs to the arm rather than to the session, because the second
+question the benchmark exists to ask is whether structural facts let a cheaper
+model do work that otherwise needs a dearer one. That is a comparison between
+arms differing in both halves, and it cannot be posed while one model is fixed
+across the session:
+
+```sh
+node bench/run.ts --arms baseline,codedocs                  # like for like
+node bench/run.ts --arms baseline@claude-opus-5,codedocs@claude-haiku-4-5-20251001
+```
 
 Both arms get `Bash`, because grep and find are how anyone searches a repository
 from a shell and taking it from the baseline would rig the result. Both may
@@ -48,6 +62,12 @@ an agent, and hiding it would flatter the tool.
 A run is thrown out, not silently counted, when the baseline reaches for
 `codedocs` anyway, when the codedocs arm never calls it, or when the agent left
 no patch at all. The report prints how many were thrown out.
+
+Every delta in the report is read against one **reference arm**, named under the
+table's header: the baseline arm with the most runs behind it — a run with no
+tool in it, on the model the session leaned on. One reference for the whole
+report means every percentage in it answers the same question. A block the
+reference did not run in prints no delta rather than a misleading one.
 
 ## The cases
 
@@ -267,6 +287,8 @@ The residual bias therefore runs against the tool being sold, as it does for
 node bench/run.ts                    # every case, both arms, 3 replicates
 node bench/run.ts --cases 331102     # one case
 node bench/run.ts --replicates 1     # a smoke run
+node bench/run.ts --model claude-opus-5          # the default model for every arm
+node bench/run.ts --arms baseline,codedocs@claude-haiku-4-5-20251001
 node bench/report.ts                 # the comparison table
 node bench/report.ts --json          # the same numbers, machine readable
 ```
@@ -278,7 +300,7 @@ builds each codedocs run's index in that run's worktree, so the arm pays the
 per-question cost rather than the cold build.
 
 Each run leaves three files in `bench/results/`: `<case>-<arm>-r<n>.json`, the
-record the report reads; `.stream.jsonl`, everything the agent did; and `.diff`,
+record the report reads, where `<arm>` is the arm's `toolset@model` id; `.stream.jsonl`, everything the agent did; and `.diff`,
 the patch it produced, readable and `git apply`-able as it stands.
 
 `run.ts --rescore` rebuilds every record from the streams and patches already on
@@ -304,6 +326,7 @@ process spawning:
 | `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
 | `seeds/`        | the pool the freezer works from, one file per difficulty level |
 | `worktree.ts`   | a run's own checkout at its case's commit, and its removal     |
+| `arms.ts`       | an arm: parsing it, ordering it, and widening an older record  |
 | `warm.ts`       | building the index that worktree does not come with            |
 | `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
 | `agent.ts`      | spawning `claude -p` and collecting its stream                 |
@@ -318,7 +341,7 @@ process spawning:
 | `run.ts`        | the command line                                               |
 | `difficulty.ts` | the levels, and the heading the report prints for each         |
 | `summarise.ts`  | the medians one arm's runs become                              |
-| `table.ts`      | column widths, rows, and the delta beneath a pair of arms      |
+| `table.ts`      | column widths, rows, and the delta beneath a non-reference arm |
 | `report.ts`     | reading `results/`, grouping by level, printing the comparison |
 
 ## What this does not show
@@ -339,9 +362,11 @@ process spawning:
   per-run worktree exists to prevent. A single-question user never recovers the
   build; a working session does, several times over. The per-run numbers assume
   the session, and the build cost is stated here rather than buried in them.
-- **One repository, one model, one task shape, three replicates.** Enough to see
-  whether an effect is there and whether the spread swamps it. Not enough for a
-  confidence interval, and not evidence about repositories unlike vscode.
+- **One repository, one task shape, three replicates.** Enough to see whether an
+  effect is there and whether the spread swamps it. Not enough for a confidence
+  interval, and not evidence about repositories unlike vscode. An arm carries its
+  own model, so a session may vary that too — but every result on disk so far
+  was measured on one.
 - **Whether the fix is correct is not measured.** A run that changed every
   ground-truth file may still have written the wrong change inside it, and it
   scores as a hit. Judging the patch needs a judge model; this measures what the
