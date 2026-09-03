@@ -625,7 +625,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "bench_arms",
-      "community": 117,
+      "community": 4,
       "norm_label": "arms.ts"
     },
     {
@@ -635,7 +635,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "bench_arms_toolsets",
-      "community": 117,
+      "community": 4,
       "norm_label": "toolsets"
     },
     {
@@ -645,7 +645,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "bench_arms_modellabel",
-      "community": 117,
+      "community": 4,
       "norm_label": "modellabel()"
     },
     {
@@ -655,7 +655,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "bench_arms_armid",
-      "community": 117,
+      "community": 4,
       "norm_label": "armid()"
     },
     {
@@ -665,7 +665,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "bench_arms_makearm",
-      "community": 117,
+      "community": 4,
       "norm_label": "makearm()"
     },
     {
@@ -675,7 +675,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "bench_arms_parsearm",
-      "community": 117,
+      "community": 4,
       "norm_label": "parsearm()"
     },
     {
@@ -695,7 +695,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "bench_arms_legacyrecord",
-      "community": 117,
+      "community": 4,
       "norm_label": "legacyrecord"
     },
     {
@@ -705,7 +705,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "bench_arms_readrecord",
-      "community": 117,
+      "community": 98,
       "norm_label": "readrecord()"
     },
     {
@@ -929,13 +929,203 @@
       "norm_label": "freeze()"
     },
     {
+      "label": "judge.ts",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bench_judge",
+      "community": 84,
+      "norm_label": "judge.ts"
+    },
+    {
+      "label": "JudgeFailed",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "bench_judge_judgefailed",
+      "community": 117,
+      "norm_label": "judgefailed"
+    },
+    {
+      "label": "JudgeEnvelope",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "bench_judge_judgeenvelope",
+      "community": 84,
+      "norm_label": "judgeenvelope"
+    },
+    {
+      "label": "askJudge()",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "bench_judge_askjudge",
+      "community": 84,
+      "norm_label": "askjudge()"
+    },
+    {
+      "label": "objectIn()",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "bench_judge_objectin",
+      "community": 84,
+      "norm_label": "objectin()"
+    },
+    {
+      "label": "grade()",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "bench_judge_grade",
+      "community": 84,
+      "norm_label": "grade()"
+    },
+    {
+      "label": "tokensOf()",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "bench_judge_tokensof",
+      "community": 84,
+      "norm_label": "tokensof()"
+    },
+    {
+      "label": "verdictFrom()",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L114",
+      "_origin": "ast",
+      "id": "bench_judge_verdictfrom",
+      "community": 84,
+      "norm_label": "verdictfrom()"
+    },
+    {
+      "label": "judgeOnce()",
+      "file_type": "code",
+      "source_file": "bench/judge.ts",
+      "source_location": "L139",
+      "_origin": "ast",
+      "id": "bench_judge_judgeonce",
+      "community": 84,
+      "norm_label": "judgeonce()"
+    },
+    {
+      "label": "judgement.ts",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bench_judgement",
+      "community": 84,
+      "norm_label": "judgement.ts"
+    },
+    {
+      "label": "JudgePlan",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "bench_judgement_judgeplan",
+      "community": 117,
+      "norm_label": "judgeplan"
+    },
+    {
+      "label": "judgementKey()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "bench_judgement_judgementkey",
+      "community": 84,
+      "norm_label": "judgementkey()"
+    },
+    {
+      "label": "cachedReplicates()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "bench_judgement_cachedreplicates",
+      "community": 84,
+      "norm_label": "cachedreplicates()"
+    },
+    {
+      "label": "writeReplicates()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "bench_judgement_writereplicates",
+      "community": 84,
+      "norm_label": "writereplicates()"
+    },
+    {
+      "label": "consensus()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "bench_judgement_consensus",
+      "community": 84,
+      "norm_label": "consensus()"
+    },
+    {
+      "label": "judgementFrom()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L104",
+      "_origin": "ast",
+      "id": "bench_judgement_judgementfrom",
+      "community": 84,
+      "norm_label": "judgementfrom()"
+    },
+    {
+      "label": "judgeInputFor()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L136",
+      "_origin": "ast",
+      "id": "bench_judgement_judgeinputfor",
+      "community": 84,
+      "norm_label": "judgeinputfor()"
+    },
+    {
+      "label": "cachedJudgement()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L145",
+      "_origin": "ast",
+      "id": "bench_judgement_cachedjudgement",
+      "community": 84,
+      "norm_label": "cachedjudgement()"
+    },
+    {
+      "label": "judgeRun()",
+      "file_type": "code",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L165",
+      "_origin": "ast",
+      "id": "bench_judgement_judgerun",
+      "community": 84,
+      "norm_label": "judgerun()"
+    },
+    {
       "label": "paths.ts",
       "file_type": "code",
       "source_file": "bench/paths.ts",
       "source_location": "L1",
       "_origin": "ast",
       "id": "bench_paths",
-      "community": 93,
+      "community": 47,
       "norm_label": "paths.ts"
     },
     {
@@ -945,7 +1135,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "bench_paths_repo_root",
-      "community": 93,
+      "community": 47,
       "norm_label": "repo_root"
     },
     {
@@ -955,7 +1145,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "bench_paths_target",
-      "community": 93,
+      "community": 47,
       "norm_label": "target"
     },
     {
@@ -965,7 +1155,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "bench_paths_worktrees",
-      "community": 93,
+      "community": 47,
       "norm_label": "worktrees"
     },
     {
@@ -985,14 +1175,24 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "bench_paths_results",
-      "community": 93,
+      "community": 47,
       "norm_label": "results"
+    },
+    {
+      "label": "JUDGEMENTS",
+      "file_type": "code",
+      "source_file": "bench/paths.ts",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "bench_paths_judgements",
+      "community": 47,
+      "norm_label": "judgements"
     },
     {
       "label": "normalise()",
       "file_type": "code",
       "source_file": "bench/paths.ts",
-      "source_location": "L47",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "bench_paths_normalise",
       "community": 79,
@@ -1035,7 +1235,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "bench_preflight_preflight",
-      "community": 47,
+      "community": 117,
       "norm_label": "preflight()"
     },
     {
@@ -1112,7 +1312,7 @@
       "label": "recordFrom()",
       "file_type": "code",
       "source_file": "bench/record.ts",
-      "source_location": "L37",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "bench_record_recordfrom",
       "community": 98,
@@ -1122,11 +1322,81 @@
       "label": "verdictLine()",
       "file_type": "code",
       "source_file": "bench/record.ts",
-      "source_location": "L60",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "bench_record_verdictline",
       "community": 93,
       "norm_label": "verdictline()"
+    },
+    {
+      "label": "rejudge.ts",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bench_rejudge",
+      "community": 117,
+      "norm_label": "rejudge.ts"
+    },
+    {
+      "label": "Saved",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "bench_rejudge_saved",
+      "community": 117,
+      "norm_label": "saved"
+    },
+    {
+      "label": "savedRecords()",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "bench_rejudge_savedrecords",
+      "community": 117,
+      "norm_label": "savedrecords()"
+    },
+    {
+      "label": "skipReason()",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "bench_rejudge_skipreason",
+      "community": 117,
+      "norm_label": "skipreason()"
+    },
+    {
+      "label": "cell()",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L60",
+      "_origin": "ast",
+      "id": "bench_rejudge_cell",
+      "community": 117,
+      "norm_label": "cell()"
+    },
+    {
+      "label": "judgeSaved()",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "bench_rejudge_judgesaved",
+      "community": 117,
+      "norm_label": "judgesaved()"
+    },
+    {
+      "label": "rejudge()",
+      "file_type": "code",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "bench_rejudge_rejudge",
+      "community": 117,
+      "norm_label": "rejudge()"
     },
     {
       "label": "report.ts",
@@ -1215,48 +1485,128 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "bench_rescore",
-      "community": 117,
+      "community": 98,
       "norm_label": "rescore.ts"
     },
     {
       "label": "Provenance",
       "file_type": "code",
       "source_file": "bench/rescore.ts",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "bench_rescore_provenance",
-      "community": 117,
+      "community": 98,
       "norm_label": "provenance"
     },
     {
       "label": "provenanceOf()",
       "file_type": "code",
       "source_file": "bench/rescore.ts",
-      "source_location": "L36",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "bench_rescore_provenanceof",
-      "community": 117,
+      "community": 98,
       "norm_label": "provenanceof()"
+    },
+    {
+      "label": "judgementFor()",
+      "file_type": "code",
+      "source_file": "bench/rescore.ts",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "bench_rescore_judgementfor",
+      "community": 98,
+      "norm_label": "judgementfor()"
     },
     {
       "label": "patchOf()",
       "file_type": "code",
       "source_file": "bench/rescore.ts",
-      "source_location": "L51",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "bench_rescore_patchof",
-      "community": 117,
+      "community": 98,
       "norm_label": "patchof()"
     },
     {
       "label": "rescore()",
       "file_type": "code",
       "source_file": "bench/rescore.ts",
-      "source_location": "L60",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "bench_rescore_rescore",
-      "community": 117,
+      "community": 98,
       "norm_label": "rescore()"
+    },
+    {
+      "label": "rubric.ts",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bench_rubric",
+      "community": 84,
+      "norm_label": "rubric.ts"
+    },
+    {
+      "label": "CORRECTNESS",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "bench_rubric_correctness",
+      "community": 84,
+      "norm_label": "correctness"
+    },
+    {
+      "label": "SIMILARITY",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "bench_rubric_similarity",
+      "community": 84,
+      "norm_label": "similarity"
+    },
+    {
+      "label": "JudgeInput",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "bench_rubric_judgeinput",
+      "community": 84,
+      "norm_label": "judgeinput"
+    },
+    {
+      "label": "capped()",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "bench_rubric_capped",
+      "community": 84,
+      "norm_label": "capped()"
+    },
+    {
+      "label": "SCALES",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "bench_rubric_scales",
+      "community": 84,
+      "norm_label": "scales"
+    },
+    {
+      "label": "judgePrompt()",
+      "file_type": "code",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "bench_rubric_judgeprompt",
+      "community": 84,
+      "norm_label": "judgeprompt()"
     },
     {
       "label": "run.ts",
@@ -1269,10 +1619,20 @@
       "norm_label": "run.ts"
     },
     {
+      "label": "judgePlan()",
+      "file_type": "code",
+      "source_file": "bench/run.ts",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "bench_run_judgeplan",
+      "community": 117,
+      "norm_label": "judgeplan()"
+    },
+    {
       "label": "main()",
       "file_type": "code",
       "source_file": "bench/run.ts",
-      "source_location": "L34",
+      "source_location": "L60",
       "_origin": "ast",
       "id": "bench_run_main",
       "community": 117,
@@ -1462,7 +1822,7 @@
       "label": "stemFor()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L25",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "bench_session_stemfor",
       "community": 93,
@@ -1472,7 +1832,7 @@
       "label": "legacyStemFor()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L36",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "bench_session_legacystemfor",
       "community": 93,
@@ -1482,7 +1842,7 @@
       "label": "Outcome",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L41",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "bench_session_outcome",
       "community": 93,
@@ -1492,17 +1852,27 @@
       "label": "runInWorktree()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L56",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "bench_session_runinworktree",
       "community": 93,
       "norm_label": "runinworktree()"
     },
     {
+      "label": "withJudgement()",
+      "file_type": "code",
+      "source_file": "bench/session.ts",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "bench_session_withjudgement",
+      "community": 93,
+      "norm_label": "withjudgement()"
+    },
+    {
       "label": "fileRun()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L82",
+      "source_location": "L111",
       "_origin": "ast",
       "id": "bench_session_filerun",
       "community": 93,
@@ -1512,7 +1882,7 @@
       "label": "executeRun()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L123",
+      "source_location": "L154",
       "_origin": "ast",
       "id": "bench_session_executerun",
       "community": 93,
@@ -1522,7 +1892,7 @@
       "label": "cellName()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L135",
+      "source_location": "L167",
       "_origin": "ast",
       "id": "bench_session_cellname",
       "community": 93,
@@ -1532,7 +1902,7 @@
       "label": "alreadyMeasured()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L147",
+      "source_location": "L179",
       "_origin": "ast",
       "id": "bench_session_alreadymeasured",
       "community": 93,
@@ -1542,7 +1912,7 @@
       "label": "SessionPlan",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L170",
+      "source_location": "L202",
       "_origin": "ast",
       "id": "bench_session_sessionplan",
       "community": 93,
@@ -1552,7 +1922,7 @@
       "label": "runOne()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L186",
+      "source_location": "L220",
       "_origin": "ast",
       "id": "bench_session_runone",
       "community": 93,
@@ -1562,7 +1932,7 @@
       "label": "runSession()",
       "file_type": "code",
       "source_file": "bench/session.ts",
-      "source_location": "L216",
+      "source_location": "L250",
       "_origin": "ast",
       "id": "bench_session_runsession",
       "community": 117,
@@ -1662,7 +2032,7 @@
       "label": "Cell",
       "file_type": "code",
       "source_file": "bench/summarise.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "bench_summarise_cell",
       "community": 4,
@@ -1672,17 +2042,37 @@
       "label": "median()",
       "file_type": "code",
       "source_file": "bench/summarise.ts",
-      "source_location": "L30",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "bench_summarise_median",
       "community": 4,
       "norm_label": "median()"
     },
     {
+      "label": "modalSimilarity()",
+      "file_type": "code",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "bench_summarise_modalsimilarity",
+      "community": 4,
+      "norm_label": "modalsimilarity()"
+    },
+    {
+      "label": "judgeSpend()",
+      "file_type": "code",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "bench_summarise_judgespend",
+      "community": 4,
+      "norm_label": "judgespend()"
+    },
+    {
       "label": "summarise()",
       "file_type": "code",
       "source_file": "bench/summarise.ts",
-      "source_location": "L40",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "bench_summarise_summarise",
       "community": 4,
@@ -1692,7 +2082,7 @@
       "label": "delta()",
       "file_type": "code",
       "source_file": "bench/summarise.ts",
-      "source_location": "L61",
+      "source_location": "L115",
       "_origin": "ast",
       "id": "bench_summarise_delta",
       "community": 4,
@@ -1729,10 +2119,20 @@
       "norm_label": "pad()"
     },
     {
-      "label": "armRow()",
+      "label": "SHORT",
       "file_type": "code",
       "source_file": "bench/table.ts",
       "source_location": "L24",
+      "_origin": "ast",
+      "id": "bench_table_short",
+      "community": 4,
+      "norm_label": "short"
+    },
+    {
+      "label": "armRow()",
+      "file_type": "code",
+      "source_file": "bench/table.ts",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "bench_table_armrow",
       "community": 4,
@@ -1742,7 +2142,7 @@
       "label": "deltaRow()",
       "file_type": "code",
       "source_file": "bench/table.ts",
-      "source_location": "L43",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "bench_table_deltarow",
       "community": 4,
@@ -1752,7 +2152,7 @@
       "label": "printArms()",
       "file_type": "code",
       "source_file": "bench/table.ts",
-      "source_location": "L63",
+      "source_location": "L76",
       "_origin": "ast",
       "id": "bench_table_printarms",
       "community": 4,
@@ -1762,7 +2162,7 @@
       "label": "printHeader()",
       "file_type": "code",
       "source_file": "bench/table.ts",
-      "source_location": "L84",
+      "source_location": "L97",
       "_origin": "ast",
       "id": "bench_table_printheader",
       "community": 4,
@@ -1772,7 +2172,7 @@
       "label": "printLevelHeading()",
       "file_type": "code",
       "source_file": "bench/table.ts",
-      "source_location": "L98",
+      "source_location": "L115",
       "_origin": "ast",
       "id": "bench_table_printlevelheading",
       "community": 4,
@@ -1782,7 +2182,7 @@
       "label": "printTotals()",
       "file_type": "code",
       "source_file": "bench/table.ts",
-      "source_location": "L104",
+      "source_location": "L121",
       "_origin": "ast",
       "id": "bench_table_printtotals",
       "community": 4,
@@ -2019,14 +2419,74 @@
       "norm_label": "rundiff"
     },
     {
+      "label": "Correctness",
+      "file_type": "code",
+      "source_file": "bench/types.ts",
+      "source_location": "L142",
+      "_origin": "ast",
+      "id": "bench_types_correctness",
+      "community": 84,
+      "norm_label": "correctness"
+    },
+    {
+      "label": "Similarity",
+      "file_type": "code",
+      "source_file": "bench/types.ts",
+      "source_location": "L156",
+      "_origin": "ast",
+      "id": "bench_types_similarity",
+      "community": 84,
+      "norm_label": "similarity"
+    },
+    {
+      "label": "JudgeVerdict",
+      "file_type": "code",
+      "source_file": "bench/types.ts",
+      "source_location": "L167",
+      "_origin": "ast",
+      "id": "bench_types_judgeverdict",
+      "community": 84,
+      "norm_label": "judgeverdict"
+    },
+    {
+      "label": "RunJudgement",
+      "file_type": "code",
+      "source_file": "bench/types.ts",
+      "source_location": "L182",
+      "_origin": "ast",
+      "id": "bench_types_runjudgement",
+      "community": 4,
+      "norm_label": "runjudgement"
+    },
+    {
       "label": "RunRecord",
       "file_type": "code",
       "source_file": "bench/types.ts",
-      "source_location": "L137",
+      "source_location": "L207",
       "_origin": "ast",
       "id": "bench_types_runrecord",
       "community": 4,
       "norm_label": "runrecord"
+    },
+    {
+      "label": "upstream.ts",
+      "file_type": "code",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bench_upstream",
+      "community": 84,
+      "norm_label": "upstream.ts"
+    },
+    {
+      "label": "upstreamFix()",
+      "file_type": "code",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "bench_upstream_upstreamfix",
+      "community": 84,
+      "norm_label": "upstreamfix()"
     },
     {
       "label": "warm.ts",
@@ -3825,7 +4285,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_render_style",
-      "community": 10,
+      "community": 3,
       "norm_label": "style"
     },
     {
@@ -4055,7 +4515,7 @@
       "source_location": "L465",
       "_origin": "ast",
       "id": "src_render_symbolline",
-      "community": 50,
+      "community": 27,
       "norm_label": "symbolline()"
     },
     {
@@ -4085,7 +4545,7 @@
       "source_location": "L508",
       "_origin": "ast",
       "id": "src_render_referenceline",
-      "community": 50,
+      "community": 27,
       "norm_label": "referenceline()"
     },
     {
@@ -4765,7 +5225,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_render_answers_test",
-      "community": 13,
+      "community": 41,
       "norm_label": "render-answers.test.ts"
     },
     {
@@ -4775,7 +5235,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "test_render_answers_test_plain",
-      "community": 13,
+      "community": 41,
       "norm_label": "plain"
     },
     {
@@ -4785,7 +5245,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "test_render_answers_test_shell",
-      "community": 13,
+      "community": 41,
       "norm_label": "shell"
     },
     {
@@ -4795,7 +5255,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "test_render_answers_test_node",
-      "community": 13,
+      "community": 41,
       "norm_label": "node"
     },
     {
@@ -4805,7 +5265,7 @@
       "source_location": "L357",
       "_origin": "ast",
       "id": "test_render_answers_test_report",
-      "community": 13,
+      "community": 41,
       "norm_label": "report()"
     },
     {
@@ -5575,7 +6035,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ts7_index",
-      "community": 0,
+      "community": 11,
       "norm_label": "index.ts"
     },
     {
@@ -5635,7 +6095,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "ts7_program_analyse",
-      "community": 0,
+      "community": 11,
       "norm_label": "analyse()"
     },
     {
@@ -5645,7 +6105,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "ts7_program_openanalysis",
-      "community": 0,
+      "community": 11,
       "norm_label": "openanalysis()"
     },
     {
@@ -5905,7 +6365,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "ts7_symbols_symbolsweep",
-      "community": 61,
+      "community": 6,
       "norm_label": "symbolsweep"
     },
     {
@@ -5945,7 +6405,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ts7_types_declarationsite",
-      "community": 61,
+      "community": 6,
       "norm_label": "declarationsite"
     },
     {
@@ -5985,7 +6445,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "ts7_types_analysissession",
-      "community": 0,
+      "community": 11,
       "norm_label": "analysissession"
     },
     {
@@ -6265,7 +6725,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "config_jsonc",
-      "community": 1,
+      "community": 150,
       "norm_label": "jsonc.ts"
     },
     {
@@ -6285,7 +6745,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "config_jsonc_stripjsonc",
-      "community": 1,
+      "community": 150,
       "norm_label": "stripjsonc()"
     },
     {
@@ -6295,7 +6755,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "config_jsonc_blankcomments",
-      "community": 1,
+      "community": 150,
       "norm_label": "blankcomments()"
     },
     {
@@ -6305,7 +6765,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "config_jsonc_blanktrailingcommas",
-      "community": 1,
+      "community": 150,
       "norm_label": "blanktrailingcommas()"
     },
     {
@@ -6315,7 +6775,7 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "config_jsonc_units",
-      "community": 1,
+      "community": 150,
       "norm_label": "units()"
     },
     {
@@ -6325,7 +6785,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "config_jsonc_endofstring",
-      "community": 1,
+      "community": 150,
       "norm_label": "endofstring()"
     },
     {
@@ -6335,7 +6795,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "config_jsonc_blank",
-      "community": 1,
+      "community": 150,
       "norm_label": "blank()"
     },
     {
@@ -6625,7 +7085,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "config_types_config",
-      "community": 11,
+      "community": 0,
       "norm_label": "config"
     },
     {
@@ -6655,7 +7115,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "continuity_index_candidate",
-      "community": 13,
+      "community": 41,
       "norm_label": "candidate"
     },
     {
@@ -6785,7 +7245,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_discovery",
-      "community": 48,
+      "community": 11,
       "norm_label": "discovery.ts"
     },
     {
@@ -6795,7 +7255,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_discovery_skip_dirs",
-      "community": 48,
+      "community": 11,
       "norm_label": "skip_dirs"
     },
     {
@@ -6815,7 +7275,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_discovery_findrepositoryroot",
-      "community": 7,
+      "community": 14,
       "norm_label": "findrepositoryroot()"
     },
     {
@@ -6825,7 +7285,7 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "src_discovery_discoverprojects",
-      "community": 48,
+      "community": 11,
       "norm_label": "discoverprojects()"
     },
     {
@@ -6835,7 +7295,7 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "src_discovery_expandprojectglobs",
-      "community": 48,
+      "community": 11,
       "norm_label": "expandprojectglobs()"
     },
     {
@@ -6865,7 +7325,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "docs_check_claimreport",
-      "community": 13,
+      "community": 25,
       "norm_label": "claimreport"
     },
     {
@@ -6895,7 +7355,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "docs_check_sectionreport",
-      "community": 25,
+      "community": 41,
       "norm_label": "sectionreport"
     },
     {
@@ -6905,7 +7365,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "docs_check_documentreport",
-      "community": 25,
+      "community": 41,
       "norm_label": "documentreport"
     },
     {
@@ -7435,7 +7895,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "docs_predicate_verdict",
-      "community": 25,
+      "community": 41,
       "norm_label": "verdict"
     },
     {
@@ -7445,7 +7905,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "docs_predicate_claimreason",
-      "community": 19,
+      "community": 25,
       "norm_label": "claimreason"
     },
     {
@@ -7475,7 +7935,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "docs_predicate_checkcontext",
-      "community": 13,
+      "community": 57,
       "norm_label": "checkcontext"
     },
     {
@@ -7485,7 +7945,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "docs_predicate_endpoint",
-      "community": 19,
+      "community": 148,
       "norm_label": "endpoint"
     },
     {
@@ -7675,7 +8135,7 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "docs_predicate_countclaim",
-      "community": 92,
+      "community": 19,
       "norm_label": "countclaim()"
     },
     {
@@ -7775,7 +8235,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_envelope",
-      "community": 27,
+      "community": 7,
       "norm_label": "envelope.ts"
     },
     {
@@ -7795,7 +8255,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "src_envelope_blindspot",
-      "community": 27,
+      "community": 7,
       "norm_label": "blindspot"
     },
     {
@@ -7805,7 +8265,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "src_envelope_projectconditions",
-      "community": 57,
+      "community": 7,
       "norm_label": "projectconditions"
     },
     {
@@ -7815,7 +8275,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_envelope_snapshot",
-      "community": 13,
+      "community": 7,
       "norm_label": "snapshot"
     },
     {
@@ -7825,7 +8285,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "src_envelope_resolvedrequest",
-      "community": 57,
+      "community": 7,
       "norm_label": "resolvedrequest"
     },
     {
@@ -7835,7 +8295,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "src_envelope_budget",
-      "community": 13,
+      "community": 7,
       "norm_label": "budget"
     },
     {
@@ -7845,7 +8305,7 @@
       "source_location": "L147",
       "_origin": "ast",
       "id": "src_envelope_errorparams",
-      "community": 13,
+      "community": 7,
       "norm_label": "errorparams"
     },
     {
@@ -7855,7 +8315,7 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "src_envelope_errorcode",
-      "community": 13,
+      "community": 7,
       "norm_label": "errorcode"
     },
     {
@@ -7865,7 +8325,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "src_envelope_envelopeerror",
-      "community": 10,
+      "community": 7,
       "norm_label": "envelopeerror"
     },
     {
@@ -7875,7 +8335,7 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "src_envelope_envelope",
-      "community": 27,
+      "community": 7,
       "norm_label": "envelope"
     },
     {
@@ -7885,7 +8345,7 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "src_envelope_answercontext",
-      "community": 27,
+      "community": 92,
       "norm_label": "answercontext"
     },
     {
@@ -7895,7 +8355,7 @@
       "source_location": "L272",
       "_origin": "ast",
       "id": "src_envelope_answer",
-      "community": 27,
+      "community": 92,
       "norm_label": "answer()"
     },
     {
@@ -7915,7 +8375,7 @@
       "source_location": "L328",
       "_origin": "ast",
       "id": "src_envelope_failure",
-      "community": 13,
+      "community": 7,
       "norm_label": "failure()"
     },
     {
@@ -8065,7 +8525,7 @@
       "source_location": "L221",
       "_origin": "ast",
       "id": "src_git_changedpaths",
-      "community": 92,
+      "community": 13,
       "norm_label": "changedpaths()"
     },
     {
@@ -8075,7 +8535,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_index",
-      "community": 13,
+      "community": 7,
       "norm_label": "index.ts"
     },
     {
@@ -8115,7 +8575,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "labels_effective_effectivelabels",
-      "community": 13,
+      "community": 57,
       "norm_label": "effectivelabels"
     },
     {
@@ -8145,7 +8605,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "labels_effective_labelsof",
-      "community": 57,
+      "community": 19,
       "norm_label": "labelsof()"
     },
     {
@@ -8155,7 +8615,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "labels_effective_valueof",
-      "community": 57,
+      "community": 19,
       "norm_label": "valueof()"
     },
     {
@@ -8185,7 +8645,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "labels_index_labelfiles",
-      "community": 41,
+      "community": 15,
       "norm_label": "labelfiles()"
     },
     {
@@ -8225,7 +8685,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "labels_scope",
-      "community": 57,
+      "community": 61,
       "norm_label": "scope.ts"
     },
     {
@@ -8235,7 +8695,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "labels_scope_labelfilter",
-      "community": 57,
+      "community": 61,
       "norm_label": "labelfilter"
     },
     {
@@ -8245,7 +8705,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "labels_scope_scope",
-      "community": 57,
+      "community": 7,
       "norm_label": "scope"
     },
     {
@@ -8255,7 +8715,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "labels_scope_default_scope",
-      "community": 57,
+      "community": 41,
       "norm_label": "default_scope"
     },
     {
@@ -8265,7 +8725,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "labels_scope_scoping",
-      "community": 13,
+      "community": 92,
       "norm_label": "scoping"
     },
     {
@@ -8295,7 +8755,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "labels_scope_axis_values",
-      "community": 57,
+      "community": 61,
       "norm_label": "axis_values"
     },
     {
@@ -8335,7 +8795,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "labels_scope_applyscope",
-      "community": 27,
+      "community": 92,
       "norm_label": "applyscope()"
     },
     {
@@ -8355,7 +8815,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "labels_signals_trackedfiles",
-      "community": 57,
+      "community": 15,
       "norm_label": "trackedfiles()"
     },
     {
@@ -8475,7 +8935,7 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "src_manifest_operations",
-      "community": 12,
+      "community": 8,
       "norm_label": "operations"
     },
     {
@@ -8525,7 +8985,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_model",
-      "community": 57,
+      "community": 61,
       "norm_label": "model.ts"
     },
     {
@@ -8555,7 +9015,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_model_provenance",
-      "community": 57,
+      "community": 61,
       "norm_label": "provenance"
     },
     {
@@ -8565,7 +9025,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_model_derivation",
-      "community": 57,
+      "community": 61,
       "norm_label": "derivation"
     },
     {
@@ -8575,7 +9035,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_model_edgekind",
-      "community": 13,
+      "community": 61,
       "norm_label": "edgekind"
     },
     {
@@ -8585,7 +9045,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_model_symbolkind",
-      "community": 57,
+      "community": 61,
       "norm_label": "symbolkind"
     },
     {
@@ -8595,7 +9055,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "src_model_callerattribution",
-      "community": 57,
+      "community": 61,
       "norm_label": "callerattribution"
     },
     {
@@ -8605,7 +9065,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "src_model_unresolvedcallcause",
-      "community": 57,
+      "community": 61,
       "norm_label": "unresolvedcallcause"
     },
     {
@@ -8615,7 +9075,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_model_fidelity",
-      "community": 57,
+      "community": 61,
       "norm_label": "fidelity"
     },
     {
@@ -8645,7 +9105,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "src_model_preconditioncause",
-      "community": 57,
+      "community": 61,
       "norm_label": "preconditioncause"
     },
     {
@@ -8655,7 +9115,7 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "src_model_labelaxis",
-      "community": 57,
+      "community": 61,
       "norm_label": "labelaxis"
     },
     {
@@ -8665,7 +9125,7 @@
       "source_location": "L145",
       "_origin": "ast",
       "id": "src_model_labelvalue",
-      "community": 57,
+      "community": 61,
       "norm_label": "labelvalue"
     },
     {
@@ -8685,7 +9145,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "src_model_projectnode",
-      "community": 29,
+      "community": 0,
       "norm_label": "projectnode"
     },
     {
@@ -8695,7 +9155,7 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "src_model_filenode",
-      "community": 15,
+      "community": 0,
       "norm_label": "filenode"
     },
     {
@@ -8705,7 +9165,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "src_model_importedge",
-      "community": 61,
+      "community": 6,
       "norm_label": "importedge"
     },
     {
@@ -8725,7 +9185,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "src_model_unresolvedspecifier",
-      "community": 61,
+      "community": 6,
       "norm_label": "unresolvedspecifier"
     },
     {
@@ -8735,7 +9195,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "src_model_symbolnode",
-      "community": 61,
+      "community": 6,
       "norm_label": "symbolnode"
     },
     {
@@ -8745,7 +9205,7 @@
       "source_location": "L278",
       "_origin": "ast",
       "id": "src_model_callsource",
-      "community": 19,
+      "community": 148,
       "norm_label": "callsource"
     },
     {
@@ -8765,7 +9225,7 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "src_model_calledge",
-      "community": 61,
+      "community": 6,
       "norm_label": "calledge"
     },
     {
@@ -8775,7 +9235,7 @@
       "source_location": "L312",
       "_origin": "ast",
       "id": "src_model_referencekind",
-      "community": 57,
+      "community": 61,
       "norm_label": "referencekind"
     },
     {
@@ -8785,7 +9245,7 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "src_model_referenceedge",
-      "community": 61,
+      "community": 6,
       "norm_label": "referenceedge"
     },
     {
@@ -8805,7 +9265,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_naming",
-      "community": 2,
+      "community": 148,
       "norm_label": "naming.ts"
     },
     {
@@ -8815,7 +9275,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_naming_naming",
-      "community": 29,
+      "community": 148,
       "norm_label": "naming"
     },
     {
@@ -8825,7 +9285,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_naming_namingfor",
-      "community": 5,
+      "community": 110,
       "norm_label": "namingfor()"
     },
     {
@@ -8885,7 +9345,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "operations_analyse_analyse",
-      "community": 10,
+      "community": 13,
       "norm_label": "analyse()"
     },
     {
@@ -8955,7 +9415,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_changes",
-      "community": 92,
+      "community": 13,
       "norm_label": "changes.ts"
     },
     {
@@ -8975,7 +9435,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "operations_changes_changedfiles",
-      "community": 92,
+      "community": 13,
       "norm_label": "changedfiles()"
     },
     {
@@ -8985,7 +9445,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "operations_changes_fidelities",
-      "community": 92,
+      "community": 13,
       "norm_label": "fidelities()"
     },
     {
@@ -8995,7 +9455,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "operations_changes_fromindexes",
-      "community": 92,
+      "community": 13,
       "norm_label": "fromindexes()"
     },
     {
@@ -9005,7 +9465,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "operations_changes_fromgit",
-      "community": 92,
+      "community": 13,
       "norm_label": "fromgit()"
     },
     {
@@ -9015,7 +9475,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "operations_changes_fidelitymoved",
-      "community": 92,
+      "community": 13,
       "norm_label": "fidelitymoved()"
     },
     {
@@ -9155,7 +9615,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "operations_classification_group",
-      "community": 29,
+      "community": 110,
       "norm_label": "group()"
     },
     {
@@ -9195,7 +9655,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_docs",
-      "community": 13,
+      "community": 41,
       "norm_label": "docs.ts"
     },
     {
@@ -9205,7 +9665,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "operations_docs_docsoptions",
-      "community": 13,
+      "community": 41,
       "norm_label": "docsoptions"
     },
     {
@@ -9215,7 +9675,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "operations_docs_docsenvelope",
-      "community": 13,
+      "community": 41,
       "norm_label": "docsenvelope"
     },
     {
@@ -9225,7 +9685,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "operations_docs_docscheck",
-      "community": 13,
+      "community": 41,
       "norm_label": "docscheck()"
     },
     {
@@ -9235,7 +9695,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "operations_docs_docsaffected",
-      "community": 13,
+      "community": 41,
       "norm_label": "docsaffected()"
     },
     {
@@ -9245,7 +9705,7 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "operations_docs_assemble",
-      "community": 13,
+      "community": 92,
       "norm_label": "assemble()"
     },
     {
@@ -9255,7 +9715,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "operations_docs_fails",
-      "community": 13,
+      "community": 41,
       "norm_label": "fails()"
     },
     {
@@ -9265,7 +9725,7 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "operations_docs_contextfor",
-      "community": 13,
+      "community": 41,
       "norm_label": "contextfor()"
     },
     {
@@ -9365,7 +9825,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "operations_doctor_baselinereport",
-      "community": 5,
+      "community": 13,
       "norm_label": "baselinereport"
     },
     {
@@ -9465,7 +9925,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "operations_evidence_evidencekind",
-      "community": 13,
+      "community": 7,
       "norm_label": "evidencekind"
     },
     {
@@ -9475,7 +9935,7 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "operations_evidence_evidencereport",
-      "community": 61,
+      "community": 6,
       "norm_label": "evidencereport"
     },
     {
@@ -9485,7 +9945,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "operations_evidence_evidenceenvelope",
-      "community": 13,
+      "community": 27,
       "norm_label": "evidenceenvelope"
     },
     {
@@ -9495,7 +9955,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "operations_evidence_evidenceoptions",
-      "community": 13,
+      "community": 92,
       "norm_label": "evidenceoptions"
     },
     {
@@ -9575,7 +10035,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_file",
-      "community": 61,
+      "community": 92,
       "norm_label": "file.ts"
     },
     {
@@ -9595,7 +10055,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "operations_file_file",
-      "community": 27,
+      "community": 92,
       "norm_label": "file()"
     },
     {
@@ -9605,7 +10065,7 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "operations_file_resolvepath",
-      "community": 61,
+      "community": 92,
       "norm_label": "resolvepath()"
     },
     {
@@ -9635,7 +10095,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "operations_impact_impactedsymbol",
-      "community": 13,
+      "community": 41,
       "norm_label": "impactedsymbol"
     },
     {
@@ -9655,7 +10115,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "operations_impact_baselineused",
-      "community": 13,
+      "community": 41,
       "norm_label": "baselineused"
     },
     {
@@ -9665,7 +10125,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "operations_impact_impactenvelope",
-      "community": 13,
+      "community": 41,
       "norm_label": "impactenvelope"
     },
     {
@@ -9715,7 +10175,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "operations_impact_reaching",
-      "community": 92,
+      "community": 19,
       "norm_label": "reaching()"
     },
     {
@@ -9875,7 +10335,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_references",
-      "community": 27,
+      "community": 92,
       "norm_label": "references.ts"
     },
     {
@@ -9885,7 +10345,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "operations_references_references",
-      "community": 27,
+      "community": 92,
       "norm_label": "references()"
     },
     {
@@ -9895,7 +10355,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "operations_references_referenceedgesof",
-      "community": 27,
+      "community": 92,
       "norm_label": "referenceedgesof()"
     },
     {
@@ -9915,7 +10375,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "operations_report_bug_reproduction",
-      "community": 10,
+      "community": 7,
       "norm_label": "reproduction"
     },
     {
@@ -9985,7 +10445,7 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "operations_report_bug_specifierfact",
-      "community": 13,
+      "community": 7,
       "norm_label": "specifierfact"
     },
     {
@@ -10065,7 +10525,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "operations_report_bug_answerfacts",
-      "community": 13,
+      "community": 7,
       "norm_label": "answerfacts"
     },
     {
@@ -10085,7 +10545,7 @@
       "source_location": "L271",
       "_origin": "ast",
       "id": "operations_report_bug_reportenvelope",
-      "community": 13,
+      "community": 7,
       "norm_label": "reportenvelope"
     },
     {
@@ -10185,7 +10645,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_scope",
-      "community": 27,
+      "community": 92,
       "norm_label": "scope.ts"
     },
     {
@@ -10195,7 +10655,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "operations_scope_scopeto",
-      "community": 27,
+      "community": 92,
       "norm_label": "scopeto()"
     },
     {
@@ -10205,7 +10665,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "operations_scope_specifierspots",
-      "community": 27,
+      "community": 13,
       "norm_label": "specifierspots()"
     },
     {
@@ -10215,7 +10675,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "operations_scope_meaning",
-      "community": 27,
+      "community": 92,
       "norm_label": "meaning"
     },
     {
@@ -10225,7 +10685,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "operations_scope_compare",
-      "community": 27,
+      "community": 92,
       "norm_label": "compare()"
     },
     {
@@ -10235,7 +10695,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_subject",
-      "community": 27,
+      "community": 50,
       "norm_label": "subject.ts"
     },
     {
@@ -10245,7 +10705,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "operations_subject_resolvesubject",
-      "community": 27,
+      "community": 50,
       "norm_label": "resolvesubject()"
     },
     {
@@ -10255,7 +10715,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "operations_subject_notecollisions",
-      "community": 27,
+      "community": 92,
       "norm_label": "notecollisions()"
     },
     {
@@ -10265,7 +10725,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_symbol",
-      "community": 27,
+      "community": 92,
       "norm_label": "symbol.ts"
     },
     {
@@ -10275,7 +10735,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "operations_symbol_globtoregexp",
-      "community": 27,
+      "community": 10,
       "norm_label": "globtoregexp()"
     },
     {
@@ -10285,7 +10745,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "operations_symbol_symbol",
-      "community": 27,
+      "community": 10,
       "norm_label": "symbol()"
     },
     {
@@ -10325,7 +10785,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "operations_trace_tracepath",
-      "community": 65,
+      "community": 42,
       "norm_label": "tracepath"
     },
     {
@@ -10415,7 +10875,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "operations_trace_filesof",
-      "community": 10,
+      "community": 65,
       "norm_label": "filesof()"
     },
     {
@@ -11005,7 +11465,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "session_index",
-      "community": 11,
+      "community": 14,
       "norm_label": "index.ts"
     },
     {
@@ -11025,7 +11485,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "session_open_sessionoptions",
-      "community": 11,
+      "community": 14,
       "norm_label": "sessionoptions"
     },
     {
@@ -11035,7 +11495,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "session_open_session",
-      "community": 11,
+      "community": 14,
       "norm_label": "session"
     },
     {
@@ -11165,7 +11625,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "session_shared_repairreport",
-      "community": 11,
+      "community": 14,
       "norm_label": "repairreport"
     },
     {
@@ -11265,7 +11725,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "session_wave_wavecontext",
-      "community": 11,
+      "community": 0,
       "norm_label": "wavecontext"
     },
     {
@@ -11315,7 +11775,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_enums",
-      "community": 57,
+      "community": 61,
       "norm_label": "enums.ts"
     },
     {
@@ -11325,7 +11785,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "store_enums_kinds",
-      "community": 29,
+      "community": 147,
       "norm_label": "kinds"
     },
     {
@@ -11335,7 +11795,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "store_enums_attributions",
-      "community": 92,
+      "community": 148,
       "norm_label": "attributions"
     },
     {
@@ -11345,7 +11805,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "store_enums_provenances",
-      "community": 29,
+      "community": 148,
       "norm_label": "provenances"
     },
     {
@@ -11355,7 +11815,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "store_enums_derivations",
-      "community": 29,
+      "community": 148,
       "norm_label": "derivations"
     },
     {
@@ -11375,7 +11835,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "store_enums_reference_kinds",
-      "community": 92,
+      "community": 148,
       "norm_label": "reference_kinds"
     },
     {
@@ -11385,7 +11845,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "store_enums_label_axes",
-      "community": 29,
+      "community": 148,
       "norm_label": "label_axes"
     },
     {
@@ -11395,7 +11855,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "store_enums_label_values",
-      "community": 29,
+      "community": 148,
       "norm_label": "label_values"
     },
     {
@@ -11405,7 +11865,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "store_enums_fidelities",
-      "community": 92,
+      "community": 29,
       "norm_label": "fidelities"
     },
     {
@@ -11415,7 +11875,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "store_enums_precondition_causes",
-      "community": 92,
+      "community": 110,
       "norm_label": "precondition_causes"
     },
     {
@@ -11425,7 +11885,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "store_enums_enumcodes",
-      "community": 57,
+      "community": 61,
       "norm_label": "enumcodes"
     },
     {
@@ -11435,7 +11895,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "store_enums_enum_codes",
-      "community": 92,
+      "community": 149,
       "norm_label": "enum_codes"
     },
     {
@@ -11455,7 +11915,7 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "store_enums_named",
-      "community": 29,
+      "community": 147,
       "norm_label": "named()"
     },
     {
@@ -11465,7 +11925,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_header",
-      "community": 29,
+      "community": 110,
       "norm_label": "header.ts"
     },
     {
@@ -11475,7 +11935,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "store_header_indexheader",
-      "community": 29,
+      "community": 110,
       "norm_label": "indexheader"
     },
     {
@@ -11495,7 +11955,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "store_header_writemeta",
-      "community": 29,
+      "community": 110,
       "norm_label": "writemeta()"
     },
     {
@@ -11505,7 +11965,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_index",
-      "community": 92,
+      "community": 110,
       "norm_label": "index.ts"
     },
     {
@@ -11565,7 +12025,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_open",
-      "community": 29,
+      "community": 110,
       "norm_label": "open.ts"
     },
     {
@@ -11575,7 +12035,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "store_open_store",
-      "community": 92,
+      "community": 110,
       "norm_label": "store"
     },
     {
@@ -11585,7 +12045,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "store_open_readuserversion",
-      "community": 29,
+      "community": 110,
       "norm_label": "readuserversion()"
     },
     {
@@ -11595,7 +12055,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "store_open_openstore",
-      "community": 15,
+      "community": 110,
       "norm_label": "openstore()"
     },
     {
@@ -11605,7 +12065,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_edges",
-      "community": 29,
+      "community": 148,
       "norm_label": "read-edges.ts"
     },
     {
@@ -11615,7 +12075,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "store_read_edges_edgerow",
-      "community": 29,
+      "community": 148,
       "norm_label": "edgerow"
     },
     {
@@ -11625,7 +12085,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "store_read_edges_tosite",
-      "community": 29,
+      "community": 147,
       "norm_label": "tosite()"
     },
     {
@@ -11635,7 +12095,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "store_read_edges_toedge",
-      "community": 29,
+      "community": 147,
       "norm_label": "toedge()"
     },
     {
@@ -11645,7 +12105,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "store_read_edges_byendpoints",
-      "community": 29,
+      "community": 148,
       "norm_label": "byendpoints()"
     },
     {
@@ -11655,7 +12115,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "store_read_edges_readcallersof",
-      "community": 92,
+      "community": 19,
       "norm_label": "readcallersof()"
     },
     {
@@ -11665,7 +12125,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "store_read_edges_readcalleesof",
-      "community": 92,
+      "community": 149,
       "norm_label": "readcalleesof()"
     },
     {
@@ -11695,7 +12155,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_file_facts",
-      "community": 61,
+      "community": 147,
       "norm_label": "read-file-facts.ts"
     },
     {
@@ -11705,7 +12165,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "store_read_file_facts_filemembership",
-      "community": 61,
+      "community": 147,
       "norm_label": "filemembership"
     },
     {
@@ -11715,7 +12175,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "store_read_file_facts_readindexedfiles",
-      "community": 61,
+      "community": 19,
       "norm_label": "readindexedfiles()"
     },
     {
@@ -11725,7 +12185,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "store_read_file_facts_readmembershipof",
-      "community": 61,
+      "community": 41,
       "norm_label": "readmembershipof()"
     },
     {
@@ -11735,7 +12195,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "store_read_file_facts_readsymbolsin",
-      "community": 61,
+      "community": 147,
       "norm_label": "readsymbolsin()"
     },
     {
@@ -11745,7 +12205,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "store_read_file_facts_readimportsof",
-      "community": 61,
+      "community": 147,
       "norm_label": "readimportsof()"
     },
     {
@@ -11815,7 +12275,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_labels",
-      "community": 29,
+      "community": 148,
       "norm_label": "read-labels.ts"
     },
     {
@@ -11825,7 +12285,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "store_read_labels_labelrow",
-      "community": 29,
+      "community": 148,
       "norm_label": "labelrow"
     },
     {
@@ -11835,7 +12295,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "store_read_labels_tolabel",
-      "community": 29,
+      "community": 147,
       "norm_label": "tolabel()"
     },
     {
@@ -11855,7 +12315,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_projects",
-      "community": 92,
+      "community": 0,
       "norm_label": "read-projects.ts"
     },
     {
@@ -11875,7 +12335,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "store_read_projects_readcanonicalprojects",
-      "community": 92,
+      "community": 0,
       "norm_label": "readcanonicalprojects()"
     },
     {
@@ -11925,7 +12385,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "store_read_projects_readprojects",
-      "community": 0,
+      "community": 13,
       "norm_label": "readprojects()"
     },
     {
@@ -11935,7 +12395,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_references",
-      "community": 92,
+      "community": 148,
       "norm_label": "read-references.ts"
     },
     {
@@ -11945,7 +12405,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "store_read_references_referencerow",
-      "community": 92,
+      "community": 148,
       "norm_label": "referencerow"
     },
     {
@@ -11955,7 +12415,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "store_read_references_toreference",
-      "community": 29,
+      "community": 147,
       "norm_label": "toreference()"
     },
     {
@@ -11965,7 +12425,7 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "store_read_references_byreference",
-      "community": 92,
+      "community": 148,
       "norm_label": "byreference()"
     },
     {
@@ -11975,7 +12435,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "store_read_references_readreferencesto",
-      "community": 92,
+      "community": 19,
       "norm_label": "readreferencesto()"
     },
     {
@@ -11985,7 +12445,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "store_read_references_readreferencesfrom",
-      "community": 92,
+      "community": 19,
       "norm_label": "readreferencesfrom()"
     },
     {
@@ -11995,7 +12455,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_specifiers",
-      "community": 92,
+      "community": 110,
       "norm_label": "read-specifiers.ts"
     },
     {
@@ -12005,7 +12465,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "store_read_specifiers_readunresolvedspecifiers",
-      "community": 92,
+      "community": 19,
       "norm_label": "readunresolvedspecifiers()"
     },
     {
@@ -12025,7 +12485,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_read_symbols",
-      "community": 29,
+      "community": 147,
       "norm_label": "read-symbols.ts"
     },
     {
@@ -12035,7 +12495,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "store_read_symbols_symbolrow",
-      "community": 29,
+      "community": 147,
       "norm_label": "symbolrow"
     },
     {
@@ -12045,7 +12505,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "store_read_symbols_tosymbol",
-      "community": 29,
+      "community": 147,
       "norm_label": "tosymbol()"
     },
     {
@@ -12055,7 +12515,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "store_read_symbols_readsymbols",
-      "community": 27,
+      "community": 147,
       "norm_label": "readsymbols()"
     },
     {
@@ -12065,7 +12525,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "store_read_symbols_readsymbol",
-      "community": 27,
+      "community": 147,
       "norm_label": "readsymbol()"
     },
     {
@@ -12075,7 +12535,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "store_read_symbols_readsymbolsshorthand",
-      "community": 29,
+      "community": 50,
       "norm_label": "readsymbolsshorthand()"
     },
     {
@@ -12085,7 +12545,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "store_read_symbols_readsymbolsnamed",
-      "community": 29,
+      "community": 147,
       "norm_label": "readsymbolsnamed()"
     },
     {
@@ -12095,7 +12555,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "store_read_symbols_readsymbolidat",
-      "community": 0,
+      "community": 147,
       "norm_label": "readsymbolidat()"
     },
     {
@@ -12105,7 +12565,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_schema",
-      "community": 29,
+      "community": 110,
       "norm_label": "schema.ts"
     },
     {
@@ -12115,7 +12575,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "store_schema_tables",
-      "community": 29,
+      "community": 110,
       "norm_label": "tables"
     },
     {
@@ -12125,7 +12585,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_shared",
-      "community": 29,
+      "community": 148,
       "norm_label": "shared.ts"
     },
     {
@@ -12135,7 +12595,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "store_shared_idof",
-      "community": 29,
+      "community": 147,
       "norm_label": "idof()"
     },
     {
@@ -12155,7 +12615,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "store_shared_compare",
-      "community": 29,
+      "community": 148,
       "norm_label": "compare()"
     },
     {
@@ -12165,7 +12625,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_statements",
-      "community": 29,
+      "community": 147,
       "norm_label": "statements.ts"
     },
     {
@@ -12175,7 +12635,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "store_statements_statements",
-      "community": 29,
+      "community": 147,
       "norm_label": "statements"
     },
     {
@@ -12185,7 +12645,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "store_statements_prepared",
-      "community": 29,
+      "community": 147,
       "norm_label": "prepared()"
     },
     {
@@ -12195,7 +12655,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "store_statements_pathid",
-      "community": 0,
+      "community": 147,
       "norm_label": "pathid()"
     },
     {
@@ -12205,7 +12665,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "store_statements_nodeid",
-      "community": 92,
+      "community": 19,
       "norm_label": "nodeid()"
     },
     {
@@ -12215,7 +12675,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_stats",
-      "community": 92,
+      "community": 110,
       "norm_label": "stats.ts"
     },
     {
@@ -12225,7 +12685,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "store_stats_counts",
-      "community": 92,
+      "community": 13,
       "norm_label": "counts()"
     },
     {
@@ -12235,7 +12695,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "store_write_commit",
-      "community": 29,
+      "community": 110,
       "norm_label": "write-commit.ts"
     },
     {
@@ -12245,7 +12705,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "store_write_commit_wavewrite",
-      "community": 29,
+      "community": 110,
       "norm_label": "wavewrite"
     },
     {
@@ -12255,7 +12715,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "store_write_commit_analysisstart",
-      "community": 29,
+      "community": 110,
       "norm_label": "analysisstart"
     },
     {
@@ -12265,7 +12725,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "store_write_commit_projectwrite",
-      "community": 29,
+      "community": 110,
       "norm_label": "projectwrite"
     },
     {
@@ -12275,7 +12735,7 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "store_write_commit_transaction",
-      "community": 0,
+      "community": 110,
       "norm_label": "transaction()"
     },
     {
@@ -12285,7 +12745,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "store_write_commit_clearfile",
-      "community": 29,
+      "community": 147,
       "norm_label": "clearfile()"
     },
     {
@@ -12295,7 +12755,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "store_write_commit_beginanalysis",
-      "community": 15,
+      "community": 11,
       "norm_label": "beginanalysis()"
     },
     {
@@ -12315,7 +12775,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "store_write_commit_retirefiles",
-      "community": 0,
+      "community": 110,
       "norm_label": "retirefiles()"
     },
     {
@@ -12325,7 +12785,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "store_write_commit_applywave",
-      "community": 0,
+      "community": 110,
       "norm_label": "applywave()"
     },
     {
@@ -12335,7 +12795,7 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "store_write_commit_replacelabels",
-      "community": 14,
+      "community": 110,
       "norm_label": "replacelabels()"
     },
     {
@@ -12345,7 +12805,7 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "store_write_commit_writeheader",
-      "community": 0,
+      "community": 14,
       "norm_label": "writeheader()"
     },
     {
@@ -12355,7 +12815,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "store_write_commit_refreshprojects",
-      "community": 0,
+      "community": 110,
       "norm_label": "refreshprojects()"
     },
     {
@@ -12365,7 +12825,7 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "store_write_commit_factgroup",
-      "community": 61,
+      "community": 6,
       "norm_label": "factgroup"
     },
     {
@@ -12375,7 +12835,7 @@
       "source_location": "L268",
       "_origin": "ast",
       "id": "store_write_commit_groupbyproject",
-      "community": 29,
+      "community": 110,
       "norm_label": "groupbyproject()"
     },
     {
@@ -12385,7 +12845,7 @@
       "source_location": "L311",
       "_origin": "ast",
       "id": "store_write_commit_byfile",
-      "community": 29,
+      "community": 110,
       "norm_label": "byfile()"
     },
     {
@@ -12405,7 +12865,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "store_write_rows_filefacts",
-      "community": 61,
+      "community": 6,
       "norm_label": "filefacts"
     },
     {
@@ -12565,7 +13025,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_symbol_id_packageref",
-      "community": 2,
+      "community": 50,
       "norm_label": "packageref"
     },
     {
@@ -12645,7 +13105,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "src_symbol_id_symbolid",
-      "community": 50,
+      "community": 149,
       "norm_label": "symbolid()"
     },
     {
@@ -12675,7 +13135,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "src_symbol_id_fileof",
-      "community": 50,
+      "community": 65,
       "norm_label": "fileof()"
     },
     {
@@ -12685,7 +13145,7 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "src_symbol_id_shorthandof",
-      "community": 50,
+      "community": 27,
       "norm_label": "shorthandof()"
     },
     {
@@ -12695,7 +13155,7 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "src_symbol_id_dottedof",
-      "community": 50,
+      "community": 147,
       "norm_label": "dottedof()"
     },
     {
@@ -12715,7 +13175,7 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "src_symbol_id_splitshorthand",
-      "community": 5,
+      "community": 50,
       "norm_label": "splitshorthand()"
     },
     {
@@ -12765,7 +13225,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_adapter_test",
-      "community": 50,
+      "community": 152,
       "norm_label": "adapter.test.ts"
     },
     {
@@ -12775,7 +13235,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "test_adapter_test_fixture",
-      "community": 50,
+      "community": 152,
       "norm_label": "fixture()"
     },
     {
@@ -12785,7 +13245,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "test_adapter_test_root",
-      "community": 50,
+      "community": 152,
       "norm_label": "root"
     },
     {
@@ -12795,7 +13255,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "test_adapter_test_result",
-      "community": 50,
+      "community": 152,
       "norm_label": "result"
     },
     {
@@ -12805,7 +13265,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "test_adapter_test_edge",
-      "community": 50,
+      "community": 152,
       "norm_label": "edge()"
     },
     {
@@ -12875,7 +13335,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_cold_build_test",
-      "community": 15,
+      "community": 11,
       "norm_label": "cold-build.test.ts"
     },
     {
@@ -12885,7 +13345,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "test_cold_build_test_fixture",
-      "community": 15,
+      "community": 11,
       "norm_label": "fixture"
     },
     {
@@ -12895,7 +13355,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "test_cold_build_test_dump",
-      "community": 15,
+      "community": 11,
       "norm_label": "dump()"
     },
     {
@@ -12905,7 +13365,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "test_cold_build_test_halfbuild",
-      "community": 15,
+      "community": 11,
       "norm_label": "halfbuild()"
     },
     {
@@ -12985,7 +13445,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_descriptors_test",
-      "community": 50,
+      "community": 27,
       "norm_label": "descriptors.test.ts"
     },
     {
@@ -12995,7 +13455,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "test_descriptors_test_fixtureroot",
-      "community": 50,
+      "community": 27,
       "norm_label": "fixtureroot"
     },
     {
@@ -13005,7 +13465,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "test_descriptors_test_result",
-      "community": 50,
+      "community": 27,
       "norm_label": "result"
     },
     {
@@ -13015,7 +13475,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "test_descriptors_test_at",
-      "community": 50,
+      "community": 27,
       "norm_label": "at()"
     },
     {
@@ -13025,7 +13485,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "test_descriptors_test_claiming",
-      "community": 50,
+      "community": 27,
       "norm_label": "claiming()"
     },
     {
@@ -13065,7 +13525,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_docs_test",
-      "community": 25,
+      "community": 41,
       "norm_label": "docs.test.ts"
     },
     {
@@ -13075,7 +13535,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "test_docs_test_fixture",
-      "community": 25,
+      "community": 41,
       "norm_label": "fixture"
     },
     {
@@ -13085,7 +13545,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "test_docs_test_plant",
-      "community": 25,
+      "community": 41,
       "norm_label": "plant()"
     },
     {
@@ -13095,7 +13555,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "test_docs_test_document",
-      "community": 25,
+      "community": 41,
       "norm_label": "document()"
     },
     {
@@ -13105,7 +13565,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "test_docs_test_check",
-      "community": 25,
+      "community": 41,
       "norm_label": "check()"
     },
     {
@@ -13115,7 +13575,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "test_docs_test_documentat",
-      "community": 25,
+      "community": 41,
       "norm_label": "documentat()"
     },
     {
@@ -13125,7 +13585,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "test_docs_test_claimsof",
-      "community": 25,
+      "community": 41,
       "norm_label": "claimsof()"
     },
     {
@@ -13135,7 +13595,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "test_docs_test_claimnamed",
-      "community": 25,
+      "community": 41,
       "norm_label": "claimnamed()"
     },
     {
@@ -13145,7 +13605,7 @@
       "source_location": "L618",
       "_origin": "ast",
       "id": "test_docs_test_plantrename",
-      "community": 25,
+      "community": 41,
       "norm_label": "plantrename()"
     },
     {
@@ -13155,7 +13615,7 @@
       "source_location": "L651",
       "_origin": "ast",
       "id": "test_docs_test_plantrelations",
-      "community": 25,
+      "community": 41,
       "norm_label": "plantrelations()"
     },
     {
@@ -13165,7 +13625,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_doctor_test",
-      "community": 1,
+      "community": 13,
       "norm_label": "doctor.test.ts"
     },
     {
@@ -13175,7 +13635,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "test_doctor_test_fixture",
-      "community": 1,
+      "community": 13,
       "norm_label": "fixture"
     },
     {
@@ -13185,7 +13645,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "test_doctor_test_manifest",
-      "community": 1,
+      "community": 13,
       "norm_label": "manifest()"
     },
     {
@@ -13195,7 +13655,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "test_doctor_test_write",
-      "community": 1,
+      "community": 13,
       "norm_label": "write()"
     },
     {
@@ -13205,7 +13665,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "test_doctor_test_install",
-      "community": 1,
+      "community": 13,
       "norm_label": "install()"
     },
     {
@@ -13215,7 +13675,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "test_doctor_test_run",
-      "community": 1,
+      "community": 13,
       "norm_label": "run()"
     },
     {
@@ -14855,7 +15315,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_impact_test",
-      "community": 1,
+      "community": 151,
       "norm_label": "impact.test.ts"
     },
     {
@@ -14865,7 +15325,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "test_impact_test_git",
-      "community": 1,
+      "community": 151,
       "norm_label": "git()"
     },
     {
@@ -14875,7 +15335,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "test_impact_test_write",
-      "community": 1,
+      "community": 151,
       "norm_label": "write()"
     },
     {
@@ -14885,7 +15345,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "test_impact_test_runanalyse",
-      "community": 1,
+      "community": 151,
       "norm_label": "runanalyse()"
     },
     {
@@ -14895,7 +15355,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "test_impact_test_runimpact",
-      "community": 1,
+      "community": 92,
       "norm_label": "runimpact()"
     },
     {
@@ -14905,7 +15365,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "test_impact_test_head",
-      "community": 1,
+      "community": 151,
       "norm_label": "head()"
     },
     {
@@ -14915,7 +15375,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "test_impact_test_advance",
-      "community": 1,
+      "community": 151,
       "norm_label": "advance()"
     },
     {
@@ -14925,7 +15385,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_labels_test",
-      "community": 41,
+      "community": 15,
       "norm_label": "labels.test.ts"
     },
     {
@@ -14935,7 +15395,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "test_labels_test_packages",
-      "community": 41,
+      "community": 15,
       "norm_label": "packages"
     },
     {
@@ -14945,7 +15405,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "test_labels_test_fixture",
-      "community": 41,
+      "community": 15,
       "norm_label": "fixture"
     },
     {
@@ -14955,7 +15415,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "test_labels_test_write",
-      "community": 41,
+      "community": 15,
       "norm_label": "write()"
     },
     {
@@ -14965,7 +15425,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "test_labels_test_commit",
-      "community": 41,
+      "community": 15,
       "norm_label": "commit()"
     },
     {
@@ -14975,7 +15435,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "test_labels_test_labelsof",
-      "community": 41,
+      "community": 15,
       "norm_label": "labelsof()"
     },
     {
@@ -14985,7 +15445,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "test_labels_test_decide",
-      "community": 41,
+      "community": 15,
       "norm_label": "decide()"
     },
     {
@@ -14995,7 +15455,7 @@
       "source_location": "L295",
       "_origin": "ast",
       "id": "test_labels_test_ask",
-      "community": 41,
+      "community": 15,
       "norm_label": "ask()"
     },
     {
@@ -15185,7 +15645,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_store_test",
-      "community": 92,
+      "community": 149,
       "norm_label": "store.test.ts"
     },
     {
@@ -15195,7 +15655,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "test_store_test_site",
-      "community": 92,
+      "community": 149,
       "norm_label": "site()"
     },
     {
@@ -15205,7 +15665,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "test_store_test_id",
-      "community": 92,
+      "community": 149,
       "norm_label": "id()"
     },
     {
@@ -15215,7 +15675,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "test_store_test_node",
-      "community": 92,
+      "community": 149,
       "norm_label": "node()"
     },
     {
@@ -15225,7 +15685,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "test_store_test_edge",
-      "community": 92,
+      "community": 149,
       "norm_label": "edge()"
     },
     {
@@ -15235,7 +15695,7 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "test_store_test_reference",
-      "community": 92,
+      "community": 149,
       "norm_label": "reference()"
     },
     {
@@ -15245,7 +15705,7 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "test_store_test_write",
-      "community": 92,
+      "community": 149,
       "norm_label": "write"
     },
     {
@@ -15305,7 +15765,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_trace_test",
-      "community": 65,
+      "community": 42,
       "norm_label": "trace.test.ts"
     },
     {
@@ -15315,7 +15775,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "test_trace_test_fixture",
-      "community": 65,
+      "community": 42,
       "norm_label": "fixture"
     },
     {
@@ -15325,7 +15785,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "test_trace_test_paths",
-      "community": 65,
+      "community": 42,
       "norm_label": "paths()"
     },
     {
@@ -15335,7 +15795,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "test_trace_test_sequenceof",
-      "community": 65,
+      "community": 42,
       "norm_label": "sequenceof()"
     },
     {
@@ -15385,7 +15845,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "test_wave_test_repair",
-      "community": 14,
+      "community": 27,
       "norm_label": "repair()"
     },
     {
@@ -16932,7 +17392,7 @@
       "label": "What an arm is",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "bench_readme_what_an_arm_is",
       "community": 36,
@@ -16942,7 +17402,7 @@
       "label": "The cases",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L72",
+      "source_location": "L73",
       "_origin": "ast",
       "id": "bench_readme_the_cases",
       "community": 36,
@@ -16952,7 +17412,7 @@
       "label": "One tree per run",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L122",
+      "source_location": "L123",
       "_origin": "ast",
       "id": "bench_readme_one_tree_per_run",
       "community": 36,
@@ -16962,7 +17422,7 @@
       "label": "Difficulty levels",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L159",
+      "source_location": "L161",
       "_origin": "ast",
       "id": "bench_readme_difficulty_levels",
       "community": 36,
@@ -16972,7 +17432,7 @@
       "label": "What is measured",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L178",
+      "source_location": "L180",
       "_origin": "ast",
       "id": "bench_readme_what_is_measured",
       "community": 36,
@@ -16982,7 +17442,7 @@
       "label": "An exploration step",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L197",
+      "source_location": "L207",
       "_origin": "ast",
       "id": "bench_readme_an_exploration_step",
       "community": 36,
@@ -16992,7 +17452,7 @@
       "label": "Lines of source read",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L213",
+      "source_location": "L223",
       "_origin": "ast",
       "id": "bench_readme_lines_of_source_read",
       "community": 36,
@@ -17002,7 +17462,7 @@
       "label": "What counts as touching a symbol",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L230",
+      "source_location": "L240",
       "_origin": "ast",
       "id": "bench_readme_what_counts_as_touching_a_symbol",
       "community": 36,
@@ -17012,17 +17472,57 @@
       "label": "Where the counts are wrong, and which way",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L258",
+      "source_location": "L268",
       "_origin": "ast",
       "id": "bench_readme_where_the_counts_are_wrong_and_which_way",
       "community": 36,
       "norm_label": "where the counts are wrong, and which way"
     },
     {
+      "label": "Judging the fix",
+      "file_type": "document",
+      "source_file": "bench/README.md",
+      "source_location": "L294",
+      "_origin": "ast",
+      "id": "bench_readme_judging_the_fix",
+      "community": 36,
+      "norm_label": "judging the fix"
+    },
+    {
+      "label": "What the judge cannot see",
+      "file_type": "document",
+      "source_file": "bench/README.md",
+      "source_location": "L334",
+      "_origin": "ast",
+      "id": "bench_readme_what_the_judge_cannot_see",
+      "community": 36,
+      "norm_label": "what the judge cannot see"
+    },
+    {
+      "label": "Three readings, and what they disagree about",
+      "file_type": "document",
+      "source_file": "bench/README.md",
+      "source_location": "L349",
+      "_origin": "ast",
+      "id": "bench_readme_three_readings_and_what_they_disagree_about",
+      "community": 36,
+      "norm_label": "three readings, and what they disagree about"
+    },
+    {
+      "label": "What judging costs, and who pays",
+      "file_type": "document",
+      "source_file": "bench/README.md",
+      "source_location": "L366",
+      "_origin": "ast",
+      "id": "bench_readme_what_judging_costs_and_who_pays",
+      "community": 36,
+      "norm_label": "what judging costs, and who pays"
+    },
+    {
       "label": "Running it",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L284",
+      "source_location": "L385",
       "_origin": "ast",
       "id": "bench_readme_running_it",
       "community": 36,
@@ -17032,7 +17532,7 @@
       "label": "How the harness is laid out",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L318",
+      "source_location": "L436",
       "_origin": "ast",
       "id": "bench_readme_how_the_harness_is_laid_out",
       "community": 36,
@@ -17042,7 +17542,7 @@
       "label": "What this does not show",
       "file_type": "document",
       "source_file": "bench/README.md",
-      "source_location": "L347",
+      "source_location": "L470",
       "_origin": "ast",
       "id": "bench_readme_what_this_does_not_show",
       "community": 36,
@@ -20175,7 +20675,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "research_incremental_analysis_1_tsc_incremental_and_tsbuildinfo",
-      "community": 84,
+      "community": 60,
       "norm_label": "1. `tsc --incremental` and `.tsbuildinfo`"
     },
     {
@@ -20185,7 +20685,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "research_incremental_analysis_what_is_actually_cached",
-      "community": 84,
+      "community": 60,
       "norm_label": "what is actually cached"
     },
     {
@@ -20195,7 +20695,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "research_incremental_analysis_what_invalidates_it",
-      "community": 84,
+      "community": 60,
       "norm_label": "what invalidates it"
     },
     {
@@ -20205,7 +20705,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "research_incremental_analysis_is_the_format_documented_or_stable_can_a_third_party_read_it",
-      "community": 84,
+      "community": 60,
       "norm_label": "is the format documented or stable? can a third party read it?"
     },
     {
@@ -22352,7 +22852,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Gates incremental propagation: a file whose content changed but whose export shape did not stops the wave, so a body-only edit \u2014 the commonest edit there is \u2014 settles in one round and one file.",
-      "community": 75,
+      "community": 35,
       "norm_label": "export-shape hash",
       "id": "context_export_shape_hash"
     },
@@ -22366,7 +22866,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Computed from typeToString and structural expansion, never from Type.id, which was measured turning a body-only edit into 10 waves and 1,436 of 3,000 files because type ids are assigned lazily per snapshot.",
-      "community": 75,
+      "community": 35,
       "norm_label": "shape hash",
       "id": "context_shape_hash"
     },
@@ -22714,7 +23214,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Propagates to direct importers only where an export-shape hash moved. A ceiling of eight waves turns a bug in the shape hash into a slow answer rather than a hung process, falling back to a cold build that analyse reports.",
-      "community": 75,
+      "community": 37,
       "norm_label": "propagation wave repair",
       "id": "docs_solution_wave"
     },
@@ -24904,6 +25404,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bench/run.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "bench_run_judgeplan",
+      "target": "bench_argv_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
       "source_location": "L26",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -24926,6 +25437,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bench/run.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "bench_run_judgeplan",
+      "target": "bench_argv_has",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
       "source_location": "L31",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -24938,9 +25460,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_armid",
-      "confidence_score": 1.0
+      "target": "bench_arms_armid"
     },
     {
       "relation": "contains",
@@ -24948,9 +25470,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_armsin",
-      "confidence_score": 1.0
+      "target": "bench_arms_armsin"
     },
     {
       "relation": "contains",
@@ -24958,9 +25480,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_legacyrecord",
-      "confidence_score": 1.0
+      "target": "bench_arms_legacyrecord"
     },
     {
       "relation": "contains",
@@ -24968,9 +25490,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_makearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_makearm"
     },
     {
       "relation": "contains",
@@ -24978,9 +25500,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_modellabel",
-      "confidence_score": 1.0
+      "target": "bench_arms_modellabel"
     },
     {
       "relation": "contains",
@@ -24988,9 +25510,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_orderarms",
-      "confidence_score": 1.0
+      "target": "bench_arms_orderarms"
     },
     {
       "relation": "contains",
@@ -24998,9 +25520,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_parsearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_parsearm"
     },
     {
       "relation": "contains",
@@ -25008,9 +25530,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_parsearms",
-      "confidence_score": 1.0
+      "target": "bench_arms_parsearms"
     },
     {
       "relation": "contains",
@@ -25018,9 +25540,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_readrecord",
-      "confidence_score": 1.0
+      "target": "bench_arms_readrecord"
     },
     {
       "relation": "contains",
@@ -25028,9 +25550,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_referencearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_referencearm"
     },
     {
       "relation": "contains",
@@ -25038,9 +25560,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_arms_toolsets",
-      "confidence_score": 1.0
+      "target": "bench_arms_toolsets"
     },
     {
       "relation": "imports_from",
@@ -25049,9 +25571,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_types",
-      "confidence_score": 1.0
+      "target": "bench_types"
     },
     {
       "relation": "imports",
@@ -25060,9 +25582,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -25071,9 +25593,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_types_runrecord",
-      "confidence_score": 1.0
+      "target": "bench_types_runrecord"
     },
     {
       "relation": "imports",
@@ -25082,8 +25604,19 @@
       "source_file": "bench/arms.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms",
-      "target": "bench_types_toolset",
+      "target": "bench_types_toolset"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_arms",
       "confidence_score": 1.0
     },
     {
@@ -25093,9 +25626,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report",
-      "target": "bench_arms",
-      "confidence_score": 1.0
+      "target": "bench_arms"
     },
     {
       "relation": "imports_from",
@@ -25104,9 +25637,9 @@
       "source_file": "bench/rescore.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_rescore",
-      "target": "bench_arms",
-      "confidence_score": 1.0
+      "target": "bench_arms"
     },
     {
       "relation": "imports_from",
@@ -25115,9 +25648,9 @@
       "source_file": "bench/run.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_run",
-      "target": "bench_arms",
-      "confidence_score": 1.0
+      "target": "bench_arms"
     },
     {
       "relation": "imports_from",
@@ -25126,9 +25659,9 @@
       "source_file": "bench/table.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_table",
-      "target": "bench_arms",
-      "confidence_score": 1.0
+      "target": "bench_arms"
     },
     {
       "relation": "calls",
@@ -25137,9 +25670,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms_armid",
-      "target": "bench_arms_modellabel",
-      "confidence_score": 1.0
+      "target": "bench_arms_modellabel"
     },
     {
       "relation": "calls",
@@ -25148,9 +25681,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms_makearm",
-      "target": "bench_arms_armid",
-      "confidence_score": 1.0
+      "target": "bench_arms_armid"
     },
     {
       "relation": "calls",
@@ -25159,9 +25692,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms_parsearm",
-      "target": "bench_arms_makearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_makearm"
     },
     {
       "relation": "calls",
@@ -25170,9 +25703,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L98",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms_readrecord",
-      "target": "bench_arms_makearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_makearm"
     },
     {
       "relation": "imports",
@@ -25181,9 +25714,9 @@
       "source_file": "bench/run.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_run",
-      "target": "bench_arms_parsearms",
-      "confidence_score": 1.0
+      "target": "bench_arms_parsearms"
     },
     {
       "relation": "calls",
@@ -25192,8 +25725,30 @@
       "source_file": "bench/run.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_run_main",
-      "target": "bench_arms_parsearms",
+      "target": "bench_arms_parsearms"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_arms_readrecord",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "bench_rejudge_savedrecords",
+      "target": "bench_arms_readrecord",
       "confidence_score": 1.0
     },
     {
@@ -25203,9 +25758,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report",
-      "target": "bench_arms_readrecord",
-      "confidence_score": 1.0
+      "target": "bench_arms_readrecord"
     },
     {
       "relation": "calls",
@@ -25214,9 +25769,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report_loadrecords",
-      "target": "bench_arms_readrecord",
-      "confidence_score": 1.0
+      "target": "bench_arms_readrecord"
     },
     {
       "relation": "imports",
@@ -25225,9 +25780,9 @@
       "source_file": "bench/rescore.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_rescore",
-      "target": "bench_arms_readrecord",
-      "confidence_score": 1.0
+      "target": "bench_arms_readrecord"
     },
     {
       "relation": "calls",
@@ -25236,9 +25791,9 @@
       "source_file": "bench/rescore.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_rescore_provenanceof",
-      "target": "bench_arms_readrecord",
-      "confidence_score": 1.0
+      "target": "bench_arms_readrecord"
     },
     {
       "relation": "calls",
@@ -25247,9 +25802,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms_armsin",
-      "target": "bench_arms_orderarms",
-      "confidence_score": 1.0
+      "target": "bench_arms_orderarms"
     },
     {
       "relation": "calls",
@@ -25258,9 +25813,9 @@
       "source_file": "bench/arms.ts",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_arms_referencearm",
-      "target": "bench_arms_armsin",
-      "confidence_score": 1.0
+      "target": "bench_arms_armsin"
     },
     {
       "relation": "imports",
@@ -25269,9 +25824,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report",
-      "target": "bench_arms_armsin",
-      "confidence_score": 1.0
+      "target": "bench_arms_armsin"
     },
     {
       "relation": "calls",
@@ -25280,9 +25835,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report_printjson",
-      "target": "bench_arms_armsin",
-      "confidence_score": 1.0
+      "target": "bench_arms_armsin"
     },
     {
       "relation": "imports",
@@ -25291,9 +25846,9 @@
       "source_file": "bench/table.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_table",
-      "target": "bench_arms_armsin",
-      "confidence_score": 1.0
+      "target": "bench_arms_armsin"
     },
     {
       "relation": "calls",
@@ -25313,9 +25868,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report",
-      "target": "bench_arms_referencearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_referencearm"
     },
     {
       "relation": "calls",
@@ -25324,9 +25879,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L153",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report_main",
-      "target": "bench_arms_referencearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_referencearm"
     },
     {
       "relation": "calls",
@@ -25335,9 +25890,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report_printjson",
-      "target": "bench_arms_referencearm",
-      "confidence_score": 1.0
+      "target": "bench_arms_referencearm"
     },
     {
       "relation": "contains",
@@ -25877,12 +26432,874 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_askjudge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_grade",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_judgeenvelope",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_judgefailed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_judgeonce",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_objectin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_tokensof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_judge_verdictfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_rubric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_rubric_correctness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_rubric_judgeinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_rubric_judgeprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_rubric_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_tally",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_tally_runtotals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_types_correctness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_types_judgeverdict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_judge",
+      "target": "bench_types_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_judge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bench_session",
+      "target": "bench_judge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_judge_judgefailed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bench_session",
+      "target": "bench_judge_judgefailed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "bench_judge_judgeonce",
+      "target": "bench_judge_askjudge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "bench_judge_verdictfrom",
+      "target": "bench_judge_objectin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "bench_judge_verdictfrom",
+      "target": "bench_judge_grade",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "bench/judge.ts",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "bench_judge_tokensof",
+      "target": "src_args_token"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "bench_judge_verdictfrom",
+      "target": "bench_judge_tokensof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judge.ts",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "bench_judge_judgeonce",
+      "target": "bench_judge_verdictfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bench/judge.ts",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "bench_judge_judgeonce",
+      "target": "bench_rubric_judgeprompt"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judge_judgeonce",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bench/judgement.ts",
+      "source_location": "L174",
+      "weight": 1.0,
+      "source": "bench_judgement_judgerun",
+      "target": "bench_judge_judgeonce"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_cachedjudgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_cachedreplicates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_consensus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L136",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_judgeinputfor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_judgementfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_judgementkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_judgeplan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L165",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_judgerun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_judgement_writereplicates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_paths_judgements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_rubric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_rubric_correctness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_rubric_judgeinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_rubric_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_types_benchcase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_types_judgeverdict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_types_runjudgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_upstream",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "bench_judgement",
+      "target": "bench_upstream_upstreamfix",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_judgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rescore.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "bench_rescore",
+      "target": "bench_judgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "bench_run",
+      "target": "bench_judgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_session",
+      "target": "bench_judgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_judgement_judgeplan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "bench_run",
+      "target": "bench_judgement_judgeplan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_session",
+      "target": "bench_judgement_judgeplan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L151",
+      "weight": 1.0,
+      "source": "bench_judgement_cachedjudgement",
+      "target": "bench_judgement_judgementkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L171",
+      "weight": 1.0,
+      "source": "bench_judgement_judgerun",
+      "target": "bench_judgement_judgementkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L152",
+      "weight": 1.0,
+      "source": "bench_judgement_cachedjudgement",
+      "target": "bench_judgement_cachedreplicates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L172",
+      "weight": 1.0,
+      "source": "bench_judgement_judgerun",
+      "target": "bench_judgement_cachedreplicates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L177",
+      "weight": 1.0,
+      "source": "bench_judgement_judgerun",
+      "target": "bench_judgement_writereplicates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "bench/judgement.ts",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "bench_judgement_consensus",
+      "target": "src_render_count"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "bench_judgement_judgementfrom",
+      "target": "bench_judgement_consensus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L155",
+      "weight": 1.0,
+      "source": "bench_judgement_cachedjudgement",
+      "target": "bench_judgement_judgementfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L179",
+      "weight": 1.0,
+      "source": "bench_judgement_judgerun",
+      "target": "bench_judgement_judgementfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "bench_judgement_cachedjudgement",
+      "target": "bench_judgement_judgeinputfor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "bench_judgement_judgeinputfor",
+      "target": "bench_upstream_upstreamfix",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/judgement.ts",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "bench_judgement_judgerun",
+      "target": "bench_judgement_judgeinputfor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rescore.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "bench_rescore",
+      "target": "bench_judgement_cachedjudgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rescore.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "bench_rescore_judgementfor",
+      "target": "bench_judgement_cachedjudgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_judgement_judgerun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "bench_rejudge_judgesaved",
+      "target": "bench_judgement_judgerun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_session",
+      "target": "bench_judgement_judgerun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "bench_session_withjudgement",
+      "target": "bench_judgement_judgerun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "bench/paths.ts",
       "source_location": "L19",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "bench_paths",
       "target": "bench_paths_codedocs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/paths.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "bench_paths",
+      "target": "bench_paths_judgements",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -25960,6 +27377,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "bench/report.ts",
       "source_location": "L17",
       "weight": 1.0,
@@ -26026,6 +27454,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "bench_upstream",
+      "target": "bench_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "bench/warm.ts",
       "source_location": "L12",
       "weight": 1.0,
@@ -26065,6 +27504,17 @@
       "confidence_score": 1.0,
       "source": "bench_prompt",
       "target": "bench_paths_target"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "bench_upstream",
+      "target": "bench_paths_target",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -26120,6 +27570,17 @@
       "confidence_score": 1.0,
       "source": "bench_warm",
       "target": "bench_paths_codedocs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_paths_results",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -26431,9 +27892,9 @@
       "source_file": "bench/prompt.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_prompt",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -26614,9 +28075,9 @@
       "source_file": "bench/record.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_record",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -26628,6 +28089,17 @@
       "confidence_score": 1.0,
       "source": "bench_record",
       "target": "bench_types_benchcase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/record.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "bench_record",
+      "target": "bench_types_runjudgement",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -26829,6 +28301,176 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_rejudge_cell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_rejudge_judgesaved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_rejudge_rejudge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_rejudge_saved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_rejudge_savedrecords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_rejudge_skipreason",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_types_benchcase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "bench_rejudge",
+      "target": "bench_types_runrecord",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "bench_run",
+      "target": "bench_rejudge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "bench_rejudge_rejudge",
+      "target": "bench_rejudge_savedrecords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "bench_rejudge_rejudge",
+      "target": "bench_rejudge_skipreason",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "bench_rejudge_rejudge",
+      "target": "bench_rejudge_cell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rejudge.ts",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "bench_rejudge_rejudge",
+      "target": "bench_rejudge_judgesaved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "bench_run",
+      "target": "bench_rejudge_rejudge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "bench_run_main",
+      "target": "bench_rejudge_rejudge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "bench/report.ts",
       "source_location": "L36",
       "weight": 1.0,
@@ -26991,9 +28633,9 @@
       "source_file": "bench/report.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_report",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -27142,6 +28784,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bench/rescore.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "bench_rescore",
+      "target": "bench_rescore_judgementfor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rescore.ts",
       "source_location": "L42",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -27196,9 +28848,9 @@
       "source_file": "bench/rescore.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_rescore",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -27229,9 +28881,9 @@
       "source_file": "bench/rescore.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_rescore",
-      "target": "bench_types_toolset",
-      "confidence_score": 1.0
+      "target": "bench_types_toolset"
     },
     {
       "relation": "imports_from",
@@ -27254,6 +28906,17 @@
       "confidence_score": 1.0,
       "source": "bench_rescore_rescore",
       "target": "bench_rescore_provenanceof"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rescore.ts",
+      "source_location": "L129",
+      "weight": 1.0,
+      "source": "bench_rescore_rescore",
+      "target": "bench_rescore_judgementfor",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -27287,6 +28950,142 @@
       "confidence_score": 1.0,
       "source": "bench_run_main",
       "target": "bench_rescore_rescore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_rubric_capped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_rubric_correctness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_rubric_judgeinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_rubric_judgeprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_rubric_scales",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_rubric_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_types_correctness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "bench_rubric",
+      "target": "bench_types_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "bench_summarise",
+      "target": "bench_rubric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "bench_summarise",
+      "target": "bench_rubric_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/rubric.ts",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "bench_rubric_judgeprompt",
+      "target": "bench_rubric_capped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "bench_run",
+      "target": "bench_run_judgeplan",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27363,6 +29162,17 @@
       "confidence_score": 1.0,
       "source": "bench_run",
       "target": "bench_types_runrecord"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/run.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "bench_run_main",
+      "target": "bench_run_judgeplan",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -27476,9 +29286,9 @@
       "source_file": "bench/score.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_score",
-      "target": "bench_types_toolset",
-      "confidence_score": 1.0
+      "target": "bench_types_toolset"
     },
     {
       "relation": "calls",
@@ -27721,9 +29531,9 @@
       "source_file": "bench/session.ts",
       "source_location": "L135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_session",
-      "target": "bench_session_cellname",
-      "confidence_score": 1.0
+      "target": "bench_session_cellname"
     },
     {
       "relation": "contains",
@@ -27751,9 +29561,9 @@
       "source_file": "bench/session.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_session",
-      "target": "bench_session_legacystemfor",
-      "confidence_score": 1.0
+      "target": "bench_session_legacystemfor"
     },
     {
       "relation": "contains",
@@ -27816,6 +29626,16 @@
       "target": "bench_session_stemfor"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "bench_session",
+      "target": "bench_session_withjudgement",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -27855,9 +29675,9 @@
       "source_file": "bench/session.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_session",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -27965,9 +29785,9 @@
       "source_file": "bench/session.ts",
       "source_location": "L154",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_session_alreadymeasured",
-      "target": "bench_session_legacystemfor",
-      "confidence_score": 1.0
+      "target": "bench_session_legacystemfor"
     },
     {
       "relation": "calls",
@@ -28007,6 +29827,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bench/session.ts",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "bench_session_filerun",
+      "target": "bench_session_withjudgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/session.ts",
       "source_location": "L98",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -28020,9 +29851,9 @@
       "source_file": "bench/session.ts",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_session_executerun",
-      "target": "bench_session_cellname",
-      "confidence_score": 1.0
+      "target": "bench_session_cellname"
     },
     {
       "relation": "calls",
@@ -28042,9 +29873,9 @@
       "source_file": "bench/session.ts",
       "source_location": "L193",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_session_runone",
-      "target": "bench_session_cellname",
-      "confidence_score": 1.0
+      "target": "bench_session_cellname"
     },
     {
       "relation": "calls",
@@ -28349,11 +30180,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bench/summarise.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "bench_summarise",
+      "target": "bench_summarise_judgespend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
       "source_location": "L28",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "bench_summarise",
       "target": "bench_summarise_median"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "bench_summarise",
+      "target": "bench_summarise_modalsimilarity",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28381,11 +30232,33 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "bench/summarise.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "bench_summarise",
+      "target": "bench_types_runjudgement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
       "source_location": "L8",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "bench_summarise",
       "target": "bench_types_runrecord"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "bench_summarise",
+      "target": "bench_types_similarity",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -28419,6 +30292,50 @@
       "confidence_score": 1.0,
       "source": "bench_summarise_summarise",
       "target": "bench_summarise_median"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "bench_summarise_summarise",
+      "target": "bench_summarise_modalsimilarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/summarise.ts",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "bench_summarise_summarise",
+      "target": "bench_summarise_judgespend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/table.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "bench_table",
+      "target": "bench_summarise_judgespend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bench/table.ts",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "bench_table_printtotals",
+      "target": "bench_summarise_judgespend"
     },
     {
       "relation": "imports",
@@ -28545,6 +30462,16 @@
       "target": "bench_table_rule"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/table.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "bench_table",
+      "target": "bench_table_short",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -28562,9 +30489,9 @@
       "source_file": "bench/table.ts",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_table",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "imports",
@@ -28576,6 +30503,17 @@
       "confidence_score": 1.0,
       "source": "bench_table",
       "target": "bench_types_runrecord"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/table.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "bench_table",
+      "target": "bench_types_similarity",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -28878,9 +30816,9 @@
       "source_file": "bench/types.ts",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_types",
-      "target": "bench_types_arm",
-      "confidence_score": 1.0
+      "target": "bench_types_arm"
     },
     {
       "relation": "contains",
@@ -28906,6 +30844,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bench/types.ts",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "bench_types",
+      "target": "bench_types_correctness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/types.ts",
       "source_location": "L26",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -28926,11 +30874,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bench/types.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "bench_types",
+      "target": "bench_types_judgeverdict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/types.ts",
       "source_location": "L104",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "bench_types",
       "target": "bench_types_rundiff"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/types.ts",
+      "source_location": "L182",
+      "weight": 1.0,
+      "source": "bench_types",
+      "target": "bench_types_runjudgement",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28956,10 +30924,52 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bench/types.ts",
-      "source_location": "L69",
+      "source_location": "L156",
       "weight": 1.0,
       "source": "bench_types",
-      "target": "bench_types_toolset",
+      "target": "bench_types_similarity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/types.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "bench_types",
+      "target": "bench_types_toolset"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "bench_upstream",
+      "target": "bench_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "bench_upstream",
+      "target": "bench_types_benchcase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/upstream.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "bench_upstream",
+      "target": "bench_upstream_upstreamfix",
       "confidence_score": 1.0
     },
     {
@@ -75113,6 +77123,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bench/README.md",
+      "source_location": "L294",
+      "weight": 1.0,
+      "source": "bench_readme_the_fix_benchmark",
+      "target": "bench_readme_judging_the_fix",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/README.md",
       "source_location": "L86",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -75155,9 +77175,9 @@
       "source_file": "bench/README.md",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bench_readme_the_fix_benchmark",
-      "target": "bench_readme_what_an_arm_is",
-      "confidence_score": 1.0
+      "target": "bench_readme_what_an_arm_is"
     },
     {
       "relation": "contains",
@@ -75218,6 +77238,36 @@
       "confidence_score": 1.0,
       "source": "bench_readme_what_is_measured",
       "target": "bench_readme_where_the_counts_are_wrong_and_which_way"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/README.md",
+      "source_location": "L349",
+      "weight": 1.0,
+      "source": "bench_readme_judging_the_fix",
+      "target": "bench_readme_three_readings_and_what_they_disagree_about",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/README.md",
+      "source_location": "L366",
+      "weight": 1.0,
+      "source": "bench_readme_judging_the_fix",
+      "target": "bench_readme_what_judging_costs_and_who_pays",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bench/README.md",
+      "source_location": "L334",
+      "weight": 1.0,
+      "source": "bench_readme_judging_the_fix",
+      "target": "bench_readme_what_the_judge_cannot_see",
+      "confidence_score": 1.0
     },
     {
       "relation": "cites",
@@ -83086,5 +85136,5 @@
       "source_file": "packages/cli/README.md"
     }
   ],
-  "built_at_commit": "30dc8e1d420ae21863bd8817851776a07b067552"
+  "built_at_commit": "072c262fcf9b85a8d6c591932c39c1996cf5d457"
 }
