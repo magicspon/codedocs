@@ -185,8 +185,8 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1788445977.2692273,
-    "ast_hash": "eeddc34c54d49747a786fda42eea0e6a",
+    "mtime": 1788447879.1346292,
+    "ast_hash": "5439c3e15c9f6a02bd10c2c3156fa81e",
     "semantic_hash": ""
   },
   "cspell.words.txt": {
@@ -225,8 +225,8 @@
     "semantic_hash": "00f5903f47436ef457ec9cedddccb638"
   },
   "packages/cli/src/args.ts": {
-    "mtime": 1788445040.0280118,
-    "ast_hash": "8ba494cfc75c00e598f09aac68d89f0a",
+    "mtime": 1788447665.16402,
+    "ast_hash": "9a98036353ff9b922ecc85bc06a31f95",
     "semantic_hash": ""
   },
   "packages/cli/src/bin.ts": {
@@ -235,13 +235,13 @@
     "semantic_hash": "6085d0aba9a4abda1f7caad0c5e2f203"
   },
   "packages/cli/src/main.ts": {
-    "mtime": 1788446047.0523582,
-    "ast_hash": "c6b677c6d9edb773af9727489f8d0fe6",
+    "mtime": 1788447706.9167452,
+    "ast_hash": "e9909b48690a47d8a842ba656715a2ab",
     "semantic_hash": ""
   },
   "packages/cli/src/render.ts": {
-    "mtime": 1788444961.534571,
-    "ast_hash": "413444a1d88347e93ca964adcef6216a",
+    "mtime": 1788447653.3336928,
+    "ast_hash": "b24e04ea262fefe18aa06c4471256b19",
     "semantic_hash": ""
   },
   "packages/cli/test/main.test.ts": {
@@ -375,8 +375,8 @@
     "semantic_hash": "2b8aadef5f02189adc7388f4ef798652"
   },
   "CONTEXT.md": {
-    "mtime": 1788445955.482527,
-    "ast_hash": "cb2cadf85d0e366a31386befbbc42da8",
+    "mtime": 1788448113.7446327,
+    "ast_hash": "03c14fdc9b0a36ceffe6f64b1ea9da93",
     "semantic_hash": ""
   },
   "docs/adr/0001-analysis-preconditions-and-answer-honesty.md": {
@@ -480,8 +480,8 @@
     "semantic_hash": "8b3f48dcae0687bf604461c2ea707bfe"
   },
   "packages/cli/src/mcp.ts": {
-    "mtime": 1788445047.5245626,
-    "ast_hash": "fb692f0daee524e14e9c1e3feae1d031",
+    "mtime": 1788447665.1641972,
+    "ast_hash": "85b0d11fccb96f1c7f649bea2cf828df",
     "semantic_hash": ""
   },
   "packages/cli/test/mcp.test.ts": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "packages/core/src/manifest.ts": {
-    "mtime": 1788444692.8999438,
-    "ast_hash": "2403e1dc4eddc1fe6be8e5cb29aaea88",
+    "mtime": 1788447665.1637728,
+    "ast_hash": "2bcd75326518c57fd8916093310e919c",
     "semantic_hash": ""
   },
   "packages/core/test/cold-build.test.ts": {
@@ -645,9 +645,9 @@
     "semantic_hash": ""
   },
   "packages/cli/src/stack.ts": {
-    "mtime": 1788327287.927471,
-    "ast_hash": "53e8b59d3935ae9e8dde9d0b0d162321",
-    "semantic_hash": "53e8b59d3935ae9e8dde9d0b0d162321"
+    "mtime": 1788447595.5218613,
+    "ast_hash": "1cfbf9e6d715809bbe695102245dba79",
+    "semantic_hash": ""
   },
   "packages/cli/test/stack.test.ts": {
     "mtime": 1788290992.1035752,
@@ -1230,14 +1230,14 @@
     "semantic_hash": "2b34c17e05076809b662285ac9348db6"
   },
   "docs/SOLUTION.md": {
-    "mtime": 1788381017.9500034,
-    "ast_hash": "e28a509648d585368e4e521e5ac44068",
-    "semantic_hash": "e28a509648d585368e4e521e5ac44068"
+    "mtime": 1788446157.1613116,
+    "ast_hash": "55279f7ea8b2e4e17ceed79ca3665c64",
+    "semantic_hash": ""
   },
   "docs/agent-guide.md": {
-    "mtime": 1788383051.6491957,
-    "ast_hash": "0c59b2b5560bab4c23a546099acb38d8",
-    "semantic_hash": "0c59b2b5560bab4c23a546099acb38d8"
+    "mtime": 1788446157.1399276,
+    "ast_hash": "1bb13a86965191431fb22d62892cbf87",
+    "semantic_hash": ""
   },
   "bench/agent.ts": {
     "mtime": 1788389878.2985265,
@@ -1680,8 +1680,8 @@
     "semantic_hash": ""
   },
   "packages/cli/test/draft.test.ts": {
-    "mtime": 1788446088.2370062,
-    "ast_hash": "56c4c272cf9ce26505cf3491a9955cca",
+    "mtime": 1788448164.7572558,
+    "ast_hash": "e10f0791b0f3495cf5cb132355021599",
     "semantic_hash": ""
   },
   "packages/core/src/operations/draft-facts.ts": {
@@ -1705,8 +1705,1728 @@
     "semantic_hash": ""
   },
   "docs/adr/0013-drafting-a-document.md": {
-    "mtime": 1788445874.7533424,
-    "ast_hash": "55e5d3988f7c14277d0e4770a5f058d0",
+    "mtime": 1788447953.5766838,
+    "ast_hash": "b5bb0179539d50924cf1785fd419ea34",
     "semantic_hash": ""
+  },
+  "packages/cli/src/draft-out.ts": {
+    "mtime": 1788448188.0797174,
+    "ast_hash": "95da777fcbc1d25b37cf2365e7c03372",
+    "semantic_hash": ""
+  },
+  "/Users/magicspon/dev/projects/codedocs/.changeset/config.json": {
+    "mtime": 1788381017.9434738,
+    "ast_hash": "ef4ecc0e41fa96bf3904f26b63dd7eb0",
+    "semantic_hash": "ef4ecc0e41fa96bf3904f26b63dd7eb0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.claude/settings.json": {
+    "mtime": 1788386284.3872244,
+    "ast_hash": "7df4954b8dd2873f525118470005db90",
+    "semantic_hash": "7df4954b8dd2873f525118470005db90"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.claude/settings.local.json": {
+    "mtime": 1788427143.7325573,
+    "ast_hash": "62cce168af4fa477a1cf05bd8e0b2a86",
+    "semantic_hash": "62cce168af4fa477a1cf05bd8e0b2a86"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/applypatch-msg": {
+    "mtime": 1788381796.0361018,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/commit-msg": {
+    "mtime": 1788381796.0359478,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/h": {
+    "mtime": 1788381796.0353951,
+    "ast_hash": "15239a01c5554e56ff745570fb583a91",
+    "semantic_hash": "15239a01c5554e56ff745570fb583a91"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/husky.sh": {
+    "mtime": 1788381796.0368106,
+    "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
+    "semantic_hash": "13871d2ab13e8423790ecb2c01c78c18"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-applypatch": {
+    "mtime": 1788381796.0362678,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-checkout": {
+    "mtime": 1788381796.0365162,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-commit": {
+    "mtime": 1788381796.0360262,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-merge": {
+    "mtime": 1788381796.0365858,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/post-rewrite": {
+    "mtime": 1788381796.0364468,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-applypatch": {
+    "mtime": 1788381796.0361784,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-auto-gc": {
+    "mtime": 1788381796.0367203,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-commit": {
+    "mtime": 1788381796.0355263,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-merge-commit": {
+    "mtime": 1788381796.0356221,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-push": {
+    "mtime": 1788381796.0366557,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/pre-rebase": {
+    "mtime": 1788381796.036365,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.husky/_/prepare-commit-msg": {
+    "mtime": 1788381796.0358596,
+    "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
+    "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.oxfmtrc.json": {
+    "mtime": 1788116859.7543,
+    "ast_hash": "dc00e1dccb3714f500c05bc369488310",
+    "semantic_hash": "dc00e1dccb3714f500c05bc369488310"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.oxlintrc.json": {
+    "mtime": 1788290992.0937374,
+    "ast_hash": "018a3bd99783fc1b9f0810d6861e34dd",
+    "semantic_hash": "018a3bd99783fc1b9f0810d6861e34dd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/active.ts": {
+    "mtime": 1788435004.6907887,
+    "ast_hash": "848c2eef4b14b6a39996253709603c96",
+    "semantic_hash": "848c2eef4b14b6a39996253709603c96"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/agent.ts": {
+    "mtime": 1788389878.2985265,
+    "ast_hash": "e4e7713ee8b908c7956dd4eae427c631",
+    "semantic_hash": "e4e7713ee8b908c7956dd4eae427c631"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/argv.ts": {
+    "mtime": 1788386284.388764,
+    "ast_hash": "6b202c8d7a90153c17cfd5287d3dbeeb",
+    "semantic_hash": "6b202c8d7a90153c17cfd5287d3dbeeb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/arms.ts": {
+    "mtime": 1788435004.6911566,
+    "ast_hash": "206fe2028a0b02390246041c2c396025",
+    "semantic_hash": "206fe2028a0b02390246041c2c396025"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/cases.ts": {
+    "mtime": 1788435004.691872,
+    "ast_hash": "68b2dcf11a90061652b2dbc1a651f2f1",
+    "semantic_hash": "68b2dcf11a90061652b2dbc1a651f2f1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/comparisons.ts": {
+    "mtime": 1788435004.6925788,
+    "ast_hash": "ce24fed1d999f533586bee3856cb6865",
+    "semantic_hash": "ce24fed1d999f533586bee3856cb6865"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/diff.ts": {
+    "mtime": 1788389878.2987103,
+    "ast_hash": "49ea2f6ef3a8db3df5619ff3383b2eea",
+    "semantic_hash": "49ea2f6ef3a8db3df5619ff3383b2eea"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/difficulty.ts": {
+    "mtime": 1788386284.3905876,
+    "ast_hash": "5e75f607553706ceeafa8b414a11101f",
+    "semantic_hash": "5e75f607553706ceeafa8b414a11101f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/freeze-cases.ts": {
+    "mtime": 1788435004.6933925,
+    "ast_hash": "245d1819cc1d3d299447269397888cf0",
+    "semantic_hash": "245d1819cc1d3d299447269397888cf0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/judge.ts": {
+    "mtime": 1788435004.6940389,
+    "ast_hash": "0496fcfa065f99d15f6fb5179c8c2b52",
+    "semantic_hash": "0496fcfa065f99d15f6fb5179c8c2b52"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/judgement.ts": {
+    "mtime": 1788435004.694287,
+    "ast_hash": "0fa740a070aceae955842691839ab89e",
+    "semantic_hash": "0fa740a070aceae955842691839ab89e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/judgements/0d588919032a0f3d.json": {
+    "mtime": 1788429099.7947843,
+    "ast_hash": "e42a01e3263ec1b00849cb26f9fcfec4",
+    "semantic_hash": "e42a01e3263ec1b00849cb26f9fcfec4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/judgements/255cf5fdde6529d8.json": {
+    "mtime": 1788431032.5344522,
+    "ast_hash": "ba7ff712fcf6250de5f53fcf5f2c7090",
+    "semantic_hash": "ba7ff712fcf6250de5f53fcf5f2c7090"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/judgements/57d2a81298ab194f.json": {
+    "mtime": 1788429087.651245,
+    "ast_hash": "65f884c00fd7e8acb59d8e872d1c1cb1",
+    "semantic_hash": "65f884c00fd7e8acb59d8e872d1c1cb1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/markdown.ts": {
+    "mtime": 1788435004.6944911,
+    "ast_hash": "4b3ed20086c421c589f132ae3e73492a",
+    "semantic_hash": "4b3ed20086c421c589f132ae3e73492a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/paths.ts": {
+    "mtime": 1788435004.6952682,
+    "ast_hash": "9e89d2aa24434348673675726b1b57e8",
+    "semantic_hash": "9e89d2aa24434348673675726b1b57e8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/preflight.ts": {
+    "mtime": 1788388360.2187936,
+    "ast_hash": "dd6e87abf0fb788e9ac6301849e587d8",
+    "semantic_hash": "dd6e87abf0fb788e9ac6301849e587d8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prewarm.ts": {
+    "mtime": 1788435004.6959243,
+    "ast_hash": "126541b4a52be89378327a0e9f07b9b6",
+    "semantic_hash": "126541b4a52be89378327a0e9f07b9b6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prompt.ts": {
+    "mtime": 1788435004.6968305,
+    "ast_hash": "f6b3b955c57be8bbd7640e9c410acdae",
+    "semantic_hash": "f6b3b955c57be8bbd7640e9c410acdae"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/326185.json": {
+    "mtime": 1788435004.697464,
+    "ast_hash": "9d1a7eda7fc99e12d1ccb7eb8ca371b8",
+    "semantic_hash": "9d1a7eda7fc99e12d1ccb7eb8ca371b8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/327194.json": {
+    "mtime": 1788435004.6978729,
+    "ast_hash": "a5d0043eaf3f6e42b7711f5d6e7e846e",
+    "semantic_hash": "a5d0043eaf3f6e42b7711f5d6e7e846e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/329074.json": {
+    "mtime": 1788435004.6982532,
+    "ast_hash": "4876de81d6b5aa01c1ad0d67741e9cb4",
+    "semantic_hash": "4876de81d6b5aa01c1ad0d67741e9cb4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/329326.json": {
+    "mtime": 1788435004.698525,
+    "ast_hash": "c9f7008d8ca505981a1bb5b0cc7ad20c",
+    "semantic_hash": "c9f7008d8ca505981a1bb5b0cc7ad20c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/329610.json": {
+    "mtime": 1788435004.698818,
+    "ast_hash": "6c82722578dea5a8b02ad042070e65a0",
+    "semantic_hash": "6c82722578dea5a8b02ad042070e65a0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/331102.json": {
+    "mtime": 1788435004.6991136,
+    "ast_hash": "5c512cb5f7e31b147f241458fc33368b",
+    "semantic_hash": "5c512cb5f7e31b147f241458fc33368b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/331452.json": {
+    "mtime": 1788435004.6994863,
+    "ast_hash": "a40b9e7d59d359c45ace8eb601f1bdaf",
+    "semantic_hash": "a40b9e7d59d359c45ace8eb601f1bdaf"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/331914.json": {
+    "mtime": 1788435004.6998112,
+    "ast_hash": "e2e0f74c47c50fe60d8e053366d71c64",
+    "semantic_hash": "e2e0f74c47c50fe60d8e053366d71c64"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/332146.json": {
+    "mtime": 1788435004.7001226,
+    "ast_hash": "def547667d8311f9b80155c8cdb72afa",
+    "semantic_hash": "def547667d8311f9b80155c8cdb72afa"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/332885.json": {
+    "mtime": 1788435004.7005208,
+    "ast_hash": "fe93c13604052a5ca656dd2d28991943",
+    "semantic_hash": "fe93c13604052a5ca656dd2d28991943"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/333085.json": {
+    "mtime": 1788435004.7007987,
+    "ast_hash": "d9bcaf6e031a6912fbdeb32ebab20fee",
+    "semantic_hash": "d9bcaf6e031a6912fbdeb32ebab20fee"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/prospects/333230.json": {
+    "mtime": 1788435004.7010827,
+    "ast_hash": "e7ec672076650a56a6f768ca7610befd",
+    "semantic_hash": "e7ec672076650a56a6f768ca7610befd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/record.ts": {
+    "mtime": 1788435004.7016518,
+    "ast_hash": "2c3661459645e54807129fcfb3b11699",
+    "semantic_hash": "2c3661459645e54807129fcfb3b11699"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/rejudge.ts": {
+    "mtime": 1788435004.702019,
+    "ast_hash": "4d335050cb6615d20c4e7e6c49406352",
+    "semantic_hash": "4d335050cb6615d20c4e7e6c49406352"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/report.ts": {
+    "mtime": 1788435004.702629,
+    "ast_hash": "4a63185af35870c3a30f64c1c70c0b58",
+    "semantic_hash": "4a63185af35870c3a30f64c1c70c0b58"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/rescore.ts": {
+    "mtime": 1788435004.7032177,
+    "ast_hash": "decb6bb76beda9f74355f4f36b2010ca",
+    "semantic_hash": "decb6bb76beda9f74355f4f36b2010ca"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331102-baseline-r1.json": {
+    "mtime": 1788385848.6958675,
+    "ast_hash": "38c3da4f6bf2cd6713c4328cff12a3ae",
+    "semantic_hash": "38c3da4f6bf2cd6713c4328cff12a3ae"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331102-baseline-r2.json": {
+    "mtime": 1788385848.6971762,
+    "ast_hash": "8c306f54c7695b23b961c7fcfe76dcce",
+    "semantic_hash": "8c306f54c7695b23b961c7fcfe76dcce"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331102-baseline-r3.json": {
+    "mtime": 1788385848.6982448,
+    "ast_hash": "0f354fdf89018b3025fba02bf05cd183",
+    "semantic_hash": "0f354fdf89018b3025fba02bf05cd183"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331102-codedocs-r1.json": {
+    "mtime": 1788385848.6992652,
+    "ast_hash": "3adec9ce13fd281c23040ceb9be7aacd",
+    "semantic_hash": "3adec9ce13fd281c23040ceb9be7aacd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331102-codedocs-r2.json": {
+    "mtime": 1788385848.7001176,
+    "ast_hash": "c0a18ddb74e166f53a63077505fc6dec",
+    "semantic_hash": "c0a18ddb74e166f53a63077505fc6dec"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331102-codedocs-r3.json": {
+    "mtime": 1788385848.7010903,
+    "ast_hash": "8fa301b1ce32ce1a48954f2e9480435d",
+    "semantic_hash": "8fa301b1ce32ce1a48954f2e9480435d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331452-baseline-r1.json": {
+    "mtime": 1788385848.7023706,
+    "ast_hash": "a25d908af9fba8778af81381c7d9789f",
+    "semantic_hash": "a25d908af9fba8778af81381c7d9789f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331452-baseline-r2.json": {
+    "mtime": 1788385848.70388,
+    "ast_hash": "ace7800c38dd6d8a160e8c1744e519e8",
+    "semantic_hash": "ace7800c38dd6d8a160e8c1744e519e8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331452-baseline-r3.json": {
+    "mtime": 1788385848.7053459,
+    "ast_hash": "a60c05acea86e7c70dbfe8e5b103f1e8",
+    "semantic_hash": "a60c05acea86e7c70dbfe8e5b103f1e8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331452-codedocs-r1.json": {
+    "mtime": 1788385848.7078693,
+    "ast_hash": "1c92b427f028d2b9a5459bd4b82712a1",
+    "semantic_hash": "1c92b427f028d2b9a5459bd4b82712a1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331452-codedocs-r2.json": {
+    "mtime": 1788385848.710112,
+    "ast_hash": "425506a7ffb6fd58da9ffedbeae783fd",
+    "semantic_hash": "425506a7ffb6fd58da9ffedbeae783fd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/331452-codedocs-r3.json": {
+    "mtime": 1788385848.7120278,
+    "ast_hash": "fea6d1f693343ec5deff5aea0f3a0a21",
+    "semantic_hash": "fea6d1f693343ec5deff5aea0f3a0a21"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/332885-baseline-r1.json": {
+    "mtime": 1788385848.7126253,
+    "ast_hash": "a23fb1698e9bb568cc0b4c27ddbd32de",
+    "semantic_hash": "a23fb1698e9bb568cc0b4c27ddbd32de"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/332885-baseline-r2.json": {
+    "mtime": 1788385848.7130783,
+    "ast_hash": "d64397430a7b2a23419088368d8000e9",
+    "semantic_hash": "d64397430a7b2a23419088368d8000e9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/332885-baseline-r3.json": {
+    "mtime": 1788385848.7135472,
+    "ast_hash": "86e70dcee0446cdfebde5e8d59b799fb",
+    "semantic_hash": "86e70dcee0446cdfebde5e8d59b799fb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/332885-codedocs-r1.json": {
+    "mtime": 1788385848.7140737,
+    "ast_hash": "5307de2c5fb7620ed8a4bca0ebf583ca",
+    "semantic_hash": "5307de2c5fb7620ed8a4bca0ebf583ca"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/332885-codedocs-r2.json": {
+    "mtime": 1788385848.7146225,
+    "ast_hash": "656f8b55f587491655f68fffd7957b78",
+    "semantic_hash": "656f8b55f587491655f68fffd7957b78"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/332885-codedocs-r3.json": {
+    "mtime": 1788385848.7152545,
+    "ast_hash": "c411caf30e2d721a80cf8718dec73e3d",
+    "semantic_hash": "c411caf30e2d721a80cf8718dec73e3d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333085-baseline-r1.json": {
+    "mtime": 1788385848.7158122,
+    "ast_hash": "6b897cbcc09c6ea50829337dac491521",
+    "semantic_hash": "6b897cbcc09c6ea50829337dac491521"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333085-baseline-r2.json": {
+    "mtime": 1788385848.7164772,
+    "ast_hash": "bf5a82d4d36b4ff2361872721482b50e",
+    "semantic_hash": "bf5a82d4d36b4ff2361872721482b50e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333085-baseline-r3.json": {
+    "mtime": 1788385848.7172656,
+    "ast_hash": "2e0db33f69f4496e646a04c9737b4eab",
+    "semantic_hash": "2e0db33f69f4496e646a04c9737b4eab"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333085-codedocs-r1.json": {
+    "mtime": 1788385848.7183728,
+    "ast_hash": "91633432bfaac426e1a8cf203c83e8dc",
+    "semantic_hash": "91633432bfaac426e1a8cf203c83e8dc"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333085-codedocs-r2.json": {
+    "mtime": 1788385848.7192042,
+    "ast_hash": "da5ff67c7d4ddf4ee681a4aa1bd23cd1",
+    "semantic_hash": "da5ff67c7d4ddf4ee681a4aa1bd23cd1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333085-codedocs-r3.json": {
+    "mtime": 1788385848.7203372,
+    "ast_hash": "413dca9a0dc1fe9d22d76d89358beeba",
+    "semantic_hash": "413dca9a0dc1fe9d22d76d89358beeba"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333230-baseline-r1.json": {
+    "mtime": 1788387654.924021,
+    "ast_hash": "0fcaa02d2059f1cc573f2bb751d9d039",
+    "semantic_hash": "0fcaa02d2059f1cc573f2bb751d9d039"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333230-baseline-r2.json": {
+    "mtime": 1788385848.7214916,
+    "ast_hash": "cf7affd5b486dc6401254ca7a6b12428",
+    "semantic_hash": "cf7affd5b486dc6401254ca7a6b12428"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333230-baseline-r3.json": {
+    "mtime": 1788385848.7222645,
+    "ast_hash": "da6b41ae5601dba9838fc4ae31d6921d",
+    "semantic_hash": "da6b41ae5601dba9838fc4ae31d6921d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333230-codedocs-r1.json": {
+    "mtime": 1788385848.7230306,
+    "ast_hash": "e8b975860b95ce9d4173a319a13d31a6",
+    "semantic_hash": "e8b975860b95ce9d4173a319a13d31a6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333230-codedocs-r2.json": {
+    "mtime": 1788385848.7235901,
+    "ast_hash": "f3bdf690945e45a21b3008b53ee344ac",
+    "semantic_hash": "f3bdf690945e45a21b3008b53ee344ac"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results-localization/333230-codedocs-r3.json": {
+    "mtime": 1788385848.724304,
+    "ast_hash": "644eb12d2b62859a4c8ec707edec9123",
+    "semantic_hash": "644eb12d2b62859a4c8ec707edec9123"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results/329610-baseline@sonnet-5-r1.json": {
+    "mtime": 1788431032.534882,
+    "ast_hash": "80a60e1ef6172bace04c09940dff759d",
+    "semantic_hash": "80a60e1ef6172bace04c09940dff759d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results/329610-codedocs@sonnet-5-r1.json": {
+    "mtime": 1788431300.7342336,
+    "ast_hash": "80f55e8009d27d6d816f32da0a4b035f",
+    "semantic_hash": "80f55e8009d27d6d816f32da0a4b035f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results/333230-baseline-r1.json": {
+    "mtime": 1788430078.6469238,
+    "ast_hash": "c6981b2e89eb1b3165354f8f032fb2a9",
+    "semantic_hash": "c6981b2e89eb1b3165354f8f032fb2a9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/results/333230-codedocs-r1.json": {
+    "mtime": 1788430078.648882,
+    "ast_hash": "9305259d0169b8b60850fbd799a26032",
+    "semantic_hash": "9305259d0169b8b60850fbd799a26032"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/rubric.ts": {
+    "mtime": 1788435004.7038064,
+    "ast_hash": "1180f4d556d274ff9c964ef91bb2c613",
+    "semantic_hash": "1180f4d556d274ff9c964ef91bb2c613"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/run.ts": {
+    "mtime": 1788435004.704774,
+    "ast_hash": "860811df0dc61aee0c57bbea24f6b57e",
+    "semantic_hash": "860811df0dc61aee0c57bbea24f6b57e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/score.ts": {
+    "mtime": 1788435004.705311,
+    "ast_hash": "a9694b2171163eae51a4cce06cff5f39",
+    "semantic_hash": "a9694b2171163eae51a4cce06cff5f39"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/seeds/index.ts": {
+    "mtime": 1788426637.8438566,
+    "ast_hash": "748e73bdd660012e0a025f3d25ff0801",
+    "semantic_hash": "748e73bdd660012e0a025f3d25ff0801"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/seeds/level1.ts": {
+    "mtime": 1788426637.8440003,
+    "ast_hash": "e347df30063daf288626dcfa1f7e1b09",
+    "semantic_hash": "e347df30063daf288626dcfa1f7e1b09"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/seeds/level2.ts": {
+    "mtime": 1788426637.844155,
+    "ast_hash": "c2ad29e564f5cc66ff76aef121f74aeb",
+    "semantic_hash": "c2ad29e564f5cc66ff76aef121f74aeb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/seeds/level3.ts": {
+    "mtime": 1788426637.8443484,
+    "ast_hash": "56eb5410d450f84fe3c1d783e6c1714c",
+    "semantic_hash": "56eb5410d450f84fe3c1d783e6c1714c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/seeds/level4.ts": {
+    "mtime": 1788426637.8445423,
+    "ast_hash": "6030d3295ea250d54e1b09d260bbe948",
+    "semantic_hash": "6030d3295ea250d54e1b09d260bbe948"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/session.ts": {
+    "mtime": 1788435004.705851,
+    "ast_hash": "e30859583e66c67111cd0221212b9226",
+    "semantic_hash": "e30859583e66c67111cd0221212b9226"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/stream.ts": {
+    "mtime": 1788389878.3004339,
+    "ast_hash": "f742e0da006b4733ef7c84d7c4386bcd",
+    "semantic_hash": "f742e0da006b4733ef7c84d7c4386bcd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/summarise.ts": {
+    "mtime": 1788435004.7063782,
+    "ast_hash": "5eec4f1587d2b4f0c0b233b9857b4446",
+    "semantic_hash": "5eec4f1587d2b4f0c0b233b9857b4446"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/table.ts": {
+    "mtime": 1788435004.7067544,
+    "ast_hash": "c034a7a4e02d7de174b8eecbdd5f1cb5",
+    "semantic_hash": "c034a7a4e02d7de174b8eecbdd5f1cb5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/tally.ts": {
+    "mtime": 1788386284.3933017,
+    "ast_hash": "da662d344a38cadc15b032c2d5541c61",
+    "semantic_hash": "da662d344a38cadc15b032c2d5541c61"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/types.ts": {
+    "mtime": 1788435004.70727,
+    "ast_hash": "c0d9512b02763534d9bc6dbe1b9d9c0c",
+    "semantic_hash": "c0d9512b02763534d9bc6dbe1b9d9c0c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/upstream.ts": {
+    "mtime": 1788435004.7077756,
+    "ast_hash": "dbed4fcad7f4d85f4d8835137bba3e62",
+    "semantic_hash": "dbed4fcad7f4d85f4d8835137bba3e62"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/verify-cache.ts": {
+    "mtime": 1788435004.7080936,
+    "ast_hash": "41b97933f4144ed1ba8d7710c4080670",
+    "semantic_hash": "41b97933f4144ed1ba8d7710c4080670"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/warm.ts": {
+    "mtime": 1788435004.7089438,
+    "ast_hash": "dc190bacf6ab76c29d2bc53c4cab95ca",
+    "semantic_hash": "dc190bacf6ab76c29d2bc53c4cab95ca"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/worktree.ts": {
+    "mtime": 1788388360.2204702,
+    "ast_hash": "34c38f99f8b171349682432d1c8d5d07",
+    "semantic_hash": "34c38f99f8b171349682432d1c8d5d07"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/writeup-prose.ts": {
+    "mtime": 1788435004.7093346,
+    "ast_hash": "e995c3339cf9f0190f54be4673bb0222",
+    "semantic_hash": "e995c3339cf9f0190f54be4673bb0222"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/writeup-tables.ts": {
+    "mtime": 1788435004.7097251,
+    "ast_hash": "caa3695ecc7ce9c00ffb60473eb877db",
+    "semantic_hash": "caa3695ecc7ce9c00ffb60473eb877db"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/writeup.ts": {
+    "mtime": 1788435004.7100804,
+    "ast_hash": "075f90643eecf2469043cffdf3e3356b",
+    "semantic_hash": "075f90643eecf2469043cffdf3e3356b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/commitlint.config.js": {
+    "mtime": 1786887146.4872582,
+    "ast_hash": "8f6e7b204d54987b17bf027230fec44f",
+    "semantic_hash": "8f6e7b204d54987b17bf027230fec44f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/cspell.json": {
+    "mtime": 1788381017.9488683,
+    "ast_hash": "0b1cec579dc2048ab761b4fa892fc3ff",
+    "semantic_hash": "0b1cec579dc2048ab761b4fa892fc3ff"
+  },
+  "/Users/magicspon/dev/projects/codedocs/nano-staged.js": {
+    "mtime": 1787829968.2853887,
+    "ast_hash": "44be96c75aff88f72e74b3c7ba5f5440",
+    "semantic_hash": "44be96c75aff88f72e74b3c7ba5f5440"
+  },
+  "/Users/magicspon/dev/projects/codedocs/package.json": {
+    "mtime": 1788435004.7147918,
+    "ast_hash": "50d5ca2706a5698ebae7a0c84c2d1dc7",
+    "semantic_hash": "50d5ca2706a5698ebae7a0c84c2d1dc7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/package.json": {
+    "mtime": 1788381017.9583998,
+    "ast_hash": "00f5903f47436ef457ec9cedddccb638",
+    "semantic_hash": "00f5903f47436ef457ec9cedddccb638"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/args.ts": {
+    "mtime": 1788447665.16402,
+    "ast_hash": "9a98036353ff9b922ecc85bc06a31f95",
+    "semantic_hash": "9a98036353ff9b922ecc85bc06a31f95"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/bin.ts": {
+    "mtime": 1788381017.9588432,
+    "ast_hash": "6085d0aba9a4abda1f7caad0c5e2f203",
+    "semantic_hash": "6085d0aba9a4abda1f7caad0c5e2f203"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/draft-out.ts": {
+    "mtime": 1788448188.0797174,
+    "ast_hash": "95da777fcbc1d25b37cf2365e7c03372",
+    "semantic_hash": "95da777fcbc1d25b37cf2365e7c03372"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/main.ts": {
+    "mtime": 1788447706.9167452,
+    "ast_hash": "e9909b48690a47d8a842ba656715a2ab",
+    "semantic_hash": "e9909b48690a47d8a842ba656715a2ab"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/mcp.ts": {
+    "mtime": 1788447665.1641972,
+    "ast_hash": "85b0d11fccb96f1c7f649bea2cf828df",
+    "semantic_hash": "85b0d11fccb96f1c7f649bea2cf828df"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/messages.ts": {
+    "mtime": 1788444996.5255554,
+    "ast_hash": "4c17b1662b6092c2fd3911564bc8d9e1",
+    "semantic_hash": "4c17b1662b6092c2fd3911564bc8d9e1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/render.ts": {
+    "mtime": 1788447653.3336928,
+    "ast_hash": "b24e04ea262fefe18aa06c4471256b19",
+    "semantic_hash": "b24e04ea262fefe18aa06c4471256b19"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/src/stack.ts": {
+    "mtime": 1788447595.5218613,
+    "ast_hash": "1cfbf9e6d715809bbe695102245dba79",
+    "semantic_hash": "1cfbf9e6d715809bbe695102245dba79"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/args.test.ts": {
+    "mtime": 1788381017.9597006,
+    "ast_hash": "7ed079b3ff680002bfb4fd4803f4cfae",
+    "semantic_hash": "7ed079b3ff680002bfb4fd4803f4cfae"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/draft.test.ts": {
+    "mtime": 1788448164.7572558,
+    "ast_hash": "e10f0791b0f3495cf5cb132355021599",
+    "semantic_hash": "e10f0791b0f3495cf5cb132355021599"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/main.test.ts": {
+    "mtime": 1788364176.7151835,
+    "ast_hash": "09e256f2a8109f0bc9394853c565c7b7",
+    "semantic_hash": "09e256f2a8109f0bc9394853c565c7b7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/mcp.test.ts": {
+    "mtime": 1788386284.3980362,
+    "ast_hash": "667381ac8f6da5e3b5fb95cd42338504",
+    "semantic_hash": "667381ac8f6da5e3b5fb95cd42338504"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/messages.test.ts": {
+    "mtime": 1788381017.960536,
+    "ast_hash": "825d2b825ce8e1d7bac713f9a847f08d",
+    "semantic_hash": "825d2b825ce8e1d7bac713f9a847f08d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/package.fixture.json": {
+    "mtime": 1788178019.9945195,
+    "ast_hash": "90fffbbef4c80b56810797d56a2bbb27",
+    "semantic_hash": "90fffbbef4c80b56810797d56a2bbb27"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/render-answers.test.ts": {
+    "mtime": 1788381017.9609265,
+    "ast_hash": "aa493a9912bbe46ca392f4bfa95b2643",
+    "semantic_hash": "aa493a9912bbe46ca392f4bfa95b2643"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/render.test.ts": {
+    "mtime": 1788381017.9613776,
+    "ast_hash": "eeaf3cac899bfaf9497f0499ffdd77f7",
+    "semantic_hash": "eeaf3cac899bfaf9497f0499ffdd77f7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/report-bug.test.ts": {
+    "mtime": 1788445080.537197,
+    "ast_hash": "09e6dfb271539061970ba5885a8579bd",
+    "semantic_hash": "09e6dfb271539061970ba5885a8579bd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/test/stack.test.ts": {
+    "mtime": 1788290992.1035752,
+    "ast_hash": "2cdde71313d47585c5f14683f8dbf7bb",
+    "semantic_hash": "2cdde71313d47585c5f14683f8dbf7bb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/tsconfig.json": {
+    "mtime": 1788178019.9950113,
+    "ast_hash": "eee4962a04e45357dc45975ee5752f92",
+    "semantic_hash": "eee4962a04e45357dc45975ee5752f92"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/tsdown.config.ts": {
+    "mtime": 1788381017.962011,
+    "ast_hash": "bf0bc1205cf1ef728b29c4c9835ab781",
+    "semantic_hash": "bf0bc1205cf1ef728b29c4c9835ab781"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/vitest.config.ts": {
+    "mtime": 1788178019.9952784,
+    "ast_hash": "cab69431b3572d48a3feaf17ee4c8afe",
+    "semantic_hash": "cab69431b3572d48a3feaf17ee4c8afe"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/package.json": {
+    "mtime": 1788381017.9623585,
+    "ast_hash": "4e4adcff069906bd9b9b6af3949310bc",
+    "semantic_hash": "4e4adcff069906bd9b9b6af3949310bc"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/calls.ts": {
+    "mtime": 1788364176.7160542,
+    "ast_hash": "31bb529168d268e9c0331b50d9a2e4bf",
+    "semantic_hash": "31bb529168d268e9c0331b50d9a2e4bf"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/descriptors.ts": {
+    "mtime": 1788364176.716534,
+    "ast_hash": "b41660b84cf951e5cca65f4c93cde53d",
+    "semantic_hash": "b41660b84cf951e5cca65f4c93cde53d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/export-shapes.ts": {
+    "mtime": 1788327287.9286237,
+    "ast_hash": "e917ae9461a3ed70aa267d38e4cc189b",
+    "semantic_hash": "e917ae9461a3ed70aa267d38e4cc189b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/imports.ts": {
+    "mtime": 1788327287.9288514,
+    "ast_hash": "c6ceca9543b0c044098f7d0e5d7bd708",
+    "semantic_hash": "c6ceca9543b0c044098f7d0e5d7bd708"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/index.ts": {
+    "mtime": 1788327287.9290013,
+    "ast_hash": "c68ffa63cd6722e0b986ed2a480b4bbf",
+    "semantic_hash": "c68ffa63cd6722e0b986ed2a480b4bbf"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/lookup.ts": {
+    "mtime": 1788331909.7695012,
+    "ast_hash": "f6ddcc666992c7c554c1759f819f8b59",
+    "semantic_hash": "f6ddcc666992c7c554c1759f819f8b59"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/program.ts": {
+    "mtime": 1788364176.717097,
+    "ast_hash": "e872f68451c77ba90ef75c59344904a6",
+    "semantic_hash": "e872f68451c77ba90ef75c59344904a6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/references.ts": {
+    "mtime": 1788364176.7176242,
+    "ast_hash": "43a50c55f5198e18415cda89038592a2",
+    "semantic_hash": "43a50c55f5198e18415cda89038592a2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/shared.ts": {
+    "mtime": 1788327287.9294004,
+    "ast_hash": "99435c64a37a88b03020c1919ef878d5",
+    "semantic_hash": "99435c64a37a88b03020c1919ef878d5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/symbols.ts": {
+    "mtime": 1788364176.7179637,
+    "ast_hash": "088e11b9490e78a5fab96b6c1bed3547",
+    "semantic_hash": "088e11b9490e78a5fab96b6c1bed3547"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/adapter/ts7/types.ts": {
+    "mtime": 1788364176.7183127,
+    "ast_hash": "e20e168178175f182345de87cbd6d9cb",
+    "semantic_hash": "e20e168178175f182345de87cbd6d9cb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/baseline/index.ts": {
+    "mtime": 1788352299.257854,
+    "ast_hash": "8d1bb2679eb5b5ce48ff745f068fe4e8",
+    "semantic_hash": "8d1bb2679eb5b5ce48ff745f068fe4e8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/baseline/select.ts": {
+    "mtime": 1788352299.2579954,
+    "ast_hash": "d556dcb09256b707d1806780c5105b0f",
+    "semantic_hash": "d556dcb09256b707d1806780c5105b0f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/baseline/store.ts": {
+    "mtime": 1788381017.962783,
+    "ast_hash": "c8cb5d95546ddacf456abee428afb051",
+    "semantic_hash": "c8cb5d95546ddacf456abee428afb051"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/errors.ts": {
+    "mtime": 1788327287.9301581,
+    "ast_hash": "0a69002a936016e18d3c522c29c9415f",
+    "semantic_hash": "0a69002a936016e18d3c522c29c9415f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/index.ts": {
+    "mtime": 1788327287.9305248,
+    "ast_hash": "d69fe8a3625a73d67eeb063abd09da11",
+    "semantic_hash": "d69fe8a3625a73d67eeb063abd09da11"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/jsonc.ts": {
+    "mtime": 1788327287.9308066,
+    "ast_hash": "76f6116f8068b6978c6f25ea6104bfe7",
+    "semantic_hash": "76f6116f8068b6978c6f25ea6104bfe7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/primitives.ts": {
+    "mtime": 1788327287.9316707,
+    "ast_hash": "0bb00de80dd22c318be64a960c979275",
+    "semantic_hash": "0bb00de80dd22c318be64a960c979275"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/read.ts": {
+    "mtime": 1788327287.9318805,
+    "ast_hash": "093c237904cc5cb020fccbc4e2b9306e",
+    "semantic_hash": "093c237904cc5cb020fccbc4e2b9306e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/schema.ts": {
+    "mtime": 1788327287.932044,
+    "ast_hash": "2c3f232ea707e6ef6343a6c1b75c9715",
+    "semantic_hash": "2c3f232ea707e6ef6343a6c1b75c9715"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/config/types.ts": {
+    "mtime": 1788327287.9322178,
+    "ast_hash": "2447e2893915de045ac26dcf7804eaee",
+    "semantic_hash": "2447e2893915de045ac26dcf7804eaee"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/continuity/index.ts": {
+    "mtime": 1788364176.718973,
+    "ast_hash": "d91a24f374dbfd15811cecc72459603f",
+    "semantic_hash": "d91a24f374dbfd15811cecc72459603f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/discovery.ts": {
+    "mtime": 1788327287.9326446,
+    "ast_hash": "bfbfad69ee2dfbad677e2dd4cf2417c9",
+    "semantic_hash": "bfbfad69ee2dfbad677e2dd4cf2417c9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/docs/check.ts": {
+    "mtime": 1788364176.719421,
+    "ast_hash": "e82458218ff1f6ab1ed1db453129ef2c",
+    "semantic_hash": "e82458218ff1f6ab1ed1db453129ef2c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/docs/claim.ts": {
+    "mtime": 1788352299.2589426,
+    "ast_hash": "60e292e36b0be1d2b5e2f705e4666643",
+    "semantic_hash": "60e292e36b0be1d2b5e2f705e4666643"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/docs/discover.ts": {
+    "mtime": 1788352299.259124,
+    "ast_hash": "ce762f2360812f569eb12cdc3c27560f",
+    "semantic_hash": "ce762f2360812f569eb12cdc3c27560f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/docs/document.ts": {
+    "mtime": 1788352299.2594795,
+    "ast_hash": "05c35f74ec19ba6cc71e6141b97e6c1f",
+    "semantic_hash": "05c35f74ec19ba6cc71e6141b97e6c1f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/docs/index.ts": {
+    "mtime": 1788352299.259634,
+    "ast_hash": "e90ef488eb97402e3e2a3dd2b7d76c5a",
+    "semantic_hash": "e90ef488eb97402e3e2a3dd2b7d76c5a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/docs/predicate.ts": {
+    "mtime": 1788364176.7197113,
+    "ast_hash": "a6eb5a2d791af567db4b891f05b62b83",
+    "semantic_hash": "a6eb5a2d791af567db4b891f05b62b83"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/drift.ts": {
+    "mtime": 1788188473.978266,
+    "ast_hash": "0e854648b42f9cda7fdd3b5648406c74",
+    "semantic_hash": "0e854648b42f9cda7fdd3b5648406c74"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/envelope.ts": {
+    "mtime": 1788444675.2471611,
+    "ast_hash": "75b1c127d8e4ab090a418aafd4eab639",
+    "semantic_hash": "75b1c127d8e4ab090a418aafd4eab639"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/git.ts": {
+    "mtime": 1788352299.2603018,
+    "ast_hash": "14a34c938d1eb6b29f8ed57f3a14e2ec",
+    "semantic_hash": "14a34c938d1eb6b29f8ed57f3a14e2ec"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/index.ts": {
+    "mtime": 1788444918.3677225,
+    "ast_hash": "c89b6bc7d0a977b98c698182226050d1",
+    "semantic_hash": "c89b6bc7d0a977b98c698182226050d1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/labels/effective.ts": {
+    "mtime": 1788333911.1668947,
+    "ast_hash": "ed229cc318310ce6df3aeaa5a481792c",
+    "semantic_hash": "ed229cc318310ce6df3aeaa5a481792c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/labels/index.ts": {
+    "mtime": 1788333911.1670716,
+    "ast_hash": "0478e6fd48b65a078a51b7d4cc961070",
+    "semantic_hash": "0478e6fd48b65a078a51b7d4cc961070"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/labels/scope.ts": {
+    "mtime": 1788333911.1672132,
+    "ast_hash": "9244af8ca5ab684ff177a9440c521be0",
+    "semantic_hash": "9244af8ca5ab684ff177a9440c521be0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/labels/signals.ts": {
+    "mtime": 1788333911.167355,
+    "ast_hash": "349eafa88f1f94f3993bc07afefe1839",
+    "semantic_hash": "349eafa88f1f94f3993bc07afefe1839"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/manifest.ts": {
+    "mtime": 1788447665.1637728,
+    "ast_hash": "2bcd75326518c57fd8916093310e919c",
+    "semantic_hash": "2bcd75326518c57fd8916093310e919c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/model.ts": {
+    "mtime": 1788364176.7201784,
+    "ast_hash": "6dd7011b16ec63d0ec72bf7ed07a2154",
+    "semantic_hash": "6dd7011b16ec63d0ec72bf7ed07a2154"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/naming.ts": {
+    "mtime": 1788364176.7204788,
+    "ast_hash": "242b0b3f36befc170db179cc3257c008",
+    "semantic_hash": "242b0b3f36befc170db179cc3257c008"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/analyse.ts": {
+    "mtime": 1788352299.26143,
+    "ast_hash": "cd7989044423fe2b6fd9b230618ccf3a",
+    "semantic_hash": "cd7989044423fe2b6fd9b230618ccf3a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/calls.ts": {
+    "mtime": 1788352299.2616053,
+    "ast_hash": "3d8438a726b6dc755ba07babf1e0c6d7",
+    "semantic_hash": "3d8438a726b6dc755ba07babf1e0c6d7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/changes.ts": {
+    "mtime": 1788352299.2617538,
+    "ast_hash": "b61368c674c94c15dc23f33d4a67fa98",
+    "semantic_hash": "b61368c674c94c15dc23f33d4a67fa98"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/claims.ts": {
+    "mtime": 1788364176.7208517,
+    "ast_hash": "3224c79fa9f53dbfc6f4eb0d42495c77",
+    "semantic_hash": "3224c79fa9f53dbfc6f4eb0d42495c77"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/classification.ts": {
+    "mtime": 1788333911.1680834,
+    "ast_hash": "4d991f25b308d97b7b984386b31bb1e1",
+    "semantic_hash": "4d991f25b308d97b7b984386b31bb1e1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/docs.ts": {
+    "mtime": 1788352299.2620592,
+    "ast_hash": "08616ba6188615a092323f19252cf426",
+    "semantic_hash": "08616ba6188615a092323f19252cf426"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/doctor.ts": {
+    "mtime": 1788352299.2622678,
+    "ast_hash": "a0781f7c170540df0134f014b1c742c8",
+    "semantic_hash": "a0781f7c170540df0134f014b1c742c8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/draft-facts.ts": {
+    "mtime": 1788445874.5153675,
+    "ast_hash": "edd19f8b6e57a64ee02f59c197d4412f",
+    "semantic_hash": "edd19f8b6e57a64ee02f59c197d4412f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/draft-markdown.ts": {
+    "mtime": 1788446047.0520844,
+    "ast_hash": "54747696c0be10efccedc8bb5a431e94",
+    "semantic_hash": "54747696c0be10efccedc8bb5a431e94"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/draft.ts": {
+    "mtime": 1788445874.51569,
+    "ast_hash": "01e917c3b55bb10f00f1b32622778639",
+    "semantic_hash": "01e917c3b55bb10f00f1b32622778639"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/evidence.ts": {
+    "mtime": 1788444731.5899005,
+    "ast_hash": "d5d2d733a0019fed74ae3ddde76212df",
+    "semantic_hash": "d5d2d733a0019fed74ae3ddde76212df"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/file.ts": {
+    "mtime": 1788444851.4958785,
+    "ast_hash": "028b471f129330adb3cf38306f9f3152",
+    "semantic_hash": "028b471f129330adb3cf38306f9f3152"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/impact.ts": {
+    "mtime": 1788364176.7214289,
+    "ast_hash": "ed9aabce60ce65a8f47ea8243997bea0",
+    "semantic_hash": "ed9aabce60ce65a8f47ea8243997bea0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/measure.ts": {
+    "mtime": 1788328491.476205,
+    "ast_hash": "4d7c220f88353bcf5bd62286f9bd5404",
+    "semantic_hash": "4d7c220f88353bcf5bd62286f9bd5404"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/references.ts": {
+    "mtime": 1788352299.2630231,
+    "ast_hash": "78c45b8cbcc2f4720406553867cfc018",
+    "semantic_hash": "78c45b8cbcc2f4720406553867cfc018"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/report-bug.ts": {
+    "mtime": 1788333911.1689336,
+    "ast_hash": "3385863630c546c1c6187256e121fb0f",
+    "semantic_hash": "3385863630c546c1c6187256e121fb0f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/scope.ts": {
+    "mtime": 1788327287.934561,
+    "ast_hash": "72fd65d87a88e558b101d707d9c4a990",
+    "semantic_hash": "72fd65d87a88e558b101d707d9c4a990"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/subject.ts": {
+    "mtime": 1788364176.7217565,
+    "ast_hash": "f22bacca6e955c7e4c342a7e964ae761",
+    "semantic_hash": "f22bacca6e955c7e4c342a7e964ae761"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/symbol.ts": {
+    "mtime": 1788333911.1691294,
+    "ast_hash": "ba8f0f34b8c5a3392d551e47df694c90",
+    "semantic_hash": "ba8f0f34b8c5a3392d551e47df694c90"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/operations/trace.ts": {
+    "mtime": 1788364176.721978,
+    "ast_hash": "030b7c4cfec0af164b85536f67fd6738",
+    "semantic_hash": "030b7c4cfec0af164b85536f67fd6738"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/dependencies.ts": {
+    "mtime": 1788328491.4763796,
+    "ast_hash": "c7bb5067191c2f1d4ce46d6d1879bf20",
+    "semantic_hash": "c7bb5067191c2f1d4ce46d6d1879bf20"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/fingerprint.ts": {
+    "mtime": 1788364176.72228,
+    "ast_hash": "8b64b883cde230a20769c4dcb43152d1",
+    "semantic_hash": "8b64b883cde230a20769c4dcb43152d1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/fs.ts": {
+    "mtime": 1788327287.9361188,
+    "ast_hash": "9f0ec18e7aec2a84a643b2185651c765",
+    "semantic_hash": "9f0ec18e7aec2a84a643b2185651c765"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/glob.ts": {
+    "mtime": 1788327287.9365625,
+    "ast_hash": "608c8ab4eb4fd3cb127b20f7706231d5",
+    "semantic_hash": "608c8ab4eb4fd3cb127b20f7706231d5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/index.ts": {
+    "mtime": 1788328491.4766645,
+    "ast_hash": "a7f64a072ce6b90c766666c922fc52fd",
+    "semantic_hash": "a7f64a072ce6b90c766666c922fc52fd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/project.ts": {
+    "mtime": 1788327287.9370325,
+    "ast_hash": "20666c87994820793753d2ba0e3fdc13",
+    "semantic_hash": "20666c87994820793753d2ba0e3fdc13"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/signals.ts": {
+    "mtime": 1788328491.476937,
+    "ast_hash": "33beca0597ee65f4c32f3ecf0678ecda",
+    "semantic_hash": "33beca0597ee65f4c32f3ecf0678ecda"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/specifiers.ts": {
+    "mtime": 1788328491.4772332,
+    "ast_hash": "21c26cbae976e81ca1a9ab008a11f7e3",
+    "semantic_hash": "21c26cbae976e81ca1a9ab008a11f7e3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/preflight/tsconfig.ts": {
+    "mtime": 1788327287.9377148,
+    "ast_hash": "cab05cb5beefdd25f85d0d5be0bafb5a",
+    "semantic_hash": "cab05cb5beefdd25f85d0d5be0bafb5a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/session/cold.ts": {
+    "mtime": 1788333911.1695178,
+    "ast_hash": "d8a936c76cfd06cd0676250555b0b079",
+    "semantic_hash": "d8a936c76cfd06cd0676250555b0b079"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/session/index.ts": {
+    "mtime": 1788348976.6643872,
+    "ast_hash": "670ba89fe5cd1249b9bac6636e7ece27",
+    "semantic_hash": "670ba89fe5cd1249b9bac6636e7ece27"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/session/open.ts": {
+    "mtime": 1788364176.7225268,
+    "ast_hash": "5b2c9f6eef58e45bd8905baca83d7920",
+    "semantic_hash": "5b2c9f6eef58e45bd8905baca83d7920"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/session/shared.ts": {
+    "mtime": 1788333911.1699424,
+    "ast_hash": "665d8107d022cfb9c783f33b9378b5d9",
+    "semantic_hash": "665d8107d022cfb9c783f33b9378b5d9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/session/version.ts": {
+    "mtime": 1788327287.9389088,
+    "ast_hash": "1eacde96a98952c0de70807bc0426b74",
+    "semantic_hash": "1eacde96a98952c0de70807bc0426b74"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/session/wave.ts": {
+    "mtime": 1788333911.1701853,
+    "ast_hash": "19940b000572415745ea5216486e8f7f",
+    "semantic_hash": "19940b000572415745ea5216486e8f7f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/enums.ts": {
+    "mtime": 1788352299.2634099,
+    "ast_hash": "1f16e59d186f071c19edc8822863afe3",
+    "semantic_hash": "1f16e59d186f071c19edc8822863afe3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/header.ts": {
+    "mtime": 1788333911.170541,
+    "ast_hash": "28aa44566913889276aa5d39cac76008",
+    "semantic_hash": "28aa44566913889276aa5d39cac76008"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/index.ts": {
+    "mtime": 1788364176.7228422,
+    "ast_hash": "eda4833a3c80ef08f2a19b0fb624b210",
+    "semantic_hash": "eda4833a3c80ef08f2a19b0fb624b210"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/interner.ts": {
+    "mtime": 1788364176.7231896,
+    "ast_hash": "31fea045422df516f0d58592d4f209cf",
+    "semantic_hash": "31fea045422df516f0d58592d4f209cf"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/open.ts": {
+    "mtime": 1788364176.72458,
+    "ast_hash": "e2ab397da1d1a4b29c83133b01fd048c",
+    "semantic_hash": "e2ab397da1d1a4b29c83133b01fd048c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-edges.ts": {
+    "mtime": 1788364176.7254977,
+    "ast_hash": "2b5279b4f25b7a67c458a4b77787df85",
+    "semantic_hash": "2b5279b4f25b7a67c458a4b77787df85"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-file-facts.ts": {
+    "mtime": 1788331909.7741346,
+    "ast_hash": "594450855dd13a64a3d1dad9f81a9625",
+    "semantic_hash": "594450855dd13a64a3d1dad9f81a9625"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-files.ts": {
+    "mtime": 1788327287.9407039,
+    "ast_hash": "4e36ed8a341cf76b6cf34560634663bd",
+    "semantic_hash": "4e36ed8a341cf76b6cf34560634663bd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-labels.ts": {
+    "mtime": 1788364176.725917,
+    "ast_hash": "3d269eadefccba27dba2c1e87c1040ce",
+    "semantic_hash": "3d269eadefccba27dba2c1e87c1040ce"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-projects.ts": {
+    "mtime": 1788327287.9410183,
+    "ast_hash": "b36ffefa3b717555c74f19b48accd1f5",
+    "semantic_hash": "b36ffefa3b717555c74f19b48accd1f5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-references.ts": {
+    "mtime": 1788364176.7262053,
+    "ast_hash": "94fc90f9f3e62f3bf6462bd7a9ebd49c",
+    "semantic_hash": "94fc90f9f3e62f3bf6462bd7a9ebd49c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-specifiers.ts": {
+    "mtime": 1788327287.9414895,
+    "ast_hash": "f89cab714d4413daad13cda21ecf645e",
+    "semantic_hash": "f89cab714d4413daad13cda21ecf645e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/read-symbols.ts": {
+    "mtime": 1788364176.7264714,
+    "ast_hash": "be7d181ea795ef28a3a007d331c6cd6e",
+    "semantic_hash": "be7d181ea795ef28a3a007d331c6cd6e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/schema.ts": {
+    "mtime": 1788364176.7267463,
+    "ast_hash": "f5321e55f4504da7bb8490d007b556a8",
+    "semantic_hash": "f5321e55f4504da7bb8490d007b556a8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/shared.ts": {
+    "mtime": 1788364176.726965,
+    "ast_hash": "4c68b3beb6a4cc5cbcc34375924c75a0",
+    "semantic_hash": "4c68b3beb6a4cc5cbcc34375924c75a0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/statements.ts": {
+    "mtime": 1788364176.727149,
+    "ast_hash": "eb79414fd8798d077da40aba3d8179b7",
+    "semantic_hash": "eb79414fd8798d077da40aba3d8179b7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/stats.ts": {
+    "mtime": 1788327287.9425352,
+    "ast_hash": "586e51a322e4f4634eb941dba2cec5e4",
+    "semantic_hash": "586e51a322e4f4634eb941dba2cec5e4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/write-commit.ts": {
+    "mtime": 1788333911.1712785,
+    "ast_hash": "880d5b25c612dba286149eaaa63065cc",
+    "semantic_hash": "880d5b25c612dba286149eaaa63065cc"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/store/write-rows.ts": {
+    "mtime": 1788333911.171514,
+    "ast_hash": "c3b70f79205ed837d97dd92efb5de432",
+    "semantic_hash": "c3b70f79205ed837d97dd92efb5de432"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/src/symbol-id.ts": {
+    "mtime": 1788364176.7274919,
+    "ast_hash": "516c50b1613c97111913d76ebb2eda63",
+    "semantic_hash": "516c50b1613c97111913d76ebb2eda63"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/adapter.test.ts": {
+    "mtime": 1788364176.7277358,
+    "ast_hash": "8273dba04293f626e17e873952d917ed",
+    "semantic_hash": "8273dba04293f626e17e873952d917ed"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/claim.test.ts": {
+    "mtime": 1788381017.9632127,
+    "ast_hash": "50a94ebd73fa649c3355a54804f00f3c",
+    "semantic_hash": "50a94ebd73fa649c3355a54804f00f3c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/classification.test.ts": {
+    "mtime": 1788381017.9637108,
+    "ast_hash": "d90a7f1742343e290ab51d7ccf439838",
+    "semantic_hash": "d90a7f1742343e290ab51d7ccf439838"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/cold-build.test.ts": {
+    "mtime": 1788364176.728014,
+    "ast_hash": "994d3b7f94ad8305d838aeca43c79b5b",
+    "semantic_hash": "994d3b7f94ad8305d838aeca43c79b5b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/config.test.ts": {
+    "mtime": 1788381017.964213,
+    "ast_hash": "f2d52cd97fa568b1ecf28c107f8b438a",
+    "semantic_hash": "f2d52cd97fa568b1ecf28c107f8b438a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/continuity.test.ts": {
+    "mtime": 1788381017.9645753,
+    "ast_hash": "df9c5b13c2ca368121db359bb46c8a41",
+    "semantic_hash": "df9c5b13c2ca368121db359bb46c8a41"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/descriptors.test.ts": {
+    "mtime": 1788364176.728425,
+    "ast_hash": "d2a9d3ea0d4fcfb73740a104af2fc430",
+    "semantic_hash": "d2a9d3ea0d4fcfb73740a104af2fc430"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/discovery.test.ts": {
+    "mtime": 1788327287.944475,
+    "ast_hash": "6f246d5f747b5c73f7b3f5d431f0bdc2",
+    "semantic_hash": "6f246d5f747b5c73f7b3f5d431f0bdc2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/docs.test.ts": {
+    "mtime": 1788381017.9648647,
+    "ast_hash": "bd68c35da74eb785561bf52a4b34a2ef",
+    "semantic_hash": "bd68c35da74eb785561bf52a4b34a2ef"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/doctor.test.ts": {
+    "mtime": 1788381017.9654887,
+    "ast_hash": "d8441009bab2e0619ab859d6d779f609",
+    "semantic_hash": "d8441009bab2e0619ab859d6d779f609"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/document.test.ts": {
+    "mtime": 1788381017.9658077,
+    "ast_hash": "7db49c3fb2e923b634eade1dac151fbd",
+    "semantic_hash": "7db49c3fb2e923b634eade1dac151fbd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/draft.test.ts": {
+    "mtime": 1788445821.6979449,
+    "ast_hash": "d1fcf97699bcebecacb8515f8aab3fa2",
+    "semantic_hash": "d1fcf97699bcebecacb8515f8aab3fa2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/evidence.test.ts": {
+    "mtime": 1788364176.7288475,
+    "ast_hash": "9d0e756adb1adaac0ed5420818cb33c8",
+    "semantic_hash": "9d0e756adb1adaac0ed5420818cb33c8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/src/barrel.ts": {
+    "mtime": 1788178020.000908,
+    "ast_hash": "25497a87ca6e0b784694949f85c7b7a5",
+    "semantic_hash": "25497a87ca6e0b784694949f85c7b7a5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/src/checkout.ts": {
+    "mtime": 1788178020.0013041,
+    "ast_hash": "74e17a7f32169aee53e6b6e53e67b91f",
+    "semantic_hash": "74e17a7f32169aee53e6b6e53e67b91f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/src/component.tsx": {
+    "mtime": 1788178020.001714,
+    "ast_hash": "df7a111ead3f9a14b7cd809f1a395b99",
+    "semantic_hash": "df7a111ead3f9a14b7cd809f1a395b99"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/src/lazy.ts": {
+    "mtime": 1788196557.3043165,
+    "ast_hash": "4a8cb830112f57596e9c8270aa602580",
+    "semantic_hash": "4a8cb830112f57596e9c8270aa602580"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/src/payments.ts": {
+    "mtime": 1788178020.0020916,
+    "ast_hash": "d5b31d5eafdce5a50f12c89f9a73fe98",
+    "semantic_hash": "d5b31d5eafdce5a50f12c89f9a73fe98"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/src/recursion.ts": {
+    "mtime": 1788188473.9808335,
+    "ast_hash": "e2b594de4a89d23ed24a51639692958e",
+    "semantic_hash": "e2b594de4a89d23ed24a51639692958e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/basic/tsconfig.json": {
+    "mtime": 1788178020.0024683,
+    "ast_hash": "0f69a0b3adb597096913d9404f29435b",
+    "semantic_hash": "0f69a0b3adb597096913d9404f29435b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/descriptors/src/descriptors.ts": {
+    "mtime": 1788191056.0422916,
+    "ast_hash": "fe9e600a71edf737fb78bac38180bead",
+    "semantic_hash": "fe9e600a71edf737fb78bac38180bead"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/descriptors/tsconfig.json": {
+    "mtime": 1788191056.042477,
+    "ast_hash": "191de7b13898f676942c58b46e2ece31",
+    "semantic_hash": "191de7b13898f676942c58b46e2ece31"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/docs/src/checkout.ts": {
+    "mtime": 1788352299.2646809,
+    "ast_hash": "02c232e87fcdd5274897c9453fe0fd9d",
+    "semantic_hash": "02c232e87fcdd5274897c9453fe0fd9d"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/docs/src/payments.ts": {
+    "mtime": 1788352299.2648146,
+    "ast_hash": "7a5a733017a94c1469b33791a0db5d03",
+    "semantic_hash": "7a5a733017a94c1469b33791a0db5d03"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/docs/src/types.ts": {
+    "mtime": 1788352299.2649345,
+    "ast_hash": "e51712ef6e7153a263b45ff00ca92d32",
+    "semantic_hash": "e51712ef6e7153a263b45ff00ca92d32"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/docs/tsconfig.json": {
+    "mtime": 1788352299.265054,
+    "ast_hash": "191de7b13898f676942c58b46e2ece31",
+    "semantic_hash": "191de7b13898f676942c58b46e2ece31"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/evidence/src/callers.ts": {
+    "mtime": 1788352299.2652693,
+    "ast_hash": "d29e96c9cfff12c01b3c04a4e9e0ccc4",
+    "semantic_hash": "d29e96c9cfff12c01b3c04a4e9e0ccc4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/evidence/src/payments.ts": {
+    "mtime": 1788352299.2654035,
+    "ast_hash": "8180e2a60e180a0d05efa139160cd76b",
+    "semantic_hash": "8180e2a60e180a0d05efa139160cd76b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/evidence/src/types.ts": {
+    "mtime": 1788352299.265559,
+    "ast_hash": "d1dd3920bf08b12017185e25853d4633",
+    "semantic_hash": "d1dd3920bf08b12017185e25853d4633"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/evidence/tsconfig.json": {
+    "mtime": 1788352299.2656815,
+    "ast_hash": "191de7b13898f676942c58b46e2ece31",
+    "semantic_hash": "191de7b13898f676942c58b46e2ece31"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/projects/a-lib/src/money.ts": {
+    "mtime": 1788196557.3047478,
+    "ast_hash": "85530aff1befee12485e7151d32a6be0",
+    "semantic_hash": "85530aff1befee12485e7151d32a6be0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/projects/a-lib/tsconfig.json": {
+    "mtime": 1788196557.3049822,
+    "ast_hash": "cbdcd45812b8c766da59ed97d7f8cff6",
+    "semantic_hash": "cbdcd45812b8c766da59ed97d7f8cff6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/projects/b-app/src/checkout.ts": {
+    "mtime": 1788196557.3053284,
+    "ast_hash": "146f6e965ac6b0f2a99ac202967b54f1",
+    "semantic_hash": "146f6e965ac6b0f2a99ac202967b54f1"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/projects/b-app/tsconfig.json": {
+    "mtime": 1788196557.305468,
+    "ast_hash": "cbdcd45812b8c766da59ed97d7f8cff6",
+    "semantic_hash": "cbdcd45812b8c766da59ed97d7f8cff6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/projects/package.json": {
+    "mtime": 1788196557.3056998,
+    "ast_hash": "f08dc2c2b03ba58c2b27c682df15c4bb",
+    "semantic_hash": "f08dc2c2b03ba58c2b27c682df15c4bb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/references/src/alias.ts": {
+    "mtime": 1788331909.7761064,
+    "ast_hash": "316aa44ce1960337abcb1a5ad6e8aa87",
+    "semantic_hash": "316aa44ce1960337abcb1a5ad6e8aa87"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/references/src/types.ts": {
+    "mtime": 1788331909.77635,
+    "ast_hash": "a926810a7b053fd113fc6b51fd53c50e",
+    "semantic_hash": "a926810a7b053fd113fc6b51fd53c50e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/references/src/wallet.ts": {
+    "mtime": 1788331909.7765977,
+    "ast_hash": "fc248782015a46a6eebf35679282f8af",
+    "semantic_hash": "fc248782015a46a6eebf35679282f8af"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/references/tsconfig.json": {
+    "mtime": 1788331909.776957,
+    "ast_hash": "191de7b13898f676942c58b46e2ece31",
+    "semantic_hash": "191de7b13898f676942c58b46e2ece31"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/src/forms.ts": {
+    "mtime": 1788196557.3060234,
+    "ast_hash": "8a90c22058825f6423cb7b2defbcdb7b",
+    "semantic_hash": "8a90c22058825f6423cb7b2defbcdb7b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/src/lazily.ts": {
+    "mtime": 1788196557.3062465,
+    "ast_hash": "133b21b3f80d7aba7543955a449db0de",
+    "semantic_hash": "133b21b3f80d7aba7543955a449db0de"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/src/reexported.ts": {
+    "mtime": 1788196557.3065386,
+    "ast_hash": "293acedff9fb28167effe79ba10b7a29",
+    "semantic_hash": "293acedff9fb28167effe79ba10b7a29"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/src/required.ts": {
+    "mtime": 1788196557.3070567,
+    "ast_hash": "d0d06db3110d2213812ba2ced9450bbb",
+    "semantic_hash": "d0d06db3110d2213812ba2ced9450bbb"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/src/statically.ts": {
+    "mtime": 1788196557.3071995,
+    "ast_hash": "2a2874f5a8411a65916d0ac6095055b0",
+    "semantic_hash": "2a2874f5a8411a65916d0ac6095055b0"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/src/typed.ts": {
+    "mtime": 1788196557.3073525,
+    "ast_hash": "865440d9da8074e6d43687ba3356da4c",
+    "semantic_hash": "865440d9da8074e6d43687ba3356da4c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/specifiers/tsconfig.json": {
+    "mtime": 1788196557.3074718,
+    "ast_hash": "cbdcd45812b8c766da59ed97d7f8cff6",
+    "semantic_hash": "cbdcd45812b8c766da59ed97d7f8cff6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/glob.test.ts": {
+    "mtime": 1788381017.9660776,
+    "ast_hash": "2b34c17e05076809b662285ac9348db6",
+    "semantic_hash": "2b34c17e05076809b662285ac9348db6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/impact.test.ts": {
+    "mtime": 1788381017.9666011,
+    "ast_hash": "5b882c3677ca5e699beee81a51cf4e3c",
+    "semantic_hash": "5b882c3677ca5e699beee81a51cf4e3c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/labels.test.ts": {
+    "mtime": 1788381017.967067,
+    "ast_hash": "506a6692b24764d2ec6c7229d81e9c11",
+    "semantic_hash": "506a6692b24764d2ec6c7229d81e9c11"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/preflight.test.ts": {
+    "mtime": 1788381017.967495,
+    "ast_hash": "32cc0be2b1594bc192474272bbc73d61",
+    "semantic_hash": "32cc0be2b1594bc192474272bbc73d61"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/references.test.ts": {
+    "mtime": 1788364176.7301803,
+    "ast_hash": "cc66ecd1755f6ff1459e2652c6811eb3",
+    "semantic_hash": "cc66ecd1755f6ff1459e2652c6811eb3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/session.test.ts": {
+    "mtime": 1788364176.7305424,
+    "ast_hash": "7a865ecb9e3a06507761168bd25b23b9",
+    "semantic_hash": "7a865ecb9e3a06507761168bd25b23b9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/specifiers.test.ts": {
+    "mtime": 1788381017.9678762,
+    "ast_hash": "98d6a2f63b1c0a992e1df485d28688c8",
+    "semantic_hash": "98d6a2f63b1c0a992e1df485d28688c8"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/store.test.ts": {
+    "mtime": 1788364176.730956,
+    "ast_hash": "741d340844b45f69c99a993b8be8268c",
+    "semantic_hash": "741d340844b45f69c99a993b8be8268c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/symbol-id.test.ts": {
+    "mtime": 1788381017.9684699,
+    "ast_hash": "fb0d53cda4bb04167e791f4278f2779a",
+    "semantic_hash": "fb0d53cda4bb04167e791f4278f2779a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/trace.test.ts": {
+    "mtime": 1788364176.7318952,
+    "ast_hash": "ed6ea70429943fea1ae88f30de51a9c3",
+    "semantic_hash": "ed6ea70429943fea1ae88f30de51a9c3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/wave.test.ts": {
+    "mtime": 1788364176.732387,
+    "ast_hash": "599631082b6ef4e0fffafb17b786a2dc",
+    "semantic_hash": "599631082b6ef4e0fffafb17b786a2dc"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/tsconfig.json": {
+    "mtime": 1788178020.0031312,
+    "ast_hash": "91018f67dd852c8e8e17095570ca2ece",
+    "semantic_hash": "91018f67dd852c8e8e17095570ca2ece"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/vitest.config.ts": {
+    "mtime": 1788178020.0035043,
+    "ast_hash": "2b8aadef5f02189adc7388f4ef798652",
+    "semantic_hash": "2b8aadef5f02189adc7388f4ef798652"
+  },
+  "/Users/magicspon/dev/projects/codedocs/renovate.json": {
+    "mtime": 1788116919.899862,
+    "ast_hash": "b3764d076653a3655b204ffe7417e5b3",
+    "semantic_hash": "b3764d076653a3655b204ffe7417e5b3"
+  },
+  "/Users/magicspon/dev/projects/codedocs/scripts/no-network.ts": {
+    "mtime": 1788290992.1051555,
+    "ast_hash": "b3a4963b81020dc9295b4d59f742a61c",
+    "semantic_hash": "b3a4963b81020dc9295b4d59f742a61c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/scripts/renovate-changeset.mjs": {
+    "mtime": 1787066106.1904175,
+    "ast_hash": "7140581e386f2c9b88a1bc35805eaf18",
+    "semantic_hash": "7140581e386f2c9b88a1bc35805eaf18"
+  },
+  "/Users/magicspon/dev/projects/codedocs/scripts/sort-cspell-words.mjs": {
+    "mtime": 1788381017.9697146,
+    "ast_hash": "11578622d4e5e25bab7e8f18f1b91244",
+    "semantic_hash": "11578622d4e5e25bab7e8f18f1b91244"
+  },
+  "/Users/magicspon/dev/projects/codedocs/test/no-network.test.ts": {
+    "mtime": 1788381017.9702044,
+    "ast_hash": "170748b1dca30b934e2081f33af37911",
+    "semantic_hash": "170748b1dca30b934e2081f33af37911"
+  },
+  "/Users/magicspon/dev/projects/codedocs/tsconfig.json": {
+    "mtime": 1788178020.0046995,
+    "ast_hash": "e9a9c71757e14626e28ae7ba7cffab9a",
+    "semantic_hash": "e9a9c71757e14626e28ae7ba7cffab9a"
+  },
+  "/Users/magicspon/dev/projects/codedocs/vitest.config.ts": {
+    "mtime": 1788381017.9705296,
+    "ast_hash": "d32435621d8f2a8b5dbec806f6b703be",
+    "semantic_hash": "d32435621d8f2a8b5dbec806f6b703be"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.changeset/README.md": {
+    "mtime": 1786887146.484749,
+    "ast_hash": "ee7f8da8dbf1e56238d932d47bed7ab5",
+    "semantic_hash": "ee7f8da8dbf1e56238d932d47bed7ab5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.changeset/lucky-moons-shave.md": {
+    "mtime": 1788381017.9439137,
+    "ast_hash": "66744b470ac6d2fffbd116953699eec7",
+    "semantic_hash": "66744b470ac6d2fffbd116953699eec7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/ci.yaml": {
+    "mtime": 1788381017.9455378,
+    "ast_hash": "60c0cd09b691e61852aa3872f62462e2",
+    "semantic_hash": "60c0cd09b691e61852aa3872f62462e2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/fallow.yml": {
+    "mtime": 1787066106.1479745,
+    "ast_hash": "4b7e5f65bffce43a84329b922552d38b",
+    "semantic_hash": "4b7e5f65bffce43a84329b922552d38b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/release.yaml": {
+    "mtime": 1788381017.9460504,
+    "ast_hash": "ca839d3a4bf701bca37ec412938f2f6c",
+    "semantic_hash": "ca839d3a4bf701bca37ec412938f2f6c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/.github/workflows/renovate.yaml": {
+    "mtime": 1788381017.9465907,
+    "ast_hash": "54e2dc584fee9939ca1675aa646fc35b",
+    "semantic_hash": "54e2dc584fee9939ca1675aa646fc35b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/AGENTS.md": {
+    "mtime": 1788327287.9259298,
+    "ast_hash": "a4956bafabd4356e80dda214df9a4eca",
+    "semantic_hash": "a4956bafabd4356e80dda214df9a4eca"
+  },
+  "/Users/magicspon/dev/projects/codedocs/CLAUDE.md": {
+    "mtime": 1786887146.486988,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "/Users/magicspon/dev/projects/codedocs/CONTEXT.md": {
+    "mtime": 1788448113.7446327,
+    "ast_hash": "03c14fdc9b0a36ceffe6f64b1ea9da93",
+    "semantic_hash": "03c14fdc9b0a36ceffe6f64b1ea9da93"
+  },
+  "/Users/magicspon/dev/projects/codedocs/README.md": {
+    "mtime": 1788447879.1346292,
+    "ast_hash": "5439c3e15c9f6a02bd10c2c3156fa81e",
+    "semantic_hash": "5439c3e15c9f6a02bd10c2c3156fa81e"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/DIFFICULTY.md": {
+    "mtime": 1788426637.8406858,
+    "ast_hash": "5f726359bdeb46948f73f81e8bede7c4",
+    "semantic_hash": "5f726359bdeb46948f73f81e8bede7c4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/README.md": {
+    "mtime": 1788435004.6900039,
+    "ast_hash": "99b17fc57f0191d763fe2bee82558ac2",
+    "semantic_hash": "99b17fc57f0191d763fe2bee82558ac2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/bench/RESULTS.md": {
+    "mtime": 1788435004.690408,
+    "ast_hash": "de3123c3b6b84239fe793219154fb311",
+    "semantic_hash": "de3123c3b6b84239fe793219154fb311"
+  },
+  "/Users/magicspon/dev/projects/codedocs/cspell.words.txt": {
+    "mtime": 1788381017.9494421,
+    "ast_hash": "4cb82ee10cdcd665a23f93efffd7861c",
+    "semantic_hash": "4cb82ee10cdcd665a23f93efffd7861c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/PRD-v1.md": {
+    "mtime": 1788290992.0955148,
+    "ast_hash": "44fbccd48000728855bf1152a5a558f4",
+    "semantic_hash": "44fbccd48000728855bf1152a5a558f4"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/REQUIREMENTS.md": {
+    "mtime": 1788365371.0760374,
+    "ast_hash": "ea0aa7a61f9057f7c555c27510d58b54",
+    "semantic_hash": "ea0aa7a61f9057f7c555c27510d58b54"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/SOLUTION.md": {
+    "mtime": 1788446157.1613116,
+    "ast_hash": "55279f7ea8b2e4e17ceed79ca3665c64",
+    "semantic_hash": "55279f7ea8b2e4e17ceed79ca3665c64"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0001-analysis-preconditions-and-answer-honesty.md": {
+    "mtime": 1788364176.7098002,
+    "ast_hash": "aae2da581316c382cb91f30f53820296",
+    "semantic_hash": "aae2da581316c382cb91f30f53820296"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0002-internal-representation-and-symbol-identity.md": {
+    "mtime": 1788364176.71038,
+    "ast_hash": "dc818dbd07f4ad8604f5bcede72c0455",
+    "semantic_hash": "dc818dbd07f4ad8604f5bcede72c0455"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0003-repository-structure-classification.md": {
+    "mtime": 1788132349.8447847,
+    "ast_hash": "3faca3476115ef122e18e6915d142dd5",
+    "semantic_hash": "3faca3476115ef122e18e6915d142dd5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0004-index-storage-and-invalidation.md": {
+    "mtime": 1788199871.0724797,
+    "ast_hash": "df4929270de3014fb7ad87a5dec2b0c6",
+    "semantic_hash": "df4929270de3014fb7ad87a5dec2b0c6"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0005-document-claims-and-verdicts.md": {
+    "mtime": 1788444660.2586915,
+    "ast_hash": "ee66a3417ddddaabdfd6b8f9ed3968e9",
+    "semantic_hash": "ee66a3417ddddaabdfd6b8f9ed3968e9"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0006-operation-set-and-renderer-contract.md": {
+    "mtime": 1788444653.9423618,
+    "ast_hash": "c728e0fcd2ca76dcf78a268a93083b9c",
+    "semantic_hash": "c728e0fcd2ca76dcf78a268a93083b9c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0007-cross-commit-continuity.md": {
+    "mtime": 1788171444.1115024,
+    "ast_hash": "8893e35d150144caa098e7d7d5b3f061",
+    "semantic_hash": "8893e35d150144caa098e7d7d5b3f061"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0008-baseline-retention.md": {
+    "mtime": 1788172529.189063,
+    "ast_hash": "1eb4a4a129359b29bf46f933e196d17f",
+    "semantic_hash": "1eb4a4a129359b29bf46f933e196d17f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0009-preflight-cost-and-signal-shapes.md": {
+    "mtime": 1788364176.7108448,
+    "ast_hash": "53793edf8379ab990bb6d42d020400b7",
+    "semantic_hash": "53793edf8379ab990bb6d42d020400b7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0010-configuration-file-and-what-may-enter-it.md": {
+    "mtime": 1788209605.1871657,
+    "ast_hash": "e906d33954ea2937fea71a4a789a64e5",
+    "semantic_hash": "e906d33954ea2937fea71a4a789a64e5"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0011-report-bug-payload.md": {
+    "mtime": 1788210336.1096256,
+    "ast_hash": "7f2d8c035360efe1b61ae005e780f9bd",
+    "semantic_hash": "7f2d8c035360efe1b61ae005e780f9bd"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0012-audience-and-the-fallow-boundary.md": {
+    "mtime": 1788290992.0966918,
+    "ast_hash": "b135f726b00c896c406fd49865342f51",
+    "semantic_hash": "b135f726b00c896c406fd49865342f51"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/adr/0013-drafting-a-document.md": {
+    "mtime": 1788447953.5766838,
+    "ast_hash": "b5bb0179539d50924cf1785fd419ea34",
+    "semantic_hash": "b5bb0179539d50924cf1785fd419ea34"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agent-guide.md": {
+    "mtime": 1788446157.1399276,
+    "ast_hash": "1bb13a86965191431fb22d62892cbf87",
+    "semantic_hash": "1bb13a86965191431fb22d62892cbf87"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agents/domain.md": {
+    "mtime": 1788107697.0500324,
+    "ast_hash": "2c8af411a24ee0cd50d37955acea2c5c",
+    "semantic_hash": "2c8af411a24ee0cd50d37955acea2c5c"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agents/issue-tracker.md": {
+    "mtime": 1788114109.897328,
+    "ast_hash": "e15e709bf072b11bf7cc6439dc6f688b",
+    "semantic_hash": "e15e709bf072b11bf7cc6439dc6f688b"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/agents/triage-labels.md": {
+    "mtime": 1788107688.1321473,
+    "ast_hash": "5c395c8403ff0b06342cd34b88763913",
+    "semantic_hash": "5c395c8403ff0b06342cd34b88763913"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/research/call-graph-backend-spike.md": {
+    "mtime": 1788189138.9726946,
+    "ast_hash": "4f701bcc9095b92901b41a4f00ff8722",
+    "semantic_hash": "4f701bcc9095b92901b41a4f00ff8722"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/research/capability-matrix.md": {
+    "mtime": 1788114131.6843507,
+    "ast_hash": "75745eba3a45f4efaa3ba88bd01fa215",
+    "semantic_hash": "75745eba3a45f4efaa3ba88bd01fa215"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/research/dependency-licences.md": {
+    "mtime": 1788114131.6678572,
+    "ast_hash": "a875ff4b2233653233a1f9c3ac1e2b99",
+    "semantic_hash": "a875ff4b2233653233a1f9c3ac1e2b99"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/research/edge-count-reconciliation.md": {
+    "mtime": 1788189138.9729307,
+    "ast_hash": "8b3f48dcae0687bf604461c2ea707bfe",
+    "semantic_hash": "8b3f48dcae0687bf604461c2ea707bfe"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/research/incremental-analysis.md": {
+    "mtime": 1788114131.658363,
+    "ast_hash": "25ee2bef0a290d983321239935902e1f",
+    "semantic_hash": "25ee2bef0a290d983321239935902e1f"
+  },
+  "/Users/magicspon/dev/projects/codedocs/docs/research/symbol-identity-prior-art.md": {
+    "mtime": 1788114131.658573,
+    "ast_hash": "6fc60a7a51c9acdde69d4293b5ccc174",
+    "semantic_hash": "6fc60a7a51c9acdde69d4293b5ccc174"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/cli/README.md": {
+    "mtime": 1788445949.1890965,
+    "ast_hash": "62529389613894293d738f15dcabd1b2",
+    "semantic_hash": "62529389613894293d738f15dcabd1b2"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/docs/README.md": {
+    "mtime": 1788352299.2643008,
+    "ast_hash": "9e0792b9a9de83b43f79d118f3b4c643",
+    "semantic_hash": "9e0792b9a9de83b43f79d118f3b4c643"
+  },
+  "/Users/magicspon/dev/projects/codedocs/packages/core/test/fixtures/docs/docs/payments.md": {
+    "mtime": 1788352299.2644844,
+    "ast_hash": "c423ac89f41f54650cf316601a8deef7",
+    "semantic_hash": "c423ac89f41f54650cf316601a8deef7"
+  },
+  "/Users/magicspon/dev/projects/codedocs/pnpm-workspace.yaml": {
+    "mtime": 1788107244.052631,
+    "ast_hash": "dd17e5e998d3c24138de11b2f784ee42",
+    "semantic_hash": "dd17e5e998d3c24138de11b2f784ee42"
   }
 }
