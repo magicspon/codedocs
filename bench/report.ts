@@ -151,10 +151,12 @@ function main(): void {
   // One reference for the whole report, so every delta in it means the same
   // thing.
   const reference = referenceArm(records)
-  printHeader(reference)
+  printHeader(reference, armsIn(records))
   for (const group of groups) printLevel(group, records, cases, reference)
   printTotals(records, reference)
-  console.log('')
+  console.log(
+    '\n  the write-up is `node bench/writeup.ts` → bench/RESULTS.md\n',
+  )
 }
 
 main()

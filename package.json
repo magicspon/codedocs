@@ -12,6 +12,7 @@
     "build": "pnpm --filter @codedocs/cli build",
     "bench": "node bench/run.ts",
     "bench:report": "node bench/report.ts",
+    "bench:writeup": "node bench/writeup.ts",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "oxlint",

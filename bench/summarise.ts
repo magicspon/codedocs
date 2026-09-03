@@ -12,11 +12,31 @@ import type { RunJudgement, RunRecord, Similarity } from './types.ts'
 export type Cell = {
   runs: number
   invalid: number
+  /**
+   * How many runs each reason threw out. Counting them is not enough on its
+   * own: "the agent left no patch" and "baseline reached for codedocs" say very
+   * different things about a set, and a single total hides which happened.
+   */
+  invalidReasons: Record<string, number>
   /** Runs whose patch changed every ground-truth file. */
   hits: number
   /** Runs whose patch named at least one ground-truth symbol. */
   symbolHits: number
+  /** Turns the loop took — one request to the model each. */
+  requests: number
   tokens: number
+  /**
+   * Every token the model read: the uncached remainder, the cache writes and
+   * the cache reads together.
+   *
+   * Deliberately not `usage.input_tokens` on its own, which counts only the
+   * remainder — a few dozen tokens against a million on a long loop. Printed
+   * beside a total it does not add up to, it reads as a broken table rather
+   * than as the narrow thing it is. As counted here, input plus output is the
+   * total.
+   */
+  tokensInput: number
+  tokensOutput: number
   toolCalls: number
   /** Tool calls that inspected the repository. */
   steps: number
@@ -77,6 +97,16 @@ export function judgeSpend(judgements: RunJudgement[]): number {
   return [...paid.values()].reduce((sum, cost) => sum + cost, 0)
 }
 
+/** Tallies why runs were thrown out, so a total never stands in for the reasons. */
+function reasonsIn(records: RunRecord[]): Record<string, number> {
+  const reasons: Record<string, number> = {}
+  for (const record of records) {
+    if (record.invalid === null) continue
+    reasons[record.invalid] = (reasons[record.invalid] ?? 0) + 1
+  }
+  return reasons
+}
+
 /** Folds the runs of one arm into the cell the report prints. Invalid runs are counted, not measured. */
 export function summarise(records: RunRecord[]): Cell {
   const valid = records.filter((r) => r.invalid === null)
@@ -84,10 +114,23 @@ export function summarise(records: RunRecord[]): Cell {
   return {
     runs: records.length,
     invalid: records.length - valid.length,
+    invalidReasons: reasonsIn(records),
     hits: valid.filter((r) => r.diff?.correct).length,
     symbolHits: valid.filter((r) => (r.diff?.symbolsHit.length ?? 0) > 0)
       .length,
+    requests: Math.round(median(valid.map((r) => r.metrics.turns))),
     tokens: Math.round(median(valid.map((r) => r.metrics.tokensTotal))),
+    tokensInput: Math.round(
+      median(
+        valid.map(
+          (r) =>
+            r.metrics.tokensInput +
+            r.metrics.tokensCacheRead +
+            r.metrics.tokensCacheCreation,
+        ),
+      ),
+    ),
+    tokensOutput: Math.round(median(valid.map((r) => r.metrics.tokensOutput))),
     toolCalls: Math.round(median(valid.map((r) => r.metrics.toolCalls))),
     steps: Math.round(median(valid.map((r) => r.metrics.explorationSteps))),
     files: Math.round(median(valid.map((r) => r.metrics.filesOpened.length))),

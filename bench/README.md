@@ -382,6 +382,37 @@ which is why the report counts the bill per judgement and not per run. Revising
 the rubric changes the key, so old grades are dropped rather than quietly mixed
 in with new ones.
 
+## The write-up
+
+[RESULTS.md](RESULTS.md) is what the benchmark exists to produce, and
+`node bench/writeup.ts` generates it from the records in `results/`. It is a
+derived artefact and is never edited by hand.
+
+Generated rather than written for one reason: there is no path through the
+generator for a number that was not measured. A write-up that appears only once
+the numbers are flattering is a brochure, and the way not to write one is to
+have no way to. The prose that frames the tables — how much the set on disk
+supports, how big the sample is — is computed from those same records, so a
+caveat cannot go stale while the data underneath it changes.
+
+**The two questions are reported in separate blocks**, never pooled:
+
+- **like for like** — one model, holding the tool and not holding it. The claim
+  codedocs is sold on.
+- **a cheaper model holding the tool** — a different model on each side. Its
+  deltas carry the models' difference as well as the toolset's, which is exactly
+  why averaging the two blocks together would answer neither.
+
+Each block gives every case a row per arm and the change between them, groups
+those into difficulty levels, and covers requests, input, output and total
+tokens, cost, tool calls, files, lines of source read, time, and correctness on
+both the exact and the judged reading. Runs that were thrown out are counted
+with their reasons rather than folded into a total.
+
+`report.ts` remains the quick console view. It reads every delta against a
+single reference arm, which is only sound while one model ran — past that it
+says so, and points here.
+
 ## Running it
 
 ```sh
@@ -392,6 +423,7 @@ node bench/run.ts --model claude-opus-5          # the default model for every a
 node bench/run.ts --arms baseline,codedocs@claude-haiku-4-5-20251001
 node bench/report.ts                 # the comparison table
 node bench/report.ts --json          # the same numbers, machine readable
+node bench/writeup.ts                # regenerate RESULTS.md from the records
 
 node bench/run.ts --judge            # judge the patches already on disk
 node bench/run.ts --no-judge         # measure now, grade later
@@ -438,34 +470,39 @@ running the freezer; nothing under `cases/` is edited by hand.
 One module per seam, so a change to scoring does not sit in the same file as the
 process spawning:
 
-| Module          | What it holds                                                  |
-| --------------- | -------------------------------------------------------------- |
-| `paths.ts`      | where the benchmark reads and writes                           |
-| `cases.ts`      | the frozen cases, read from `cases/*.json`                     |
-| `seeds/`        | the pool the freezer works from, one file per difficulty level |
-| `worktree.ts`   | a run's own checkout at its case's commit, and its removal     |
-| `arms.ts`       | an arm: parsing it, ordering it, and widening an older record  |
-| `warm.ts`       | building the index that worktree does not come with            |
-| `prompt.ts`     | the task, and the briefing the codedocs arm gets               |
-| `agent.ts`      | spawning `claude -p` and collecting its stream                 |
-| `tally.ts`      | what one run consumed: calls, steps, files, lines read, tokens |
-| `stream.ts`     | walking the stream and folding it into that tally              |
-| `diff.ts`       | taking the patch out of a worktree, and reading it back        |
-| `score.ts`      | scoring one patch against the fix, and deciding validity       |
-| `record.ts`     | the record one saved stream and patch imply                    |
-| `session.ts`    | running (case, arm, replicate) in a worktree, and filing it    |
-| `rescore.ts`    | rebuilding records from saved streams and patches              |
-| `preflight.ts`  | the ground-truth checks that run before any quota is spent     |
-| `upstream.ts`   | the fix the maintainers wrote, as the judge is shown it        |
-| `rubric.ts`     | the two scales, their definitions, and the blind prompt        |
-| `judge.ts`      | spawning a judge with no tools, and reading one verdict back   |
-| `judgement.ts`  | the judgement cache, the consensus and the agreement figure    |
-| `rejudge.ts`    | filling in the judgements the runs on disk are missing         |
-| `run.ts`        | the command line                                               |
-| `difficulty.ts` | the levels, and the heading the report prints for each         |
-| `summarise.ts`  | the medians one arm's runs become                              |
-| `table.ts`      | column widths, rows, and the delta beneath a non-reference arm |
-| `report.ts`     | reading `results/`, grouping by level, printing the comparison |
+| Module              | What it holds                                                  |
+| ------------------- | -------------------------------------------------------------- |
+| `paths.ts`          | where the benchmark reads and writes                           |
+| `cases.ts`          | the frozen cases, read from `cases/*.json`                     |
+| `seeds/`            | the pool the freezer works from, one file per difficulty level |
+| `worktree.ts`       | a run's own checkout at its case's commit, and its removal     |
+| `arms.ts`           | an arm: parsing it, ordering it, and widening an older record  |
+| `warm.ts`           | building the index that worktree does not come with            |
+| `prompt.ts`         | the task, and the briefing the codedocs arm gets               |
+| `agent.ts`          | spawning `claude -p` and collecting its stream                 |
+| `tally.ts`          | what one run consumed: calls, steps, files, lines read, tokens |
+| `stream.ts`         | walking the stream and folding it into that tally              |
+| `diff.ts`           | taking the patch out of a worktree, and reading it back        |
+| `score.ts`          | scoring one patch against the fix, and deciding validity       |
+| `record.ts`         | the record one saved stream and patch imply                    |
+| `session.ts`        | running (case, arm, replicate) in a worktree, and filing it    |
+| `rescore.ts`        | rebuilding records from saved streams and patches              |
+| `preflight.ts`      | the ground-truth checks that run before any quota is spent     |
+| `upstream.ts`       | the fix the maintainers wrote, as the judge is shown it        |
+| `rubric.ts`         | the two scales, their definitions, and the blind prompt        |
+| `judge.ts`          | spawning a judge with no tools, and reading one verdict back   |
+| `judgement.ts`      | the judgement cache, the consensus and the agreement figure    |
+| `rejudge.ts`        | filling in the judgements the runs on disk are missing         |
+| `run.ts`            | the command line                                               |
+| `difficulty.ts`     | the levels, and the heading the report prints for each         |
+| `summarise.ts`      | the medians one arm's runs become                              |
+| `comparisons.ts`    | the two questions — like-for-like, and across models           |
+| `table.ts`          | column widths, rows, and the delta beneath a non-reference arm |
+| `report.ts`         | reading `results/`, grouping by level, printing the comparison |
+| `markdown.ts`       | markdown tables, padded so the output is formatter-stable      |
+| `writeup-tables.ts` | the tables `RESULTS.md` is made of                             |
+| `writeup-prose.ts`  | the parts of `RESULTS.md` that are not numbers                 |
+| `writeup.ts`        | assembling `RESULTS.md` from the records on disk               |
 
 ## What this does not show
 

@@ -94,15 +94,28 @@ export function printArms(
 }
 
 /** The title and column header, which fix the widths every row then follows. */
-export function printHeader(reference: Arm | undefined): void {
+export function printHeader(reference: Arm | undefined, arms: Arm[]): void {
   console.log('\ncodedocs fix benchmark — microsoft/vscode, medians per cell')
   console.log('  cases grouped by difficulty level; see bench/DIFFICULTY.md')
   console.log(
     `  an arm is a toolset and a model; deltas are against ${reference?.id ?? 'the first arm'}`,
   )
   console.log(
-    '  hit and sym are exact, against the upstream fix; fix, sim and agree are a judge\n',
+    '  hit and sym are exact, against the upstream fix; fix, sim and agree are a judge',
   )
+  // One reference for the whole console table keeps every percentage in it
+  // answering the same question — but only while one model ran. Past that, a
+  // delta across models carries the models' difference as well as the tool's,
+  // and the two questions have to be read apart. The write-up does that.
+  const models = new Set(arms.map((arm) => arm.model))
+  if (models.size > 1) {
+    console.log(
+      '  NOTE: more than one model ran. A delta between arms on different models\n' +
+        '  carries both the toolset and the model. `node bench/writeup.ts` reports the\n' +
+        '  like-for-like and cross-model comparisons in separate blocks.',
+    )
+  }
+  console.log('')
   console.log(
     `  ${'case'.padEnd(10)}${'shape'.padEnd(15)}${'arm'.padEnd(22)}${pad('tokens', 9)}` +
       `${pad('calls', 7)}${pad('steps', 7)}${pad('files', 7)}${pad('src', 8)}` +
