@@ -23,7 +23,13 @@ location, and reports neither.
 
 ## What was run
 
-2 runs over 1 of the 12 cases defined, on `baseline@sonnet-5`, `codedocs@sonnet-5`, up to 1 replicate per cell. 2 counted; the rest are accounted for under [Discarded runs](#discarded-runs).
+2 runs over 1 of the 2 cases in the running set, on `baseline@sonnet-5`, `codedocs@sonnet-5`, up to 1 replicate per cell. 2 counted; the rest are accounted for under [Discarded runs](#discarded-runs).
+
+The running set is 2 of 12 researched cases. The pool is deliberately
+researched wider than it is run: each codedocs run indexes its own fresh
+worktree before the agent starts, which on vscode has taken between 223 and
+3,716 seconds, so cases are promoted into the running set as there is budget to
+run them. `bench/active.ts` says which are in it.
 
 Patches were judged by `claude-opus-5`, three readings each, blind to which arm wrote them — 2 of 2 valid runs.
 
@@ -33,15 +39,16 @@ fix, and was scored on the patch git took out of that tree. The method is
 
 ## What this set supports
 
-**Not a result yet.** The runs on disk are only 1 replicate deep and missing 11 of the 12 defined cases. What
-follows is the harness reporting what it has, which is what it is built to do,
-and it is published in this state deliberately: a report that only appears once
-the numbers are flattering is not a measurement.
+**Incomplete.** The runs on disk are only 1 replicate deep and missing 1 of the 2 cases in the running set. What follows is
+the harness reporting what it has, which is what it is built to do, and it is
+published in this state deliberately: a report that appears only once the
+numbers are flattering is not a measurement.
 
-Read the tables below as a demonstration that the pipeline runs end to end,
-not as evidence about codedocs. The claim under test needs every level populated
-at three replicates before any delta in it means anything, because the whole
-hypothesis is about how the delta _changes_ between levels.
+**No gradient.** These runs cover 1 of the 4 difficulty levels. The
+hypothesis is not "codedocs is cheaper" — it is that the saving _grows_ with
+structural complexity, and a set inside a single level cannot show a slope whichever way
+its numbers fall. Whatever the deltas below say, they are a reading of
+one level and not of the claim.
 
 ## How to read this
 
@@ -139,7 +146,7 @@ nothing here is evidence about codebases unlike vscode, and nothing here is
 evidence about a language other than TypeScript.
 
 **Sample size is 2 counted runs.** A full
-pool is 12 cases at three replicates per arm, which is enough to see
+pool is 2 cases at three replicates per arm, which is enough to see
 whether an effect is there and whether the spread swamps it. It is never enough
 for a confidence interval, and it is not a claim about any repository but this
 one.

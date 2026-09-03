@@ -29,6 +29,13 @@ export const WORKTREES: string = resolve(REPO_ROOT, 'repos/.worktrees')
 /** The CLI the codedocs arm is given. */
 export const CODEDOCS: string = resolve(REPO_ROOT, 'node_modules/.bin/codedocs')
 
+/**
+ * Every researched case, frozen. Which of them are actually run is `active.ts`:
+ * the pool is researched wide and run narrow, because each codedocs run pays
+ * for indexing a fresh worktree.
+ */
+export const PROSPECTS: string = join(BENCH, 'prospects')
+
 /** One JSON record and one raw stream per run land here. */
 export const RESULTS: string = join(BENCH, 'results')
 

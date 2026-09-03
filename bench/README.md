@@ -72,8 +72,24 @@ reference did not run in prints no delta rather than a misleading one.
 
 ## The cases
 
-Every case satisfies the same three conditions, each verified rather than
-assumed:
+**Prospects and the running set.** Every researched case is frozen into
+`prospects/`. Only the ones `active.ts` names are run, preflighted or reported
+on — `node bench/writeup.ts` counts the running set, not the pool.
+
+The split is about cost, not about quality. Each codedocs run indexes its own
+fresh worktree before the agent starts, and on vscode that has taken between
+223 and 3,716 seconds; a full pool at three replicates is dozens of hours of
+indexing, most of it spent rebuilding the same thing. So the pool is researched
+wide and run narrow, and prospects are promoted as there is budget to run them.
+
+The running set today is `#333230` and `#329610` — both level 1 controls, both
+cases where the file is handed over in the stack trace and codedocs should
+therefore buy little. Starting where the tool is least likely to look good is
+deliberate. The write-up says in its own words that a set inside one level
+cannot show the gradient the whole hypothesis is about.
+
+Every case, run or not, satisfies the same three conditions, each verified
+rather than assumed:
 
 1. **The tree under test is the tree the bug was reported against.** A case
    declares the commit immediately before its fix, and is run there, so the fix
@@ -86,20 +102,20 @@ assumed:
    would be handing over the answer. Every prompt here is the underlying user
    report, with only the issue-template HTML comments stripped.
 
-| Case                         | Level | Shape          | The report gives you                                      | Truth                                         |
-| ---------------------------- | ----- | -------------- | --------------------------------------------------------- | --------------------------------------------- |
-| [#333230](cases/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames        | `listView.ts`                                 |
-| [#329610](cases/329610.json) | 1     | `file-named`   | a stack landing inside the guilty function                | `chatAttachmentWidgets.ts`                    |
-| [#331914](cases/331914.json) | 1     | `file-named`   | the file, the method and the mechanism, from the reporter | `mainThreadEditorTabs.ts`                     |
-| [#331102](cases/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`              | `tunnelAgentHost.contribution.ts`             |
-| [#333085](cases/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for           | `automationTools.ts`                          |
-| [#327194](cases/327194.json) | 2     | `symbol-named` | a settings key, `extensions.allowed`, and a warning       | `extensionManagement.ts`                      |
-| [#332885](cases/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"     | `agentService.ts`, `copilotAgent.ts`          |
-| [#332146](cases/332146.json) | 3     | `symptom-only` | a keyboard covering a chat input on Android               | `mobileVisualViewport.ts`, `workbench.ts`     |
-| [#326185](cases/326185.json) | 3     | `symbol-named` | a settings key, `http.noProxy`, that is not what is read  | `copilotAgent.ts`, `copilotCliEnvironment.ts` |
-| [#331452](cases/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all  | `agentService.ts`                             |
-| [#329074](cases/329074.json) | 4     | `symbol-named` | dictation failing in a floating window                    | `code/electron-main/app.ts`                   |
-| [#329326](cases/329326.json) | 4     | `symptom-only` | a quick pick that closes itself when opened from a menu   | `contextview.ts`                              |
+| Case                             | Level | Shape          | The report gives you                                      | Truth                                         |
+| -------------------------------- | ----- | -------------- | --------------------------------------------------------- | --------------------------------------------- |
+| [#333230](prospects/333230.json) | 1     | `file-named`   | a stack trace naming `listView.ts` on eight frames        | `listView.ts`                                 |
+| [#329610](prospects/329610.json) | 1     | `file-named`   | a stack landing inside the guilty function                | `chatAttachmentWidgets.ts`                    |
+| [#331914](prospects/331914.json) | 1     | `file-named`   | the file, the method and the mechanism, from the reporter | `mainThreadEditorTabs.ts`                     |
+| [#331102](prospects/331102.json) | 2     | `symbol-named` | one private method name, `_resumeReconnects`              | `tunnelAgentHost.contribution.ts`             |
+| [#333085](prospects/333085.json) | 2     | `symptom-only` | an agent created an automation nobody asked for           | `automationTools.ts`                          |
+| [#327194](prospects/327194.json) | 2     | `symbol-named` | a settings key, `extensions.allowed`, and a warning       | `extensionManagement.ts`                      |
+| [#332885](prospects/332885.json) | 3     | `symbol-named` | log lines that stop after "reading provider metadata"     | `agentService.ts`, `copilotAgent.ts`          |
+| [#332146](prospects/332146.json) | 3     | `symptom-only` | a keyboard covering a chat input on Android               | `mobileVisualViewport.ts`, `workbench.ts`     |
+| [#326185](prospects/326185.json) | 3     | `symbol-named` | a settings key, `http.noProxy`, that is not what is read  | `copilotAgent.ts`, `copilotCliEnvironment.ts` |
+| [#331452](prospects/331452.json) | 4     | `symptom-only` | sessions vanished after an update; no identifiers at all  | `agentService.ts`                             |
+| [#329074](prospects/329074.json) | 4     | `symbol-named` | dictation failing in a floating window                    | `code/electron-main/app.ts`                   |
+| [#329326](prospects/329326.json) | 4     | `symptom-only` | a quick pick that closes itself when opened from a menu   | `contextview.ts`                              |
 
 Three cases per level, and the spread is the point. `#333230` and `#329610` are
 controls: the file is handed over on a plate, so codedocs should buy little, and
@@ -458,12 +474,16 @@ judgement are bought separately, so a judge that failed, a session that ran
 to date for the price of the judging alone. Readings already cached are reused,
 so it is safe to re-run.
 
-`freeze-cases.ts` regenerates `cases/*.json` from the pool in `seeds/`, fetching
-each issue body and each fix's parent commit from GitHub. It exists for
+`freeze-cases.ts` regenerates `prospects/*.json` from the pool in `seeds/`,
+fetching each issue body and each fix's parent commit from GitHub. It exists for
 provenance and does not need to run: the cases are frozen, so a run asks GitHub
 for nothing but the commits they name — never for an issue body someone may
 have edited since. Adding a case means adding a seed to `seeds/level<N>.ts` and
-running the freezer; nothing under `cases/` is edited by hand.
+running the freezer; nothing under `prospects/` is edited by hand.
+
+Freezing a case does not run it. `active.ts` names the running set, and putting
+a prospect in it is a deliberate act with hours of indexing attached — never a
+side effect of researching a good case.
 
 ## How the harness is laid out
 
@@ -473,7 +493,9 @@ process spawning:
 | Module              | What it holds                                                  |
 | ------------------- | -------------------------------------------------------------- |
 | `paths.ts`          | where the benchmark reads and writes                           |
-| `cases.ts`          | the frozen cases, read from `cases/*.json`                     |
+| `prospects/`        | every researched case, frozen                                  |
+| `active.ts`         | which prospects are in the running set, and why it is small    |
+| `cases.ts`          | the running set, and the whole pool behind it                  |
 | `seeds/`            | the pool the freezer works from, one file per difficulty level |
 | `worktree.ts`       | a run's own checkout at its case's commit, and its removal     |
 | `arms.ts`           | an arm: parsing it, ordering it, and widening an older record  |

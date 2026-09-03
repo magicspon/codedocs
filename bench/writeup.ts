@@ -20,13 +20,14 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { armsIn, readRecord } from './arms.ts'
 import { has } from './argv.ts'
-import { casesById } from './cases.ts'
+import { casesById, loadProspects } from './cases.ts'
 import {
   type Comparison,
   comparisonsIn,
   questionOf,
   runsOf,
 } from './comparisons.ts'
+import { LEVELS } from './difficulty.ts'
 import { heading, sections } from './markdown.ts'
 import { BENCH, RESULTS } from './paths.ts'
 import {
@@ -56,13 +57,28 @@ function loadRecords(): RunRecord[] {
 }
 
 /** What the set on disk covers, which the prose states before any table is read. */
-function coverageOf(records: RunRecord[], casesDefined: number): Coverage {
+function coverageOf(
+  records: RunRecord[],
+  cases: ReturnType<typeof casesById>,
+): Coverage {
   const judged = records.filter((r) => r.judgement)
+  const ran = new Set(records.map((r) => r.caseId))
+  // Levels the *run* cases fall in, not the levels the running set defines: a
+  // level whose case is promoted but not yet run supports nothing either.
+  const levels = new Set(
+    [...ran].flatMap((id) => {
+      const level = cases.get(id)?.difficulty.level
+      return level === undefined ? [] : [level]
+    }),
+  )
   return {
     runs: records.length,
     valid: records.filter((r) => r.invalid === null).length,
-    cases: new Set(records.map((r) => r.caseId)).size,
-    casesDefined,
+    cases: ran.size,
+    casesDefined: cases.size,
+    prospects: loadProspects().length,
+    levels: levels.size,
+    levelsDefined: LEVELS.length,
     replicates: records.reduce((most, r) => Math.max(most, r.replicate), 0),
     arms: armsIn(records),
     judgeModel: judged[0]?.judgement?.model ?? null,
@@ -115,7 +131,7 @@ function kindSection(
 /** The document. */
 function build(records: RunRecord[]): string {
   const cases = casesById()
-  const coverage = coverageOf(records, cases.size)
+  const coverage = coverageOf(records, cases)
   const comparisons = comparisonsIn(records)
   const of = (kind: Comparison['kind']): Comparison[] =>
     comparisons.filter((c) => c.kind === kind)

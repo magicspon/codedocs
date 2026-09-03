@@ -15,9 +15,14 @@ import type { Arm } from './types.ts'
 export type Coverage = {
   runs: number
   valid: number
-  /** Cases with at least one run behind them, and cases defined on disk. */
+  /** Cases with at least one run behind them, and cases in the running set. */
   cases: number
   casesDefined: number
+  /** Cases researched and frozen, run or not. The running set is a subset. */
+  prospects: number
+  /** Difficulty levels the run cases fall in, against the four the rubric defines. */
+  levels: number
+  levelsDefined: number
   /** The most replicates any one cell reached. */
   replicates: number
   arms: Arm[]
@@ -83,7 +88,12 @@ export function provenance(coverage: Coverage): string {
       : `Patches were judged by \`${coverage.judgeModel}\`, three readings each, blind to which arm wrote them — ${coverage.judged} of ${coverage.valid} valid runs.`
   return [
     heading(2, 'What was run'),
-    `${coverage.runs} run${coverage.runs === 1 ? '' : 's'} over ${coverage.cases} of the ${coverage.casesDefined} cases defined, on ${arms}, up to ${coverage.replicates} replicate${coverage.replicates === 1 ? '' : 's'} per cell. ${coverage.valid} counted; the rest are accounted for under [Discarded runs](#discarded-runs).`,
+    `${coverage.runs} run${coverage.runs === 1 ? '' : 's'} over ${coverage.cases} of the ${coverage.casesDefined} case${coverage.casesDefined === 1 ? '' : 's'} in the running set, on ${arms}, up to ${coverage.replicates} replicate${coverage.replicates === 1 ? '' : 's'} per cell. ${coverage.valid} counted; the rest are accounted for under [Discarded runs](#discarded-runs).`,
+    `The running set is ${coverage.casesDefined} of ${coverage.prospects} researched cases. The pool is deliberately
+researched wider than it is run: each codedocs run indexes its own fresh
+worktree before the agent starts, which on vscode has taken between 223 and
+3,716 seconds, so cases are promoted into the running set as there is budget to
+run them. \`bench/active.ts\` says which are in it.`,
     judge,
     `Every run read its own \`git worktree\` at the commit before its case's
 fix, and was scored on the patch git took out of that tree. The method is
@@ -100,35 +110,53 @@ fix, and was scored on the patch git took out of that tree. The method is
  * the caveat exists to prevent.
  */
 export function standing(coverage: Coverage): string {
-  const thin = coverage.replicates < 3 || coverage.cases < coverage.casesDefined
-  if (!thin) {
-    return [
-      heading(2, 'What this set supports'),
-      `Every defined case has been run to ${coverage.replicates} replicates. That is
-enough to see whether an effect is there and whether the spread swamps it. It is
-not enough for a confidence interval.`,
-    ].join('\n\n')
-  }
   const missing = coverage.casesDefined - coverage.cases
-  const parts = [
+  const gaps = [
     coverage.replicates < 3
       ? `only ${coverage.replicates} replicate${coverage.replicates === 1 ? '' : 's'} deep`
       : '',
     missing > 0
-      ? `missing ${missing} of the ${coverage.casesDefined} defined cases`
+      ? `missing ${missing} of the ${coverage.casesDefined} cases in the running set`
       : '',
   ].filter(Boolean)
+
+  // The gradient is the claim. A set inside one level can be complete, deep and
+  // still say nothing about it, so it is called out apart from the gaps.
+  const flat = coverage.levels < coverage.levelsDefined
+  const span =
+    coverage.levels === 1 ? 'a single level' : `${coverage.levels} levels`
+  const gradient = flat
+    ? `**No gradient.** These runs cover ${coverage.levels} of the ${coverage.levelsDefined} difficulty levels. The
+hypothesis is not "codedocs is cheaper" — it is that the saving _grows_ with
+structural complexity, and a set inside ${span} cannot show a slope whichever way
+its numbers fall. Whatever the deltas below say, they are a reading of
+${coverage.levels === 1 ? 'one level' : 'part of the range'} and not of the claim.`
+    : ''
+
+  const header = heading(2, 'What this set supports')
+  if (gaps.length === 0 && !flat) {
+    return [
+      header,
+      `Every case in the running set has been run to ${coverage.replicates} replicates, across all
+${coverage.levelsDefined} difficulty levels. That is enough to see whether an effect is there,
+whether it grows with complexity, and whether the spread swamps either. It is
+not enough for a confidence interval.`,
+    ].join('\n\n')
+  }
   return [
-    heading(2, 'What this set supports'),
-    `**Not a result yet.** The runs on disk are ${parts.join(' and ')}. What
-follows is the harness reporting what it has, which is what it is built to do,
-and it is published in this state deliberately: a report that only appears once
-the numbers are flattering is not a measurement.`,
-    `Read the tables below as a demonstration that the pipeline runs end to end,
-not as evidence about codedocs. The claim under test needs every level populated
-at three replicates before any delta in it means anything, because the whole
-hypothesis is about how the delta _changes_ between levels.`,
-  ].join('\n\n')
+    header,
+    gaps.length > 0
+      ? `**Incomplete.** The runs on disk are ${gaps.join(' and ')}. What follows is
+the harness reporting what it has, which is what it is built to do, and it is
+published in this state deliberately: a report that appears only once the
+numbers are flattering is not a measurement.`
+      : `**Complete, and still narrow.** Every case in the running set has been run
+to ${coverage.replicates} replicates. That is the set doing everything it can; it is not the
+set the claim needs.`,
+    gradient,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
 }
 
 /** The limits that hold however much is run. */
