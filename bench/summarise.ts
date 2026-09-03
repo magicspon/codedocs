@@ -18,6 +18,18 @@ export type Cell = {
    * different things about a set, and a single total hides which happened.
    */
   invalidReasons: Record<string, number>
+  /**
+   * Runs of this arm that called codedocs at all, over the runs where that was
+   * recorded.
+   *
+   * Counted over every run rather than only the counted ones, because the runs
+   * it describes are exactly the ones thrown out. A codedocs run that never
+   * reached for the tool is discarded — counting it would put a run with no
+   * tool in it on the tool's side — and the discard alone loses the finding
+   * that on an easy case the agent did not need the tool. Take-up keeps it.
+   */
+  tookUp: number
+  takeUpKnown: number
   /** Runs whose patch changed every ground-truth file. */
   hits: number
   /** Runs whose patch named at least one ground-truth symbol. */
@@ -122,10 +134,15 @@ function reasonsIn(records: RunRecord[]): Record<string, number> {
 export function summarise(records: RunRecord[]): Cell {
   const valid = records.filter((r) => r.invalid === null)
   const judged = valid.flatMap((r) => (r.judgement ? [r.judgement] : []))
+  // Only runs that recorded the flag: a record written before take-up was
+  // measured is silent about it, and guessing would invent a rate.
+  const takeUp = records.filter((r) => r.usedCodedocs !== undefined)
   return {
     runs: records.length,
     invalid: records.length - valid.length,
     invalidReasons: reasonsIn(records),
+    tookUp: takeUp.filter((r) => r.usedCodedocs).length,
+    takeUpKnown: takeUp.length,
     hits: valid.filter((r) => r.diff?.correct).length,
     symbolHits: valid.filter((r) => (r.diff?.symbolsHit.length ?? 0) > 0)
       .length,

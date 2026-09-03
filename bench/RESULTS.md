@@ -107,6 +107,8 @@ _one model, with the tool and without._
 | judged to fix the bug           | 2/2               | 1/1               |        |
 | closeness to the upstream fix   | same-area         | same-change       |        |
 
+_**Not like for like.** Pooled over 2 cases, `baseline@sonnet-5` counts `329610` and `333230` and `codedocs@sonnet-5` counts `333230` alone. The change column above compares different sets of cases; see [Tool take-up](#tool-take-up) for why._
+
 #### Level 1 — local — the report points at the code (2 cases)
 
 | case   | arm                               | req   | in        | out    | tokens    | cost   | calls | files | lines | sec   | hit | fix | sim            |
@@ -121,6 +123,26 @@ _one model, with the tool and without._
 |        | codedocs@sonnet-5 _(1 discarded)_ | 41    | 3,004,371 | 37,958 | 3,042,329 | $1.401 | 40    | 6     | 1,249 | 668   | 1/1 | 1/1 | same-change    |
 |        | **change**                        | +141% | +282%     | +243%  | +281%     | +203%  | +150% | +200% | +193% | +388% |     |     |                |
 
+## Tool take-up
+
+How often each arm reached for codedocs at all. On the codedocs arm this is
+take-up, and a rate below 1 is a result rather than a hole: the agent held the
+tool and did not want it, which on a level 1 control is the _correct_ move. On
+the baseline arm the same figure is contamination, and anything above 0 is a run
+that was never the arm it claimed to be.
+
+This table exists because the discard rule below has a bias in it that runs
+towards codedocs — the runs it throws out are the ones where the agent judged
+the tool unnecessary, so the runs that survive are the ones where it judged the
+tool worth using. Reporting take-up does not remove that bias. It makes the
+thing the discard was hiding into a measurement, and it is the figure to read
+before any pooled delta.
+
+| arm               | level | runs | called codedocs |
+| ----------------- | ----- | ---- | --------------- |
+| baseline@sonnet-5 | L1    | 2    | 0/2             |
+| codedocs@sonnet-5 | L1    | 2    | 1/2             |
+
 ## Discarded runs
 
 A run is thrown out, never silently counted, when the baseline reached for
@@ -128,9 +150,9 @@ codedocs anyway, when the codedocs arm never called it, or when the agent left
 no patch at all. Each of those means the comparison would have stopped being
 between the two things it claims to compare.
 
-| arm               | reason                             | runs | out of |
-| ----------------- | ---------------------------------- | ---- | ------ |
-| codedocs@sonnet-5 | codedocs arm never called codedocs | 1    | 2      |
+| arm               | level | reason                             | runs | out of |
+| ----------------- | ----- | ---------------------------------- | ---- | ------ |
+| codedocs@sonnet-5 | L1    | codedocs arm never called codedocs | 1    | 2      |
 
 ## The judge
 
@@ -187,9 +209,18 @@ discarded. The surviving codedocs runs are therefore not a random sample of
 codedocs runs: they are the ones where the agent judged the tool worth using.
 That biases the comparison **towards** codedocs on any pooled figure, and it
 bites hardest on the easy cases, which are the ones meant to keep the benchmark
-honest. Read the discard counts above as part of the result, not as
-housekeeping: an arm that could not produce a countable run on a case has told
-you something about that case.
+honest.
+
+**The bias is reported, not repaired.** Nothing here corrects for it, and
+two things stop it being invisible. [Tool take-up](#tool-take-up) prints how
+often each arm reached for codedocs at all, per level, which turns the discard
+from missing data into a measurement and answers a question this benchmark
+otherwise cannot ask: when does an agent reach for structural facts? And every
+pooled figure whose two arms do not rest on the same cases says so directly
+under the number. Pooling only the cases both arms survived was the alternative
+and would have been worse — it makes cases disappear silently, and on this set
+it would delete a level 1 control for doing exactly what a control is there to
+do.
 
 **One judge, one rubric.** A second judge model would say how much of a
 grade is the rubric and how much is the reader. Nothing here has asked one.

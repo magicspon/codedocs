@@ -206,9 +206,17 @@ discarded. The surviving codedocs runs are therefore not a random sample of
 codedocs runs: they are the ones where the agent judged the tool worth using.
 That biases the comparison **towards** codedocs on any pooled figure, and it
 bites hardest on the easy cases, which are the ones meant to keep the benchmark
-honest. Read the discard counts above as part of the result, not as
-housekeeping: an arm that could not produce a countable run on a case has told
-you something about that case.`,
+honest.`,
+    `**The bias is reported, not repaired.** Nothing here corrects for it, and
+two things stop it being invisible. [Tool take-up](#tool-take-up) prints how
+often each arm reached for codedocs at all, per level, which turns the discard
+from missing data into a measurement and answers a question this benchmark
+otherwise cannot ask: when does an agent reach for structural facts? And every
+pooled figure whose two arms do not rest on the same cases says so directly
+under the number. Pooling only the cases both arms survived was the alternative
+and would have been worse — it makes cases disappear silently, and on this set
+it would delete a level 1 control for doing exactly what a control is there to
+do.`,
     `**One judge, one rubric.** A second judge model would say how much of a
 grade is the rubric and how much is the reader. Nothing here has asked one.`,
   ].join('\n\n')
