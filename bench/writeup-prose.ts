@@ -90,10 +90,11 @@ export function provenance(coverage: Coverage): string {
     heading(2, 'What was run'),
     `${coverage.runs} run${coverage.runs === 1 ? '' : 's'} over ${coverage.cases} of the ${coverage.casesDefined} case${coverage.casesDefined === 1 ? '' : 's'} in the running set, on ${arms}, up to ${coverage.replicates} replicate${coverage.replicates === 1 ? '' : 's'} per cell. ${coverage.valid} counted; the rest are accounted for under [Discarded runs](#discarded-runs).`,
     `The running set is ${coverage.casesDefined} of ${coverage.prospects} researched cases. The pool is deliberately
-researched wider than it is run: each codedocs run indexes its own fresh
-worktree before the agent starts, which on vscode has taken between 223 and
-3,716 seconds, so cases are promoted into the running set as there is budget to
-run them. \`bench/active.ts\` says which are in it.`,
+researched wider than it is run: every codedocs run needs an index of its own
+fresh worktree, and building one on vscode is minutes with a long tail. The
+harness builds each commit once and restores it thereafter, so a case costs one
+build however many times it is run — but a case still has to be promoted
+deliberately, and \`bench/active.ts\` says which have been.`,
     judge,
     `Every run read its own \`git worktree\` at the commit before its case's
 fix, and was scored on the patch git took out of that tree. The method is
@@ -181,16 +182,33 @@ whether an effect is there and whether the spread swamps it. It is never enough
 for a confidence interval, and it is not a claim about any repository but this
 one.`,
     `**The index build is amortized out, and it is not free.** A fresh worktree
-has no index, so one is built before every codedocs run, in a process no metric
-reads. It has taken anywhere from 223 seconds to 3,716 seconds. A single-question
-user never recovers that; a working session does, several times over. The
-per-run numbers assume the session.`,
+has no index, so one has to be there before every codedocs run, in a process no
+metric reads. Five builds have been timed: four between 186 and 223
+seconds, and one at 3,716 that is unexplained — treat it as minutes with a long
+tail rather than as a constant. The harness now builds each commit
+once and restores it into later worktrees, so what a run actually pays is the
+restore; both numbers are printed beside the verdict, named, so neither can be
+quoted as the other. A single-question user recovers none of the build; a
+working session recovers it several times over, and the per-run numbers assume
+the session.`,
     `**Correctness above the file level is one model's opinion.** \`hit\` is
 exact. \`fix\` and \`sim\` are not, and cannot be — a correct fix has many valid
 shapes. The judge is blind to the arm, has no tools, and reads each patch three
 times, and every grade's reasoning is on disk to be argued with. Where the
 agreement figure is below 1.00 the judge disagreed with itself, and the honest
 reading is that the case is arguable rather than that the grade is wrong.`,
+    `**Discarding unused-tool runs selects for the cases the tool suits.** A
+codedocs run that never called codedocs is thrown out, because counting it would
+put a run with no tool in it on the tool's side of the comparison. But on an easy
+case not reaching for the tool is the _right_ move — the stack trace names the
+file, so the agent opens it and fixes it — and those runs are exactly the ones
+discarded. The surviving codedocs runs are therefore not a random sample of
+codedocs runs: they are the ones where the agent judged the tool worth using.
+That biases the comparison **towards** codedocs on any pooled figure, and it
+bites hardest on the easy cases, which are the ones meant to keep the benchmark
+honest. Read the discard counts above as part of the result, not as
+housekeeping: an arm that could not produce a countable run on a case has told
+you something about that case.`,
     `**One judge, one rubric.** A second judge model would say how much of a
 grade is the rubric and how much is the reader. Nothing here has asked one.`,
   ].join('\n\n')

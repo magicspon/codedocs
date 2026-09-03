@@ -62,6 +62,17 @@ export type Cell = {
   judgeCostUsd: number
 }
 
+/**
+ * Runs behind a cell's numbers — the ones that counted.
+ *
+ * A cell whose every run was discarded has no numbers, only zeros, and those
+ * zeros are not measurements. Nothing may render or compare against a cell this
+ * returns 0 for.
+ */
+export function counted(cell: Cell): number {
+  return cell.runs - cell.invalid
+}
+
 /** The middle value, averaging the two middles on an even count. */
 function median(values: number[]): number {
   if (values.length === 0) return 0

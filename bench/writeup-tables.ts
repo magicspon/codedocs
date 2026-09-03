@@ -10,7 +10,7 @@
 import { type Comparison, runsOf } from './comparisons.ts'
 import { levelName, LEVELS, levelOf } from './difficulty.ts'
 import { change, num, ratio, type Row, table, usd } from './markdown.ts'
-import { type Cell, summarise } from './summarise.ts'
+import { type Cell, counted, summarise } from './summarise.ts'
 import type { BenchCase, RunRecord } from './types.ts'
 
 /** One number the two arms are compared on, and how it reads. */
@@ -58,9 +58,8 @@ const METRICS: Metric[] = [
 
 /** The correctness columns, which are ratios and grades rather than costs. */
 function correctnessOf(cell: Cell): string[] {
-  const counted = cell.runs - cell.invalid
   return [
-    ratio(cell.hits, counted),
+    ratio(cell.hits, counted(cell)),
     ratio(cell.fixes, cell.judged),
     cell.similarity ?? '—',
   ]
@@ -78,9 +77,20 @@ const WIDE_HEADERS = [
 
 /** One arm's row in the per-case table. */
 function armRow(label: string, arm: string, cell: Cell): Row {
+  // Every run discarded leaves zeros, and zeros are not measurements: printed
+  // as numbers they read as a run that cost nothing.
+  const note = cell.invalid > 0 ? ` _(${cell.invalid} discarded)_` : ''
+  if (counted(cell) === 0) {
+    return [
+      label,
+      `${arm}${note}`,
+      ...METRICS.map(() => '—'),
+      ...correctnessOf(cell),
+    ]
+  }
   return [
     label,
-    arm,
+    `${arm}${note}`,
     ...METRICS.map((metric) => metric.show(metric.of(cell))),
     ...correctnessOf(cell),
   ]
@@ -94,11 +104,15 @@ function armRow(label: string, arm: string, cell: Cell): Row {
  * not a quantity a percentage describes honestly.
  */
 function changeRow(reference: Cell, contender: Cell): Row {
+  // A change needs measurements on both sides. Against a cell whose runs were
+  // all discarded every column would read -100%, which says the arm spent
+  // nothing rather than that it produced nothing to compare.
+  const comparable = counted(reference) > 0 && counted(contender) > 0
   return [
     '',
     '**change**',
     ...METRICS.map((metric) =>
-      change(metric.of(reference), metric.of(contender)),
+      comparable ? change(metric.of(reference), metric.of(contender)) : '—',
     ),
     '',
     '',
@@ -187,11 +201,15 @@ export function headlineTable(
   const reference = summarise(runsOf(records, comparison.reference))
   const contender = summarise(runsOf(records, comparison.contender))
   if (reference.runs === 0 || contender.runs === 0) return ''
+  // Same rule as the per-case rows: no measurement on one side, no change.
+  const comparable = counted(reference) > 0 && counted(contender) > 0
+  const show = (metric: Metric, cell: Cell): string =>
+    counted(cell) === 0 ? '—' : metric.show(metric.of(cell))
   const costs = METRICS.map((metric) => [
     metric.label,
-    metric.show(metric.of(reference)),
-    metric.show(metric.of(contender)),
-    change(metric.of(reference), metric.of(contender)),
+    show(metric, reference),
+    show(metric, contender),
+    comparable ? change(metric.of(reference), metric.of(contender)) : '—',
   ])
   const [refHit, refFix, refSim] = correctnessOf(reference)
   const [armHit, armFix, armSim] = correctnessOf(contender)

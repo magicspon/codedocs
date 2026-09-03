@@ -26,6 +26,15 @@ export const TARGET: string = resolve(REPO_ROOT, 'repos/vscode')
  */
 export const WORKTREES: string = resolve(REPO_ROOT, 'repos/.worktrees')
 
+/**
+ * Built indexes, one per base commit, kept between runs.
+ *
+ * Under `repos/` for the same two reasons the worktrees are: it is git-ignored,
+ * and codedocs' own project discovery skips it, so a stored vscode index does
+ * not become part of this repository's.
+ */
+export const INDEX_CACHE: string = resolve(REPO_ROOT, 'repos/.index-cache')
+
 /** The CLI the codedocs arm is given. */
 export const CODEDOCS: string = resolve(REPO_ROOT, 'node_modules/.bin/codedocs')
 

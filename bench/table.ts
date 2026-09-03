@@ -7,7 +7,13 @@
  */
 
 import { armsIn } from './arms.ts'
-import { delta, judgeSpend, summarise, type Cell } from './summarise.ts'
+import {
+  counted,
+  delta,
+  judgeSpend,
+  summarise,
+  type Cell,
+} from './summarise.ts'
 import type { Arm, RunRecord, Similarity } from './types.ts'
 
 /** The width of the table body, which every rule spans. */
@@ -31,15 +37,25 @@ const SHORT: Record<Similarity, string> = {
 /** One arm's row. The label and shape columns print on the first arm only. */
 function armRow(label: string, shape: string, arm: string, cell: Cell): string {
   const invalid = cell.invalid > 0 ? ` (${cell.invalid} invalid)` : ''
-  const counted = cell.runs - cell.invalid
+  const runs = counted(cell)
+  const lead = `  ${label.padEnd(10)}${shape.padEnd(15)}${arm.padEnd(22)}`
+  // Every run discarded means there is nothing behind the numbers. Printing the
+  // zeros would read as a run that cost nothing rather than as a run that never
+  // counted.
+  if (runs === 0) {
+    const none = [9, 7, 7, 7, 8, 6, 6, 6, 7, 7, 6]
+      .map((width) => pad('—', width))
+      .join('')
+    return `${lead}${none}${invalid}`
+  }
   // `fix` reads against the runs a judge actually read, not against the runs
   // that counted: an unjudged run is missing evidence, not a failed fix.
   const fix = cell.judged === 0 ? '—' : `${cell.fixes}/${cell.judged}`
   return (
-    `  ${label.padEnd(10)}${shape.padEnd(15)}${arm.padEnd(22)}` +
+    `${lead}` +
     `${pad(cell.tokens.toLocaleString(), 9)}${pad(cell.toolCalls, 7)}${pad(cell.steps, 7)}` +
     `${pad(cell.files, 7)}${pad(cell.sourceLines.toLocaleString(), 8)}${pad(cell.seconds, 6)}` +
-    `${pad(`${cell.hits}/${counted}`, 6)}${pad(`${cell.symbolHits}/${counted}`, 6)}` +
+    `${pad(`${cell.hits}/${runs}`, 6)}${pad(`${cell.symbolHits}/${runs}`, 6)}` +
     `${pad(fix, 7)}${pad(cell.similarity ? SHORT[cell.similarity] : '—', 7)}` +
     `${pad(cell.judged === 0 ? '—' : cell.agreement.toFixed(2), 6)}${invalid}`
   )
@@ -88,7 +104,11 @@ export function printArms(
   for (const [id, cell] of cells) {
     console.log(armRow(first ? label : '', first ? shape : '', id, cell))
     first = false
-    if (base && id !== reference?.id) console.log(deltaRow(base, cell))
+    // A delta needs measurements on both sides. Against a cell whose runs were
+    // all discarded every column would read -100%, which says the arm spent
+    // nothing rather than that it produced nothing to compare.
+    if (base && id !== reference?.id && counted(base) > 0 && counted(cell) > 0)
+      console.log(deltaRow(base, cell))
   }
   return cells
 }

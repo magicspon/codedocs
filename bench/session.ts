@@ -20,7 +20,7 @@ import { buildPrompt } from './prompt.ts'
 import { RateLimited, recordFrom, verdictLine } from './record.ts'
 import { parseStream } from './stream.ts'
 import type { Arm, BenchCase, RunRecord } from './types.ts'
-import { warmIndex } from './warm.ts'
+import { warmIndex, type Warmed } from './warm.ts'
 import { createWorktree } from './worktree.ts'
 
 /** The path stem both a run's record and its raw stream are written under. */
@@ -44,7 +44,8 @@ type Outcome = {
   lines: string[]
   /** The patch the run left in its worktree, as unified diff text. */
   patch: string
-  indexSeconds: number
+  /** What giving the worktree an index cost, and whether it came from the cache. */
+  index: Warmed | null
 }
 
 /**
@@ -66,14 +67,16 @@ async function runInWorktree(
   )
   try {
     // Only the arm that is told about the index pays for one being there.
-    const indexSeconds =
-      arm.toolset === 'codedocs' ? warmIndex(worktree.root) : 0
+    const index =
+      arm.toolset === 'codedocs'
+        ? warmIndex(worktree.root, bench.base.commit)
+        : null
     const prompt = buildPrompt(bench, arm, worktree.root)
     const lines = await runAgent(prompt, arm.model, worktree.root)
     return {
       lines,
       patch: captureDiff(worktree.root, bench.base.commit),
-      indexSeconds,
+      index,
     }
   } finally {
     worktree.remove()
@@ -144,9 +147,14 @@ async function fileRun(
     `${JSON.stringify(record, null, '\t')}\n`,
     'utf8',
   )
-  // The index build is printed beside the verdict, not folded into it: it is
-  // the harness's cost, and no part of what the run is measured on.
-  const index = outcome.indexSeconds ? `  (index ${outcome.indexSeconds}s)` : ''
+  // The index is printed beside the verdict, not folded into it: it is the
+  // harness's cost, and no part of what the run is measured on. Built or
+  // restored is named, because the two differ by orders of magnitude and a
+  // number without its provenance invites the wrong one to be quoted.
+  const warmed = outcome.index
+  const index = warmed
+    ? `  (index ${warmed.fromCache ? 'restored' : 'built'} ${warmed.seconds}s)`
+    : ''
   console.log(`${verdictLine(record)}${index}`)
 }
 

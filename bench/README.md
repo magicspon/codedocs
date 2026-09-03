@@ -62,7 +62,18 @@ an agent, and hiding it would flatter the tool.
 
 A run is thrown out, not silently counted, when the baseline reaches for
 `codedocs` anyway, when the codedocs arm never calls it, or when the agent left
-no patch at all. The report prints how many were thrown out.
+no patch at all. The report prints how many were thrown out, and why.
+
+**That third rule has a bias in it, and it runs towards the tool.** On an easy
+case the right move is not to reach for codedocs — the stack trace names the
+file, so the agent opens it and fixes it — and that run is then discarded. So
+the surviving codedocs runs are not a random sample of codedocs runs: they are
+the ones where the agent judged the tool worth using. The alternative is worse,
+because counting a run with no tool in it as evidence about the tool measures
+nothing at all, but the effect is real and it is strongest on exactly the
+control cases that exist to keep the benchmark honest. `#329610` is the first
+case to show it: both arms grepped, opened one file and fixed it, and the
+codedocs run was discarded for never calling codedocs.
 
 Every delta in the report is read against one **reference arm**, named under the
 table's header: the baseline arm with the most runs behind it — a run with no
@@ -76,11 +87,12 @@ reference did not run in prints no delta rather than a misleading one.
 `prospects/`. Only the ones `active.ts` names are run, preflighted or reported
 on — `node bench/writeup.ts` counts the running set, not the pool.
 
-The split is about cost, not about quality. Each codedocs run indexes its own
-fresh worktree before the agent starts, and on vscode that has taken between
-223 and 3,716 seconds; a full pool at three replicates is dozens of hours of
-indexing, most of it spent rebuilding the same thing. So the pool is researched
-wide and run narrow, and prospects are promoted as there is budget to run them.
+The split is about cost, not about quality. Every codedocs run needs an index of
+its own fresh worktree, and building one on vscode is minutes with a long tail.
+The [index cache](#the-index-cache) means a case costs one build however many
+times it is run — but that is still a cost per case, so the pool is researched
+wide and run narrow, and prospects are promoted as there is budget to index and
+run them.
 
 The running set today is `#333230` and `#329610` — both level 1 controls, both
 cases where the file is handed over in the stack trace and codedocs should
@@ -157,12 +169,44 @@ asked for one, so the harness fetches each case's fix at depth 2 — the fix, an
 the commit under it — before the first run. That is the only network a benchmark
 run touches, and what it asks for are immutable hashes.
 
-A fresh worktree has no index either, so the codedocs arm's index is built
-inside it before the agent starts, in a process the benchmark is not measuring —
-where the single pinned checkout used to be warmed. That is the price of the
-isolation, and it is not a stable number: 223 seconds on the pinned checkout,
-3,716 seconds on the first fix-task run. It is printed beside each verdict so
-what the harness spent stays visible, and no metric reads it.
+### The index cache
+
+A fresh worktree has no index either, so the codedocs arm's has to be put there
+before the agent starts, in a process the benchmark is not measuring.
+
+Building it every time is the same work over and over. An index is a pure
+function of the tree it describes, and every replicate of a case reads the same
+commit — so the build happens **once per commit**, into
+`repos/.index-cache/<commit>/`, and later runs at that commit copy it in.
+
+```sh
+node bench/run.ts --warm     # build the cache for the running set, run no agent
+```
+
+This is not the state leak the per-run worktree exists to prevent. A cached
+index is only ever taken from a tree no agent has touched — the warm step runs
+before the agent starts and copies out the moment the build finishes — so what
+a later run receives is what a fresh build at that commit would have produced,
+and never anything an earlier run wrote.
+
+Restoring is not free either, and the reason is worth knowing: `git worktree
+add` writes every file with a new mtime, so every file's stat signature differs
+from the one the index recorded and codedocs hashes each to find the content
+identical. That pass costs seconds where a build costs minutes, and it happens
+in the warm step, so the run under test never pays it.
+
+Both numbers are printed beside the verdict and named — `index built 213s` or
+`index restored 5s` — because they differ by orders of magnitude and an
+unlabelled number invites the wrong one to be quoted. No metric reads either.
+
+The cache trades disk for time: one commit's index of vscode is 254 MB, so the
+full twelve-case pool would be around 3 GB. It lives under `repos/`, which is
+git-ignored, and deleting it costs only the rebuild.
+
+`node bench/verify-cache.ts` checks the trade is real — that each case restores
+rather than silently rebuilding, and that the restored index still answers for a
+ground-truth symbol. A cache that is present but stale would otherwise look
+exactly like a repository in which codedocs can find nothing.
 
 The figures quoted further down come from the run set measured on the earlier
 localization task, when the agent named files instead of changing them and every
@@ -441,6 +485,7 @@ node bench/report.ts                 # the comparison table
 node bench/report.ts --json          # the same numbers, machine readable
 node bench/writeup.ts                # regenerate RESULTS.md from the records
 
+node bench/run.ts --warm             # build the index cache, run no agent
 node bench/run.ts --judge            # judge the patches already on disk
 node bench/run.ts --no-judge         # measure now, grade later
 node bench/run.ts --judge-replicates 1           # one reading instead of three
@@ -499,7 +544,9 @@ process spawning:
 | `seeds/`            | the pool the freezer works from, one file per difficulty level |
 | `worktree.ts`       | a run's own checkout at its case's commit, and its removal     |
 | `arms.ts`           | an arm: parsing it, ordering it, and widening an older record  |
-| `warm.ts`           | building the index that worktree does not come with            |
+| `warm.ts`           | the index cache: build once per commit, restore into each run  |
+| `prewarm.ts`        | filling that cache ahead of any run                            |
+| `verify-cache.ts`   | proving a restored index is one a build would have produced    |
 | `prompt.ts`         | the task, and the briefing the codedocs arm gets               |
 | `agent.ts`          | spawning `claude -p` and collecting its stream                 |
 | `tally.ts`          | what one run consumed: calls, steps, files, lines read, tokens |
@@ -534,16 +581,16 @@ process spawning:
   therefore missing. Installing would cost several gigabytes and make the
   benchmark far harder to reproduce. Read the result as a floor: typed fidelity
   can add edges, not remove them.
-- **The index build is amortized out, and it is not free.** A fresh worktree
-  has no index, so one is built before every codedocs run: 12,519 files, 527k
-  symbols and 728k call edges, in a process no metric reads. It took 223 seconds
-  on the pinned checkout and 3,716 seconds on the first fix-task run, so treat
-  it as minutes to an hour rather than as a constant. Each question the run then asks costs about four seconds. Carrying one
-  run's index into the next would cut that, and is deliberately not done — an
-  index a run built is state the next run would inherit, which is what the
-  per-run worktree exists to prevent. A single-question user never recovers the
-  build; a working session does, several times over. The per-run numbers assume
-  the session, and the build cost is stated here rather than buried in them.
+- **The index build is amortized out, and it is not free.** Indexing vscode is
+  12,519 files, 527k symbols and 728k call edges, in a process no metric reads.
+  Five builds have been timed: four between 186 and 223 seconds, and one at
+  3,716. That outlier is unexplained, so treat the cost as minutes with a long
+  tail rather than as a constant, and the restore that replaces it as 5. The harness builds each commit once and restores it into
+  later worktrees, so what a run pays is the restore, and each question it then
+  asks costs about four seconds. A single-question user recovers none of the
+  build; a working session recovers it several times over. The per-run numbers
+  assume the session, and the build cost is stated here rather than buried in
+  them.
 - **One repository, one task shape, three replicates.** Enough to see whether an
   effect is there and whether the spread swamps it. Not enough for a confidence
   interval, and not evidence about repositories unlike vscode. An arm carries its

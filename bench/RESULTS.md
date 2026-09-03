@@ -23,15 +23,16 @@ location, and reports neither.
 
 ## What was run
 
-2 runs over 1 of the 2 cases in the running set, on `baseline@sonnet-5`, `codedocs@sonnet-5`, up to 1 replicate per cell. 2 counted; the rest are accounted for under [Discarded runs](#discarded-runs).
+4 runs over 2 of the 2 cases in the running set, on `baseline@sonnet-5`, `codedocs@sonnet-5`, up to 1 replicate per cell. 3 counted; the rest are accounted for under [Discarded runs](#discarded-runs).
 
 The running set is 2 of 12 researched cases. The pool is deliberately
-researched wider than it is run: each codedocs run indexes its own fresh
-worktree before the agent starts, which on vscode has taken between 223 and
-3,716 seconds, so cases are promoted into the running set as there is budget to
-run them. `bench/active.ts` says which are in it.
+researched wider than it is run: every codedocs run needs an index of its own
+fresh worktree, and building one on vscode is minutes with a long tail. The
+harness builds each commit once and restores it thereafter, so a case costs one
+build however many times it is run — but a case still has to be promoted
+deliberately, and `bench/active.ts` says which have been.
 
-Patches were judged by `claude-opus-5`, three readings each, blind to which arm wrote them — 2 of 2 valid runs.
+Patches were judged by `claude-opus-5`, three readings each, blind to which arm wrote them — 3 of 3 valid runs.
 
 Every run read its own `git worktree` at the commit before its case's
 fix, and was scored on the patch git took out of that tree. The method is
@@ -39,7 +40,7 @@ fix, and was scored on the patch git took out of that tree. The method is
 
 ## What this set supports
 
-**Incomplete.** The runs on disk are only 1 replicate deep and missing 1 of the 2 cases in the running set. What follows is
+**Incomplete.** The runs on disk are only 1 replicate deep. What follows is
 the harness reporting what it has, which is what it is built to do, and it is
 published in this state deliberately: a report that appears only once the
 numbers are flattering is not a measurement.
@@ -93,26 +94,32 @@ _one model, with the tool and without._
 
 |                                 | baseline@sonnet-5 | codedocs@sonnet-5 | change |
 | ------------------------------- | ----------------- | ----------------- | ------ |
-| requests                        | 22                | 41                | +86%   |
-| input tokens, cache included    | 1,149,022         | 3,004,371         | +161%  |
-| output tokens                   | 17,146            | 37,958            | +121%  |
-| total tokens                    | 1,166,168         | 3,042,329         | +161%  |
-| cost per run                    | $0.632            | $1.401            | +122%  |
-| tool calls                      | 21                | 40                | +90%   |
+| requests                        | 17                | 41                | +141%  |
+| input tokens, cache included    | 787,505           | 3,004,371         | +282%  |
+| output tokens                   | 11,061            | 37,958            | +243%  |
+| total tokens                    | 798,566           | 3,042,329         | +281%  |
+| cost per run                    | $0.462            | $1.401            | +203%  |
+| tool calls                      | 16                | 40                | +150%  |
 | files opened                    | 2                 | 6                 | +200%  |
-| lines of source read            | 620               | 1,249             | +101%  |
-| seconds                         | 226               | 668               | +196%  |
-| changed every ground-truth file | 1/1               | 1/1               |        |
-| judged to fix the bug           | 1/1               | 1/1               |        |
+| lines of source read            | 426               | 1,249             | +193%  |
+| seconds                         | 137               | 668               | +388%  |
+| changed every ground-truth file | 2/2               | 1/1               |        |
+| judged to fix the bug           | 2/2               | 1/1               |        |
 | closeness to the upstream fix   | same-area         | same-change       |        |
 
-#### Level 1 — local — the report points at the code (1 case)
+#### Level 1 — local — the report points at the code (2 cases)
 
-| case   | arm               | req  | in        | out    | tokens    | cost   | calls | files | lines | sec   | hit | fix | sim         |
-| ------ | ----------------- | ---- | --------- | ------ | --------- | ------ | ----- | ----- | ----- | ----- | --- | --- | ----------- |
-| 333230 | baseline@sonnet-5 | 22   | 1,149,022 | 17,146 | 1,166,168 | $0.632 | 21    | 2     | 620   | 226   | 1/1 | 1/1 | same-area   |
-|        | codedocs@sonnet-5 | 41   | 3,004,371 | 37,958 | 3,042,329 | $1.401 | 40    | 6     | 1,249 | 668   | 1/1 | 1/1 | same-change |
-|        | **change**        | +86% | +161%     | +121%  | +161%     | +122%  | +90%  | +200% | +101% | +196% |     |     |             |
+| case   | arm                               | req   | in        | out    | tokens    | cost   | calls | files | lines | sec   | hit | fix | sim            |
+| ------ | --------------------------------- | ----- | --------- | ------ | --------- | ------ | ----- | ----- | ----- | ----- | --- | --- | -------------- |
+| 329610 | baseline@sonnet-5                 | 12    | 425,988   | 4,975  | 430,963   | $0.291 | 11    | 1     | 232   | 49    | 1/1 | 1/1 | same-mechanism |
+|        | codedocs@sonnet-5 _(1 discarded)_ | —     | —         | —      | —         | —      | —     | —     | —     | —     | —   | —   | —              |
+|        | **change**                        | —     | —         | —      | —         | —      | —     | —     | —     | —     |     |     |                |
+| 333230 | baseline@sonnet-5                 | 22    | 1,149,022 | 17,146 | 1,166,168 | $0.632 | 21    | 2     | 620   | 226   | 1/1 | 1/1 | same-area      |
+|        | codedocs@sonnet-5                 | 41    | 3,004,371 | 37,958 | 3,042,329 | $1.401 | 40    | 6     | 1,249 | 668   | 1/1 | 1/1 | same-change    |
+|        | **change**                        | +86%  | +161%     | +121%  | +161%     | +122%  | +90%  | +200% | +101% | +196% |     |     |                |
+| **L1** | baseline@sonnet-5                 | 17    | 787,505   | 11,061 | 798,566   | $0.462 | 16    | 2     | 426   | 137   | 2/2 | 2/2 | same-area      |
+|        | codedocs@sonnet-5 _(1 discarded)_ | 41    | 3,004,371 | 37,958 | 3,042,329 | $1.401 | 40    | 6     | 1,249 | 668   | 1/1 | 1/1 | same-change    |
+|        | **change**                        | +141% | +282%     | +243%  | +281%     | +203%  | +150% | +200% | +193% | +388% |     |     |                |
 
 ## Discarded runs
 
@@ -121,13 +128,15 @@ codedocs anyway, when the codedocs arm never called it, or when the agent left
 no patch at all. Each of those means the comparison would have stopped being
 between the two things it claims to compare.
 
-_No run has been discarded._
+| arm               | reason                             | runs | out of |
+| ----------------- | ---------------------------------- | ---- | ------ |
+| codedocs@sonnet-5 | codedocs arm never called codedocs | 1    | 2      |
 
 ## The judge
 
 | arm               | runs judged | median agreement | judging cost |
 | ----------------- | ----------- | ---------------- | ------------ |
-| baseline@sonnet-5 | 1           | 0.67             | $0.240       |
+| baseline@sonnet-5 | 2           | 0.83             | $0.441       |
 | codedocs@sonnet-5 | 1           | 1.00             | $0.194       |
 
 ## What this does not show
@@ -145,17 +154,22 @@ measure one corner, but a spread inside one repository is still one repository �
 nothing here is evidence about codebases unlike vscode, and nothing here is
 evidence about a language other than TypeScript.
 
-**Sample size is 2 counted runs.** A full
+**Sample size is 3 counted runs.** A full
 pool is 2 cases at three replicates per arm, which is enough to see
 whether an effect is there and whether the spread swamps it. It is never enough
 for a confidence interval, and it is not a claim about any repository but this
 one.
 
 **The index build is amortized out, and it is not free.** A fresh worktree
-has no index, so one is built before every codedocs run, in a process no metric
-reads. It has taken anywhere from 223 seconds to 3,716 seconds. A single-question
-user never recovers that; a working session does, several times over. The
-per-run numbers assume the session.
+has no index, so one has to be there before every codedocs run, in a process no
+metric reads. Five builds have been timed: four between 186 and 223
+seconds, and one at 3,716 that is unexplained — treat it as minutes with a long
+tail rather than as a constant. The harness now builds each commit
+once and restores it into later worktrees, so what a run actually pays is the
+restore; both numbers are printed beside the verdict, named, so neither can be
+quoted as the other. A single-question user recovers none of the build; a
+working session recovers it several times over, and the per-run numbers assume
+the session.
 
 **Correctness above the file level is one model's opinion.** `hit` is
 exact. `fix` and `sim` are not, and cannot be — a correct fix has many valid
@@ -163,6 +177,19 @@ shapes. The judge is blind to the arm, has no tools, and reads each patch three
 times, and every grade's reasoning is on disk to be argued with. Where the
 agreement figure is below 1.00 the judge disagreed with itself, and the honest
 reading is that the case is arguable rather than that the grade is wrong.
+
+**Discarding unused-tool runs selects for the cases the tool suits.** A
+codedocs run that never called codedocs is thrown out, because counting it would
+put a run with no tool in it on the tool's side of the comparison. But on an easy
+case not reaching for the tool is the _right_ move — the stack trace names the
+file, so the agent opens it and fixes it — and those runs are exactly the ones
+discarded. The surviving codedocs runs are therefore not a random sample of
+codedocs runs: they are the ones where the agent judged the tool worth using.
+That biases the comparison **towards** codedocs on any pooled figure, and it
+bites hardest on the easy cases, which are the ones meant to keep the benchmark
+honest. Read the discard counts above as part of the result, not as
+housekeeping: an arm that could not produce a countable run on a case has told
+you something about that case.
 
 **One judge, one rubric.** A second judge model would say how much of a
 grade is the rubric and how much is the reader. Nothing here has asked one.

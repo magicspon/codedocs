@@ -8,6 +8,7 @@
  *   node bench/run.ts --resume             skip runs already measured
  *   node bench/run.ts --rescore            rebuild records from saved streams
  *   node bench/run.ts --judge              judge the patches already on disk
+ *   node bench/run.ts --warm               build the index cache, run no agent
  *
  * Every patch a valid run leaves is read by a judge that is shown the issue,
  * the upstream fix and the patch, and nothing about which arm wrote it. Its
@@ -38,6 +39,7 @@ import { loadCases } from './cases.ts'
 import type { JudgePlan } from './judgement.ts'
 import { RESULTS } from './paths.ts'
 import { preflight } from './preflight.ts'
+import { prewarm } from './prewarm.ts'
 import { rejudge } from './rejudge.ts'
 import { rescore } from './rescore.ts'
 import { runSession } from './session.ts'
@@ -67,6 +69,13 @@ async function main(): Promise<void> {
   if (has('rescore')) {
     console.log('rescoring saved runs; no agent is run\n')
     rescore(cases)
+    return
+  }
+
+  if (has('warm')) {
+    console.log('building the index cache; no agent is run\n')
+    preflight(cases)
+    prewarm(cases)
     return
   }
 

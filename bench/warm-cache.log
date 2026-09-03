@@ -1,0 +1,8 @@
+building the index cache; no agent is run
+
+2 commit(s) to index for 2 case(s)
+
+  8853be931d  333230                      building… 213s, cached
+  2b3436e5ec  329610                      building… 186s, cached
+
+every run at these commits now restores its index in seconds.
