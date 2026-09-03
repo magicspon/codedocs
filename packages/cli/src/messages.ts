@@ -61,7 +61,14 @@ export function formatError(error: EnvelopeError): string {
     case 'report-recursive':
       return '`report-bug` cannot reproduce itself — give it the command that failed'
     case 'report-unwritable':
+    case 'draft-unwritable':
       return `could not write ${error.params.out}: ${error.params.detail}`
+    case 'draft-exists':
+      return (
+        `${error.params.out} already exists — codedocs will not overwrite it, ` +
+        'and has no flag that would. The draft is on stdout above; move or ' +
+        'delete the file if you meant to replace it.'
+      )
     case 'depth-unsupported': {
       // Derived from the manifest, so the list cannot fall out of step with the
       // operations that actually take a depth.

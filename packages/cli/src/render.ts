@@ -23,6 +23,7 @@ import type {
   DoctorEnvelope,
   DocumentFault,
   DocumentReport,
+  DraftReport,
   Envelope,
   EvidenceEnvelope,
   EvidenceKind,
@@ -687,6 +688,39 @@ function kindLines<TItem>(
 const labelRow = (label: Label, style: Style): string =>
   `${label.node}  ${label.axis}=${label.value}  ` +
   style.dim(`[${label.provenance}: ${label.derivation}]`)
+
+/**
+ * What a `docs draft` run says about itself, which is never the draft.
+ *
+ * The Markdown is the answer and it goes where it was asked to go — stdout, or
+ * the file `--out` named. This is the note beside it, and it follows
+ * `report-bug`'s rule: where the payload is stdout, the note moves to stderr
+ * rather than into the bytes somebody is piping into a file.
+ *
+ * @param path - Where the draft was written, or `null` where it went to stdout.
+ */
+export function renderDraft(
+  envelope: Envelope<DraftReport>,
+  path: string | null,
+  style: Style,
+): string {
+  const sections = envelope.result?.sections ?? []
+  const lines = sections.map(
+    (section) =>
+      `  ${section.heading}  ` +
+      style.dim(count(section.candidates.length, 'candidate claim')),
+  )
+  const landed =
+    path === null
+      ? '  nothing written — pass --out <path> to write this draft to a file'
+      : `  wrote ${count(sections.length, 'section')} to ${path}`
+  return finish(
+    envelope,
+    lines.length === 0 ? [] : [...lines, '', style.dim(landed)],
+    style,
+    'section',
+  )
+}
 
 /** How a verdict is spelled for a person, and how it is coloured. */
 const VERDICTS: Readonly<Record<string, string>> = {

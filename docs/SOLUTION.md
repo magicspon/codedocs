@@ -133,6 +133,11 @@ quote your own code back at you.
 `report-bug` is the one operation that opens no session: it re-runs the command line you
 gave it and reports the envelope that came back.
 
+`docs draft` is the one operation whose `result` is a file rather than rows. The Markdown is
+built in `core` — [`draft-markdown.ts`](../packages/core/src/operations/draft-markdown.ts) —
+so both bindings emit the same bytes; the CLI only decides where they go, and refuses to
+write over a file that already exists.
+
 ### 4. Render ([`packages/cli/src/render.ts`](../packages/cli/src/render.ts))
 
 The human renderer is a pure function of the envelope. It never queries the index and never

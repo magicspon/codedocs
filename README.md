@@ -31,7 +31,7 @@ the analysis could not see.
 ## Contents
 
 - [Requirements](#requirements) · [Install](#install) · [Quick start](#quick-start)
-- [Commands](#commands) — [analyse](#analyse) · [symbol](#symbol) · [callers / callees](#callers-and-callees) · [references](#references) · [file](#file) · [trace](#trace) · [evidence](#evidence) · [impact](#impact) · [docs check](#docs-check) · [docs affected](#docs-affected) · [doctor](#doctor) · [report-bug](#report-bug)
+- [Commands](#commands) — [analyse](#analyse) · [symbol](#symbol) · [callers / callees](#callers-and-callees) · [references](#references) · [file](#file) · [trace](#trace) · [evidence](#evidence) · [impact](#impact) · [docs check](#docs-check) · [docs affected](#docs-affected) · [docs draft](#docs-draft) · [doctor](#doctor) · [report-bug](#report-bug)
 - [Naming a subject](#naming-a-subject) · [Filtering an answer](#filtering-an-answer) · [Flags](#flags) · [Exit codes](#exit-codes)
 - [Configuration](#configuration) · [JSON output](#json-output) · [Using it from an agent](#using-it-from-an-agent)
 - [Reading an answer honestly](#reading-an-answer-honestly) · [codedocs and fallow](#codedocs-and-fallow) · [Troubleshooting](#troubleshooting)
@@ -130,6 +130,7 @@ There is no daemon and no watcher. Each command is a one-shot process.
 | `impact`               | every symbol a change could reach, against an earlier commit  | symbol         |
 | `docs check`           | which documented claims the code now contradicts              | document       |
 | `docs affected`        | which documents a change reaches                              | document       |
+| `docs draft <subject>` | a Markdown draft of one subject, prefilled with its facts     | section        |
 | `doctor`               | every unmet precondition, and the command that would clear it | precondition   |
 | `report-bug`           | a reproduced failure, safe to paste                           | —              |
 
@@ -386,6 +387,66 @@ With no argument the changed set is the drift codedocs already computes before e
 needs no git and no configuration — usable inside a pre-commit hook. It never exits 1: reaching a
 document is not a finding.
 
+### docs draft
+
+The other half of `evidence`: the same facts, shaped as the file you were going to open anyway. It
+writes **no prose** and **no claims** — every claim it writes is a _candidate_, under a `codedocs?:`
+marker that `docs check` does not read.
+
+```console
+$ codedocs docs draft 'CheckoutService.charge'
+# CheckoutService.charge
+
+<!--
+Drafted by codedocs from `CheckoutService.charge` at commit 8f3a2c1: 1 section.
+
+codedocs wrote no prose. Everything below is a fact read from the index, and
+the paragraphs are yours. Each `codedocs?:` comment is a *candidate* claim:
+delete the `?` to endorse it, and `docs check` verifies it from then on.
+Until you endorse one, this file is not a document and nothing checks it.
+-->
+
+## CheckoutService.charge
+
+_What is `CheckoutService.charge` for, and why does it exist? codedocs does not know, and will not guess._
+
+A `method` declared at `src/checkout/service.ts:42`, analysed at `typed` fidelity.
+
+- **Calls**
+  - `src/payments/service.ts#PaymentService.capture` (src/checkout/service.ts:47)
+...
+
+<!-- codedocs?: exists(src/checkout/service.ts#CheckoutService.charge) -->
+<!-- codedocs?: calls(src/checkout/service.ts#CheckoutService.charge, src/payments/service.ts#PaymentService.capture) -->
+```
+
+**A draft is not a document.** The scan that finds documents looks for `<!-- codedocs:`, and
+`<!-- codedocs?:` is not that. So a drafted file has no [claim coverage](#docs-check) to overstate
+until you have read a fact, written the paragraph it justifies, and deleted the `?` — which is the
+one judgement codedocs cannot make for you.
+
+The subject is a symbol or a **path**. A path drafts the file and a section per durable symbol in
+it, which is what `--limit` counts:
+
+```console
+$ codedocs docs draft src/checkout/service.ts --limit 5 --out docs/checkout.md
+  src/checkout/service.ts  4 candidate claims
+  CheckoutService  2 candidate claims
+  ...
+
+  wrote 5 sections to /repo/docs/checkout.md
+
+  showing 5 of 9 — pass --limit for more
+```
+
+With no `--out` the draft is stdout and the note above goes to stderr, so a redirect captures the
+Markdown alone. `--out` **never overwrites**: an existing file is refused, exit 2, with the draft
+still on stdout so you lose nothing by moving the file out of the way. There is no `--force`.
+
+`--limit` bounds sections and nothing inside one. A subject with 176 callers drafts 176 bullets —
+narrow the subject, or `--exclude-label role=test`, both of which are part of the question rather
+than a cap on the answer. See [ADR 0013](docs/adr/0013-drafting-a-document.md).
+
 ### doctor
 
 Every unmet precondition in the repository, grouped so that one cause is one finding:
@@ -497,6 +558,9 @@ Both flags are repeatable, one per axis.
 
 `doctor` only:
   --measure            check the signals against the working tree
+
+`docs draft` only:
+  --out <path>         write the draft here instead of to stdout
 
 `report-bug` only:
   --with-repository    add the facts that name your code
@@ -744,7 +808,8 @@ code:
 - **[`docs/adr/`](docs/adr)** — one ADR per hard-to-reverse decision: analysis preconditions, the
   internal representation, classification, index storage, document claims, the operation set,
   cross-commit continuity, baseline retention, what preflight measures, what may enter the
-  configuration file, what a bug report may carry, and where codedocs stops and `fallow` starts.
+  configuration file, what a bug report may carry, where codedocs stops and `fallow` starts, and
+  what a drafted document may assert on its author's behalf.
 - **[`docs/research/`](docs/research)** — the measurements the ADRs rest on.
 - **[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)** — what codedocs is for, who it is for, and what
   it will not do.

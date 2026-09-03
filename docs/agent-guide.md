@@ -46,6 +46,7 @@ Pick the smallest tool that answers the question.
 | What my current change reaches               | `impact`        |
 | Which docs my change reaches                 | `docs affected` |
 | Which documented claims the code contradicts | `docs check`    |
+| A file to start writing documentation in     | `docs draft`    |
 | Why an answer is thin                        | `doctor`        |
 | Build the index as a step of its own         | `analyse`       |
 | codedocs itself is wrong                     | `report-bug`    |
@@ -66,6 +67,13 @@ For the hypothetical question, use `callers` or `trace` on the symbol.
 
 **`trace` is the expensive one.** An unbounded walk from a busy root can yield thousands of paths.
 Bound it with `depth` unless you have a reason not to.
+
+**`docs draft` writes a file, and every claim in it is a candidate.** Reach for it when the task is
+to document something, rather than calling `evidence` and inventing a layout. What comes back is the
+facts already arranged, with each claim under a `codedocs?:` marker that `docs check` does not read —
+so the file is not a document until somebody deletes a `?`. **Do not delete the `?` yourself on a
+claim you have not written the prose for**: that marker is how the coverage measure stays a record of
+what a person vouched for. Write the paragraph, then endorse the claim that justifies it.
 
 ## How to investigate
 

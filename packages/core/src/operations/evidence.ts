@@ -104,6 +104,61 @@ export function evidence(
   options: EvidenceOptions,
 ): EvidenceEnvelope {
   const resolved = resolveSubject(store, subject)
+  const assembly = assembleEvidence(
+    store,
+    context,
+    resolved,
+    limit,
+    options.scoping,
+  )
+  const result = assembly.report
+
+  return {
+    ...assembled(
+      'evidence',
+      {
+        subject,
+        resolved: resolved.map((node) => node.id),
+        limit,
+        depth: null,
+        scope: { ...options.scoping.scope, excluded: assembly.excluded },
+      },
+      noteCollisions(
+        scopeTo(store, context, touched(result, assembly.paths)),
+        resolved,
+      ),
+      result,
+      totals(result),
+    ),
+    claims: options.claims ? claimsFor(result, durableIds(store)) : null,
+  }
+}
+
+/** One assembled report, and what the scope withheld while assembling it. */
+export interface EvidenceAssembly {
+  readonly report: EvidenceReport
+  /** Counted across every kind, because the envelope echoes one scope. */
+  readonly excluded: number
+  /** The files the subject's symbols live in, sorted. */
+  readonly paths: readonly FilePath[]
+}
+
+/**
+ * Assemble the report for symbols already resolved.
+ *
+ * Exported for `docs draft`, which needs the same facts for each of a file's
+ * symbols and must not be able to disagree with `evidence` about any of them —
+ * ADR 0013's draft is `evidence` shaped as a file, not a second reading of the
+ * index. The subject resolution stays with the caller because a draft's subject
+ * may be a path, which resolves to no symbol at all.
+ */
+export function assembleEvidence(
+  store: Store,
+  context: AnswerContext,
+  resolved: readonly SymbolNode[],
+  limit: number | null,
+  scoping: Scoping,
+): EvidenceAssembly {
   const paths = [...new Set(resolved.map((node) => node.file))].sort()
 
   // Counted across every kind, because the envelope echoes one scope: a caller
@@ -115,12 +170,12 @@ export function evidence(
     rows: readonly TItem[],
     fileOf: (row: TItem) => string,
   ): TItem[] => {
-    const { kept, scope } = applyScope(options.scoping, rows, fileOf)
+    const { kept, scope } = applyScope(scoping, rows, fileOf)
     excluded += scope.excluded
     return kept
   }
 
-  const result: EvidenceReport = {
+  const report: EvidenceReport = {
     symbols: bound(
       scoped(resolved, (node) => node.file),
       limit,
@@ -150,22 +205,7 @@ export function evidence(
     ),
   }
 
-  return {
-    ...assembled(
-      'evidence',
-      {
-        subject,
-        resolved: resolved.map((node) => node.id),
-        limit,
-        depth: null,
-        scope: { ...options.scoping.scope, excluded },
-      },
-      noteCollisions(scopeTo(store, context, touched(result, paths)), resolved),
-      result,
-      totals(result),
-    ),
-    claims: options.claims ? claimsFor(result, durableIds(store)) : null,
-  }
+  return { report, excluded, paths }
 }
 
 /** Apply this kind's own `--limit`, and say what it withheld. */
@@ -239,9 +279,11 @@ function labelsOn(
  * Every durable `SymbolId` in the index, for the claims a document may anchor to.
  *
  * Read only when `--claims` was given: it is a full scan, and an answer that was
- * not asked for claim expressions must not pay for one.
+ * not asked for claim expressions must not pay for one. Exported so `docs draft`
+ * pays for exactly one across every section it writes, rather than one per
+ * section — a file with forty symbols would otherwise scan the table forty times.
  */
-const durableIds = (store: Store): ReadonlySet<string> =>
+export const durableIds = (store: Store): ReadonlySet<string> =>
   new Set(
     readSymbols(store)
       .filter((node) => node.durable)

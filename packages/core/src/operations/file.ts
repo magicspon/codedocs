@@ -114,8 +114,12 @@ export function fileReport(
  * An exact path wins alone: a repository holding both `src/checkout.ts` and
  * `app/src/checkout.ts` must answer about the one that was asked for, not about
  * both because one is a suffix of the other.
+ *
+ * Exported for `docs draft`, whose subject may be either a path or a symbol: it
+ * decides which by asking this, so the two operations cannot come to different
+ * conclusions about what `checkout.ts` names.
  */
-function resolvePath(store: Store, subject: string): FilePath[] {
+export function resolvePath(store: Store, subject: string): FilePath[] {
   const normalised = subject.replace(/^\.\//, '')
   const indexed = readIndexedFiles(store)
   if (indexed.includes(normalised)) return [normalised]

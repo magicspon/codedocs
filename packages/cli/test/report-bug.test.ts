@@ -497,9 +497,11 @@ describe('--out -', () => {
 
 describe('the flags it adds', () => {
   it('are refused on every other operation', () => {
-    expect(run(['symbol', '*', '--out', out, '--cwd', root]).stderr).toContain(
-      '--out applies to `report-bug`',
-    )
+    // `--out` is shared with `docs draft` (ADR 0013), so the sentence names
+    // every operation that takes it — the point is that `symbol` is not one.
+    const refused = run(['symbol', '*', '--out', out, '--cwd', root]).stderr
+    expect(refused).toContain('`report-bug`')
+    expect(refused).toContain('not `symbol`')
     expect(
       run(['callers', 'charge', '--with-repository', '--cwd', root]).stderr,
     ).toContain('--with-repository applies to `report-bug`')
