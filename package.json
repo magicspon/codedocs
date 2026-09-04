@@ -10,6 +10,7 @@
   "scripts": {
     "test": "vitest run",
     "build": "pnpm --filter @codedocs/cli build",
+    "codedocs": "node packages/cli/dist/bin.js",
     "bench": "node bench/run.ts",
     "bench:report": "node bench/report.ts",
     "bench:writeup": "node bench/writeup.ts",
