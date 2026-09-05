@@ -26,5 +26,16 @@
  * in the stack trace, so codedocs should buy little on either. Starting on the
  * cases least likely to flatter the tool is deliberate — a benchmark that
  * begins where it expects to win learns nothing from the first result.
+ *
+ * `331102` (level 2), `326185` (level 3), and `331452` (level 4) fill out the
+ * rest of the gradient — one case per remaining level, so the set can show
+ * whether the delta changes with difficulty rather than sitting inside one
+ * level. See issue #113.
  */
-export const ACTIVE: readonly string[] = ['333230', '329610']
+export const ACTIVE: readonly string[] = [
+  '333230',
+  '329610',
+  '331102',
+  '326185',
+  '331452',
+]
