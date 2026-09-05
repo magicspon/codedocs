@@ -160,8 +160,8 @@ function shaped(spec: OperationSpec, opening: string): string {
   if (spec.subject?.multiple === true) {
     const perSubject =
       spec.shape === 'kinds'
-        ? `holds one ${spec.unit} report for that subject, each of its own kinds ` +
-          `sorted ${spec.sortedBy} and bounded by its own \`limit\` **per kind**`
+        ? `holds one ${spec.unit} report for that subject: every kind of fact, ` +
+          `sorted ${spec.sortedBy}, each bounded by its own \`limit\` **per kind**`
         : `is a list of ${spec.unit}s for that subject, sorted by ${spec.sortedBy}`
     return [
       opening,
