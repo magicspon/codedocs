@@ -22,6 +22,8 @@ import { configFacts, type ConfigFacts } from '../config/index.ts'
 import { findRepositoryRoot } from '../discovery.ts'
 import {
   SCHEMA_VERSION,
+  type BatchedEnvelope,
+  type BatchEntry,
   type BlindSpot,
   type Budget,
   type Envelope,
@@ -63,8 +65,12 @@ export interface Reproduction {
   /** The re-run's own exit code. A field, never propagated: see `reportBug`. */
   readonly exitCode: 0 | 1 | 2
   readonly durationMs: number
-  /** The envelope it produced, or `null` where the command line never parsed to one. */
-  readonly envelope: Envelope<unknown> | null
+  /**
+   * The envelope it produced, or `null` where the command line never parsed
+   * to one. `BatchedEnvelope` for ADR 0014's six batched operations,
+   * `Envelope` for every other one.
+   */
+  readonly envelope: Envelope<unknown> | BatchedEnvelope<unknown> | null
   /** The failure, where there was no envelope to carry it. */
   readonly error: EnvelopeError | null
 }
@@ -252,17 +258,50 @@ const NO_ANSWER: AnswerFacts = {
   conditions: [],
 }
 
-const answerFacts = (envelope: Envelope<unknown> | null): AnswerFacts =>
-  envelope === null
-    ? NO_ANSWER
-    : {
-        error: envelope.error ?? null,
-        budget: envelope.budget,
-        snapshot: envelope.snapshot,
-        blindSpots: envelope.blindSpots,
-        resolved: envelope.request.resolved,
-        conditions: envelope.conditions,
-      }
+/**
+ * Read `AnswerFacts` off either envelope shape.
+ *
+ * `budget` is the one field a flat `Envelope` carries at the top and ADR
+ * 0014's `BatchedEnvelope` does not — so it doubles as the runtime
+ * discriminant between the two, and a batched envelope's `budget` and
+ * `blindSpots` here are summed and unioned across its subjects. That sum is a
+ * diagnostic total for a bug report, never the operation's own answer, so it
+ * does not reopen ADR 0014's refusal to pool a batched operation's budget.
+ */
+const answerFacts = (
+  envelope: Envelope<unknown> | BatchedEnvelope<unknown> | null,
+): AnswerFacts => {
+  if (envelope === null) return NO_ANSWER
+  if ('budget' in envelope) {
+    return {
+      error: envelope.error ?? null,
+      budget: envelope.budget,
+      snapshot: envelope.snapshot,
+      blindSpots: envelope.blindSpots,
+      resolved: envelope.request.resolved,
+      conditions: envelope.conditions,
+    }
+  }
+  const entries = envelope.result ?? []
+  return {
+    error: envelope.error ?? null,
+    budget: totalBudget(entries),
+    snapshot: envelope.snapshot,
+    blindSpots: entries.flatMap((entry) => entry.blindSpots),
+    resolved: envelope.request.resolved.flatMap((subject) => subject.resolved),
+    conditions: envelope.conditions,
+  }
+}
+
+/** The sum of every subject's own budget in a batch, or `null` for none. */
+function totalBudget(entries: readonly BatchEntry<unknown>[]): Budget | null {
+  if (entries.length === 0) return null
+  return {
+    returned: entries.reduce((sum, entry) => sum + entry.budget.returned, 0),
+    available: entries.reduce((sum, entry) => sum + entry.budget.available, 0),
+    truncated: entries.some((entry) => entry.budget.truncated),
+  }
+}
 
 /**
  * A `report-bug` answer, whose result is always there: the operation's finding

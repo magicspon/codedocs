@@ -12,6 +12,8 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_SCOPE } from '@codedocs/core'
 import type {
   BaselineUsed,
+  BatchedEnvelope,
+  BatchEntry,
   CallEdge,
   Candidate,
   Change,
@@ -20,16 +22,17 @@ import type {
   DoctorEnvelope,
   DocumentFault,
   DocumentReport,
-  Envelope,
-  EvidenceEnvelope,
+  EvidenceAnswer,
   EvidenceKind,
   FileReport,
   ImpactEnvelope,
   ImpactedSymbol,
   Label,
+  OperationName,
   Precondition,
   ReferenceEdge,
   ReportEnvelope,
+  ScopeFilter,
   SectionReport,
   SymbolNode,
 } from '@codedocs/core'
@@ -84,24 +87,74 @@ const node: SymbolNode = {
   collisions: 0,
 }
 
-describe('the scope note', () => {
-  const scoped = (scope: Envelope<unknown>['request']['scope']): string =>
-    renderSymbols(
-      {
-        ...shell,
-        operation: 'callers',
-        result: [node],
-        request: { ...shell.request, scope },
+/** One entry in ADR 0014's batched envelope, so each test only says what it changes. */
+function batchEntry<TResult>(
+  result: TResult,
+  overrides: Partial<Omit<BatchEntry<TResult>, 'result'>> = {},
+): BatchEntry<TResult> {
+  return {
+    subject: 'charge',
+    resolved: ['src/payments.ts#charge'],
+    budget: { returned: 1, available: 1, truncated: false },
+    excluded: 0,
+    blindSpots: [],
+    ...overrides,
+    result,
+  }
+}
+
+/** A batched envelope shell around one or more entries, one entry per subject. */
+function batchShell<TResult>(
+  operation: OperationName,
+  entries: readonly BatchEntry<TResult>[],
+  overrides: {
+    readonly conditions?: BatchedEnvelope<TResult>['conditions']
+    readonly scope?: ScopeFilter
+  } = {},
+): BatchedEnvelope<TResult> {
+  return {
+    operation,
+    schemaVersion: 5,
+    request: {
+      subjects: entries.map((entry) => entry.subject),
+      resolved: entries.map((entry) => ({
+        subject: entry.subject,
+        resolved: entry.resolved,
+      })),
+      limit: null,
+      depth: null,
+      scope: overrides.scope ?? {
+        include: DEFAULT_SCOPE.include,
+        exclude: DEFAULT_SCOPE.exclude,
       },
+    },
+    snapshot: shell.snapshot,
+    conditions: overrides.conditions ?? [],
+    result: entries,
+  }
+}
+
+describe('the scope note', () => {
+  const scoped = (scope: ScopeFilter, excluded = 0): string =>
+    renderSymbols(
+      batchShell('callers', [batchEntry([node], { excluded })], { scope }),
       plain,
     )
 
   it('stays silent for a default scope that withheld nothing', () => {
-    expect(scoped(DEFAULT_SCOPE)).not.toContain('scope')
+    expect(
+      scoped({
+        include: DEFAULT_SCOPE.include,
+        exclude: DEFAULT_SCOPE.exclude,
+      }),
+    ).not.toContain('scope')
   })
 
   it('says what the default scope withheld, once it bit', () => {
-    const out = scoped({ ...DEFAULT_SCOPE, excluded: 4 })
+    const out = scoped(
+      { include: DEFAULT_SCOPE.include, exclude: DEFAULT_SCOPE.exclude },
+      4,
+    )
     expect(out).toContain('scope authorship=authored — 4 excluded by it')
   })
 
@@ -109,7 +162,6 @@ describe('the scope note', () => {
     const out = scoped({
       include: [{ axis: 'authorship', value: 'authored' }],
       exclude: [{ axis: 'role', value: 'test' }],
-      excluded: 0,
     })
     expect(out).toContain('not role=test')
     expect(out).toContain('nothing excluded')
@@ -239,20 +291,10 @@ describe('a call-edge answer', () => {
     derivation: 'checker-signature',
   }
 
-  const edges = (operation: string, result: readonly CallEdge[]): string =>
-    renderEdges(
-      {
-        ...shell,
-        operation,
-        budget: {
-          returned: result.length,
-          available: result.length,
-          truncated: false,
-        },
-        result,
-      } as Envelope<readonly CallEdge[]>,
-      plain,
-    )
+  const edges = (
+    operation: OperationName,
+    result: readonly CallEdge[],
+  ): string => renderEdges(batchShell(operation, [batchEntry(result)]), plain)
 
   it('prints the end the caller did not name', () => {
     expect(edges('callers', [edge])).toContain('src/checkout.ts#checkout')
@@ -277,13 +319,9 @@ describe('a call-edge answer', () => {
 
   it('says a subject matched nothing, which is a different fact', () => {
     const out = renderEdges(
-      {
-        ...shell,
-        operation: 'callers',
-        request: { ...shell.request, subject: 'nope', resolved: [] },
-        budget: { returned: 0, available: 0, truncated: false },
-        result: [],
-      } as Envelope<readonly CallEdge[]>,
+      batchShell('callers', [
+        batchEntry<readonly CallEdge[]>([], { subject: 'nope', resolved: [] }),
+      ]),
       plain,
     )
     expect(out).toContain('`nope` matched no symbol')
@@ -291,13 +329,12 @@ describe('a call-edge answer', () => {
 
   it('says `file` for an operation whose subject is a path', () => {
     const out = renderFile(
-      {
-        ...shell,
-        operation: 'file',
-        request: { ...shell.request, subject: 'nope.ts', resolved: [] },
-        budget: { returned: 0, available: 0, truncated: false },
-        result: [],
-      } as Envelope<readonly FileReport[]>,
+      batchShell('file', [
+        batchEntry<readonly FileReport[]>([], {
+          subject: 'nope.ts',
+          resolved: [],
+        }),
+      ]),
       plain,
     )
     expect(out).toContain('`nope.ts` matched no file')
@@ -317,19 +354,7 @@ describe('a reference answer', () => {
   }
 
   const references = (result: readonly ReferenceEdge[]): string =>
-    renderReferences(
-      {
-        ...shell,
-        operation: 'references',
-        budget: {
-          returned: result.length,
-          available: result.length,
-          truncated: false,
-        },
-        result,
-      } as Envelope<readonly ReferenceEdge[]>,
-      plain,
-    )
+    renderReferences(batchShell('references', [batchEntry(result)]), plain)
 
   it('names both ends and the kind, because the direction varies per row', () => {
     expect(references([reference])).toContain(
@@ -368,19 +393,7 @@ const report = (overrides: Partial<FileReport> = {}): FileReport => ({
 
 describe('a file answer', () => {
   const files = (result: readonly FileReport[]): string =>
-    renderFile(
-      {
-        ...shell,
-        operation: 'file',
-        budget: {
-          returned: result.length,
-          available: result.length,
-          truncated: false,
-        },
-        result,
-      } as Envelope<readonly FileReport[]>,
-      plain,
-    )
+    renderFile(batchShell('file', [batchEntry(result)]), plain)
 
   it('heads each of the four lists, and counts them', () => {
     const out = files([report()])
@@ -466,25 +479,25 @@ describe('an evidence answer', () => {
   } as Label
 
   const evidence = (
-    overrides: Partial<EvidenceEnvelope['result']> = {},
-    request: Partial<EvidenceEnvelope['request']> = {},
+    overrides: Partial<EvidenceAnswer> = {},
+    entryOverrides: Partial<Omit<BatchEntry<EvidenceAnswer>, 'result'>> = {},
   ): string =>
     renderEvidence(
-      {
-        ...shell,
-        operation: 'evidence',
-        request: { ...shell.request, ...request },
-        result: {
-          symbols: kind([node]),
-          files: kind([report()]),
-          callers: kind([]),
-          callees: kind([]),
-          references: kind([]),
-          labels: kind([label]),
-          ...overrides,
-        },
-        claims: null,
-      } as EvidenceEnvelope,
+      batchShell('evidence', [
+        batchEntry(
+          {
+            symbols: kind([node]),
+            files: kind([report()]),
+            callers: kind([]),
+            callees: kind([]),
+            references: kind([]),
+            labels: kind([label]),
+            claims: null,
+            ...overrides,
+          },
+          entryOverrides,
+        ),
+      ]),
       plain,
     )
 
@@ -1199,25 +1212,39 @@ describe('what a renderer does with an envelope carrying no result', () => {
    * this is what pins that.
    */
   const empty = { ...shell, result: undefined }
+  /** The batched twin of `empty`, for ADR 0014's six operations. */
+  const emptyBatch = {
+    schemaVersion: 5,
+    request: {
+      subjects: [],
+      resolved: [],
+      limit: null,
+      depth: null,
+      scope: { include: DEFAULT_SCOPE.include, exclude: DEFAULT_SCOPE.exclude },
+    },
+    snapshot: shell.snapshot,
+    conditions: [],
+    result: undefined,
+  }
 
   it('answers rather than throwing, for every operation', () => {
     expect(
-      renderSymbols({ ...empty, operation: 'symbol' } as never, plain),
+      renderSymbols({ ...emptyBatch, operation: 'symbol' } as never, plain),
     ).toContain('no symbols')
     expect(
-      renderEdges({ ...empty, operation: 'callers' } as never, plain),
+      renderEdges({ ...emptyBatch, operation: 'callers' } as never, plain),
     ).toContain('no call edges')
     expect(
-      renderReferences({ ...empty, operation: 'references' } as never, plain),
-    ).toContain('no references')
-    expect(
-      renderFile({ ...empty, operation: 'file' } as never, plain),
-    ).toContain('no files')
-    expect(
-      renderEvidence(
-        { ...empty, operation: 'evidence', claims: null } as never,
+      renderReferences(
+        { ...emptyBatch, operation: 'references' } as never,
         plain,
       ),
+    ).toContain('no references')
+    expect(
+      renderFile({ ...emptyBatch, operation: 'file' } as never, plain),
+    ).toContain('no files')
+    expect(
+      renderEvidence({ ...emptyBatch, operation: 'evidence' } as never, plain),
     ).toContain('no facts')
     expect(
       renderImpact(

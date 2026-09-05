@@ -14,8 +14,13 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
+import type { BatchEntry } from '../src/envelope.ts'
 import { callers } from '../src/operations/calls.ts'
-import { evidence, type EvidenceEnvelope } from '../src/operations/evidence.ts'
+import {
+  evidence,
+  type EvidenceAnswer,
+  type EvidenceEnvelope,
+} from '../src/operations/evidence.ts'
 import { UNSCOPED } from '../src/labels/index.ts'
 import { openSession } from '../src/session/index.ts'
 import { shorthandOf } from '../src/symbol-id.ts'
@@ -64,7 +69,7 @@ function ask(
     noUpdate: false,
   })
   try {
-    return evidence(session.store, session.context, subject, limit, {
+    return evidence(session.store, session.context, [subject], limit, {
       scoping: UNSCOPED,
       claims: options.claims === true,
     })
@@ -73,14 +78,32 @@ function ask(
   }
 }
 
-/** The result, which every test here expects to be present. */
-const report = (
-  envelope: EvidenceEnvelope,
-): NonNullable<typeof envelope.result> => {
-  const found = envelope.result
+/** `ask`'s batched twin, for asserting ADR 0014's per-subject accounting. */
+function askMany(
+  subjects: readonly string[],
+  limit: number | null = null,
+): EvidenceEnvelope {
+  const session = openSession({ cwd: root, noUpdate: false })
+  try {
+    return evidence(session.store, session.context, subjects, limit, {
+      scoping: UNSCOPED,
+      claims: false,
+    })
+  } finally {
+    session.close()
+  }
+}
+
+/** The one entry a single-subject `ask` produces, which every test here expects. */
+const entry = (envelope: EvidenceEnvelope): BatchEntry<EvidenceAnswer> => {
+  const found = envelope.result?.[0]
   if (found === undefined) throw new Error('evidence answered with no result')
   return found
 }
+
+/** The one subject's assembled report. */
+const report = (envelope: EvidenceEnvelope): EvidenceAnswer =>
+  entry(envelope).result
 
 describe('evidence', () => {
   it('assembles every kind the index holds about one subject', () => {
@@ -142,18 +165,20 @@ describe('evidence', () => {
     expect(found.files.items).toHaveLength(1)
   })
 
-  it('sums the kinds into the one budget the envelope owes', () => {
+  it("sums the kinds into the subject's own budget", () => {
     const envelope = ask('charge', 2)
-    const kinds = Object.values(report(envelope))
-    expect(envelope.budget.returned).toBe(
-      kinds.reduce((sum, kind) => sum + kind.budget.returned, 0),
+    const { claims, ...kinds } = report(envelope)
+    const budgets = Object.values(kinds).map((kind) => kind.budget)
+    expect(entry(envelope).budget.returned).toBe(
+      budgets.reduce((sum, budget) => sum + budget.returned, 0),
     )
-    expect(envelope.budget.available).toBe(
-      kinds.reduce((sum, kind) => sum + kind.budget.available, 0),
+    expect(entry(envelope).budget.available).toBe(
+      budgets.reduce((sum, budget) => sum + budget.available, 0),
     )
-    // One kind was cut, so the envelope says something was — and only the kinds
+    // One kind was cut, so the entry says something was — and only the kinds
     // say which.
-    expect(envelope.budget.truncated).toBe(true)
+    expect(entry(envelope).budget.truncated).toBe(true)
+    expect(claims).toBeNull()
   })
 
   it('gives each kind the order its own operation would have given it', () => {
@@ -162,27 +187,27 @@ describe('evidence', () => {
       const alone = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
       const assembled = evidence(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         { scoping: UNSCOPED, claims: false },
       )
-      expect(assembled.result?.callers.items).toEqual(alone.result)
+      expect(report(assembled).callers.items).toEqual(alone.result?.[0]?.result)
     } finally {
       session.close()
     }
   })
 
   it('restates the payload as claim expressions only when asked', () => {
-    expect(ask('charge').claims).toBeNull()
+    expect(report(ask('charge')).claims).toBeNull()
 
-    const claims = ask('charge', null, { claims: true }).claims ?? []
+    const claims = report(ask('charge', null, { claims: true })).claims ?? []
     expect(claims).toContain('exists(src/payments.ts#charge)')
     expect(claims).toContain(
       'calls(src/callers.ts#one, src/payments.ts#charge)',
@@ -217,8 +242,48 @@ describe('evidence', () => {
 
   it('names nothing rather than guessing when the subject matches nothing', () => {
     const envelope = ask('NoSuchSymbol')
-    expect(envelope.request.resolved).toEqual([])
+    expect(entry(envelope).resolved).toEqual([])
     expect(report(envelope).callers.items).toEqual([])
-    expect(envelope.budget.available).toBe(0)
+    expect(entry(envelope).budget.available).toBe(0)
+  })
+
+  describe('ADR 0014: several subjects in one call', () => {
+    it('keys the result by subject, one entry per subject given', () => {
+      const envelope = askMany(['charge', 'audit'])
+      expect(envelope.result?.map((found) => found.subject)).toEqual([
+        'charge',
+        'audit',
+      ])
+    })
+
+    it('bounds each subject on its own, never pooling across the batch', () => {
+      // `charge` has three callers and `audit` has one; at `--limit 2` a shared
+      // pool would let `charge` alone spend the whole budget. Batching the two
+      // must answer exactly as asking about `charge` alone would.
+      const batched = askMany(['charge', 'audit'], 2)
+      const [chargeEntry, auditEntry] = batched.result ?? []
+      expect(chargeEntry?.subject).toBe('charge')
+      expect(chargeEntry?.result).toEqual(report(ask('charge', 2)))
+      expect(auditEntry?.subject).toBe('audit')
+      expect(auditEntry?.result.callers.items).toHaveLength(1)
+    })
+
+    it('is keyed by subject the same way for one subject as for many', () => {
+      // ADR 0014: the shape must not depend on how many subjects a call
+      // happened to pass — a single subject still comes back as one entry.
+      const one = askMany(['charge'])
+      expect(one.result).toHaveLength(1)
+      expect(one.result?.[0]?.subject).toBe('charge')
+    })
+
+    it('gives an ambiguous subject its own entry, not a merge with its neighbours', () => {
+      const envelope = askMany(['NoSuchSymbol', 'charge'])
+      const [missing, found] = envelope.result ?? []
+      expect(missing?.subject).toBe('NoSuchSymbol')
+      expect(missing?.resolved).toEqual([])
+      expect(missing?.result.callers.items).toEqual([])
+      expect(found?.subject).toBe('charge')
+      expect(found?.resolved).not.toEqual([])
+    })
   })
 })

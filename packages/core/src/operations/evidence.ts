@@ -24,13 +24,19 @@
  * arrive with `docs check`, step 6 of ADR 0012's order. An empty list would read
  * as "nothing documents this subject" when the truth is that codedocs holds no
  * documents at all, so the kind is absent until there is one.
+ *
+ * ADR 0014: several subjects may be given at once, and `result` is one entry
+ * per subject, keyed the same way whether one was given or many. `--limit`
+ * still applies per kind within each subject, and each subject's own totalled
+ * budget lives on its own `BatchEntry` rather than a single envelope-wide sum.
  */
 
 import {
-  assembled,
+  batched,
+  truncate,
   type AnswerContext,
+  type BatchedEnvelope,
   type Budget,
-  type Envelope,
 } from '../envelope.ts'
 import { applyScope, type Scoping } from '../labels/index.ts'
 import type {
@@ -76,11 +82,22 @@ export interface EvidenceReport {
   readonly labels: EvidenceKind<Label>
 }
 
-/** An `evidence` answer, with the claim expressions `--claims` asked for. */
-export type EvidenceEnvelope = Envelope<EvidenceReport> & {
+/**
+ * One subject's `evidence` payload: the assembled report, with the claim
+ * expressions `--claims` asked for.
+ *
+ * An intersection of `EvidenceReport` rather than a field added to it, so
+ * `assembleEvidence` and `docs draft` — which builds its own `EvidenceReport`
+ * per ADR 0013 and never restates it as claims — go on returning the report
+ * alone.
+ */
+export type EvidenceAnswer = EvidenceReport & {
   /** ADR 0005 claim expressions for the facts above, or `null` when unasked. */
   readonly claims: readonly string[] | null
 }
+
+/** An `evidence` answer: ADR 0014's envelope, one `EvidenceAnswer` per subject. */
+export type EvidenceEnvelope = BatchedEnvelope<EvidenceAnswer>
 
 /** How `evidence` was asked to run. */
 export interface EvidenceOptions {
@@ -90,48 +107,60 @@ export interface EvidenceOptions {
 }
 
 /**
- * Assemble what the index holds about one subject.
+ * Assemble what the index holds about each subject, one entry per subject.
  *
- * @param limit - Applied **per kind**, so a subject with 176 callers still
- * answers with its file, its labels and its references rather than spending the
- * whole budget on one kind.
+ * @param limit - Applied **per kind, within one subject**, so a subject with
+ * 176 callers still answers with its file, its labels and its references
+ * rather than spending the whole budget on one kind — and one subject with
+ * many callers cannot spend another subject's budget either.
  */
 export function evidence(
   store: Store,
   context: AnswerContext,
-  subject: string,
+  subjects: readonly string[],
   limit: number | null,
   options: EvidenceOptions,
 ): EvidenceEnvelope {
-  const resolved = resolveSubject(store, subject)
-  const assembly = assembleEvidence(
-    store,
-    context,
-    resolved,
-    limit,
-    options.scoping,
-  )
-  const result = assembly.report
+  // A full scan, read at most once across the whole batch rather than once per
+  // subject: `durableIds` already exists for exactly this reason for `docs
+  // draft`, which pays for one across every section it writes.
+  const durable = options.claims ? durableIds(store) : null
 
-  return {
-    ...assembled(
-      'evidence',
-      {
-        subject,
-        resolved: resolved.map((node) => node.id),
-        limit,
-        depth: null,
-        scope: { ...options.scoping.scope, excluded: assembly.excluded },
+  const entries = subjects.map((subject) => {
+    const resolved = resolveSubject(store, subject)
+    const assembly = assembleEvidence(
+      store,
+      context,
+      resolved,
+      limit,
+      options.scoping,
+    )
+    const result = assembly.report
+    const subjectContext = noteCollisions(
+      scopeTo(store, context, touched(result, assembly.paths)),
+      resolved,
+    )
+    return {
+      subject,
+      resolved: resolved.map((node) => node.id),
+      excluded: assembly.excluded,
+      blindSpots: subjectContext.blindSpots,
+      conditions: subjectContext.conditions,
+      budget: totals(result),
+      result: {
+        ...result,
+        claims: durable === null ? null : claimsFor(result, durable),
       },
-      noteCollisions(
-        scopeTo(store, context, touched(result, assembly.paths)),
-        resolved,
-      ),
-      result,
-      totals(result),
-    ),
-    claims: options.claims ? claimsFor(result, durableIds(store)) : null,
-  }
+    }
+  })
+
+  return batched(
+    'evidence',
+    context.snapshot,
+    limit,
+    options.scoping.scope,
+    entries,
+  )
 }
 
 /** One assembled report, and what the scope withheld while assembling it. */
@@ -213,15 +242,8 @@ function bound<TItem>(
   items: readonly TItem[],
   limit: number | null,
 ): EvidenceKind<TItem> {
-  const returned = limit === null ? items : items.slice(0, limit)
-  return {
-    items: returned,
-    budget: {
-      returned: returned.length,
-      available: items.length,
-      truncated: returned.length < items.length,
-    },
-  }
+  const { items: returned, budget } = truncate(items, limit)
+  return { items: returned, budget }
 }
 
 /** Every kind in the report, so the totals and the touched files read them once. */

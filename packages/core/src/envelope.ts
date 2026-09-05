@@ -27,8 +27,16 @@ import type { Fidelity, FilePath, PreconditionCause } from './model.ts'
  *
  * An operation arriving does not bump it: ADR 0006 makes the operation enum
  * additive, so a caller written against 3 still reads every field it knew.
+ *
+ * 5: ADR 0014's six batched operations — `symbol`, `evidence`, `callers`,
+ * `callees`, `references`, `file` — take `request.subjects` (plural) instead
+ * of `subject`, and `result` is now `readonly BatchEntry<T>[]`, keyed by
+ * subject unconditionally rather than a flat list. `budget` and `blindSpots`
+ * have no top-level home on these six any more: each `BatchEntry` owns its
+ * own, so a shared pool cannot let one subject's answer evict another's. The
+ * other eight operations are unchanged and still use `ResolvedRequest`.
  */
-export const SCHEMA_VERSION: number = 4
+export const SCHEMA_VERSION: number = 5
 
 /**
  * The operation set, widened as each operation lands.
@@ -130,6 +138,81 @@ export interface Budget {
   readonly returned: number
   readonly available: number
   readonly truncated: boolean
+}
+
+/**
+ * One input subject's canonical resolution, echoed for round-tripping.
+ *
+ * ADR 0014: `request.resolved` on a batched operation is one of these per
+ * input rather than a flat list, so "how many subjects were asked about" and
+ * "how ambiguous one of them turned out to be" stay two multiplicities that
+ * cannot blur into one.
+ */
+export interface ResolvedSubject {
+  readonly subject: string
+  readonly resolved: readonly string[]
+}
+
+/**
+ * The label filter a batched request applies, without a count of what it
+ * withheld.
+ *
+ * ADR 0014: `--label`/`--exclude-label` describe the question being asked
+ * once, for the whole call, so this is `Scope` minus `excluded` — the count
+ * that does vary per subject lives on that subject's own `BatchEntry` instead.
+ */
+export type ScopeFilter = Omit<Scope, 'excluded'>
+
+/** The request as codedocs resolved it, for one of ADR 0014's six batched operations. */
+export interface BatchedRequest {
+  readonly subjects: readonly string[]
+  readonly resolved: readonly ResolvedSubject[]
+  readonly limit: number | null
+  /** Always `null`: none of the six batched operations declares `--depth`. */
+  readonly depth: number | null
+  readonly scope: ScopeFilter
+}
+
+/**
+ * One subject's answer within a batched operation, bounded and counted on its
+ * own.
+ *
+ * ADR 0014 applies the reasoning ADR 0006 already gave `evidence`'s per-kind
+ * `--limit` one level up: a shared pool across subjects would mean whether
+ * subject B's results survive depends on how much subject A used, which makes
+ * the answer depend on argument order.
+ */
+export interface BatchEntry<TResult> {
+  /** As typed, the same string `request.subjects` echoes at this index. */
+  readonly subject: string
+  /** The canonical identifiers this subject resolved to. Several means ambiguous. */
+  readonly resolved: readonly string[]
+  readonly budget: Budget
+  /** How many results this subject's own scope withheld. Never a blind spot, never truncation. */
+  readonly excluded: number
+  readonly blindSpots: readonly BlindSpot[]
+  readonly result: TResult
+}
+
+/**
+ * ADR 0014's envelope for `symbol`, `evidence`, `callers`, `callees`,
+ * `references` and `file`: `result` is always an array keyed by subject,
+ * whether one subject was passed or many, so the shape is a property of the
+ * operation rather than of how many arguments a call happened to pass.
+ *
+ * `budget` and `blindSpots` have no top-level field here — each `BatchEntry`
+ * carries its own, which is what stops them pooling across subjects. Every
+ * other field means what it means on `Envelope`.
+ */
+export interface BatchedEnvelope<TResult> {
+  readonly operation: OperationName
+  readonly schemaVersion: number
+  readonly request: BatchedRequest
+  readonly snapshot: Snapshot
+  /** Conditions for only the projects any subject in the batch touched. */
+  readonly conditions: readonly ProjectConditions[]
+  readonly result?: readonly BatchEntry<TResult>[]
+  readonly error?: EnvelopeError
 }
 
 /**
@@ -354,6 +437,161 @@ export function failure(
     conditions: context.conditions,
     blindSpots: context.blindSpots,
     budget: { returned: 0, available: 0, truncated: false },
+    error,
+  }
+}
+
+/**
+ * Bound one subject's own list, and say what it withheld.
+ *
+ * The per-subject twin of `answer`'s bounding: ADR 0014 gives each subject in
+ * a batch its own budget, for the identical reason ADR 0006 already gave
+ * `evidence`'s per-kind one — a shared pool means adding a second subject
+ * quietly evicts the first's results.
+ */
+export function truncate<TItem>(
+  items: readonly TItem[],
+  limit: number | null,
+): { readonly items: readonly TItem[]; readonly budget: Budget } {
+  const returned = limit === null ? items : items.slice(0, limit)
+  return {
+    items: returned,
+    budget: {
+      returned: returned.length,
+      available: items.length,
+      truncated: returned.length < items.length,
+    },
+  }
+}
+
+/** One subject's contribution to a batch, already resolved and bounded. */
+export interface BatchSubject<TResult> {
+  readonly subject: string
+  readonly resolved: readonly string[]
+  readonly budget: Budget
+  readonly excluded: number
+  readonly blindSpots: readonly BlindSpot[]
+  /** This subject's own conditions, unioned into the envelope's shared field. */
+  readonly conditions: readonly ProjectConditions[]
+  readonly result: TResult
+}
+
+/**
+ * Build a batched envelope from entries already resolved and bounded, one per
+ * subject.
+ *
+ * ADR 0014: `result` is keyed by subject unconditionally — this is called
+ * whether one subject was passed or many, so the shape is never a function of
+ * how many arguments the caller happened to give. `conditions` is the union
+ * over every subject's own, deduplicated by project so a project two subjects
+ * both touch is not named twice.
+ */
+export function batched<TResult>(
+  operation: OperationName,
+  snapshot: Snapshot,
+  limit: number | null,
+  scope: ScopeFilter,
+  entries: readonly BatchSubject<TResult>[],
+): BatchedEnvelope<TResult> {
+  const conditions: ProjectConditions[] = []
+  const seen = new Set<string>()
+  for (const entry of entries) {
+    for (const row of entry.conditions) {
+      if (seen.has(row.project)) continue
+      seen.add(row.project)
+      conditions.push(row)
+    }
+  }
+  return {
+    operation,
+    schemaVersion: SCHEMA_VERSION,
+    request: {
+      subjects: entries.map((entry) => entry.subject),
+      resolved: entries.map((entry) => ({
+        subject: entry.subject,
+        resolved: entry.resolved,
+      })),
+      limit,
+      depth: null,
+      scope,
+    },
+    snapshot,
+    conditions,
+    result: entries.map((entry) => ({
+      subject: entry.subject,
+      resolved: entry.resolved,
+      budget: entry.budget,
+      excluded: entry.excluded,
+      blindSpots: entry.blindSpots,
+      result: entry.result,
+    })),
+  }
+}
+
+/** One subject's unbounded list, before `batchedAnswer` applies the shared `--limit` to it. */
+export interface BatchListSubject<TItem> {
+  readonly subject: string
+  readonly resolved: readonly string[]
+  readonly excluded: number
+  readonly blindSpots: readonly BlindSpot[]
+  readonly conditions: readonly ProjectConditions[]
+  readonly items: readonly TItem[]
+}
+
+/**
+ * Build a batched envelope for the four operations whose result is one list
+ * per subject: `symbol`, `callers`, `callees`, `references` and `file`.
+ *
+ * `evidence` does not use this — it bounds per kind before the envelope is
+ * built, exactly as it already does outside a batch, so it calls `batched`
+ * directly with entries it has already bounded itself.
+ */
+export function batchedAnswer<TItem>(
+  operation: OperationName,
+  snapshot: Snapshot,
+  limit: number | null,
+  scope: ScopeFilter,
+  entries: readonly BatchListSubject<TItem>[],
+): BatchedEnvelope<readonly TItem[]> {
+  return batched(
+    operation,
+    snapshot,
+    limit,
+    scope,
+    entries.map((entry) => {
+      const { items, budget } = truncate(entry.items, limit)
+      return { ...entry, budget, result: items }
+    }),
+  )
+}
+
+/**
+ * Build a failure envelope for one of ADR 0014's six batched operations.
+ *
+ * The same rule `failure` follows: a genuine failure returns the same shape
+ * carrying `error` instead of `result`, so a parser never meets a second
+ * shape for this operation family either.
+ */
+export function batchedFailure(
+  operation: OperationName,
+  subjects: readonly string[],
+  limit: number | null,
+  scope: ScopeFilter,
+  context: AnswerContext,
+  error: EnvelopeError,
+): BatchedEnvelope<never> {
+  return {
+    operation,
+    schemaVersion: SCHEMA_VERSION,
+    request: {
+      subjects,
+      resolved: subjects.map((subject) => ({ subject, resolved: [] })),
+      limit,
+      depth: null,
+      scope,
+    },
+    snapshot: context.snapshot,
+    conditions: context.conditions,
     error,
   }
 }

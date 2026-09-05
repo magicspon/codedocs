@@ -11,6 +11,10 @@ import type {
   AnalysisTotals,
   BaselineReport,
   BaselineUsed,
+  BatchedEnvelope,
+  BatchEntry,
+  BlindSpot,
+  Budget,
   CallEdge,
   Capture,
   Change,
@@ -37,6 +41,7 @@ import type {
   ProjectSummary,
   ReferenceEdge,
   RepairReport,
+  ScopeFilter,
   SectionReport,
   ReportEnvelope,
   SpecifierEvidence,
@@ -453,13 +458,12 @@ function headerNote(envelope: DoctorEnvelope, style: Style): Note {
 
 /** Render a `symbol` answer. */
 export function renderSymbols(
-  envelope: Envelope<readonly SymbolNode[]>,
+  envelope: BatchedEnvelope<readonly SymbolNode[]>,
   style: Style,
 ): string {
-  const lines = (envelope.result ?? []).map(
-    (node) => `  ${symbolLine(node, style)}`,
+  return finishBatched(envelope, style, 'symbols', (entry) =>
+    entry.result.map((node) => `  ${symbolLine(node, style)}`),
   )
-  return finish(envelope, lines, style, 'symbols')
 }
 
 /** One symbol row, shared with `evidence` so the two cannot print it differently. */
@@ -476,15 +480,16 @@ function symbolLine(node: SymbolNode, style: Style): string {
  * the source, `callees` the target.
  */
 export function renderEdges(
-  envelope: Envelope<readonly CallEdge[]>,
+  envelope: BatchedEnvelope<readonly CallEdge[]>,
   style: Style,
 ): string {
   const showTarget = envelope.operation === 'callees'
-  const lines = (envelope.result ?? []).map((edge) => {
-    const subject = showTarget ? edge.to : edge.from
-    return `  ${shorthandOf(subject)}  ${renderSite(edge, style)}`
-  })
-  return finish(envelope, lines, style, 'call edges')
+  return finishBatched(envelope, style, 'call edges', (entry) =>
+    entry.result.map((edge) => {
+      const subject = showTarget ? edge.to : edge.from
+      return `  ${shorthandOf(subject)}  ${renderSite(edge, style)}`
+    }),
+  )
 }
 
 /**
@@ -496,13 +501,12 @@ export function renderEdges(
  * facts about the same pair.
  */
 export function renderReferences(
-  envelope: Envelope<readonly ReferenceEdge[]>,
+  envelope: BatchedEnvelope<readonly ReferenceEdge[]>,
   style: Style,
 ): string {
-  const lines = (envelope.result ?? []).map(
-    (edge) => `  ${referenceLine(edge, style)}`,
+  return finishBatched(envelope, style, 'references', (entry) =>
+    entry.result.map((edge) => `  ${referenceLine(edge, style)}`),
   )
-  return finish(envelope, lines, style, 'references')
 }
 
 /** One reference row, shared with `evidence`. Provenance is never dropped. */
@@ -528,13 +532,14 @@ const FILE_LIST_LIMIT = 10
  * only licence to withhold.
  */
 export function renderFile(
-  envelope: Envelope<readonly FileReport[]>,
+  envelope: BatchedEnvelope<readonly FileReport[]>,
   style: Style,
 ): string {
-  const lines = (envelope.result ?? []).flatMap((report) =>
-    fileLines(report, style).map((line) => `  ${line}`),
+  return finishBatched(envelope, style, 'files', (entry) =>
+    entry.result.flatMap((report) =>
+      fileLines(report, style).map((line) => `  ${line}`),
+    ),
   )
-  return finish(envelope, lines, style, 'files')
 }
 
 /**
@@ -630,31 +635,31 @@ export function renderEvidence(
   envelope: EvidenceEnvelope,
   style: Style,
 ): string {
-  const report = envelope.result
-  // An unresolved subject has no kinds worth heading — `finish` says that it
-  // matched nothing, which is a different fact from every kind being empty.
-  const lines =
-    report === undefined || envelope.request.resolved.length === 0
-      ? []
-      : [
-          ...kindLines('symbols', report.symbols, (node) => [
-            symbolLine(node, style),
-          ]),
-          ...kindLines('files', report.files, (file) => fileLines(file, style)),
-          ...kindLines('callers', report.callers, (edge) => [
-            `${shorthandOf(edge.from)}  ${renderSite(edge, style)}`,
-          ]),
-          ...kindLines('callees', report.callees, (edge) => [
-            `${shorthandOf(edge.to)}  ${renderSite(edge, style)}`,
-          ]),
-          ...kindLines('references', report.references, (edge) => [
-            referenceLine(edge, style),
-          ]),
-          ...kindLines('labels', report.labels, (label) => [
-            labelRow(label, style),
-          ]),
-        ]
-  return finish(envelope, lines, style, 'facts')
+  return finishBatched(envelope, style, 'facts', (entry) => {
+    // An unresolved subject has no kinds worth heading — the empty fallback
+    // says that it matched nothing, which is a different fact from every kind
+    // being empty.
+    if (entry.resolved.length === 0) return []
+    const report = entry.result
+    return [
+      ...kindLines('symbols', report.symbols, (node) => [
+        symbolLine(node, style),
+      ]),
+      ...kindLines('files', report.files, (file) => fileLines(file, style)),
+      ...kindLines('callers', report.callers, (edge) => [
+        `${shorthandOf(edge.from)}  ${renderSite(edge, style)}`,
+      ]),
+      ...kindLines('callees', report.callees, (edge) => [
+        `${shorthandOf(edge.to)}  ${renderSite(edge, style)}`,
+      ]),
+      ...kindLines('references', report.references, (edge) => [
+        referenceLine(edge, style),
+      ]),
+      ...kindLines('labels', report.labels, (label) => [
+        labelRow(label, style),
+      ]),
+    ]
+  })
 }
 
 /**
@@ -1088,8 +1093,11 @@ export function renderReport(
   ].join('\n')
 }
 
-/** Render a failure envelope. */
-export function renderError(envelope: Envelope<never>, style: Style): string {
+/** Render a failure envelope, `Envelope` or ADR 0014's `BatchedEnvelope` alike. */
+export function renderError(
+  envelope: Envelope<never> | BatchedEnvelope<never>,
+  style: Style,
+): string {
   const error = envelope.error
   if (error === undefined) return style.warn('  error: could not answer')
   return style.warn(`  ${error.code}: ${formatError(error)}`)
@@ -1136,7 +1144,9 @@ function emptyLine(
 ): string {
   const { subject, resolved } = envelope.request
   if (subject !== null && resolved.length === 0) {
-    return style.warn(`  \`${subject}\` matched no ${nounOf(envelope)}`)
+    return style.warn(
+      `  \`${subject}\` matched no ${nounOf(envelope.operation)}`,
+    )
   }
   return style.dim(`  no ${unit}`)
 }
@@ -1146,10 +1156,12 @@ function emptyLine(
  * that it matched no *symbol*.
  *
  * Read off the manifest rather than listed here, so an operation that arrives
- * with a subject of its own cannot be forgotten in this sentence.
+ * with a subject of its own cannot be forgotten in this sentence. Takes the
+ * operation name alone rather than a whole envelope, so it reads the same for
+ * `Envelope` and ADR 0014's `BatchedEnvelope`.
  */
-const nounOf = (envelope: Envelope<unknown>): string => {
-  const named = operationSpec(envelope.operation)?.subject?.name ?? ''
+const nounOf = (operation: string): string => {
+  const named = operationSpec(operation)?.subject?.name ?? ''
   return named === 'path' ? 'file' : 'symbol'
 }
 
@@ -1158,6 +1170,80 @@ const BLIND_SPOT_LIMIT = 10
 
 /** Each note is empty or opens with a blank line, so `finish` never spaces them itself. */
 type Note = readonly string[]
+
+/**
+ * Append the honesty footer ADR 0014's six batched operations owe.
+ *
+ * Each subject gets its own budget, blind spots, ambiguity and scope note —
+ * ADR 0014 refuses to pool them, so the renderer does not either. Grouped
+ * under a `` `subject`: `` heading, one level more indented, whenever more than
+ * one subject was asked about; a single subject renders exactly as the nine
+ * non-batched operations do, so the common case reads identically either way.
+ * `conditions` and `snapshot` are shared across the whole answer and are
+ * printed once, after every subject.
+ */
+function finishBatched<TResult>(
+  envelope: BatchedEnvelope<TResult>,
+  style: Style,
+  unit: string,
+  bodyFor: (entry: BatchEntry<TResult>) => readonly string[],
+): string {
+  const entries = envelope.result ?? []
+  const grouped = entries.length > 1
+  const noun = nounOf(envelope.operation)
+  const blocks = entries.map((entry) => {
+    const lines = bodyFor(entry)
+    const body =
+      lines.length > 0
+        ? lines
+        : [emptyFor(entry.subject, entry.resolved, noun, style, unit)]
+    const block = [
+      ...body,
+      ...scopeNoteFor(envelope.request.scope, entry.excluded, style),
+      ...truncationNoteFor(entry.budget, style),
+      ...ambiguityNoteFor(
+        entry.subject,
+        entry.resolved,
+        envelope.operation,
+        style,
+      ),
+      ...blindSpotNoteFor(entry.blindSpots, style),
+    ]
+    return grouped
+      ? [style.bold(`  \`${entry.subject}\`:`), ...reindent(block)]
+      : block
+  })
+  const separated = blocks.flatMap((block, index) =>
+    index === 0 || !grouped ? block : ['', ...block],
+  )
+  const body = separated.length > 0 ? separated : [style.dim(`  no ${unit}`)]
+  return [
+    ...body,
+    ...syntacticNote(envelope, style),
+    ...snapshotNote(envelope, style),
+  ].join('\n')
+}
+
+/** Re-indent an already-formatted block one level deeper, blank lines untouched. */
+const reindent = (lines: readonly string[]): string[] =>
+  lines.map((line) => (line === '' ? '' : `  ${line}`))
+
+/**
+ * What one subject's entry says when it has nothing in it — the per-subject
+ * twin of `emptyLine`.
+ */
+function emptyFor(
+  subject: string,
+  resolved: readonly string[],
+  noun: string,
+  style: Style,
+  unit: string,
+): string {
+  if (resolved.length === 0) {
+    return style.warn(`  \`${subject}\` matched no ${noun}`)
+  }
+  return style.dim(`  no ${unit}`)
+}
 
 /**
  * The label filter this answer applied, and what it withheld.
@@ -1171,21 +1257,39 @@ type Note = readonly string[]
  */
 function scopeNote(envelope: Envelope<unknown>, style: Style): Note {
   const { scope } = envelope.request
+  return scopeNoteFor(scope, scope.excluded, style)
+}
+
+/**
+ * The label filter one answer applied, and what it withheld — the primitive
+ * form `scopeNote` and `finishBatched` both build on.
+ *
+ * `excluded` is separate from `scope` rather than read off it, because ADR
+ * 0014 keeps the filter one setting for a whole batch while the count it
+ * withheld is per subject (`scope.excluded` on `Scope` bundles the two for the
+ * nine operations that never batch).
+ */
+function scopeNoteFor(
+  scope: ScopeFilter,
+  excluded: number,
+  style: Style,
+): Note {
   const named = scope.exclude.length > 0 || scope.include.length > 1
-  if (scope.excluded === 0 && !named) return []
+  if (excluded === 0 && !named) return []
   const applied = [
     ...scope.include.map((filter) => `${filter.axis}=${filter.value}`),
     ...scope.exclude.map((filter) => `not ${filter.axis}=${filter.value}`),
   ].join(', ')
   const withheld =
-    scope.excluded === 0
-      ? 'nothing excluded'
-      : `${scope.excluded} excluded by it`
+    excluded === 0 ? 'nothing excluded' : `${excluded} excluded by it`
   return ['', style.dim(`  scope ${applied} — ${withheld}`)]
 }
 
 function truncationNote(envelope: Envelope<unknown>, style: Style): Note {
-  const { budget } = envelope
+  return truncationNoteFor(envelope.budget, style)
+}
+
+function truncationNoteFor(budget: Budget, style: Style): Note {
   if (!budget.truncated) return []
   return [
     '',
@@ -1201,17 +1305,27 @@ function truncationNote(envelope: Envelope<unknown>, style: Style): Note {
  */
 function ambiguityNote(envelope: Envelope<unknown>, style: Style): Note {
   const { resolved, subject } = envelope.request
-  if (resolved.length <= 1 || envelope.operation === 'symbol') return []
+  return ambiguityNoteFor(subject ?? '', resolved, envelope.operation, style)
+}
+
+function ambiguityNoteFor(
+  subject: string,
+  resolved: readonly string[],
+  operation: string,
+  style: Style,
+): Note {
+  if (resolved.length <= 1 || operation === 'symbol') return []
   return [
     '',
-    style.warn(
-      `  \`${subject ?? ''}\` is ambiguous — ${resolved.length} symbols:`,
-    ),
+    style.warn(`  \`${subject}\` is ambiguous — ${resolved.length} symbols:`),
     ...resolved.map((id) => style.dim(`    ${shorthandOf(id)}`)),
   ]
 }
 
-function syntacticNote(envelope: Envelope<unknown>, style: Style): Note {
+function syntacticNote(
+  envelope: Envelope<unknown> | BatchedEnvelope<unknown>,
+  style: Style,
+): Note {
   const syntactic = envelope.conditions.filter(
     (row) => row.fidelity === 'syntactic',
   )
@@ -1246,7 +1360,10 @@ function causeOf(row: ProjectConditions): string {
 }
 
 function blindSpotNote(envelope: Envelope<unknown>, style: Style): Note {
-  const spots = envelope.blindSpots
+  return blindSpotNoteFor(envelope.blindSpots, style)
+}
+
+function blindSpotNoteFor(spots: readonly BlindSpot[], style: Style): Note {
   if (spots.length === 0) return []
   const overflow = spots.length - BLIND_SPOT_LIMIT
   return [
@@ -1261,7 +1378,10 @@ function blindSpotNote(envelope: Envelope<unknown>, style: Style): Note {
   ]
 }
 
-function snapshotNote(envelope: Envelope<unknown>, style: Style): Note {
+function snapshotNote(
+  envelope: Envelope<unknown> | BatchedEnvelope<unknown>,
+  style: Style,
+): Note {
   const { dirty, commit } = envelope.snapshot
   if (!dirty) return []
   return [

@@ -74,6 +74,12 @@ One shape, every operation, success and failure alike.
 | `result`        | the operation's own payload                                            |
 | `error`         | present **instead of** `result` when the operation could not answer    |
 
+[ADR 0014](0014-multi-subject-batching.md) amends this table for six operations — `symbol`,
+`evidence`, `callers`, `callees`, `references`, `file` — which take one or more subjects at once:
+`request.subject` becomes `request.subjects`, `result` is always an array keyed by subject, and
+`budget`/`blindSpots` move onto each keyed entry rather than staying at the envelope's top for those
+six. Every other operation keeps the shape above unchanged.
+
 Scoping `conditions` to the answer is what stops the envelope growing with the size of the repository
 rather than the size of the question: cal.com has **34 projects**, and 33 of them have nothing to say
 about one `callers` answer. The full set is `doctor`'s job, which is already where ADR 0001 put the

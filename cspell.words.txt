@@ -30,6 +30,7 @@ npmjs
 pinnable
 Pocock
 predev
+reindent
 remediations
 renovatebot
 reprepares
@@ -38,11 +39,13 @@ sperno
 stackback
 tanstack
 Tauri
+trimmable
 tsdown
 turba
 turbopack
 unbatchable
 unconfig
+unioned
 unloadable
 unnormalised
 unparameterised

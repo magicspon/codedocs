@@ -10,11 +10,16 @@
 import { describe, expect, it } from 'vitest'
 import { DEFAULT_SCOPE } from '@codedocs/core'
 import type {
+  BatchedEnvelope,
+  BatchEntry,
   CallSite,
   DoctorEnvelope,
   Envelope,
+  OperationName,
   Precondition,
+  ProjectConditions,
   RepairReport,
+  Snapshot,
   SymbolNode,
   TracePath,
 } from '@codedocs/core'
@@ -44,34 +49,55 @@ const node: SymbolNode = {
   collisions: 0,
 }
 
-/** A clean envelope, so each test only says what it changes. */
-const envelopeOf = (
-  overrides: Partial<Envelope<readonly SymbolNode[]>> = {},
-): Envelope<readonly SymbolNode[]> => ({
-  operation: 'callers',
-  schemaVersion: 1,
-  request: {
-    subject: 'charge',
-    resolved: ['src/payments.ts#charge'],
-    limit: null,
-    depth: null,
-    scope: DEFAULT_SCOPE,
-  },
-  snapshot: {
-    commit: 'abc1234',
-    dirty: false,
-    analysedAt: '2026-01-01T00:00:00Z',
-  },
-  conditions: [],
-  blindSpots: [],
+/** One batched entry, so each test only says what it changes. */
+const entryOf = (
+  overrides: Partial<BatchEntry<readonly SymbolNode[]>> = {},
+): BatchEntry<readonly SymbolNode[]> => ({
+  subject: 'charge',
+  resolved: ['src/payments.ts#charge'],
   budget: { returned: 1, available: 1, truncated: false },
+  excluded: 0,
+  blindSpots: [],
   result: [node],
   ...overrides,
 })
 
+/** A clean batched envelope, one entry, so each test only says what it changes. */
+const envelopeOf = (
+  overrides: {
+    readonly operation?: OperationName
+    readonly conditions?: readonly ProjectConditions[]
+    readonly snapshot?: Snapshot
+    readonly entries?: readonly BatchEntry<readonly SymbolNode[]>[]
+  } = {},
+): BatchedEnvelope<readonly SymbolNode[]> => {
+  const entries = overrides.entries ?? [entryOf()]
+  return {
+    operation: overrides.operation ?? 'callers',
+    schemaVersion: 5,
+    request: {
+      subjects: entries.map((entry) => entry.subject),
+      resolved: entries.map((entry) => ({
+        subject: entry.subject,
+        resolved: entry.resolved,
+      })),
+      limit: null,
+      depth: null,
+      scope: { include: DEFAULT_SCOPE.include, exclude: DEFAULT_SCOPE.exclude },
+    },
+    snapshot: overrides.snapshot ?? {
+      commit: 'abc1234',
+      dirty: false,
+      analysedAt: '2026-01-01T00:00:00Z',
+    },
+    conditions: overrides.conditions ?? [],
+    result: entries,
+  }
+}
+
 const render = (
-  overrides: Partial<Envelope<readonly SymbolNode[]>> = {},
-): string => renderSymbols(envelopeOf(overrides), plain)
+  entry: Partial<BatchEntry<readonly SymbolNode[]>> = {},
+): string => renderSymbols(envelopeOf({ entries: [entryOf(entry)] }), plain)
 
 describe('a clean answer', () => {
   it('carries no footer, because no news is the honest render of a clean state', () => {
@@ -95,13 +121,7 @@ describe('the footer', () => {
 
   it('names the candidates when a subject is ambiguous', () => {
     const out = render({
-      request: {
-        subject: 'charge',
-        resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
-        limit: null,
-        depth: null,
-        scope: DEFAULT_SCOPE,
-      },
+      resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
     })
     expect(out).toContain('`charge` is ambiguous — 2 symbols')
     expect(out).toContain('src/billing.ts#charge')
@@ -111,13 +131,12 @@ describe('the footer', () => {
     const out = renderSymbols(
       envelopeOf({
         operation: 'symbol',
-        request: {
-          subject: '*',
-          resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
-          limit: null,
-          depth: null,
-          scope: DEFAULT_SCOPE,
-        },
+        entries: [
+          entryOf({
+            subject: '*',
+            resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
+          }),
+        ],
       }),
       plain,
     )
@@ -125,24 +144,27 @@ describe('the footer', () => {
   })
 
   it('names a project analysed without types, and what that costs', () => {
-    const out = render({
-      conditions: [
-        {
-          project: 'tsconfig.json',
-          fidelity: 'typed',
-          analysedAt: '2026-01-01T00:00:00Z',
-          cause: null,
-          postinstall: false,
-        },
-        {
-          project: 'apps/web/tsconfig.json',
-          fidelity: 'syntactic',
-          analysedAt: '2026-01-01T00:00:00Z',
-          cause: 'unprepared',
-          postinstall: false,
-        },
-      ],
-    })
+    const out = renderSymbols(
+      envelopeOf({
+        conditions: [
+          {
+            project: 'tsconfig.json',
+            fidelity: 'typed',
+            analysedAt: '2026-01-01T00:00:00Z',
+            cause: null,
+            postinstall: false,
+          },
+          {
+            project: 'apps/web/tsconfig.json',
+            fidelity: 'syntactic',
+            analysedAt: '2026-01-01T00:00:00Z',
+            cause: 'unprepared',
+            postinstall: false,
+          },
+        ],
+      }),
+      plain,
+    )
     expect(out).toContain('1 project(s) analysed without types')
     expect(out).toContain('apps/web/tsconfig.json')
     expect(out).toContain('may be missing')
@@ -162,42 +184,53 @@ describe('the footer', () => {
   })
 
   it('says which snapshot answered when the tree has drifted', () => {
-    const out = render({
-      snapshot: {
-        commit: 'abc1234',
-        dirty: true,
-        analysedAt: '2026-01-01T00:00:00Z',
-      },
-    })
+    const out = renderSymbols(
+      envelopeOf({
+        snapshot: {
+          commit: 'abc1234',
+          dirty: true,
+          analysedAt: '2026-01-01T00:00:00Z',
+        },
+      }),
+      plain,
+    )
     expect(out).toContain('answered from the snapshot at abc1234')
   })
 
   it('does not pretend to a commit outside a repository', () => {
-    const out = render({
-      snapshot: { commit: null, dirty: true, analysedAt: null },
-    })
+    const out = renderSymbols(
+      envelopeOf({ snapshot: { commit: null, dirty: true, analysedAt: null } }),
+      plain,
+    )
     expect(out).toContain('an unknown commit')
   })
 
   it('reports every note at once, in a fixed order', () => {
-    const out = render({
-      budget: { returned: 1, available: 2, truncated: true },
-      conditions: [
-        {
-          project: 'tsconfig.json',
-          fidelity: 'syntactic',
-          analysedAt: '2026-01-01T00:00:00Z',
-          cause: 'missing-generated',
-          postinstall: false,
-        },
-      ],
-      blindSpots: [{ subject: 'vendor.js', reason: 'not analysed' }],
-      snapshot: { commit: 'abc1234', dirty: true, analysedAt: null },
-    })
+    const out = renderSymbols(
+      envelopeOf({
+        conditions: [
+          {
+            project: 'tsconfig.json',
+            fidelity: 'syntactic',
+            analysedAt: '2026-01-01T00:00:00Z',
+            cause: 'missing-generated',
+            postinstall: false,
+          },
+        ],
+        snapshot: { commit: 'abc1234', dirty: true, analysedAt: null },
+        entries: [
+          entryOf({
+            budget: { returned: 1, available: 2, truncated: true },
+            blindSpots: [{ subject: 'vendor.js', reason: 'not analysed' }],
+          }),
+        ],
+      }),
+      plain,
+    )
     const order = [
       'showing 1 of 2',
-      'without types',
       'blind spot(s)',
+      'without types',
       'snapshot at',
     ]
     const positions = order.map((needle) => out.indexOf(needle))
@@ -209,35 +242,25 @@ describe('the footer', () => {
     expect(render({ result: [] })).toContain('no symbols')
   })
 
-  it('names an ambiguity even where the envelope carries no subject text', () => {
-    const out = render({
-      request: {
-        subject: null,
-        resolved: ['src/payments.ts#charge', 'src/billing.ts#charge'],
-        limit: null,
-        depth: null,
-        scope: DEFAULT_SCOPE,
-      },
-    })
-    expect(out).toContain('is ambiguous — 2 symbols')
-  })
-
   it('tells the two causes of a syntactic project apart, and says nothing for a third', () => {
     const causes = (
       cause: 'unprepared' | 'missing-generated' | 'broken',
       postinstall = false,
     ): string =>
-      render({
-        conditions: [
-          {
-            project: 'tsconfig.json',
-            fidelity: 'syntactic',
-            analysedAt: '2026-01-01T00:00:00Z',
-            cause,
-            postinstall,
-          },
-        ],
-      })
+      renderSymbols(
+        envelopeOf({
+          conditions: [
+            {
+              project: 'tsconfig.json',
+              fidelity: 'syntactic',
+              analysedAt: '2026-01-01T00:00:00Z',
+              cause,
+              postinstall,
+            },
+          ],
+        }),
+        plain,
+      )
 
     expect(causes('unprepared')).toContain('install the dependencies')
     expect(causes('unprepared', true)).toContain(

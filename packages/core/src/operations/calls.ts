@@ -4,9 +4,16 @@
  * One module because they differ only in which column they read: keeping them
  * apart would duplicate the subject resolution, the ambiguity handling and the
  * sort key, which is three chances for the two to disagree.
+ *
+ * ADR 0014: several subjects may be given at once, and `result` is one entry
+ * per subject, keyed the same way whether one was given or many.
  */
 
-import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import {
+  batchedAnswer,
+  type AnswerContext,
+  type BatchedEnvelope,
+} from '../envelope.ts'
 import { applyScope, type Scoping } from '../labels/index.ts'
 import type { CallEdge, SymbolNode } from '../model.ts'
 import { readCalleesOf, readCallersOf, type Store } from '../store/index.ts'
@@ -14,7 +21,7 @@ import { scopeTo } from './scope.ts'
 import { noteCollisions, resolveSubject } from './subject.ts'
 
 /**
- * Every call edge into the subject.
+ * Every call edge into each subject, one entry per subject.
  *
  * An ambiguous subject returns the union across every symbol it resolved to,
  * and the envelope's `request.resolved` names them, so a caller can tell one
@@ -23,22 +30,22 @@ import { noteCollisions, resolveSubject } from './subject.ts'
 export function callers(
   store: Store,
   context: AnswerContext,
-  subject: string,
+  subjects: readonly string[],
   limit: number | null,
   scoping: Scoping,
-): Envelope<readonly CallEdge[]> {
-  return collect(store, context, subject, limit, scoping, 'callers')
+): BatchedEnvelope<readonly CallEdge[]> {
+  return collect(store, context, subjects, limit, scoping, 'callers')
 }
 
-/** Every call edge out of the subject. */
+/** Every call edge out of each subject, one entry per subject. */
 export function callees(
   store: Store,
   context: AnswerContext,
-  subject: string,
+  subjects: readonly string[],
   limit: number | null,
   scoping: Scoping,
-): Envelope<readonly CallEdge[]> {
-  return collect(store, context, subject, limit, scoping, 'callees')
+): BatchedEnvelope<readonly CallEdge[]> {
+  return collect(store, context, subjects, limit, scoping, 'callees')
 }
 
 /**
@@ -71,37 +78,43 @@ export function callEdgesOf(
 function collect(
   store: Store,
   context: AnswerContext,
-  subject: string,
+  subjects: readonly string[],
   limit: number | null,
   scoping: Scoping,
   direction: 'callers' | 'callees',
-): Envelope<readonly CallEdge[]> {
-  const resolved = resolveSubject(store, subject)
-  // The site's file is the join: for `callers` that is the caller's own file,
-  // which is what "which of these callers are in test files" asks about.
-  const { kept: edges, scope } = applyScope(
-    scoping,
-    callEdgesOf(store, resolved, direction),
-    (edge) => edge.file,
-  )
-
-  return answer(
-    direction,
-    {
-      subject,
-      resolved: resolved.map((node) => node.id),
-      limit,
-      depth: null,
-      scope,
-    },
-    noteCollisions(
+): BatchedEnvelope<readonly CallEdge[]> {
+  const entries = subjects.map((subject) => {
+    const resolved = resolveSubject(store, subject)
+    // The site's file is the join: for `callers` that is the caller's own
+    // file, which is what "which of these callers are in test files" asks
+    // about.
+    const { kept: edges, scope } = applyScope(
+      scoping,
+      callEdgesOf(store, resolved, direction),
+      (edge) => edge.file,
+    )
+    const subjectContext = noteCollisions(
       scopeTo(store, context, [
         ...resolved.map((node) => node.file),
         ...edges.map((e) => e.file),
       ]),
       resolved,
-    ),
-    edges,
+    )
+    return {
+      subject,
+      resolved: resolved.map((node) => node.id),
+      excluded: scope.excluded,
+      blindSpots: subjectContext.blindSpots,
+      conditions: subjectContext.conditions,
+      items: edges,
+    }
+  })
+  return batchedAnswer(
+    direction,
+    context.snapshot,
+    limit,
+    scoping.scope,
+    entries,
   )
 }
 

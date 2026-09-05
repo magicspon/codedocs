@@ -132,10 +132,7 @@ function describe(spec: OperationSpec): string {
     `${spec.summary}.`,
     `Returns the codedocs answer envelope as JSON — the same bytes ${call}`,
   ].join(' ')
-  const honesty =
-    'Every answer also carries `snapshot`, `conditions`, `blindSpots` and ' +
-    '`budget`: read `blindSpots` before treating an answer as complete.'
-  return [shaped(spec, opening, honesty), spec.selection].join(' ')
+  return [shaped(spec, opening), spec.selection].join(' ')
 }
 
 /**
@@ -143,9 +140,37 @@ function describe(spec: OperationSpec): string {
  *
  * Read off the manifest's `shape` rather than guessed at from `unit`, because
  * the three shapes make different promises: only a list can be paged, and only
- * `kinds` bounds each of its lists separately.
+ * `kinds` bounds each of its lists separately. ADR 0014's six batched
+ * operations cut across `shape` — `symbol`/`callers`/`callees`/`references`/
+ * `file` are `list`-shaped and `evidence` is `kinds`-shaped *within* one
+ * subject, but every one of them wraps that shape in one array keyed by
+ * subject, so batching is checked first and handled as one case regardless of
+ * the shape underneath it.
  */
-function shaped(spec: OperationSpec, opening: string, honesty: string): string {
+function shaped(spec: OperationSpec, opening: string): string {
+  const honesty =
+    spec.subject?.multiple === true
+      ? 'Every answer also carries `snapshot` and `conditions`. `budget` and ' +
+        '`blindSpots` have no top-level field here: each entry of `result` ' +
+        'carries its own, never pooled across subjects — read a subject’s own ' +
+        '`blindSpots` before treating its answer as complete.'
+      : 'Every answer also carries `snapshot`, `conditions`, `blindSpots` and ' +
+        '`budget`: read `blindSpots` before treating an answer as complete.'
+
+  if (spec.subject?.multiple === true) {
+    const perSubject =
+      spec.shape === 'kinds'
+        ? `holds one ${spec.unit} report for that subject, each of its own kinds ` +
+          `sorted ${spec.sortedBy} and bounded by its own \`limit\` **per kind**`
+        : `is a list of ${spec.unit}s for that subject, sorted by ${spec.sortedBy}`
+    return [
+      opening,
+      'prints. `result` is always an array keyed by subject (ADR 0014) — one',
+      'entry per subject given, whether one subject was given or many, each',
+      'carrying its own `subject`, `resolved`, `budget`, `excluded` and',
+      `\`blindSpots\`. Each entry's own \`result\` ${perSubject}. ${honesty}`,
+    ].join(' ')
+  }
   if (spec.shape === 'report') {
     return [
       opening,
@@ -185,7 +210,7 @@ function shaped(spec: OperationSpec, opening: string, honesty: string): string {
 /** How the CLI spells one operation's subject, for a description that quotes it. */
 function invocationSuffix(spec: OperationSpec): string {
   if (spec.subject === null) return ''
-  const subject = ` <${spec.subject.name}>`
+  const subject = ` <${spec.subject.name}>${spec.subject.multiple ? '...' : ''}`
   return spec.subject.variadic ? ` --${subject}` : subject
 }
 
@@ -198,13 +223,18 @@ function invocationSuffix(spec: OperationSpec): string {
 function schemaFor(spec: OperationSpec): Record<string, ArgumentSchema> {
   const properties: Record<string, ArgumentSchema> = {}
   if (spec.subject !== null) {
-    properties[spec.subject.name] = spec.subject.variadic
-      ? {
-          type: 'array',
-          items: { type: 'string' },
-          description: spec.subject.description,
-        }
-      : { type: 'string', description: spec.subject.description }
+    // `variadic` (`report-bug`'s whole command) and `multiple` (ADR 0014's
+    // batching) are both several tokens rather than one, so both take an
+    // array schema — they differ in how the CLI binding reads the array back,
+    // not in how MCP declares it.
+    properties[spec.subject.name] =
+      spec.subject.variadic || spec.subject.multiple
+        ? {
+            type: 'array',
+            items: { type: 'string' },
+            description: spec.subject.description,
+          }
+        : { type: 'string', description: spec.subject.description }
   }
   if (spec.depth) properties['depth'] = DEPTH_ARGUMENT
   // Per-operation flags, described by the manifest so this binding has nothing

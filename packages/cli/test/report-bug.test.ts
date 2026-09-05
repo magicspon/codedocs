@@ -483,7 +483,7 @@ describe('--out -', () => {
       result: { repositoryFacts: string }
     }
     expect(envelope.operation).toBe('report-bug')
-    expect(envelope.schemaVersion).toBe(4)
+    expect(envelope.schemaVersion).toBe(5)
     expect(envelope.result.repositoryFacts).toBe('excluded')
     // Its own envelope says nothing about the repository either: this answer is
     // a file, and every honesty field it could fill is a fact the report has

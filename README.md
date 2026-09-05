@@ -138,6 +138,8 @@ There is no daemon and no watcher. Every command is a one-shot process.
 
 The commands are deliberately composable. There isn't a separate "AI mode" or a different API for agents.
 
+`symbol`, `callers`, `callees`, `references`, `file` and `evidence` take more than one subject in a single call — `codedocs evidence 'AuthService.login' 'SessionService.refresh'` — so an agent that already has a list of symbols pays one round trip and one envelope instead of one per symbol. See [JSON](#json) below for the shape this returns.
+
 ---
 
 ## `symbol`
@@ -453,14 +455,14 @@ Every operation supports:
 --json
 ```
 
-All commands return the same envelope.
+Every command returns one of two envelope shapes, and which one follows from the operation, never from how it was invoked.
 
-For example:
+Most operations — `analyse`, `trace`, `impact`, `docs check`, `docs affected`, `docs draft`, `doctor`, `report-bug` — return the flat envelope below:
 
 ```json
 {
-  "operation": "callees",
-  "schemaVersion": 4,
+  "operation": "trace",
+  "schemaVersion": 5,
   "request": {
     "subject": "…#getPaymentAppData",
     "resolved": ["…#getPaymentAppData"],
@@ -487,7 +489,61 @@ For example:
 }
 ```
 
-Failures use the same envelope with `error` instead of `result`.
+`symbol`, `evidence`, `callers`, `callees`, `references` and `file` take one or more subjects in a single call, and `result` is always an array keyed by subject — one entry whether one subject was given or many, so an agent that names several symbols pays one round trip and one envelope rather than one of each per symbol. `budget` and `blindSpots` have no top-level field on this shape: each entry owns its own, so a shared pool can never let one subject's answer evict another's.
+
+```sh
+codedocs callees 'getPaymentAppData' 'chargePayment' --json
+```
+
+```json
+{
+  "operation": "callees",
+  "schemaVersion": 5,
+  "request": {
+    "subjects": ["getPaymentAppData", "chargePayment"],
+    "resolved": [
+      { "subject": "getPaymentAppData", "resolved": ["…#getPaymentAppData"] },
+      { "subject": "chargePayment", "resolved": ["…#chargePayment"] }
+    ],
+    "limit": null,
+    "depth": null,
+    "scope": {
+      "include": [{ "axis": "authorship", "value": "authored" }],
+      "exclude": []
+    }
+  },
+  "snapshot": {
+    "commit": "176037d0…",
+    "dirty": false
+  },
+  "conditions": [],
+  "result": [
+    {
+      "subject": "getPaymentAppData",
+      "resolved": ["…#getPaymentAppData"],
+      "budget": { "returned": 0, "available": 0, "truncated": false },
+      "excluded": 0,
+      "blindSpots": [],
+      "result": []
+    },
+    {
+      "subject": "chargePayment",
+      "resolved": ["…#chargePayment"],
+      "budget": { "returned": 2, "available": 2, "truncated": false },
+      "excluded": 0,
+      "blindSpots": [],
+      "result": [
+        { "from": "…#chargePayment", "to": "…#audit", "kind": "calls" },
+        { "from": "…#chargePayment", "to": "…#post", "kind": "calls" }
+      ]
+    }
+  ]
+}
+```
+
+A single subject still comes back the same way — `result` has exactly one entry — so a caller never has to branch on how many subjects it happened to pass.
+
+Failures use the same envelope (whichever of the two shapes the operation carries) with `error` instead of `result`.
 
 Errors are represented by stable error codes and typed parameters rather than human-readable sentences, so consumers should branch on `error.code`, not English text.
 
