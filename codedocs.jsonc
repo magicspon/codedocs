@@ -7,6 +7,11 @@
     // `repos/` holds five fixture checkouts used for measurement. cal.com alone
     // contributes 28 tsconfigs, so without this codedocs analysing itself
     // discovers 126 projects belonging to other people's repositories.
-    "skip": ["repos"]
+    //
+    // `fixtures` holds test-only Markdown that deliberately carries claims, so
+    // that unit tests can exercise `docs check` — those are not documents about
+    // this repository. `discover.skip` already reaches the document scan
+    // (`discoverDocuments` shares this set), so no new key is needed.
+    "skip": ["repos", "fixtures"]
   }
 }

@@ -113,6 +113,28 @@ describe('fenced code', () => {
   })
 })
 
+describe('inline code', () => {
+  it('is not content: mentioning the marker in a code span is prose, not a claim', () => {
+    // docs/USAGE.md and packages/cli/README.md both explain the syntax with
+    // `` `<!-- codedocs:` `` — a code span, not a comment — and a plain
+    // substring search read it as an unterminated marker, consuming the rest
+    // of the file as its expression.
+    const document = parse(
+      '# Explaining the marker',
+      '',
+      'Discovery scans for `<!-- codedocs:`, which is not one here.',
+      '',
+      '# Next',
+      '',
+      '<!-- codedocs: exists(src/a.ts#a) -->',
+    )
+    expect(document.sections[0]?.claims).toEqual([])
+    expect(document.sections[1]?.claims.map((one) => one.text)).toEqual([
+      'exists(src/a.ts#a)',
+    ])
+  })
+})
+
 describe('claims', () => {
   it('reads one that wraps across several lines as one expression', () => {
     // ADR 0005's own example wraps a claim to keep a paragraph readable.

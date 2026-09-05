@@ -1,0 +1,14 @@
+5 case(s) x 3 replicate(s) x 2 arm(s): baseline@sonnet-5, codedocs@sonnet-5; judged by claude-opus-5 x3
+
+  333230/baseline@sonnet-5/r1       already measured, skipped
+  333230/codedocs@sonnet-5/r1       already measured, skipped
+  329610/baseline@sonnet-5/r1       already measured, skipped
+  329610/codedocs@sonnet-5/r1       already measured, skipped
+  331102/baseline@sonnet-5/r1       already measured, skipped
+  331102/codedocs@sonnet-5/r1       already measured, skipped
+  326185/baseline@sonnet-5/r1       already measured, skipped
+  326185/codedocs@sonnet-5/r1       already measured, skipped
+  331452/baseline@sonnet-5/r1       already measured, skipped
+  331452/codedocs@sonnet-5/r1       already measured, skipped
+  333230/codedocs@sonnet-5/r2       already measured, skipped
+  333230/baseline@sonnet-5/r2       

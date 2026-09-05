@@ -145,10 +145,28 @@ function readProse(
     run.links.push(link)
   }
 
-  const claim = line.includes(MARKER) ? claimAt(lines, at) : null
+  const claim = hasMarker(line) ? claimAt(lines, at) : null
   if (claim === null) return at
   run.claims.push(claim.site)
   return claim.endedAt
+}
+
+/**
+ * Whether a line opens a real marker, as opposed to prose *about* the marker.
+ *
+ * Both `docs/USAGE.md` and `packages/cli/README.md` explain the syntax with
+ * `` `<!-- codedocs:` `` — an inline code span, not a comment. A plain
+ * substring search cannot tell those apart, so a document describing its own
+ * marker became a document, and the paragraph after the mention was consumed
+ * as a claim's expression all the way to the next stray `-->`. A marker
+ * preceded by an odd number of backticks on the same line is inside a code
+ * span and is not one.
+ */
+function hasMarker(line: string): boolean {
+  const at = line.indexOf(MARKER)
+  if (at === -1) return false
+  const backticks = line.slice(0, at).split('`').length - 1
+  return backticks % 2 === 0
 }
 
 /** One section while it is still being read, before its end is known. */
