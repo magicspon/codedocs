@@ -10,9 +10,16 @@
  * walked one way at a time, while "what names `Money`" and "what does `price`
  * name" are the same question about the same edge, and splitting them would
  * make an agent ask twice to learn what one answer holds.
+ *
+ * ADR 0014: several subjects may be given at once, and `result` is one entry
+ * per subject, keyed the same way whether one was given or many.
  */
 
-import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import {
+  batchedAnswer,
+  type AnswerContext,
+  type BatchedEnvelope,
+} from '../envelope.ts'
 import { applyScope, type Scoping } from '../labels/index.ts'
 import type { ReferenceEdge, SymbolNode } from '../model.ts'
 import {
@@ -25,7 +32,8 @@ import { scopeTo } from './scope.ts'
 import { noteCollisions, resolveSubject } from './subject.ts'
 
 /**
- * Every non-call reference edge into and out of a subject.
+ * Every non-call reference edge into and out of each subject, one entry per
+ * subject.
  *
  * An ambiguous subject returns the union across every symbol it resolved to,
  * and `request.resolved` names them, exactly as the call operations do.
@@ -33,34 +41,39 @@ import { noteCollisions, resolveSubject } from './subject.ts'
 export function references(
   store: Store,
   context: AnswerContext,
-  subject: string,
+  subjects: readonly string[],
   limit: number | null,
   scoping: Scoping,
-): Envelope<readonly ReferenceEdge[]> {
-  const resolved = resolveSubject(store, subject)
-  const { kept: edges, scope } = applyScope(
-    scoping,
-    referenceEdgesOf(store, resolved),
-    (edge) => edge.file,
-  )
-
-  return answer(
-    'references',
-    {
-      subject,
-      resolved: resolved.map((node) => node.id),
-      limit,
-      depth: null,
-      scope,
-    },
-    noteCollisions(
+): BatchedEnvelope<readonly ReferenceEdge[]> {
+  const entries = subjects.map((subject) => {
+    const resolved = resolveSubject(store, subject)
+    const { kept: edges, scope } = applyScope(
+      scoping,
+      referenceEdgesOf(store, resolved),
+      (edge) => edge.file,
+    )
+    const subjectContext = noteCollisions(
       scopeTo(store, context, [
         ...resolved.map((node) => node.file),
         ...edges.map((edge) => edge.file),
       ]),
       resolved,
-    ),
-    edges,
+    )
+    return {
+      subject,
+      resolved: resolved.map((node) => node.id),
+      excluded: scope.excluded,
+      blindSpots: subjectContext.blindSpots,
+      conditions: subjectContext.conditions,
+      items: edges,
+    }
+  })
+  return batchedAnswer(
+    'references',
+    context.snapshot,
+    limit,
+    scoping.scope,
+    entries,
   )
 }
 

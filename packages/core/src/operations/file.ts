@@ -7,9 +7,16 @@
  *
  * It reads rows and composes nothing: the projects that globbed it, the fidelity
  * those conditions gave it, what it declares, and the imports either way.
+ *
+ * ADR 0014: several paths may be given at once, and `result` is one entry per
+ * path, keyed the same way whether one was given or many.
  */
 
-import { answer, type AnswerContext, type Envelope } from '../envelope.ts'
+import {
+  batchedAnswer,
+  type AnswerContext,
+  type BatchedEnvelope,
+} from '../envelope.ts'
 import { applyScope, type Scoping } from '../labels/index.ts'
 import type {
   Fidelity,
@@ -47,34 +54,40 @@ export interface FileReport {
 }
 
 /**
- * Report what the index holds about the files a path names.
+ * Report what the index holds about the files each path names, one entry per
+ * path.
  *
- * The subject is a repository-relative path, and — per ADR 0006's rule that
+ * A subject is a repository-relative path, and — per ADR 0006's rule that
  * whatever an operation prints is accepted back — the tail of one: `checkout.ts`
  * finds `src/checkout.ts`. A tail that matches several files is not an error but
  * the same ambiguity a bare symbol name carries, so every match is reported and
- * `request.resolved` names them.
+ * `resolved` names them.
  */
 export function file(
   store: Store,
   context: AnswerContext,
-  subject: string,
+  subjects: readonly string[],
   limit: number | null,
   scoping: Scoping,
-): Envelope<readonly FileReport[]> {
-  const { kept: paths, scope } = applyScope(
-    scoping,
-    resolvePath(store, subject),
-    (path) => path,
-  )
-  const reports = paths.map((path) => fileReport(store, context, path))
-
-  return answer(
-    'file',
-    { subject, resolved: paths, limit, depth: null, scope },
-    scopeTo(store, context, paths),
-    reports,
-  )
+): BatchedEnvelope<readonly FileReport[]> {
+  const entries = subjects.map((subject) => {
+    const { kept: paths, scope } = applyScope(
+      scoping,
+      resolvePath(store, subject),
+      (path) => path,
+    )
+    const reports = paths.map((path) => fileReport(store, context, path))
+    const subjectContext = scopeTo(store, context, paths)
+    return {
+      subject,
+      resolved: paths,
+      excluded: scope.excluded,
+      blindSpots: subjectContext.blindSpots,
+      conditions: subjectContext.conditions,
+      items: reports,
+    }
+  })
+  return batchedAnswer('file', context.snapshot, limit, scoping.scope, entries)
 }
 
 /**

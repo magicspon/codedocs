@@ -132,14 +132,15 @@ describe('an answer over a collided id', () => {
       const envelope = callers(
         session.store,
         session.context,
-        `${file}#retry.report`,
+        [`${file}#retry.report`],
         null,
         UNSCOPED,
       )
       // Two catch clauses declare a `report`, and both are called. The edges are
       // the union, which is the over-report the blind spot exists to declare.
-      expect(envelope.result).toHaveLength(2)
-      expect(envelope.blindSpots.map((spot) => spot.subject)).toContain(
+      const entry = envelope.result?.[0]
+      expect(entry?.result).toHaveLength(2)
+      expect(entry?.blindSpots.map((spot) => spot.subject)).toContain(
         `${file}#retry.report`,
       )
     } finally {
@@ -153,11 +154,11 @@ describe('an answer over a collided id', () => {
       const envelope = callers(
         session.store,
         session.context,
-        `${file}#retry`,
+        [`${file}#retry`],
         null,
         UNSCOPED,
       )
-      expect(envelope.blindSpots).toEqual([])
+      expect(envelope.result?.[0]?.blindSpots).toEqual([])
     } finally {
       session.close()
     }

@@ -68,12 +68,30 @@ describe('argument handling', () => {
   })
 })
 
+/** One entry of a batched envelope's `result`, which every test here expects. */
+interface BatchEntry {
+  readonly subject: string
+  readonly resolved: readonly string[]
+  readonly budget: { truncated: boolean; returned: number; available: number }
+  readonly excluded: number
+  readonly blindSpots: readonly unknown[]
+  readonly result: unknown
+}
+
+const entryOf = (stdout: string): BatchEntry => {
+  const envelope = JSON.parse(stdout) as { result: BatchEntry[] }
+  const found = envelope.result[0]
+  if (found === undefined) throw new Error('answered with no entry')
+  return found
+}
+
 describe('the machine renderer', () => {
   it('answers with the envelope every operation owes', () => {
-    const result = invoke('callers', 'charge', '--json')
-    expect(result.code).toBe(0)
-
-    const envelope = JSON.parse(result.stdout) as Record<string, unknown>
+    // `trace` is one of the nine operations ADR 0014 leaves untouched: the flat
+    // shape, budget and blind spots at the top.
+    const flat = invoke('trace', 'charge', '--json')
+    expect(flat.code).toBe(0)
+    const flatEnvelope = JSON.parse(flat.stdout) as Record<string, unknown>
     for (const field of [
       'operation',
       'schemaVersion',
@@ -84,49 +102,79 @@ describe('the machine renderer', () => {
       'budget',
       'result',
     ]) {
-      expect(envelope).toHaveProperty(field)
+      expect(flatEnvelope).toHaveProperty(field)
+    }
+
+    // `callers` is one of ADR 0014's six batched operations: `result` is an
+    // array keyed by subject, and `budget`/`blindSpots` live on that entry.
+    const batched = invoke('callers', 'charge', '--json')
+    expect(batched.code).toBe(0)
+    const batchedEnvelope = JSON.parse(batched.stdout) as Record<
+      string,
+      unknown
+    >
+    for (const field of [
+      'operation',
+      'schemaVersion',
+      'request',
+      'snapshot',
+      'conditions',
+      'result',
+    ]) {
+      expect(batchedEnvelope).toHaveProperty(field)
+    }
+    expect(batchedEnvelope).not.toHaveProperty('blindSpots')
+    expect(batchedEnvelope).not.toHaveProperty('budget')
+    const entry = entryOf(batched.stdout)
+    for (const field of ['subject', 'resolved', 'budget', 'blindSpots']) {
+      expect(entry).toHaveProperty(field)
     }
   })
 
   it('echoes the resolved subject, so an answer can be fed back in', () => {
-    const envelope = JSON.parse(
-      invoke('callers', 'charge', '--json').stdout,
-    ) as {
-      request: { resolved: string[] }
-    }
+    const entry = entryOf(invoke('callers', 'charge', '--json').stdout)
     // The `SymbolId` itself, which is ADR 0006's third input form: the package
     // is the fixture's own, and the version is the fixed placeholder ADR 0002
     // normalises a workspace version to.
-    expect(envelope.request.resolved).toEqual([
+    expect(entry.resolved).toEqual([
       'codedocs npm codedocs-cli-fixture . `src/payments.ts`/charge().',
     ])
 
     // The resolved id round-trips: passing it back gives the same answer.
-    const again = JSON.parse(
-      invoke('callers', envelope.request.resolved[0] ?? '', '--json').stdout,
-    ) as { request: { resolved: string[] } }
-    expect(again.request.resolved).toEqual(envelope.request.resolved)
+    const again = entryOf(
+      invoke('callers', entry.resolved[0] ?? '', '--json').stdout,
+    )
+    expect(again.resolved).toEqual(entry.resolved)
   })
 
   it('is unbounded by default, so an agent is never handed a silent cap', () => {
-    const envelope = JSON.parse(invoke('symbol', '*', '--json').stdout) as {
-      budget: { truncated: boolean; returned: number; available: number }
-    }
-    expect(envelope.budget.truncated).toBe(false)
-    expect(envelope.budget.returned).toBe(envelope.budget.available)
+    const entry = entryOf(invoke('symbol', '*', '--json').stdout)
+    expect(entry.budget.truncated).toBe(false)
+    expect(entry.budget.returned).toBe(entry.budget.available)
   })
 
   it('carries the schema version the error shape belongs to', () => {
     const envelope = JSON.parse(invoke('symbol', '*', '--json').stdout) as {
       schemaVersion: number
     }
-    expect(envelope.schemaVersion).toBe(4)
+    expect(envelope.schemaVersion).toBe(5)
   })
 
   it('is byte-identical when the same question is asked twice', () => {
     expect(invoke('symbol', '*', '--json').stdout).toBe(
       invoke('symbol', '*', '--json').stdout,
     )
+  })
+
+  it('takes several subjects at once, one entry per subject', () => {
+    const envelope = JSON.parse(
+      invoke('callers', 'charge', 'checkout', '--json').stdout,
+    ) as { request: { subjects: string[] }; result: BatchEntry[] }
+    expect(envelope.request.subjects).toEqual(['charge', 'checkout'])
+    expect(envelope.result.map((entry) => entry.subject)).toEqual([
+      'charge',
+      'checkout',
+    ])
   })
 })
 
@@ -198,29 +246,38 @@ describe('evidence', () => {
     const envelope = JSON.parse(
       invoke('evidence', 'charge', '--limit', '1', '--json').stdout,
     ) as {
-      result: Record<string, { items: unknown[]; budget: { returned: number } }>
+      result: {
+        result: Record<
+          string,
+          { items: unknown[]; budget: { returned: number } }
+        >
+      }[]
     }
-    for (const kind of Object.values(envelope.result)) {
+    const report = envelope.result[0]?.result
+    const { claims: _claims, ...kinds } = report ?? {}
+    for (const kind of Object.values(kinds)) {
       expect(kind.budget.returned).toBeLessThanOrEqual(1)
     }
     // Every kind still answered, which a shared pool of one could not do.
-    expect(envelope.result['symbols']?.items).toHaveLength(1)
-    expect(envelope.result['files']?.items).toHaveLength(1)
-    expect(envelope.result['callers']?.items).toHaveLength(1)
+    expect(report?.['symbols']?.items).toHaveLength(1)
+    expect(report?.['files']?.items).toHaveLength(1)
+    expect(report?.['callers']?.items).toHaveLength(1)
   })
 
   it('emits claim expressions in the machine renderer alone', () => {
     const envelope = JSON.parse(
       invoke('evidence', 'charge', '--claims', '--json').stdout,
-    ) as { claims: string[] }
-    expect(envelope.claims).toContain('exists(src/payments.ts#charge)')
+    ) as { result: { result: { claims: string[] } }[] }
+    expect(envelope.result[0]?.result.claims).toContain(
+      'exists(src/payments.ts#charge)',
+    )
 
     // Absent unasked, rather than always sent: a claim restates a fact the
     // payload already carries.
     const plain = JSON.parse(invoke('evidence', 'charge', '--json').stdout) as {
-      claims: string[] | null
+      result: { result: { claims: string[] | null } }[]
     }
-    expect(plain.claims).toBeNull()
+    expect(plain.result[0]?.result.claims).toBeNull()
   })
 
   it('refuses `--claims` without `--json` rather than dropping it', () => {
@@ -436,13 +493,13 @@ describe('references', () => {
       invoke('references', 'Gateway', '--json').stdout,
     ) as {
       operation: string
-      result: { from: string; to: string; kind: string }[]
+      result: { result: { from: string; to: string; kind: string }[] }[]
     }
     expect(envelope.operation).toBe('references')
     // Both ends as `SymbolId`s: `--json` is what an agent feeds back in, and
     // ADR 0005's shorthand is what the human renderer prints instead.
     const pkg = 'codedocs npm codedocs-cli-fixture .'
-    expect(envelope.result[0]).toMatchObject({
+    expect(envelope.result[0]?.result[0]).toMatchObject({
       from: `${pkg} \`src/payments.ts\`/StripeGateway#`,
       to: `${pkg} \`src/payments.ts\`/Gateway#`,
       kind: 'implements',
@@ -469,15 +526,17 @@ describe('file', () => {
       invoke('file', 'src/checkout.ts', '--json').stdout,
     ) as {
       result: {
-        path: string
-        projects: string[]
-        canonicalProject: string
-        symbols: unknown[]
-        imports: unknown[]
-        importers: string[]
+        result: {
+          path: string
+          projects: string[]
+          canonicalProject: string
+          symbols: unknown[]
+          imports: unknown[]
+          importers: string[]
+        }[]
       }[]
     }
-    const report = envelope.result[0]
+    const report = envelope.result[0]?.result[0]
     expect(report?.path).toBe('src/checkout.ts')
     expect(report?.projects).toEqual(['tsconfig.json'])
     expect(report?.canonicalProject).toBe('tsconfig.json')
@@ -545,14 +604,11 @@ describe('the scope channel', () => {
   })
 
   it('filters by label, and reports the count rather than a blind spot', () => {
-    const envelope = JSON.parse(
+    const entry = entryOf(
       invoke('symbol', '*', '--exclude-label', 'role=test', '--json').stdout,
-    ) as {
-      request: { scope: { excluded: number } }
-      blindSpots: unknown[]
-    }
-    expect(envelope.request.scope.excluded).toBeGreaterThanOrEqual(0)
-    expect(envelope.blindSpots).toEqual([])
+    )
+    expect(entry.excluded).toBeGreaterThanOrEqual(0)
+    expect(entry.blindSpots).toEqual([])
   })
 
   it('refuses a filter it does not know rather than matching nothing', () => {

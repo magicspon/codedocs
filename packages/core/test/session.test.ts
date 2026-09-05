@@ -45,13 +45,13 @@ describe('openSession', () => {
       const envelope = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
-        'src/checkout.ts#checkout',
-      )
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toContain('src/checkout.ts#checkout')
     } finally {
       session.close()
     }
@@ -79,13 +79,13 @@ describe('openSession', () => {
       const envelope = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
-        'src/extra.ts#again',
-      )
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toContain('src/extra.ts#again')
     } finally {
       session.close()
     }
@@ -101,11 +101,11 @@ describe('openSession', () => {
       const envelope = symbol(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result).toHaveLength(1)
+      expect(envelope.result?.[0]?.result).toHaveLength(1)
       expect(session.context.blindSpots.map((spot) => spot.subject)).toContain(
         'src/extra.ts',
       )
@@ -118,10 +118,17 @@ describe('openSession', () => {
   it('reports truncation rather than silently withholding', () => {
     const session = openSession({ cwd: root, noUpdate: false })
     try {
-      const envelope = symbol(session.store, session.context, '*', 2, UNSCOPED)
-      expect(envelope.budget.returned).toBe(2)
-      expect(envelope.budget.truncated).toBe(true)
-      expect(envelope.budget.available).toBeGreaterThan(2)
+      const envelope = symbol(
+        session.store,
+        session.context,
+        ['*'],
+        2,
+        UNSCOPED,
+      )
+      const entry = envelope.result?.[0]
+      expect(entry?.budget.returned).toBe(2)
+      expect(entry?.budget.truncated).toBe(true)
+      expect(entry?.budget.available).toBeGreaterThan(2)
     } finally {
       session.close()
     }

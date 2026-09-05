@@ -309,24 +309,25 @@ describe('the scope channel, over a real index', () => {
     )
 
     const scoped = ask((open) =>
-      symbol(open.store, open.context, '*', null, {
+      symbol(open.store, open.context, ['*'], null, {
         scope: scopeOf([], [{ axis: 'role', value: 'test' }]),
         labels: open.labels(),
       }),
     )
+    const entry = scoped.result?.[0]
 
-    expect(scoped.request.scope.excluded).toBeGreaterThan(0)
+    expect(entry?.excluded).toBeGreaterThan(0)
     // The one rule the channel exists to obey: codedocs knows exactly what it
     // withheld, so it is a count rather than something it could not see.
-    expect(scoped.blindSpots).toEqual([])
+    expect(entry?.blindSpots).toEqual([])
     expect(
-      (scoped.result ?? []).some((node) => node.file.includes('.test.')),
+      (entry?.result ?? []).some((node) => node.file.includes('.test.')),
     ).toBe(false)
   })
 
   it('echoes the scope on every answer, including when nothing was excluded', () => {
     const envelope = ask((open) =>
-      callers(open.store, open.context, 'charge', null, {
+      callers(open.store, open.context, ['charge'], null, {
         scope: scopeOf([], []),
         labels: open.labels(),
       }),
@@ -334,7 +335,7 @@ describe('the scope channel, over a real index', () => {
     expect(envelope.request.scope.include).toEqual([
       { axis: 'authorship', value: 'authored' },
     ])
-    expect(envelope.request.scope.excluded).toBe(0)
+    expect(envelope.result?.[0]?.excluded).toBe(0)
   })
 
   it('leaves test callers in by default, so tested code never reads as dead', () => {
@@ -346,21 +347,23 @@ describe('the scope channel, over a real index', () => {
     )
 
     const envelope = ask((open) =>
-      callers(open.store, open.context, 'charge', null, {
+      callers(open.store, open.context, ['charge'], null, {
         scope: scopeOf([], []),
         labels: open.labels(),
       }),
     )
     expect(
-      (envelope.result ?? []).some((edge) => edge.file.includes('.test.')),
+      (envelope.result?.[0]?.result ?? []).some((edge) =>
+        edge.file.includes('.test.'),
+      ),
     ).toBe(true)
   })
 
   it('filters nothing when it is given nothing to filter with', () => {
     const envelope = ask((open) =>
-      symbol(open.store, open.context, '*', null, UNSCOPED),
+      symbol(open.store, open.context, ['*'], null, UNSCOPED),
     )
-    expect(envelope.request.scope.excluded).toBe(0)
+    expect(envelope.result?.[0]?.excluded).toBe(0)
   })
 })
 

@@ -29,6 +29,15 @@ export interface SubjectSpec {
    * parser, and a lossy one.
    */
   readonly variadic: boolean
+  /**
+   * Whether this operation takes one or several, per ADR 0014.
+   *
+   * Unlike `variadic`, several tokens here are still several subjects, each
+   * resolved and answered on its own — not one command line taken whole. Set
+   * on exactly the six operations ADR 0014 names: `symbol`, `evidence`,
+   * `callers`, `callees`, `references`, `file`.
+   */
+  readonly multiple: boolean
 }
 
 /**
@@ -123,8 +132,10 @@ const IDENTIFIER: SubjectSpec = {
   description:
     'Anything codedocs prints as an identifier: `src/auth/service.ts#AuthService.login` ' +
     'names one symbol exactly, and `AuthService.login` may resolve to several — in ' +
-    'which case the answer is their union and `request.resolved` names them.',
+    'which case the answer is their union and `request.resolved` names them. Several ' +
+    'subjects may be given at once (ADR 0014); `result` is then one entry per subject.',
   variadic: false,
+  multiple: true,
 }
 
 /**
@@ -161,8 +172,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
       description:
         'A glob, matched against both the declared name and the qualified name — ' +
         '`*Service`, `AuthService.login`, or `*` for everything. There is no ' +
-        'ranking: results are sorted, never scored.',
+        'ranking: results are sorted, never scored. Several patterns may be given ' +
+        'at once (ADR 0014); `result` is then one entry per pattern.',
       variadic: false,
+      multiple: true,
     },
     depth: false,
     flags: [],
@@ -225,8 +238,10 @@ export const OPERATIONS: readonly OperationSpec[] = [
       description:
         'A repository-relative path, or the tail of one: `checkout.ts` finds ' +
         '`src/checkout.ts`. A tail matching several files answers about each, ' +
-        'and `request.resolved` names them.',
+        'and `request.resolved` names them. Several paths may be given at once ' +
+        '(ADR 0014); `result` is then one entry per path.',
       variadic: false,
+      multiple: true,
     },
     depth: false,
     flags: [],
@@ -249,6 +264,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
         'The symbol to walk outward from, in either form a subject takes. The ' +
         'walk is unbounded unless `depth` bounds it.',
       variadic: false,
+      multiple: false,
     },
     depth: true,
     flags: [],
@@ -354,6 +370,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
         'symbol in it, `AuthService.login` drafts that symbol alone. A path ' +
         'wins where a subject names both, because a path is the exact form.',
       variadic: false,
+      multiple: false,
     },
     depth: false,
     flags: [
@@ -445,6 +462,7 @@ export const OPERATIONS: readonly OperationSpec[] = [
         'envelope of the failure happening now — nothing is read from a log, ' +
         'because codedocs logs nothing.',
       variadic: true,
+      multiple: false,
     },
     depth: false,
     flags: [

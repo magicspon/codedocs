@@ -54,6 +54,12 @@ Pick the smallest tool that answers the question.
 Over MCP the names are the same, with one transliteration: `docs check` is `docs_check` and
 `docs affected` is `docs_affected`, because a tool name may not carry a space.
 
+**`symbol`, `callers`, `callees`, `references`, `file` and `evidence` take more than one subject in
+one call.** If `symbol '*Repository'` names six matches you want inspected, or `impact` just named
+several reached symbols, call `evidence` once with all of them — `evidence 'A.b' 'C.d' 'E.f'` — rather
+than once per subject. `result` comes back as one entry per subject either way, so a single-subject
+call is not a special case to code around.
+
 Three of these are worth calling out.
 
 **`evidence` is usually the right first call.** Given one subject it returns every kind of fact at
@@ -108,7 +114,9 @@ The sequence is not mandatory. Use the tools the task calls for.
 
 ## Read the answer honestly
 
-Every answer carries the same envelope, whatever the operation. Four fields say how much to trust it:
+Every answer carries an envelope, and which shape it is follows from the operation alone.
+
+For every operation except the six named above, four fields say how much to trust it:
 
 | Field        | Says                                                                  |
 | ------------ | --------------------------------------------------------------------- |
@@ -116,6 +124,13 @@ Every answer carries the same envelope, whatever the operation. Four fields say 
 | `budget`     | `returned` against `available`, and `truncated` if any were held back |
 | `request`    | how the subject resolved, and the `scope` your labels applied         |
 | `conditions` | the `fidelity` of each project the answer touched                     |
+
+For `symbol`, `callers`, `callees`, `references`, `file` and `evidence`, `result` is an array with one
+entry per subject you asked about, whether you asked about one or several. `blindSpots` and `budget`
+have no top-level field on these six — each entry of `result` carries its own, so a symbol with a
+thousand callers can never spend a second subject's budget. `request.subjects` echoes what you typed,
+in order, and `request.resolved` names what each one resolved to, one entry per input. `conditions`
+still sits at the top: it is the union of every project any subject in the call touched.
 
 Three things are easy to blur into one and codedocs keeps apart:
 

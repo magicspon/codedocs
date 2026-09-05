@@ -88,6 +88,24 @@ describe('the tool list', () => {
     expect(schemas.get('analyse')).toEqual([])
   })
 
+  it('gives ADR 0014’s six batched operations an array-typed subject, and every other operation a string one', () => {
+    const types = new Map(
+      (
+        tools() as {
+          name: string
+          inputSchema: { properties: Record<string, { type: string }> }
+        }[]
+      ).map((tool) => [tool.name, tool.inputSchema.properties]),
+    )
+    expect(types.get('callers')?.['subject']?.type).toBe('array')
+    expect(types.get('symbol')?.['pattern']?.type).toBe('array')
+    expect(types.get('file')?.['path']?.type).toBe('array')
+    expect(types.get('evidence')?.['subject']?.type).toBe('array')
+    // `trace` and `docs_draft` take exactly one subject, never a batch.
+    expect(types.get('trace')?.['root']?.type).toBe('string')
+    expect(types.get('docs_draft')?.['subject']?.type).toBe('string')
+  })
+
   it('takes a variadic subject as a list, not as a string to be split again', () => {
     const tool = (
       tools() as {
@@ -184,7 +202,7 @@ describe('the handshake', () => {
 
 describe('a tool call', () => {
   it('returns the bytes `--json` produces, and nothing around them', () => {
-    const viaMcp = textOf(call('callers', { subject: 'charge' }))
+    const viaMcp = textOf(call('callers', { subject: ['charge'] }))
     const viaCli = run([
       'callers',
       'charge',
@@ -195,8 +213,10 @@ describe('a tool call', () => {
     ])
     expect(viaMcp).toBe(viaCli.stdout)
     // Verbatim means verbatim: the envelope is the whole payload, not a field of
-    // something this binding invented.
-    expect(JSON.parse(viaMcp)).toHaveProperty('blindSpots')
+    // something this binding invented. `callers` is one of ADR 0014's six
+    // batched operations, so `blindSpots` lives on the one entry, not the top.
+    const envelope = JSON.parse(viaMcp) as { result: unknown[] }
+    expect(envelope.result[0]).toHaveProperty('blindSpots')
   })
 
   it('passes the caller`s bounds through unchanged', () => {
@@ -211,13 +231,13 @@ describe('a tool call', () => {
     // Sent after `--`, so it cannot be mistaken for an unknown flag — which is
     // the difference between an empty answer and a refusal.
     const envelope = JSON.parse(
-      textOf(call('symbol', { pattern: '-nope' })),
+      textOf(call('symbol', { pattern: ['-nope'] })),
     ) as {
-      request: { subject: string }
-      result: unknown[]
+      request: { subjects: string[] }
+      result: { subject: string; result: unknown[] }[]
     }
-    expect(envelope.request.subject).toBe('-nope')
-    expect(envelope.result).toEqual([])
+    expect(envelope.request.subjects).toEqual(['-nope'])
+    expect(envelope.result[0]?.result).toEqual([])
   })
 
   it('reproduces a failure and hands back the report, writing no file', () => {
@@ -250,24 +270,24 @@ describe('a tool call', () => {
   it('refuses an argument the operation does not have', () => {
     // `--depth` on `callers` is refused at the CLI for the same reason: a bound
     // silently ignored reads as a bound that was applied.
-    const failure = errorOf(call('callers', { subject: 'charge', depth: 2 }))
+    const failure = errorOf(call('callers', { subject: ['charge'], depth: 2 }))
     expect(failure['code']).toBe(-32602)
     expect(failure['message']).toContain('no argument `depth`')
   })
 
   it('refuses an argument of the wrong type', () => {
     expect(
-      errorOf(call('symbol', { pattern: '*', limit: 'lots' }))['code'],
+      errorOf(call('symbol', { pattern: ['*'], limit: 'lots' }))['code'],
     ).toBe(-32602)
     expect(
-      errorOf(call('symbol', { pattern: '*', 'no-update': 'yes' }))['code'],
+      errorOf(call('symbol', { pattern: ['*'], 'no-update': 'yes' }))['code'],
     ).toBe(-32602)
   })
 
   it('refuses a subject-less call to an operation that needs one', () => {
     expect(errorOf(call('callers', {}))['code']).toBe(-32602)
-    // An empty string and an empty list are the same absence.
-    expect(errorOf(call('callers', { subject: '' }))['code']).toBe(-32602)
+    // An empty list is the same absence a variadic subject refuses.
+    expect(errorOf(call('callers', { subject: [] }))['code']).toBe(-32602)
     expect(errorOf(call('report-bug', { command: [] }))['code']).toBe(-32602)
   })
 
@@ -311,7 +331,7 @@ describe('a tool call', () => {
   })
 
   it('refuses a bound below the one its schema declares', () => {
-    const failure = errorOf(call('symbol', { pattern: '*', limit: -1 }))
+    const failure = errorOf(call('symbol', { pattern: ['*'], limit: -1 }))
     expect(failure['message']).toContain('must be at least')
   })
 
@@ -319,11 +339,13 @@ describe('a tool call', () => {
     // `--no-update false` is not a thing the parser accepts; the absence of the
     // flag is how "off" is spelled.
     const off = JSON.parse(
-      textOf(call('symbol', { pattern: 'charge', 'no-update': false })),
+      textOf(call('symbol', { pattern: ['charge'], 'no-update': false })),
     ) as { request: { limit: number | null } }
     expect(off.request.limit).toBeNull()
 
-    const on = textOf(call('symbol', { pattern: 'charge', 'no-update': true }))
+    const on = textOf(
+      call('symbol', { pattern: ['charge'], 'no-update': true }),
+    )
     expect(on).toContain('"operation"')
   })
 
@@ -331,7 +353,7 @@ describe('a tool call', () => {
     const envelope = JSON.parse(
       textOf(
         call('symbol', {
-          pattern: '*',
+          pattern: ['*'],
           label: ['role=source', 'authorship=authored'],
         }),
       ),
@@ -339,7 +361,7 @@ describe('a tool call', () => {
     expect(envelope.request.scope.include).toHaveLength(2)
   })
 
-  it('refuses a subject that is not a string', () => {
+  it('refuses a subject that is not an array of strings', () => {
     expect(errorOf(call('callers', { subject: 12 }))['code']).toBe(-32602)
   })
 
@@ -353,7 +375,7 @@ describe('a tool call', () => {
         method: 'tools/call',
         params: {
           name: 'symbol',
-          arguments: { pattern: '*', cwd: '/definitely/not/a/tree' },
+          arguments: { pattern: ['*'], cwd: '/definitely/not/a/tree' },
         },
       }),
     )

@@ -18,6 +18,7 @@ import { relative, resolve } from 'node:path'
 
 import {
   analyse,
+  batchedFailure,
   callees,
   callers,
   ConfigError,
@@ -29,6 +30,7 @@ import {
   file,
   impact,
   openSession,
+  operationSpec,
   REPORT_FILE,
   references,
   reportBug,
@@ -36,6 +38,7 @@ import {
   symbol,
   trace,
   type AnswerContext,
+  type BatchedEnvelope,
   type DocsEnvelope,
   type DocsOptions,
   type DraftReport,
@@ -89,8 +92,13 @@ export interface Run {
  * `Run`, so this stays inside the binding.
  */
 interface Outcome extends Run {
-  /** The envelope the operation produced, or `null` where none was reached. */
-  readonly envelope: Envelope<unknown> | null
+  /**
+   * The envelope the operation produced, or `null` where none was reached.
+   *
+   * `BatchedEnvelope` for ADR 0014's six batched operations, `Envelope` for
+   * every other one — which shape it is follows from `operation`.
+   */
+  readonly envelope: Envelope<unknown> | BatchedEnvelope<unknown> | null
   /** The failure, where there was no envelope to carry it. */
   readonly error: EnvelopeError | null
 }
@@ -180,6 +188,15 @@ function answered(command: Command, style: Style): Outcome {
 const subjectOf = (command: Command): string => command.subject ?? ''
 
 /**
+ * The subjects one of ADR 0014's six batched operations was given.
+ *
+ * Coalesced the same way `subjectOf` is: the parser refuses zero subjects for
+ * one of these operations, so `command.subjects` is never empty by the time a
+ * handler reads it.
+ */
+const subjectsOf = (command: Command): readonly string[] => command.subjects
+
+/**
  * The scope an answer applies, and the labels to apply it against.
  *
  * The labels are read on first use, so an answer that filters nothing pays no
@@ -220,7 +237,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
     const envelope = symbol(
       session.store,
       session.context,
-      subjectOf(command),
+      subjectsOf(command),
       command.limit,
       scopingFor(command, session),
     )
@@ -232,7 +249,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
     const envelope = references(
       session.store,
       session.context,
-      subjectOf(command),
+      subjectsOf(command),
       command.limit,
       scopingFor(command, session),
     )
@@ -242,7 +259,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
     const envelope = file(
       session.store,
       session.context,
-      subjectOf(command),
+      subjectsOf(command),
       command.limit,
       scopingFor(command, session),
     )
@@ -252,7 +269,7 @@ const HANDLERS: Readonly<Record<OperationName, Handler>> = {
     const envelope: EvidenceEnvelope = evidence(
       session.store,
       session.context,
-      subjectOf(command),
+      subjectsOf(command),
       command.limit,
       { scoping: scopingFor(command, session), claims: command.claims },
     )
@@ -462,7 +479,7 @@ function edges(read: typeof callers): Handler {
     const envelope = read(
       session.store,
       session.context,
-      subjectOf(command),
+      subjectsOf(command),
       command.limit,
       scopingFor(command, session),
     )
@@ -616,13 +633,41 @@ function write(command: Command, envelope: ReportEnvelope): Written {
  * honesty fields are empty rather than invented: an unknown snapshot is reported
  * as unknown.
  */
-function failed(
+/** Whether `command`'s operation is one of ADR 0014's six batched operations. */
+const batches = (command: Command): boolean =>
+  operationSpec(command.operation)?.subject?.multiple === true
+
+/**
+ * A genuine failure returns the same shape a success would have: `Envelope`
+ * for most operations, and ADR 0014's `BatchedEnvelope` for the six that
+ * batch — the parser has already refused a batched operation given zero
+ * subjects, so `command.subjects` is never empty here.
+ */
+function failureEnvelope(
   command: Command,
-  style: Style,
   error: EnvelopeError,
   context?: AnswerContext,
-): Outcome {
-  const envelope: Envelope<never> = {
+): Envelope<never> | BatchedEnvelope<never> {
+  const fallback: AnswerContext = {
+    snapshot: context?.snapshot ?? {
+      commit: null,
+      dirty: false,
+      analysedAt: null,
+    },
+    conditions: context?.conditions ?? [],
+    blindSpots: context?.blindSpots ?? [],
+  }
+  if (batches(command)) {
+    return batchedFailure(
+      command.operation,
+      command.subjects,
+      command.limit,
+      command.scope,
+      fallback,
+      error,
+    )
+  }
+  return {
     operation: command.operation,
     schemaVersion: SCHEMA_VERSION,
     request: {
@@ -632,16 +677,21 @@ function failed(
       depth: command.depth,
       scope: command.scope,
     },
-    snapshot: context?.snapshot ?? {
-      commit: null,
-      dirty: false,
-      analysedAt: null,
-    },
-    conditions: context?.conditions ?? [],
-    blindSpots: context?.blindSpots ?? [],
+    snapshot: fallback.snapshot,
+    conditions: fallback.conditions,
+    blindSpots: fallback.blindSpots,
     budget: { returned: 0, available: 0, truncated: false },
     error,
   }
+}
+
+function failed(
+  command: Command,
+  style: Style,
+  error: EnvelopeError,
+  context?: AnswerContext,
+): Outcome {
+  const envelope = failureEnvelope(command, error, context)
   return {
     stdout: command.json ? JSON.stringify(envelope, null, 2) : '',
     stderr: command.json ? '' : renderError(envelope, style),
@@ -664,7 +714,7 @@ function failed(
  */
 function emit(
   json: boolean,
-  envelope: Envelope<unknown>,
+  envelope: Envelope<unknown> | BatchedEnvelope<unknown>,
   human: () => string,
   code: 0 | 1 = 0,
 ): Outcome {

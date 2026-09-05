@@ -105,13 +105,13 @@ describe('a body-only edit', () => {
       const envelope = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
-        'src/checkout.ts#checkout',
-      )
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toContain('src/checkout.ts#checkout')
     } finally {
       session.close()
     }
@@ -153,13 +153,13 @@ describe('an export-shape change', () => {
       const envelope = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
-        'src/lazy.ts#loadPayments',
-      )
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toContain('src/lazy.ts#loadPayments')
     } finally {
       session.close()
     }
@@ -179,11 +179,11 @@ describe('an export-shape change', () => {
       const envelope = symbol(
         session.store,
         session.context,
-        'Badge',
+        ['Badge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.[0]?.line).toBe(1)
+      expect(envelope.result?.[0]?.result[0]?.line).toBe(1)
     } finally {
       session.close()
     }
@@ -239,13 +239,13 @@ describe('a new file', () => {
       const envelope = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
-        'src/extra.ts#again',
-      )
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toContain('src/extra.ts#again')
     } finally {
       session.close()
     }
@@ -268,13 +268,13 @@ describe('a new file', () => {
       const envelope = callers(
         session.store,
         session.context,
-        'later',
+        ['later'],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toContain(
-        'src/extra.ts#soon',
-      )
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toContain('src/extra.ts#soon')
     } finally {
       session.close()
     }
@@ -297,17 +297,19 @@ describe('a deleted file', () => {
     try {
       expect(session.repair).toBeNull() // The tree and the index agree again.
       expect(
-        symbol(session.store, session.context, 'again', null, UNSCOPED).result,
+        symbol(session.store, session.context, ['again'], null, UNSCOPED)
+          .result?.[0]?.result,
       ).toEqual([])
       // The edge from the deleted file is gone; the pre-existing one is not.
       const envelope = callers(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      const from = envelope.result?.map((edge) => shorthandOf(edge.from)) ?? []
+      const from =
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)) ?? []
       expect(from).not.toContain('src/extra.ts#again')
       expect(from).toContain('src/checkout.ts#checkout')
     } finally {

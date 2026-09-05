@@ -218,11 +218,11 @@ describe('what an answer says about them', () => {
       const envelope = symbol(
         session.store,
         session.context,
-        '*',
+        ['*'],
         null,
         UNSCOPED,
       )
-      const spots = envelope.blindSpots.filter(
+      const spots = (envelope.result?.[0]?.blindSpots ?? []).filter(
         (spot) => spot.subject === 'left-pad',
       )
       expect(spots).toHaveLength(1)
@@ -244,11 +244,11 @@ describe('what an answer says about them', () => {
       const envelope = symbol(
         session.store,
         session.context,
-        'charge',
+        ['charge'],
         null,
         UNSCOPED,
       )
-      expect(envelope.blindSpots).toEqual([])
+      expect(envelope.result?.[0]?.blindSpots).toEqual([])
     } finally {
       session.close()
     }

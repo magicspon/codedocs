@@ -50,6 +50,17 @@ describe('what it accepts', () => {
     expect(command?.subject).toBeNull()
     expect(command?.trailing).toEqual(['trace', 'charge', '--json'])
   })
+
+  it('takes several subjects for one of ADR 0014’s six batched operations', () => {
+    const command = commandOf('evidence', 'charge', 'refund', 'audit')
+    expect(command?.subject).toBeNull()
+    expect(command?.subjects).toEqual(['charge', 'refund', 'audit'])
+  })
+
+  it('still takes exactly one subject as a batch of one', () => {
+    const command = commandOf('callers', 'charge')
+    expect(command?.subjects).toEqual(['charge'])
+  })
 })
 
 describe('what it refuses', () => {
@@ -81,9 +92,11 @@ describe('what it refuses', () => {
   })
 
   it('counts the extra arguments, naming what the operation calls one', () => {
-    expect(errorOf('callers', 'charge', 'extra')).toEqual({
+    // `trace` takes exactly one subject — unlike ADR 0014's six batched
+    // operations, a second positional is refused rather than a second subject.
+    expect(errorOf('trace', 'charge', 'extra')).toEqual({
       code: 'too-many-arguments',
-      params: { operation: 'callers', noun: 'subject', got: 2 },
+      params: { operation: 'trace', noun: 'root', got: 2 },
     })
     // An operation with no subject has no noun of its own to name.
     expect(errorOf('analyse', 'here', 'there')).toEqual({

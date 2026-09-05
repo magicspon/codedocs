@@ -166,13 +166,13 @@ describe('a call that leaves its project', () => {
       const envelope = callers(
         session.store,
         session.context,
-        CHARGE,
+        [CHARGE],
         null,
         UNSCOPED,
       )
-      expect(envelope.result?.map((edge) => shorthandOf(edge.from))).toEqual([
-        'b-app/src/checkout.ts#go',
-      ])
+      expect(
+        envelope.result?.[0]?.result.map((edge) => shorthandOf(edge.from)),
+      ).toEqual(['b-app/src/checkout.ts#go'])
     } finally {
       session.close()
     }
@@ -208,7 +208,8 @@ describe('a build interrupted between two projects', () => {
         },
       ])
       expect(
-        callers(session.store, session.context, CHARGE, null, UNSCOPED).result,
+        callers(session.store, session.context, [CHARGE], null, UNSCOPED)
+          .result?.[0]?.result,
       ).toEqual([])
     } finally {
       session.close()

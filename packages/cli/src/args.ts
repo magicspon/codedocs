@@ -42,6 +42,15 @@ export interface Command {
   /** The subject or pattern, absent for `analyse` and for a variadic subject. */
   readonly subject: string | null
   /**
+   * The subjects given, for one of ADR 0014's six batched operations.
+   *
+   * Empty for every operation whose `SubjectSpec.multiple` is `false`, which
+   * keeps using `subject` above unchanged. Always at least one entry for an
+   * operation that takes it: the parser refuses zero the same way it refuses
+   * an absent singular subject.
+   */
+  readonly subjects: readonly string[]
+  /**
    * The command line after `--`, for an operation whose subject is variadic.
    *
    * Empty for every other operation. `report-bug`'s subject is a whole command,
@@ -169,6 +178,7 @@ export function parse(
     command: {
       operation: spec.name,
       subject: invocation.value.subject,
+      subjects: invocation.value.subjects,
       trailing: invocation.value.trailing,
       json,
       noUpdate: values['no-update'] === true,
@@ -264,6 +274,8 @@ function partition(tokens: readonly Token[]): {
 interface Invocation {
   readonly spec: OperationSpec
   readonly subject: string | null
+  /** One or more, for a `multiple` subject spec (ADR 0014). Empty otherwise. */
+  readonly subjects: readonly string[]
   readonly trailing: readonly string[]
 }
 
@@ -287,8 +299,11 @@ function resolveInvocation(
     const name = own[0] ?? trailing[0] ?? ''
     return { error: { code: 'unknown-operation', params: { name } } }
   }
-  return matched.spec.subject?.variadic === true
-    ? resolveVariadic(matched.spec, own, trailing)
+  if (matched.spec.subject?.variadic === true) {
+    return resolveVariadic(matched.spec, own, trailing)
+  }
+  return matched.spec.subject?.multiple === true
+    ? resolveMultiple(matched.spec, [...own, ...trailing], matched.words)
     : resolveSubject(matched.spec, [...own, ...trailing], matched.words)
 }
 
@@ -338,7 +353,7 @@ function resolveVariadic(
       },
     }
   }
-  return { value: { spec, subject: null, trailing } }
+  return { value: { spec, subject: null, subjects: [], trailing } }
 }
 
 /** An operation that takes one token, or — like `analyse` — takes none. */
@@ -365,7 +380,31 @@ function resolveSubject(
       },
     }
   }
-  return { value: { spec, subject: subject ?? null, trailing: [] } }
+  return {
+    value: { spec, subject: subject ?? null, subjects: [], trailing: [] },
+  }
+}
+
+/**
+ * A `multiple` subject spec (ADR 0014): one or more tokens, each its own
+ * subject, with no cap on how many — batching several is the point.
+ */
+function resolveMultiple(
+  spec: OperationSpec,
+  positionals: readonly string[],
+  words: number,
+): Step<Invocation> {
+  const noun = spec.subject?.name ?? 'subject'
+  const subjects = positionals.slice(words)
+  if (subjects.length === 0) {
+    return {
+      error: {
+        code: 'subject-required',
+        params: { operation: spec.name, noun },
+      },
+    }
+  }
+  return { value: { spec, subject: null, subjects, trailing: [] } }
 }
 
 /**
@@ -535,7 +574,7 @@ const flagWidth = (): number =>
 /** How one operation is invoked, as `--help` spells it. */
 function invocation(spec: OperationSpec): string {
   if (spec.subject === null) return `codedocs ${spec.name}`
-  const subject = `<${spec.subject.name}>`
+  const subject = `<${spec.subject.name}>${spec.subject.multiple ? '...' : ''}`
   return `codedocs ${spec.name} ${spec.subject.variadic ? `-- ${subject}` : subject}`
 }
 

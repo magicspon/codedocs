@@ -14,7 +14,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-import type { Envelope } from '../src/envelope.ts'
+import type { BatchedEnvelope } from '../src/envelope.ts'
 import { callers } from '../src/operations/calls.ts'
 import { file, type FileReport } from '../src/operations/file.ts'
 import { references } from '../src/operations/references.ts'
@@ -46,18 +46,30 @@ afterAll(() => {
   rmSync(root, { recursive: true, force: true })
 })
 
-/** Run one operation over a real session, as the binding does. */
+/** Run one operation over a real session, as the binding does, for one subject. */
 function ask<T>(
-  run: (...args: Parameters<typeof references>) => Envelope<readonly T[]>,
+  run: (
+    ...args: Parameters<typeof references>
+  ) => BatchedEnvelope<readonly T[]>,
   subject: string,
-): Envelope<readonly T[]> {
+): BatchedEnvelope<readonly T[]> {
   const session = openSession({ cwd: root, noUpdate: false })
   try {
-    return run(session.store, session.context, subject, null, UNSCOPED)
+    return run(session.store, session.context, [subject], null, UNSCOPED)
   } finally {
     session.close()
   }
 }
+
+/** The one entry a single-subject `ask` produces, which every test here expects. */
+function entryOf<T>(envelope: BatchedEnvelope<readonly T[]>) {
+  const found = envelope.result?.[0]
+  if (found === undefined) throw new Error('answered with no result')
+  return found
+}
+
+const resultOf = <T>(envelope: BatchedEnvelope<readonly T[]>): readonly T[] =>
+  entryOf(envelope).result
 
 /**
  * Endpoints as ADR 0005's shorthand, which is the form both renderers print.
@@ -73,10 +85,10 @@ const named = (edge: ReferenceEdge): ReferenceEdge => ({
 })
 
 const referencesTo = (subject: string): readonly ReferenceEdge[] =>
-  (ask<ReferenceEdge>(references, subject).result ?? []).map(named)
+  resultOf(ask<ReferenceEdge>(references, subject)).map(named)
 
 const fileReport = (subject: string): FileReport | undefined =>
-  (ask<FileReport>(file, subject).result ?? [])[0]
+  resultOf(ask<FileReport>(file, subject))[0]
 
 describe('references', () => {
   it('reports a type named in a signature, which `callers` cannot', () => {
@@ -94,11 +106,11 @@ describe('references', () => {
       const called = callers(
         session.store,
         session.context,
-        'Money',
+        ['Money'],
         null,
         UNSCOPED,
       )
-      expect(called.result).toEqual([])
+      expect(resultOf(called)).toEqual([])
     } finally {
       session.close()
     }
@@ -142,11 +154,11 @@ describe('references', () => {
       const called = callers(
         session.store,
         session.context,
-        'record',
+        ['record'],
         null,
         UNSCOPED,
       )
-      expect(called.result?.length).toBe(1)
+      expect(resultOf(called).length).toBe(1)
     } finally {
       session.close()
     }
@@ -173,11 +185,11 @@ describe('references', () => {
     const envelope = ask<ReferenceEdge>(references, 'Wallet')
     // `resolved` carries the `SymbolId` itself: ADR 0006 makes it what an agent
     // feeds back in, and only the id round-trips.
-    expect(envelope.request.resolved.map(shorthandOf)).toEqual([
+    expect(entryOf(envelope).resolved.map(shorthandOf)).toEqual([
       'src/alias.ts#Wallet',
       'src/wallet.ts#Wallet',
     ])
-    const between = (envelope.result ?? [])
+    const between = resultOf(envelope)
       .map(named)
       .filter(
         (edge) =>
@@ -189,7 +201,9 @@ describe('references', () => {
 
   it('says which symbols a subject resolved to', () => {
     expect(
-      ask<ReferenceEdge>(references, 'Money').request.resolved.map(shorthandOf),
+      entryOf(ask<ReferenceEdge>(references, 'Money')).resolved.map(
+        shorthandOf,
+      ),
     ).toEqual(['src/types.ts#Money'])
   })
 })
@@ -226,7 +240,53 @@ describe('file', () => {
 
   it('answers with nothing for a path the index does not hold', () => {
     const envelope = ask<FileReport>(file, 'src/nowhere.ts')
-    expect(envelope.result).toEqual([])
-    expect(envelope.request.resolved).toEqual([])
+    expect(resultOf(envelope)).toEqual([])
+    expect(entryOf(envelope).resolved).toEqual([])
+  })
+})
+
+describe('ADR 0014: several subjects in one call', () => {
+  it('answers `callers` for several subjects, one entry each, never pooled', () => {
+    const session = openSession({ cwd: root, noUpdate: false })
+    try {
+      const envelope = callers(
+        session.store,
+        session.context,
+        ['Money', 'record'],
+        null,
+        UNSCOPED,
+      )
+      expect(envelope.result?.map((found) => found.subject)).toEqual([
+        'Money',
+        'record',
+      ])
+      // `Money` is never called; `record` is called once — exactly what asking
+      // about either alone would answer, whichever order the batch names them.
+      expect(envelope.result?.[0]?.result).toEqual([])
+      expect(envelope.result?.[1]?.result).toHaveLength(1)
+    } finally {
+      session.close()
+    }
+  })
+
+  it('answers `file` for several paths, one entry each', () => {
+    const session = openSession({ cwd: root, noUpdate: false })
+    try {
+      const envelope = file(
+        session.store,
+        session.context,
+        ['src/wallet.ts', 'src/types.ts'],
+        null,
+        UNSCOPED,
+      )
+      expect(envelope.result?.map((found) => found.subject)).toEqual([
+        'src/wallet.ts',
+        'src/types.ts',
+      ])
+      expect(envelope.result?.[0]?.result[0]?.path).toBe('src/wallet.ts')
+      expect(envelope.result?.[1]?.result[0]?.path).toBe('src/types.ts')
+    } finally {
+      session.close()
+    }
   })
 })

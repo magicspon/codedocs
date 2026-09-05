@@ -168,7 +168,7 @@ describe('what a draft holds', () => {
     const session = openSession({ cwd: root, noUpdate: false })
     const facts = (() => {
       try {
-        return evidence(session.store, session.context, 'charge', null, {
+        return evidence(session.store, session.context, ['charge'], null, {
           scoping: UNSCOPED,
           claims: true,
         })
@@ -177,12 +177,13 @@ describe('what a draft holds', () => {
       }
     })()
     const drafted = report(ask('charge'))
-    for (const edge of facts.result?.callers.items ?? []) {
+    const chargeFacts = facts.result?.[0]?.result
+    for (const edge of chargeFacts?.callers.items ?? []) {
       expect(drafted.markdown).toContain(`${edge.file}:${edge.line}`)
     }
     // The candidates are `evidence --claims`, narrowed to the ones this section
     // is named in — never a claim that operation would not have offered.
-    const offered = new Set(facts.claims ?? [])
+    const offered = new Set(chargeFacts?.claims ?? [])
     for (const candidate of drafted.sections[0]?.candidates ?? []) {
       expect(offered.has(candidate), candidate).toBe(true)
     }
