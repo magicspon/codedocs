@@ -56,8 +56,8 @@ arms differing in both halves, and it cannot be posed while one model is fixed
 across the session:
 
 ```sh
-node bench/run.ts --arms baseline,codedocs                  # like for like
-node bench/run.ts --arms baseline@claude-opus-5,codedocs@claude-haiku-4-5-20251001
+node bench/src/run.ts --arms baseline,codedocs                  # like for like
+node bench/src/run.ts --arms baseline@claude-opus-5,codedocs@claude-haiku-4-5-20251001
 ```
 
 Both arms get `Bash`, because grep and find are how anyone searches a repository
@@ -118,7 +118,7 @@ Two alternatives were weighed and rejected:
 Take-up is counted over _every_ run of an arm, not only the counted ones,
 because the runs it describes are precisely the ones thrown out. Records written
 before the flag existed are silent about it and are left out of the denominator
-rather than guessed at; `node bench/run.ts --rescore` fills them in from the
+rather than guessed at; `node bench/src/run.ts --rescore` fills them in from the
 saved stream, for nothing.
 
 Every delta in the report is read against one **reference arm**, named under the
@@ -130,8 +130,8 @@ reference did not run in prints no delta rather than a misleading one.
 ## The cases
 
 **Prospects and the running set.** Every researched case is frozen into
-`prospects/`. Only the ones `active.ts` names are run, preflighted or reported
-on — `node bench/writeup.ts` counts the running set, not the pool.
+`prospects/`. Only the ones `src/cases/active.ts` names are run, preflighted or reported
+on — `node bench/src/writeup/writeup.ts` counts the running set, not the pool.
 
 The split is about cost, not about quality. Every codedocs run needs an index of
 its own fresh worktree, and building one on vscode is minutes with a long tail.
@@ -186,7 +186,7 @@ The pool spreads across `base/`, `code/electron-main/`,
 `platform/extensionManagement/`, `platform/agentHost/`, `sessions/` and three
 `workbench/` areas, because a pool that repeatedly tests one corner of the
 repository measures that corner rather than the repository. Seeds live in
-`seeds/level<N>.ts`, one file per level; `DIFFICULTY.md` says what each level
+`src/cases/seeds/level<N>.ts`, one file per level; `DIFFICULTY.md` says what each level
 means and why each case sits where it does.
 
 Ground truth is the non-test source files the upstream fix _modified_. Test
@@ -226,7 +226,7 @@ commit — so the build happens **once per commit**, into
 `repos/.index-cache/<commit>/`, and later runs at that commit copy it in.
 
 ```sh
-node bench/run.ts --warm     # build the cache for the running set, run no agent
+node bench/src/run.ts --warm     # build the cache for the running set, run no agent
 ```
 
 This is not the state leak the per-run worktree exists to prevent. A cached
@@ -249,7 +249,7 @@ The cache trades disk for time: one commit's index of vscode is 254 MB, so the
 full twelve-case pool would be around 3 GB. It lives under `repos/`, which is
 git-ignored, and deleting it costs only the rebuild.
 
-`node bench/verify-cache.ts` checks the trade is real — that each case restores
+`node bench/src/execution/verify-cache.ts` checks the trade is real — that each case restores
 rather than silently rebuilding, and that the restored index still answers for a
 ground-truth symbol. A cache that is present but stale would otherwise look
 exactly like a repository in which codedocs can find nothing.
@@ -491,7 +491,7 @@ in with new ones.
 ## The write-up
 
 [RESULTS.md](RESULTS.md) is what the benchmark exists to produce, and
-`node bench/writeup.ts` generates it from the records in `results/`. It is a
+`node bench/src/writeup/writeup.ts` generates it from the records in `results/`. It is a
 derived artefact and is never edited by hand.
 
 Generated rather than written for one reason: there is no path through the
@@ -517,30 +517,30 @@ arm, by level and by reason rather than folded into a total, and **Tool
 take-up** prints how often each arm reached for codedocs at all — see [Take-up,
 and why the bias is reported rather than repaired](#take-up-and-why-the-bias-is-reported-rather-than-repaired).
 
-`report.ts` remains the quick console view. It reads every delta against a
+`src/reporting/report.ts` remains the quick console view. It reads every delta against a
 single reference arm, which is only sound while one model ran — past that it
 says so, and points here.
 
 ## Running it
 
 ```sh
-node bench/run.ts                    # every case, both arms, 3 replicates
-node bench/run.ts --cases 331102     # one case
-node bench/run.ts --replicates 1     # a smoke run
-node bench/run.ts --model claude-opus-5          # the default model for every arm
-node bench/run.ts --arms baseline,codedocs@claude-haiku-4-5-20251001
-node bench/report.ts                 # the comparison table
-node bench/report.ts --json          # the same numbers, machine readable
-node bench/writeup.ts                # regenerate RESULTS.md from the records
+node bench/src/run.ts                    # every case, both arms, 3 replicates
+node bench/src/run.ts --cases 331102     # one case
+node bench/src/run.ts --replicates 1     # a smoke run
+node bench/src/run.ts --model claude-opus-5          # the default model for every arm
+node bench/src/run.ts --arms baseline,codedocs@claude-haiku-4-5-20251001
+node bench/src/reporting/report.ts                 # the comparison table
+node bench/src/reporting/report.ts --json          # the same numbers, machine readable
+node bench/src/writeup/writeup.ts                # regenerate RESULTS.md from the records
 
-node bench/run.ts --warm             # build the index cache, run no agent
-node bench/run.ts --judge            # judge the patches already on disk
-node bench/run.ts --no-judge         # measure now, grade later
-node bench/run.ts --judge-replicates 1           # one reading instead of three
-node bench/run.ts --judge-model claude-sonnet-5  # a cheaper judge
+node bench/src/run.ts --warm             # build the index cache, run no agent
+node bench/src/run.ts --judge            # judge the patches already on disk
+node bench/src/run.ts --no-judge         # measure now, grade later
+node bench/src/run.ts --judge-replicates 1           # one reading instead of three
+node bench/src/run.ts --judge-model claude-sonnet-5  # a cheaper judge
 ```
 
-`run.ts` refuses to start when a case's declared base is not the commit under
+`src/run.ts` refuses to start when a case's declared base is not the commit under
 its fix, or when a file that fix touched is missing from that tree, because
 either voids the ground truth. It fetches the commits the cases name, then
 builds each codedocs run's index in that run's worktree, so the arm pays the
@@ -567,60 +567,64 @@ judgement are bought separately, so a judge that failed, a session that ran
 to date for the price of the judging alone. Readings already cached are reused,
 so it is safe to re-run.
 
-`freeze-cases.ts` regenerates `prospects/*.json` from the pool in `seeds/`,
+`src/cases/freeze-cases.ts` regenerates `prospects/*.json` from the pool in `seeds/`,
 fetching each issue body and each fix's parent commit from GitHub. It exists for
 provenance and does not need to run: the cases are frozen, so a run asks GitHub
 for nothing but the commits they name — never for an issue body someone may
-have edited since. Adding a case means adding a seed to `seeds/level<N>.ts` and
+have edited since. Adding a case means adding a seed to `src/cases/seeds/level<N>.ts` and
 running the freezer; nothing under `prospects/` is edited by hand.
 
-Freezing a case does not run it. `active.ts` names the running set, and putting
+Freezing a case does not run it. `src/cases/active.ts` names the running set, and putting
 a prospect in it is a deliberate act with hours of indexing attached — never a
 side effect of researching a good case.
 
 ## How the harness is laid out
 
 One module per seam, so a change to scoring does not sit in the same file as the
-process spawning:
+process spawning. Code lives under `src/`, grouped by what it's for; `prospects/`,
+`results/` and `judgements/` are data, not code, and stay at the top level:
 
-| Module               | What it holds                                                  |
-| -------------------- | -------------------------------------------------------------- |
-| `paths.ts`           | where the benchmark reads and writes                           |
-| `prospects/`         | every researched case, frozen                                  |
-| `active.ts`          | which prospects are in the running set, and why it is small    |
-| `cases.ts`           | the running set, and the whole pool behind it                  |
-| `seeds/`             | the pool the freezer works from, one file per difficulty level |
-| `worktree.ts`        | a run's own checkout at its case's commit, and its removal     |
-| `arms.ts`            | an arm: parsing it, ordering it, and widening an older record  |
-| `warm.ts`            | the index cache: build once per commit, restore into each run  |
-| `prewarm.ts`         | filling that cache ahead of any run                            |
-| `verify-cache.ts`    | proving a restored index is one a build would have produced    |
-| `prompt.ts`          | the task, and the briefing the codedocs arm gets               |
-| `agent.ts`           | spawning `claude -p` and collecting its stream                 |
-| `tally.ts`           | what one run consumed: calls, steps, files, lines read, tokens |
-| `stream.ts`          | walking the stream and folding it into that tally              |
-| `diff.ts`            | taking the patch out of a worktree, and reading it back        |
-| `score.ts`           | scoring one patch against the fix, and deciding validity       |
-| `record.ts`          | the record one saved stream and patch imply                    |
-| `session.ts`         | running (case, arm, replicate) in a worktree, and filing it    |
-| `rescore.ts`         | rebuilding records from saved streams and patches              |
-| `preflight.ts`       | the ground-truth checks that run before any quota is spent     |
-| `upstream.ts`        | the fix the maintainers wrote, as the judge is shown it        |
-| `rubric.ts`          | the two scales, their definitions, and the blind prompt        |
-| `judge.ts`           | spawning a judge with no tools, and reading one verdict back   |
-| `judgement.ts`       | the judgement cache, the consensus and the agreement figure    |
-| `rejudge.ts`         | filling in the judgements the runs on disk are missing         |
-| `run.ts`             | the command line                                               |
-| `difficulty.ts`      | the levels, and the heading the report prints for each         |
-| `summarise.ts`       | the medians one arm's runs become                              |
-| `comparisons.ts`     | the two questions — like-for-like, and across models           |
-| `table.ts`           | column widths, rows, and the delta beneath a non-reference arm |
-| `report.ts`          | reading `results/`, grouping by level, printing the comparison |
-| `markdown.ts`        | markdown tables, padded so the output is formatter-stable      |
-| `writeup-tables.ts`  | the tables `RESULTS.md` is made of                             |
-| `writeup-honesty.ts` | take-up, the discards, and what a pooled figure rests on       |
-| `writeup-prose.ts`   | the parts of `RESULTS.md` that are not numbers                 |
-| `writeup.ts`         | assembling `RESULTS.md` from the records on disk               |
+| Module                            | What it holds                                                  |
+| --------------------------------- | ---------------------------------------------------------------- |
+| `src/core/paths.ts`               | where the benchmark reads and writes                           |
+| `src/core/types.ts`               | the shapes every other module passes around                    |
+| `src/core/arms.ts`                | an arm: parsing it, ordering it, and widening an older record  |
+| `src/core/argv.ts`                | command-line flag parsing shared by `src/run.ts` and `src/writeup/writeup.ts`  |
+| `prospects/`                      | every researched case, frozen                                  |
+| `src/cases/active.ts`             | which prospects are in the running set, and why it is small    |
+| `src/cases/cases.ts`              | the running set, and the whole pool behind it                  |
+| `src/cases/difficulty.ts`         | the levels, and the heading the report prints for each         |
+| `src/cases/freeze-cases.ts`       | regenerating `prospects/*.json` from the seed pool              |
+| `src/cases/seeds/`                | the pool the freezer works from, one file per difficulty level |
+| `src/execution/worktree.ts`       | a run's own checkout at its case's commit, and its removal     |
+| `src/execution/warm.ts`           | the index cache: build once per commit, restore into each run  |
+| `src/execution/prewarm.ts`        | filling that cache ahead of any run                             |
+| `src/execution/verify-cache.ts`   | proving a restored index is one a build would have produced    |
+| `src/execution/prompt.ts`         | the task, and the briefing the codedocs arm gets                |
+| `src/execution/agent.ts`          | spawning `claude -p` and collecting its stream                 |
+| `src/execution/session.ts`        | running (case, arm, replicate) in a worktree, and filing it    |
+| `src/execution/preflight.ts`      | the ground-truth checks that run before any quota is spent     |
+| `src/execution/upstream.ts`       | the fix the maintainers wrote, as the judge is shown it        |
+| `src/scoring/tally.ts`            | what one run consumed: calls, steps, files, lines read, tokens |
+| `src/scoring/stream.ts`           | walking the stream and folding it into that tally              |
+| `src/scoring/diff.ts`             | taking the patch out of a worktree, and reading it back        |
+| `src/scoring/score.ts`            | scoring one patch against the fix, and deciding validity       |
+| `src/scoring/record.ts`           | the record one saved stream and patch imply                    |
+| `src/scoring/rescore.ts`          | rebuilding records from saved streams and patches               |
+| `src/judging/rubric.ts`           | the two scales, their definitions, and the blind prompt        |
+| `src/judging/judge.ts`            | spawning a judge with no tools, and reading one verdict back   |
+| `src/judging/judgement.ts`        | the judgement cache, the consensus and the agreement figure    |
+| `src/judging/rejudge.ts`          | filling in the judgements the runs on disk are missing         |
+| `src/reporting/summarise.ts`      | the medians one arm's runs become                               |
+| `src/reporting/comparisons.ts`    | the two questions — like-for-like, and across models           |
+| `src/reporting/table.ts`          | column widths, rows, and the delta beneath a non-reference arm |
+| `src/reporting/report.ts`         | reading `results/`, grouping by level, printing the comparison |
+| `src/reporting/markdown.ts`       | markdown tables, padded so the output is formatter-stable      |
+| `src/writeup/writeup-tables.ts`   | the tables `RESULTS.md` is made of                              |
+| `src/writeup/writeup-honesty.ts`  | take-up, the discards, and what a pooled figure rests on       |
+| `src/writeup/writeup-prose.ts`    | the parts of `RESULTS.md` that are not numbers                 |
+| `src/writeup/writeup.ts`          | assembling `RESULTS.md` from the records on disk                |
+| `src/run.ts`                      | the command line                                                |
 
 ## What this does not show
 

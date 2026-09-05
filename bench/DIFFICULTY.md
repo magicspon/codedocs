@@ -82,7 +82,7 @@ case in the set.
 ## The current cases
 
 Each case records its own reasoning in the `difficulty.why` field of its
-`cases/*.json`, and the seed it was written from lives in `seeds/level<N>.ts`.
+`cases/*.json`, and the seed it was written from lives in `src/cases/seeds/level<N>.ts`.
 The short version:
 
 | Case      | Level | What sets the level                                                                        |
