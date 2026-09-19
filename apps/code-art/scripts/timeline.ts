@@ -27,6 +27,7 @@ import { tmpdir } from 'node:os'
 import { basename, join, relative, resolve, sep } from 'node:path'
 import { parseArgs } from 'node:util'
 import type { Atlas, Commit, Timeline } from '../src/lib/atlas.ts'
+import { fromCaller } from './caller.ts'
 import { withHealth } from './fallow-health.ts'
 import { readAtlas } from './read-index.ts'
 import { readFallow, type FallowReading } from './read-fallow.ts'
@@ -39,7 +40,7 @@ const { values, positionals } = parseArgs({
     'no-fallow': { type: 'boolean', default: false },
   },
 })
-const repo = resolve(positionals[0] ?? '.')
+const repo = fromCaller(positionals[0] ?? '.')
 const frameCount = Math.max(2, Number(values.frames))
 const name = values.name ?? basename(repo)
 const useFallow = !values['no-fallow']
