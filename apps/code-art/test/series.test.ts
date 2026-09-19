@@ -2,9 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Atlas, Timeline } from '../src/lib/atlas.ts'
 import { cityLayout } from '../src/lib/city-layout.ts'
 import { galaxyLayout } from '../src/lib/galaxy-layout.ts'
-import { landscapeLayout } from '../src/lib/landscape-layout.ts'
 import { fromAtlas, seriesOf, visibility } from '../src/lib/series.ts'
-import { elevationAt } from '../src/lib/terrain.ts'
 import { atlas, file } from './fixture.ts'
 
 const frame = (files: Atlas['files'], calls: Atlas['calls'] = []): Atlas => ({
@@ -55,6 +53,27 @@ describe('seriesOf', () => {
     expect(series.at[2]![1]!.path).toBe('b.ts')
   })
 
+  it('keeps clone links through history, keyed like calls', () => {
+    const base = history()
+    const copied: Timeline = {
+      ...base,
+      frames: [
+        base.frames[0]!,
+        // `a` and `b` share 12 lines, then 30 once `b` grows.
+        { ...base.frames[1]!, clones: [[0, 1, 12]] },
+        {
+          ...frame([file('a.ts'), file('b.ts'), file('c.ts')]),
+          clones: [[0, 1, 30]],
+          fallow: { version: '3.22.0', deadCode: false },
+        },
+      ],
+    }
+    const series = seriesOf(copied)
+    expect(series.merged.clones).toEqual([[0, 1, 30]])
+    expect(series.cloneLife).toEqual([[1, 3]])
+    expect(series.merged.fallow?.version).toBe('3.22.0')
+  })
+
   it('treats a single export as one frame', () => {
     const one = fromAtlas(atlas())
     expect(one.commits).toHaveLength(1)
@@ -89,24 +108,5 @@ describe('layouts over a history', () => {
     expect(a!.heights[2]).toBe(0)
     expect(b!.heights[0]).toBe(0)
     expect(a!.heights[1]).toBeGreaterThan(a!.heights[0]!)
-  })
-
-  it('raises the land where a file is written', () => {
-    const layout = landscapeLayout(series)
-    const r = layout.rects[0]!
-    const grid = Math.sqrt(layout.elevations[0]!.length)
-    const cell = layout.size / (grid - 1)
-    const vertex =
-      Math.round((r.y + r.h / 2 + layout.size / 2) / cell) * grid +
-      Math.round((r.x + r.w / 2 + layout.size / 2) / cell)
-    const early = elevationAt(layout.elevations, vertex, 0)
-    const grown = elevationAt(layout.elevations, vertex, 1)
-    const gone = elevationAt(layout.elevations, vertex, 2)
-    expect(grown).toBeGreaterThan(early)
-    expect(gone).toBeLessThan(grown)
-    expect(elevationAt(layout.elevations, vertex, 0.5)).toBeCloseTo(
-      (early + grown) / 2,
-      6,
-    )
   })
 })

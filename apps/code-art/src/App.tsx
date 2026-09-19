@@ -6,7 +6,6 @@ import type { Playhead, Series } from './lib/series.ts'
 import { Hud } from './Hud.tsx'
 import { City } from './scenes/City.tsx'
 import { Galaxy } from './scenes/Galaxy.tsx'
-import { Landscape } from './scenes/Landscape.tsx'
 import type { SceneProps } from './scenes/scene.ts'
 import { TimelineBar } from './TimelineBar.tsx'
 
@@ -14,14 +13,12 @@ import { TimelineBar } from './TimelineBar.tsx'
 const SCENES: Record<string, (props: SceneProps) => JSX.Element> = {
   galaxy: Galaxy,
   city: City,
-  landscape: Landscape,
 }
 
-/** Bloom strength per scene: the galaxy is all light, the landscape is daylight. */
+/** Bloom strength per scene: the galaxy is all light. */
 const BLOOM: Record<string, number> = {
   galaxy: 1.1,
   city: 0.9,
-  landscape: 0.25,
 }
 
 /** Reads `?data=…&scene=…` so a view can be bookmarked. */

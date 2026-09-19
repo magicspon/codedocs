@@ -1,7 +1,6 @@
 /**
- * A squarified treemap of the directory tree. The city and the landscape both
- * stand on it, so a folder is a district in one and a region of hills in the
- * other, and files that live together sit together.
+ * A squarified treemap of the directory tree. The city stands on it, so a
+ * folder is a district and files that live together sit together.
  */
 
 /** An axis-aligned rectangle on the ground plane. */

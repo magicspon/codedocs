@@ -44,6 +44,55 @@ export interface FileDatum {
   readonly refsIn: number
   /** Calls the analysis could not resolve: the file's blind spots. */
   readonly unresolved: number
+  /** What fallow says about the file; absent when fallow did not run. */
+  readonly health?: FileHealth
+}
+
+/**
+ * One file's reading from fallow. Every file gets one when fallow ran: cycles,
+ * copies and dead code are checked across the whole repo, so a file missing
+ * from those lists truly has none.
+ */
+export interface FileHealth {
+  /** Absent when fallow's health pass skipped the file (unreachable or ignored). */
+  readonly score?: FileScore
+  /** Hotspot score, 0–100: complexity times recent churn. `0` when not a hotspot. */
+  readonly hotspot: number
+  /** Commits in fallow's churn window; `0` when not a hotspot. */
+  readonly commits: number
+  /** Hotspot trend: `-1` cooling, `0` stable, `1` accelerating. */
+  readonly trend: number
+  /** Lines that belong to a clone group. */
+  readonly duplicated: number
+  /** Part of an import cycle. */
+  readonly cyclic: boolean
+  /** Reachable from no entry point. Only read when the repo has a fallow config. */
+  readonly unused?: boolean
+  /** Exports nothing imports. Only read when the repo has a fallow config. */
+  readonly unusedExports?: number
+}
+
+/** fallow's complexity measures for one file. */
+export interface FileScore {
+  /** Maintainability index, 0–100: higher is easier to change. */
+  readonly maintainability: number
+  /** Cyclomatic complexity per line. */
+  readonly density: number
+  readonly cyclomatic: number
+  readonly cognitive: number
+  /** The worst function's CRAP score: complexity weighed against missing tests. */
+  readonly crap: number
+}
+
+/** Which fallow produced an atlas's `health` readings, and how far to trust them. */
+export interface FallowMeta {
+  readonly version: string
+  /**
+   * Whether `unused` and `unusedExports` were read. Dead code depends on the
+   * repo's entry points, which only a fallow config names; without one the
+   * guesses are too often wrong to draw as fact.
+   */
+  readonly deadCode: boolean
 }
 
 /** A weighted file-to-file relation: `[fromIndex, toIndex, count]`. */
@@ -62,6 +111,10 @@ export interface Atlas {
   readonly calls: readonly Link[]
   /** Resolved imports, weight always `1`. */
   readonly imports: readonly Link[]
+  /** Present when fallow ran over the repo at export. */
+  readonly fallow?: FallowMeta
+  /** Files that share copied code, weighted by lines shared, heaviest first. */
+  readonly clones?: readonly Link[]
 }
 
 /** Total symbols in one file. */
