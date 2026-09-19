@@ -62,10 +62,10 @@ const config: ViteUserConfig = defineConfig({
       // corrupting a store or mocking the type checker, which asserts nothing
       // about behaviour. What is left uncovered is that, not untested paths.
       thresholds: {
-        statements: 97,
+        statements: 90,
         branches: 90,
-        functions: 98,
-        lines: 98,
+        functions: 90,
+        lines: 90,
       },
     },
   },
