@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { cityLayout } from '../src/lib/city-layout.ts'
 import { galaxyLayout } from '../src/lib/galaxy-layout.ts'
-import { fileAt, landscapeLayout } from '../src/lib/landscape-layout.ts'
 import { gaussian, hash, rng } from '../src/lib/rng.ts'
 import { fromAtlas } from '../src/lib/series.ts'
 import { atlas } from './fixture.ts'
@@ -58,24 +57,5 @@ describe('cityLayout', () => {
 
   it('makes a file with more symbols taller', () => {
     expect(layout.buildings[0]!.h).toBeGreaterThan(layout.buildings[4]!.h)
-  })
-})
-
-describe('landscapeLayout', () => {
-  const layout = landscapeLayout(fromAtlas(atlas()))
-
-  it('maps a point on a file’s plot back to that file, and open water to none', () => {
-    layout.rects.forEach((r, i) =>
-      expect(fileAt(layout.rects, r.x + r.w / 2, r.y + r.h / 2)).toBe(i),
-    )
-    expect(fileAt(layout.rects, layout.size, layout.size)).toBeNull()
-  })
-
-  it('raises land above the water and marks the hub with a lighthouse', () => {
-    let top = -Infinity
-    for (let i = 1; i < layout.positions.length; i += 3)
-      top = Math.max(top, layout.positions[i]!)
-    expect(top).toBeGreaterThan(layout.waterLevel)
-    expect(layout.lighthouses[0]?.file).toBe(0)
   })
 })

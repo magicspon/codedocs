@@ -110,9 +110,9 @@
     "semantic_hash": "8f6e7b204d54987b17bf027230fec44f"
   },
   "cspell.json": {
-    "mtime": 1788381017.9488683,
-    "ast_hash": "0b1cec579dc2048ab761b4fa892fc3ff",
-    "semantic_hash": "0b1cec579dc2048ab761b4fa892fc3ff"
+    "mtime": 1789824559.6371098,
+    "ast_hash": "f28d58293e87711a029ba82a17093e31",
+    "semantic_hash": ""
   },
   "nano-staged.js": {
     "mtime": 1787829968.2853887,
@@ -190,8 +190,8 @@
     "semantic_hash": ""
   },
   "cspell.words.txt": {
-    "mtime": 1789822904.2483845,
-    "ast_hash": "ac5a9e9a9536dd538a5fd44f8c67c1bc",
+    "mtime": 1789830330.544465,
+    "ast_hash": "f7a235959762450544cf9d86d9ae6c72",
     "semantic_hash": ""
   },
   "docs/REQUIREMENTS.md": {
@@ -1805,13 +1805,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/scripts/export.ts": {
-    "mtime": 1789778644.5878937,
-    "ast_hash": "25aef5a150060e18f0096cfd0b0c34f7",
+    "mtime": 1789829290.6033216,
+    "ast_hash": "69a16ee63d6eca36fca42d8daed71f0d",
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1789822888.3455527,
-    "ast_hash": "5f3c47273a9000bbb2bff3dacc7cd1fe",
+    "mtime": 1789828814.145007,
+    "ast_hash": "4c03b3839d23d473c4e42c52df7f162c",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1820,18 +1820,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Hud.tsx": {
-    "mtime": 1789822888.3450184,
-    "ast_hash": "b4d965bf8d11a54d1523b357edb4f136",
+    "mtime": 1789828814.1451373,
+    "ast_hash": "036f37bb54396b078deb749fe41be51d",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/cal.com.json": {
-    "mtime": 1789822975.528464,
-    "ast_hash": "d2b96d637eb8874673fa3f5ca68fe992",
+    "mtime": 1789829341.9484346,
+    "ast_hash": "5549ae6f6a59cf609737779d3aee1001",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.json": {
-    "mtime": 1789822974.609573,
-    "ast_hash": "42c6f63a2322713e761d8e6af1cf0964",
+    "mtime": 1789829256.2080486,
+    "ast_hash": "802876a83bc4bb89cc30881120941f1a",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/next-fullstack-realworld-app.json": {
@@ -1850,8 +1850,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/atlas.ts": {
-    "mtime": 1789778667.0347042,
-    "ast_hash": "1af881e5babe0dab46f3d9e07ba46aaf",
+    "mtime": 1789829290.6032178,
+    "ast_hash": "871e8d576bd169cb7e794eb2a5e048ce",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/city-layout.ts": {
@@ -1867,11 +1867,6 @@
   "apps/code-art/src/lib/glow.ts": {
     "mtime": 1789822635.1358151,
     "ast_hash": "703e6839a175e9d981d6f43e8cf21e67",
-    "semantic_hash": ""
-  },
-  "apps/code-art/src/lib/landscape-layout.ts": {
-    "mtime": 1789822888.344908,
-    "ast_hash": "378fc31fa8fd9fa3a63b3128d1a0b18d",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/load.ts": {
@@ -1890,8 +1885,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/treemap.ts": {
-    "mtime": 1789778384.7727275,
-    "ast_hash": "99de0089f509e5a2a4e8fc191ed2bfaa",
+    "mtime": 1789828814.145366,
+    "ast_hash": "f379fd847d12a5b27e57e352102475f0",
     "semantic_hash": ""
   },
   "apps/code-art/src/main.tsx": {
@@ -1909,28 +1904,23 @@
     "ast_hash": "c2f962749f2c26a1742dc2c3eb94bdcd",
     "semantic_hash": ""
   },
-  "apps/code-art/src/scenes/Landscape.tsx": {
-    "mtime": 1789822888.3453112,
-    "ast_hash": "72c964a681f6fa8aae993c424fafa364",
-    "semantic_hash": ""
-  },
   "apps/code-art/src/scenes/scene.ts": {
     "mtime": 1789822621.284035,
     "ast_hash": "b49d9984ea157fd98451edb93f1244cf",
     "semantic_hash": ""
   },
   "apps/code-art/test/fixture.ts": {
-    "mtime": 1789822799.3058255,
+    "mtime": 1789829282.57936,
     "ast_hash": "377325f9082680ebbc109c16be779486",
     "semantic_hash": ""
   },
   "apps/code-art/test/layouts.test.ts": {
-    "mtime": 1789822888.3457603,
-    "ast_hash": "03ce4f6c08d397adbd3fbdd7e012ed60",
+    "mtime": 1789829290.6035948,
+    "ast_hash": "c6ed291d82ec599ab1618ee6dac9dc09",
     "semantic_hash": ""
   },
   "apps/code-art/test/treemap.test.ts": {
-    "mtime": 1789778463.1037254,
+    "mtime": 1789829282.5797281,
     "ast_hash": "0550fd49cc4a9004053401368a38e0a9",
     "semantic_hash": ""
   },
@@ -1945,8 +1935,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1789823031.9597375,
-    "ast_hash": "e5a71a5a3fff736d25e249d4a1bda945",
+    "mtime": 1789830434.0319507,
+    "ast_hash": "957031fb816f615e8b5e7a202bad642b",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -1975,13 +1965,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/scripts/read-index.ts": {
-    "mtime": 1789822987.5904877,
-    "ast_hash": "a23ff8ec2e0f82619adc8914aab1fe8c",
+    "mtime": 1789829282.5789344,
+    "ast_hash": "eccb2615028e9d0ecd3ae26a3b827060",
     "semantic_hash": ""
   },
   "apps/code-art/scripts/timeline.ts": {
-    "mtime": 1789822888.3455741,
-    "ast_hash": "b40debb898673e49ec92b54521985276",
+    "mtime": 1789830402.2775638,
+    "ast_hash": "11d2cc49dbe012046f1d84d3a8d35f36",
     "semantic_hash": ""
   },
   "apps/code-art/src/TimelineBar.tsx": {
@@ -1990,28 +1980,58 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.timeline.json": {
-    "mtime": 1789822515.2961636,
-    "ast_hash": "dc4a3074352216b774891efb716b280f",
+    "mtime": 1789830295.4595532,
+    "ast_hash": "ebb0282e36d052ef4450ad48cdc0693e",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/series.ts": {
-    "mtime": 1789822888.344745,
-    "ast_hash": "1b4af4672c36bbbcd5b1eede9d6a127c",
-    "semantic_hash": ""
-  },
-  "apps/code-art/src/lib/terrain.ts": {
-    "mtime": 1789822940.9932232,
-    "ast_hash": "ed735f4d59589961f552072b324694ed",
+    "mtime": 1789830229.6005175,
+    "ast_hash": "326c27365c64658cd5b10b1969cd2e2a",
     "semantic_hash": ""
   },
   "apps/code-art/test/read-index.test.ts": {
-    "mtime": 1789823016.016621,
-    "ast_hash": "6ef98bc65043aad1404cc83687a84253",
+    "mtime": 1789829282.5795677,
+    "ast_hash": "6ccdce3f20734070878669a9d6b5839b",
     "semantic_hash": ""
   },
   "apps/code-art/test/series.test.ts": {
-    "mtime": 1789822914.6322832,
-    "ast_hash": "dd8fa82e03cae44a90c4c21ea56234dd",
+    "mtime": 1789830244.9030387,
+    "ast_hash": "af8afa98df32e41b9837b242a4848646",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/data/code-art.timeline.json": {
+    "mtime": 1789824738.4328725,
+    "ast_hash": "b443f113e76a46921bcc6a4f22cb9768",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/data/vscode.timeline.json": {
+    "mtime": 1789830545.8480842,
+    "ast_hash": "0e223754876a17de64eb130752bc0645",
+    "semantic_hash": ""
+  },
+  "apps/code-art/scripts/fallow-health.ts": {
+    "mtime": 1789829357.5505679,
+    "ast_hash": "57b3988e4a81c9c2352fce240bc5770e",
+    "semantic_hash": ""
+  },
+  "apps/code-art/scripts/read-fallow.ts": {
+    "mtime": 1789830615.785559,
+    "ast_hash": "5389782f1995ea9034c3562a33bd2d7d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/fallow-health.test.ts": {
+    "mtime": 1789830244.9316595,
+    "ast_hash": "00eb1b9e7f4e573e8cf618faa8f819d1",
+    "semantic_hash": ""
+  },
+  "apps/code-art/scripts/churn.ts": {
+    "mtime": 1789830615.7852678,
+    "ast_hash": "0544cca6ee20db1d89fb14dc0b7c642a",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/churn.test.ts": {
+    "mtime": 1789830615.7858632,
+    "ast_hash": "317a3c5426d3b135d54625599870cca7",
     "semantic_hash": ""
   }
 }

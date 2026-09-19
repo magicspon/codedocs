@@ -20,6 +20,8 @@ export interface Series {
   readonly fileLife: readonly Life[]
   /** Per merged call: `[birth, death)` in frames. */
   readonly callLife: readonly Life[]
+  /** Per merged clone link: `[birth, death)` in frames. Empty without fallow. */
+  readonly cloneLife: readonly Life[]
 }
 
 /**
@@ -84,6 +86,39 @@ function extend(
   else lives.set(key, [frame, frame + 1])
 }
 
+function pair(key: string): [number, number] {
+  const [a, b] = key.split(' ')
+  return [Number(a), Number(b)]
+}
+
+/**
+ * Merges one kind of link across frames: each pair at its heaviest, heaviest
+ * first, with the frames it exists in. `locals[f]` maps frame `f`'s file
+ * indexes to merged ones.
+ */
+function foldLinks(
+  frames: readonly Atlas[],
+  locals: readonly (readonly number[])[],
+  pick: (frame: Atlas) => readonly Link[] | undefined,
+): { links: Link[]; lives: Life[] } {
+  const weights = new Map<string, number>()
+  const lives = new Map<string, [number, number]>()
+  frames.forEach((frame, f) => {
+    for (const [from, to, weight] of pick(frame) ?? []) {
+      const key = `${locals[f]![from]} ${locals[f]![to]}`
+      weights.set(key, Math.max(weights.get(key) ?? 0, weight))
+      extend(lives, key, f)
+    }
+  })
+  const keys = [...weights.keys()].sort(
+    (a, b) => weights.get(b)! - weights.get(a)!,
+  )
+  return {
+    links: keys.map((key) => [...pair(key), weights.get(key)!]),
+    lives: keys.map((key) => lives.get(key)!),
+  }
+}
+
 /** Folds a timeline into one stable layout plus per-frame facts. */
 export function seriesOf(timeline: Timeline): Series {
   const merged = new Map<string, FileDatum>()
@@ -100,29 +135,17 @@ export function seriesOf(timeline: Timeline): Series {
   const index = new Map(paths.map((p, i) => [p, i]))
   const files = paths.map((p) => merged.get(p)!)
 
-  const weights = new Map<string, number>()
-  const callLives = new Map<string, [number, number]>()
+  // Links index each frame's own file list; re-key them by merged index.
+  const locals = timeline.frames.map((frame) =>
+    frame.files.map((file) => index.get(file.path)!),
+  )
+  const calls = foldLinks(timeline.frames, locals, (frame) => frame.calls)
+  const clones = foldLinks(timeline.frames, locals, (frame) => frame.clones)
   const imports = new Set<string>()
   timeline.frames.forEach((frame, f) => {
-    // Links index the frame's own file list; re-key them by path-stable merged index.
-    const local = frame.files.map((file) => index.get(file.path)!)
-    for (const [from, to, weight] of frame.calls) {
-      const key = `${local[from]} ${local[to]}`
-      weights.set(key, Math.max(weights.get(key) ?? 0, weight))
-      extend(callLives, key, f)
-    }
     for (const [from, to] of frame.imports)
-      imports.add(`${local[from]} ${local[to]}`)
+      imports.add(`${locals[f]![from]} ${locals[f]![to]}`)
   })
-
-  const pair = (key: string): [number, number] => {
-    const [a, b] = key.split(' ')
-    return [Number(a), Number(b)]
-  }
-  const callKeys = [...weights.keys()].sort(
-    (a, b) => weights.get(b)! - weights.get(a)!,
-  )
-  const calls: Link[] = callKeys.map((key) => [...pair(key), weights.get(key)!])
   const last = timeline.frames[timeline.frames.length - 1]
 
   return {
@@ -134,8 +157,11 @@ export function seriesOf(timeline: Timeline): Series {
       analysedAt: last?.analysedAt ?? '',
       projects: last?.projects ?? [],
       files,
-      calls,
+      calls: calls.links,
       imports: [...imports].map((key) => [...pair(key), 1]),
+      clones: clones.links,
+      // The newest frame says which fallow ran and whether dead code is trusted.
+      ...(last?.fallow && { fallow: last.fallow }),
     },
     at: timeline.frames.map((frame) => {
       const row: (FileDatum | null)[] = paths.map(() => null)
@@ -143,6 +169,7 @@ export function seriesOf(timeline: Timeline): Series {
       return row
     }),
     fileLife: paths.map((p) => fileLives.get(p)!),
-    callLife: callKeys.map((key) => callLives.get(key)!),
+    callLife: calls.lives,
+    cloneLife: clones.lives,
   }
 }

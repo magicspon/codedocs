@@ -1,14 +1,15 @@
 /**
  * Builds a timeline: the repository analysed at a spread of past commits.
  *
- *     pnpm --filter @codedocs/code-art timeline <repo> [--frames 16] [--name x]
+ *     pnpm --filter @codedocs/code-art timeline <repo> [--frames 16] [--name x] [--no-fallow]
  *
  * The index holds one moment, so history has to be re-analysed. Each commit is
  * checked out into a throwaway worktree outside the repo — inside it, the next
  * `codedocs analyse` of the repo would discover it as more projects — with the
  * repo's `node_modules` linked in so old commits still analyse at `typed`
- * fidelity. Each frame is cached by sha, so asking for more frames later only
- * analyses the new ones.
+ * fidelity. With fallow on the PATH, each commit also gets its health readings,
+ * scored as of that commit. The analysis and the readings are cached by sha
+ * separately, so adding fallow to an old timeline does not re-analyse it.
  */
 
 import { execFileSync } from 'node:child_process'
@@ -26,18 +27,22 @@ import { tmpdir } from 'node:os'
 import { basename, join, relative, resolve, sep } from 'node:path'
 import { parseArgs } from 'node:util'
 import type { Atlas, Commit, Timeline } from '../src/lib/atlas.ts'
+import { withHealth } from './fallow-health.ts'
 import { readAtlas } from './read-index.ts'
+import { readFallow, type FallowReading } from './read-fallow.ts'
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
   options: {
     frames: { type: 'string', default: '16' },
     name: { type: 'string' },
+    'no-fallow': { type: 'boolean', default: false },
   },
 })
 const repo = resolve(positionals[0] ?? '.')
 const frameCount = Math.max(2, Number(values.frames))
 const name = values.name ?? basename(repo)
+const useFallow = !values['no-fallow']
 const here = import.meta.dirname
 const cli = resolve(here, '../../../packages/cli/dist/bin.js')
 if (!existsSync(cli)) {
@@ -118,60 +123,134 @@ function mirror(source: string, target: string, tree: string): void {
   }
 }
 
-/** Analyses one commit in a throwaway worktree and reads it back. */
-function analyse(commit: Commit, modules: readonly string[]): Atlas {
-  const dir = join(mkdtempSync(join(tmpdir(), 'code-art-')), 'tree')
-  git('worktree', 'add', '--detach', '--force', dir, commit.sha)
-  try {
-    for (const source of modules) {
-      const target = join(dir, relative(repo, source))
-      if (existsSync(resolve(target, '..'))) mirror(source, target, dir)
-    }
-    execFileSync('node', [cli, 'analyse', '--cwd', dir], { stdio: 'ignore' })
-    // The scenes draw at most ~2,000 calls; 8,000 per frame leaves room for
-    // the heaviest to change between commits without one frame costing 1 MB.
-    return readAtlas(join(dir, '.codedocs', 'index.db'), name, { calls: 8000 })
-  } finally {
-    git('worktree', 'remove', '--force', dir)
+/**
+ * A throwaway worktree at `sha`, checked out on first use, so a frame that is
+ * fully cached never touches git.
+ */
+interface LazyTree {
+  readonly dir: () => string
+  readonly close: () => void
+}
+
+function lazyTree(sha: string): LazyTree {
+  let dir: string | undefined
+  return {
+    dir: () => {
+      if (dir) return dir
+      dir = join(mkdtempSync(join(tmpdir(), 'code-art-')), 'tree')
+      git('worktree', 'add', '--quiet', '--detach', '--force', dir, sha)
+      return dir
+    },
+    close: () => {
+      if (dir) git('worktree', 'remove', '--force', dir)
+    },
   }
+}
+
+/** Analyses the checkout at `dir` and reads it back. */
+function analyse(dir: string): Atlas {
+  for (const source of modules) {
+    const target = join(dir, relative(repo, source))
+    if (existsSync(resolve(target, '..'))) mirror(source, target, dir)
+  }
+  execFileSync('node', [cli, 'analyse', '--cwd', dir], { stdio: 'ignore' })
+  // The scenes draw at most ~2,000 calls; 8,000 per frame leaves room for
+  // the heaviest to change between commits without one frame costing 1 MB.
+  return readAtlas(join(dir, '.codedocs', 'index.db'), name, { calls: 8000 })
+}
+
+/** A commit that does not analyse — no TypeScript yet, a broken tree. */
+function emptyFrame(commit: Commit): Atlas {
+  return {
+    name,
+    commit: commit.sha,
+    analysedAt: '',
+    projects: [],
+    files: [],
+    calls: [],
+    imports: [],
+  }
+}
+
+/** The JSON at `path`, or else `compute()`'s result, stored there unless `null`. */
+function cached<T>(path: string, compute: () => T | null): T | null {
+  if (existsSync(path)) return JSON.parse(readFileSync(path, 'utf8')) as T
+  const value = compute()
+  if (value !== null) writeFileSync(path, JSON.stringify(value))
+  return value
 }
 
 const cacheDir = join(here, '..', '.cache', name)
 mkdirSync(cacheDir, { recursive: true })
-const commits = pickCommits()
 const modules = nodeModules(repo)
-const frames = commits.map((commit, k) => {
-  const cached = join(cacheDir, `${commit.sha}.json`)
-  const label = `[${k + 1}/${commits.length}] ${commit.sha.slice(0, 7)} ${commit.subject.slice(0, 50)}`
-  if (existsSync(cached)) {
-    console.log(`${label} (cached)`)
-    return JSON.parse(readFileSync(cached, 'utf8')) as Atlas
-  }
+
+/** Analyses the commit now, or gives an empty frame if it will not analyse. */
+function analyseOrEmpty(
+  commit: Commit,
+  tree: LazyTree,
+  notes: string[],
+): Atlas {
   const started = Date.now()
-  let atlas: Atlas
   try {
-    atlas = analyse(commit, modules)
+    const atlas = analyse(tree.dir())
+    notes.push(`analysed in ${seconds(started)}`)
+    return atlas
   } catch (error) {
-    // A commit that does not analyse — no TypeScript yet, a broken tree — is an
-    // empty frame, not a failed timeline.
-    console.log(
-      `${label} could not be analysed: ${String(error).split('\n')[0]}`,
-    )
-    atlas = {
-      name,
-      commit: commit.sha,
-      analysedAt: '',
-      projects: [],
-      files: [],
-      calls: [],
-      imports: [],
-    }
+    // An empty frame, not a failed timeline.
+    notes.push(`not analysed: ${String(error).split('\n')[0]}`)
+    return emptyFrame(commit)
   }
-  writeFileSync(cached, JSON.stringify(atlas))
-  console.log(
-    `${label} — ${atlas.files.length} files in ${((Date.now() - started) / 1000).toFixed(1)}s`,
+}
+
+/**
+ * The frame's fallow readings, from the cache or run now. None when fallow is
+ * off or fails, or the frame is empty and has nothing to read health onto.
+ */
+function readingFor(
+  commit: Commit,
+  atlas: Atlas,
+  tree: LazyTree,
+  notes: string[],
+): FallowReading | null {
+  if (!useFallow || atlas.files.length === 0) return null
+  return cached(join(cacheDir, `${commit.sha}.fallow.json`), () => {
+    const started = Date.now()
+    const reading = readFallow(tree.dir())
+    notes.push(`fallow in ${seconds(started)}`)
+    return reading
+  })
+}
+
+/**
+ * One frame. The analysis and the fallow readings are cached apart, so adding
+ * fallow to an old timeline checks each commit out again but never
+ * re-analyses it.
+ */
+function frameAt(commit: Commit): Atlas {
+  const tree = lazyTree(commit.sha)
+  const notes: string[] = []
+  try {
+    const atlas = cached(join(cacheDir, `${commit.sha}.json`), () =>
+      analyseOrEmpty(commit, tree, notes),
+    )!
+    const reading = readingFor(commit, atlas, tree, notes)
+    console.log(`${atlas.files.length} files; ${notes.join(', ') || 'cached'}`)
+    return reading ? withHealth(atlas, reading.report, reading.deadCode) : atlas
+  } finally {
+    tree.close()
+  }
+}
+
+function seconds(since: number): string {
+  return `${((Date.now() - since) / 1000).toFixed(1)}s`
+}
+
+const commits = pickCommits()
+const frames = commits.map((commit, k) => {
+  process.stdout.write(
+    `[${k + 1}/${commits.length}] ${commit.sha.slice(0, 7)} ${commit.subject.slice(0, 50)} — `,
   )
-  return atlas
+  return frameAt(commit)
 })
 
 const timeline: Timeline = { name, commits, frames }
