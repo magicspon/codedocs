@@ -1,0 +1,11 @@
+{
+  // Its own project because the root config has no JSX setting, and the root
+  // excludes this directory so `tsc` there does not trip over `.tsx`.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src", "scripts", "vite.config.ts"],
+  "exclude": []
+}

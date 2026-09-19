@@ -1,0 +1,2 @@
+# Per-commit analyses cached by `pnpm timeline`.
+.cache

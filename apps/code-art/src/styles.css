@@ -1,0 +1,179 @@
+:root {
+  --ink: #e8ebf3;
+  --muted: #9aa3b8;
+  --panel: rgb(10 12 22 / 72%);
+  --edge: rgb(255 255 255 / 10%);
+  --accent: #ffc56b;
+  color-scheme: dark;
+  font:
+    14px/1.45 ui-sans-serif,
+    system-ui,
+    sans-serif;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  background: #020208;
+  color: var(--ink);
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+.hud {
+  position: fixed;
+  inset: 16px;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.hud.empty {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel {
+  pointer-events: auto;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 10px;
+  padding: 12px 14px;
+  backdrop-filter: blur(8px);
+  max-width: min(340px, calc(100vw - 32px));
+}
+
+.controls select {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.tabs button {
+  flex: 1;
+  font: inherit;
+  text-transform: capitalize;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.tabs button[aria-selected='true'] {
+  color: #111;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.meta {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.file strong {
+  display: block;
+  word-break: break-all;
+  font-family: ui-monospace, monospace;
+  font-size: 12.5px;
+}
+
+.file dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  margin: 8px 0 0;
+}
+
+.file dt {
+  color: var(--muted);
+}
+
+.file dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.kinds {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .hud {
+    flex-direction: column;
+  }
+}
+
+.timeline {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(720px, calc(100vw - 32px));
+  max-width: none;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 12px;
+  align-items: center;
+}
+
+.timeline button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: #111;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.timeline input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.timeline .commit {
+  grid-column: 1 / -1;
+  margin: 0;
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline .commit .meta {
+  margin: 0;
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}

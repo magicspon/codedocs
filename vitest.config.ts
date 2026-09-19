@@ -15,6 +15,9 @@ const config: ViteUserConfig = defineConfig({
   test: {
     projects: [
       'packages/*',
+      // The art viewer: its layouts are pure functions of an index, so they are tested
+      // like any other code even though the package is never published.
+      'apps/code-art',
       // The repository's own invariants belong to no package: ADR 0011's "no
       // codedocs package reaches the network" is a fact about the workspace and
       // its dependency closure, and there is no package it could sit inside
@@ -27,7 +30,12 @@ const config: ViteUserConfig = defineConfig({
     coverage: {
       // Every source file, not only the ones a test happened to import — an
       // untested file reading 0% is the number worth seeing.
-      include: ['packages/*/src/**/*.ts', 'scripts/**/*.ts'],
+      include: [
+        'packages/*/src/**/*.ts',
+        'scripts/**/*.ts',
+        'apps/code-art/src/lib/**/*.ts',
+        'apps/code-art/scripts/read-index.ts',
+      ],
       exclude: [
         // Type-only surface compiles to nothing; v8 would report it as
         // uncovered lines that no test could ever reach.
