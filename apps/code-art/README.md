@@ -18,7 +18,8 @@ pnpm art
 
 Exports land in `src/data/` and are git-ignored. Pick a dataset and a scene in
 the top-left panel. Point at anything to see the file behind it.
-`?data=vscode&scene=city` in the URL opens a view directly.
+`?data=vscode&scene=city` in the URL opens a view directly; add `&lens=health`
+to open it with the health lens on.
 
 ## Health readings
 
@@ -34,6 +35,25 @@ share copied code are linked in `clones`. Add `--no-fallow` to skip it.
   `score`. That means "not measured", not zero.
 - fallow's telemetry is off unless you turn it on. The export turns it off
   anyway, so an export never sends anything.
+
+### The health lens
+
+Tick **Health lens** in the top-left panel to draw these readings over the
+scene. It is only offered for data that fallow ran over. Over a timeline, the
+readings blend from commit to commit, just as heights do.
+
+| Reading        | Galaxy                                  | City                                          |
+| -------------- | --------------------------------------- | --------------------------------------------- |
+| Hotspot        | the file's core flares, orange to white | fire on the roof; taller and whiter is hotter |
+| Unused file    | the file's stars fade to grey           | the tower goes dark                           |
+| Hard to change | —                                       | the facade rusts                              |
+| Copied code    | a pale blue thread joins the two files  | —                                             |
+
+- Heat is the square root of the hotspot score, so a score of 10 still shows
+  without the hottest file drowning the rest.
+- Rust starts at a maintainability of 85 and is full at 50. Real files sit
+  between about 50 and 99, and a healthy repo's worst file lands near 85.
+- Point at a file to see fallow's numbers for it in the file panel.
 
 ## Watch a repo grow
 

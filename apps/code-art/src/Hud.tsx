@@ -1,6 +1,7 @@
 import type { JSX } from 'react'
 import type { Series } from './lib/series.ts'
 import { FilePanel } from './FilePanel.tsx'
+import { LensToggle } from './LensToggle.tsx'
 
 /** What each scene maps, in one line, so the picture can be read and not just looked at. */
 const LEGENDS: Record<string, string> = {
@@ -16,6 +17,8 @@ interface HudProps {
   readonly scenes: readonly string[]
   readonly scene: string
   readonly onScene: (name: string) => void
+  readonly lens: boolean
+  readonly onLens: (on: boolean) => void
   readonly series: Series | null
   /** The whole frame under the playhead, which the hovered file's facts come from. */
   readonly frame: number
@@ -75,8 +78,14 @@ export function Hud(props: HudProps): JSX.Element {
           <p className="meta">Loading…</p>
         )}
         <p className="legend">{LEGENDS[props.scene]}</p>
+        <LensToggle
+          scene={props.scene}
+          fallow={series?.merged.fallow}
+          on={props.lens}
+          onChange={props.onLens}
+        />
       </div>
-      {file && <FilePanel file={file} />}
+      {file && <FilePanel file={file} fallow={series?.merged.fallow} />}
     </div>
   )
 }

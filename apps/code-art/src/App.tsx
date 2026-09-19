@@ -21,7 +21,7 @@ const BLOOM: Record<string, number> = {
   city: 0.9,
 }
 
-/** Reads `?data=…&scene=…` so a view can be bookmarked. */
+/** Reads `?data=…&scene=…&lens=health` so a view can be bookmarked. */
 function initial(key: string, fallback: string): string {
   return new URLSearchParams(location.search).get(key) ?? fallback
 }
@@ -32,6 +32,7 @@ export function App(): JSX.Element {
     initial('data', DATASETS[0] ?? ''),
   )
   const [scene, setScene] = useState(() => initial('scene', 'galaxy'))
+  const [lens, setLens] = useState(() => initial('lens', '') === 'health')
   const [series, setSeries] = useState<Series | null>(null)
   const [frame, setFrame] = useState(0)
   const [hovered, setHovered] = useState<number | null>(null)
@@ -42,20 +43,23 @@ export function App(): JSX.Element {
     setSeries(null)
     setHovered(null)
     void loadSeries(dataset).then((s) => live && setSeries(s))
-    history.replaceState(
-      null,
-      '',
-      `?data=${encodeURIComponent(dataset)}&scene=${scene}`,
-    )
     return () => {
       live = false
     }
   }, [dataset, scene])
 
+  useEffect(() => {
+    if (!dataset) return
+    const query = `?data=${encodeURIComponent(dataset)}&scene=${scene}`
+    history.replaceState(null, '', lens ? `${query}&lens=health` : query)
+  }, [dataset, scene, lens])
+
   const Scene = SCENES[scene] ?? Galaxy
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
   const playhead = useMemo<Playhead>(() => ({ t: 0 }), [series, scene])
+  // The lens stays chosen across datasets, but only draws where fallow ran.
+  const healthy = series?.merged.fallow !== undefined
 
   return (
     <>
@@ -65,7 +69,12 @@ export function App(): JSX.Element {
           dpr={[1, 2]}
           raycaster={{ params: { Points: { threshold: 0.4 } } as never }}
         >
-          <Scene series={series} playhead={playhead} onHover={setHovered} />
+          <Scene
+            series={series}
+            playhead={playhead}
+            lens={lens && healthy}
+            onHover={setHovered}
+          />
           <EffectComposer>
             <Bloom
               intensity={BLOOM[scene] ?? 1}
@@ -82,6 +91,8 @@ export function App(): JSX.Element {
         scenes={Object.keys(SCENES)}
         scene={scene}
         onScene={setScene}
+        lens={lens}
+        onLens={setLens}
         series={series}
         frame={frame}
         hovered={hovered}

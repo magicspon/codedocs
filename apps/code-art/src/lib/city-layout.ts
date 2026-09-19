@@ -1,5 +1,6 @@
 import { Color } from 'three'
 import { symbolCount } from './atlas.ts'
+import { everHot, healthTracks, type HealthTracks } from './health.ts'
 import { GENERATED_COLOR, ROLE_COLORS, projectColor } from './palette.ts'
 import { hash, rng } from './rng.ts'
 import type { Series } from './series.ts'
@@ -8,7 +9,9 @@ import { treemap, type Region } from './treemap.ts'
 /**
  * The city's geometry. Directories are districts, files are buildings:
  * footprint from bytes, height from symbols, colour from role, and a rooftop
- * beacon as bright as the calls arriving from elsewhere.
+ * beacon as bright as the calls arriving from elsewhere. Under the health lens,
+ * hotspots burn on their roofs, unused files go dark and hard-to-change files
+ * weather.
  */
 
 /** One building, in `Atlas.files` order so an instance id is a file index. */
@@ -38,6 +41,9 @@ export interface CityLayout {
     readonly births: Float32Array
     readonly deaths: Float32Array
   }
+  readonly health: HealthTracks
+  /** Files that are a hotspot in any frame: the only roofs that can burn. */
+  readonly hot: readonly number[]
   /** Side length of the city square. */
   readonly size: number
   /** A typical building's width, which the camera and fog scale by. */
@@ -133,5 +139,14 @@ export function cityLayout(series: Series): CityLayout {
     }
   }
 
-  return { buildings, districts: layout.regions, traffic, size, unit }
+  const health = healthTracks(series)
+  return {
+    buildings,
+    districts: layout.regions,
+    traffic,
+    health,
+    hot: files.flatMap((_, i) => (everHot(health, i) ? [i] : [])),
+    size,
+    unit,
+  }
 }

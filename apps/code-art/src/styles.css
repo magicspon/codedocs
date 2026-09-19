@@ -177,3 +177,30 @@ canvas {
   flex: none;
   font-variant-numeric: tabular-nums;
 }
+
+.lens {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--edge);
+}
+
+.lens label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.lens input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.file h3 {
+  margin: 10px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

@@ -1,10 +1,20 @@
 import { AdditiveBlending, ShaderMaterial } from 'three'
+import { HEALTH_GLSL } from './health-texture.ts'
 import { VISIBILITY_GLSL } from './series.ts'
+
+/** A soft round sprite, brightest at its centre. */
+const POINT_FRAGMENT = /* glsl */ `
+  varying vec3 vColor;
+  void main() {
+    float d = length(gl_PointCoord - 0.5) * 2.0;
+    float a = smoothstep(1.0, 0.0, d);
+    gl_FragColor = vec4(vColor, a * a);
+  }
+`
 
 /**
  * Soft round points with a size and colour per vertex. `PointsMaterial` draws
  * square sprites of one size, and a galaxy is nothing but points of many sizes.
-
  *
  * `birth` and `death` attributes against `uTime` fade each point in and out,
  * which is the whole of timeline playback for the galaxy.
@@ -30,34 +40,82 @@ export function glowMaterial(): ShaderMaterial {
         gl_Position = projectionMatrix * mv;
       }
     `,
-    fragmentShader: /* glsl */ `
-      varying vec3 vColor;
-      void main() {
-        float d = length(gl_PointCoord - 0.5) * 2.0;
-        float a = smoothstep(1.0, 0.0, d);
-        gl_FragColor = vec4(vColor, a * a);
-      }
-    `,
+    fragmentShader: POINT_FRAGMENT,
     vertexColors: true,
   })
 }
 
-/** Lines whose segments fade by `birth` and `death` against `uTime`. */
+/**
+ * `glowMaterial` that also reads each point's file health, for the health lens.
+ * Points need a `file` attribute. `uLens` fades the lens in from `0` to `1`;
+ * `flare` is how far a hotspot swells, so a file's core can blaze while its
+ * stars only warm.
+ */
+export function healthGlowMaterial(flare: number): ShaderMaterial {
+  return new ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    blending: AdditiveBlending,
+    uniforms: {
+      uScale: { value: 300 },
+      uTime: { value: 0 },
+      uLens: { value: 0 },
+      uFlare: { value: flare },
+      uHealth: { value: null },
+      uHealthRows: { value: 1 },
+    },
+    vertexShader: /* glsl */ `
+      attribute float size;
+      attribute float birth;
+      attribute float death;
+      attribute float file;
+      varying vec3 vColor;
+      uniform float uScale;
+      uniform float uTime;
+      uniform float uLens;
+      uniform float uFlare;
+      ${VISIBILITY_GLSL}
+      ${HEALTH_GLSL}
+      void main() {
+        vec4 health = healthOf(file) * uLens;
+        // Unused code fades to a dim grey: present, but nothing reaches it.
+        float grey = dot(color, vec3(0.3, 0.59, 0.11));
+        vec3 c = mix(color, vec3(grey * 0.3), health.g);
+        // Hotspots burn from orange towards white as they heat.
+        vec3 fire = mix(vec3(1.0, 0.35, 0.08), vec3(1.0, 0.85, 0.6), health.r);
+        c = mix(c, fire * (0.6 + 1.6 * health.r), min(1.0, health.r * 2.0) * min(1.0, uFlare));
+        vColor = c;
+        float swell = 1.0 + health.r * uFlare * 2.5;
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size * swell * visibility(birth, death, uTime) * uScale / -mv.z;
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader: POINT_FRAGMENT,
+    vertexColors: true,
+  })
+}
+
+/**
+ * Lines whose segments fade by `birth` and `death` against `uTime`, and all
+ * together by `uOpacity`, so a set of lines can be switched on gently.
+ */
 export function lifeLineMaterial(): ShaderMaterial {
   return new ShaderMaterial({
     transparent: true,
     depthWrite: false,
     blending: AdditiveBlending,
     vertexColors: true,
-    uniforms: { uTime: { value: 0 } },
+    uniforms: { uTime: { value: 0 }, uOpacity: { value: 1 } },
     vertexShader: /* glsl */ `
       attribute float birth;
       attribute float death;
       varying vec3 vColor;
       uniform float uTime;
+      uniform float uOpacity;
       ${VISIBILITY_GLSL}
       void main() {
-        vColor = color * visibility(birth, death, uTime);
+        vColor = color * visibility(birth, death, uTime) * uOpacity;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
     `,

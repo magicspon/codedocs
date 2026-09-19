@@ -1,5 +1,5 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame, type ThreeEvent } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { useLayoutEffect, useMemo, useRef, type JSX } from 'react'
 import {
   AdditiveBlending,
@@ -8,9 +8,10 @@ import {
   ShaderMaterial,
   type InstancedMesh,
 } from 'three'
-import { cityLayout, type Building } from '../lib/city-layout.ts'
-import { VISIBILITY_GLSL, type Playhead } from '../lib/series.ts'
+import { cityLayout } from '../lib/city-layout.ts'
+import { VISIBILITY_GLSL } from '../lib/series.ts'
 import type { Region } from '../lib/treemap.ts'
+import { Buildings } from './Buildings.tsx'
 import type { SceneProps } from './scene.ts'
 
 const dummy = new Object3D()
@@ -124,102 +125,18 @@ function Districts({
   )
 }
 
-/** A building's height at fractional frame `t`, blending the two frames around it. */
-function heightAt(b: Building, t: number): number {
-  const f0 = Math.floor(t)
-  const f1 = Math.min(f0 + 1, b.heights.length - 1)
-  const h0 = b.heights[f0] ?? 0
-  return h0 + ((b.heights[f1] ?? 0) - h0) * (t - f0)
-}
-
-/**
- * Towers and their beacons, re-stacked whenever the playhead moves. On the CPU
- * rather than in a shader: a standard lit material keeps its lighting, and
- * 12,000 matrices is well inside one frame.
- */
-function Buildings(props: {
-  buildings: readonly Building[]
-  playhead: Playhead
-  onHover: SceneProps['onHover']
-}): JSX.Element {
-  const { buildings, playhead } = props
-  const body = useRef<InstancedMesh>(null)
-  const roof = useRef<InstancedMesh>(null)
-  const drawn = useRef(Number.NaN)
-  const lift = 0.3
-  const lit = useMemo(
-    () => buildings.flatMap((b, i) => (b.beacon > 0 ? [i] : [])),
-    [buildings],
-  )
-
-  useLayoutEffect(() => {
-    // Colours never change; only matrices follow the playhead.
-    buildings.forEach((b, i) => body.current?.setColorAt(i, b.color))
-    lit.forEach((i, k) =>
-      roof.current?.setColorAt(
-        k,
-        new Color('#ffb46b').multiplyScalar(
-          0.6 + buildings[i]!.beacon ** 2 * 4,
-        ),
-      ),
-    )
-    drawn.current = Number.NaN
-  }, [buildings, lit])
-
-  useFrame(() => {
-    if (playhead.t === drawn.current || !body.current || !roof.current) return
-    drawn.current = playhead.t
-    buildings.forEach((b, i) => {
-      const h = heightAt(b, playhead.t)
-      dummy.position.set(b.x, lift + h / 2, b.z)
-      // A zero scale would make a singular matrix; a sliver is invisible anyway.
-      dummy.scale.set(h > 0 ? b.w : 1e-4, Math.max(h, 1e-4), h > 0 ? b.d : 1e-4)
-      dummy.updateMatrix()
-      body.current!.setMatrixAt(i, dummy.matrix)
-    })
-    lit.forEach((i, k) => {
-      const b = buildings[i]!
-      const h = heightAt(b, playhead.t)
-      const on = h > 0 ? 1 : 1e-4
-      dummy.position.set(b.x, lift + h + 0.02, b.z)
-      dummy.scale.set(b.w * 0.6 * on, 0.04 * on, b.d * 0.6 * on)
-      dummy.updateMatrix()
-      roof.current!.setMatrixAt(k, dummy.matrix)
-    })
-    body.current.instanceMatrix.needsUpdate = true
-    roof.current.instanceMatrix.needsUpdate = true
-    body.current.computeBoundingSphere()
-    roof.current.computeBoundingSphere()
-  })
-
-  return (
-    <>
-      <instancedMesh
-        ref={body}
-        args={[undefined, undefined, buildings.length]}
-        onPointerMove={(e: ThreeEvent<PointerEvent>) => (
-          e.stopPropagation(),
-          props.onHover(e.instanceId ?? null)
-        )}
-        onPointerOut={() => props.onHover(null)}
-      >
-        <boxGeometry />
-        <meshStandardMaterial roughness={0.55} metalness={0.25} />
-      </instancedMesh>
-      <instancedMesh ref={roof} args={[undefined, undefined, lit.length]}>
-        <boxGeometry />
-        <meshBasicMaterial toneMapped={false} />
-      </instancedMesh>
-    </>
-  )
-}
-
 /**
  * The codebase as a night city: districts are directories, towers are files
  * dense with symbols, beacons mark code others call, arcs carry the calls.
- * Over a timeline, towers rise as their files grow.
+ * Over a timeline, towers rise as their files grow. Under the health lens,
+ * hotspots burn, unused files go dark and hard-to-change files weather.
  */
-export function City({ series, playhead, onHover }: SceneProps): JSX.Element {
+export function City({
+  series,
+  playhead,
+  lens,
+  onHover,
+}: SceneProps): JSX.Element {
   const layout = useMemo(() => cityLayout(series), [series])
   const traffic = useMemo(trafficMaterial, [])
   useFrame((state) => {
@@ -250,8 +167,9 @@ export function City({ series, playhead, onHover }: SceneProps): JSX.Element {
       </mesh>
       <Districts districts={layout.districts} unit={layout.unit} />
       <Buildings
-        buildings={layout.buildings}
+        layout={layout}
         playhead={playhead}
+        lens={lens}
         onHover={onHover}
       />
       <lineSegments material={traffic}>

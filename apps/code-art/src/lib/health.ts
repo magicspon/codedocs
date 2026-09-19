@@ -1,0 +1,113 @@
+import type { FileHealth } from './atlas.ts'
+import type { Series } from './series.ts'
+
+/**
+ * fallow's readings as per-frame tracks the scenes can blend, the way building
+ * heights blend. Each track is flat: file `i` at frame `f` sits at
+ * `i * frames + f`, so a vscode timeline is three typed arrays, not 150,000
+ * small ones.
+ */
+export interface HealthTracks {
+  readonly frames: number
+  /** Hotspot strength in `[0, 1]`; `0` when the file is not a hotspot. */
+  readonly heat: Float32Array
+  /** `1` where the file is reachable from no entry point, else `0`. */
+  readonly unused: Float32Array
+  /** How hard the file is to change, in `[0, 1]`; `0` when fallow did not score it. */
+  readonly wear: Float32Array
+}
+
+/** One file's blended reading at a moment in the history. */
+export interface HealthSample {
+  heat: number
+  unused: number
+  wear: number
+}
+
+/**
+ * Maintainability at or above this reads as sound. fallow's index runs 0–100,
+ * but real files sit between about 50 and 99; a healthy repo's worst file
+ * lands near 85, so wear starts there.
+ */
+const SOUND = 85
+/** Maintainability at or below this reads as fully worn. */
+const WORN = 50
+
+/**
+ * Hotspot strength. Scores cluster near zero with a long tail, so a square
+ * root keeps a score of 10 visible without letting the top one swamp the rest.
+ */
+export function heatOf(health: FileHealth | undefined): number {
+  return Math.sqrt(Math.min(100, health?.hotspot ?? 0) / 100)
+}
+
+/** Wear from maintainability; a file fallow did not score is not drawn as worn. */
+export function wearOf(health: FileHealth | undefined): number {
+  const mi = health?.score?.maintainability
+  if (mi === undefined) return 0
+  return Math.min(1, Math.max(0, (SOUND - mi) / (SOUND - WORN)))
+}
+
+/**
+ * Builds the tracks for every merged file. Unused files are only marked when
+ * the newest frame's fallow run trusted its dead-code findings.
+ */
+export function healthTracks(series: Series): HealthTracks {
+  const frames = series.at.length
+  const n = series.merged.files.length
+  const deadCode = series.merged.fallow?.deadCode ?? false
+  const tracks = {
+    frames,
+    heat: new Float32Array(n * frames),
+    unused: new Float32Array(n * frames),
+    wear: new Float32Array(n * frames),
+  }
+  series.at.forEach((row, f) => {
+    row.forEach((datum, i) => {
+      const health = datum?.health
+      if (!health) return
+      const at = i * frames + f
+      tracks.heat[at] = heatOf(health)
+      tracks.unused[at] = deadCode && health.unused ? 1 : 0
+      tracks.wear[at] = wearOf(health)
+    })
+  })
+  return tracks
+}
+
+/** Whether any file ever reads as a hotspot, per merged file. */
+export function everHot(tracks: HealthTracks, file: number): boolean {
+  for (let f = 0; f < tracks.frames; f++)
+    if (tracks.heat[file * tracks.frames + f]! > 0) return true
+  return false
+}
+
+/**
+ * The value at fractional frame `t` in a run of per-frame values starting at
+ * `offset`, blending the two frames around it.
+ */
+export function blend(
+  values: ArrayLike<number>,
+  offset: number,
+  frames: number,
+  t: number,
+): number {
+  const f0 = Math.max(0, Math.min(Math.floor(t), frames - 1))
+  const f1 = Math.min(f0 + 1, frames - 1)
+  const v0 = values[offset + f0] ?? 0
+  return v0 + ((values[offset + f1] ?? 0) - v0) * Math.max(0, t - f0)
+}
+
+/** Fills `out` with file `file`'s reading at fractional frame `t`. */
+export function sampleHealth(
+  tracks: HealthTracks,
+  file: number,
+  t: number,
+  out: HealthSample,
+): HealthSample {
+  const offset = file * tracks.frames
+  out.heat = blend(tracks.heat, offset, tracks.frames, t)
+  out.unused = blend(tracks.unused, offset, tracks.frames, t)
+  out.wear = blend(tracks.wear, offset, tracks.frames, t)
+  return out
+}
