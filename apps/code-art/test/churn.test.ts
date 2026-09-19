@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseLog } from '../scripts/churn.ts'
+import { notShallow, parseLog } from '../scripts/churn.ts'
 
 describe('parseLog', () => {
   // Two commits as `git log --numstat --format=format:%at|%ae` prints them.
@@ -53,5 +53,13 @@ describe('parseLog', () => {
 
   it('keeps a pipe inside a path', () => {
     expect(parseLog('5|x\n1\t0\tsrc/a|b.ts', 0)[0]?.path).toBe('src/a|b.ts')
+  })
+})
+
+describe('notShallow', () => {
+  it('excludes each boundary commit and ignores anything else', () => {
+    const sha = 'a'.repeat(40)
+    expect(notShallow(`${sha}\n\nnot-a-sha\n`)).toEqual([`^${sha}`])
+    expect(notShallow('')).toEqual([])
   })
 })

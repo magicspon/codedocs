@@ -88,6 +88,9 @@ automatically; use the bar at the bottom to pause or drag through the commits.
   file in an old frame would read as cooling.
 - A shallow clone has no history to replay. Deepen it first, for example
   `git fetch --shallow-since=2025-08-31 origin main`.
+- Hotspots leave out the commits at a shallow clone's cut-off. git shows each
+  of them adding every file, which would make every file look like a hotspot
+  that is cooling down.
 - A repo without `node_modules` still works, at `syntactic` fidelity. The
   vscode fixture has none, so its timeline matches its existing index.
 
