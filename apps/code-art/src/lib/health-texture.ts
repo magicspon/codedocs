@@ -21,7 +21,8 @@ export interface HealthTexture {
 const HEALTH_WIDTH = 1024
 
 /**
- * GLSL that reads file `file`'s health: `r` heat, `g` unused, `b` wear.
+ * GLSL that reads file `file`'s health: `r` heat, `g` unused, `b` wear,
+ * `a` trend (`-1` cooling to `1` heating up).
  * Expects `uHealth` and `uHealthRows` uniforms.
  */
 export const HEALTH_GLSL: string = /* glsl */ `
@@ -50,13 +51,14 @@ export function healthTexture(
   // Each texel is one file; blending neighbours would mix unrelated files.
   texture.minFilter = NearestFilter
   texture.magFilter = NearestFilter
-  const sample: HealthSample = { heat: 0, unused: 0, wear: 0 }
+  const sample: HealthSample = { heat: 0, unused: 0, wear: 0, trend: 0 }
   const update = (t: number): void => {
     for (let i = 0; i < files; i++) {
       sampleHealth(tracks, i, t, sample)
       data[i * 4] = sample.heat
       data[i * 4 + 1] = sample.unused
       data[i * 4 + 2] = sample.wear
+      data[i * 4 + 3] = sample.trend
     }
     texture.needsUpdate = true
   }

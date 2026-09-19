@@ -15,12 +15,12 @@ const TRENDS: Record<number, string> = {
 /** What the health lens draws in each scene, one sentence per reading. */
 const LENS: Record<string, { hot: string; unused: string; rest: string }> = {
   galaxy: {
-    hot: 'Hotspots flare, from orange to white as they get hotter.',
+    hot: 'Hotspots flare, from orange to white as they get hotter. A pulsing one is heating up; a dull red one is cooling.',
     unused: 'Grey stars are files no entry point reaches.',
     rest: 'Pale blue threads join files that share copied code.',
   },
   city: {
-    hot: 'Fire on a roof marks a hotspot: taller and whiter is hotter.',
+    hot: 'Fire on a roof marks a hotspot: taller and whiter is hotter. A pulsing fire is heating up; a low grey one is cooling.',
     unused: 'Dark towers are files no entry point reaches.',
     rest: 'Rust shows code that is hard to change.',
   },

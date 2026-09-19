@@ -45,6 +45,8 @@ readings blend from commit to commit, just as heights do.
 | Reading        | Galaxy                                  | City                                          |
 | -------------- | --------------------------------------- | --------------------------------------------- |
 | Hotspot        | the file's core flares, orange to white | fire on the roof; taller and whiter is hotter |
+| Heating up     | the flare pulses                        | the fire pulses                               |
+| Cooling        | the flare sinks to a dull red           | the fire burns low and turns to grey smoke    |
 | Unused file    | the file's stars fade to grey           | the tower goes dark                           |
 | Hard to change | —                                       | the facade rusts                              |
 | Copied code    | a pale blue thread joins the two files  | —                                             |
@@ -53,6 +55,9 @@ readings blend from commit to commit, just as heights do.
   without the hottest file drowning the rest.
 - Rust starts at a maintainability of 85 and is full at 50. Real files sit
   between about 50 and 99, and a healthy repo's worst file lands near 85.
+- The trend is fallow's: it compares the file's recent commits with its older
+  ones inside the hotspot window. Over a timeline it blends from commit to
+  commit, so you can watch a file start to pulse before it gets hot.
 - Point at a file to see fallow's numbers for it in the file panel.
 
 ## Watch a repo grow

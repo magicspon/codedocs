@@ -9,6 +9,7 @@ import {
   heatOf,
   healthTracks,
   sampleHealth,
+  trendOf,
   wearOf,
 } from '../src/lib/health.ts'
 import { healthRows, lensLegend, lensNote } from '../src/lib/health-text.ts'
@@ -44,6 +45,7 @@ function frames(deadCode: boolean): Atlas[] {
         file('a.ts', {
           health: health({
             hotspot: 64,
+            trend: 1,
             score: {
               maintainability: 50,
               density: 0,
@@ -97,6 +99,13 @@ describe('health readings', () => {
     expect(scored(10)).toBe(1)
   })
 
+  it('draws a trend only for hotspots', () => {
+    expect(trendOf(undefined)).toBe(0)
+    expect(trendOf(health({ trend: 1 }))).toBe(0)
+    expect(trendOf(health({ hotspot: 5, trend: 1 }))).toBe(1)
+    expect(trendOf(health({ hotspot: 5, trend: -1 }))).toBe(-1)
+  })
+
   it('blends between frames, like heights', () => {
     const values = [0, 10, 20, 30]
     expect(blend(values, 1, 3, 0.5)).toBeCloseTo(15)
@@ -106,15 +115,17 @@ describe('health readings', () => {
 
   it('tracks each file per frame and blends the playhead between them', () => {
     const tracks = healthTracks(timeline(true))
-    const out = { heat: 0, unused: 0, wear: 0 }
+    const out = { heat: 0, unused: 0, wear: 0, trend: 0 }
     expect(sampleHealth(tracks, 0, 0, out)).toEqual({
       heat: 0,
       unused: 0,
       wear: 0,
+      trend: 0,
     })
     sampleHealth(tracks, 0, 0.5, out)
     expect(out.heat).toBeCloseTo(0.4)
     expect(out.wear).toBeCloseTo(0.5)
+    expect(out.trend).toBeCloseTo(0.5)
     expect(sampleHealth(tracks, 1, 1, out).unused).toBe(1)
   })
 
@@ -148,6 +159,7 @@ describe('health in the scenes', () => {
     expect(data[0]).toBe(0)
     update(1)
     expect(data[0]).toBeCloseTo(0.8)
+    expect(data[3]).toBe(1)
     expect(data[5]).toBe(1)
     expect(texture.image.width).toBe(1024)
   })
@@ -164,7 +176,7 @@ describe('health in the scenes', () => {
   it('rusts worn buildings and darkens unused ones only as the lens opens', () => {
     const base = new Color(1, 1, 1)
     const out = new Color()
-    const sample = { heat: 0, unused: 1, wear: 1 }
+    const sample = { heat: 0, unused: 1, wear: 1, trend: 0 }
     expect(weathered(base, sample, 0, out).equals(base)).toBe(true)
     weathered(base, sample, 1, out)
     expect(out.r).toBeLessThan(0.2)
@@ -176,6 +188,7 @@ describe('health in the scenes', () => {
     expect(glow.uniforms.uFlare!.value).toBe(0.25)
     expect(glow.uniforms.uLens!.value).toBe(0)
     expect(glow.vertexShader).toContain('healthOf(file)')
+    expect(glow.uniforms.uClock!.value).toBe(0)
     expect(lifeLineMaterial().uniforms.uOpacity!.value).toBe(1)
   })
 })
@@ -209,5 +222,6 @@ describe('health in words', () => {
     expect(lensNote('city', undefined, true)).toContain('fallow on your PATH')
     expect(lensNote('city', meta(true), false)).toBe('')
     expect(lensNote('city', meta(true), true)).toContain('Fire')
+    expect(lensLegend('galaxy', meta(true))).toContain('heating up')
   })
 })

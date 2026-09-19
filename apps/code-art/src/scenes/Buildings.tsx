@@ -15,11 +15,13 @@ import type { SceneProps } from './scene.ts'
 
 const dummy = new Object3D()
 const paint = new Color()
-const sample: HealthSample = { heat: 0, unused: 0, wear: 0 }
+const sample: HealthSample = { heat: 0, unused: 0, wear: 0, trend: 0 }
 /** Towers stand on the district slabs. */
 const LIFT = 0.3
 const EMBER = new Color('#ff5a14')
 const BLAZE = new Color('#ffd27a')
+/** What a cooling hotspot's fire dies down to. */
+const ASH = new Color('#5c5452')
 
 /** A building's height at fractional frame `t`, blending the two frames around it. */
 function heightAt(b: Building, t: number): number {
@@ -52,6 +54,11 @@ interface Meshes {
 interface Drawn {
   readonly t: number
   readonly lens: number
+}
+
+/** A frame to draw: where the city is, plus wall-clock seconds for the fires' pulse. */
+interface Moment extends Drawn {
+  readonly clock: number
 }
 
 function ready(meshes: {
@@ -108,19 +115,43 @@ function stackRoofs(
   })
 }
 
-/** Fire on each hotspot's roof, as big and as white as it is hot. */
-function stackFires(fire: InstancedMesh, layout: CityLayout, at: Drawn): void {
+/**
+ * Fire on each hotspot's roof, as big and as white as it is hot. One heating
+ * up throbs; one cooling burns low and greys to smoke.
+ */
+function stackFires(fire: InstancedMesh, layout: CityLayout, at: Moment): void {
   layout.hot.forEach((i, k) => {
     const b = layout.buildings[i]!
     const h = heightAt(b, at.t)
     const standing = h > 0 ? at.lens : 0
-    const heat = sampleHealth(layout.health, i, at.t, sample).heat * standing
+    const { heat: raw, trend } = sampleHealth(layout.health, i, at.t, sample)
+    const heat = raw * standing
+    const rising = Math.max(trend, 0)
+    const cooling = Math.max(-trend, 0)
+    // The index staggers the beats so a street of fires does not pulse as one.
+    const beat = 0.5 + 0.5 * Math.sin(at.clock * 4 + i * 1.7)
     const span = Math.min(b.w, b.d)
-    const tall = heat > 0 ? span * (0.3 + 2.2 * heat) : 0
+    const tall =
+      heat > 0
+        ? span * (0.3 + 2.2 * heat) * (1 + rising * beat * 0.5 - cooling * 0.4)
+        : 0
     const wide = span * 0.7 * heat
     place(fire, k, [b.x, LIFT + h + tall / 2, b.z], [wide, tall, wide])
-    fire.setColorAt(k, paint.copy(EMBER).lerp(BLAZE, heat))
+    fire.setColorAt(
+      k,
+      paint
+        .copy(EMBER)
+        .lerp(BLAZE, heat)
+        .lerp(ASH, cooling * 0.8),
+    )
   })
+}
+
+/** Marks a mesh's instances as changed, for three to upload. */
+function touch(mesh: InstancedMesh): void {
+  mesh.instanceMatrix.needsUpdate = true
+  if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
+  mesh.computeBoundingSphere()
 }
 
 /** Redraws every tower, beacon and fire for `at`; `was` is the lens last drawn. */
@@ -128,17 +159,36 @@ function restack(
   meshes: Meshes,
   layout: CityLayout,
   lit: readonly number[],
-  at: Drawn,
+  at: Moment,
   was: number,
 ): void {
   stackBodies(meshes.body, layout, at, at.lens > 0 || was !== 0)
   stackRoofs(meshes.roof, layout.buildings, lit, at.t)
   stackFires(meshes.fire, layout, at)
-  for (const mesh of Object.values(meshes)) {
-    mesh.instanceMatrix.needsUpdate = true
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
-    mesh.computeBoundingSphere()
+  for (const mesh of Object.values(meshes)) touch(mesh)
+}
+
+/**
+ * Draws `next`, given where the city was `last` drawn, and returns where
+ * it now stands. Only the fires pulse between moves; the towers stay put until
+ * the playhead or the lens moves.
+ */
+function redraw(
+  meshes: Meshes,
+  layout: CityLayout,
+  lit: readonly number[],
+  last: Drawn,
+  next: Moment,
+): Drawn {
+  if (moved(last, next)) {
+    restack(meshes, layout, lit, next, last.lens)
+    return next
   }
+  if (next.lens > 0 && layout.hot.length > 0) {
+    stackFires(meshes.fire, layout, next)
+    touch(meshes.fire)
+  }
+  return last
 }
 
 /**
@@ -181,16 +231,18 @@ export function Buildings(props: {
 
   useFrame((state) => {
     flicker(flame.current, state.clock.elapsedTime)
-    const next = { t: playhead.t, lens: lens.current }
-    const last = drawn.current
+    const next = {
+      t: playhead.t,
+      lens: lens.current,
+      clock: state.clock.elapsedTime,
+    }
     const meshes = {
       body: body.current,
       roof: roof.current,
       fire: fire.current,
     }
-    if (!moved(last, next) || !ready(meshes)) return
-    drawn.current = next
-    restack(meshes, layout, lit, next, last.lens)
+    if (ready(meshes))
+      drawn.current = redraw(meshes, layout, lit, drawn.current, next)
   })
 
   return (

@@ -1860,13 +1860,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/galaxy-layout.ts": {
-    "mtime": 1789832087.0266085,
-    "ast_hash": "88a2970940746e043a054676ccb92da2",
+    "mtime": 1789832388.2751968,
+    "ast_hash": "4ad267479f14a42e60812a271e4a3db8",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/glow.ts": {
-    "mtime": 1789832087.0261087,
-    "ast_hash": "f84b86cda7c3d3f63059a3701487a7a7",
+    "mtime": 1789833368.2809575,
+    "ast_hash": "49ab0c4e9c43b44e46374428499f27f8",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/load.ts": {
@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Galaxy.tsx": {
-    "mtime": 1789832272.997941,
-    "ast_hash": "e01d5c9647339d5b08a44742874aed0b",
+    "mtime": 1789833368.2811413,
+    "ast_hash": "79f0e9a8cac918d7088e2fcdddff4a9e",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/scene.ts": {
@@ -1935,8 +1935,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1789832193.0143778,
-    "ast_hash": "667a10374daa18ce80d30058ed75f80a",
+    "mtime": 1789833403.1933527,
+    "ast_hash": "044b9dfaf9b8ae7f4a888b8c01bf4e99",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -2040,18 +2040,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/health-text.ts": {
-    "mtime": 1789832288.8231714,
-    "ast_hash": "c68cd543397fefa75560b65459e9d514",
+    "mtime": 1789833403.1931784,
+    "ast_hash": "f85da4ee9f9d3d9ed79ffc10d982d6fd",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/health-texture.ts": {
-    "mtime": 1789832272.9975965,
-    "ast_hash": "306f227fe02330ccb74f551d499c55e8",
+    "mtime": 1789833356.1430612,
+    "ast_hash": "4792f99481face0aef7092cc47367c73",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/health.ts": {
-    "mtime": 1789832087.0261612,
-    "ast_hash": "2b211afb8fdd2b202af2447033abf4b5",
+    "mtime": 1789833356.142938,
+    "ast_hash": "64ecbd2bd72d4b9ecb074a3888709e2b",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/threads.ts": {
@@ -2060,8 +2060,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Buildings.tsx": {
-    "mtime": 1789832273.3775427,
-    "ast_hash": "de5f871c3ccdfa94694239aa9df2ce17",
+    "mtime": 1789833387.7659433,
+    "ast_hash": "a2e5e75e84ce177c4a520c87498beced",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/lens.ts": {
@@ -2070,8 +2070,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/health.test.ts": {
-    "mtime": 1789832288.5458586,
-    "ast_hash": "848926f63422c54b549f4b9bb8a93de5",
+    "mtime": 1789833403.1935527,
+    "ast_hash": "28a4bfa4268597280dc60e337dd9cd46",
     "semantic_hash": ""
   }
 }

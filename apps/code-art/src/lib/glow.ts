@@ -49,7 +49,8 @@ export function glowMaterial(): ShaderMaterial {
  * `glowMaterial` that also reads each point's file health, for the health lens.
  * Points need a `file` attribute. `uLens` fades the lens in from `0` to `1`;
  * `flare` is how far a hotspot swells, so a file's core can blaze while its
- * stars only warm.
+ * stars only warm. `uClock` is wall-clock seconds, for the pulse of a hotspot
+ * that is heating up; `uTime` is the playhead and stands still when paused.
  */
 export function healthGlowMaterial(flare: number): ShaderMaterial {
   return new ShaderMaterial({
@@ -59,6 +60,7 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
     uniforms: {
       uScale: { value: 300 },
       uTime: { value: 0 },
+      uClock: { value: 0 },
       uLens: { value: 0 },
       uFlare: { value: flare },
       uHealth: { value: null },
@@ -72,6 +74,7 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
       varying vec3 vColor;
       uniform float uScale;
       uniform float uTime;
+      uniform float uClock;
       uniform float uLens;
       uniform float uFlare;
       ${VISIBILITY_GLSL}
@@ -83,9 +86,15 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
         vec3 c = mix(color, vec3(grey * 0.3), health.g);
         // Hotspots burn from orange towards white as they heat.
         vec3 fire = mix(vec3(1.0, 0.35, 0.08), vec3(1.0, 0.85, 0.6), health.r);
-        c = mix(c, fire * (0.6 + 1.6 * health.r), min(1.0, health.r * 2.0) * min(1.0, uFlare));
+        // A cooling hotspot sinks to a dull red ember.
+        float cooling = max(-health.a, 0.0);
+        fire = mix(fire, vec3(0.5, 0.07, 0.03), cooling * 0.8);
+        // One heating up throbs; the file index staggers the beats so they do not march.
+        float beat = 0.5 + 0.5 * sin(uClock * 4.0 + file * 1.7);
+        float pulse = 1.0 + max(health.a, 0.0) * beat * 0.6;
+        c = mix(c, fire * (0.6 + 1.6 * health.r) * pulse, min(1.0, health.r * 2.0) * min(1.0, uFlare));
         vColor = c;
-        float swell = 1.0 + health.r * uFlare * 2.5;
+        float swell = 1.0 + health.r * uFlare * 2.5 * pulse;
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
         gl_PointSize = size * swell * visibility(birth, death, uTime) * uScale / -mv.z;
         gl_Position = projectionMatrix * mv;

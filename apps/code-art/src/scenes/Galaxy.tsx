@@ -71,7 +71,8 @@ function Lines(props: {
  * The codebase as a spiral galaxy: arms are top-level directories, the core is
  * the code everything else leans on, stars are symbols, red haze is blind spots.
  * Over a timeline, stars ignite as their file gains symbols. Under the health
- * lens, hotspots flare, unused files grey out and copies pair up.
+ * lens, hotspots flare (pulsing when heating up, dull red when cooling),
+ * unused files grey out and copies pair up.
  */
 export function Galaxy(props: SceneProps): JSX.Element {
   const { series, playhead, onHover } = props
@@ -101,14 +102,16 @@ export function Galaxy(props: SceneProps): JSX.Element {
   const lens = useLens(props.lens)
   const group = useRef<Group>(null)
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     // A slow turn: fast enough to read depth, slow enough to stay calm.
     if (group.current) group.current.rotation.y += delta * 0.02
     for (const m of Object.values(materials))
       m.uniforms.uTime!.value = playhead.t
     health.follow(playhead.t, lens.current)
-    materials.stars.uniforms.uLens!.value = lens.current
-    materials.cores.uniforms.uLens!.value = lens.current
+    for (const m of [materials.stars, materials.cores]) {
+      m.uniforms.uLens!.value = lens.current
+      m.uniforms.uClock!.value = state.clock.elapsedTime
+    }
     materials.clones.uniforms.uOpacity!.value = lens.current
   })
 

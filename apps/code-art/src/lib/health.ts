@@ -15,6 +15,8 @@ export interface HealthTracks {
   readonly unused: Float32Array
   /** How hard the file is to change, in `[0, 1]`; `0` when fallow did not score it. */
   readonly wear: Float32Array
+  /** Hotspot trend in `[-1, 1]`: `1` heating up, `-1` cooling; `0` when not a hotspot. */
+  readonly trend: Float32Array
 }
 
 /** One file's blended reading at a moment in the history. */
@@ -22,6 +24,7 @@ export interface HealthSample {
   heat: number
   unused: number
   wear: number
+  trend: number
 }
 
 /**
@@ -49,6 +52,15 @@ export function wearOf(health: FileHealth | undefined): number {
 }
 
 /**
+ * Hotspot trend. fallow gives every file one, but only a hotspot's is drawn:
+ * a cold file "heating up" has nothing yet to burn.
+ */
+export function trendOf(health: FileHealth | undefined): number {
+  if (!health || health.hotspot <= 0) return 0
+  return Math.sign(health.trend)
+}
+
+/**
  * Builds the tracks for every merged file. Unused files are only marked when
  * the newest frame's fallow run trusted its dead-code findings.
  */
@@ -61,6 +73,7 @@ export function healthTracks(series: Series): HealthTracks {
     heat: new Float32Array(n * frames),
     unused: new Float32Array(n * frames),
     wear: new Float32Array(n * frames),
+    trend: new Float32Array(n * frames),
   }
   series.at.forEach((row, f) => {
     row.forEach((datum, i) => {
@@ -70,6 +83,7 @@ export function healthTracks(series: Series): HealthTracks {
       tracks.heat[at] = heatOf(health)
       tracks.unused[at] = deadCode && health.unused ? 1 : 0
       tracks.wear[at] = wearOf(health)
+      tracks.trend[at] = trendOf(health)
     })
   })
   return tracks
@@ -109,5 +123,6 @@ export function sampleHealth(
   out.heat = blend(tracks.heat, offset, tracks.frames, t)
   out.unused = blend(tracks.unused, offset, tracks.frames, t)
   out.wear = blend(tracks.wear, offset, tracks.frames, t)
+  out.trend = blend(tracks.trend, offset, tracks.frames, t)
   return out
 }
