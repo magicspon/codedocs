@@ -7,6 +7,7 @@ codegens
 codeguide
 devicecard
 drei
+emissivemap
 esbuild
 expando
 fallowrc
@@ -49,6 +50,7 @@ sperno
 squarified
 squarify
 stackback
+strobing
 tanstack
 Tauri
 treemap
@@ -63,6 +65,7 @@ unloadable
 unnormalised
 unparameterised
 unparseable
+unreachability
 unstub
 untallied
 uprn

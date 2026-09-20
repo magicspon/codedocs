@@ -18,18 +18,17 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
-  readdirSync,
-  realpathSync,
-  symlinkSync,
   writeFileSync,
 } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { basename, join, relative, resolve, sep } from 'node:path'
+import { basename, join, relative, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
 import type { Atlas, Commit, Timeline } from '../src/lib/atlas.ts'
+import { fromCaller } from './caller.ts'
 import { withHealth } from './fallow-health.ts'
 import { readAtlas } from './read-index.ts'
 import { readFallow, type FallowReading } from './read-fallow.ts'
+import { mirror, nodeModules } from './worktree.ts'
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
@@ -39,7 +38,7 @@ const { values, positionals } = parseArgs({
     'no-fallow': { type: 'boolean', default: false },
   },
 })
-const repo = resolve(positionals[0] ?? '.')
+const repo = fromCaller(positionals[0] ?? '.')
 const frameCount = Math.max(2, Number(values.frames))
 const name = values.name ?? basename(repo)
 const useFallow = !values['no-fallow']
@@ -76,53 +75,6 @@ function pickCommits(): Commit[] {
   })
 }
 
-/** Every `node_modules` directory near the top of the repo, so a worktree can borrow them. */
-function nodeModules(dir: string, depth = 0): string[] {
-  if (depth > 3) return []
-  const found: string[] = []
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (
-      !entry.isDirectory() ||
-      entry.name === '.git' ||
-      entry.name === '.codedocs'
-    )
-      continue
-    const path = join(dir, entry.name)
-    if (entry.name === 'node_modules') found.push(path)
-    else found.push(...nodeModules(path, depth + 1))
-  }
-  return found
-}
-
-/**
- * Mirrors one `node_modules` directory into the worktree `tree`.
- *
- * Third-party packages are linked as they are. A workspace package is not:
- * pnpm links it to the *current* checkout, and the checker would follow that
- * link and index today's source inside an old frame. It is pointed at the
- * worktree's own copy instead, or left out if that commit did not have it.
- */
-function mirror(source: string, target: string, tree: string): void {
-  mkdirSync(target, { recursive: true })
-  for (const entry of readdirSync(source, { withFileTypes: true })) {
-    const from = join(source, entry.name)
-    const to = join(target, entry.name)
-    if (existsSync(to)) continue
-    if (entry.name.startsWith('@') && entry.isDirectory()) {
-      mirror(from, to, tree)
-      continue
-    }
-    const real = realpathSync(from)
-    const workspace =
-      real.startsWith(repo + sep) && !real.includes(`${sep}node_modules${sep}`)
-    if (!workspace) symlinkSync(from, to)
-    else {
-      const own = join(tree, relative(repo, real))
-      if (existsSync(own)) symlinkSync(own, to)
-    }
-  }
-}
-
 /**
  * A throwaway worktree at `sha`, checked out on first use, so a frame that is
  * fully cached never touches git.
@@ -151,7 +103,7 @@ function lazyTree(sha: string): LazyTree {
 function analyse(dir: string): Atlas {
   for (const source of modules) {
     const target = join(dir, relative(repo, source))
-    if (existsSync(resolve(target, '..'))) mirror(source, target, dir)
+    if (existsSync(resolve(target, '..'))) mirror(source, target, { repo, dir })
   }
   execFileSync('node', [cli, 'analyse', '--cwd', dir], { stdio: 'ignore' })
   // The scenes draw at most ~2,000 calls; 8,000 per frame leaves room for

@@ -8,17 +8,19 @@
 
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
+import { fromCaller } from './caller.ts'
 import { withHealth } from './fallow-health.ts'
 import { readAtlas } from './read-index.ts'
 import { readFallow } from './read-fallow.ts'
 
 const args = process.argv.slice(2)
 const useFallow = !args.includes('--no-fallow')
-const [target, nameArg] = args.filter((a) => a !== '--no-fallow')
-if (target === undefined) {
+const [given, nameArg] = args.filter((a) => a !== '--no-fallow')
+if (given === undefined) {
   console.error('usage: export <repo-root | index.db> [name] [--no-fallow]')
   process.exit(1)
 }
+const target = fromCaller(given)
 
 const dbPath = statSync(target).isDirectory()
   ? join(target, '.codedocs', 'index.db')

@@ -18,7 +18,8 @@ pnpm art
 
 Exports land in `src/data/` and are git-ignored. Pick a dataset and a scene in
 the top-left panel. Point at anything to see the file behind it.
-`?data=vscode&scene=city` in the URL opens a view directly.
+`?data=vscode&scene=city` in the URL opens a view directly; add `&lens=health`
+to open it with the health lens on.
 
 ## Health readings
 
@@ -34,6 +35,54 @@ share copied code are linked in `clones`. Add `--no-fallow` to skip it.
   `score`. That means "not measured", not zero.
 - fallow's telemetry is off unless you turn it on. The export turns it off
   anyway, so an export never sends anything.
+
+### The health lens
+
+Tick **Health lens** in the top-left panel to draw these readings over the
+scene. It is only offered for data that fallow ran over. Over a timeline, the
+readings blend from commit to commit, just as heights do.
+
+| Reading        | Galaxy                                  | City                                                                                        |
+| -------------- | --------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Hotspot        | the file's core flares, orange to white | a pillar of warning light on the roof, taller and redder as it heats; its windows flush red |
+| Heating up     | the flare pulses                        | a pulse climbs the pillar and the windows throb                                             |
+| Cooling        | the flare sinks to a dull red           | the pillar burns low and greys towards smoke                                                |
+| Unused file    | the file's stars fade to grey           | the windows go out and the shell cools to concrete                                          |
+| Hard to change | —                                       | the facade rusts                                                                            |
+| Whole repo     | —                                       | the air thickens with smog and the stars go out                                             |
+| Copied code    | a pale blue thread joins the two files  | —                                                                                           |
+
+- Heat is the square root of the hotspot score, so a score of 10 still shows
+  without the hottest file drowning the rest.
+- Rust starts at a maintainability of 85 and is full at 50. Real files sit
+  between about 50 and 99, and a healthy repo's worst file lands near 85.
+- The trend is fallow's: it compares the file's recent commits with its older
+  ones inside the hotspot window. Over a timeline it blends from commit to
+  commit, so you can watch a file start to pulse before it gets hot.
+- The weather is the one reading no single building gives. It averages every
+  file's heat, wear and unreachability, and a repository where a tenth of the
+  files are fully in trouble reads as half choked. A city can raise only a few
+  pillars and still be hard to breathe in.
+
+## The city
+
+Away from the lens, the city is built from the index alone.
+
+| Shape         | Reading                                                                                                                                       |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Footprint     | bytes on disk                                                                                                                                 |
+| Height        | symbols declared                                                                                                                              |
+| Setbacks      | one per kind of symbol beyond the first, so a file mixing classes, types and enums is a stepped tower and a file of plain functions is a slab |
+| Lit windows   | calls and references touching the file, per symbol; a file nothing reaches keeps only its stairwell light                                     |
+| Window colour | the kind of symbol the file mostly declares                                                                                                   |
+| Roof mast     | calls arriving from other files                                                                                                               |
+| Arcs          | the heaviest call routes, with light travelling along them                                                                                    |
+
+Windows are a fixed real size, so a taller building simply has more floors, and
+the floors of a setback line up with the shaft beneath it. Seen from far
+enough away the grid averages into a wash rather than shimmering.
+
+- Point at a file to see fallow's numbers for it in the file panel.
 
 ## Watch a repo grow
 
@@ -63,6 +112,9 @@ automatically; use the bar at the bottom to pause or drag through the commits.
   file in an old frame would read as cooling.
 - A shallow clone has no history to replay. Deepen it first, for example
   `git fetch --shallow-since=2025-08-31 origin main`.
+- Hotspots leave out the commits at a shallow clone's cut-off. git shows each
+  of them adding every file, which would make every file look like a hotspot
+  that is cooling down.
 - A repo without `node_modules` still works, at `syntactic` fidelity. The
   vscode fixture has none, so its timeline matches its existing index.
 

@@ -4,6 +4,8 @@
   --panel: rgb(10 12 22 / 72%);
   --edge: rgb(255 255 255 / 10%);
   --accent: #ffc56b;
+  --text-small: 12.5px;
+  --text-tiny: 12px;
   color-scheme: dark;
   font:
     14px/1.45 ui-sans-serif,
@@ -13,7 +15,7 @@
 
 html,
 body,
-#root {
+:where(#root) {
   margin: 0;
   height: 100%;
   background: #020208;
@@ -94,14 +96,14 @@ canvas {
 .legend {
   margin: 6px 0 0;
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: var(--text-small);
 }
 
 .file strong {
   display: block;
   word-break: break-all;
   font-family: ui-monospace, monospace;
-  font-size: 12.5px;
+  font-size: var(--text-small);
 }
 
 .file dl {
@@ -123,7 +125,7 @@ canvas {
 .kinds {
   margin: 8px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: var(--text-tiny);
 }
 
 @media (max-width: 640px) {
@@ -153,7 +155,7 @@ canvas {
   border: none;
   background: var(--accent);
   color: #111;
-  font-size: 13px;
+  font-size: var(--text-small);
   cursor: pointer;
 }
 
@@ -172,8 +174,35 @@ canvas {
   text-overflow: ellipsis;
 }
 
-.timeline .commit .meta {
-  margin: 0;
+.commit-meta {
   flex: none;
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
+}
+
+.lens {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--edge);
+}
+
+.lens label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.lens input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.file h3 {
+  margin: 10px 0 0;
+  font-size: var(--text-tiny);
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }

@@ -1,8 +1,10 @@
 import { Color } from 'three'
 import { symbolCount } from './atlas.ts'
+import { healthTracks, type HealthTracks } from './health.ts'
 import { KIND_COLORS, projectColor } from './palette.ts'
 import { gaussian, hash, rng } from './rng.ts'
 import type { Life, Series } from './series.ts'
+import { threads, type Threads } from './threads.ts'
 
 /**
  * The galaxy's geometry, computed once per dataset.
@@ -13,6 +15,8 @@ import type { Life, Series } from './series.ts'
  *   files sit in the bright core, and leaf code drifts to the rim.
  * - **Stars** are symbols, clustered around their file and coloured by kind.
  * - **Red nebulae** are unresolved calls: where the analysis could not see.
+ * - **Health** (when fallow ran): hotspots flare, unused files grey out, and
+ *   files sharing copied code are drawn as binary pairs joined by a thread.
  *
  * Every point and line carries the frames it lives in, so a timeline plays on
  * the GPU by moving one uniform.
@@ -27,6 +31,8 @@ export interface PointCloud {
   readonly births: Float32Array
   /** Per point: the frame it is gone by. */
   readonly deaths: Float32Array
+  /** Per point: the merged file it belongs to, which the health lens looks up. */
+  readonly files: Float32Array
 }
 
 export interface GalaxyLayout {
@@ -35,18 +41,17 @@ export interface GalaxyLayout {
   readonly stars: PointCloud
   readonly nebulae: PointCloud
   /** Line segment pairs for the heaviest calls. */
-  readonly links: {
-    readonly positions: Float32Array
-    readonly colors: Float32Array
-    readonly births: Float32Array
-    readonly deaths: Float32Array
-  }
+  readonly links: Threads
+  /** Line segment pairs joining files that share copied code. */
+  readonly clones: Threads
+  readonly health: HealthTracks
   readonly radius: number
 }
 
 const MAX_STARS_PER_FILE = 300
 const MAX_LINKS = 1800
 const MAX_ARMS = 8
+const CLONE_COLOR = new Color('#9fd8ff')
 
 /**
  * Finds the shallowest directory depth that splits the repo into at least
@@ -74,6 +79,7 @@ function cloud(n: number): PointCloud {
     sizes: new Float32Array(n),
     births: new Float32Array(n),
     deaths: new Float32Array(n),
+    files: new Float32Array(n),
   }
 }
 
@@ -170,6 +176,7 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     cores.colors.set([glow.r, glow.g, glow.b], i * 3)
     cores.sizes[i] = 0.35 + Math.log1p(f.callsIn + f.refsIn) * 0.18
     ;[cores.births[i], cores.deaths[i]] = series.fileLife[i]!
+    cores.files[i] = i
   })
 
   const starCount = files.reduce(
@@ -202,6 +209,7 @@ export function galaxyLayout(series: Series): GalaxyLayout {
       )
       stars.colors.set([color.r, color.g, color.b], s * 3)
       stars.sizes[s] = 0.12 + random() * 0.22
+      stars.files[s] = i
       ;[stars.births[s], stars.deaths[s]] = starLife(series, i, k, shown, total)
     }
   })
@@ -239,27 +247,29 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     }
   }
 
-  const calls = atlas.calls.slice(0, MAX_LINKS)
-  const heaviest = Math.log1p(calls[0]?.[2] ?? 1)
-  const links = {
-    positions: new Float32Array(calls.length * 6),
-    colors: new Float32Array(calls.length * 6),
-    births: new Float32Array(calls.length * 2),
-    deaths: new Float32Array(calls.length * 2),
-  }
-  calls.forEach(([from, to, weight], i) => {
-    links.positions.set([...centres[from]!, ...centres[to]!], i * 6)
-    const [birth, death] = series.callLife[i]!
-    links.births.set([birth, birth], i * 2)
-    links.deaths.set([death, death], i * 2)
-    const k = 0.015 + 0.12 * (Math.log1p(weight) / heaviest)
-    const a = tint[from]!
-    const c = tint[to]!
-    links.colors.set(
-      [a.r * k, a.g * k, a.b * k, c.r * k, c.g * k, c.b * k],
-      i * 6,
-    )
-  })
+  const links = threads(
+    atlas.calls.slice(0, MAX_LINKS),
+    series.callLife,
+    centres,
+    (from, to) => [tint[from]!, tint[to]!],
+    (share) => 0.015 + 0.12 * share,
+  )
+  // Pale blue-white, like a pair of hot young stars; the copy is the bond.
+  const clones = threads(
+    (atlas.clones ?? []).slice(0, MAX_LINKS),
+    series.cloneLife,
+    centres,
+    () => [CLONE_COLOR, CLONE_COLOR],
+    (share) => 0.015 + 0.1 * share,
+  )
 
-  return { cores, stars, nebulae, links, radius }
+  return {
+    cores,
+    stars,
+    nebulae,
+    links,
+    clones,
+    health: healthTracks(series),
+    radius,
+  }
 }
