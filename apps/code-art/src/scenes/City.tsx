@@ -11,8 +11,10 @@ import {
 import { cityLayout } from '../lib/city-layout.ts'
 import { VISIBILITY_GLSL } from '../lib/series.ts'
 import type { Region } from '../lib/treemap.ts'
+import { Alarms } from './Alarms.tsx'
 import { Buildings } from './Buildings.tsx'
 import type { SceneProps } from './scene.ts'
+import { Weather } from './Weather.tsx'
 
 const dummy = new Object3D()
 
@@ -81,7 +83,9 @@ function trafficMaterial(): ShaderMaterial {
       void main() {
         float head = fract(uTime * 0.25 + vPhase);
         float pulse = smoothstep(0.18, 0.0, abs(vProgress - head));
-        gl_FragColor = vec4(vColor * (0.02 + pulse * 0.9) * vLife, 1.0);
+        // Dim enough to read as traffic over the city rather than as a net
+        // drawn across it: the towers and their windows carry the picture.
+        gl_FragColor = vec4(vColor * (0.015 + pulse * 0.55) * vLife, 1.0);
       }
     `,
   })
@@ -127,9 +131,11 @@ function Districts({
 
 /**
  * The codebase as a night city: districts are directories, towers are files
- * dense with symbols, beacons mark code others call, arcs carry the calls.
- * Over a timeline, towers rise as their files grow. Under the health lens,
- * hotspots burn, unused files go dark and hard-to-change files weather.
+ * dense with symbols, their windows lit by the traffic through them, masts
+ * mark code others call, arcs carry the calls. Over a timeline, towers rise as
+ * their files grow. Under the health lens, hotspots raise alarm pillars,
+ * unreachable files stand abandoned, hard-to-change files weather, and the air
+ * itself thickens with the repository's debt.
  */
 export function City({
   series,
@@ -147,20 +153,13 @@ export function City({
 
   return (
     <>
-      <color attach="background" args={['#05060d']} />
-      <fog attach="fog" args={['#05060d', size * 0.4, size * 1.8]} />
       <PerspectiveCamera
         makeDefault
         position={[size * 0.75, size * 0.55, size * 0.75]}
         fov={45}
         far={size * 6}
       />
-      <hemisphereLight args={['#6f7fb8', '#0a0a12', 0.5]} />
-      <directionalLight
-        position={[size * 0.4, size, size * 0.2]}
-        intensity={1.4}
-        color="#b8c6ff"
-      />
+      <Weather smog={layout.smog} size={size} playhead={playhead} lens={lens} />
       <mesh rotation-x={-Math.PI / 2} position-y={-0.01}>
         <planeGeometry args={[size * 4, size * 4]} />
         <meshStandardMaterial color="#04050a" />
@@ -172,6 +171,7 @@ export function City({
         lens={lens}
         onHover={onHover}
       />
+      <Alarms layout={layout} playhead={playhead} lens={lens} />
       <lineSegments material={traffic}>
         <bufferGeometry>
           <bufferAttribute

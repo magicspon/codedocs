@@ -20,9 +20,9 @@ const LENS: Record<string, { hot: string; unused: string; rest: string }> = {
     rest: 'Pale blue threads join files that share copied code.',
   },
   city: {
-    hot: 'Fire on a roof marks a hotspot: taller and whiter is hotter. A pulsing fire is heating up; a low grey one is cooling.',
-    unused: 'Dark towers are files no entry point reaches.',
-    rest: 'Rust shows code that is hard to change.',
+    hot: 'A pillar of warning light marks a hotspot: taller and redder is hotter, and its windows flush red. A pulse climbing the pillar means heating up; a low grey one means cooling.',
+    unused: 'Unlit, concrete-grey towers are files no entry point reaches.',
+    rest: 'Rust shows code that is hard to change, and the air thickens with smog as the whole repository does.',
   },
 }
 

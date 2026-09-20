@@ -1,4 +1,3 @@
-import { Color } from 'three'
 import { describe, expect, it } from 'vitest'
 import type { Atlas, FileHealth } from '../src/lib/atlas.ts'
 import { cityLayout } from '../src/lib/city-layout.ts'
@@ -9,12 +8,12 @@ import {
   heatOf,
   healthTracks,
   sampleHealth,
+  smogPerFrame,
   trendOf,
   wearOf,
 } from '../src/lib/health.ts'
 import { healthRows, lensLegend, lensNote } from '../src/lib/health-text.ts'
 import { healthTexture } from '../src/lib/health-texture.ts'
-import { weathered } from '../src/lib/palette.ts'
 import { fromAtlas, seriesOf } from '../src/lib/series.ts'
 import { atlas, file } from './fixture.ts'
 
@@ -173,14 +172,21 @@ describe('health in the scenes', () => {
     expect(data[0]).toBeCloseTo(0.8)
   })
 
-  it('rusts worn buildings and darkens unused ones only as the lens opens', () => {
-    const base = new Color(1, 1, 1)
-    const out = new Color()
-    const sample = { heat: 0, unused: 1, wear: 1, trend: 0 }
-    expect(weathered(base, sample, 0, out).equals(base)).toBe(true)
-    weathered(base, sample, 1, out)
-    expect(out.r).toBeLessThan(0.2)
-    expect(out.r).toBeGreaterThan(out.b)
+  it("reads the whole city's trouble as weather, frame by frame", () => {
+    const series = timeline(true)
+    const smog = smogPerFrame(healthTracks(series), series)
+    expect(smog).toHaveLength(2)
+    // The fixture's first frame is sound; by the second, one file has gone hot
+    // and worn and the other is unreachable, so the air thickens.
+    expect(smog[0]!).toBe(0)
+    expect(smog[1]!).toBeGreaterThan(0.3)
+    for (const air of smog) expect(air).toBeGreaterThanOrEqual(0)
+    for (const air of smog) expect(air).toBeLessThan(1)
+  })
+
+  it('reads a repository with nothing wrong as clear air', () => {
+    const series = fromAtlas(atlas())
+    expect(smogPerFrame(healthTracks(series), series)[0]).toBe(0)
   })
 
   it('gives the shaders a lens to fade and a texture to read', () => {
@@ -216,12 +222,14 @@ describe('health in words', () => {
   })
 
   it('says when unused files are left out of the lens', () => {
-    expect(lensLegend('city', meta(true))).toContain('Dark towers')
+    expect(lensLegend('city', meta(true))).toContain('Unlit, concrete-grey')
     expect(lensLegend('city', meta(false))).toContain('no fallow config')
     expect(lensLegend('nowhere', meta(true))).toBe('')
     expect(lensNote('city', undefined, true)).toContain('fallow on your PATH')
     expect(lensNote('city', meta(true), false)).toBe('')
-    expect(lensNote('city', meta(true), true)).toContain('Fire')
+    expect(lensNote('city', meta(true), true)).toContain(
+      'pillar of warning light',
+    )
     expect(lensLegend('galaxy', meta(true))).toContain('heating up')
   })
 })

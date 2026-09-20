@@ -7,7 +7,7 @@ import { LensToggle } from './LensToggle.tsx'
 const LEGENDS: Record<string, string> = {
   galaxy:
     'Arms are top-level folders. The core holds the code everything else leans on. Stars are symbols, coloured by kind. Red haze marks calls the analysis could not resolve.',
-  city: 'Districts are folders. Footprint is file size, height is symbol count. Grey is source, teal is test, amber is config, violet is generated. Beacons glow with incoming calls.',
+  city: 'Districts are folders. Footprint is file size, height is symbol count, and each setback is another kind of symbol the file declares. Lit windows are the traffic through the file, tinted by the kind it mostly holds. Roof masts glow with incoming calls.',
 }
 
 interface HudProps {

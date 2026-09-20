@@ -1,6 +1,12 @@
 import { Color } from 'three'
 import { symbolCount } from './atlas.ts'
-import { everHot, healthTracks, type HealthTracks } from './health.ts'
+import { facadeOf, TIER_SHARE, type Facade } from './facade.ts'
+import {
+  everHot,
+  healthTracks,
+  smogPerFrame,
+  type HealthTracks,
+} from './health.ts'
 import { GENERATED_COLOR, ROLE_COLORS, projectColor } from './palette.ts'
 import { hash, rng } from './rng.ts'
 import type { Series } from './series.ts'
@@ -8,10 +14,10 @@ import { treemap, type Region } from './treemap.ts'
 
 /**
  * The city's geometry. Directories are districts, files are buildings:
- * footprint from bytes, height from symbols, colour from role, and a rooftop
- * beacon as bright as the calls arriving from elsewhere. Under the health lens,
- * hotspots burn on their roofs, unused files go dark and hard-to-change files
- * weather.
+ * footprint from bytes, height from symbols, colour from role, windows lit by
+ * the traffic through the file, and a mast on the roof as bright as the calls
+ * arriving from elsewhere. Under the health lens, hotspots raise an alarm
+ * pillar, unused files stand abandoned and hard-to-change files weather.
  */
 
 /** One building, in `Atlas.files` order so an instance id is a file index. */
@@ -27,6 +33,17 @@ export interface Building {
   readonly color: Color
   /** Beacon brightness in `[0, 1]`; `0` means no beacon. */
   readonly beacon: number
+  /** Windows, lamp colour and setbacks. */
+  readonly facade: Facade
+}
+
+/** One setback block: which building it caps, and where it sits in that stack. */
+export interface Tier {
+  readonly building: number
+  /** `0` is the block resting on the shaft. */
+  readonly step: number
+  /** How many blocks the stack holds. */
+  readonly of: number
 }
 
 export interface CityLayout {
@@ -42,8 +59,12 @@ export interface CityLayout {
     readonly deaths: Float32Array
   }
   readonly health: HealthTracks
-  /** Files that are a hotspot in any frame: the only roofs that can burn. */
+  /** Every building's setbacks, flattened into one draw. */
+  readonly tiers: readonly Tier[]
+  /** Files that are a hotspot in any frame: the only roofs that can raise an alarm. */
   readonly hot: readonly number[]
+  /** How choked the air is in each frame, in `[0, 1]`. */
+  readonly smog: Float32Array
   /** Side length of the city square. */
   readonly size: number
   /** A typical building's width, which the camera and fog scale by. */
@@ -78,17 +99,20 @@ export function cityLayout(series: Series): CityLayout {
   const buildings = files.map((f, i): Building => {
     const rect = layout.files[i]!
     const gap = Math.min(rect.w, rect.h) * 0.14
+    const w = Math.max(rect.w - gap, 0.05)
+    const d = Math.max(rect.h - gap, 0.05)
+    const h = unit * (0.25 + Math.sqrt(symbolCount(f)) * 0.55)
     const base = f.generated ? GENERATED_COLOR : ROLE_COLORS[f.role]!
     const color = base
       .clone()
       .lerp(projectColor(f.project), 0.3)
-      .multiplyScalar(0.55 + random() * 0.3)
+      .multiplyScalar(0.3 + random() * 0.22)
     return {
       x: rect.x + rect.w / 2,
       z: rect.y + rect.h / 2,
-      w: Math.max(rect.w - gap, 0.05),
-      d: Math.max(rect.h - gap, 0.05),
-      h: unit * (0.25 + Math.sqrt(symbolCount(f)) * 0.55),
+      w,
+      d,
+      h,
       heights: Float32Array.from(series.at, (row) => {
         const datum = row[i]
         return datum ? unit * (0.25 + Math.sqrt(symbolCount(datum)) * 0.55) : 0
@@ -98,6 +122,7 @@ export function cityLayout(series: Series): CityLayout {
         f.callsIn >= Math.max(beaconFloor, 1)
           ? Math.log1p(f.callsIn) / maxBeacon
           : 0,
+      facade: facadeOf(f, h / Math.max(w, d), random()),
     }
   })
 
@@ -145,8 +170,38 @@ export function cityLayout(series: Series): CityLayout {
     districts: layout.regions,
     traffic,
     health,
+    tiers: buildings.flatMap((b, building) =>
+      Array.from({ length: b.facade.tiers }, (_, step) => ({
+        building,
+        step,
+        of: b.facade.tiers,
+      })),
+    ),
     hot: files.flatMap((_, i) => (everHot(health, i) ? [i] : [])),
+    smog: smogPerFrame(health, series),
     size,
     unit,
   }
+}
+
+/**
+ * Where setback `tier` sits on a building standing `h` tall, as
+ * `[base, height, inset]`. Setbacks share the top `TIER_SHARE` of the height
+ * and each one draws in, so the stack keeps the height the symbol count earned.
+ */
+export function tierAt(
+  tier: Tier,
+  h: number,
+): readonly [number, number, number] {
+  const block = (h * TIER_SHARE) / tier.of
+  return [
+    h * (1 - TIER_SHARE) + block * tier.step,
+    block,
+    0.74 ** (tier.step + 1),
+  ]
+}
+
+/** The height of a building's shaft: all of it, less whatever its setbacks take. */
+export function shaftOf(building: Building, h: number): number {
+  return building.facade.tiers > 0 ? h * (1 - TIER_SHARE) : h
 }
