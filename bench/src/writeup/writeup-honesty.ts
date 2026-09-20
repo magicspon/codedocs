@@ -27,7 +27,12 @@
 import { armsIn } from '../core/arms.ts'
 import type { Comparison } from '../reporting/comparisons.ts'
 import { levelOf, LEVELS } from '../cases/difficulty.ts'
-import { byLeadingColumns, ratio, type Row, table } from '../reporting/markdown.ts'
+import {
+  byLeadingColumns,
+  ratio,
+  type Row,
+  table,
+} from '../reporting/markdown.ts'
 import { summarise } from '../reporting/summarise.ts'
 import type { BenchCase, RunRecord } from '../core/types.ts'
 

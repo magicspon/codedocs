@@ -23,7 +23,12 @@ import {
   printLevelHeading,
   printTotals,
 } from './table.ts'
-import type { Arm, BenchCase, DifficultyLevel, RunRecord } from '../core/types.ts'
+import type {
+  Arm,
+  BenchCase,
+  DifficultyLevel,
+  RunRecord,
+} from '../core/types.ts'
 
 /** Every run record on disk. */
 function loadRecords(): RunRecord[] {
