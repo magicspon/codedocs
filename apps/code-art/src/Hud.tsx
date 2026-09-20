@@ -1,14 +1,8 @@
 import type { JSX } from 'react'
+import { hoveredFile } from './lib/frame.ts'
 import type { Series } from './lib/series.ts'
+import { Controls } from './Controls.tsx'
 import { FilePanel } from './FilePanel.tsx'
-import { LensToggle } from './LensToggle.tsx'
-
-/** What each scene maps, in one line, so the picture can be read and not just looked at. */
-const LEGENDS: Record<string, string> = {
-  galaxy:
-    'Arms are top-level folders. The core holds the code everything else leans on. Stars are symbols, coloured by kind. Red haze marks calls the analysis could not resolve.',
-  city: 'Districts are folders. Footprint is file size, height is symbol count, and each setback is another kind of symbol the file declares. Lit windows are the traffic through the file, tinted by the kind it mostly holds. Roof masts glow with incoming calls.',
-}
 
 interface HudProps {
   readonly datasets: readonly string[]
@@ -27,13 +21,6 @@ interface HudProps {
 
 /** The overlay: pickers, a legend, and the file under the pointer. */
 export function Hud(props: HudProps): JSX.Element {
-  const { series, hovered } = props
-  const row = series?.at[Math.min(props.frame, series.at.length - 1)]
-  const file = hovered !== null ? (row?.[hovered] ?? undefined) : undefined
-  const present = row?.filter(Boolean).length ?? 0
-  const commit =
-    series?.commits[Math.min(props.frame, series.commits.length - 1)]
-
   if (props.datasets.length === 0) {
     return (
       <div className="hud empty">
@@ -46,46 +33,24 @@ export function Hud(props: HudProps): JSX.Element {
     )
   }
 
+  const fallow = props.series?.merged.fallow
+  const file = hoveredFile(props.series, props.frame, props.hovered)
   return (
     <div className="hud">
-      <div className="panel controls">
-        <select
-          value={props.dataset}
-          onChange={(e) => props.onDataset(e.target.value)}
-          aria-label="Dataset"
-        >
-          {props.datasets.map((d) => (
-            <option key={d}>{d}</option>
-          ))}
-        </select>
-        <div className="tabs" role="tablist">
-          {props.scenes.map((s) => (
-            <button
-              key={s}
-              role="tab"
-              aria-selected={s === props.scene}
-              onClick={() => props.onScene(s)}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-        {series ? (
-          <p className="meta">
-            {present.toLocaleString()} files · {commit?.sha.slice(0, 7)}
-          </p>
-        ) : (
-          <p className="meta">Loading…</p>
-        )}
-        <p className="legend">{LEGENDS[props.scene]}</p>
-        <LensToggle
-          scene={props.scene}
-          fallow={series?.merged.fallow}
-          on={props.lens}
-          onChange={props.onLens}
-        />
-      </div>
-      {file && <FilePanel file={file} fallow={series?.merged.fallow} />}
+      <Controls
+        datasets={props.datasets}
+        dataset={props.dataset}
+        onDataset={props.onDataset}
+        scenes={props.scenes}
+        scene={props.scene}
+        onScene={props.onScene}
+        lens={props.lens}
+        onLens={props.onLens}
+        fallow={fallow}
+        series={props.series}
+        frame={props.frame}
+      />
+      {file && <FilePanel file={file} fallow={fallow} />}
     </div>
   )
 }

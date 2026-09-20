@@ -72,7 +72,7 @@ export function TimelineBar({
         aria-label="Commit"
       />
       <p className="commit">
-        <span className="meta">
+        <span className="commit-meta">
           {frame + 1}/{last + 1} · {commit?.sha.slice(0, 7)} ·{' '}
           {commit?.date.slice(0, 10)}
         </span>
