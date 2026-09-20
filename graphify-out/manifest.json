@@ -190,8 +190,8 @@
     "semantic_hash": ""
   },
   "cspell.words.txt": {
-    "mtime": 1789830330.544465,
-    "ast_hash": "f7a235959762450544cf9d86d9ae6c72",
+    "mtime": 1789896766.9213376,
+    "ast_hash": "c5cbb7369cd9f7ce011d0b1aca1a6259",
     "semantic_hash": ""
   },
   "docs/REQUIREMENTS.md": {
@@ -1810,8 +1810,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1789895947.8351002,
-    "ast_hash": "8b6c1a6a061b9591c93551018b93d749",
+    "mtime": 1789897239.709024,
+    "ast_hash": "edab8d9a59ee5c806381ef51bbbf7459",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1820,8 +1820,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Hud.tsx": {
-    "mtime": 1789895428.4233868,
-    "ast_hash": "933c66e77c20f5c61a73f4e237db4885",
+    "mtime": 1789897239.7067263,
+    "ast_hash": "6760e2b5e71be8725b9e60fc24daa649",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/cal.com.json": {
@@ -1970,13 +1970,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/scripts/timeline.ts": {
-    "mtime": 1789834565.6435096,
-    "ast_hash": "79beb0e7276f286312b1c261fbeb376e",
+    "mtime": 1789897269.6670573,
+    "ast_hash": "713076569a1147af0923d666a01f35da",
     "semantic_hash": ""
   },
   "apps/code-art/src/TimelineBar.tsx": {
-    "mtime": 1789832087.0269547,
-    "ast_hash": "6acf1cfdcad08d8b60af688e4040276e",
+    "mtime": 1789897277.6402955,
+    "ast_hash": "895096da1b141a41ce13ee2c0587af8e",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.timeline.json": {
@@ -2122,6 +2122,36 @@
   "apps/code-art/test/stack.test.ts": {
     "mtime": 1789896484.168617,
     "ast_hash": "0ed94f594f2b53217f36779b5c37ed5c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/scripts/worktree.ts": {
+    "mtime": 1789897292.5802739,
+    "ast_hash": "dc50746b5bf27ed969f026b729d224b8",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/Controls.tsx": {
+    "mtime": 1789897247.0884187,
+    "ast_hash": "2e89fb677889e8bcbb7de7862054b1d2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/Stage.tsx": {
+    "mtime": 1789897217.7847066,
+    "ast_hash": "66df672f167de31950911d40b8c8cb23",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/hooks.ts": {
+    "mtime": 1789897217.782146,
+    "ast_hash": "2b18164efb3c9c53af493cf62228c2b2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/frame.ts": {
+    "mtime": 1789897292.5801141,
+    "ast_hash": "f1cadd425148a818109a8b20209c24f4",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/frame.test.ts": {
+    "mtime": 1789897196.4783342,
+    "ast_hash": "ff6e99946622841f9245f4a3f13539e4",
     "semantic_hash": ""
   }
 }
