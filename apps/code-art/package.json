@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./pipeline": "./scripts/pipeline.ts"
+  },
   "scripts": {
     "export": "node scripts/export.ts",
     "timeline": "node scripts/timeline.ts",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode embed",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {

@@ -108,6 +108,9 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
     devDependencies:
+      '@codedocs/code-art':
+        specifier: workspace:*
+        version: link:../../apps/code-art
       '@codedocs/core':
         specifier: workspace:*
         version: link:../core

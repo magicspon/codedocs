@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** The `codedocs` entry point. Node 24 runs this TypeScript directly. */
 
+import { art } from './art.ts'
 import { run } from './main.ts'
 import { serve } from './mcp.ts'
 
@@ -13,6 +14,9 @@ process.setSourceMapsEnabled(true)
 // envelope and does not go through the parser that produces one.
 if (process.argv[2] === 'mcp') {
   await serve(process.stdin, process.stdout)
+} else if (process.argv[2] === 'art') {
+  // Nor is `art`: it writes a page rather than answering a question.
+  process.exitCode = art(process.argv.slice(3))
 } else {
   const { stdout, stderr, code } = run(process.argv.slice(2))
   if (stdout !== '') process.stdout.write(`${stdout}\n`)

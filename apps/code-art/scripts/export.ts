@@ -9,9 +9,7 @@
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fromCaller } from './caller.ts'
-import { withHealth } from './fallow-health.ts'
-import { readAtlas } from './read-index.ts'
-import { readFallow } from './read-fallow.ts'
+import { snapshot } from './snapshot.ts'
 
 const args = process.argv.slice(2)
 const useFallow = !args.includes('--no-fallow')
@@ -33,11 +31,7 @@ if (!existsSync(dbPath)) {
 // The repo root is two levels above `.codedocs/index.db`.
 const root = resolve(dirname(dbPath), '..')
 const name = nameArg ?? basename(root)
-const indexed = readAtlas(dbPath, name)
-const reading = useFallow ? readFallow(root) : null
-const atlas = reading
-  ? withHealth(indexed, reading.report, reading.deadCode)
-  : indexed
+const atlas = snapshot(dbPath, { name, fallow: useFallow })
 const scored = atlas.files.filter((f) => f.health?.score).length
 
 const outDir = join(import.meta.dirname, '..', 'src', 'data')

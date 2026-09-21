@@ -5,6 +5,11 @@ the data, so each shape can be read back as a fact about the code.
 
 ## Run it
 
+Anyone with the CLI installed can run `codedocs art` in a repo. This writes
+the viewer, with the data inlined, to `.codedocs/art/index.html`. Add
+`--frames 16` for a timeline. The rest of this page covers working on the art
+itself.
+
 From the repo root:
 
 ```sh
@@ -144,7 +149,27 @@ teal for test, amber for config and violet for generated code.
 - `src/lib/*-layout.ts` turn an atlas into geometry buffers. They are pure and
   tested (`test/`).
 - `src/scenes/*.tsx` draw those buffers with React Three Fiber.
+- `scripts/snapshot.ts` and `scripts/history.ts` are the export and the
+  timeline as functions. `export.ts` and `timeline.ts` wrap them for the dev
+  viewer, and `codedocs art` imports them through `scripts/pipeline.ts`.
 
-The viewer loads data as modules, not requests, so it holds no network code
-(ADR 0011). All dependencies are dev-only because the package is never
-published.
+The dev viewer loads data as modules, not requests (ADR 0011).
+
+## What `codedocs art` ships
+
+`pnpm build` here runs `vite build --mode embed`. That makes one
+self-contained `dist/index.html`, and the CLI build copies it to
+`dist/art/viewer.html`.
+
+- The script and stylesheet are inlined (`scripts/single-file.ts`). A
+  browser will not load a module from a file on disk, but it will run the
+  same code inline.
+- No dev export goes into the page. `codedocs art` adds each dataset as a
+  `<script type="application/json" data-dataset>` block (`scripts/page.ts`),
+  and the viewer parses one only when it is opened.
+- The page has a Content-Security-Policy of `default-src 'none'`. three.js
+  contains loaders that call `fetch`. The viewer never uses them, but the
+  build cannot remove them, so the browser is told to refuse any request.
+
+All dependencies are dev-only. The package is never published: the CLI
+bundles the node side of it, and ships the viewer as a built page.

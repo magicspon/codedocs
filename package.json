@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "vitest run",
-    "build": "pnpm --filter @codedocs/cli build",
+    "build": "pnpm --filter @codedocs/code-art build && pnpm --filter @codedocs/cli build",
     "codedocs": "node packages/cli/dist/bin.js",
     "art": "pnpm --filter @codedocs/code-art dev",
     "bench": "node bench/run.ts",
