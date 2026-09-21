@@ -7,7 +7,7 @@ import { along, route, type Shot } from '../lib/flight.ts'
 export const FLIGHT_SECONDS = 1.6
 
 /** What of drei's `OrbitControls` a flight steers. */
-interface Controls {
+export interface Controls {
   readonly target: Vector3
   readonly object: Camera
   addEventListener(type: 'start', listener: () => void): void
@@ -21,7 +21,7 @@ interface Leg {
 }
 
 /** Where the camera is now, copied, so a flight can start from it. */
-function snapshot(controls: Controls): Shot {
+export function snapshot(controls: Controls): Shot {
   return {
     target: controls.target.clone(),
     position: controls.object.position.clone(),

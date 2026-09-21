@@ -11,6 +11,7 @@ import {
   type Paths,
 } from './lib/paths.ts'
 import type { Series } from './lib/series.ts'
+import type { SystemClaims } from './lib/system-nav.ts'
 import type { Trace, TraceQuery } from './lib/trace.ts'
 
 /** The keyboard walk from the selected file, for the panel and the scene. */
@@ -40,7 +41,8 @@ const ARROWS = [
 /**
  * Walks the selected file's links by keyboard. The arrows move a cursor over
  * its callers (left) and callees (right); Enter selects the file under it,
- * Backspace steps back, Escape clears the selection and the walk.
+ * Backspace steps back, Escape clears the selection and the walk. Enter and
+ * Escape stand aside while the picked file's system `claims` them.
  */
 export function usePathKeys(
   series: Series | null,
@@ -48,6 +50,7 @@ export function usePathKeys(
   query: TraceQuery,
   trace: Trace | null,
   onQuery: (query: TraceQuery) => void,
+  claims: SystemClaims,
 ): PathNav {
   const selected = detailFile(null, trace?.matches)
   const paths = useMemo(() => {
@@ -89,7 +92,7 @@ export function usePathKeys(
       callback: () => {
         if (series && aim !== null) follow(series.merged.files[aim]!.path)
       },
-      options: { enabled: on },
+      options: { enabled: on && !claims.enter, conflictBehavior: 'allow' },
     },
     {
       hotkey: 'Backspace',
@@ -108,6 +111,7 @@ export function usePathKeys(
         setTrail([])
         select('')
       },
+      options: { enabled: !claims.leave, conflictBehavior: 'allow' },
     },
   ])
 

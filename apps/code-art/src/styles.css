@@ -81,6 +81,11 @@ canvas {
   font-size: var(--text-small);
 }
 
+/* Alone in its panel, so no gap above it. */
+.legend.system-keys {
+  margin: 0;
+}
+
 .file strong {
   display: block;
   word-break: break-all;

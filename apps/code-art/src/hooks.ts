@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import type { FileSymbols } from './lib/atlas.ts'
 import { DATASETS, loadSeries } from './lib/load.ts'
 import { loadNames } from './lib/names.ts'
 import type { Series } from './lib/series.ts'
@@ -80,19 +81,20 @@ export function useBookmark(
 }
 
 /**
- * The symbol names of the file at `path` in repository `repo`, by kind, or
- * `null` until they load (and for good when none were exported). Only called
- * once a file is picked, so nothing is read before then.
+ * The symbols of the file at `path` in repository `repo`: `undefined` while
+ * they load, `null` for good when none were exported. Only called once a file
+ * is picked, so nothing is read before then.
  */
-export function useNames(
+export function useSymbols(
   repo: string,
   path: string,
-): readonly (readonly string[])[] | null {
-  const { data } = useQuery({
+): FileSymbols | null | undefined {
+  const { data, isPending } = useQuery({
     queryKey: ['names', repo],
     queryFn: () => loadNames(repo),
     // One parse per repository, kept for the session: they can be large.
     gcTime: Infinity,
   })
+  if (isPending) return undefined
   return data?.[path] ?? null
 }

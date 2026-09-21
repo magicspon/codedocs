@@ -130,10 +130,16 @@ describe('writeArt', () => {
     const block = new RegExp(
       `<script type="application/json" data-symbols="${basename(root)}">(.*?)</script>`,
     ).exec(page)
-    const names = JSON.parse(block![1]!) as Record<string, string[][]>
-    // Every indexed file with symbols is there, one list per kind.
+    const names = JSON.parse(block![1]!) as Record<
+      string,
+      { names: string[]; kinds: number[]; parents: number[] }
+    >
+    // Every indexed file with symbols is there, each symbol with a kind and a parent.
     expect(Object.keys(names).length).toBeGreaterThan(0)
-    for (const lists of Object.values(names)) expect(lists).toHaveLength(8)
+    for (const file of Object.values(names)) {
+      expect(file.kinds).toHaveLength(file.names.length)
+      expect(file.parents).toHaveLength(file.names.length)
+    }
   })
 
   it('adds a timeline with --frames, and keeps it on a later run without', () => {

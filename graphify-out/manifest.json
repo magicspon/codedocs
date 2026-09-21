@@ -15,82 +15,82 @@
     "semantic_hash": ""
   },
   ".husky/_/applypatch-msg": {
-    "mtime": 1790031668.1408954,
+    "mtime": 1790032161.1053135,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/commit-msg": {
-    "mtime": 1790031668.1407533,
+    "mtime": 1790032161.0997667,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/h": {
-    "mtime": 1790031668.1401289,
+    "mtime": 1790032161.0913372,
     "ast_hash": "15239a01c5554e56ff745570fb583a91",
     "semantic_hash": "15239a01c5554e56ff745570fb583a91"
   },
   ".husky/_/husky.sh": {
-    "mtime": 1790031668.1417098,
+    "mtime": 1790032161.110858,
     "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
     "semantic_hash": "13871d2ab13e8423790ecb2c01c78c18"
   },
   ".husky/_/post-applypatch": {
-    "mtime": 1790031668.1411867,
+    "mtime": 1790032161.1066191,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-checkout": {
-    "mtime": 1790031668.1414137,
+    "mtime": 1790032161.1103432,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-commit": {
-    "mtime": 1790031668.1408186,
+    "mtime": 1790032161.0998626,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-merge": {
-    "mtime": 1790031668.1414812,
+    "mtime": 1790032161.1104617,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-rewrite": {
-    "mtime": 1790031668.141337,
+    "mtime": 1790032161.1101894,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-applypatch": {
-    "mtime": 1790031668.1409657,
+    "mtime": 1790032161.1063929,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-auto-gc": {
-    "mtime": 1790031668.1416109,
+    "mtime": 1790032161.110692,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-commit": {
-    "mtime": 1790031668.1402574,
+    "mtime": 1790032161.091685,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-merge-commit": {
-    "mtime": 1790031668.1404476,
+    "mtime": 1790032161.0935485,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-push": {
-    "mtime": 1790031668.1415522,
+    "mtime": 1790032161.110594,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-rebase": {
-    "mtime": 1790031668.141255,
+    "mtime": 1790032161.109977,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/prepare-commit-msg": {
-    "mtime": 1790031668.1406035,
+    "mtime": 1790032161.09959,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
@@ -1800,8 +1800,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/package.json": {
-    "mtime": 1790031668.1503325,
-    "ast_hash": "0f88a76ff77922d88c96322a73bb5e25",
+    "mtime": 1790032161.1272926,
+    "ast_hash": "ba3df3ff1ee05f82372436455bdd27c9",
     "semantic_hash": ""
   },
   "apps/code-art/scripts/export.ts": {
@@ -1810,8 +1810,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790031810.35562,
-    "ast_hash": "c408c1bb7306da0cbd8d128ac9264ae3",
+    "mtime": 1790033325.1569715,
+    "ast_hash": "d3f360650a2ae813e406a42e621e7109",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1820,8 +1820,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Hud.tsx": {
-    "mtime": 1790031817.3718019,
-    "ast_hash": "646514e6f1565c0935bdd539d14ad1c0",
+    "mtime": 1790033344.6416688,
+    "ast_hash": "99aec4e93533a3dcbf6426be513ae462",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/cal.com.json": {
@@ -1850,8 +1850,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/atlas.ts": {
-    "mtime": 1790030550.0402122,
-    "ast_hash": "d63259a2450cb6fe033007b4b76cd8d9",
+    "mtime": 1790032619.6532042,
+    "ast_hash": "e3dd826357ca23b673635922bdcb836c",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/city-layout.ts": {
@@ -1890,8 +1890,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/main.tsx": {
-    "mtime": 1790028740.4819782,
-    "ast_hash": "289409884904e3cd1c9fa9912424aa53",
+    "mtime": 1790032175.8149357,
+    "ast_hash": "6def9545773ed7091bd10986987332f1",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/City.tsx": {
@@ -1900,13 +1900,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Galaxy.tsx": {
-    "mtime": 1790031823.9897134,
-    "ast_hash": "05252e34feb94dbea1c9421a423908f0",
+    "mtime": 1790033325.1568446,
+    "ast_hash": "54c970dec229355bd69f9ffcdf1b3db2",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/scene.ts": {
-    "mtime": 1790031810.355834,
-    "ast_hash": "813cf372e09c636d0159942a08ae544c",
+    "mtime": 1790033325.1564116,
+    "ast_hash": "c822c08315c0c850dc794bd968f91da4",
     "semantic_hash": ""
   },
   "apps/code-art/test/fixture.ts": {
@@ -2130,13 +2130,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Stage.tsx": {
-    "mtime": 1790031810.3557422,
-    "ast_hash": "9f4df68ab5081cd735527887c2ccabe5",
+    "mtime": 1790033325.156709,
+    "ast_hash": "989dca045fc038829aef215d01d8dd2a",
     "semantic_hash": ""
   },
   "apps/code-art/src/hooks.ts": {
-    "mtime": 1790030564.0103836,
-    "ast_hash": "6925150506baf3c7d191941a7da6af3a",
+    "mtime": 1790032678.8038263,
+    "ast_hash": "92c128bc09dbd80cbf98ed28bdbc25d5",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/frame.ts": {
@@ -2200,8 +2200,8 @@
     "semantic_hash": ""
   },
   "packages/cli/test/art.test.ts": {
-    "mtime": 1790030550.0472686,
-    "ast_hash": "e4039c310e536d65ecf3d49dec98adb5",
+    "mtime": 1790032643.6605742,
+    "ast_hash": "432879aed4eadbdaabc9f019240b7c1e",
     "semantic_hash": ""
   },
   ".changeset/quiet-towers-glow.md": {
@@ -2260,18 +2260,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/orbits.ts": {
-    "mtime": 1790029636.5915446,
-    "ast_hash": "8abc8e82782f3841663bb2857493f276",
+    "mtime": 1790032809.8483322,
+    "ast_hash": "bbe903eb3aae6c3f611875b1f3b34330",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Planets.tsx": {
-    "mtime": 1790030564.010191,
-    "ast_hash": "50f827f746c2359041ef97f3a4e22179",
+    "mtime": 1790033344.6414893,
+    "ast_hash": "a8cdbce9fd9ff98b1a69e4ddad2c78f4",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/fly.ts": {
-    "mtime": 1790029889.1216803,
-    "ast_hash": "7f706cac966893c01637ce18ed363065",
+    "mtime": 1790032726.7204854,
+    "ast_hash": "04ae12c8fd2320001bfee4538d098c67",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/scan.ts": {
@@ -2285,8 +2285,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/scripts/read-names.ts": {
-    "mtime": 1790030257.0635393,
-    "ast_hash": "82cf1f99677c590d387fa47dcd97267f",
+    "mtime": 1790032809.8491862,
+    "ast_hash": "75d12b86369ead649ade22b708c99425",
     "semantic_hash": ""
   },
   "apps/code-art/src/SearchResults.tsx": {
@@ -2295,13 +2295,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.symbols.json": {
-    "mtime": 1790030376.4114754,
-    "ast_hash": "f2d1715c8f34bdd90480d798d1c8ba82",
+    "mtime": 1790032818.937321,
+    "ast_hash": "e47f94293d4b82931171cd25136c66ad",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/names.ts": {
-    "mtime": 1790030292.164859,
-    "ast_hash": "8665a2cb9f5808e70c8ef6f7e989fb4e",
+    "mtime": 1790032175.8145864,
+    "ast_hash": "bd14a59aa0f701656aeb5d62e99840e8",
     "semantic_hash": ""
   },
   "apps/code-art/src/useSearchControls.ts": {
@@ -2310,13 +2310,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/read-names.test.ts": {
-    "mtime": 1790030363.9214613,
-    "ast_hash": "a957d7f1b8c73ea38d6ffbdafd80255b",
+    "mtime": 1790032637.4498897,
+    "ast_hash": "6b5f057bb9eafc1eb67a8b93f9b96eda",
     "semantic_hash": ""
   },
   "apps/code-art/src/PathsPanel.tsx": {
-    "mtime": 1790031800.6386726,
-    "ast_hash": "fed9d6ba6c6dd5b939b759ff13688a9c",
+    "mtime": 1790032119.4727528,
+    "ast_hash": "9bdd832321cf8beffe45c6ab9b49e8a3",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/paths.ts": {
@@ -2325,13 +2325,53 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/usePathKeys.ts": {
-    "mtime": 1790031833.2417157,
-    "ast_hash": "a5da112ec6f5056afc154086209acfdb",
+    "mtime": 1790033325.157087,
+    "ast_hash": "326f0c0292b315e08e4a278470c16e81",
     "semantic_hash": ""
   },
   "apps/code-art/test/paths.test.ts": {
     "mtime": 1790031732.0135293,
     "ast_hash": "c7939add1ed86f6f9677afc26db5b969",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/symbol-tree.ts": {
+    "mtime": 1790032650.4271603,
+    "ast_hash": "dd3f288600b07df96e46b8f45ea87c2c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/queries.ts": {
+    "mtime": 1790032175.8147342,
+    "ast_hash": "d426b98aee8170d18e8beba8838decda",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/Orbit.tsx": {
+    "mtime": 1790033164.970393,
+    "ast_hash": "1d2f0f8999524a22b6f8e4c9caee198c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/follow.ts": {
+    "mtime": 1790032883.121837,
+    "ast_hash": "da8ef07d5b676b852522f6c3d2afc9b9",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/orbits.test.ts": {
+    "mtime": 1790032846.5488899,
+    "ast_hash": "b1b44654e464d20fc33fe539acaa5120",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/system-nav.ts": {
+    "mtime": 1790033313.8668149,
+    "ast_hash": "e36a995f82d0cf3a76a0d9a67665b9be",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/system-keys.ts": {
+    "mtime": 1790033344.641311,
+    "ast_hash": "1a7396e4b1f0b96c5a3709f1fe39485b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/system-nav.test.ts": {
+    "mtime": 1790033359.3147643,
+    "ast_hash": "78d22ff7f7078973dbe5343cf46d5ea2",
     "semantic_hash": ""
   }
 }

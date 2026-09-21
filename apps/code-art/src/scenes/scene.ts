@@ -1,4 +1,5 @@
 import type { Playhead, Series } from '../lib/series.ts'
+import type { SystemClaims } from '../lib/system-nav.ts'
 import type { Trace } from '../lib/trace.ts'
 
 /** What every scene is given. */
@@ -16,4 +17,6 @@ export interface SceneProps {
   readonly onPick: (file: number) => void
   /** The file the path keys point at from the selected one, or `null`. */
   readonly aim?: number | null
+  /** Told which plain keys a picked file's system is using, so the rest stand aside. */
+  readonly onClaims?: (claims: SystemClaims) => void
 }

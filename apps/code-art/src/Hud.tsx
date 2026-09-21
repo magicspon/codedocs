@@ -76,6 +76,15 @@ export function Hud(props: HudProps): JSX.Element {
             onCollapse={setCollapsed}
           />
         )}
+        {/* Only the galaxy draws a picked file as a system to walk. */}
+        {props.scene === 'galaxy' && props.nav.selected !== null && (
+          <div className="panel">
+            <p className="legend system-keys">
+              Shift ←→ choose a planet · Enter or Shift ↓ zoom in · Esc or Shift
+              ↑ zoom out
+            </p>
+          </div>
+        )}
         {props.series && (
           <PathsPanel
             nav={props.nav}

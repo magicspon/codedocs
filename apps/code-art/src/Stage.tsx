@@ -2,6 +2,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { Canvas } from '@react-three/fiber'
 import type { JSX } from 'react'
 import type { Playhead, Series } from './lib/series.ts'
+import type { SystemClaims } from './lib/system-nav.ts'
 import type { Trace } from './lib/trace.ts'
 import { City } from './scenes/City.tsx'
 import { Galaxy } from './scenes/Galaxy.tsx'
@@ -30,6 +31,7 @@ interface StageProps {
   readonly trace: Trace | null
   readonly onPick: (index: number) => void
   readonly aim: number | null
+  readonly onClaims: (claims: SystemClaims) => void
 }
 
 /** The canvas: one scene, under the bloom that scene wants. */
@@ -51,6 +53,7 @@ export function Stage(props: StageProps): JSX.Element {
         trace={props.trace}
         onPick={props.onPick}
         aim={props.aim}
+        onClaims={props.onClaims}
       />
       <EffectComposer>
         <Bloom

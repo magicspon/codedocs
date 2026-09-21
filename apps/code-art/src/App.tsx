@@ -8,6 +8,7 @@ import {
 } from './hooks.ts'
 import { DATASETS } from './lib/load.ts'
 import type { Playhead } from './lib/series.ts'
+import { NO_CLAIMS, type SystemClaims } from './lib/system-nav.ts'
 import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { Hud } from './Hud.tsx'
 import { SCENES, Stage } from './Stage.tsx'
@@ -33,7 +34,9 @@ export function App(): JSX.Element {
     const path = series?.merged.files[file]?.path
     if (path) setQuery((q) => ({ ...q, text: path }))
   }
-  const nav = usePathKeys(series, frame, query, trace, setQuery)
+  // Enter and Escape, when the picked file's system is using them.
+  const [claims, setClaims] = useState<SystemClaims>(NO_CLAIMS)
+  const nav = usePathKeys(series, frame, query, trace, setQuery, claims)
 
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
@@ -52,6 +55,7 @@ export function App(): JSX.Element {
           trace={trace}
           onPick={pick}
           aim={nav.aim}
+          onClaims={setClaims}
         />
       )}
       <Hud

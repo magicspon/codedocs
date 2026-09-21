@@ -11,7 +11,7 @@ import {
 } from '../lib/glow.ts'
 import { healthTexture } from '../lib/health-texture.ts'
 import { visibility } from '../lib/series.ts'
-import { orbitsOf } from '../lib/orbits.ts'
+import { orbitsOf, SYSTEM_VIEW } from '../lib/orbits.ts'
 import type { Threads } from '../lib/threads.ts'
 import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
@@ -110,9 +110,6 @@ function Aim(props: {
   )
 }
 
-/** How far back the camera stands from a picked star, in orbits of its outermost ring. */
-const SYSTEM_VIEW = 3.4
-
 /**
  * The codebase as a spiral galaxy: arms are top-level directories, the core is
  * the code everything else leans on, stars are symbols, red haze is blind spots.
@@ -185,7 +182,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
     (file: number, from: Shot) => {
       const star = new Vector3(...shape.anchors[file]!)
       group.current?.localToWorld(star)
-      const reach = orbitsOf(series.merged.files[file]!).reach
+      const reach = orbitsOf(series.merged.files[file]!, null).reach
       return approach(from, star, reach * SYSTEM_VIEW, 0.5)
     },
     0.15,
@@ -243,7 +240,12 @@ export function Galaxy(props: SceneProps): JSX.Element {
           focus={focus.mix}
           scale={300}
         />
-        <Planets repo={series.merged.name} pick={picked} grow={planets} />
+        <Planets
+          repo={series.merged.name}
+          pick={picked}
+          grow={planets}
+          onClaims={props.onClaims}
+        />
         {props.aim != null && (
           <Aim
             at={shape.anchors[props.aim]!}
