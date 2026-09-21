@@ -26,6 +26,26 @@ the top-left panel. Point at anything to see the file behind it.
 `?data=vscode&scene=city` in the URL opens a view directly; add `&lens=health`
 to open it with the health lens on.
 
+## Search and trace
+
+Type part of a path in the search box, or click any file, to trace it. Press
+`/` to jump to the box and Escape to clear it.
+
+- Every word you type must appear in the path. Case does not matter. A full
+  path traces that one file alone.
+- The rest of the scene goes dark. The matched files glow, and the files the
+  trace reaches stay lit.
+- Arcs join the traced files. Light runs along them from caller to callee, one
+  hop at a time. Blue light flows in (the callers), and amber light flows out
+  (the callees). The callers fire first, so you watch the flow arrive at the
+  file and then leave it.
+- Choose **Calls** or **Imports** to follow, which way to follow them, and how
+  many hops (1 to 4).
+- A trace starts from at most 60 matches, and a busy file shows only its 24
+  heaviest links at each hop. This keeps the picture readable.
+- `&q=` in the URL opens a search directly, for example
+  `?data=codedocs&scene=city&q=operations/trace.ts`.
+
 ## Health readings
 
 When [fallow](https://github.com/fallow-rs/fallow) is on your PATH, the export

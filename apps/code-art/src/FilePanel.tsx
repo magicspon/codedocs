@@ -8,13 +8,27 @@ import {
 } from './lib/atlas.ts'
 import { healthRows } from './lib/health-text.ts'
 
+/** Where the file sits on the search's trace; nothing when it is off the trace. */
+function TraceRow({ hops }: { hops: string | undefined }): JSX.Element | null {
+  if (!hops) return null
+  return (
+    <>
+      <dt>Trace</dt>
+      <dd>{hops}</dd>
+    </>
+  )
+}
+
 /** The facts behind whatever the pointer is over: the art is data, so it can always be read back. */
 export function FilePanel({
   file,
   fallow,
+  hops,
 }: {
   file: FileDatum
   fallow: FallowMeta | undefined
+  /** Where the file sits on the search's trace, in words; absent off it. */
+  hops?: string | undefined
 }): JSX.Element {
   const kinds = KINDS.flatMap((kind, i) =>
     file.kinds[i] ? [`${file.kinds[i]} ${kind}`] : [],
@@ -36,6 +50,7 @@ export function FilePanel({
           {ROLES[file.role]}
           {file.generated ? ', generated' : ''}
         </dd>
+        <TraceRow hops={hops} />
       </dl>
       <p className="kinds">{kinds.join(' · ')}</p>
       {file.health && fallow && (

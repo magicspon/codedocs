@@ -1,4 +1,5 @@
-import { MeshStandardMaterial, type IUniform } from 'three'
+import { MeshStandardMaterial, type IUniform, type Texture } from 'three'
+import { FOCUS_GLSL } from './focus-texture.ts'
 
 /**
  * The material every tower is drawn with: a standard lit surface with a window
@@ -14,10 +15,16 @@ import { MeshStandardMaterial, type IUniform } from 'three'
 const RUST = 'vec3(0.478, 0.322, 0.212)'
 /** What an unreachable building's shell cools to: lightless concrete. */
 const ABANDONED = 'vec3(0.045, 0.050, 0.070)'
+/** The cool light a searched tower gives off. */
+const FOUND = 'vec3(0.55, 0.8, 1.0)'
 /** The red a hotspot's windows flush. */
 const ALARM = 'vec3(1.0, 0.13, 0.05)'
 
 const DECLARE = /* glsl */ `
+  uniform float uFocus;
+  ${FOCUS_GLSL}
+  attribute float aFile;
+  varying float vFocus;
   attribute vec2 aFacade;
   attribute vec3 aLamp;
   attribute vec4 aHealth;
@@ -49,12 +56,15 @@ const MEASURE = /* glsl */ `
   vSeed = aFacade.y;
   vLamp = aLamp;
   vHealth = aHealth;
+  vFocus = focusOf(aFile);
 `
 
 const HELPERS = /* glsl */ `
   uniform float uWindow;
   uniform float uLens;
   uniform float uClock;
+  uniform float uFocus;
+  varying float vFocus;
   varying vec3 vLocal;
   varying vec3 vSize;
   varying vec3 vNrm;
@@ -138,6 +148,8 @@ const WEATHER = /* glsl */ `
   vec3 read = lensRead();
   diffuseColor.rgb = mix(diffuseColor.rgb, ${RUST}, read.z * 0.75);
   diffuseColor.rgb = mix(diffuseColor.rgb, ${ABANDONED}, read.y);
+  // Under a search, towers the trace never reaches recede into the dark.
+  diffuseColor.rgb *= mix(1.0, 0.12, uFocus * (1.0 - vFocus));
   }
 `
 
@@ -155,6 +167,12 @@ const LIGHTS = /* glsl */ `
   vec3 glow = lamp * on * (1.15 + 1.6 * read.x * beat);
   // A hotspot with few lit windows still shows: alarm light washes the walls.
   glow += ${ALARM} * read.x * 0.16 * beat * (1.0 - roof);
+  // Under a search: the rest go dark, the reached burn a little brighter, and
+  // the searched towers glow from within, their roofs brightest.
+  float away = uFocus * (1.0 - vFocus);
+  float found = uFocus * step(0.99, vFocus);
+  glow *= mix(1.0, 0.035, away) * (1.0 + uFocus * vFocus * 0.6);
+  glow += ${FOUND} * found * (0.1 + 0.05 * sin(uClock * 3.0) + roof * 0.35);
   totalEmissiveRadiance += glow;
   }
 `
@@ -167,6 +185,11 @@ export interface FacadeUniforms {
   readonly uLens: IUniform<number>
   /** Wall-clock seconds, for the alarm strobe. */
   readonly uClock: IUniform<number>
+  /** How far a search's dimming has eased in, `0` to `1`. */
+  readonly uFocus: IUniform<number>
+  /** Every file's focus, from `focusTexture`. */
+  readonly uFocusMap: IUniform<Texture | null>
+  readonly uFocusRows: IUniform<number>
 }
 
 /** A facade material and the uniforms to drive it. */
@@ -186,8 +209,14 @@ export function facadeMaterial(window: number): Facades {
     uWindow: { value: window },
     uLens: { value: 0 },
     uClock: { value: 0 },
+    uFocus: { value: 0 },
+    uFocusMap: { value: null },
+    uFocusRows: { value: 1 },
   }
-  const material = new MeshStandardMaterial({ roughness: 0.62, metalness: 0.2 })
+  const material = new MeshStandardMaterial({
+    roughness: 0.62,
+    metalness: 0.2,
+  })
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms)
     shader.vertexShader = shader.vertexShader

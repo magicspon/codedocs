@@ -60,6 +60,8 @@ export interface Run {
   readonly lamp: Float32Array
   /** Four per instance: heat, unused, wear and trend at the playhead. */
   readonly health: Float32Array
+  /** One per instance: its file, which the shader looks focus up by. */
+  readonly files: Float32Array
 }
 
 /** Builds a run's static attributes from the buildings its instances belong to. */
@@ -72,6 +74,7 @@ export function runOf(
     facade: new Float32Array(owners.length * 2),
     lamp: new Float32Array(owners.length * 3),
     health: new Float32Array(owners.length * 4),
+    files: Float32Array.from(owners),
   }
   owners.forEach((i, k) => {
     const { facade } = buildings[i]!

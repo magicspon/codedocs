@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { DATASETS, loadSeries } from './lib/load.ts'
 import type { Series } from './lib/series.ts'
+import type { Direction, TraceQuery } from './lib/trace.ts'
 
-/** Reads `?data=…&scene=…&lens=health` so a view can be bookmarked. */
+/** Reads `?data=…&scene=…&lens=health&q=…` so a view can be bookmarked. */
 export function initial(key: string, fallback: string): string {
   return new URLSearchParams(location.search).get(key) ?? fallback
 }
@@ -10,6 +11,19 @@ export function initial(key: string, fallback: string): string {
 /** The dataset to open: whatever the URL asks for, else the first exported. */
 export function initialDataset(): string {
   return initial('data', DATASETS[0] ?? '')
+}
+
+/** The search to open with: `?q=` from the URL, traced both ways, two hops deep. */
+export function initialQuery(): TraceQuery {
+  const flow = initial('flow', 'both')
+  return {
+    text: initial('q', ''),
+    direction: (['in', 'out', 'both'].includes(flow)
+      ? flow
+      : 'both') as Direction,
+    via: initial('via', 'calls') === 'imports' ? 'imports' : 'calls',
+    depth: 2,
+  }
 }
 
 /** A loaded series and the file hovered inside it. */
@@ -51,10 +65,13 @@ export function useBookmark(
   dataset: string,
   scene: string,
   lens: boolean,
+  search: string,
 ): void {
   useEffect(() => {
     if (!dataset) return
-    const query = `?data=${encodeURIComponent(dataset)}&scene=${scene}`
-    history.replaceState(null, '', lens ? `${query}&lens=health` : query)
-  }, [dataset, scene, lens])
+    let query = `?data=${encodeURIComponent(dataset)}&scene=${scene}`
+    if (lens) query += '&lens=health'
+    if (search.trim()) query += `&q=${encodeURIComponent(search.trim())}`
+    history.replaceState(null, '', query)
+  }, [dataset, scene, lens, search])
 }

@@ -13,7 +13,10 @@ import { VISIBILITY_GLSL } from '../lib/series.ts'
 import type { Region } from '../lib/treemap.ts'
 import { Alarms } from './Alarms.tsx'
 import { Buildings } from './Buildings.tsx'
+import { useFocus } from './focus.ts'
 import type { SceneProps } from './scene.ts'
+import { LIFT } from './stack.ts'
+import { TraceFlow } from './TraceFlow.tsx'
 import { Weather } from './Weather.tsx'
 
 const dummy = new Object3D()
@@ -54,7 +57,11 @@ function trafficMaterial(): ShaderMaterial {
     depthWrite: false,
     blending: AdditiveBlending,
     vertexColors: true,
-    uniforms: { uTime: { value: 0 }, uHistory: { value: 0 } },
+    uniforms: {
+      uTime: { value: 0 },
+      uHistory: { value: 0 },
+      uDim: { value: 1 },
+    },
     vertexShader: /* glsl */ `
       attribute float progress;
       attribute float phase;
@@ -76,6 +83,7 @@ function trafficMaterial(): ShaderMaterial {
     `,
     fragmentShader: /* glsl */ `
       uniform float uTime;
+      uniform float uDim;
       varying float vProgress;
       varying float vPhase;
       varying vec3 vColor;
@@ -85,7 +93,7 @@ function trafficMaterial(): ShaderMaterial {
         float pulse = smoothstep(0.18, 0.0, abs(vProgress - head));
         // Dim enough to read as traffic over the city rather than as a net
         // drawn across it: the towers and their windows carry the picture.
-        gl_FragColor = vec4(vColor * (0.015 + pulse * 0.55) * vLife, 1.0);
+        gl_FragColor = vec4(vColor * (0.015 + pulse * 0.55) * vLife * uDim, 1.0);
       }
     `,
   })
@@ -135,19 +143,35 @@ function Districts({
  * mark code others call, arcs carry the calls. Over a timeline, towers rise as
  * their files grow. Under the health lens, hotspots raise alarm pillars,
  * unreachable files stand abandoned, hard-to-change files weather, and the air
- * itself thickens with the repository's debt.
+ * itself thickens with the repository's debt. Under a search, the rest of the
+ * city goes dark and light arcs between the traced towers.
  */
 export function City({
   series,
   playhead,
   lens,
   onHover,
+  trace,
+  onPick,
 }: SceneProps): JSX.Element {
   const layout = useMemo(() => cityLayout(series), [series])
   const traffic = useMemo(trafficMaterial, [])
+  const focus = useFocus(trace, series.merged.files.length)
+  // Arcs leave from the roofs, at each tower's tallest, and bow like the traffic.
+  const shape = useMemo(
+    () => ({
+      anchors: layout.buildings.map((b) => [b.x, LIFT + b.h, b.z] as const),
+      bow: 0.3,
+      size: layout.unit * 0.55,
+      lives: series.fileLife,
+    }),
+    [layout, series],
+  )
   useFrame((state) => {
     traffic.uniforms.uTime!.value = state.clock.elapsedTime
     traffic.uniforms.uHistory!.value = playhead.t
+    // The trace's own arcs carry the calls under a search.
+    traffic.uniforms.uDim!.value = 1 - focus.mix.current * 0.9
   })
   const { size } = layout
 
@@ -169,7 +193,9 @@ export function City({
         layout={layout}
         playhead={playhead}
         lens={lens}
+        focus={focus}
         onHover={onHover}
+        onPick={onPick}
       />
       <Alarms layout={layout} playhead={playhead} lens={lens} />
       <lineSegments material={traffic}>
@@ -200,6 +226,14 @@ export function City({
           />
         </bufferGeometry>
       </lineSegments>
+      <TraceFlow
+        trace={trace}
+        shape={shape}
+        files={series.merged.files}
+        playhead={playhead}
+        focus={focus.mix}
+        scale={300}
+      />
       <OrbitControls
         makeDefault
         enableDamping
