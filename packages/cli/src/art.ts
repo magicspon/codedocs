@@ -21,8 +21,10 @@ import { parseArgs } from 'node:util'
 import {
   artPage,
   buildTimeline,
+  readNames,
   snapshot,
   type Atlas,
+  type SymbolNames,
   type Timeline,
 } from '@codedocs/code-art/pipeline'
 import { findRepositoryRoot } from '@codedocs/core'
@@ -104,20 +106,38 @@ function analyseAt(dir: string): void {
   if (outcome.code === 2) throw new Error(outcome.stderr || 'analyse failed')
 }
 
+/** Symbol names sit beside the datasets, under this suffix. */
+const SYMBOLS = '.symbols.json'
+
+/** Every JSON file in `dir` that `keep` accepts, parsed, by name less `suffix`. */
+function readAll<T>(
+  dir: string,
+  suffix: string,
+  keep: (file: string) => boolean,
+): Record<string, T> {
+  const files = readdirSync(dir).filter((file) => file.endsWith(suffix))
+  return Object.fromEntries(
+    files
+      .filter(keep)
+      .sort()
+      .map((file) => [
+        file.slice(0, -suffix.length),
+        JSON.parse(readFileSync(join(dir, file), 'utf8')) as T,
+      ]),
+  )
+}
+
 /**
  * Every dataset written so far, by name. Kept between runs, so a later run
  * without `--frames` still shows the timeline an earlier one built.
  */
 function datasets(dir: string): Record<string, Atlas | Timeline> {
-  const names = readdirSync(dir).filter((file) => file.endsWith('.json'))
-  return Object.fromEntries(
-    names
-      .sort()
-      .map((file) => [
-        file.slice(0, -'.json'.length),
-        JSON.parse(readFileSync(join(dir, file), 'utf8')) as Atlas | Timeline,
-      ]),
-  )
+  return readAll(dir, '.json', (file) => !file.endsWith(SYMBOLS))
+}
+
+/** Every repository's symbol names written so far, by repository name. */
+function symbolSets(dir: string): Record<string, SymbolNames> {
+  return readAll(dir, SYMBOLS, () => true)
 }
 
 /** Writes the art for `options`, and returns the page's path. */
@@ -134,11 +154,13 @@ export function writeArt(options: ArtOptions, io: ArtIo): string {
   const data = join(out, 'data')
   mkdirSync(data, { recursive: true })
 
-  const atlas = snapshot(join(root, '.codedocs', 'index.db'), {
+  const db = join(root, '.codedocs', 'index.db')
+  const atlas = snapshot(db, {
     name,
     fallow: options.fallow,
   })
   writeFileSync(join(data, `${name}.json`), JSON.stringify(atlas))
+  writeFileSync(join(data, `${name}${SYMBOLS}`), JSON.stringify(readNames(db)))
   io.log(
     `${name}: ${atlas.files.length} files, ${atlas.calls.length} call links`,
   )
@@ -157,7 +179,8 @@ export function writeArt(options: ArtOptions, io: ArtIo): string {
   }
 
   const page = join(out, 'index.html')
-  writeFileSync(page, artPage(readFileSync(io.viewer, 'utf8'), datasets(data)))
+  const viewer = readFileSync(io.viewer, 'utf8')
+  writeFileSync(page, artPage(viewer, datasets(data), symbolSets(data)))
   return page
 }
 

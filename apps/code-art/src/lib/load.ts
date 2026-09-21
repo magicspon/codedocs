@@ -31,9 +31,11 @@ function embedded(): Record<string, Load> {
  */
 function sources(): Record<string, Load> {
   if (import.meta.env.MODE === 'embed') return embedded()
-  const modules = import.meta.glob<{ default: Atlas | Timeline }>(
+  // Symbol names are not a dataset; `names.ts` loads them on demand.
+  const modules = import.meta.glob<{ default: Atlas | Timeline }>([
     '../data/*.json',
-  )
+    '!../data/*.symbols.json',
+  ])
   return Object.fromEntries(
     Object.entries(modules).map(([path, load]) => [
       path.replace(/^.*\/(.+)\.json$/, '$1'),

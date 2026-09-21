@@ -122,6 +122,20 @@ describe('writeArt', () => {
     expect(datasetsIn(readFileSync(page, 'utf8'))).toEqual([basename(root)])
   })
 
+  it('writes the symbol names in a block of their own, not as a dataset', () => {
+    const page = readFileSync(
+      writeArt({ cwd: root, frames: null, fallow: false }, io),
+      'utf8',
+    )
+    const block = new RegExp(
+      `<script type="application/json" data-symbols="${basename(root)}">(.*?)</script>`,
+    ).exec(page)
+    const names = JSON.parse(block![1]!) as Record<string, string[][]>
+    // Every indexed file with symbols is there, one list per kind.
+    expect(Object.keys(names).length).toBeGreaterThan(0)
+    for (const lists of Object.values(names)) expect(lists).toHaveLength(8)
+  })
+
   it('adds a timeline with --frames, and keeps it on a later run without', () => {
     const name = basename(root)
     writeArt({ cwd: root, frames: 3, fallow: false }, io)

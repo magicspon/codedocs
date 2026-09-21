@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import type { SymbolNames } from './lib/atlas.ts'
 import { DATASETS, loadSeries } from './lib/load.ts'
+import { loadNames } from './lib/names.ts'
 import type { Series } from './lib/series.ts'
 import type { Direction, TraceQuery } from './lib/trace.ts'
 
@@ -74,4 +76,24 @@ export function useBookmark(
     if (search.trim()) query += `&q=${encodeURIComponent(search.trim())}`
     history.replaceState(null, '', query)
   }, [dataset, scene, lens, search])
+}
+
+/**
+ * The symbol names of the file at `path` in repository `repo`, by kind, or
+ * `null` until they load (and for good when none were exported). Only called
+ * once a file is picked, so nothing is read before then.
+ */
+export function useNames(
+  repo: string,
+  path: string,
+): readonly (readonly string[])[] | null {
+  const [names, setNames] = useState<SymbolNames | null>(null)
+  useEffect(() => {
+    let live = true
+    void loadNames(repo).then((n) => live && setNames(n))
+    return () => {
+      live = false
+    }
+  }, [repo])
+  return names?.[path] ?? null
 }

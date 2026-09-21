@@ -21,7 +21,9 @@ pnpm --filter @codedocs/code-art export repos/vscode
 pnpm art
 ```
 
-Exports land in `src/data/` and are git-ignored. Pick a dataset and a scene in
+Exports land in `src/data/` and are git-ignored. Each export also writes
+`<name>.symbols.json`, the names of every symbol. The viewer reads it only when
+you pick a file, so it does not slow down opening a dataset. Pick a dataset and a scene in
 the top-left panel. Point at anything to see the file behind it.
 `?data=vscode&scene=city` in the URL opens a view directly; add `&lens=health`
 to open it with the health lens on.
@@ -41,6 +43,16 @@ Type part of a path in the search box, or click any file, to trace it. Press
   file and then leave it.
 - Choose **Calls** or **Imports** to follow, which way to follow them, and how
   many hops (1 to 4).
+- When the search finds exactly one file, the camera flies to it. Clear the
+  search and the camera flies back to where it was. Drag the view at any time
+  to stop the flight.
+  - **Galaxy:** the galaxy stops turning. The file's symbols move out from its
+    star as planets, with one orbit for each kind of symbol. The orbits are in
+    kind order: functions are nearest the star. Point at a planet to see the
+    name of its symbol. The names load the first time you pick a file. A
+    dataset exported before names were added shows only the kind.
+  - **City:** the camera flies up over the rooftops and down to the tower. A
+    band of light climbs the tower and turns on every window it passes.
 - A trace starts from at most 60 matches, and a busy file shows only its 24
   heaviest links at each hop. This keeps the picture readable.
 - `&q=` in the URL opens a search directly, for example

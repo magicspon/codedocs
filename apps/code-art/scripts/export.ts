@@ -9,6 +9,7 @@
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fromCaller } from './caller.ts'
+import { readNames } from './read-names.ts'
 import { snapshot } from './snapshot.ts'
 
 const args = process.argv.slice(2)
@@ -38,6 +39,11 @@ const outDir = join(import.meta.dirname, '..', 'src', 'data')
 mkdirSync(outDir, { recursive: true })
 const out = join(outDir, `${name}.json`)
 writeFileSync(out, JSON.stringify(atlas))
+// The names ride separately, so the viewer reads them only when a file is picked.
+writeFileSync(
+  join(outDir, `${name}.symbols.json`),
+  JSON.stringify(readNames(dbPath)),
+)
 console.log(
   `${name}: ${atlas.files.length} files, ${atlas.calls.length} call links, ${atlas.imports.length} imports, ${scored} scored by fallow → ${out}`,
 )

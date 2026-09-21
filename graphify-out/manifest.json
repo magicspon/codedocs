@@ -1865,8 +1865,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/glow.ts": {
-    "mtime": 1790028740.4819887,
-    "ast_hash": "4839a080936c2792e8a02b04c29ce49e",
+    "mtime": 1790029546.8746533,
+    "ast_hash": "c2e8e871ff39de3363eaecd537582839",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/load.ts": {
@@ -1895,13 +1895,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/City.tsx": {
-    "mtime": 1790028740.4846954,
-    "ast_hash": "e9daf853c8d758bb375cb5746631fbb7",
+    "mtime": 1790029636.5924363,
+    "ast_hash": "fc2df42f670bde0f154f6986395b947c",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Galaxy.tsx": {
-    "mtime": 1790029017.9370773,
-    "ast_hash": "3e79eab30b4cfe6c211de26e0296045f",
+    "mtime": 1790029669.95331,
+    "ast_hash": "b5d9c0d610a59a2adecdc396b4a9f9d4",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/scene.ts": {
@@ -1935,8 +1935,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790028929.079237,
-    "ast_hash": "24fc3b98d71c24a3a0abc875ec8077c3",
+    "mtime": 1790029965.9652145,
+    "ast_hash": "365dc0ecaecd6e9f317cfef849478295",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -2060,8 +2060,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Buildings.tsx": {
-    "mtime": 1790028961.7545838,
-    "ast_hash": "b72f3fa572779a6027cc83ddda272550",
+    "mtime": 1790029592.1693268,
+    "ast_hash": "47aadd52a82cc812bd0a883197a5167b",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/lens.ts": {
@@ -2085,8 +2085,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/facade-material.ts": {
-    "mtime": 1790028881.568131,
-    "ast_hash": "2942c90c73029d51f7da82151dc8be9e",
+    "mtime": 1790029569.785216,
+    "ast_hash": "c0ba2e21ab5b56341ec5679446b06894",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/facade.ts": {
@@ -2262,6 +2262,36 @@
   "apps/code-art/test/trace.test.ts": {
     "mtime": 1790028962.6374266,
     "ast_hash": "a3ce7856e503caeb871d1761bcf859c8",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/flight.ts": {
+    "mtime": 1790029687.4488761,
+    "ast_hash": "40cc89520b6daf9fd1e6652bf2056689",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/orbits.ts": {
+    "mtime": 1790029636.5915446,
+    "ast_hash": "8abc8e82782f3841663bb2857493f276",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/Planets.tsx": {
+    "mtime": 1790029670.9406028,
+    "ast_hash": "b8d7c2e90f26a1204c51bcd6c8155872",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/fly.ts": {
+    "mtime": 1790029889.1216803,
+    "ast_hash": "7f706cac966893c01637ce18ed363065",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/scan.ts": {
+    "mtime": 1790029923.7844343,
+    "ast_hash": "e08dbdd58af458d94f7af99a0add4b5f",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/flight.test.ts": {
+    "mtime": 1790029687.4490225,
+    "ast_hash": "dd202db892edbfe177cc81bb67e80676",
     "semantic_hash": ""
   }
 }

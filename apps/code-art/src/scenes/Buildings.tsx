@@ -6,6 +6,7 @@ import type { Focus } from './focus.ts'
 import { facadeMaterial } from '../lib/facade-material.ts'
 import type { Playhead } from '../lib/series.ts'
 import { useLens } from './lens.ts'
+import { useScan } from './scan.ts'
 import type { SceneProps } from './scene.ts'
 import { dress, ready, restack, runOf, type Run } from './stack.ts'
 
@@ -47,6 +48,8 @@ export function Buildings(props: {
   playhead: Playhead
   lens: boolean
   focus: Focus
+  /** The one file the search names, whose tower lights up; `null` otherwise. */
+  pick: number | null
   onHover: SceneProps['onHover']
   onPick: SceneProps['onPick']
 }): JSX.Element {
@@ -65,6 +68,7 @@ export function Buildings(props: {
     facades.uniforms.uFocusMap.value = focus.texture
     facades.uniforms.uFocusRows.value = focus.texture.image.height
   }, [facades, focus.texture])
+  useScan(facades.uniforms, layout, props.pick, playhead)
   const beacons = useMemo(
     () => new MeshBasicMaterial({ toneMapped: false }),
     [],

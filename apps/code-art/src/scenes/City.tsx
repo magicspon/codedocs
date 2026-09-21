@@ -6,16 +6,19 @@ import {
   Color,
   Object3D,
   ShaderMaterial,
+  Vector3,
   type InstancedMesh,
 } from 'three'
 import { cityLayout } from '../lib/city-layout.ts'
+import { approach, type Shot } from '../lib/flight.ts'
 import { VISIBILITY_GLSL } from '../lib/series.ts'
 import type { Region } from '../lib/treemap.ts'
 import { Alarms } from './Alarms.tsx'
 import { Buildings } from './Buildings.tsx'
+import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
 import type { SceneProps } from './scene.ts'
-import { LIFT } from './stack.ts'
+import { heightAt, LIFT } from './stack.ts'
 import { TraceFlow } from './TraceFlow.tsx'
 import { Weather } from './Weather.tsx'
 
@@ -144,7 +147,9 @@ function Districts({
  * their files grow. Under the health lens, hotspots raise alarm pillars,
  * unreachable files stand abandoned, hard-to-change files weather, and the air
  * itself thickens with the repository's debt. Under a search, the rest of the
- * city goes dark and light arcs between the traced towers.
+ * city goes dark and light arcs between the traced towers. Pick one file and
+ * the camera flies up over the rooftops and down to its tower, and a band of
+ * light climbs the tower, switching on every floor.
  */
 export function City({
   series,
@@ -166,6 +171,24 @@ export function City({
       lives: series.fileLife,
     }),
     [layout, series],
+  )
+  const pick = trace?.roots.length === 1 ? trace.roots[0]! : null
+  useFlight(
+    pick,
+    (file: number, from: Shot) => {
+      const b = layout.buildings[file]!
+      const h = heightAt(b, playhead.t)
+      const middle = new Vector3(b.x, LIFT + h * 0.5, b.z)
+      // Far enough back for the whole tower, near enough that it fills the view.
+      const distance = Math.max(
+        h * 1.5,
+        Math.max(b.w, b.d) * 4,
+        layout.unit * 5,
+      )
+      return approach(from, middle, distance, 0.42)
+    },
+    // A drone's path: up over the rooftops, then down on to the tower.
+    0.35,
   )
   useFrame((state) => {
     traffic.uniforms.uTime!.value = state.clock.elapsedTime
@@ -194,6 +217,7 @@ export function City({
         playhead={playhead}
         lens={lens}
         focus={focus}
+        pick={pick}
         onHover={onHover}
         onPick={onPick}
       />

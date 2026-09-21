@@ -1,7 +1,8 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, type JSX } from 'react'
-import type { Group, ShaderMaterial } from 'three'
+import { useEffect, useMemo, useRef, type JSX, type RefObject } from 'react'
+import { Vector3, type Group, type ShaderMaterial } from 'three'
+import { approach, type Shot } from '../lib/flight.ts'
 import { galaxyLayout, type PointCloud } from '../lib/galaxy-layout.ts'
 import {
   glowMaterial,
@@ -10,9 +11,12 @@ import {
 } from '../lib/glow.ts'
 import { healthTexture } from '../lib/health-texture.ts'
 import { visibility } from '../lib/series.ts'
+import { orbitsOf } from '../lib/orbits.ts'
 import type { Threads } from '../lib/threads.ts'
+import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
 import { useLens } from './lens.ts'
+import { Planets } from './Planets.tsx'
 import type { SceneProps } from './scene.ts'
 import { TraceFlow } from './TraceFlow.tsx'
 
@@ -78,12 +82,27 @@ function Lines(props: {
 }
 
 /**
+ * A slow turn: fast enough to read depth, slow enough to stay calm. It stops
+ * under a pick, or the star would drift out from under the camera.
+ */
+function useSpin(group: RefObject<Group | null>, turning: boolean): void {
+  useFrame((_, delta) => {
+    if (group.current && turning) group.current.rotation.y += delta * 0.02
+  })
+}
+
+/** How far back the camera stands from a picked star, in orbits of its outermost ring. */
+const SYSTEM_VIEW = 3.4
+
+/**
  * The codebase as a spiral galaxy: arms are top-level directories, the core is
  * the code everything else leans on, stars are symbols, red haze is blind spots.
  * Over a timeline, stars ignite as their file gains symbols. Under the health
  * lens, hotspots flare (pulsing when heating up, dull red when cooling),
  * unused files grey out and copies pair up. Under a search, the rest of the
- * sky dims and light runs the calls through the files that matched.
+ * sky dims and light runs the calls through the files that matched. Pick one
+ * file and the galaxy stops turning, the camera flies to its star, and its
+ * symbols swing out round it as planets.
  */
 export function Galaxy(props: SceneProps): JSX.Element {
   const { series, playhead, onHover } = props
@@ -131,10 +150,29 @@ export function Galaxy(props: SceneProps): JSX.Element {
     [layout, series],
   )
   const group = useRef<Group>(null)
+  const trace = props.trace
+  const pick = trace?.roots.length === 1 ? trace.roots[0]! : null
+  const planets = useRef(0)
+  const picked = useMemo(
+    () =>
+      pick === null
+        ? null
+        : { file: series.merged.files[pick]!, at: shape.anchors[pick]! },
+    [pick, series, shape],
+  )
+  useSpin(group, pick === null)
+  useFlight(
+    pick,
+    (file: number, from: Shot) => {
+      const star = new Vector3(...shape.anchors[file]!)
+      group.current?.localToWorld(star)
+      const reach = orbitsOf(series.merged.files[file]!).reach
+      return approach(from, star, reach * SYSTEM_VIEW, 0.5)
+    },
+    0.15,
+  )
 
-  useFrame((state, delta) => {
-    // A slow turn: fast enough to read depth, slow enough to stay calm.
-    if (group.current) group.current.rotation.y += delta * 0.02
+  useFrame((state) => {
     for (const m of Object.values(materials))
       m.uniforms.uTime!.value = playhead.t
     health.follow(playhead.t, lens.current)
@@ -143,6 +181,8 @@ export function Galaxy(props: SceneProps): JSX.Element {
       m.uniforms.uClock!.value = state.clock.elapsedTime
       m.uniforms.uFocus!.value = focus.mix.current
     }
+    // The picked file's star cloud gathers into its planets.
+    materials.stars.uniforms.uAbsorb!.value = planets.current
     // A search quiets everything but itself: its own arcs carry the calls.
     const quiet = 1 - focus.mix.current * 0.88
     materials.clones.uniforms.uOpacity!.value = lens.current * quiet
@@ -184,6 +224,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
           focus={focus.mix}
           scale={300}
         />
+        <Planets repo={series.merged.name} pick={picked} grow={planets} />
       </group>
       <OrbitControls
         makeDefault

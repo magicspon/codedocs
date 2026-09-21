@@ -37,6 +37,17 @@ describe('artPage', () => {
     expect(page).toContain('data-dataset="a&quot;b&amp;c"')
   })
 
+  it('writes symbol names in blocks of their own', () => {
+    const names = { 'src/a.ts': [['</script>'], [], [], [], [], [], [], []] }
+    const page = artPage(VIEWER, { one: atlas() }, { one: names })
+    const match =
+      /<script type="application\/json" data-symbols="one">(.*?)<\/script>/.exec(
+        page,
+      )
+    expect(JSON.parse(match![1]!)).toEqual(names)
+    expect(page.match(/<\/script>/g)).toHaveLength(2)
+  })
+
   it('refuses a page that is not the embed build', () => {
     expect(() => artPage('<body></body>', {})).toThrow(/embed build/)
   })
