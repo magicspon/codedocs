@@ -24,18 +24,49 @@ export function FilePanel({
   file,
   fallow,
   hops,
+  collapsed,
+  onCollapse,
 }: {
   file: FileDatum
   fallow: FallowMeta | undefined
   /** Where the file sits on the search's trace, in words; absent off it. */
   hops?: string | undefined
+  /** Only the path shows when collapsed. */
+  collapsed: boolean
+  onCollapse: (collapsed: boolean) => void
+}): JSX.Element {
+  return (
+    <div className="panel file">
+      <div className="file-head">
+        <strong>{file.path}</strong>
+        <button
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? 'Show details' : 'Hide details'}
+          onClick={() => onCollapse(!collapsed)}
+        >
+          {collapsed ? '+' : '−'}
+        </button>
+      </div>
+      {!collapsed && <FileFacts file={file} fallow={fallow} hops={hops} />}
+    </div>
+  )
+}
+
+/** Everything about the file below its path. */
+function FileFacts({
+  file,
+  fallow,
+  hops,
+}: {
+  file: FileDatum
+  fallow: FallowMeta | undefined
+  hops: string | undefined
 }): JSX.Element {
   const kinds = KINDS.flatMap((kind, i) =>
     file.kinds[i] ? [`${file.kinds[i]} ${kind}`] : [],
   )
   return (
-    <div className="panel file">
-      <strong>{file.path}</strong>
+    <>
       <dl>
         <dt>Symbols</dt>
         <dd>{symbolCount(file)}</dd>
@@ -66,6 +97,6 @@ export function FilePanel({
           </dl>
         </>
       )}
-    </div>
+    </>
   )
 }

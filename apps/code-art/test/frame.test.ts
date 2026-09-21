@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Atlas, Timeline } from '../src/lib/atlas.ts'
-import { frameSummary, hoveredFile } from '../src/lib/frame.ts'
+import { detailFile, frameSummary, hoveredFile } from '../src/lib/frame.ts'
 import { fromAtlas, seriesOf } from '../src/lib/series.ts'
 import { atlas, file } from './fixture.ts'
 
@@ -54,5 +54,20 @@ describe('frameSummary', () => {
 
   it('reads a single export as its one frame', () => {
     expect(frameSummary(fromAtlas(atlas()), 0).present).toBe(5)
+  })
+})
+
+describe('detailFile', () => {
+  it('shows the hovered file first', () => {
+    expect(detailFile(2, [5])).toBe(2)
+  })
+
+  it('falls back to the one file a search selects', () => {
+    expect(detailFile(null, [5])).toBe(5)
+  })
+
+  it('shows nothing when the search matches several files, or none', () => {
+    expect(detailFile(null, [5, 6])).toBeNull()
+    expect(detailFile(null, undefined)).toBeNull()
   })
 })

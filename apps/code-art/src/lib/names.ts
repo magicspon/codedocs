@@ -36,19 +36,13 @@ function sources(): Record<string, Load> {
 }
 
 const loaders = sources()
-// One parse per repository, however many files are picked in it.
-const cache = new Map<string, Promise<SymbolNames | null>>()
 
 /**
  * The names for the repository `repo` (an atlas's `name`), or `null` when
  * none were exported with it, as for a dataset written before names were.
+ * Uncached: the caller's query keeps one parse per repository.
  */
 export function loadNames(repo: string): Promise<SymbolNames | null> {
-  let names = cache.get(repo)
-  if (!names) {
-    const load = loaders[repo]
-    names = load ? load().catch(() => null) : Promise.resolve(null)
-    cache.set(repo, names)
-  }
-  return names
+  const load = loaders[repo]
+  return load ? load().catch(() => null) : Promise.resolve(null)
 }

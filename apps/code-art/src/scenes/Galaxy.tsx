@@ -1,4 +1,4 @@
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Html, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, type JSX, type RefObject } from 'react'
 import { Vector3, type Group, type ShaderMaterial } from 'three'
@@ -89,6 +89,25 @@ function useSpin(group: RefObject<Group | null>, turning: boolean): void {
   useFrame((_, delta) => {
     if (group.current && turning) group.current.rotation.y += delta * 0.02
   })
+}
+
+/** A tag on the star the path keys point at, so the walk can be seen in the sky. */
+function Aim(props: {
+  at: readonly [number, number, number]
+  path: string
+}): JSX.Element {
+  return (
+    <Html
+      position={props.at as [number, number, number]}
+      center
+      zIndexRange={[15, 5]}
+      style={{ pointerEvents: 'none' }}
+    >
+      <span className="trace-label aim">
+        {props.path.slice(props.path.lastIndexOf('/') + 1)}
+      </span>
+    </Html>
+  )
 }
 
 /** How far back the camera stands from a picked star, in orbits of its outermost ring. */
@@ -225,6 +244,12 @@ export function Galaxy(props: SceneProps): JSX.Element {
           scale={300}
         />
         <Planets repo={series.merged.name} pick={picked} grow={planets} />
+        {props.aim != null && (
+          <Aim
+            at={shape.anchors[props.aim]!}
+            path={series.merged.files[props.aim]!.path}
+          />
+        )}
       </group>
       <OrbitControls
         makeDefault

@@ -6,7 +6,7 @@ import type { Trace, TraceQuery } from './trace.ts'
  */
 
 /** `n` hops, in words. */
-export function hopCount(n: number): string {
+function hopCount(n: number): string {
   return `${n} ${n === 1 ? 'hop' : 'hops'}`
 }
 

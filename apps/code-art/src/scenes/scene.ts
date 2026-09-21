@@ -14,4 +14,6 @@ export interface SceneProps {
   readonly trace: Trace | null
   /** Called with a clicked file, which becomes the search. */
   readonly onPick: (file: number) => void
+  /** The file the path keys point at from the selected one, or `null`. */
+  readonly aim?: number | null
 }

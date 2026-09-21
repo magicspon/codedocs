@@ -29,6 +29,7 @@ interface StageProps {
   readonly onHover: (index: number | null) => void
   readonly trace: Trace | null
   readonly onPick: (index: number) => void
+  readonly aim: number | null
 }
 
 /** The canvas: one scene, under the bloom that scene wants. */
@@ -49,6 +50,7 @@ export function Stage(props: StageProps): JSX.Element {
         onHover={props.onHover}
         trace={props.trace}
         onPick={props.onPick}
+        aim={props.aim}
       />
       <EffectComposer>
         <Bloom

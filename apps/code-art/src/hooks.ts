@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import type { SymbolNames } from './lib/atlas.ts'
 import { DATASETS, loadSeries } from './lib/load.ts'
 import { loadNames } from './lib/names.ts'
 import type { Series } from './lib/series.ts'
@@ -40,26 +40,27 @@ export interface SeriesView {
 /**
  * Loads a dataset, and holds what the pointer is over in it.
  *
- * The hover is an index into the series it came from, so it is dropped with
- * the series rather than left to point at a file in the next one. Switching
- * scenes reloads too: each scene draws its own layout of the same data.
+ * A loaded dataset stays cached, so switching back to it is instant; each
+ * scene still lays it out afresh. The hover is an index into the series it
+ * came from, so it is kept against the view it was made in and dropped when
+ * the dataset or scene changes, rather than left to point at another file.
  */
 export function useSeries(dataset: string, scene: string): SeriesView {
-  const [series, setSeries] = useState<Series | null>(null)
-  const [hovered, setHovered] = useState<number | null>(null)
-
-  useEffect(() => {
-    if (!dataset) return
-    let live = true
-    setSeries(null)
-    setHovered(null)
-    void loadSeries(dataset).then((s) => live && setSeries(s))
-    return () => {
-      live = false
-    }
-  }, [dataset, scene])
-
-  return { series, hovered, setHovered }
+  const { data } = useQuery({
+    queryKey: ['series', dataset],
+    queryFn: () => loadSeries(dataset),
+    enabled: dataset !== '',
+  })
+  const view = `${dataset}/${scene}`
+  const [held, setHeld] = useState<{ view: string; index: number | null }>({
+    view,
+    index: null,
+  })
+  return {
+    series: data ?? null,
+    hovered: held.view === view ? held.index : null,
+    setHovered: (index) => setHeld({ view, index }),
+  }
 }
 
 /** Keeps the URL in step with the view, so the address bar is always shareable. */
@@ -87,13 +88,11 @@ export function useNames(
   repo: string,
   path: string,
 ): readonly (readonly string[])[] | null {
-  const [names, setNames] = useState<SymbolNames | null>(null)
-  useEffect(() => {
-    let live = true
-    void loadNames(repo).then((n) => live && setNames(n))
-    return () => {
-      live = false
-    }
-  }, [repo])
-  return names?.[path] ?? null
+  const { data } = useQuery({
+    queryKey: ['names', repo],
+    queryFn: () => loadNames(repo),
+    // One parse per repository, kept for the session: they can be large.
+    gcTime: Infinity,
+  })
+  return data?.[path] ?? null
 }

@@ -12,6 +12,7 @@ import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { Hud } from './Hud.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { TimelineBar } from './TimelineBar.tsx'
+import { usePathKeys } from './usePathKeys.ts'
 
 /** The viewer: one dataset, one scene, the file under the pointer, and a search traced through it. */
 export function App(): JSX.Element {
@@ -32,6 +33,7 @@ export function App(): JSX.Element {
     const path = series?.merged.files[file]?.path
     if (path) setQuery((q) => ({ ...q, text: path }))
   }
+  const nav = usePathKeys(series, frame, query, trace, setQuery)
 
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
@@ -49,6 +51,7 @@ export function App(): JSX.Element {
           onHover={setHovered}
           trace={trace}
           onPick={pick}
+          aim={nav.aim}
         />
       )}
       <Hud
@@ -66,6 +69,7 @@ export function App(): JSX.Element {
         query={query}
         onQuery={setQuery}
         trace={trace}
+        nav={nav}
       />
       {series && series.commits.length > 1 && (
         <TimelineBar
