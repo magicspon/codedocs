@@ -1,5 +1,6 @@
-import { useEffect, useState, type JSX } from 'react'
+import { useEffect, useMemo, useState, type JSX } from 'react'
 import type { Playhead, Series } from './lib/series.ts'
+import { unwarp, warp } from './lib/time-warp.ts'
 
 /** Frames per second of history: a 16-commit timeline plays in about ten seconds. */
 const SPEED = 1.6
@@ -9,51 +10,70 @@ interface TimelineBarProps {
   readonly playhead: Playhead
   /** Called when the whole frame under the playhead changes. */
   readonly onFrame: (frame: number) => void
+  /** The only frames to play, from `keyFrames`, when isolation squeezes time; `null` plays them all. */
+  readonly keys: readonly number[] | null
 }
 
 /**
  * Play, pause and scrub through a timeline. It owns the animation loop and
  * writes `playhead.t` directly, so the scenes follow it without React
- * re-rendering the canvas sixty times a second.
+ * re-rendering the canvas sixty times a second. Under isolation it plays
+ * only `keys`, one step each, and the slider spans those steps.
  */
 export function TimelineBar({
   series,
   playhead,
   onFrame,
+  keys: squeezed,
 }: TimelineBarProps): JSX.Element {
-  const last = series.commits.length - 1
-  const [t, setT] = useState(playhead.t)
+  const frames = series.commits.length
+  const keys = useMemo(
+    () => squeezed ?? Array.from({ length: frames }, (_, f) => f),
+    [squeezed, frames],
+  )
+  const last = keys.length - 1
+  // Where the slider sits, in steps along `keys`; the playhead is its frame.
+  const [step, setStep] = useState(() => unwarp(keys, playhead.t))
   // A history is for watching grow: start playing as soon as it loads.
   const [playing, setPlaying] = useState(true)
+
+  // New keys: find the playhead on them, and snap it to a frame they play.
+  useEffect(() => {
+    const at = unwarp(keys, playhead.t)
+    playhead.t = warp(keys, at)
+    setStep(at)
+  }, [keys, playhead])
 
   useEffect(() => {
     if (!playing) return
     let previous = performance.now()
-    let id = requestAnimationFrame(function step(now) {
-      playhead.t = Math.min(
-        last,
-        playhead.t + ((now - previous) / 1000) * SPEED,
-      )
+    let at = unwarp(keys, playhead.t)
+    let id = requestAnimationFrame(function tick(now) {
+      at = Math.min(last, at + ((now - previous) / 1000) * SPEED)
       previous = now
-      setT(playhead.t)
-      if (playhead.t >= last) setPlaying(false)
-      else id = requestAnimationFrame(step)
+      playhead.t = warp(keys, at)
+      setStep(at)
+      if (at >= last) setPlaying(false)
+      else id = requestAnimationFrame(tick)
     })
     return () => cancelAnimationFrame(id)
-  }, [playing, playhead, last])
+  }, [playing, playhead, keys, last])
 
-  const frame = Math.round(t)
+  const frame = Math.round(warp(keys, step))
   useEffect(() => onFrame(frame), [frame, onFrame])
 
   const toggle = (): void => {
     // Play at the end means play again from the start.
-    if (!playing && playhead.t >= last) playhead.t = 0
+    if (!playing && step >= last) {
+      playhead.t = warp(keys, 0)
+      setStep(0)
+    }
     setPlaying(!playing)
   }
   const scrub = (value: number): void => {
     setPlaying(false)
-    playhead.t = value
-    setT(value)
+    playhead.t = warp(keys, value)
+    setStep(value)
   }
 
   const commit = series.commits[frame]
@@ -67,14 +87,16 @@ export function TimelineBar({
         min={0}
         max={last}
         step={0.01}
-        value={t}
+        value={step}
         onChange={(e) => scrub(Number(e.target.value))}
         aria-label="Commit"
       />
       <p className="commit">
         <span className="commit-meta">
-          {frame + 1}/{last + 1} · {commit?.sha.slice(0, 7)} ·{' '}
-          {commit?.date.slice(0, 10)}
+          {squeezed
+            ? `step ${Math.round(step) + 1}/${last + 1} · `
+            : `${frame + 1}/${frames} · `}
+          {commit?.sha.slice(0, 7)} · {commit?.date.slice(0, 10)}
         </span>
         <span>{commit?.subject}</span>
       </p>

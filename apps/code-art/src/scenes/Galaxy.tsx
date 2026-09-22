@@ -1,9 +1,9 @@
-import { Html, OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame, type ThreeEvent } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, type JSX, type RefObject } from 'react'
-import { Vector3, type Group, type ShaderMaterial } from 'three'
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import { useEffect, useMemo, useRef, type JSX } from 'react'
+import { Vector3, type Group, type Points } from 'three'
 import { approach, type Shot } from '../lib/flight.ts'
-import { galaxyLayout, type PointCloud } from '../lib/galaxy-layout.ts'
+import { galaxyLayout } from '../lib/galaxy-layout.ts'
 import {
   glowMaterial,
   healthGlowMaterial,
@@ -12,103 +12,14 @@ import {
 import { healthTexture } from '../lib/health-texture.ts'
 import { visibility } from '../lib/series.ts'
 import { orbitsOf, SYSTEM_VIEW } from '../lib/orbits.ts'
-import type { Threads } from '../lib/threads.ts'
 import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
+import { Aim, Cloud, Lines, useSpin } from './galaxy-parts.tsx'
+import { useIsolation } from './isolation.ts'
 import { useLens } from './lens.ts'
 import { Planets } from './Planets.tsx'
 import type { SceneProps } from './scene.ts'
 import { TraceFlow } from './TraceFlow.tsx'
-
-function Cloud(props: {
-  cloud: PointCloud
-  material: ShaderMaterial
-  onHover?: (index: number | null) => void
-  onPick?: (index: number) => void
-}): JSX.Element {
-  const { cloud, onHover, onPick } = props
-  return (
-    <points
-      material={props.material}
-      onPointerMove={
-        onHover &&
-        ((e: ThreeEvent<PointerEvent>) => (
-          e.stopPropagation(),
-          onHover(e.index ?? null)
-        ))
-      }
-      onPointerOut={onHover && (() => onHover(null))}
-      onClick={
-        onPick &&
-        ((e: ThreeEvent<MouseEvent>) => {
-          e.stopPropagation()
-          if (e.index !== undefined) onPick(e.index)
-        })
-      }
-    >
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[cloud.positions, 3]}
-        />
-        <bufferAttribute attach="attributes-color" args={[cloud.colors, 3]} />
-        <bufferAttribute attach="attributes-size" args={[cloud.sizes, 1]} />
-        <bufferAttribute attach="attributes-birth" args={[cloud.births, 1]} />
-        <bufferAttribute attach="attributes-death" args={[cloud.deaths, 1]} />
-        <bufferAttribute attach="attributes-file" args={[cloud.files, 1]} />
-      </bufferGeometry>
-    </points>
-  )
-}
-
-function Lines(props: {
-  threads: Threads
-  material: ShaderMaterial
-}): JSX.Element {
-  const { threads } = props
-  return (
-    <lineSegments material={props.material}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[threads.positions, 3]}
-        />
-        <bufferAttribute attach="attributes-color" args={[threads.colors, 3]} />
-        <bufferAttribute attach="attributes-birth" args={[threads.births, 1]} />
-        <bufferAttribute attach="attributes-death" args={[threads.deaths, 1]} />
-      </bufferGeometry>
-    </lineSegments>
-  )
-}
-
-/**
- * A slow turn: fast enough to read depth, slow enough to stay calm. It stops
- * under a pick, or the star would drift out from under the camera.
- */
-function useSpin(group: RefObject<Group | null>, turning: boolean): void {
-  useFrame((_, delta) => {
-    if (group.current && turning) group.current.rotation.y += delta * 0.02
-  })
-}
-
-/** A tag on the star the path keys point at, so the walk can be seen in the sky. */
-function Aim(props: {
-  at: readonly [number, number, number]
-  path: string
-}): JSX.Element {
-  return (
-    <Html
-      position={props.at as [number, number, number]}
-      center
-      zIndexRange={[15, 5]}
-      style={{ pointerEvents: 'none' }}
-    >
-      <span className="trace-label aim">
-        {props.path.slice(props.path.lastIndexOf('/') + 1)}
-      </span>
-    </Html>
-  )
-}
 
 /**
  * The codebase as a spiral galaxy: arms are top-level directories, the core is
@@ -118,7 +29,9 @@ function Aim(props: {
  * unused files grey out and copies pair up. Under a search, the rest of the
  * sky dims and light runs the calls through the files that matched. Pick one
  * file and the galaxy stops turning, the camera flies to its star, and its
- * symbols swing out round it as planets.
+ * symbols swing out round it as planets. Isolate it, and everything the
+ * trace does not reach goes out, while what it does reach is drawn in round
+ * the pick, a ring per hop: callers above, callees below.
  */
 export function Galaxy(props: SceneProps): JSX.Element {
   const { series, playhead, onHover } = props
@@ -168,6 +81,34 @@ export function Galaxy(props: SceneProps): JSX.Element {
   const group = useRef<Group>(null)
   const trace = props.trace
   const pick = trace?.roots.length === 1 ? trace.roots[0]! : null
+  const cores = useRef<Points>(null)
+  const stars = useRef<Points>(null)
+  const gathered = useMemo(
+    () => [
+      { cloud: layout.cores, points: cores, bounds: true },
+      { cloud: layout.stars, points: stars, bounds: false },
+    ],
+    [layout],
+  )
+  // The first ring clears the pick's planets; with several picks, a star's width.
+  const spacing =
+    pick === null ? 3 : orbitsOf(series.merged.files[pick]!, null).reach * 1.4
+  const isolation = useIsolation(
+    props.isolate ?? false,
+    trace,
+    shape,
+    spacing,
+    gathered,
+    focus.mix,
+  )
+  // Moons' links name their far files by path.
+  const starOf = useMemo(() => {
+    const index = new Map(series.merged.files.map((f, i) => [f.path, i]))
+    return (path: string) => {
+      const i = index.get(path)
+      return i === undefined ? undefined : isolation.shape.anchors[i]
+    }
+  }, [series, isolation.shape])
   const planets = useRef(0)
   const picked = useMemo(
     () =>
@@ -196,11 +137,13 @@ export function Galaxy(props: SceneProps): JSX.Element {
       m.uniforms.uLens!.value = lens.current
       m.uniforms.uClock!.value = state.clock.elapsedTime
       m.uniforms.uFocus!.value = focus.mix.current
+      m.uniforms.uIsolate!.value = isolation.mix.current
     }
     // The picked file's star cloud gathers into its planets.
     materials.stars.uniforms.uAbsorb!.value = planets.current
     // A search quiets everything but itself: its own arcs carry the calls.
-    const quiet = 1 - focus.mix.current * 0.88
+    // Isolation takes the rest away altogether: threads and haze belong to files it hides.
+    const quiet = (1 - focus.mix.current * 0.88) * (1 - isolation.mix.current)
     materials.clones.uniforms.uOpacity!.value = lens.current * quiet
     materials.links.uniforms.uOpacity!.value = quiet
     materials.nebulae.uniforms.uDim!.value = quiet
@@ -208,7 +151,8 @@ export function Galaxy(props: SceneProps): JSX.Element {
 
   // A file not yet written at this point in history is still in the buffer; it must not answer the pointer.
   const present = (file: number): boolean =>
-    visibility(series.fileLife[file]!, playhead.t) > 0.5
+    visibility(series.fileLife[file]!, playhead.t) > 0.5 &&
+    !isolation.hidden(file)
   const hover = (file: number | null): void =>
     onHover(file !== null && present(file) ? file : null)
 
@@ -225,8 +169,9 @@ export function Galaxy(props: SceneProps): JSX.Element {
         <Cloud cloud={layout.nebulae} material={materials.nebulae} />
         <Lines threads={layout.links} material={materials.links} />
         <Lines threads={layout.clones} material={materials.clones} />
-        <Cloud cloud={layout.stars} material={materials.stars} />
+        <Cloud ref={stars} cloud={layout.stars} material={materials.stars} />
         <Cloud
+          ref={cores}
           cloud={layout.cores}
           material={materials.cores}
           onHover={hover}
@@ -234,21 +179,22 @@ export function Galaxy(props: SceneProps): JSX.Element {
         />
         <TraceFlow
           trace={props.trace}
-          shape={shape}
+          shape={isolation.shape}
           files={series.merged.files}
           playhead={playhead}
-          focus={focus.mix}
+          focus={isolation.flow}
           scale={300}
         />
         <Planets
           repo={series.merged.name}
           pick={picked}
           grow={planets}
+          starOf={starOf}
           onClaims={props.onClaims}
         />
         {props.aim != null && (
           <Aim
-            at={shape.anchors[props.aim]!}
+            at={isolation.shape.anchors[props.aim]!}
             path={series.merged.files[props.aim]!.path}
           />
         )}

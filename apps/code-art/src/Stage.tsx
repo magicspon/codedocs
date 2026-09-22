@@ -27,6 +27,7 @@ interface StageProps {
   readonly series: Series
   readonly playhead: Playhead
   readonly lens: boolean
+  readonly isolate: boolean
   readonly onHover: (index: number | null) => void
   readonly trace: Trace | null
   readonly onPick: (index: number) => void
@@ -49,6 +50,7 @@ export function Stage(props: StageProps): JSX.Element {
         series={props.series}
         playhead={props.playhead}
         lens={props.lens && healthy}
+        isolate={props.isolate}
         onHover={props.onHover}
         trace={props.trace}
         onPick={props.onPick}

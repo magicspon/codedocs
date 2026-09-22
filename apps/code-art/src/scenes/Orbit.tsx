@@ -19,6 +19,8 @@ import {
 import { KINDS, type FileSymbols } from '../lib/atlas.ts'
 import type { Planet, Ring } from '../lib/orbits.ts'
 import { KIND_COLORS } from '../lib/palette.ts'
+import { Glimpses, type MoonsFor } from './Glimpses.tsx'
+import { placeOf } from './place.ts'
 
 const dummy = new Object3D()
 
@@ -29,12 +31,6 @@ const CIRCLE = new BufferGeometry().setFromPoints(
     return new Vector3(Math.cos(a), 0, Math.sin(a))
   }),
 )
-
-/** Where planet `p` sits on `ring`, before the ring turns. */
-function placeOf(ring: Ring, p: Planet): [number, number, number] {
-  const r = ring.radius + p.drift
-  return [Math.cos(p.phase) * r, p.lift, Math.sin(p.phase) * r]
-}
 
 /** A planet's name and kind; just the kind while names load, or where none were exported. */
 function PlanetLabel(props: {
@@ -118,12 +114,15 @@ export function Orbit({
   ring,
   symbols,
   focused,
+  moonsFor,
   highlight,
   onSelect,
 }: {
   ring: Ring
   symbols: FileSymbols | null
   focused: Focused | null
+  /** Each body's moons, for the few it shows unfocused; `null` without names. */
+  moonsFor: MoonsFor | null
   /** The symbol picked out by keyboard, if it is on this ring. */
   highlight: number | null
   onSelect: (symbol: number) => void
@@ -150,9 +149,11 @@ export function Orbit({
   }, [ring, color])
 
   // The whole ring turns as one: its planets never pass each other, so one
-  // rotation per ring stands in for hundreds of per-planet updates.
-  useFrame((_, delta) => {
-    if (spin.current) spin.current.rotation.y -= ring.speed * delta
+  // rotation per ring stands in for hundreds of per-planet updates. Read off
+  // the clock, not summed, so a moon glimpsed unfocused is where it was once
+  // its body is focused and its whole system drawn.
+  useFrame(({ clock }) => {
+    if (spin.current) spin.current.rotation.y = -ring.speed * clock.elapsedTime
   })
 
   return (
@@ -191,6 +192,14 @@ export function Orbit({
               emissiveIntensity={0.12}
             />
           </instancedMesh>
+          {moonsFor && (
+            <Glimpses
+              ring={ring}
+              moonsFor={moonsFor}
+              skip={focus}
+              full={picked}
+            />
+          )}
           {focused && focus >= 0 && (
             <group
               ref={focused.anchor}
