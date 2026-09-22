@@ -5,11 +5,13 @@ import { useSymbols } from '../hooks.ts'
 import type { FileDatum, FileSymbols } from '../lib/atlas.ts'
 import { approach } from '../lib/flight.ts'
 import {
+  moonsOf,
   orbitsOf,
   SYSTEM_VIEW,
   systemsAlong,
   type System as Rings,
 } from '../lib/orbits.ts'
+import { moonLinksOf } from '../lib/moon-links.ts'
 import { treeOf } from '../lib/symbol-tree.ts'
 import {
   AT_STAR,
@@ -21,6 +23,8 @@ import {
   type SystemNav,
 } from '../lib/system-nav.ts'
 import { useFollow } from './follow.ts'
+import type { MoonsFor } from './Glimpses.tsx'
+import { MoonLinks, type StarOf } from './MoonLinks.tsx'
 import { Orbit } from './Orbit.tsx'
 import { useReportClaims, useSystemKeys } from './system-keys.ts'
 
@@ -63,6 +67,7 @@ function Satellites(props: {
   depth: number
   symbols: FileSymbols | null
   anchor: RefObject<Group | null>
+  moonsFor: MoonsFor | null
   /** The body picked out by keyboard on the level being looked at. */
   highlight: number | null
   onSelect: (depth: number, symbol: number) => void
@@ -78,6 +83,7 @@ function Satellites(props: {
           key={ring.kind}
           ring={ring}
           symbols={props.symbols}
+          moonsFor={props.moonsFor}
           highlight={depth === systems.length - 1 ? props.highlight : null}
           onSelect={(symbol) => props.onSelect(depth, symbol)}
           focused={
@@ -108,6 +114,7 @@ function System(props: {
   shown: Pick
   open: boolean
   system: RefObject<Group | null>
+  starOf: StarOf
   onClaims: ((claims: SystemClaims) => void) | undefined
 }): JSX.Element {
   const { file, at } = props.shown
@@ -115,6 +122,11 @@ function System(props: {
   const symbols = useSymbols(props.repo, file.path)
   const tree = useMemo(() => (symbols ? treeOf(symbols) : null), [symbols])
   const orbits = useMemo(() => orbitsOf(file, tree), [file, tree])
+  // Stable per tree, so each ring lays out its glimpsed moons once.
+  const moonsFor = useMemo<MoonsFor | null>(
+    () => (tree ? (s, size) => moonsOf(file.path, tree, s, size) : null),
+    [file.path, tree],
+  )
   // The walk belongs to the pick it was made under; a new pick starts at the star.
   const [held, setHeld] = useState({ pick: props.shown, nav: AT_STAR })
   const nav = props.open && held.pick === props.shown ? held.nav : AT_STAR
@@ -122,6 +134,11 @@ function System(props: {
   const systems = useMemo(
     () => (tree ? systemsAlong(file.path, tree, orbits, focus) : [orbits]),
     [file.path, tree, orbits, focus],
+  )
+  // Once a body is focused, its moons' calls and references run off them.
+  const links = useMemo(
+    () => (symbols && props.open ? moonLinksOf(symbols, systems, focus) : []),
+    [symbols, props.open, systems, focus],
   )
   const anchor = useRef<Group>(null)
   const go = (next: SystemNav): void =>
@@ -142,23 +159,32 @@ function System(props: {
     },
   )
   return (
-    <group ref={props.system} position={at} visible={false}>
-      {/* The star lights its own planets; nothing else in the galaxy is lit. */}
-      <pointLight intensity={4} decay={0} distance={orbits.reach * 3} />
-      <ambientLight intensity={0.12} />
-      {/* Drawn once the names are in, or known absent, so the rings never regroup in view. */}
-      {symbols !== undefined && (
-        <Satellites
-          systems={systems}
-          focus={focus}
-          depth={0}
-          symbols={symbols}
-          anchor={anchor}
-          highlight={nav.highlight}
-          onSelect={(depth, symbol) => go(select(nav, depth, symbol))}
-        />
-      )}
-    </group>
+    <>
+      <group ref={props.system} position={at} visible={false}>
+        {/* The star lights its own planets; nothing else in the galaxy is lit. */}
+        <pointLight intensity={4} decay={0} distance={orbits.reach * 3} />
+        <ambientLight intensity={0.12} />
+        {/* Drawn once the names are in, or known absent, so the rings never regroup in view. */}
+        {symbols !== undefined && (
+          <Satellites
+            systems={systems}
+            focus={focus}
+            depth={0}
+            symbols={symbols}
+            anchor={anchor}
+            moonsFor={moonsFor}
+            highlight={nav.highlight}
+            onSelect={(depth, symbol) => go(select(nav, depth, symbol))}
+          />
+        )}
+      </group>
+      <MoonLinks
+        links={links}
+        anchor={anchor}
+        system={props.system}
+        starOf={props.starOf}
+      />
+    </>
   )
 }
 
@@ -167,13 +193,16 @@ function System(props: {
  * swing out from the star when the file is picked and fold back into it when
  * the pick is cleared. `grow` reports how far out they are, `0` to `1`, so the
  * galaxy can hand the file's own star cloud over to its planets. Hovering a
- * planet names its symbol; clicking one zooms in to its moons.
+ * planet names its symbol; clicking one zooms in to its moons, and lines run
+ * off those moons to what they call and reference.
  */
 export function Planets(props: {
   /** The repository's name, which its symbol names are filed under. */
   repo: string
   pick: Pick | null
   grow: { current: number }
+  /** Where each file's star is, for the lines that run off to them. */
+  starOf: StarOf
   onClaims?: (claims: SystemClaims) => void
 }): JSX.Element | null {
   const system = useRef<Group>(null)
@@ -189,6 +218,7 @@ export function Planets(props: {
       shown={last.current}
       open={props.pick !== null}
       system={system}
+      starOf={props.starOf}
       onClaims={props.onClaims}
     />
   )

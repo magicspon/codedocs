@@ -17,6 +17,8 @@ interface HudProps {
   readonly onScene: (name: string) => void
   readonly lens: boolean
   readonly onLens: (on: boolean) => void
+  readonly isolate: boolean
+  readonly onIsolate: (on: boolean) => void
   readonly series: Series | null
   /** The whole frame under the playhead, which the hovered file's facts come from. */
   readonly frame: number
@@ -58,6 +60,8 @@ export function Hud(props: HudProps): JSX.Element {
           onScene={props.onScene}
           lens={props.lens}
           onLens={props.onLens}
+          isolate={props.isolate}
+          onIsolate={props.onIsolate}
           fallow={fallow}
           series={props.series}
           frame={props.frame}

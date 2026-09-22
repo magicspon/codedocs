@@ -61,6 +61,7 @@ export function glowMaterial(): ShaderMaterial {
  * `uFocus` fades in a search: files the trace never touches sink to embers,
  * and the searched ones burn brighter. `uAbsorb` shrinks a searched file's
  * points away, for when its planets take over from its star cloud.
+ * `uIsolate` shrinks the files the trace never touches to nothing.
  */
 export function healthGlowMaterial(flare: number): ShaderMaterial {
   return new ShaderMaterial({
@@ -79,6 +80,7 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
       uFocusMap: { value: null },
       uFocusRows: { value: 1 },
       uAbsorb: { value: 0 },
+      uIsolate: { value: 0 },
     },
     vertexShader: /* glsl */ `
       attribute float size;
@@ -93,6 +95,7 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
       uniform float uFlare;
       uniform float uFocus;
       uniform float uAbsorb;
+      uniform float uIsolate;
       ${VISIBILITY_GLSL}
       ${HEALTH_GLSL}
       ${FOCUS_GLSL}
@@ -114,7 +117,7 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
         float found = uFocus * step(0.99, focusOf(file));
         vColor = c * mix(1.0, 0.06, away) * (1.0 + found * 0.9);
         float swell = (1.0 + health.r * uFlare * 2.5 * pulse) * mix(1.0, 0.6, away) *
-          (1.0 - found * uAbsorb);
+          (1.0 - found * uAbsorb) * (1.0 - uIsolate * step(focusOf(file), 0.0));
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
         gl_PointSize = size * swell * visibility(birth, death, uTime) * uScale / -mv.z;
         gl_Position = projectionMatrix * mv;

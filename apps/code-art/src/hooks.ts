@@ -6,7 +6,7 @@ import { loadNames } from './lib/names.ts'
 import type { Series } from './lib/series.ts'
 import type { Direction, TraceQuery } from './lib/trace.ts'
 
-/** Reads `?data=…&scene=…&lens=health&q=…` so a view can be bookmarked. */
+/** Reads `?data=…&scene=…&lens=health&isolate=on&q=…` so a view can be bookmarked. */
 export function initial(key: string, fallback: string): string {
   return new URLSearchParams(location.search).get(key) ?? fallback
 }
@@ -69,15 +69,17 @@ export function useBookmark(
   dataset: string,
   scene: string,
   lens: boolean,
+  isolate: boolean,
   search: string,
 ): void {
   useEffect(() => {
     if (!dataset) return
     let query = `?data=${encodeURIComponent(dataset)}&scene=${scene}`
     if (lens) query += '&lens=health'
+    if (isolate) query += '&isolate=on'
     if (search.trim()) query += `&q=${encodeURIComponent(search.trim())}`
     history.replaceState(null, '', query)
-  }, [dataset, scene, lens, search])
+  }, [dataset, scene, lens, isolate, search])
 }
 
 /**

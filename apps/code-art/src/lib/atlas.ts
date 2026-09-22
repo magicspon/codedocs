@@ -127,6 +127,50 @@ export interface FileSymbols {
   readonly kinds: readonly number[]
   /** The symbol each one is declared inside, or `-1` for the file's top level. */
   readonly parents: readonly number[]
+  /** Other files the symbols link to, which each link's peer indexes. */
+  readonly peers?: readonly string[]
+  /**
+   * Calls and references touching these symbols, `LINK_WIDTH` numbers each:
+   * see `SymbolLink`. Absent from names exported before links were.
+   */
+  readonly links?: readonly number[]
+}
+
+/** How many numbers one link takes in `FileSymbols.links`. */
+export const LINK_WIDTH = 6
+
+/** One link in `FileSymbols.links`, unpacked. */
+export interface SymbolLink {
+  /** This file's symbol at the link's near end. */
+  readonly symbol: number
+  /** `0` a call; `1 +` a `REFERENCE_KINDS` entry: references, extends, implements, type references. */
+  readonly via: number
+  /** Whether the far end calls or references this one, rather than the reverse. */
+  readonly inbound: boolean
+  /** Index into `peers`, or `-1` for this same file. */
+  readonly peer: number
+  /** The far end's symbol in its own file, or `-1` for that file's top-level code. */
+  readonly other: number
+  /** How many sites make the link. */
+  readonly count: number
+}
+
+/** Every link on `symbol`, unpacked. */
+export function linksOf(file: FileSymbols, symbol: number): SymbolLink[] {
+  const flat = file.links ?? []
+  const out: SymbolLink[] = []
+  for (let i = 0; i < flat.length; i += LINK_WIDTH) {
+    if (flat[i] !== symbol) continue
+    out.push({
+      symbol,
+      via: flat[i + 1]!,
+      inbound: flat[i + 2] === 1,
+      peer: flat[i + 3]!,
+      other: flat[i + 4]!,
+      count: flat[i + 5]!,
+    })
+  }
+  return out
 }
 
 /**

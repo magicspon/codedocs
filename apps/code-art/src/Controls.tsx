@@ -42,6 +42,8 @@ interface ControlsProps {
   readonly onScene: (name: string) => void
   readonly lens: boolean
   readonly onLens: (on: boolean) => void
+  readonly isolate: boolean
+  readonly onIsolate: (on: boolean) => void
   readonly fallow: FallowMeta | undefined
   /** Null while loading, when there is nothing to say about the frame. */
   readonly series: Series | null
@@ -102,9 +104,22 @@ export function Controls(props: ControlsProps): JSX.Element {
         },
         transient: false,
       },
+      // Only the galaxy can draw the trace's files in close.
+      'isolate ( i )': {
+        value: props.isolate,
+        disabled: props.scene !== 'galaxy',
+        onChange: (
+          v: boolean | undefined,
+          _: string,
+          ctx: { initial: boolean },
+        ) => {
+          if (!ctx.initial && v !== undefined) props.onIsolate(v)
+        },
+        transient: false,
+      },
       showing: { value: shown, editable: false },
     }),
-    [props.datasets, props.scenes, available],
+    [props.datasets, props.scenes, available, props.scene],
   )
 
   // Registered after the pickers, so the search folder sits below them.
@@ -112,6 +127,8 @@ export function Controls(props: ControlsProps): JSX.Element {
 
   // A read-only row follows the view; Leva keeps a value once set, so push it.
   useEffect(() => set({ showing: shown }), [set, shown])
+  // The `i` key toggles isolation outside Leva.
+  useEffect(() => set({ 'isolate ( i )': props.isolate }), [set, props.isolate])
 
   return (
     <div className="panel controls">

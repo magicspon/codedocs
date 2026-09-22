@@ -6,8 +6,10 @@
 
 import { DatabaseSync } from 'node:sqlite'
 import type { FileSymbols, SymbolNames } from '../src/lib/atlas.ts'
+import { readLinks } from './read-links.ts'
 
 interface Row {
+  readonly id: number
   readonly path: string
   readonly kind: number
   readonly name: string
@@ -38,14 +40,17 @@ function parentsOf(rows: readonly Row[]): number[] {
   return parents
 }
 
-/** Every file's symbols, in the order they appear in the file, each with its parent. */
+/**
+ * Every file's symbols, in the order they appear in the file, each with its
+ * parent and the calls and references that touch it.
+ */
 export function readNames(dbPath: string): SymbolNames {
   const db = new DatabaseSync(dbPath, { readOnly: true })
   try {
     // Paths escaping the root are skipped, as the atlas skips them.
     const rows = db
       .prepare(
-        `select p.path, s.kind, s.name, n.descriptors from symbol s
+        `select s.node_id as id, p.path, s.kind, s.name, n.descriptors from symbol s
          join path p on p.id = s.path_id join node n on n.id = s.node_id
          where p.path not like '../%' order by p.path, s.start`,
       )
@@ -57,12 +62,18 @@ export function readNames(dbPath: string): SymbolNames {
       if (file) file.push(row)
       else byFile.set(row.path, [row])
     }
+    // Each symbol's node, so a link's ends find their place in these lists.
+    const symbolAt = new Map<number, { path: string; symbol: number }>()
+    for (const [path, file] of byFile)
+      file.forEach((row, symbol) => symbolAt.set(row.id, { path, symbol }))
+    const links = readLinks(db, symbolAt)
     const names: Record<string, FileSymbols> = {}
     for (const [path, file] of byFile) {
       names[path] = {
         names: file.map((row) => row.name),
         kinds: file.map((row) => row.kind),
         parents: parentsOf(file),
+        ...links.get(path),
       }
     }
     return names

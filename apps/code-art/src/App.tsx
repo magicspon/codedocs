@@ -1,3 +1,4 @@
+import { useHotkey } from '@tanstack/react-hotkeys'
 import { useDeferredValue, useMemo, useState, type JSX } from 'react'
 import {
   initial,
@@ -6,9 +7,11 @@ import {
   useBookmark,
   useSeries,
 } from './hooks.ts'
+import { isolatedFiles } from './lib/isolate.ts'
 import { DATASETS } from './lib/load.ts'
 import type { Playhead } from './lib/series.ts'
 import { NO_CLAIMS, type SystemClaims } from './lib/system-nav.ts'
+import { keyFrames } from './lib/time-warp.ts'
 import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { Hud } from './Hud.tsx'
 import { SCENES, Stage } from './Stage.tsx'
@@ -20,15 +23,26 @@ export function App(): JSX.Element {
   const [dataset, setDataset] = useState(initialDataset)
   const [scene, setScene] = useState(() => initial('scene', 'galaxy'))
   const [lens, setLens] = useState(() => initial('lens', '') === 'health')
+  const [isolate, setIsolate] = useState(() => initial('isolate', '') === 'on')
+  useHotkey('I', () => setIsolate((on) => !on))
   const [frame, setFrame] = useState(0)
   const [query, setQuery] = useState<TraceQuery>(initialQuery)
   const { series, hovered, setHovered } = useSeries(dataset, scene)
-  useBookmark(dataset, scene, lens, query.text)
+  useBookmark(dataset, scene, lens, isolate, query.text)
   // Deferred so typing stays quick while a big repository re-traces behind it.
   const searched = useDeferredValue(query)
   const trace = useMemo(
     () => (series ? traceOf(series, searched) : null),
     [series, searched],
+  )
+  // Only the galaxy isolates; there, time closes up round the isolated files too.
+  const isolating = isolate && scene === 'galaxy' && trace !== null
+  const keys = useMemo(
+    () =>
+      isolating && series && trace
+        ? keyFrames(series, isolatedFiles(trace))
+        : null,
+    [isolating, series, trace],
   )
   const pick = (file: number): void => {
     const path = series?.merged.files[file]?.path
@@ -51,6 +65,7 @@ export function App(): JSX.Element {
           series={series}
           playhead={playhead}
           lens={lens}
+          isolate={isolate}
           onHover={setHovered}
           trace={trace}
           onPick={pick}
@@ -67,6 +82,8 @@ export function App(): JSX.Element {
         onScene={setScene}
         lens={lens}
         onLens={setLens}
+        isolate={isolate}
+        onIsolate={setIsolate}
         series={series}
         frame={frame}
         hovered={hovered}
@@ -81,6 +98,7 @@ export function App(): JSX.Element {
           series={series}
           playhead={playhead}
           onFrame={setFrame}
+          keys={keys}
         />
       )}
     </>

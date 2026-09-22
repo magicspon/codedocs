@@ -17,6 +17,8 @@ export interface SceneProps {
   readonly onPick: (file: number) => void
   /** The file the path keys point at from the selected one, or `null`. */
   readonly aim?: number | null
+  /** Whether to isolate the trace: hide what it does not reach and draw the rest in close. */
+  readonly isolate?: boolean
   /** Told which plain keys a picked file's system is using, so the rest stand aside. */
   readonly onClaims?: (claims: SystemClaims) => void
 }
