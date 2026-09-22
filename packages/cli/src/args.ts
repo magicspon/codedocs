@@ -597,6 +597,7 @@ export function usage(): string {
     ),
     '',
     '  codedocs mcp                serve the operations above over MCP (stdio)',
+    '  codedocs art                draw the index as 3D art in .codedocs/art (--help for more)',
     '',
     'A subject is anything codedocs prints as an identifier:',
     '  src/auth/service.ts#AuthService.login   exact',

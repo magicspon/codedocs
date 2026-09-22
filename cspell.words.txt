@@ -53,6 +53,7 @@ stackback
 strobing
 tanstack
 Tauri
+Thinger
 treemap
 trimmable
 tsdown

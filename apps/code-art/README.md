@@ -5,6 +5,11 @@ the data, so each shape can be read back as a fact about the code.
 
 ## Run it
 
+Anyone with the CLI installed can run `codedocs art` in a repo. This writes
+the viewer, with the data inlined, to `.codedocs/art/index.html`. Add
+`--frames 16` for a timeline. The rest of this page covers working on the art
+itself.
+
 From the repo root:
 
 ```sh
@@ -16,10 +21,42 @@ pnpm --filter @codedocs/code-art export repos/vscode
 pnpm art
 ```
 
-Exports land in `src/data/` and are git-ignored. Pick a dataset and a scene in
+Exports land in `src/data/` and are git-ignored. Each export also writes
+`<name>.symbols.json`, the names of every symbol. The viewer reads it only when
+you pick a file, so it does not slow down opening a dataset. Pick a dataset and a scene in
 the top-left panel. Point at anything to see the file behind it.
 `?data=vscode&scene=city` in the URL opens a view directly; add `&lens=health`
 to open it with the health lens on.
+
+## Search and trace
+
+Type part of a path in the search box, or click any file, to trace it. Press
+`/` to jump to the box and Escape to clear it.
+
+- Every word you type must appear in the path. Case does not matter. A full
+  path traces that one file alone.
+- The rest of the scene goes dark. The matched files glow, and the files the
+  trace reaches stay lit.
+- Arcs join the traced files. Light runs along them from caller to callee, one
+  hop at a time. Blue light flows in (the callers), and amber light flows out
+  (the callees). The callers fire first, so you watch the flow arrive at the
+  file and then leave it.
+- Choose **Calls** or **Imports** to follow, which way to follow them, and how
+  many hops (1 to 4).
+- When the search finds exactly one file, the camera flies to it. Clear the
+  search and the camera flies back to where it was. Drag the view at any time
+  to stop the flight.
+  - **Galaxy:** the galaxy stops turning. The file's symbols move out from its
+    star as planets, with one orbit for each kind of symbol. The orbits are in
+    kind order: functions are nearest the star. Point at a planet to see the
+    name of its symbol. The names load the first time you pick a file. A
+    dataset exported before names were added shows only the kind.
+  - **City:** the camera flies up over the rooftops and down to the tower. A
+    band of light climbs the tower and turns on every window it passes.
+- A trace starts from at most 60 matches, and a busy file shows only its 24
+  heaviest links at each hop. This keeps the picture readable.
+- `&q=` in the URL opens a search directly, for example
+  `?data=codedocs&scene=city&q=operations/trace.ts`.
 
 ## Health readings
 
@@ -144,7 +181,27 @@ teal for test, amber for config and violet for generated code.
 - `src/lib/*-layout.ts` turn an atlas into geometry buffers. They are pure and
   tested (`test/`).
 - `src/scenes/*.tsx` draw those buffers with React Three Fiber.
+- `scripts/snapshot.ts` and `scripts/history.ts` are the export and the
+  timeline as functions. `export.ts` and `timeline.ts` wrap them for the dev
+  viewer, and `codedocs art` imports them through `scripts/pipeline.ts`.
 
-The viewer loads data as modules, not requests, so it holds no network code
-(ADR 0011). All dependencies are dev-only because the package is never
-published.
+The dev viewer loads data as modules, not requests (ADR 0011).
+
+## What `codedocs art` ships
+
+`pnpm build` here runs `vite build --mode embed`. That makes one
+self-contained `dist/index.html`, and the CLI build copies it to
+`dist/art/viewer.html`.
+
+- The script and stylesheet are inlined (`scripts/single-file.ts`). A
+  browser will not load a module from a file on disk, but it will run the
+  same code inline.
+- No dev export goes into the page. `codedocs art` adds each dataset as a
+  `<script type="application/json" data-dataset>` block (`scripts/page.ts`),
+  and the viewer parses one only when it is opened.
+- The page has a Content-Security-Policy of `default-src 'none'`. three.js
+  contains loaders that call `fetch`. The viewer never uses them, but the
+  build cannot remove them, so the browser is told to refuse any request.
+
+All dependencies are dev-only. The package is never published: the CLI
+bundles the node side of it, and ships the viewer as a built page.

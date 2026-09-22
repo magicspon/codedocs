@@ -23,6 +23,19 @@ export function hoveredFile(
   return rowAt(series, frame)[hovered] ?? undefined
 }
 
+/**
+ * The file the detail panel shows: the one under the pointer, else the one
+ * selected. A file is selected when the search narrows to it alone, as a click
+ * on it does, so it stays on show once the pointer moves away.
+ */
+export function detailFile(
+  hovered: number | null,
+  matches: readonly number[] | undefined,
+): number | null {
+  if (hovered !== null) return hovered
+  return matches?.length === 1 ? matches[0]! : null
+}
+
 /** What the HUD says about a frame. */
 export interface FrameSummary {
   /** Files that existed at this frame, of all the ones the series merged. */

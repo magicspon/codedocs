@@ -1,10 +1,12 @@
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
-import { useLayoutEffect, useMemo, useRef, type JSX } from 'react'
-import type { InstancedMesh } from 'three'
+import { useEffect, useLayoutEffect, useMemo, useRef, type JSX } from 'react'
+import { MeshBasicMaterial, type InstancedMesh } from 'three'
 import type { CityLayout } from '../lib/city-layout.ts'
+import type { Focus } from './focus.ts'
 import { facadeMaterial } from '../lib/facade-material.ts'
 import type { Playhead } from '../lib/series.ts'
 import { useLens } from './lens.ts'
+import { useScan } from './scan.ts'
 import type { SceneProps } from './scene.ts'
 import { dress, ready, restack, runOf, type Run } from './stack.ts'
 
@@ -27,6 +29,10 @@ function Facade({ run }: { run: Run }): JSX.Element {
         attach="attributes-aHealth"
         args={[run.health, 4]}
       />
+      <instancedBufferAttribute
+        attach="attributes-aFile"
+        args={[run.files, 1]}
+      />
     </boxGeometry>
   )
 }
@@ -41,9 +47,13 @@ export function Buildings(props: {
   layout: CityLayout
   playhead: Playhead
   lens: boolean
+  focus: Focus
+  /** The one file the search names, whose tower lights up; `null` otherwise. */
+  pick: number | null
   onHover: SceneProps['onHover']
+  onPick: SceneProps['onPick']
 }): JSX.Element {
-  const { layout, playhead, onHover } = props
+  const { layout, playhead, onHover, onPick, focus } = props
   const { buildings } = layout
   const shaft = useRef<InstancedMesh>(null)
   const tier = useRef<InstancedMesh>(null)
@@ -53,6 +63,15 @@ export function Buildings(props: {
   const facades = useMemo(
     () => facadeMaterial(layout.unit * WINDOW),
     [layout.unit],
+  )
+  useEffect(() => {
+    facades.uniforms.uFocusMap.value = focus.texture
+    facades.uniforms.uFocusRows.value = focus.texture.image.height
+  }, [facades, focus.texture])
+  useScan(facades.uniforms, layout, props.pick, playhead)
+  const beacons = useMemo(
+    () => new MeshBasicMaterial({ toneMapped: false }),
+    [],
   )
   const lit = useMemo(
     () => buildings.flatMap((b, i) => (b.beacon > 0 ? [i] : [])),
@@ -85,6 +104,9 @@ export function Buildings(props: {
   useFrame((state) => {
     facades.uniforms.uClock.value = state.clock.elapsedTime
     facades.uniforms.uLens.value = lens.current
+    facades.uniforms.uFocus.value = focus.mix.current
+    // Beacons would outshine the trace; a search banks them to embers.
+    beacons.color.setScalar(1 - focus.mix.current * 0.85)
     const meshes = {
       shaft: shaft.current,
       tier: tier.current,
@@ -107,6 +129,10 @@ export function Buildings(props: {
           onHover(e.instanceId ?? null)
         )}
         onPointerOut={() => onHover(null)}
+        onClick={(e: ThreeEvent<MouseEvent>) => {
+          e.stopPropagation()
+          if (e.instanceId !== undefined) onPick(e.instanceId)
+        }}
       >
         <Facade run={runs.shaft} />
       </instancedMesh>
@@ -119,6 +145,11 @@ export function Buildings(props: {
           onHover(layout.tiers[e.instanceId ?? -1]?.building ?? null)
         )}
         onPointerOut={() => onHover(null)}
+        onClick={(e: ThreeEvent<MouseEvent>) => {
+          e.stopPropagation()
+          const building = layout.tiers[e.instanceId ?? -1]?.building
+          if (building !== undefined) onPick(building)
+        }}
       >
         <Facade run={runs.tier} />
       </instancedMesh>
@@ -129,7 +160,7 @@ export function Buildings(props: {
         raycast={() => null}
       >
         <boxGeometry />
-        <meshBasicMaterial toneMapped={false} />
+        <primitive object={beacons} attach="material" />
       </instancedMesh>
     </>
   )

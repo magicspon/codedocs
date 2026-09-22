@@ -693,6 +693,32 @@ Nothing is transmitted automatically.
 
 ---
 
+# `codedocs art`
+
+Draws the index as an interactive 3D city and galaxy:
+
+```sh
+codedocs art
+```
+
+This writes `.codedocs/art/index.html`. Open it in a browser. It is one file, and it makes no network requests.
+
+Each shape stands for a fact about the code. For example, a building's footprint is the file's size, and its height is how many symbols it declares.
+
+To watch the repository grow, add `--frames` to replay that many commits from its history:
+
+```sh
+codedocs art --frames 16
+```
+
+- Each commit is checked out into a temporary git worktree, then removed. Your working tree is never touched.
+- Frames are cached in `.codedocs/art/cache`, so a later run only analyses new commits.
+- A later run without `--frames` keeps the timeline you already built.
+
+If [`fallow`](https://docs.fallow.tools) is on your `PATH`, the art also shows its health readings, such as hotspots and hard-to-change files. Add `--no-fallow` to skip them.
+
+---
+
 # codedocs and fallow
 
 codedocs deliberately does not try to become a general-purpose repository analyser.

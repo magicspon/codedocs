@@ -53,38 +53,20 @@ canvas {
   max-width: min(340px, calc(100vw - 32px));
 }
 
-.controls select {
-  width: 100%;
-  font: inherit;
-  color: var(--ink);
-  background: rgb(255 255 255 / 6%);
-  border: 1px solid var(--edge);
-  border-radius: 6px;
-  padding: 6px;
+.controls {
+  box-sizing: border-box;
+  width: min(370px, calc(100vw - 32px));
+  max-width: none;
+  padding: 0;
+  overflow: hidden;
 }
 
-.tabs {
-  display: flex;
-  gap: 4px;
-  margin-top: 8px;
+.controls .prose {
+  padding: 0 14px 12px;
 }
 
-.tabs button {
-  flex: 1;
-  font: inherit;
-  text-transform: capitalize;
-  color: var(--muted);
-  background: none;
-  border: 1px solid var(--edge);
-  border-radius: 6px;
-  padding: 6px 0;
-  cursor: pointer;
-}
-
-.tabs button[aria-selected='true'] {
-  color: #111;
-  background: var(--accent);
-  border-color: var(--accent);
+.controls .legend {
+  white-space: pre-line;
 }
 
 .meta {
@@ -97,6 +79,11 @@ canvas {
   margin: 6px 0 0;
   color: var(--muted);
   font-size: var(--text-small);
+}
+
+/* Alone in its panel, so no gap above it. */
+.legend.system-keys {
+  margin: 0;
 }
 
 .file strong {
@@ -180,22 +167,30 @@ canvas {
   font-variant-numeric: tabular-nums;
 }
 
-.lens {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--edge);
+.file-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-.lens label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.file-head strong {
+  flex: 1;
+}
+
+.file-head button {
+  flex: none;
+  font: inherit;
+  font-size: var(--text-tiny);
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  padding: 0 6px;
   cursor: pointer;
 }
 
-.lens input {
-  accent-color: var(--accent);
-  margin: 0;
+.file-head button:hover {
+  color: var(--ink);
 }
 
 .file h3 {
@@ -205,4 +200,141 @@ canvas {
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.matches {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.matches button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-family: ui-monospace, monospace;
+  font-size: var(--text-tiny);
+  color: var(--ink);
+  background: none;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.matches button:hover {
+  background: rgb(255 255 255 / 8%);
+}
+
+.matches .dir {
+  color: var(--muted);
+}
+
+.swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.swatch.in {
+  background: #4fd3ff;
+  box-shadow: 0 0 6px #4fd3ff;
+}
+
+.swatch.out {
+  background: #ffb347;
+  box-shadow: 0 0 6px #ffb347;
+}
+
+.trace-label {
+  display: block;
+  transform: translateY(-22px);
+  white-space: nowrap;
+  font:
+    600 11px/1 ui-monospace,
+    monospace;
+  color: #f2f8ff;
+  background: rgb(4 8 18 / 70%);
+  border: 1px solid rgb(120 200 255 / 35%);
+  border-radius: 4px;
+  padding: 3px 6px;
+  text-shadow: 0 0 6px rgb(120 200 255 / 60%);
+}
+
+.planet-label {
+  transform: translateY(-16px);
+}
+
+.planet-label i {
+  font-style: normal;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.paths {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: min(340px, calc(100vw - 32px));
+  box-sizing: border-box;
+}
+
+.paths .sides {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
+  min-height: 0;
+}
+
+.paths section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.paths h3 {
+  margin: 0;
+  font-size: var(--text-tiny);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.paths .count {
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.paths .matches {
+  overflow-y: auto;
+  max-height: 30vh;
+}
+
+/* The cursor takes its side's flow colour: blue flows in, amber flows out. */
+.paths [data-side='in'] [aria-current] button {
+  box-shadow: inset 2px 0 #4fd3ff;
+  background: rgb(79 211 255 / 14%);
+}
+
+.paths [data-side='out'] [aria-current] button {
+  box-shadow: inset 2px 0 #ffb347;
+  background: rgb(255 179 71 / 14%);
+}
+
+.trace-label.aim {
+  border-color: rgb(255 255 255 / 60%);
 }

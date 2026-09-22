@@ -1,19 +1,42 @@
-import { useMemo, useState, type JSX } from 'react'
-import { initial, initialDataset, useBookmark, useSeries } from './hooks.ts'
+import { useDeferredValue, useMemo, useState, type JSX } from 'react'
+import {
+  initial,
+  initialDataset,
+  initialQuery,
+  useBookmark,
+  useSeries,
+} from './hooks.ts'
 import { DATASETS } from './lib/load.ts'
 import type { Playhead } from './lib/series.ts'
+import { NO_CLAIMS, type SystemClaims } from './lib/system-nav.ts'
+import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { Hud } from './Hud.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { TimelineBar } from './TimelineBar.tsx'
+import { usePathKeys } from './usePathKeys.ts'
 
-/** The viewer: one dataset, one scene, and the file under the pointer. */
+/** The viewer: one dataset, one scene, the file under the pointer, and a search traced through it. */
 export function App(): JSX.Element {
   const [dataset, setDataset] = useState(initialDataset)
   const [scene, setScene] = useState(() => initial('scene', 'galaxy'))
   const [lens, setLens] = useState(() => initial('lens', '') === 'health')
   const [frame, setFrame] = useState(0)
+  const [query, setQuery] = useState<TraceQuery>(initialQuery)
   const { series, hovered, setHovered } = useSeries(dataset, scene)
-  useBookmark(dataset, scene, lens)
+  useBookmark(dataset, scene, lens, query.text)
+  // Deferred so typing stays quick while a big repository re-traces behind it.
+  const searched = useDeferredValue(query)
+  const trace = useMemo(
+    () => (series ? traceOf(series, searched) : null),
+    [series, searched],
+  )
+  const pick = (file: number): void => {
+    const path = series?.merged.files[file]?.path
+    if (path) setQuery((q) => ({ ...q, text: path }))
+  }
+  // Enter and Escape, when the picked file's system is using them.
+  const [claims, setClaims] = useState<SystemClaims>(NO_CLAIMS)
+  const nav = usePathKeys(series, frame, query, trace, setQuery, claims)
 
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
@@ -29,6 +52,10 @@ export function App(): JSX.Element {
           playhead={playhead}
           lens={lens}
           onHover={setHovered}
+          trace={trace}
+          onPick={pick}
+          aim={nav.aim}
+          onClaims={setClaims}
         />
       )}
       <Hud
@@ -43,6 +70,10 @@ export function App(): JSX.Element {
         series={series}
         frame={frame}
         hovered={hovered}
+        query={query}
+        onQuery={setQuery}
+        trace={trace}
+        nav={nav}
       />
       {series && series.commits.length > 1 && (
         <TimelineBar

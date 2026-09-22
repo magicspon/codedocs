@@ -117,6 +117,25 @@ export interface Atlas {
   readonly clones?: readonly Link[]
 }
 
+/**
+ * One file's symbols, in source order, as three matching lists: symbol `i`
+ * is `names[i]`, of kind `kinds[i]`, declared inside `parents[i]`.
+ */
+export interface FileSymbols {
+  readonly names: readonly string[]
+  /** Indexes into `KINDS`. */
+  readonly kinds: readonly number[]
+  /** The symbol each one is declared inside, or `-1` for the file's top level. */
+  readonly parents: readonly number[]
+}
+
+/**
+ * Symbol names, kept out of the atlas and read only once a file is picked:
+ * vscode's half a million names would double what every page load parses.
+ * Keyed by path, so one set serves a repository's index and its timeline.
+ */
+export type SymbolNames = Readonly<Record<string, FileSymbols>>
+
 /** Total symbols in one file. */
 export function symbolCount(file: FileDatum): number {
   let total = 0

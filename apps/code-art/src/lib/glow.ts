@@ -1,4 +1,5 @@
 import { AdditiveBlending, ShaderMaterial } from 'three'
+import { FOCUS_GLSL } from './focus-texture.ts'
 import { HEALTH_GLSL } from './health-texture.ts'
 import { VISIBILITY_GLSL } from './series.ts'
 
@@ -17,14 +18,19 @@ const POINT_FRAGMENT = /* glsl */ `
  * square sprites of one size, and a galaxy is nothing but points of many sizes.
  *
  * `birth` and `death` attributes against `uTime` fade each point in and out,
- * which is the whole of timeline playback for the galaxy.
+ * which is the whole of timeline playback for the galaxy. `uDim` darkens the
+ * lot, for when a search draws the eye elsewhere.
  */
 export function glowMaterial(): ShaderMaterial {
   return new ShaderMaterial({
     transparent: true,
     depthWrite: false,
     blending: AdditiveBlending,
-    uniforms: { uScale: { value: 300 }, uTime: { value: 0 } },
+    uniforms: {
+      uScale: { value: 300 },
+      uTime: { value: 0 },
+      uDim: { value: 1 },
+    },
     vertexShader: /* glsl */ `
       attribute float size;
       attribute float birth;
@@ -32,9 +38,10 @@ export function glowMaterial(): ShaderMaterial {
       varying vec3 vColor;
       uniform float uScale;
       uniform float uTime;
+      uniform float uDim;
       ${VISIBILITY_GLSL}
       void main() {
-        vColor = color;
+        vColor = color * uDim;
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
         gl_PointSize = size * visibility(birth, death, uTime) * uScale / -mv.z;
         gl_Position = projectionMatrix * mv;
@@ -51,6 +58,9 @@ export function glowMaterial(): ShaderMaterial {
  * `flare` is how far a hotspot swells, so a file's core can blaze while its
  * stars only warm. `uClock` is wall-clock seconds, for the pulse of a hotspot
  * that is heating up; `uTime` is the playhead and stands still when paused.
+ * `uFocus` fades in a search: files the trace never touches sink to embers,
+ * and the searched ones burn brighter. `uAbsorb` shrinks a searched file's
+ * points away, for when its planets take over from its star cloud.
  */
 export function healthGlowMaterial(flare: number): ShaderMaterial {
   return new ShaderMaterial({
@@ -65,6 +75,10 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
       uFlare: { value: flare },
       uHealth: { value: null },
       uHealthRows: { value: 1 },
+      uFocus: { value: 0 },
+      uFocusMap: { value: null },
+      uFocusRows: { value: 1 },
+      uAbsorb: { value: 0 },
     },
     vertexShader: /* glsl */ `
       attribute float size;
@@ -77,8 +91,11 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
       uniform float uClock;
       uniform float uLens;
       uniform float uFlare;
+      uniform float uFocus;
+      uniform float uAbsorb;
       ${VISIBILITY_GLSL}
       ${HEALTH_GLSL}
+      ${FOCUS_GLSL}
       void main() {
         vec4 health = healthOf(file) * uLens;
         // Unused code fades to a dim grey: present, but nothing reaches it.
@@ -93,8 +110,11 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
         float beat = 0.5 + 0.5 * sin(uClock * 4.0 + file * 1.7);
         float pulse = 1.0 + max(health.a, 0.0) * beat * 0.6;
         c = mix(c, fire * (0.6 + 1.6 * health.r) * pulse, min(1.0, health.r * 2.0) * min(1.0, uFlare));
-        vColor = c;
-        float swell = 1.0 + health.r * uFlare * 2.5 * pulse;
+        float away = uFocus * (1.0 - focusOf(file));
+        float found = uFocus * step(0.99, focusOf(file));
+        vColor = c * mix(1.0, 0.06, away) * (1.0 + found * 0.9);
+        float swell = (1.0 + health.r * uFlare * 2.5 * pulse) * mix(1.0, 0.6, away) *
+          (1.0 - found * uAbsorb);
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
         gl_PointSize = size * swell * visibility(birth, death, uTime) * uScale / -mv.z;
         gl_Position = projectionMatrix * mv;

@@ -17,11 +17,20 @@ const config: UserConfig = defineConfig({
     // `@codedocs/core` is bundled in, not depended on. Publishing the CLI alone
     // keeps core's exports from becoming a public API with a compatibility
     // promise, and a `workspace:*` dependency would not resolve for a consumer.
-    alwaysBundle: ['@codedocs/core'],
+    alwaysBundle: ['@codedocs/core', '@codedocs/code-art'],
     // `typescript` ships two JS shims around a Go binary; bundling the shims
     // separates them from the binary they spawn.
     neverBundle: ['typescript'],
   },
+  // `codedocs art`'s viewer: one self-contained page, built by
+  // `@codedocs/code-art`'s own `build` before this one runs.
+  copy: [
+    {
+      from: '../../apps/code-art/dist/index.html',
+      to: 'dist/art',
+      rename: 'viewer.html',
+    },
+  ],
   // `.js`, not tsdown's default `.mjs`: the package is `"type": "module"`, so
   // the extension would only restate what the manifest already says.
   outExtensions: () => ({ js: '.js' }),
