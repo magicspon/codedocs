@@ -1,6 +1,8 @@
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState, type JSX } from 'react'
 import type { FileDatum } from './lib/atlas.ts'
 import { hoveredFile } from './lib/frame.ts'
+import { ITEM, panel, SPRING, staggered } from './lib/motion.ts'
 import type { Series } from './lib/series.ts'
 import { traceHops } from './lib/trace-text.ts'
 import type { Trace, TraceQuery } from './lib/trace.ts'
@@ -41,29 +43,51 @@ interface GalaxyHudProps {
   readonly nav: PathNav
 }
 
-/** The key caps shown while flying. */
+/** Slides out from behind the rocket, to its right. */
+const KEYS_IN = staggered(panel({ x: -16 }))
+
+/** Drops down into the top corners. */
+const DROP_IN = panel({ y: -10 })
+
+/** The key caps shown while flying, each group arriving after the last. */
 function FlightKeys(): JSX.Element {
   return (
-    <ul className="flight-keys" aria-label="Flying keys">
+    <motion.ul
+      className="flight-keys"
+      aria-label="Flying keys"
+      variants={KEYS_IN}
+      initial="hidden"
+      animate="shown"
+      exit="gone"
+    >
       {FLIGHT_KEYS.map(([keys, does]) => (
-        <li key={does}>
+        <motion.li key={does} variants={ITEM}>
           {keys.map((key) => (
             <kbd key={key}>{key}</kbd>
           ))}
           <span>{does}</span>
-        </li>
+        </motion.li>
       ))}
-    </ul>
+    </motion.ul>
   )
 }
 
-/** The rocket, and the flying keys beside it while in flight. */
+/**
+ * The rocket, and the flying keys beside it while in flight. It rises into
+ * place once the galaxy is up, rather than being there before the art is.
+ */
 function Dock(props: {
   fly: boolean
   onFly: (on: boolean) => void
 }): JSX.Element {
   return (
-    <div className="dock">
+    // Centred with motion's `x`, not a CSS transform, which motion would overwrite.
+    <motion.div
+      className="dock"
+      style={{ x: '-50%' }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0, transition: { ...SPRING, delay: 0.3 } }}
+    >
       <IconToggle
         open={props.fly}
         onToggle={props.onFly}
@@ -71,8 +95,8 @@ function Dock(props: {
       >
         <RocketIcon />
       </IconToggle>
-      {props.fly && <FlightKeys />}
-    </div>
+      <AnimatePresence>{props.fly && <FlightKeys />}</AnimatePresence>
+    </motion.div>
   )
 }
 
@@ -80,7 +104,14 @@ function Dock(props: {
 function FileInfo(props: GalaxyHudProps & { file: FileDatum }): JSX.Element {
   const { series, nav } = props
   return (
-    <div id="file-info" className="corner-panels">
+    <motion.div
+      id="file-info"
+      className="corner-panels"
+      variants={DROP_IN}
+      initial="hidden"
+      animate="shown"
+      exit="gone"
+    >
       <FilePanel
         file={props.file}
         fallow={series?.merged.fallow}
@@ -100,7 +131,7 @@ function FileInfo(props: GalaxyHudProps & { file: FileDatum }): JSX.Element {
           onPick={nav.follow}
         />
       )}
-    </div>
+    </motion.div>
   )
 }
 
@@ -145,7 +176,9 @@ export function GalaxyHud(props: GalaxyHudProps): JSX.Element {
           >
             <InfoIcon />
           </IconToggle>
-          {info && <FileInfo {...props} file={file} />}
+          <AnimatePresence>
+            {info && <FileInfo {...props} file={file} />}
+          </AnimatePresence>
         </div>
       )}
     </>

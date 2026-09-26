@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import type { JSX, MouseEvent } from 'react'
 
 /**
@@ -103,8 +104,11 @@ export function IconToggle(props: {
     props.onToggle(!props.open)
   }
   return (
-    <button
+    // A little give under the pointer, so a press feels like one.
+    <motion.button
       className="icon-button"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.92 }}
       aria-expanded={props.controls ? props.open : undefined}
       aria-pressed={props.controls ? undefined : props.open}
       aria-controls={props.controls}
@@ -113,6 +117,6 @@ export function IconToggle(props: {
       onClick={toggle}
     >
       {props.children}
-    </button>
+    </motion.button>
   )
 }

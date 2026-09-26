@@ -1,7 +1,7 @@
 import { getRouteApi, Link } from '@tanstack/react-router'
 import type { CSSProperties, JSX, ReactNode } from 'react'
 import { DATASETS } from './lib/load.ts'
-import { designation, hueOf } from './landing/identity.ts'
+import { designation, hueOf, labelOf } from './landing/identity.ts'
 import { Starfield } from './landing/Starfield.tsx'
 import './landing/landing.css'
 
@@ -12,7 +12,7 @@ function Galaxies(): JSX.Element {
       {DATASETS.map((dataset) => (
         <li key={dataset} style={{ '--hue': hueOf(dataset) } as CSSProperties}>
           <Link to="/$dataset" params={{ dataset }}>
-            <span className="galaxy-name">{dataset}</span>
+            <span className="galaxy-name">{labelOf(dataset)}</span>
             <span className="galaxy-id">{designation(dataset)}</span>
           </Link>
         </li>

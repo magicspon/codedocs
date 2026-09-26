@@ -383,7 +383,6 @@ canvas {
   position: fixed;
   left: 50%;
   bottom: 16px;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 10px;

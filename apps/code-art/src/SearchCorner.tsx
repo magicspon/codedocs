@@ -1,6 +1,8 @@
 import { useHotkey } from '@tanstack/react-hotkeys'
-import { useRef, useState, type JSX } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useState, type JSX } from 'react'
 import type { FileDatum } from './lib/atlas.ts'
+import { panel } from './lib/motion.ts'
 import type { Trace, TraceQuery } from './lib/trace.ts'
 import { IconToggle, SearchIcon } from './icons.tsx'
 import { SearchResults } from './SearchResults.tsx'
@@ -12,20 +14,28 @@ interface SearchCornerProps {
   readonly files: readonly FileDatum[]
 }
 
-/** The search box and what it found. */
-function SearchForm(
-  props: SearchCornerProps & { focus: boolean },
-): JSX.Element {
+/** Drops down from the magnifier. */
+const DROP_IN = panel({ y: -10 })
+
+/** The search box and what it found. The box takes the cursor as it opens. */
+function SearchForm(props: SearchCornerProps): JSX.Element {
   const { query, onQuery } = props
   return (
-    <div id="search" className="panel search-panel">
+    <motion.div
+      id="search"
+      className="panel search-panel"
+      variants={DROP_IN}
+      initial="hidden"
+      animate="shown"
+      exit="gone"
+    >
       <input
         type="search"
         placeholder="Find a file by path"
         aria-label="Find a file by path"
         value={query.text}
         onChange={(e) => onQuery({ ...query, text: e.target.value })}
-        autoFocus={props.focus}
+        autoFocus
       />
       <SearchResults
         query={query}
@@ -33,38 +43,31 @@ function SearchForm(
         trace={props.trace}
         files={props.files}
       />
-    </div>
+    </motion.div>
   )
 }
 
 /**
  * The galaxy's search, top left: a magnifier that opens the search form.
- * `/` opens it too and puts the cursor in the box.
+ * `/` opens it too; either way the cursor lands in the box.
  */
 export function SearchCorner(props: SearchCornerProps): JSX.Element {
   const [open, setOpen] = useState(false)
-  // Only a `/` press should grab focus; a click leaves it on the canvas.
-  const focus = useRef(false)
   useHotkey('/', () => {
-    focus.current = true
     if (open) document.querySelector<HTMLInputElement>('#search input')?.focus()
     else setOpen(true)
   })
-  const toggle = (on: boolean): void => {
-    focus.current = false
-    setOpen(on)
-  }
   return (
     <div className="corner left">
       <IconToggle
         open={open}
-        onToggle={toggle}
+        onToggle={setOpen}
         labels={['Search (/)', 'Hide search']}
         controls="search"
       >
         <SearchIcon />
       </IconToggle>
-      {open && <SearchForm {...props} focus={focus.current} />}
+      <AnimatePresence>{open && <SearchForm {...props} />}</AnimatePresence>
     </div>
   )
 }
