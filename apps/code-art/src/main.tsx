@@ -8,7 +8,9 @@ import { inject } from '@vercel/analytics'
 
 import './styles.css'
 
-inject()
+// Only the public site counts visits. The embed page ships inside codedocs,
+// which must never reach the network (ADR 0011), and its CSP would block it.
+if (import.meta.env.MODE === 'web') inject()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

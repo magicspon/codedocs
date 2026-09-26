@@ -3,5 +3,7 @@
   "framework": "vite",
   "buildCommand": "pnpm build:web",
   "outputDirectory": "dist-web",
-  "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/((?!assets/|_vercel/).*)", "destination": "/index.html" }
+  ]
 }
