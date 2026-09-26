@@ -19,12 +19,28 @@ function TraceRow({ hops }: { hops: string | undefined }): JSX.Element | null {
   )
 }
 
+/** The +/− button that folds the panel down to its path. */
+function CollapseToggle(props: {
+  collapsed: boolean
+  onCollapse: (collapsed: boolean) => void
+}): JSX.Element {
+  return (
+    <button
+      aria-expanded={!props.collapsed}
+      aria-label={props.collapsed ? 'Show details' : 'Hide details'}
+      onClick={() => props.onCollapse(!props.collapsed)}
+    >
+      {props.collapsed ? '+' : '−'}
+    </button>
+  )
+}
+
 /** The facts behind whatever the pointer is over: the art is data, so it can always be read back. */
 export function FilePanel({
   file,
   fallow,
   hops,
-  collapsed,
+  collapsed = false,
   onCollapse,
 }: {
   file: FileDatum
@@ -32,20 +48,17 @@ export function FilePanel({
   /** Where the file sits on the search's trace, in words; absent off it. */
   hops?: string | undefined
   /** Only the path shows when collapsed. */
-  collapsed: boolean
-  onCollapse: (collapsed: boolean) => void
+  collapsed?: boolean
+  /** Absent, the panel cannot be collapsed and shows no toggle. */
+  onCollapse?: (collapsed: boolean) => void
 }): JSX.Element {
   return (
     <div className="panel file">
       <div className="file-head">
         <strong>{file.path}</strong>
-        <button
-          aria-expanded={!collapsed}
-          aria-label={collapsed ? 'Show details' : 'Hide details'}
-          onClick={() => onCollapse(!collapsed)}
-        >
-          {collapsed ? '+' : '−'}
-        </button>
+        {onCollapse && (
+          <CollapseToggle collapsed={collapsed} onCollapse={onCollapse} />
+        )}
       </div>
       {!collapsed && <FileFacts file={file} fallow={fallow} hops={hops} />}
     </div>

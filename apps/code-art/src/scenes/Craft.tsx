@@ -1,14 +1,14 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState, type JSX, type RefObject } from 'react'
-import { Vector3, type Group, type Mesh } from 'three'
+import { Vector3, type Camera, type Group, type Mesh } from 'three'
 import {
   heading,
   launch,
   nearest,
   speedLimit,
-  steer,
   type Craft as State,
 } from '../lib/craft.ts'
+import { pilot, plan, type Trip } from '../lib/autopilot.ts'
 import { useCraftKeys } from './craft-keys.ts'
 import type { Controls } from './fly.ts'
 
@@ -21,6 +21,42 @@ const HULL = 0.14
 const nose = new Vector3()
 const seat = new Vector3()
 const look = new Vector3()
+
+/** Puts the hull where the craft is, banked into its turn, its engine burning `burn`. */
+function pose(
+  ship: Group | null,
+  flame: Mesh | null,
+  craft: State,
+  burn: number,
+): void {
+  if (ship) {
+    ship.position.copy(craft.position)
+    // Yaw, then pitch, then a bank into the turn.
+    ship.rotation.set(craft.pitch, craft.yaw, -craft.turn * 0.6, 'YXZ')
+  }
+  flame?.scale.setScalar(0.6 + burn * 0.8)
+}
+
+/** Brings the camera round behind the craft; returns the point it looks at. */
+function chase(camera: Camera, craft: State, dt: number): Vector3 {
+  heading(craft, nose)
+  seat
+    .copy(craft.position)
+    .addScaledVector(nose, -HULL * CHASE_BACK)
+    .setY(seat.y + HULL * CHASE_UP)
+  // Eased, so the camera swings after the hull rather than bolted to it.
+  camera.position.lerp(seat, 1 - Math.exp(-dt * 8))
+  // Aimed well ahead, so the hull sits low in the frame and the way on is clear.
+  look.copy(craft.position).addScaledVector(nose, HULL * 14)
+  camera.lookAt(look)
+  return look
+}
+
+/** A star to fly to, in the galaxy's frame, and how far from it to stop. */
+export interface Goal {
+  readonly star: readonly [number, number, number]
+  readonly distance: number
+}
 
 /** A small dart of a ship: a hull, two swept wings and an engine that glows under thrust. */
 function Hull(props: {
@@ -69,12 +105,17 @@ function Hull(props: {
  * stars' `anchors` are in. Each frame it writes its place in that frame to
  * `local`, and a point just ahead of it to `ahead`, for the view to settle on
  * when it lands.
+ *
+ * Given a `goal`, a star in the galaxy's frame and how far from it to stop,
+ * it flies itself there, as the camera does to a picked file when not
+ * flying. Any flying key takes the controls back.
  */
 export function Craft(props: {
   galaxy: RefObject<Group | null>
   anchors: readonly (readonly [number, number, number])[]
   local: RefObject<Vector3>
   ahead: RefObject<Vector3 | null>
+  goal: Goal | null
 }): JSX.Element {
   const camera = useThree((s) => s.camera)
   const stick = useCraftKeys(true)
@@ -89,6 +130,14 @@ export function Craft(props: {
   )
   const ship = useRef<Group>(null)
   const flame = useRef<Mesh>(null)
+  const trip = useRef<Trip | null>(null)
+  const { goal, galaxy } = props
+  useEffect(() => {
+    const g = galaxy.current
+    if (!goal || !g) return void (trip.current = null)
+    const star = g.localToWorld(new Vector3(...goal.star))
+    trip.current = plan(craft, star, goal.distance)
+  }, [goal, galaxy, craft])
 
   useFrame((_, delta) => {
     // Capped, so a stalled frame cannot fling the craft across the galaxy.
@@ -96,28 +145,13 @@ export function Craft(props: {
     const local = props.local.current
     local.copy(craft.position)
     props.galaxy.current?.worldToLocal(local)
-    steer(craft, stick.current, dt, speedLimit(nearest(props.anchors, local)))
-
-    const s = ship.current
-    if (s) {
-      s.position.copy(craft.position)
-      // Yaw, then pitch, then a bank into the turn.
-      s.rotation.set(craft.pitch, craft.yaw, -craft.turn * 0.6, 'YXZ')
-    }
-    const f = flame.current
-    if (f) f.scale.setScalar(0.6 + Math.max(0, stick.current.thrust) * 0.8)
-
-    heading(craft, nose)
-    seat
-      .copy(craft.position)
-      .addScaledVector(nose, -HULL * CHASE_BACK)
-      .setY(seat.y + HULL * CHASE_UP)
-    // Eased, so the camera swings after the hull rather than bolted to it.
-    camera.position.lerp(seat, 1 - Math.exp(-dt * 8))
-    // Aimed well ahead, so the hull sits low in the frame and the way on is clear.
-    look.copy(craft.position).addScaledVector(nose, HULL * 14)
-    camera.lookAt(look)
-    ;(props.ahead.current ??= new Vector3()).copy(look)
+    trip.current = pilot(craft, trip.current, stick.current, dt, () =>
+      speedLimit(nearest(props.anchors, local)),
+    )
+    // The engine burns under thrust, and all through a trip.
+    const burn = trip.current ? 1 : Math.max(0, stick.current.thrust)
+    pose(ship.current, flame.current, craft, burn)
+    ;(props.ahead.current ??= new Vector3()).copy(chase(camera, craft, dt))
   })
 
   return <Hull ship={ship} flame={flame} />

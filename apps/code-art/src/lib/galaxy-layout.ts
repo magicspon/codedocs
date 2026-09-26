@@ -46,11 +46,21 @@ export interface GalaxyLayout {
   readonly clones: Threads
   readonly health: HealthTracks
   readonly radius: number
+  /** How far the files' stars were spread apart, against their points' size. */
+  readonly spread: number
 }
 
 const MAX_STARS_PER_FILE = 300
 const MAX_LINKS = 1800
 const MAX_ARMS = 8
+/**
+ * How far apart files' stars sit, against the galaxy's shape. Only the
+ * centres spread: each star's cloud of symbols and haze keeps its place
+ * round it, so there is open space to fly through between systems. Points
+ * keep their size here; the scene draws them larger by `spread` when viewed
+ * from afar, so the galaxy still looks the same from its viewing distance.
+ */
+const SPREAD = 2
 const CLONE_COLOR = new Color('#9fd8ff')
 
 /**
@@ -158,6 +168,12 @@ export function galaxyLayout(series: Series): GalaxyLayout {
       Math.sin(theta) * r + spread,
     ]
   })
+
+  for (const c of centres) {
+    c[0] *= SPREAD
+    c[1] *= SPREAD
+    c[2] *= SPREAD
+  }
 
   const tint = files.map((f, i) =>
     armOf.has(keys[i]!)
@@ -270,6 +286,7 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     links,
     clones,
     health: healthTracks(series),
-    radius,
+    radius: radius * SPREAD,
+    spread: SPREAD,
   }
 }

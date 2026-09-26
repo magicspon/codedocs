@@ -13,6 +13,7 @@ import type { Playhead } from './lib/series.ts'
 import { NO_CLAIMS, type SystemClaims } from './lib/system-nav.ts'
 import { keyFrames } from './lib/time-warp.ts'
 import { traceOf, type TraceQuery } from './lib/trace.ts'
+import { GalaxyHud } from './GalaxyHud.tsx'
 import { Hud } from './Hud.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { TimelineBar } from './TimelineBar.tsx'
@@ -59,6 +60,8 @@ export function App(): JSX.Element {
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
   const playhead = useMemo<Playhead>(() => ({ t: 0 }), [series, scene])
+  // The galaxy keeps its own bare overlay; with no data, the HUD says so.
+  const bare = scene === 'galaxy' && DATASETS.length > 0
 
   return (
     <>
@@ -78,27 +81,40 @@ export function App(): JSX.Element {
           fly={flying}
         />
       )}
-      <Hud
-        datasets={DATASETS}
-        dataset={dataset}
-        onDataset={setDataset}
-        scenes={Object.keys(SCENES)}
-        scene={scene}
-        onScene={setScene}
-        lens={lens}
-        onLens={setLens}
-        isolate={isolate}
-        onIsolate={setIsolate}
-        fly={flying}
-        onFly={setFly}
-        series={series}
-        frame={frame}
-        hovered={hovered}
-        query={query}
-        onQuery={setQuery}
-        trace={trace}
-        nav={nav}
-      />
+      {bare ? (
+        <GalaxyHud
+          fly={flying}
+          onFly={setFly}
+          series={series}
+          frame={frame}
+          query={query}
+          onQuery={setQuery}
+          trace={trace}
+          nav={nav}
+        />
+      ) : (
+        <Hud
+          datasets={DATASETS}
+          dataset={dataset}
+          onDataset={setDataset}
+          scenes={Object.keys(SCENES)}
+          scene={scene}
+          onScene={setScene}
+          lens={lens}
+          onLens={setLens}
+          isolate={isolate}
+          onIsolate={setIsolate}
+          fly={flying}
+          onFly={setFly}
+          series={series}
+          frame={frame}
+          hovered={hovered}
+          query={query}
+          onQuery={setQuery}
+          trace={trace}
+          nav={nav}
+        />
+      )}
       {series && series.commits.length > 1 && (
         <TimelineBar
           key={`timeline:${dataset}/${scene}`}
@@ -106,6 +122,7 @@ export function App(): JSX.Element {
           playhead={playhead}
           onFrame={setFrame}
           keys={keys}
+          hidden={bare}
         />
       )}
     </>

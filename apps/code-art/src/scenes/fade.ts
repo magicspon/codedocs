@@ -1,4 +1,4 @@
-import type { Material, Object3D } from 'three'
+import { ShaderMaterial, type Material, type Object3D } from 'three'
 
 /**
  * Sets every material under `root` to `opacity` of its own, so a whole
@@ -17,6 +17,9 @@ export function fadeAll(root: Object3D, opacity: number): void {
         m.needsUpdate = true
       }
       m.opacity = (m.userData.full as number) * opacity
+      // A shader material reads its opacity from a uniform, if it has one.
+      if (m instanceof ShaderMaterial && m.uniforms.uOpacity)
+        m.uniforms.uOpacity.value = m.opacity
     }
   })
 }

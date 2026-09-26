@@ -1,7 +1,9 @@
 import { Html } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import {
+  useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type JSX,
@@ -19,6 +21,7 @@ import {
 import { KINDS, type FileSymbols } from '../lib/atlas.ts'
 import type { Planet, Ring } from '../lib/orbits.ts'
 import { KIND_COLORS } from '../lib/palette.ts'
+import { starLitMaterial } from '../lib/star-lit.ts'
 import { Glimpses, type MoonsFor } from './Glimpses.tsx'
 import { placeOf } from './place.ts'
 
@@ -129,6 +132,9 @@ export function Orbit({
 }): JSX.Element {
   const spin = useRef<Group>(null)
   const mesh = useRef<InstancedMesh>(null)
+  // Lit by the system's star alone; whoever draws the system aims it there.
+  const lit = useMemo(() => starLitMaterial(), [])
+  useEffect(() => () => lit.dispose(), [lit])
   const [hovered, setHovered] = useState<number | null>(null)
   const color = KIND_COLORS[ring.kind]!
   const { focus, picked, named } = marksOf(ring, focused, highlight, hovered)
@@ -171,7 +177,7 @@ export function Orbit({
         <group ref={spin}>
           <instancedMesh
             ref={mesh}
-            args={[undefined, undefined, ring.planets.length]}
+            args={[undefined, lit, ring.planets.length]}
             // A planet names itself; the star behind it keeps the file's panel.
             onPointerMove={(e: ThreeEvent<PointerEvent>) => {
               e.stopPropagation()
@@ -186,11 +192,6 @@ export function Orbit({
             }}
           >
             <sphereGeometry args={[1, 16, 12]} />
-            <meshStandardMaterial
-              roughness={0.7}
-              emissive={color}
-              emissiveIntensity={0.12}
-            />
           </instancedMesh>
           {moonsFor && (
             <Glimpses

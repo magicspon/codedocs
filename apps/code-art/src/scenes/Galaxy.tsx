@@ -1,5 +1,5 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, type JSX } from 'react'
 import { Vector3, type Group, type Points } from 'three'
 import { approach, type Shot } from '../lib/flight.ts'
@@ -11,11 +11,12 @@ import {
 } from '../lib/glow.ts'
 import { healthTexture } from '../lib/health-texture.ts'
 import { visibility } from '../lib/series.ts'
+import { starLight } from '../lib/star-light.ts'
 import { orbitsOf, reachOf, SYSTEM_VIEW } from '../lib/orbits.ts'
-import { Craft, useLanding } from './Craft.tsx'
+import { Craft, useLanding, type Goal } from './Craft.tsx'
 import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
-import { Aim, Cloud, Lines, useSpin } from './galaxy-parts.tsx'
+import { Aim, Cloud, Lines, useDotScale, useSpin } from './galaxy-parts.tsx'
 import { useIsolation } from './isolation.ts'
 import { useLens } from './lens.ts'
 import { Nearby } from './Nearby.tsx'
@@ -132,6 +133,29 @@ export function Galaxy(props: SceneProps): JSX.Element {
     [series],
   )
   useLanding(flying, ahead)
+  // In flight, a picked file is somewhere to fly to, not a view to cut to.
+  const goal = useMemo<Goal | null>(
+    () =>
+      pick === null
+        ? null
+        : {
+            star: shape.anchors[pick]!,
+            distance:
+              orbitsOf(series.merged.files[pick]!, null).reach * SYSTEM_VIEW,
+          },
+    [pick, shape, series],
+  )
+  // A star answers the pointer within this much of it; wider as the stars
+  // spread, or from the viewing distance it would be too small to hit.
+  const raycaster = useThree((s) => s.raycaster)
+  useEffect(() => {
+    raycaster.params.Points = { threshold: 0.4 * layout.spread }
+  }, [raycaster, layout.spread])
+  useDotScale(
+    [materials.nebulae, materials.stars, materials.cores],
+    flying,
+    layout.spread,
+  )
   // Held still while flying, or every star would slide past the craft.
   useSpin(group, pick === null && !flying)
   useFlight(
@@ -200,7 +224,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
           files={series.merged.files}
           playhead={playhead}
           focus={isolation.flow}
-          scale={300}
+          scale={300 * layout.spread}
         />
         <Planets
           repo={series.merged.name}
@@ -211,12 +235,22 @@ export function Galaxy(props: SceneProps): JSX.Element {
         />
         {flying && (
           <Nearby
+            light={(file) =>
+              starLight(
+                series.fileLife[file]!,
+                playhead.t,
+                trace?.focus[file] ?? 1,
+                focus.mix.current,
+                isolation.mix.current,
+              )
+            }
             repo={series.merged.name}
             files={series.merged.files}
             anchors={shape.anchors}
             ranges={ranges}
             craft={craft}
             skip={pick}
+            onPick={(file) => present(file) && props.onPick(file)}
           />
         )}
         {props.aim != null && (
@@ -232,6 +266,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
           anchors={shape.anchors}
           local={craft}
           ahead={ahead}
+          goal={goal}
         />
       ) : (
         <OrbitControls

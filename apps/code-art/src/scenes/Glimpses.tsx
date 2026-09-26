@@ -1,9 +1,10 @@
 import { useFrame } from '@react-three/fiber'
-import { useLayoutEffect, useMemo, useRef, type JSX } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, type JSX } from 'react'
 import { Object3D, Vector3, type InstancedMesh } from 'three'
 import { glimpsesOf } from '../lib/glimpses.ts'
 import type { Ring, System } from '../lib/orbits.ts'
 import { KIND_COLORS } from '../lib/palette.ts'
+import { starLitMaterial } from '../lib/star-lit.ts'
 import { bodyAt, placeOf } from './place.ts'
 
 const dummy = new Object3D()
@@ -28,6 +29,9 @@ export function Glimpses(props: {
 }): JSX.Element | null {
   const { ring, moonsFor, skip, full } = props
   const mesh = useRef<InstancedMesh>(null)
+  // Lit by the system's star, as the planets are.
+  const lit = useMemo(() => starLitMaterial(), [])
+  useEffect(() => () => lit.dispose(), [lit])
   // Flattened: each moon with the index of the planet it circles.
   const moons = useMemo(
     () =>
@@ -70,14 +74,13 @@ export function Glimpses(props: {
       // Keyed on the count, so a new layout gets a buffer of the right size.
       key={moons.length}
       ref={mesh}
-      args={[undefined, undefined, moons.length]}
+      args={[undefined, lit, moons.length]}
       // Too small to aim at; clicks fall through to the planet.
       raycast={() => null}
       // The moons move every frame, so no bounding sphere holds them.
       frustumCulled={false}
     >
       <sphereGeometry args={[1, 12, 8]} />
-      <meshStandardMaterial roughness={0.7} emissiveIntensity={0.12} />
     </instancedMesh>
   )
 }

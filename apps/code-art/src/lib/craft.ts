@@ -69,7 +69,7 @@ export function heading(craft: Craft, out: Vector3): Vector3 {
  * in open space, so the same keys both cross the galaxy and land.
  */
 export function speedLimit(distance: number): number {
-  return Math.min(14, Math.max(0.6, distance * 0.9))
+  return Math.min(24, Math.max(0.6, distance * 0.9))
 }
 
 const nose = new Vector3()
@@ -106,6 +106,7 @@ export function steer(
  * idling at the edge does not make them flicker. It also holds its place
  * until a newcomer is clearly nearer, or with wide ranges the nearest few
  * would change hands with every move and never settle long enough to fade in.
+ * Only files `keep` passes are considered.
  */
 /** A shown star ranks as if this much nearer than it is. */
 const HOLD = 0.7
@@ -116,9 +117,11 @@ export function nearby(
   at: Vector3,
   count: number,
   shown: readonly number[],
+  keep: (file: number) => boolean = () => true,
 ): number[] {
   const found: { file: number; d: number }[] = []
   anchors.forEach(([x, y, z], file) => {
+    if (!keep(file)) return
     const d = Math.hypot(x - at.x, y - at.y, z - at.z)
     const range = ranges[file]! * (shown.includes(file) ? 1.15 : 1)
     if (d < range) found.push({ file, d: shown.includes(file) ? d * HOLD : d })
@@ -133,11 +136,13 @@ export function nearby(
  * Puts the new set of nearby files into `slots`, leaving each one already
  * shown where it was, so its system is not rebuilt. `null` for the same slots.
  */
-export function reslot(
-  slots: readonly (number | null)[],
-  near: readonly number[],
-): (number | null)[] | null {
-  const next = slots.map((f) => (f !== null && near.includes(f) ? f : null))
+export function reslot<T>(
+  slots: readonly (T | null)[],
+  near: readonly T[],
+): (T | null)[] | null {
+  const next: (T | null)[] = slots.map((f) =>
+    f !== null && near.includes(f) ? f : null,
+  )
   for (const f of near) if (!next.includes(f)) next[next.indexOf(null)] = f
   return next.every((f, i) => f === slots[i]) ? null : next
 }

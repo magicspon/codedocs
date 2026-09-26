@@ -338,3 +338,164 @@ canvas {
 .trace-label.aim {
   border-color: rgb(255 255 255 / 60%);
 }
+
+/* The galaxy's bare overlay: a dock at the bottom, the file's details top right. */
+.dock {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+}
+
+.icon-button {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--edge);
+  background: var(--panel);
+  backdrop-filter: blur(8px);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.icon-button:hover,
+.icon-button:focus-visible {
+  color: var(--ink);
+}
+
+.icon-button[aria-pressed='true'],
+.icon-button[aria-expanded='true'] {
+  color: #111;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.flight-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 8px 14px;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  color: var(--muted);
+  font-size: var(--text-small);
+}
+
+.flight-keys li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.flight-keys span {
+  margin-left: 2px;
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  padding: 0 5px;
+  border: 1px solid var(--edge);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: rgb(255 255 255 / 6%);
+  color: var(--ink);
+  font:
+    600 var(--text-tiny) / 1 ui-monospace,
+    monospace;
+}
+
+.corner {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  max-height: calc(100vh - 32px);
+}
+
+.corner-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.corner.left {
+  right: auto;
+  left: 16px;
+  align-items: flex-start;
+}
+
+.search-panel {
+  box-sizing: border-box;
+  width: min(340px, calc(100vw - 32px));
+  overflow-y: auto;
+}
+
+.search-panel input {
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+  font-size: var(--text-small);
+  color: var(--ink);
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.search-panel input:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 0;
+}
+
+/* Calls or imports, a pill of two icon buttons at the bottom left. */
+.follow {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.follow .icon-button {
+  width: 36px;
+  height: 36px;
+  border-color: transparent;
+  background: none;
+  backdrop-filter: none;
+}
+
+.follow .icon-button[aria-pressed='true'] {
+  background: var(--accent);
+}
+
+/* On a narrow screen, lift the dock clear of the pill. */
+@media (max-width: 640px) {
+  .dock {
+    bottom: 72px;
+  }
+}

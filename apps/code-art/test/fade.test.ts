@@ -6,6 +6,7 @@ import {
   MeshStandardMaterial,
 } from 'three'
 import { describe, expect, it } from 'vitest'
+import { starLitMaterial } from '../src/lib/star-lit.ts'
 import { fadeAll } from '../src/scenes/fade.ts'
 
 describe('fadeAll', () => {
@@ -30,5 +31,13 @@ describe('fadeAll', () => {
     root.add(new Mesh(undefined, [a, b]))
     fadeAll(root, 0.5)
     expect([a.opacity, b.opacity]).toEqual([0.5, 0.2])
+  })
+
+  it('fades a star-lit body through its opacity uniform', () => {
+    const lit = starLitMaterial()
+    const root = new Group()
+    root.add(new Mesh(undefined, lit))
+    fadeAll(root, 0.25)
+    expect(lit.uniforms.uOpacity!.value).toBeCloseTo(0.25)
   })
 })

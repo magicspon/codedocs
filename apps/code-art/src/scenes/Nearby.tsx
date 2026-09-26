@@ -1,53 +1,43 @@
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState, type JSX, type RefObject } from 'react'
-import type { Group, PointLight, Vector3 } from 'three'
+import type { Group, Vector3 } from 'three'
 import { useSymbols } from '../hooks.ts'
 import type { FileDatum } from '../lib/atlas.ts'
 import { faded, nearby, nearness, reslot, spent } from '../lib/craft.ts'
 import { moonsOf, orbitsOf } from '../lib/orbits.ts'
+import { FAINT } from '../lib/star-light.ts'
+import { lightFrom } from '../lib/star-lit.ts'
 import { treeOf } from '../lib/symbol-tree.ts'
 import { fadeAll } from './fade.ts'
 import type { MoonsFor } from './Glimpses.tsx'
 import { Orbit } from './Orbit.tsx'
+import { Sun } from './Sun.tsx'
 
-/**
- * How many systems are drawn at once. Each costs a light, and every light is
- * paid for by every lit planet, so keep this modest.
- */
-const SLOTS = 12
+/** How many systems are drawn at once; each lights itself, so they cost only draw calls. */
+const SLOTS = 30
 /** Seconds between looks round for stars; the craft is not that quick. */
 const SCAN = 0.25
 
 type Anchor = readonly [number, number, number]
 
-/** Sizes and fades a system: grown by nearness, seen by nearness and fade together. */
+/**
+ * Sizes, fades and lights a system: grown by nearness, seen by nearness and
+ * fade together, and every body lit from the sun at its centre.
+ */
 function place(g: Group | null, grow: number, seen: number): void {
   if (!g) return
   // An ease-out on the scale, as when a picked file's planets unfold.
   g.scale.setScalar(Math.max(1 - (1 - grow) ** 3, 1e-4))
   g.visible = seen > 0
   fadeAll(g, seen)
-}
-
-/** Lights a system from its star, as bright as it is seen. */
-function shine(
-  l: PointLight | null,
-  at: Anchor,
-  seen: number,
-  reach: number,
-): void {
-  if (!l) return
-  l.position.set(...at)
-  l.intensity = 4 * seen
-  l.distance = reach * 3
+  lightFrom(g)
 }
 
 /**
  * One star's planets and their moons, grown with the craft's nearness and
- * faded in once its names are in. Told it is `leaving`,
- * it fades out instead and calls `onGone` when it has. Its slot's light is
- * handed in, so the light is never mounted or unmounted: a change in the
- * number of lights would recompile every lit material.
+ * faded in once its names are in. Told it is `leaving`, it fades out
+ * instead and calls `onGone` when it has. It is never brighter than its
+ * star, as `light` says.
  */
 function NearSystem(props: {
   repo: string
@@ -55,7 +45,9 @@ function NearSystem(props: {
   at: Anchor
   range: number
   craft: RefObject<Vector3>
-  light: RefObject<PointLight | null>
+  light: () => number
+  /** Called when one of its planets is clicked: the file becomes the pick. */
+  onPick: () => void
   leaving: boolean
   onGone: () => void
 }): JSX.Element {
@@ -87,9 +79,7 @@ function NearSystem(props: {
     const out = spent(props.leaving, shown.current, grow)
     if (out && !gone.current) props.onGone()
     gone.current = out
-    const seen = grow * shown.current
-    place(system.current, grow, seen)
-    shine(props.light.current, at, seen, orbits.reach)
+    place(system.current, grow, grow * shown.current * props.light())
   })
 
   return (
@@ -98,6 +88,7 @@ function NearSystem(props: {
       position={at as [number, number, number]}
       visible={false}
     >
+      <Sun />
       {/* Drawn once the names are in, or known absent, so the rings never regroup in view. */}
       {symbols !== undefined &&
         orbits.rings.map((ring) => (
@@ -108,7 +99,7 @@ function NearSystem(props: {
             moonsFor={moonsFor}
             focused={null}
             highlight={null}
-            onSelect={() => {}}
+            onSelect={props.onPick}
           />
         ))}
     </group>
@@ -116,9 +107,8 @@ function NearSystem(props: {
 }
 
 /**
- * A slot: a light always, and a system while a star holds the slot. A star
- * handed the slot fades in while the one before it fades out; the light
- * goes to the newcomer.
+ * A slot: a system while a star holds it. A star handed the slot fades in
+ * while the one before it fades out.
  */
 function Slot(props: {
   repo: string
@@ -127,9 +117,9 @@ function Slot(props: {
   anchors: readonly Anchor[]
   ranges: readonly number[]
   craft: RefObject<Vector3>
+  light: (file: number) => number
+  onPick: (file: number) => void
 }): JSX.Element {
-  const light = useRef<PointLight>(null)
-  const dark = useRef<PointLight>(null)
   const [held, setHeld] = useState<{
     file: number | null
     leaving: number | null
@@ -145,7 +135,8 @@ function Slot(props: {
       at={props.anchors[file]!}
       range={props.ranges[file]!}
       craft={props.craft}
-      light={leaving ? dark : light}
+      light={() => props.light(file)}
+      onPick={() => props.onPick(file)}
       leaving={leaving}
       onGone={() =>
         setHeld((h) => (h.leaving === file ? { ...h, leaving: null } : h))
@@ -154,7 +145,6 @@ function Slot(props: {
   )
   return (
     <>
-      <pointLight ref={light} intensity={0} decay={0} />
       {held.file !== null && system(held.file, false)}
       {held.leaving !== null && system(held.leaving, true)}
     </>
@@ -163,9 +153,10 @@ function Slot(props: {
 
 /**
  * The planets and moons of the stars round the craft, growing out of each
- * star as it comes near and folding back as it falls behind. A star shows
- * from `ranges[i]` away; `skip` is the picked file, whose own system is
- * already drawn. Drawn inside the galaxy's group, whose frame `craft` is in.
+ * star as it comes near and folding back as it falls behind, each lit by
+ * its own sun. A star shows from `ranges[i]` away, if it is bright enough to
+ * see by `light`; `skip` is the picked file, whose own system is already
+ * drawn. Drawn inside the galaxy's group, whose frame `craft` is in.
  */
 export function Nearby(props: {
   repo: string
@@ -174,6 +165,10 @@ export function Nearby(props: {
   ranges: readonly number[]
   craft: RefObject<Vector3>
   skip: number | null
+  /** How bright a file's star is drawn, `0` to `1`. */
+  light: (file: number) => number
+  /** Called with a file whose planet was clicked. */
+  onPick: (file: number) => void
 }): JSX.Element {
   const [slots, setSlots] = useState<(number | null)[]>(() =>
     Array.from({ length: SLOTS }, () => null),
@@ -189,11 +184,10 @@ export function Nearby(props: {
       props.anchors,
       props.ranges,
       props.craft.current,
-      SLOTS + 1,
+      SLOTS,
       shown,
+      (f) => f !== props.skip && props.light(f) > FAINT,
     )
-      .filter((f) => f !== props.skip)
-      .slice(0, SLOTS)
     const next = reslot(slots, near)
     if (next) setSlots(next)
   })
@@ -209,6 +203,8 @@ export function Nearby(props: {
           anchors={props.anchors}
           ranges={props.ranges}
           craft={props.craft}
+          light={props.light}
+          onPick={props.onPick}
         />
       ))}
     </>

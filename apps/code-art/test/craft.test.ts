@@ -100,6 +100,11 @@ describe('nearby', () => {
     expect(nearby(anchors, wide, new Vector3(4.5, 0, 0), 1, [0])).toEqual([1])
   })
 
+  it('passes over stars it is told not to keep', () => {
+    const at = new Vector3(2.5, 0, 0)
+    expect(nearby(anchors, ranges, at, 3, [], (f) => f !== 0)).toEqual([1])
+  })
+
   it('measures to the nearest star', () => {
     expect(nearest(anchors, new Vector3(18, 0, 0))).toBe(2)
   })

@@ -11,6 +11,7 @@ emissivemap
 esbuild
 expando
 fallowrc
+fooking
 fract
 frontmatter
 gitdir
@@ -45,6 +46,7 @@ reindent
 remediations
 renovatebot
 reprepares
+reslot
 SCIP
 sperno
 squarified

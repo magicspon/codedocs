@@ -42,11 +42,7 @@ export function Stage(props: StageProps): JSX.Element {
   // The lens stays chosen across datasets, but only draws where fallow ran.
   const healthy = props.series.merged.fallow !== undefined
   return (
-    <Canvas
-      key={`${props.dataset}/${props.scene}`}
-      dpr={[1, 2]}
-      raycaster={{ params: { Points: { threshold: 0.4 } } as never }}
-    >
+    <Canvas key={`${props.dataset}/${props.scene}`} dpr={[1, 2]}>
       <Scene
         series={props.series}
         playhead={props.playhead}
