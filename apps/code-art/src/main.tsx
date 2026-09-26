@@ -4,6 +4,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { queryClient } from './queries.ts'
 import { Viewer } from './router.tsx'
+import { Analytics } from '@vercel/analytics/next'
+
 import './styles.css'
 
 createRoot(document.getElementById('root')!).render(
@@ -14,5 +16,6 @@ createRoot(document.getElementById('root')!).render(
         <Viewer />
       </MotionConfig>
     </QueryClientProvider>
+    <Analytics />
   </StrictMode>,
 )
