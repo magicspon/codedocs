@@ -29,6 +29,10 @@ export function designation(name: string): string {
  * landing page must not parse; re-exporting one means updating it here.
  */
 const SITE: Readonly<Record<string, { label: string; commit: string }>> = {
+  payload: {
+    label: 'payload',
+    commit: '124b55a8747d9b45db0af30aad337569d37a9b3e',
+  },
   router: {
     label: '@tanstack/router',
     commit: '763ac8b8add670ccb31887dab6509343e4827d5a',

@@ -37,7 +37,7 @@ function sources(): Record<string, Load> {
   // literal, so the list lives here and in `names.ts`. Symbol names are not
   // a dataset; `names.ts` loads them on demand.
   const modules = import.meta.glob<{ default: Atlas | Timeline }>(
-    '../data/{router,typescript,vscode}.json',
+    '../data/{payload,router,typescript,vscode}.json',
   )
   return Object.fromEntries(
     Object.entries(modules).map(([path, load]) => [
