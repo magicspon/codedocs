@@ -1,4 +1,4 @@
-import { FIRST_RING, keplerSpeed, MAX_PER_RING } from './kepler.ts'
+import { FIRST_RING, keplerSpeed, MAX_PER_RING, moonReach } from './kepler.ts'
 import type { Planet, Ring, System } from './orbits.ts'
 import { gaussian, hash, rng } from './rng.ts'
 
@@ -16,6 +16,8 @@ export interface Member {
   /** Index in the file's `FileSymbols`, or `-1` when the names are not known. */
   readonly symbol: number
   readonly children: number
+  /** How many moon orbits it has: one per kind among what it declares. */
+  readonly moonRings: number
 }
 
 /** A band of the system, and the kinds of symbol whose planets circle in it. */
@@ -48,20 +50,22 @@ const ZONES: readonly Zone[] = [
   {
     kinds: [0, 6],
     cap: 6,
-    base: 0.07,
-    grow: 0.012,
-    max: 0.12,
+    base: 0.06,
+    grow: 0.025,
+    max: 0.22,
     tilt: 0.03,
     gap: 0.3,
     loose: [0, ASTEROIDS],
   },
-  // Gas giants: classes and namespaces, swollen by their members.
+  // Gas giants: classes and namespaces, swollen by their members. In every
+  // zone a body grows with the root of its moon count, so a crowded one reads
+  // as big from afar.
   {
     kinds: [1, 7],
     cap: 4,
-    base: 0.16,
-    grow: 0.035,
-    max: 0.34,
+    base: 0.14,
+    grow: 0.05,
+    max: 0.5,
     tilt: 0.03,
     gap: 0.5,
   },
@@ -69,9 +73,9 @@ const ZONES: readonly Zone[] = [
   {
     kinds: [2, 4],
     cap: 4,
-    base: 0.11,
-    grow: 0.018,
-    max: 0.18,
+    base: 0.09,
+    grow: 0.03,
+    max: 0.3,
     tilt: 0.04,
     gap: 0.4,
   },
@@ -80,8 +84,8 @@ const ZONES: readonly Zone[] = [
     kinds: [3],
     cap: 5,
     base: 0.04,
-    grow: 0.004,
-    max: 0.06,
+    grow: 0.008,
+    max: 0.1,
     tilt: 0.3,
     gap: 0.28,
     loose: [ASTEROIDS, ASTEROIDS + KUIPER],
@@ -103,7 +107,7 @@ interface Spec {
   readonly kind: number
   readonly form: 'orbit' | 'belt'
   readonly size: number
-  /** How far its bodies reach off its line: a planet's radius, a belt's spread. */
+  /** How far its bodies reach off its line: a planet's moons, a belt's spread. */
   readonly extent: number
   readonly tilt: number
   readonly gap: number
@@ -143,7 +147,8 @@ function zoneSpecs(
         kind,
         form: 'orbit',
         size,
-        extent: size,
+        // Its moons circle with it, so its orbit keeps clear of theirs too.
+        extent: moonReach(size, m.moonRings),
         members: [m],
       })
     }

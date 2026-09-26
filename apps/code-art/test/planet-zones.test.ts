@@ -10,7 +10,8 @@ function members(
   return Array.from({ length: 8 }, (_, kind) =>
     Array.from({ length: counts[kind] ?? 0 }, () => {
       const symbol = next++
-      return { symbol, children: children[symbol] ?? 0 }
+      const n = children[symbol] ?? 0
+      return { symbol, children: n, moonRings: n > 0 ? 1 : 0 }
     }),
   )
 }
@@ -42,6 +43,13 @@ describe('zonesOf', () => {
   it('swells a giant with its members', () => {
     const { rings } = zonesOf(members([0, 2], [0, 25]), 'a.ts')
     expect(rings[1]!.size).toBeGreaterThan(rings[0]!.size)
+  })
+
+  it('clears the next orbit past a planet’s moons', () => {
+    // Two functions; the first declares a lot, so the second moves out.
+    const bare = zonesOf(members([2]), 'a.ts').rings
+    const mooned = zonesOf(members([2], [30]), 'a.ts').rings
+    expect(mooned[1]!.radius).toBeGreaterThan(bare[1]!.radius)
   })
 
   it('lays variables in the asteroid belt, between rocky planets and giants', () => {

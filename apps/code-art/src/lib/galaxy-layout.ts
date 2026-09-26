@@ -53,7 +53,7 @@ const MAX_ARMS = 8
  * keep their size here; the scene draws them larger by `spread` when viewed
  * from afar, so the galaxy still looks the same from its viewing distance.
  */
-const SPREAD = 2
+const SPREAD = 4
 const CLONE_COLOR = new Color('#9fd8ff')
 
 /**

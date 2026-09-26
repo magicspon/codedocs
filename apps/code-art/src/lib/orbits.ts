@@ -1,5 +1,11 @@
 import { isTest, KINDS, type FileDatum } from './atlas.ts'
-import { FIRST_RING, keplerSpeed, MAX_PER_RING } from './kepler.ts'
+import {
+  FIRST_RING,
+  keplerSpeed,
+  MAX_PER_RING,
+  MOON_SCALE,
+  RING_GAP,
+} from './kepler.ts'
 import { zonesOf, zonesReach, type Member } from './planet-zones.ts'
 import { gaussian, hash, rng } from './rng.ts'
 import { byKind, type SymbolTree } from './symbol-tree.ts'
@@ -62,7 +68,6 @@ export interface System {
 /** How far back a camera stands from a system, in radii of its outermost ring. */
 export const SYSTEM_VIEW = 3.4
 
-const RING_GAP = 0.5
 /** A disc's plane, off the system's: tipped enough to read as a disc, not a line. */
 const DISC_TILT = 0.35
 /** A disc swirls faster than a solar system turns. */
@@ -80,11 +85,6 @@ const SIZES: readonly number[] = [
   0.11, // namespace
 ]
 
-/**
- * A moon system's scale against the body it circles: its first ring lies
- * three body radii out, clear of the surface.
- */
-const MOON_SCALE = 3 / FIRST_RING
 /** Moons drawn larger than the rings' scale alone makes them, or they vanish. */
 const MOON_SIZE = 1.6
 
@@ -155,13 +155,19 @@ function membersOf(file: FileDatum, tree: SymbolTree | null): Member[][] {
       Array.from({ length: file.kinds[kind] ?? 0 }, () => ({
         symbol: -1,
         children: 0,
+        moonRings: 0,
       })),
     )
   return byKind(tree.symbols, tree.roots).map((list) =>
-    list.map((symbol) => ({
-      symbol,
-      children: tree.children[symbol]?.length ?? 0,
-    })),
+    list.map((symbol) => {
+      const children = tree.children[symbol] ?? []
+      return {
+        symbol,
+        children: children.length,
+        // `moonsOf` lays one ring per kind, so this is its ring count.
+        moonRings: new Set(children.map((c) => tree.symbols.kinds[c])).size,
+      }
+    }),
   )
 }
 
