@@ -1,6 +1,6 @@
 import { useHotkey } from '@tanstack/react-hotkeys'
 import { getRouteApi } from '@tanstack/react-router'
-import { useDeferredValue, useMemo, useState, type JSX } from 'react'
+import { useDeferredValue, useEffect, useMemo, useState, type JSX } from 'react'
 import { useBookmark, useHover } from './hooks.ts'
 import { isolatedFiles } from './lib/isolate.ts'
 import { DATASETS } from './lib/load.ts'
@@ -52,6 +52,12 @@ export function App(): JSX.Element {
   // The view whose first frame has drawn, and whose hover is current.
   const view = `${dataset}/${scene}`
   const { hovered, setHovered } = useHover(view)
+  // The canvas takes the whole page, so a star under the pointer shows it on the body.
+  useEffect(() => {
+    if (hovered === null) return
+    document.body.style.cursor = 'pointer'
+    return () => void (document.body.style.cursor = '')
+  }, [hovered])
   useBookmark({ scene, lens, isolate, query })
   // Deferred so typing stays quick while a big repository re-traces behind it.
   const searched = useDeferredValue(query)
@@ -104,6 +110,7 @@ export function App(): JSX.Element {
           onFly={setFly}
           series={series}
           frame={frame}
+          hovered={hovered}
           query={query}
           onQuery={setQuery}
           trace={trace}

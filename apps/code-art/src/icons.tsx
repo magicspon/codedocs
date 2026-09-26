@@ -50,6 +50,17 @@ export function InfoIcon(): JSX.Element {
   )
 }
 
+/** A house, for going back to the landing page. */
+export function HomeIcon(): JSX.Element {
+  return (
+    <Icon>
+      <path d="M4 11 12 4l8 7" />
+      <path d="M6 9.5V20h12V9.5" />
+      <path d="M10 20v-5h4v5" />
+    </Icon>
+  )
+}
+
 /** A magnifying glass, for the search. */
 export function SearchIcon(): JSX.Element {
   return (

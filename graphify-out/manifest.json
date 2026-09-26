@@ -1810,8 +1810,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790447277.5698054,
-    "ast_hash": "43a63787fb59e9364bb026cd455f9ee5",
+    "mtime": 1790465129.0641248,
+    "ast_hash": "5ef496b118cf8f1d76502c5bbdaa1627",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1850,8 +1850,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/load.ts": {
-    "mtime": 1790447277.6883528,
-    "ast_hash": "1983499cd34a8f4c6dc4d3b639c417a3",
+    "mtime": 1790462759.3581395,
+    "ast_hash": "c53bc0f82cb47f92e4ae7db6718d357a",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/palette.ts": {
@@ -1870,7 +1870,7 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Galaxy.tsx": {
-    "mtime": 1790447277.7491946,
+    "mtime": 1790463973.1640563,
     "ast_hash": "4ac07c3acd770552ea37e4a9b137f401",
     "semantic_hash": ""
   },
@@ -2190,8 +2190,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/names.ts": {
-    "mtime": 1790447277.6918986,
-    "ast_hash": "dfab7f7aef1bd04c125137185cf67d79",
+    "mtime": 1790462759.3593066,
+    "ast_hash": "50087ae64f952ef1f147354473c125b9",
     "semantic_hash": ""
   },
   "apps/code-art/src/useSearchControls.ts": {
@@ -2415,13 +2415,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/GalaxyHud.tsx": {
-    "mtime": 1790447829.5496297,
-    "ast_hash": "eb4469049a4260999566064943dc6684",
+    "mtime": 1790465129.0642688,
+    "ast_hash": "250f782c67000f1c9ebcabf21a78b98c",
     "semantic_hash": ""
   },
   "apps/code-art/src/icons.tsx": {
-    "mtime": 1790447829.550444,
-    "ast_hash": "55125d475c1b75c6c3d0c65221d37782",
+    "mtime": 1790465129.0640743,
+    "ast_hash": "06baf2887ae818fdc414ad786e1a33aa",
     "semantic_hash": ""
   },
   "apps/code-art/src/SearchCorner.tsx": {
@@ -2670,8 +2670,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/landing/identity.ts": {
-    "mtime": 1790447829.5507069,
-    "ast_hash": "ed87ab1be6995c6e4858b6f0f9044843",
+    "mtime": 1790462763.9655385,
+    "ast_hash": "dfeed0d2a751784931d81d77825672ff",
     "semantic_hash": ""
   },
   "apps/code-art/dist-web/assets/typescript-Dd9mTZE3.js": {
@@ -2695,8 +2695,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/vercel.json": {
-    "mtime": 1790452946.7823172,
-    "ast_hash": "4938a221e09e9fc2e2ea6dcaf4789f6a",
+    "mtime": 1790453099.2589068,
+    "ast_hash": "08b784bf4d19017c7e1f997e4b721b52",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/data/payload.json": {
+    "mtime": 1790464059.1957493,
+    "ast_hash": "d86af0b2fd0c2195d7be7041e9a9fc32",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/data/payload.symbols.json": {
+    "mtime": 1790464059.4764194,
+    "ast_hash": "d6caa97cb98869600a23bce929834367",
     "semantic_hash": ""
   }
 }

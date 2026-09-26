@@ -468,6 +468,41 @@ kbd {
   max-height: calc(100vh - 32px);
 }
 
+/* The file's name, then its info button, along the top of the corner. */
+.corner-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+}
+
+.file-name {
+  margin: 0;
+  padding: 6px 12px;
+  overflow: hidden;
+  /* Long paths lose their start, so the file's own name stays in view. */
+  direction: rtl;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: min(420px, calc(100vw - 32px - 50px));
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+  font:
+    var(--text-small) / 1.4 ui-monospace,
+    monospace;
+}
+
+/* Back to the landing page, top centre. */
+.home {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .corner-panels {
   display: flex;
   flex-direction: column;

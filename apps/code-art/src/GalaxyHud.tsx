@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState, type JSX } from 'react'
 import type { FileDatum } from './lib/atlas.ts'
@@ -7,7 +8,7 @@ import type { Series } from './lib/series.ts'
 import { traceHops } from './lib/trace-text.ts'
 import type { Trace, TraceQuery } from './lib/trace.ts'
 import { FilePanel } from './FilePanel.tsx'
-import { IconToggle, InfoIcon, RocketIcon } from './icons.tsx'
+import { HomeIcon, IconToggle, InfoIcon, RocketIcon } from './icons.tsx'
 import { FollowSwitch } from './FollowSwitch.tsx'
 import { PathsPanel } from './PathsPanel.tsx'
 import { SearchCorner } from './SearchCorner.tsx'
@@ -37,6 +38,8 @@ interface GalaxyHudProps {
   readonly series: Series | null
   /** The whole frame under the playhead, which the selected file's facts come from. */
   readonly frame: number
+  /** The file under the pointer, an index into the series' `merged.files`. */
+  readonly hovered: number | null
   readonly query: TraceQuery
   readonly onQuery: (query: TraceQuery) => void
   readonly trace: Trace | null
@@ -135,6 +138,41 @@ function FileInfo(props: GalaxyHudProps & { file: FileDatum }): JSX.Element {
   )
 }
 
+/** Top right: the file's name, and a button for its details once one is picked. */
+function FileCorner(
+  props: GalaxyHudProps & {
+    name: string
+    file: FileDatum | undefined
+    info: boolean
+    onInfo: (open: boolean) => void
+  },
+): JSX.Element {
+  const { file, info } = props
+  return (
+    <div className="corner">
+      <div className="corner-head">
+        {/* Isolated, so the right-to-left clipping keeps the path in order. */}
+        <p className="file-name" title={props.name}>
+          <bdi>{props.name}</bdi>
+        </p>
+        {file && (
+          <IconToggle
+            open={info}
+            onToggle={props.onInfo}
+            labels={['Show file details', 'Hide file details']}
+            controls="file-info"
+          >
+            <InfoIcon />
+          </IconToggle>
+        )}
+      </div>
+      <AnimatePresence>
+        {info && file && <FileInfo {...props} file={file} />}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 /**
  * The galaxy's overlay: nothing but a rocket until asked. The rocket (or F)
  * takes off and shows the flying keys; the magnifier (or /) opens the
@@ -151,8 +189,14 @@ export function GalaxyHud(props: GalaxyHudProps): JSX.Element {
       onQuery({ ...query, ...TRACE })
   }, [query, onQuery])
   const file = hoveredFile(props.series, props.frame, props.nav.selected)
+  // The star under the pointer names itself; with none, the selected file does.
+  const name =
+    hoveredFile(props.series, props.frame, props.hovered)?.path ?? file?.path
   return (
     <>
+      <Link to="/" className="icon-button home" aria-label="Home" title="Home">
+        <HomeIcon />
+      </Link>
       <Dock fly={props.fly} onFly={props.onFly} />
       <FollowSwitch
         via={props.query.via}
@@ -166,20 +210,14 @@ export function GalaxyHud(props: GalaxyHudProps): JSX.Element {
           files={props.series.merged.files}
         />
       )}
-      {file && (
-        <div className="corner">
-          <IconToggle
-            open={info}
-            onToggle={setInfo}
-            labels={['Show file details', 'Hide file details']}
-            controls="file-info"
-          >
-            <InfoIcon />
-          </IconToggle>
-          <AnimatePresence>
-            {info && <FileInfo {...props} file={file} />}
-          </AnimatePresence>
-        </div>
+      {name && (
+        <FileCorner
+          {...props}
+          name={name}
+          file={file}
+          info={info}
+          onInfo={setInfo}
+        />
       )}
     </>
   )
