@@ -185,8 +185,8 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1790435612.7900045,
-    "ast_hash": "9194c9c95dc39dc503c64d61df595089",
+    "mtime": 1790435716.519816,
+    "ast_hash": "1844199c7e1ca6e26bcb8887ebe9cec8",
     "semantic_hash": ""
   },
   "cspell.words.txt": {
@@ -1810,8 +1810,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790435472.9551442,
-    "ast_hash": "03dfc2b170895c4ec66495e442e0ab8b",
+    "mtime": 1790443855.4894757,
+    "ast_hash": "829ebe9007c22676acbaacf86f61eab4",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1850,13 +1850,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/atlas.ts": {
-    "mtime": 1790192248.881377,
-    "ast_hash": "25ad7c2f6c012f1f14b7f2a0c5b9016d",
+    "mtime": 1790443175.3897696,
+    "ast_hash": "5946d88d01b9844f9fa5626e408b5b38",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/galaxy-layout.ts": {
-    "mtime": 1790433642.2451615,
-    "ast_hash": "83369b3379f8ff708958bcc4cb7e5c07",
+    "mtime": 1790443490.3193958,
+    "ast_hash": "41f0130d8463b6b18e24a64e480c5d22",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/glow.ts": {
@@ -1885,8 +1885,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Galaxy.tsx": {
-    "mtime": 1790433764.2752323,
-    "ast_hash": "ae602bda093a1cddf239bcee6c32079d",
+    "mtime": 1790443175.3912673,
+    "ast_hash": "cfae596c8eb3a2c76d262143d00af367",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/scene.ts": {
@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/layouts.test.ts": {
-    "mtime": 1790435422.554842,
-    "ast_hash": "b445feac7add76fc103ed977ed4fbad8",
+    "mtime": 1790443175.3937736,
+    "ast_hash": "364dc0626618120292befeda399c1209",
     "semantic_hash": ""
   },
   "apps/code-art/tsconfig.json": {
@@ -1915,8 +1915,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790435590.988449,
-    "ast_hash": "e5df75b4ada8dc43127072edeb6e0a21",
+    "mtime": 1790443857.9921813,
+    "ast_hash": "7205a557dfdc38e05b6214720d42e353",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -2145,8 +2145,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/flow-material.ts": {
-    "mtime": 1790192248.8823416,
-    "ast_hash": "01598ccb6a9ce7ba2c914bab65a1b432",
+    "mtime": 1790443175.390136,
+    "ast_hash": "e07a058eb459219faeb2446997c8eb4a",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/flow.ts": {
@@ -2190,13 +2190,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/orbits.ts": {
-    "mtime": 1790430643.3083193,
-    "ast_hash": "5673aea467fb046bf7da2c4ab6a8a7f2",
+    "mtime": 1790443201.8013406,
+    "ast_hash": "67e1da9081deccabd4395d9f61a58c17",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Planets.tsx": {
-    "mtime": 1790432986.0157504,
-    "ast_hash": "d7287bc5f8cda2c7a93cfe8cdeba1209",
+    "mtime": 1790443175.3921006,
+    "ast_hash": "13afa1d1c471d80b2580147574692748",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/fly.ts": {
@@ -2205,8 +2205,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/flight.test.ts": {
-    "mtime": 1790192248.8937104,
-    "ast_hash": "dd202db892edbfe177cc81bb67e80676",
+    "mtime": 1790443320.3985512,
+    "ast_hash": "0244b89d64dfe1339eeeffe640fb7e29",
     "semantic_hash": ""
   },
   "apps/code-art/scripts/read-names.ts": {
@@ -2270,8 +2270,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Orbit.tsx": {
-    "mtime": 1790432955.2820888,
-    "ast_hash": "552c4a3c06af7961f4e07db440b3a923",
+    "mtime": 1790443848.2950504,
+    "ast_hash": "ebabd2739352fb0cd24a24b083da5f60",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/follow.ts": {
@@ -2280,8 +2280,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/orbits.test.ts": {
-    "mtime": 1790192248.8947434,
-    "ast_hash": "b1b44654e464d20fc33fe539acaa5120",
+    "mtime": 1790443320.3986964,
+    "ast_hash": "8c4e062825bfdeb9b5439662a2c04ece",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/system-nav.ts": {
@@ -2350,13 +2350,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/galaxy-parts.tsx": {
-    "mtime": 1790433464.8899522,
-    "ast_hash": "461b5cddc724d503c5f3be3ad7b2340e",
+    "mtime": 1790443175.3925052,
+    "ast_hash": "02033c669d238f84b40dea9584ac213a",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/gather.ts": {
-    "mtime": 1790192248.8911462,
-    "ast_hash": "44a1c7be11c92e5f99bf48fac5c5c866",
+    "mtime": 1790443175.3933125,
+    "ast_hash": "b92003af82cb64b0257f21d7a5e1d4bc",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/isolation.ts": {
@@ -2395,8 +2395,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Nearby.tsx": {
-    "mtime": 1790433764.2754695,
-    "ast_hash": "a6f94dc5323766b12a7c3b8823630c33",
+    "mtime": 1790443175.3915458,
+    "ast_hash": "2f45ecf350daa26dae1cf1880642e7da",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/craft-keys.ts": {
@@ -2572,6 +2572,91 @@
   "apps/code-art/archive/city/README.md": {
     "mtime": 1790435603.4359179,
     "ast_hash": "d78ce7fce7bfb412c80dc5ac60931348",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/dust.ts": {
+    "mtime": 1790436325.253821,
+    "ast_hash": "650cb84d8014a3f0d8014e48d25a1e0c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/point-cloud.ts": {
+    "mtime": 1790436197.3723123,
+    "ast_hash": "37e0034a2398fdebc8df726f6497c120",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/dust.test.ts": {
+    "mtime": 1790436325.2565532,
+    "ast_hash": "39542eac70077570c981247f99871eac",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/star-look.ts": {
+    "mtime": 1790437192.154858,
+    "ast_hash": "fa1f43073d7004ddb7697c56ab5cf142",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/star-look.test.ts": {
+    "mtime": 1790437192.155074,
+    "ast_hash": "e3eef476707dab656c80776aac024cbb",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/accretion.ts": {
+    "mtime": 1790437913.7481856,
+    "ast_hash": "fc8d93afbf2945f4c2f076c126600aaf",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/BlackHole.tsx": {
+    "mtime": 1790443110.026131,
+    "ast_hash": "368d4921dcc3001903d9db4043dc93dc",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/accretion.test.ts": {
+    "mtime": 1790437982.669071,
+    "ast_hash": "11c4925fcf722a6fbdafef8bfba240d7",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/disc-glow.ts": {
+    "mtime": 1790442603.723249,
+    "ast_hash": "cf6267a6163b41a77cde17030c5e10a1",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/body-look.ts": {
+    "mtime": 1790443201.8014448,
+    "ast_hash": "bf60d56e7f88102b6d73ce7b506e114d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/body-look.test.ts": {
+    "mtime": 1790443133.3453798,
+    "ast_hash": "8930e59ecc710d08cfe1ec6792bad47b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/streak.ts": {
+    "mtime": 1790442591.5038455,
+    "ast_hash": "d42128b821824946d263995cdaf0faa9",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/streak.test.ts": {
+    "mtime": 1790442620.7460718,
+    "ast_hash": "36b40836e53eab58d97e1d229021faf2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/kepler.ts": {
+    "mtime": 1790443195.7235458,
+    "ast_hash": "181752768fb46d67105016675716c0e9",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/planet-zones.ts": {
+    "mtime": 1790443320.3972275,
+    "ast_hash": "01eb81e35977f2cac7d356551e04f1d8",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/planet-zones.test.ts": {
+    "mtime": 1790443321.1279538,
+    "ast_hash": "4d2c549030e7840fc1c5f9a84cc264c9",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/tracks.ts": {
+    "mtime": 1790443847.4816742,
+    "ast_hash": "d90ca1ce9e7c39a17b62ddb80fe0e32b",
     "semantic_hash": ""
   }
 }

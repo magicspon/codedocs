@@ -34,6 +34,7 @@ The screen starts empty apart from a few round buttons:
 - **Rocket (bottom centre), or F:** take off and fly the camera yourself. The
   flying keys appear beside it. Press it or F again to land.
 - **Magnifier (top left), or `/`:** open the search.
+- **O:** hide or show the planets' orbit lines.
 - **Calls and imports (bottom left):** choose which links a trace follows.
 - **Info (top right):** appears when a file is picked. It opens the file's
   facts, its fallow health readings and its links.
@@ -148,11 +149,12 @@ gains symbols.
 
 ## The galaxy
 
-| Folder       | File                               | Calls                       | Blind spots (unresolved calls) |
-| ------------ | ---------------------------------- | --------------------------- | ------------------------------ |
-| a spiral arm | a cluster of stars, one per symbol | light threads; hubs at core | faint red haze                 |
+| Folder       | File                               | Calls                    | Blind spots (unresolved calls) |
+| ------------ | ---------------------------------- | ------------------------ | ------------------------------ |
+| a spiral arm | a cluster of stars, one per symbol | dust lanes; hubs at core | faint red haze                 |
 
-Star colours show symbol kind.
+Star colours show symbol kind. Test files are black holes: their symbols form a
+glowing disc round a dark middle.
 
 ## How it fits together
 

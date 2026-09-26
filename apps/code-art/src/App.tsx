@@ -16,6 +16,7 @@ import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { GalaxyHud } from './GalaxyHud.tsx'
 import { Hud } from './Hud.tsx'
 import { SCENES, Stage } from './Stage.tsx'
+import { toggleTracks } from './scenes/tracks.ts'
 import { TimelineBar } from './TimelineBar.tsx'
 import { usePathKeys } from './usePathKeys.ts'
 
@@ -30,6 +31,7 @@ export function App(): JSX.Element {
   const [lens, setLens] = useState(() => initial('lens', '') === 'health')
   const [isolate, setIsolate] = useState(() => initial('isolate', '') === 'on')
   useHotkey('I', () => setIsolate((on) => !on))
+  useHotkey('O', toggleTracks)
   // Taking off is for the galaxy only, and never outlives it.
   const [fly, setFly] = useState(false)
   const flying = fly && scene === 'galaxy'

@@ -18,10 +18,11 @@ describe('rng', () => {
 describe('galaxyLayout', () => {
   const layout = galaxyLayout(fromAtlas(atlas()))
 
-  it('draws one core per file, one star per symbol and one line per call', () => {
+  it('draws one core per file, one star per symbol and dust along each call', () => {
     expect(layout.cores.sizes.length).toBe(5)
     expect(layout.stars.sizes.length).toBe(8 + 1 + 1 + 1 + 0)
-    expect(layout.links.positions.length).toBe(2 * 6)
+    // Two calls: the heaviest gets the most puffs, the lighter at least the fewest.
+    expect(layout.dust.sizes.length).toBeGreaterThanOrEqual(2 * 3)
   })
 
   it('puts the most-called file nearest the centre', () => {

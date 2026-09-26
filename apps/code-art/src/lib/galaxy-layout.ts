@@ -1,8 +1,12 @@
 import { Color } from 'three'
-import { symbolCount } from './atlas.ts'
+import { isTest, symbolCount } from './atlas.ts'
 import { healthTracks, type HealthTracks } from './health.ts'
 import { KIND_COLORS, projectColor } from './palette.ts'
+import { discStar, tiltOf } from './accretion.ts'
+import { dust } from './dust.ts'
+import { cloud, type PointCloud } from './point-cloud.ts'
 import { gaussian, hash, rng } from './rng.ts'
+import { starLook } from './star-look.ts'
 import type { Life, Series } from './series.ts'
 import { threads, type Threads } from './threads.ts'
 
@@ -14,7 +18,9 @@ import { threads, type Threads } from './threads.ts'
  * - **Radius** is gravity: the most-called, most-referenced, most-imported
  *   files sit in the bright core, and leaf code drifts to the rim.
  * - **Stars** are symbols, clustered around their file and coloured by kind.
- * - **Red nebulae** are unresolved calls: where the analysis could not see.
+ * - **Black holes** are test files: their symbols ring a dark middle as a disc.
+ * - **Nebulae** (reds through blues) are unresolved calls: where the analysis could not see.
+ * - **Dust lanes** are the heaviest calls, bowed the way the arms wind.
  * - **Health** (when fallow ran): hotspots flare, unused files grey out, and
  *   files sharing copied code are drawn as binary pairs joined by a thread.
  *
@@ -22,26 +28,13 @@ import { threads, type Threads } from './threads.ts'
  * the GPU by moving one uniform.
  */
 
-/** Point buffers ready for a `bufferGeometry`. */
-export interface PointCloud {
-  readonly positions: Float32Array
-  readonly colors: Float32Array
-  readonly sizes: Float32Array
-  /** Per point: the frame it appears in. */
-  readonly births: Float32Array
-  /** Per point: the frame it is gone by. */
-  readonly deaths: Float32Array
-  /** Per point: the merged file it belongs to, which the health lens looks up. */
-  readonly files: Float32Array
-}
-
 export interface GalaxyLayout {
   /** One bright point per file, in `Atlas.files` order, so a hit's index is the file. */
   readonly cores: PointCloud
   readonly stars: PointCloud
   readonly nebulae: PointCloud
-  /** Line segment pairs for the heaviest calls. */
-  readonly links: Threads
+  /** Dust lanes along the heaviest calls. */
+  readonly dust: PointCloud
   /** Line segment pairs joining files that share copied code. */
   readonly clones: Threads
   readonly health: HealthTracks
@@ -64,6 +57,21 @@ const SPREAD = 2
 const CLONE_COLOR = new Color('#9fd8ff')
 
 /**
+ * Nebula hues, kept this dim because the puffs glow additively and stack.
+ * Red, crimson, magenta, violet, indigo, blue and teal: enough spread that
+ * neighbouring blind spots read as separate clouds.
+ */
+const NEBULA_HUES: readonly (readonly [number, number, number])[] = [
+  [0.065, 0.004, 0.012],
+  [0.06, 0.006, 0.03],
+  [0.05, 0.004, 0.05],
+  [0.032, 0.006, 0.06],
+  [0.014, 0.01, 0.065],
+  [0.006, 0.022, 0.065],
+  [0.004, 0.04, 0.05],
+]
+
+/**
  * Finds the shallowest directory depth that splits the repo into at least
  * three sizeable groups, none holding most of the files — otherwise vscode's
  * `src/` would be one arm and the spiral would read as a disc.
@@ -80,17 +88,6 @@ function armKeys(paths: readonly string[]): string[] {
     if (sizeable.length >= 3 && largest <= paths.length * 0.45) return keys
   }
   return paths.map((p) => p.split('/')[0]!)
-}
-
-function cloud(n: number): PointCloud {
-  return {
-    positions: new Float32Array(n * 3),
-    colors: new Float32Array(n * 3),
-    sizes: new Float32Array(n),
-    births: new Float32Array(n),
-    deaths: new Float32Array(n),
-    files: new Float32Array(n),
-  }
 }
 
 /**
@@ -189,6 +186,8 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     const glow = new Color()
       .lerpColors(tint[i]!, new Color('#ffffff'), 0.4)
       .multiplyScalar((0.35 + (1 - rank[i]!) * 0.9) * (0.4 + 0.6 * crowd))
+    // A test file is a black hole: its middle stays all but dark, though it still answers the pointer.
+    if (isTest(f)) glow.multiplyScalar(0.06)
     cores.colors.set([glow.r, glow.g, glow.b], i * 3)
     cores.sizes[i] = 0.35 + Math.log1p(f.callsIn + f.refsIn) * 0.18
     ;[cores.births[i], cores.deaths[i]] = series.fileLife[i]!
@@ -206,25 +205,35 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     const shown = Math.min(MAX_STARS_PER_FILE, total)
     const sigma = 0.25 + Math.sqrt(total) * 0.07
     const [cx, cy, cz] = centres[i]!
+    const hole = isTest(f) ? tiltOf(random) : null
     // Walk the kind counts so each star takes the kind its share says it should.
     let kind = 0
     let seen = 0
     for (let k = 0; k < shown; k++, s++) {
       const at = (k / shown) * total
       while (kind < 7 && seen + f.kinds[kind]! <= at) seen += f.kinds[kind++]!
-      const color = KIND_COLORS[kind]!.clone().multiplyScalar(
-        (0.2 + random() * 0.5) * (0.4 + 0.6 * rank[i]!),
-      )
-      stars.positions.set(
-        [
-          cx + gaussian(random) * sigma,
-          cy + gaussian(random) * sigma * 0.5,
-          cz + gaussian(random) * sigma,
-        ],
-        s * 3,
-      )
-      stars.colors.set([color.r, color.g, color.b], s * 3)
-      stars.sizes[s] = 0.12 + random() * 0.22
+      if (hole) {
+        // A test's symbols are swept into the disc round its hole.
+        const star = discStar(random, sigma * 1.1, hole, 0.4 + 0.6 * rank[i]!)
+        stars.positions.set(
+          [cx + star.offset[0], cy + star.offset[1], cz + star.offset[2]],
+          s * 3,
+        )
+        stars.colors.set([star.color.r, star.color.g, star.color.b], s * 3)
+        stars.sizes[s] = star.size
+      } else {
+        const { color, size } = starLook(KIND_COLORS[kind]!, rank[i]!, random)
+        stars.positions.set(
+          [
+            cx + gaussian(random) * sigma,
+            cy + gaussian(random) * sigma * 0.5,
+            cz + gaussian(random) * sigma,
+          ],
+          s * 3,
+        )
+        stars.colors.set([color.r, color.g, color.b], s * 3)
+        stars.sizes[s] = size
+      }
       stars.files[s] = i
       ;[stars.births[s], stars.deaths[s]] = starLife(series, i, k, shown, total)
     }
@@ -248,6 +257,8 @@ export function galaxyLayout(series: Series): GalaxyLayout {
   for (const i of hazy) {
     const puffs = Math.min(6, Math.ceil(Math.log1p(files[i]!.unresolved)))
     const [cx, cy, cz] = centres[i]!
+    // Hue from the path, not `random`, so the stream (and every later draw) is unchanged.
+    const [hr, hg, hb] = NEBULA_HUES[hash(files[i]!.path) % NEBULA_HUES.length]!
     for (let k = 0; k < puffs; k++, b++) {
       nebulae.positions.set(
         [
@@ -257,18 +268,19 @@ export function galaxyLayout(series: Series): GalaxyLayout {
         ],
         b * 3,
       )
-      nebulae.colors.set([0.05 + random() * 0.03, 0.004, 0.012], b * 3)
+      const glow = 0.75 + random() * 0.45
+      nebulae.colors.set([hr * glow, hg * glow, hb * glow], b * 3)
       nebulae.sizes[b] = 2.5 + random() * 4
       ;[nebulae.births[b], nebulae.deaths[b]] = series.fileLife[i]!
     }
   }
 
-  const links = threads(
+  const lanes = dust(
     atlas.calls.slice(0, MAX_LINKS),
     series.callLife,
     centres,
     (from, to) => [tint[from]!, tint[to]!],
-    (share) => 0.015 + 0.12 * share,
+    random,
   )
   // Pale blue-white, like a pair of hot young stars; the copy is the bond.
   const clones = threads(
@@ -283,7 +295,7 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     cores,
     stars,
     nebulae,
-    links,
+    dust: lanes,
     clones,
     health: healthTracks(series),
     radius: radius * SPREAD,

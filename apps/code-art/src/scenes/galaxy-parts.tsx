@@ -2,7 +2,7 @@ import { Html } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import { useRef, type JSX, type Ref, type RefObject } from 'react'
 import type { Group, Points, ShaderMaterial } from 'three'
-import type { PointCloud } from '../lib/galaxy-layout.ts'
+import type { PointCloud } from '../lib/point-cloud.ts'
 import type { Threads } from '../lib/threads.ts'
 
 /** The galaxy's building blocks: its clouds, its threads, its turn and its tags. */

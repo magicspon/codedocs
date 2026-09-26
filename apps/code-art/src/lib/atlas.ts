@@ -21,6 +21,21 @@ export const KINDS: readonly string[] = [
 /** File roles, in the order the `role` label stores them. */
 export const ROLES: readonly string[] = ['source', 'test', 'config']
 
+/** A test by its name: `.test` or `.spec` before the extension, or under `__tests__`. */
+const TEST_PATH = /\.(test|spec)\.[cm]?[jt]sx?$|(^|\/)__tests__\//
+
+/**
+ * Whether a file is a test, which scenes draw as a black hole. The index's
+ * label says so where it was recorded; an index older than labels marks
+ * every file source, so the name decides there.
+ */
+export function isTest(file: {
+  readonly role: number
+  readonly path: string
+}): boolean {
+  return ROLES[file.role] === 'test' || TEST_PATH.test(file.path)
+}
+
 /** One file, flattened to what a scene can turn into position, size and colour. */
 export interface FileDatum {
   /** Repository-relative path. */

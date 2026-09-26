@@ -26,7 +26,8 @@ import { TraceFlow } from './TraceFlow.tsx'
 
 /**
  * The codebase as a spiral galaxy: arms are top-level directories, the core is
- * the code everything else leans on, stars are symbols, red haze is blind spots.
+ * the code everything else leans on, stars are symbols, red haze is blind spots
+ * and dust lanes are the heaviest calls.
  * Over a timeline, stars ignite as their file gains symbols. Under the health
  * lens, hotspots flare (pulsing when heating up, dull red when cooling),
  * unused files grey out and copies pair up. Under a search, the rest of the
@@ -48,10 +49,10 @@ export function Galaxy(props: SceneProps): JSX.Element {
   const materials = useMemo(
     () => ({
       nebulae: glowMaterial(),
+      dust: glowMaterial(),
       // A hot file's core blazes; its stars only warm, or the arm would drown.
       stars: healthGlowMaterial(0.25),
       cores: healthGlowMaterial(1),
-      links: lifeLineMaterial(),
       clones: lifeLineMaterial(),
     }),
     [],
@@ -152,7 +153,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
     raycaster.params.Points = { threshold: 0.4 * layout.spread }
   }, [raycaster, layout.spread])
   useDotScale(
-    [materials.nebulae, materials.stars, materials.cores],
+    [materials.nebulae, materials.dust, materials.stars, materials.cores],
     flying,
     layout.spread,
   )
@@ -185,8 +186,8 @@ export function Galaxy(props: SceneProps): JSX.Element {
     // Isolation takes the rest away altogether: threads and haze belong to files it hides.
     const quiet = (1 - focus.mix.current * 0.88) * (1 - isolation.mix.current)
     materials.clones.uniforms.uOpacity!.value = lens.current * quiet
-    materials.links.uniforms.uOpacity!.value = quiet
     materials.nebulae.uniforms.uDim!.value = quiet
+    materials.dust.uniforms.uDim!.value = quiet
   })
 
   // A file not yet written at this point in history is still in the buffer; it must not answer the pointer.
@@ -208,7 +209,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
       />
       <group ref={group}>
         <Cloud cloud={layout.nebulae} material={materials.nebulae} />
-        <Lines threads={layout.links} material={materials.links} />
+        <Cloud cloud={layout.dust} material={materials.dust} />
         <Lines threads={layout.clones} material={materials.clones} />
         <Cloud ref={stars} cloud={layout.stars} material={materials.stars} />
         <Cloud

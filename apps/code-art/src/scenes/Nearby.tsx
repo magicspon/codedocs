@@ -2,7 +2,7 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState, type JSX, type RefObject } from 'react'
 import type { Group, Vector3 } from 'three'
 import { useSymbols } from '../hooks.ts'
-import type { FileDatum } from '../lib/atlas.ts'
+import { isTest, type FileDatum } from '../lib/atlas.ts'
 import { faded, nearby, nearness, reslot, spent } from '../lib/craft.ts'
 import { moonsOf, orbitsOf } from '../lib/orbits.ts'
 import { FAINT } from '../lib/star-light.ts'
@@ -11,6 +11,7 @@ import { treeOf } from '../lib/symbol-tree.ts'
 import { fadeAll } from './fade.ts'
 import type { MoonsFor } from './Glimpses.tsx'
 import { Orbit } from './Orbit.tsx'
+import { BlackHole } from './BlackHole.tsx'
 import { Sun } from './Sun.tsx'
 
 /** How many systems are drawn at once; each lights itself, so they cost only draw calls. */
@@ -88,12 +89,16 @@ function NearSystem(props: {
       position={at as [number, number, number]}
       visible={false}
     >
-      <Sun />
+      {isTest(file) ? (
+        <BlackHole rings={symbols === undefined ? [] : orbits.rings} />
+      ) : (
+        <Sun />
+      )}
       {/* Drawn once the names are in, or known absent, so the rings never regroup in view. */}
       {symbols !== undefined &&
-        orbits.rings.map((ring) => (
+        orbits.rings.map((ring, i) => (
           <Orbit
-            key={ring.kind}
+            key={i}
             ring={ring}
             symbols={symbols}
             moonsFor={moonsFor}

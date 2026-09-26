@@ -2,7 +2,7 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState, type JSX, type RefObject } from 'react'
 import { Vector3, type Group } from 'three'
 import { useSymbols } from '../hooks.ts'
-import type { FileDatum, FileSymbols } from '../lib/atlas.ts'
+import { isTest, type FileDatum, type FileSymbols } from '../lib/atlas.ts'
 import { approach } from '../lib/flight.ts'
 import { lightFrom } from '../lib/star-lit.ts'
 import {
@@ -27,6 +27,7 @@ import { useFollow } from './follow.ts'
 import type { MoonsFor } from './Glimpses.tsx'
 import { MoonLinks, type StarOf } from './MoonLinks.tsx'
 import { Orbit } from './Orbit.tsx'
+import { BlackHole } from './BlackHole.tsx'
 import { Sun } from './Sun.tsx'
 import { useReportClaims, useSystemKeys } from './system-keys.ts'
 
@@ -81,9 +82,9 @@ function Satellites(props: {
   const deepest = depth === systems.length - 2
   return (
     <>
-      {systems[depth]!.rings.map((ring) => (
+      {systems[depth]!.rings.map((ring, i) => (
         <Orbit
-          key={ring.kind}
+          key={i}
           ring={ring}
           symbols={props.symbols}
           moonsFor={props.moonsFor}
@@ -165,7 +166,11 @@ function System(props: {
     <>
       <group ref={props.system} position={at} visible={false}>
         {/* The star lights its own planets and moons, through their material. */}
-        <Sun />
+        {isTest(file) ? (
+          <BlackHole rings={symbols === undefined ? [] : orbits.rings} />
+        ) : (
+          <Sun />
+        )}
         {/* Drawn once the names are in, or known absent, so the rings never regroup in view. */}
         {symbols !== undefined && (
           <Satellites

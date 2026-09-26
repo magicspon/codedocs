@@ -75,29 +75,35 @@ describe('route', () => {
 describe('orbitsOf', () => {
   const f = file('src/a.ts', { kinds: [5, 2, 0, 0, 0, 3, 0, 0] })
 
-  it('gives each kind present its own ring, in kind order, one planet per symbol', () => {
+  it('gives each planet its own orbit, rocky ones innermost, variables a belt', () => {
     const { rings } = orbitsOf(f)
-    expect(rings.map((r) => [r.kind, r.planets.length])).toEqual([
-      [0, 5],
-      [1, 2],
-      [5, 3],
+    expect(rings.map((r) => [r.kind, r.form, r.planets.length])).toEqual([
+      [0, 'orbit', 1],
+      [0, 'orbit', 1],
+      [0, 'orbit', 1],
+      [0, 'orbit', 1],
+      [0, 'orbit', 1],
+      [5, 'belt', 3],
+      [1, 'orbit', 1],
+      [1, 'orbit', 1],
     ])
-    expect(rings[0]!.radius).toBeLessThan(rings[1]!.radius)
+    expect(rings[0]!.radius).toBeLessThan(rings[5]!.radius)
     // Inner rings run faster.
-    expect(rings[0]!.speed).toBeGreaterThan(rings[2]!.speed)
+    expect(rings[0]!.speed).toBeGreaterThan(rings[7]!.speed)
   })
 
   it('draws the same system for the same file', () => {
     expect(orbitsOf(f)).toEqual(orbitsOf(f))
   })
 
-  it('caps a crowded ring but keeps the true count', () => {
+  it('caps a crowded belt but keeps the true count', () => {
     const big = orbitsOf(file('big.ts', { kinds: [5000, 0, 0, 0, 0, 0, 0, 0] }))
-    expect(big.rings[0]!.count).toBe(5000)
-    expect(big.rings[0]!.planets.length).toBeLessThan(5000)
+    const belt = big.rings.find((r) => r.form === 'belt')!
+    expect(belt.count).toBe(5000 - 6)
+    expect(belt.planets.length).toBeLessThan(belt.count)
   })
 
-  it('reaches as far as its outer ring', () => {
+  it('reaches as far as its outer orbit', () => {
     const { rings, reach } = orbitsOf(f)
     expect(reach).toBe(rings.at(-1)!.radius)
   })

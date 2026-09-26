@@ -39,10 +39,24 @@ describe('orbitsOf', () => {
 
   it('draws every counted symbol, unnamed, without a tree', () => {
     const rings = orbitsOf(file, null).rings
-    expect(rings.map((r) => r.planets.length)).toEqual([2, 1, 3, 1])
+    // Two functions and a method on orbits, three variables a belt, a class.
+    expect(rings.map((r) => r.planets.length)).toEqual([1, 1, 1, 3, 1])
     expect(rings.every((r) => r.planets.every((p) => p.symbol === -1))).toBe(
       true,
     )
+  })
+
+  it('lays a test file’s symbols into one disc, hottest within', () => {
+    const rings = orbitsOf({ ...file, role: 1 }, null).rings
+    expect(new Set(rings.map((r) => r.tilt)).size).toBe(1)
+    expect(new Set(rings.map((r) => r.node)).size).toBe(1)
+    expect(rings.map((r) => r.heat)).toEqual([0, 1 / 3, 2 / 3, 1])
+  })
+
+  it('leaves an ordinary file’s rings lit, not glowing, and where they were', () => {
+    const rings = orbitsOf({ ...file, role: 0 }, null).rings
+    expect(rings.every((r) => r.heat === null)).toBe(true)
+    expect(new Set(rings.map((r) => r.node)).size).toBe(rings.length)
   })
 })
 
