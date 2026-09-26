@@ -51,8 +51,9 @@ Type part of a path in the search box, or click any file, to trace it. Press
     kind order: functions are nearest the star. Point at a planet to see the
     name of its symbol. The names load the first time you pick a file. A
     dataset exported before names were added shows only the kind.
-  - **City:** the camera flies up over the rooftops and down to the tower. A
-    band of light climbs the tower and turns on every window it passes.
+  - **City:** the camera flies up over the rooftops and down to the
+    settlement. A band of light climbs it and turns on every building it
+    passes, shortest first.
 - A trace starts from at most 60 matches, and a busy file shows only its 24
   heaviest links at each hop. This keeps the picture readable.
 - `&q=` in the URL opens a search directly, for example
@@ -79,15 +80,15 @@ Tick **Health lens** in the top-left panel to draw these readings over the
 scene. It is only offered for data that fallow ran over. Over a timeline, the
 readings blend from commit to commit, just as heights do.
 
-| Reading        | Galaxy                                  | City                                                                                        |
-| -------------- | --------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Hotspot        | the file's core flares, orange to white | a pillar of warning light on the roof, taller and redder as it heats; its windows flush red |
-| Heating up     | the flare pulses                        | a pulse climbs the pillar and the windows throb                                             |
-| Cooling        | the flare sinks to a dull red           | the pillar burns low and greys towards smoke                                                |
-| Unused file    | the file's stars fade to grey           | the windows go out and the shell cools to concrete                                          |
-| Hard to change | —                                       | the facade rusts                                                                            |
-| Whole repo     | —                                       | the air thickens with smog and the stars go out                                             |
-| Copied code    | a pale blue thread joins the two files  | —                                                                                           |
+| Reading        | Galaxy                                  | City                                                                                                |
+| -------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Hotspot        | the file's core flares, orange to white | a pillar of warning light on the settlement's landmark, taller and redder as it heats; its buildings flush red |
+| Heating up     | the flare pulses                        | a pulse climbs the pillar and the buildings throb                                                   |
+| Cooling        | the flare sinks to a dull red           | the pillar burns low and greys towards smoke                                                        |
+| Unused file    | the file's stars fade to grey           | the buildings go dark and the shells cool to concrete                                                |
+| Hard to change | —                                       | the shells rust                                                                                      |
+| Whole repo     | —                                       | the air thickens with smog and the stars go out                                                     |
+| Copied code    | a pale blue thread joins the two files  | —                                                                                                     |
 
 - Heat is the square root of the hotspot score, so a score of 10 still shows
   without the hottest file drowning the rest.
@@ -103,21 +104,24 @@ readings blend from commit to commit, just as heights do.
 
 ## The city
 
-Away from the lens, the city is built from the index alone.
+Away from the lens, the city is built from the index alone, on the galaxy's
+own terms: every file is a **settlement**, standing on its directory's
+district exactly as a building used to.
 
-| Shape         | Reading                                                                                                                                       |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Footprint     | bytes on disk                                                                                                                                 |
-| Height        | symbols declared                                                                                                                              |
-| Setbacks      | one per kind of symbol beyond the first, so a file mixing classes, types and enums is a stepped tower and a file of plain functions is a slab |
-| Lit windows   | calls and references touching the file, per symbol; a file nothing reaches keeps only its stairwell light                                     |
-| Window colour | the kind of symbol the file mostly declares                                                                                                   |
-| Roof mast     | calls arriving from other files                                                                                                               |
-| Arcs          | the heaviest call routes, with light travelling along them                                                                                    |
+| Shape             | Reading                                                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Settlement tier    | population (symbols declared): a village if there are few, a town if there are plenty, a city if it is both symbol-dense and well connected  |
+| Buildings          | the settlement's own symbols, scattered from its `kinds` counts the way the galaxy scatters stars, laid out as a small street                |
+| Building footprint | the symbol's kind: classes and namespaces stand wider than functions and variables                                                            |
+| Building height     | the kind, scaled by how much of the codebase calls and references the file -- two files with the same population read as different skylines |
+| Building colour     | the shell is the file's role tinted by project; a lit building glows its own kind's colour                                                    |
+| Lit buildings       | calls and references touching the file, per symbol; a file nothing reaches keeps only its stairwell light                                     |
+| Landmark mast       | calls arriving from other files, on the settlement's tallest building                                                                          |
+| Arcs                | the heaviest call routes, with light travelling along them                                                                                     |
 
-Windows are a fixed real size, so a taller building simply has more floors, and
-the floors of a setback line up with the shaft beneath it. Seen from far
-enough away the grid averages into a wash rather than shimmering.
+A settlement's buildings pop in as its file gains symbols, the way the
+galaxy's stars do, rather than one tower growing taller. Seen from far enough
+away a settlement's buildings average into a wash rather than shimmering.
 
 - Point at a file to see fallow's numbers for it in the file panel.
 
@@ -155,18 +159,19 @@ automatically; use the bar at the bottom to pause or drag through the commits.
 - A repo without `node_modules` still works, at `syntactic` fidelity. The
   vscode fixture has none, so its timeline matches its existing index.
 
-Files keep one position for the whole history. Galaxy stars light up as a file
-gains symbols and city towers rise.
+Files keep one position for the whole history. Galaxy stars and city
+buildings both light up as a file gains symbols, rather than growing taller.
 
 ## Scenes
 
-| Scene  | Folder       | File                                            | Calls                        | Blind spots (unresolved calls) |
-| ------ | ------------ | ----------------------------------------------- | ---------------------------- | ------------------------------ |
-| Galaxy | a spiral arm | a cluster of stars, one per symbol              | light threads; hubs at core  | faint red haze                 |
-| City   | a district   | a building: footprint = bytes, height = symbols | pulses along arcs; lit roofs | —                              |
+| Scene  | Folder       | File                                                                | Calls                                | Blind spots (unresolved calls) |
+| ------ | ------------ | -------------------------------------------------------------------- | ------------------------------------- | ------------------------------- |
+| Galaxy | a spiral arm | a cluster of stars, one per symbol                                   | light threads; hubs at core           | faint red haze                  |
+| City   | a district   | a settlement: village, town or city by population, buildings by symbol | pulses along arcs; a landmark mast    | —                                |
 
-Star colours show symbol kind. Building colours show role: grey for source,
-teal for test, amber for config and violet for generated code.
+Star colours show symbol kind; so do a settlement's building colours, tinted
+by role (grey for source, teal for test, amber for config, violet for
+generated code) when lit.
 
 ## How it fits together
 

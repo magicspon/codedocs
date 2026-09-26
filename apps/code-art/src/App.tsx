@@ -25,6 +25,10 @@ export function App(): JSX.Element {
   const [lens, setLens] = useState(() => initial('lens', '') === 'health')
   const [isolate, setIsolate] = useState(() => initial('isolate', '') === 'on')
   useHotkey('I', () => setIsolate((on) => !on))
+  // Taking off is for the galaxy only, and never outlives it.
+  const [fly, setFly] = useState(false)
+  const flying = fly && scene === 'galaxy'
+  useHotkey('F', () => setFly((on) => !on), { enabled: scene === 'galaxy' })
   const [frame, setFrame] = useState(0)
   const [query, setQuery] = useState<TraceQuery>(initialQuery)
   const { series, hovered, setHovered } = useSeries(dataset, scene)
@@ -71,6 +75,7 @@ export function App(): JSX.Element {
           onPick={pick}
           aim={nav.aim}
           onClaims={setClaims}
+          fly={flying}
         />
       )}
       <Hud
@@ -84,6 +89,8 @@ export function App(): JSX.Element {
         onLens={setLens}
         isolate={isolate}
         onIsolate={setIsolate}
+        fly={flying}
+        onFly={setFly}
         series={series}
         frame={frame}
         hovered={hovered}

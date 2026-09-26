@@ -11,12 +11,14 @@ import {
 } from '../lib/glow.ts'
 import { healthTexture } from '../lib/health-texture.ts'
 import { visibility } from '../lib/series.ts'
-import { orbitsOf, SYSTEM_VIEW } from '../lib/orbits.ts'
+import { orbitsOf, reachOf, SYSTEM_VIEW } from '../lib/orbits.ts'
+import { Craft, useLanding } from './Craft.tsx'
 import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
 import { Aim, Cloud, Lines, useSpin } from './galaxy-parts.tsx'
 import { useIsolation } from './isolation.ts'
 import { useLens } from './lens.ts'
+import { Nearby } from './Nearby.tsx'
 import { Planets } from './Planets.tsx'
 import type { SceneProps } from './scene.ts'
 import { TraceFlow } from './TraceFlow.tsx'
@@ -31,7 +33,9 @@ import { TraceFlow } from './TraceFlow.tsx'
  * file and the galaxy stops turning, the camera flies to its star, and its
  * symbols swing out round it as planets. Isolate it, and everything the
  * trace does not reach goes out, while what it does reach is drawn in round
- * the pick, a ring per hop: callers above, callees below.
+ * the pick, a ring per hop: callers above, callees below. Take off, and the
+ * camera rides a little spacecraft instead, and each star's planets and
+ * moons grow out of it as the craft draws near.
  */
 export function Galaxy(props: SceneProps): JSX.Element {
   const { series, playhead, onHover } = props
@@ -117,7 +121,19 @@ export function Galaxy(props: SceneProps): JSX.Element {
         : { file: series.merged.files[pick]!, at: shape.anchors[pick]! },
     [pick, series, shape],
   )
-  useSpin(group, pick === null)
+  const flying = props.fly ?? false
+  // Where the craft is, in the galaxy's frame, and where it last looked.
+  const craft = useRef(new Vector3())
+  const ahead = useRef<Vector3 | null>(null)
+  // A star shows its planets from this far out: well beyond the view of its
+  // system, so they are already there as the craft closes in.
+  const ranges = useMemo(
+    () => series.merged.files.map((f) => reachOf(f) * SYSTEM_VIEW * 12),
+    [series],
+  )
+  useLanding(flying, ahead)
+  // Held still while flying, or every star would slide past the craft.
+  useSpin(group, pick === null && !flying)
   useFlight(
     pick,
     (file: number, from: Shot) => {
@@ -163,6 +179,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
         makeDefault
         position={[0, layout.radius * 0.9, layout.radius * 1.5]}
         fov={55}
+        near={0.01}
         far={layout.radius * 20}
       />
       <group ref={group}>
@@ -192,6 +209,16 @@ export function Galaxy(props: SceneProps): JSX.Element {
           starOf={starOf}
           onClaims={props.onClaims}
         />
+        {flying && (
+          <Nearby
+            repo={series.merged.name}
+            files={series.merged.files}
+            anchors={shape.anchors}
+            ranges={ranges}
+            craft={craft}
+            skip={pick}
+          />
+        )}
         {props.aim != null && (
           <Aim
             at={isolation.shape.anchors[props.aim]!}
@@ -199,11 +226,20 @@ export function Galaxy(props: SceneProps): JSX.Element {
           />
         )}
       </group>
-      <OrbitControls
-        makeDefault
-        enableDamping
-        maxDistance={layout.radius * 4}
-      />
+      {flying ? (
+        <Craft
+          galaxy={group}
+          anchors={shape.anchors}
+          local={craft}
+          ahead={ahead}
+        />
+      ) : (
+        <OrbitControls
+          makeDefault
+          enableDamping
+          maxDistance={layout.radius * 4}
+        />
+      )}
     </>
   )
 }

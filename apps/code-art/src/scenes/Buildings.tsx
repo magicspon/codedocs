@@ -8,47 +8,22 @@ import type { Playhead } from '../lib/series.ts'
 import { useLens } from './lens.ts'
 import { useScan } from './scan.ts'
 import type { SceneProps } from './scene.ts'
-import { dress, ready, restack, runOf, type Run } from './stack.ts'
-
-/** How wide one window is, as a share of a typical building's width. */
-const WINDOW = 0.15
-
-/** The instanced attributes one run of boxes feeds the facade shader. */
-function Facade({ run }: { run: Run }): JSX.Element {
-  return (
-    <boxGeometry>
-      <instancedBufferAttribute
-        attach="attributes-aFacade"
-        args={[run.facade, 2]}
-      />
-      <instancedBufferAttribute
-        attach="attributes-aLamp"
-        args={[run.lamp, 3]}
-      />
-      <instancedBufferAttribute
-        attach="attributes-aHealth"
-        args={[run.health, 4]}
-      />
-      <instancedBufferAttribute
-        attach="attributes-aFile"
-        args={[run.files, 1]}
-      />
-    </boxGeometry>
-  )
-}
+import { dress, ready, restack } from './stack.ts'
 
 /**
- * The towers: a shaft, its setbacks and a beacon mast, re-stacked whenever the
- * playhead moves. The window grid, the health lens and the alarm strobe all
- * live in the facade shader, so opening the lens or letting an alarm beat
- * costs two uniforms rather than 12,000 rewritten instances.
+ * Every settlement's buildings: one instanced mesh across the whole city,
+ * re-stacked whenever the playhead moves, plus a mast on each settlement
+ * that earned a beacon. The lens, the alarm strobe, the scan and the search
+ * focus all live in the facade shader, so opening the lens or letting an
+ * alarm beat costs uniforms rather than hundreds of thousands of rewritten
+ * instances.
  */
 export function Buildings(props: {
   layout: CityLayout
   playhead: Playhead
   lens: boolean
   focus: Focus
-  /** The one file the search names, whose tower lights up; `null` otherwise. */
+  /** The one file the search names, whose settlement lights up; `null` otherwise. */
   pick: number | null
   onHover: SceneProps['onHover']
   onPick: SceneProps['onPick']
@@ -56,47 +31,33 @@ export function Buildings(props: {
   const { layout, playhead, onHover, onPick, focus } = props
   const { buildings } = layout
   const shaft = useRef<InstancedMesh>(null)
-  const tier = useRef<InstancedMesh>(null)
   const mast = useRef<InstancedMesh>(null)
   const drawn = useRef(Number.NaN)
   const lens = useLens(props.lens)
-  const facades = useMemo(
-    () => facadeMaterial(layout.unit * WINDOW),
-    [layout.unit],
-  )
+  const facades = useMemo(facadeMaterial, [])
   useEffect(() => {
     facades.uniforms.uFocusMap.value = focus.texture
     facades.uniforms.uFocusRows.value = focus.texture.image.height
   }, [facades, focus.texture])
-  useScan(facades.uniforms, layout, props.pick, playhead)
+  useScan(facades.uniforms, layout, props.pick)
   const beacons = useMemo(
     () => new MeshBasicMaterial({ toneMapped: false }),
     [],
   )
   const lit = useMemo(
-    () => buildings.flatMap((b, i) => (b.beacon > 0 ? [i] : [])),
-    [buildings],
+    () =>
+      layout.settlements.flatMap((s, i) =>
+        layout.beacons[s.file]! > 0 ? [i] : [],
+      ),
+    [layout],
   )
-  const runs = useMemo(
-    () => ({
-      shaft: runOf(
-        buildings,
-        buildings.map((_, i) => i),
-      ),
-      tier: runOf(
-        buildings,
-        layout.tiers.map((t) => t.building),
-      ),
-    }),
-    [buildings, layout.tiers],
+  const health = useMemo(
+    () => new Float32Array(buildings.count * 4),
+    [buildings],
   )
 
   useLayoutEffect(() => {
-    const meshes = {
-      shaft: shaft.current,
-      tier: tier.current,
-      mast: mast.current,
-    }
+    const meshes = { shaft: shaft.current, mast: mast.current }
     if (ready(meshes)) dress(meshes, layout, lit)
     drawn.current = Number.NaN
   }, [layout, lit])
@@ -107,13 +68,9 @@ export function Buildings(props: {
     facades.uniforms.uFocus.value = focus.mix.current
     // Beacons would outshine the trace; a search banks them to embers.
     beacons.color.setScalar(1 - focus.mix.current * 0.85)
-    const meshes = {
-      shaft: shaft.current,
-      tier: tier.current,
-      mast: mast.current,
-    }
+    const meshes = { shaft: shaft.current, mast: mast.current }
     if (ready(meshes) && drawn.current !== playhead.t) {
-      restack(meshes, layout, runs, lit, playhead.t)
+      restack(meshes, layout, health, lit, playhead.t)
       drawn.current = playhead.t
     }
   })
@@ -122,41 +79,47 @@ export function Buildings(props: {
     <>
       <instancedMesh
         ref={shaft}
-        args={[undefined, undefined, buildings.length]}
+        args={[undefined, undefined, buildings.count]}
         material={facades.material}
         onPointerMove={(e: ThreeEvent<PointerEvent>) => (
           e.stopPropagation(),
-          onHover(e.instanceId ?? null)
+          onHover(
+            e.instanceId !== undefined ? buildings.file[e.instanceId]! : null,
+          )
         )}
         onPointerOut={() => onHover(null)}
         onClick={(e: ThreeEvent<MouseEvent>) => {
           e.stopPropagation()
-          if (e.instanceId !== undefined) onPick(e.instanceId)
+          if (e.instanceId !== undefined) onPick(buildings.file[e.instanceId]!)
         }}
       >
-        <Facade run={runs.shaft} />
-      </instancedMesh>
-      <instancedMesh
-        ref={tier}
-        args={[undefined, undefined, Math.max(layout.tiers.length, 1)]}
-        material={facades.material}
-        onPointerMove={(e: ThreeEvent<PointerEvent>) => (
-          e.stopPropagation(),
-          onHover(layout.tiers[e.instanceId ?? -1]?.building ?? null)
-        )}
-        onPointerOut={() => onHover(null)}
-        onClick={(e: ThreeEvent<MouseEvent>) => {
-          e.stopPropagation()
-          const building = layout.tiers[e.instanceId ?? -1]?.building
-          if (building !== undefined) onPick(building)
-        }}
-      >
-        <Facade run={runs.tier} />
+        <boxGeometry>
+          <instancedBufferAttribute
+            attach="attributes-aLit"
+            args={[buildings.lit, 1]}
+          />
+          <instancedBufferAttribute
+            attach="attributes-aSeed"
+            args={[buildings.seed, 1]}
+          />
+          <instancedBufferAttribute
+            attach="attributes-aLamp"
+            args={[buildings.lamp, 3]}
+          />
+          <instancedBufferAttribute
+            attach="attributes-aHealth"
+            args={[health, 4]}
+          />
+          <instancedBufferAttribute
+            attach="attributes-aFile"
+            args={[buildings.file, 1]}
+          />
+        </boxGeometry>
       </instancedMesh>
       <instancedMesh
         ref={mast}
         args={[undefined, undefined, Math.max(lit.length, 1)]}
-        // A mast is a light on a pole: it must not steal the pointer from its tower.
+        // A mast is a light on a pole: it must not steal the pointer from its settlement.
         raycast={() => null}
       >
         <boxGeometry />

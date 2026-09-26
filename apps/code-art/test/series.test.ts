@@ -103,10 +103,21 @@ describe('layouts over a history', () => {
     expect(stars.deaths.slice(0, 9).every((d) => d === 2)).toBe(true)
   })
 
-  it('gives a building no height in frames its file does not exist', () => {
-    const [a, b] = cityLayout(series).buildings
-    expect(a!.heights[2]).toBe(0)
-    expect(b!.heights[0]).toBe(0)
-    expect(a!.heights[1]).toBeGreaterThan(a!.heights[0]!)
+  it('pops a settlement’s buildings in as its file gains symbols, and clears them once its file is gone', () => {
+    const { buildings, settlements } = cityLayout(series)
+    const a = settlements[0]!
+    const b = settlements[1]!
+    // `a.ts` declares 9 symbols at its largest, capped to the settlement's limit.
+    expect(a.count).toBeLessThan(9)
+    // Some of its buildings exist from the first frame, the rest from the second.
+    const aBirths = buildings.births.subarray(a.offset, a.offset + a.count)
+    expect([...aBirths].filter((f) => f === 0).length).toBeGreaterThan(0)
+    expect([...aBirths].filter((f) => f === 1).length).toBeGreaterThan(0)
+    // `a.ts` is deleted in frame 2, so every one of its buildings is gone by then.
+    const aDeaths = buildings.deaths.subarray(a.offset, a.offset + a.count)
+    expect([...aDeaths].every((f) => f === 2)).toBe(true)
+    // `b.ts` exists from frame 1 onward.
+    expect(buildings.births[b.offset]).toBe(1)
+    expect(buildings.deaths[b.offset]).toBe(3)
   })
 })

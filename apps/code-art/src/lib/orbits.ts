@@ -133,6 +133,15 @@ export function orbitsOf(file: FileDatum, tree: SymbolTree | null): System {
   return ringsOf(members, file.path, 1, 1)
 }
 
+/**
+ * The `reach` `orbitsOf(file, null)` would give, without laying out a
+ * planet: one ring per kind the file declares.
+ */
+export function reachOf(file: FileDatum): number {
+  const rings = KINDS.filter((_, kind) => (file.kinds[kind] ?? 0) > 0).length
+  return FIRST_RING + Math.max(0, rings - 1) * RING_GAP
+}
+
 /** The moons of `symbol`, a body of radius `size`, in the file at `path`. */
 export function moonsOf(
   path: string,

@@ -18,7 +18,7 @@ import { Buildings } from './Buildings.tsx'
 import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
 import type { SceneProps } from './scene.ts'
-import { heightAt, LIFT } from './stack.ts'
+import { LIFT } from './stack.ts'
 import { TraceFlow } from './TraceFlow.tsx'
 import { Weather } from './Weather.tsx'
 
@@ -141,15 +141,20 @@ function Districts({
 }
 
 /**
- * The codebase as a night city: districts are directories, towers are files
- * dense with symbols, their windows lit by the traffic through them, masts
- * mark code others call, arcs carry the calls. Over a timeline, towers rise as
- * their files grow. Under the health lens, hotspots raise alarm pillars,
- * unreachable files stand abandoned, hard-to-change files weather, and the air
- * itself thickens with the repository's debt. Under a search, the rest of the
- * city goes dark and light arcs between the traced towers. Pick one file and
- * the camera flies up over the rooftops and down to its tower, and a band of
- * light climbs the tower, switching on every floor.
+ * The codebase as a night city: districts are directories, and every file is
+ * a settlement standing on its district's plot -- a village if it declares
+ * few symbols, a town if it declares plenty, a city if it is both
+ * symbol-dense and well connected. A settlement's buildings are its own
+ * symbols, lit by the traffic through the file and coloured by kind; masts
+ * mark the settlements code elsewhere calls most, arcs carry the calls. Over
+ * a timeline, a settlement's buildings pop in as its file gains symbols.
+ * Under the health lens, hotspots raise an alarm pillar over a settlement's
+ * landmark, unreachable files stand abandoned, hard-to-change files weather,
+ * and the air itself thickens with the repository's debt. Under a search,
+ * the rest of the city goes dark and light arcs between the traced
+ * settlements. Pick one file and the camera flies up over the rooftops and
+ * down to its settlement, and a band of light climbs it, switching on every
+ * building it passes.
  */
 export function City({
   series,
@@ -162,10 +167,10 @@ export function City({
   const layout = useMemo(() => cityLayout(series), [series])
   const traffic = useMemo(trafficMaterial, [])
   const focus = useFocus(trace, series.merged.files.length)
-  // Arcs leave from the roofs, at each tower's tallest, and bow like the traffic.
+  // Arcs leave from each settlement's landmark, at its tallest, and bow like the traffic.
   const shape = useMemo(
     () => ({
-      anchors: layout.buildings.map((b) => [b.x, LIFT + b.h, b.z] as const),
+      anchors: layout.settlements.map((s) => [s.x, LIFT + s.h, s.z] as const),
       bow: 0.3,
       size: layout.unit * 0.55,
       lives: series.fileLife,
@@ -176,18 +181,17 @@ export function City({
   useFlight(
     pick,
     (file: number, from: Shot) => {
-      const b = layout.buildings[file]!
-      const h = heightAt(b, playhead.t)
-      const middle = new Vector3(b.x, LIFT + h * 0.5, b.z)
-      // Far enough back for the whole tower, near enough that it fills the view.
+      const s = layout.settlements[file]!
+      const middle = new Vector3(s.x, LIFT + s.h * 0.5, s.z)
+      // Far enough back for the whole settlement, near enough that it fills the view.
       const distance = Math.max(
-        h * 1.5,
-        Math.max(b.w, b.d) * 4,
+        s.h * 1.5,
+        Math.max(s.w, s.d) * 2.2,
         layout.unit * 5,
       )
       return approach(from, middle, distance, 0.42)
     },
-    // A drone's path: up over the rooftops, then down on to the tower.
+    // A drone's path: up over the rooftops, then down on to the settlement.
     0.35,
   )
   useFrame((state) => {

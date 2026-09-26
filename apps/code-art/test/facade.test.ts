@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { alarmMaterial } from '../src/lib/alarm.ts'
-import { cityLayout, shaftOf, tierAt } from '../src/lib/city-layout.ts'
-import { facadeOf, lampOf, litOf, tiersOf } from '../src/lib/facade.ts'
+import { cityLayout } from '../src/lib/city-layout.ts'
 import { facadeMaterial } from '../src/lib/facade-material.ts'
+import { lampOf, litOf } from '../src/lib/facade.ts'
 import { fromAtlas } from '../src/lib/series.ts'
 import { skyMaterial } from '../src/lib/sky.ts'
 import { atlas, file } from './fixture.ts'
@@ -31,36 +31,18 @@ describe('facades', () => {
     expect(types.b).toBeGreaterThan(funcs.b)
     expect(funcs.r).toBeGreaterThan(funcs.b)
   })
-
-  it('steps a tall tower back once per extra kind, and never a squat one', () => {
-    const mixed = file('mixed.ts', { kinds: [2, 2, 2, 2, 0, 0, 0, 0] })
-    expect(tiersOf(mixed, 4)).toBe(3)
-    expect(tiersOf(mixed, 1.5)).toBe(1)
-    expect(tiersOf(mixed, 0.4)).toBe(0)
-    expect(tiersOf(file('plain.ts'), 9)).toBe(0)
-  })
-
-  it('keeps the height a file earned, however its setbacks divide it', () => {
-    const building = {
-      facade: facadeOf(file('a.ts', { kinds: [1, 1, 0, 0, 0, 0, 0, 0] }), 3, 0),
-    }
-    expect(building.facade.tiers).toBe(1)
-    const [base, block] = tierAt({ building: 0, step: 0, of: 1 }, 10)
-    expect(shaftOf(building as never, 10) + block).toBeCloseTo(10)
-    expect(base).toBeCloseTo(shaftOf(building as never, 10))
-  })
 })
 
 describe('city geometry', () => {
   const layout = cityLayout(fromAtlas(atlas()))
 
-  it('gives every setback a building to stand on', () => {
-    for (const tier of layout.tiers) {
-      expect(layout.buildings[tier.building]).toBeDefined()
-      expect(tier.step).toBeLessThan(tier.of)
+  it('gives every settlement at least one building', () => {
+    for (const s of layout.settlements) {
+      expect(s.count).toBeGreaterThan(0)
+      expect(layout.buildings.h[s.landmark]).toBeGreaterThan(0)
     }
-    const stacks = layout.buildings.map((b) => b.facade.tiers)
-    expect(layout.tiers).toHaveLength(stacks.reduce((a, b) => a + b, 0))
+    const total = layout.settlements.reduce((sum, s) => sum + s.count, 0)
+    expect(layout.buildings.count).toBe(total)
   })
 
   it('reads the weather once per frame', () => {
@@ -69,9 +51,8 @@ describe('city geometry', () => {
 })
 
 describe('city materials', () => {
-  it('gives the facade shader a window size, a lens and a clock', () => {
-    const { material, uniforms } = facadeMaterial(0.8)
-    expect(uniforms.uWindow.value).toBe(0.8)
+  it('gives the facade shader a lens and a clock', () => {
+    const { material, uniforms } = facadeMaterial()
     expect(uniforms.uLens.value).toBe(0)
     // The shader is only woven in at compile time, so check it lands.
     const shader = {
@@ -81,7 +62,7 @@ describe('city materials', () => {
         '#include <common>\n#include <color_fragment>\n#include <emissivemap_fragment>',
     }
     material.onBeforeCompile(shader as never, null as never)
-    expect(shader.uniforms).toHaveProperty('uWindow')
+    expect(shader.uniforms).toHaveProperty('uLens')
     expect(shader.vertexShader).toContain('instanceMatrix')
     expect(shader.fragmentShader).toContain('totalEmissiveRadiance +=')
     expect(shader.fragmentShader).toContain('alarmBeat()')

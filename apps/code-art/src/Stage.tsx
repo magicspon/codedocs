@@ -33,6 +33,7 @@ interface StageProps {
   readonly onPick: (index: number) => void
   readonly aim: number | null
   readonly onClaims: (claims: SystemClaims) => void
+  readonly fly: boolean
 }
 
 /** The canvas: one scene, under the bloom that scene wants. */
@@ -56,6 +57,7 @@ export function Stage(props: StageProps): JSX.Element {
         onPick={props.onPick}
         aim={props.aim}
         onClaims={props.onClaims}
+        fly={props.fly}
       />
       <EffectComposer>
         <Bloom

@@ -1,22 +1,23 @@
-import { Color, Object3D, type InstancedMesh } from 'three'
 import {
-  shaftOf,
-  tierAt,
-  type Building,
-  type CityLayout,
-} from '../lib/city-layout.ts'
-import { blend, sampleHealth, type HealthSample } from '../lib/health.ts'
+  Color,
+  InstancedBufferAttribute,
+  Object3D,
+  type InstancedMesh,
+} from 'three'
+import type { CityLayout } from '../lib/city-layout.ts'
+import { sampleHealth, type HealthSample } from '../lib/health.ts'
+import { visibility } from '../lib/series.ts'
 
 /**
  * Placing the city's boxes. Kept out of the component so the arithmetic of a
- * shaft, its setbacks and its mast is plain, and so the component is only
- * meshes and frames.
+ * building and its mast is plain, and so the component is only meshes and
+ * frames.
  */
 
 const dummy = new Object3D()
 const sample: HealthSample = { heat: 0, unused: 0, wear: 0, trend: 0 }
 
-/** Towers stand on the district slabs. */
+/** Settlements stand on the district slabs. */
 export const LIFT = 0.3
 
 /** What a beacon mast glows, before its brightness. */
@@ -25,11 +26,6 @@ const BEACON = new Color('#ffb46b')
 /** A mast's colour: the brightest beacons pull far ahead of the rest. */
 export function beaconOf(beacon: number): Color {
   return BEACON.clone().multiplyScalar(0.6 + beacon ** 2 * 4)
-}
-
-/** A building's height at fractional frame `t`, blending the two frames around it. */
-export function heightAt(b: Building, t: number): number {
-  return blend(b.heights, 0, b.heights.length, t)
 }
 
 /** Places instance `k` of `mesh`; a zero scale would make a singular matrix, so hidden means a sliver. */
@@ -48,118 +44,63 @@ function place(
 }
 
 /**
- * The per-instance attributes a run of instances feeds the facade shader.
- * `owners` says which building each instance belongs to, so a setback wears
- * the same facade as the shaft it caps.
+ * Places every building, growing each one in as its file gains enough
+ * symbols to earn it (mirrors how the galaxy's stars pop in), and samples
+ * its file's health into the per-instance attribute the facade shader reads.
  */
-export interface Run {
-  readonly owners: readonly number[]
-  /** Two per instance: lit share and seed. */
-  readonly facade: Float32Array
-  /** Three per instance: the lamp colour. */
-  readonly lamp: Float32Array
-  /** Four per instance: heat, unused, wear and trend at the playhead. */
-  readonly health: Float32Array
-  /** One per instance: its file, which the shader looks focus up by. */
-  readonly files: Float32Array
-}
-
-/** Builds a run's static attributes from the buildings its instances belong to. */
-export function runOf(
-  buildings: readonly Building[],
-  owners: readonly number[],
-): Run {
-  const run = {
-    owners,
-    facade: new Float32Array(owners.length * 2),
-    lamp: new Float32Array(owners.length * 3),
-    health: new Float32Array(owners.length * 4),
-    files: Float32Array.from(owners),
-  }
-  owners.forEach((i, k) => {
-    const { facade } = buildings[i]!
-    run.facade[k * 2] = facade.lit
-    run.facade[k * 2 + 1] = facade.seed
-    run.lamp.set([facade.lamp.r, facade.lamp.g, facade.lamp.b], k * 3)
-  })
-  return run
-}
-
-/** Reads every instance's health at `t` into its attribute. */
-function readHealth(layout: CityLayout, run: Run, t: number): void {
-  run.owners.forEach((file, k) => {
-    sampleHealth(layout.health, file, t, sample)
-    run.health.set(
-      [sample.heat, sample.unused, sample.wear, sample.trend],
-      k * 4,
-    )
-  })
-}
-
-/** Every tower's shaft: all of its height, less whatever its setbacks take. */
-function stackShafts(
+function stackBuildings(
   mesh: InstancedMesh,
-  buildings: readonly Building[],
+  layout: CityLayout,
+  health: Float32Array,
   t: number,
 ): void {
-  buildings.forEach((b, i) => {
-    const h = heightAt(b, t)
-    const shaft = shaftOf(b, h)
-    const shown = h > 0 ? 1 : 0
-    place(
-      mesh,
-      i,
-      [b.x, LIFT + shaft / 2, b.z],
-      [b.w * shown, shaft, b.d * shown],
-    )
-  })
-}
-
-/** The setbacks stepping back up each tower's crown. */
-function stackTiers(mesh: InstancedMesh, layout: CityLayout, t: number): void {
-  layout.tiers.forEach((tier, k) => {
-    const b = layout.buildings[tier.building]!
-    const h = heightAt(b, t)
-    const [base, block, inset] = tierAt(tier, h)
-    const shown = h > 0 ? 1 : 0
+  const { buildings } = layout
+  for (let k = 0; k < buildings.count; k++) {
+    const grow = visibility([buildings.births[k]!, buildings.deaths[k]!], t)
+    const h = buildings.h[k]! * grow
     place(
       mesh,
       k,
-      [b.x, LIFT + base + block / 2, b.z],
-      [b.w * inset * shown, block, b.d * inset * shown],
+      [buildings.x[k]!, LIFT + h / 2, buildings.z[k]!],
+      [buildings.w[k]!, h, buildings.d[k]!],
     )
-  })
+    sampleHealth(layout.health, buildings.file[k]!, t, sample)
+    health.set([sample.heat, sample.unused, sample.wear, sample.trend], k * 4)
+  }
 }
 
-/** Masts on the roofs of the most-called towers, as tall as the calls arriving. */
+/** Masts on the roofs of the most-called settlements' landmarks. */
 function stackMasts(
   mesh: InstancedMesh,
   layout: CityLayout,
   lit: readonly number[],
   t: number,
 ): void {
-  lit.forEach((i, k) => {
-    const b = layout.buildings[i]!
-    const h = heightAt(b, t)
-    const shown = h > 0 ? 1 : 0
-    const mast = layout.unit * (0.15 + b.beacon * 0.9)
-    const thin = Math.min(b.w, b.d) * 0.025
-    place(mesh, k, [b.x, LIFT + h + mast / 2, b.z], [thin, mast * shown, thin])
+  lit.forEach((settlement, k) => {
+    const s = layout.settlements[settlement]!
+    const grow = visibility(
+      [
+        layout.buildings.births[s.landmark]!,
+        layout.buildings.deaths[s.landmark]!,
+      ],
+      t,
+    )
+    const h = s.h * grow
+    const mast = layout.unit * (0.15 + layout.beacons[s.file]! * 0.9)
+    const thin = Math.min(s.w, s.d) * 0.025
+    place(mesh, k, [s.x, LIFT + h + mast / 2, s.z], [thin, mast * grow, thin])
   })
 }
 
 /** Marks a mesh's instances as changed, for three to upload. */
 function touch(mesh: InstancedMesh): void {
   mesh.instanceMatrix.needsUpdate = true
-  const health = mesh.geometry.getAttribute('aHealth')
-  if (health) health.needsUpdate = true
   mesh.computeBoundingSphere()
 }
 
-/** The three instanced meshes a city redraws. */
+/** The two instanced meshes a city redraws. */
 export interface Meshes {
   readonly shaft: InstancedMesh
-  readonly tier: InstancedMesh
   readonly mast: InstancedMesh
 }
 
@@ -167,47 +108,48 @@ export interface Meshes {
 export function ready(meshes: {
   [K in keyof Meshes]: InstancedMesh | null
 }): meshes is Meshes {
-  return Boolean(meshes.shaft && meshes.tier && meshes.mast)
+  return Boolean(meshes.shaft && meshes.mast)
 }
 
 /**
  * Sets what never changes once a layout is built: the shell and beacon
- * colours, which the lens works on in the shader rather than here, and how
- * many instances of each mesh are drawn. A city with no setbacks and no
- * beacons is still allotted one instance of each, so the count is what decides
- * whether a stray box appears at the origin.
+ * colours, and how many mast instances are drawn. A city with no beacons is
+ * still allotted one instance, so the count is what decides whether a stray
+ * box appears at the origin.
  */
 export function dress(
   meshes: Meshes,
   layout: CityLayout,
   lit: readonly number[],
 ): void {
-  const { buildings } = layout
-  buildings.forEach((b, i) => meshes.shaft.setColorAt(i, b.color))
-  layout.tiers.forEach((t, k) =>
-    meshes.tier.setColorAt(k, buildings[t.building]!.color),
+  // One flat write for every shell colour, rather than a `setColorAt` loop:
+  // `buildings.color` is already laid out exactly as `instanceColor` wants it.
+  meshes.shaft.instanceColor = new InstancedBufferAttribute(
+    layout.buildings.color.slice(),
+    3,
   )
-  lit.forEach((i, k) =>
-    meshes.mast.setColorAt(k, beaconOf(buildings[i]!.beacon)),
+  lit.forEach((settlement, k) =>
+    meshes.mast.setColorAt(
+      k,
+      beaconOf(layout.beacons[layout.settlements[settlement]!.file]!),
+    ),
   )
-  for (const mesh of Object.values(meshes))
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
-  meshes.tier.count = layout.tiers.length
+  if (meshes.mast.instanceColor) meshes.mast.instanceColor.needsUpdate = true
   meshes.mast.count = lit.length
 }
 
-/** Redraws every shaft, setback and mast at playhead `t`. */
+/** Redraws every building and mast at playhead `t`. */
 export function restack(
   meshes: Meshes,
   layout: CityLayout,
-  runs: { readonly shaft: Run; readonly tier: Run },
+  health: Float32Array,
   lit: readonly number[],
   t: number,
 ): void {
-  stackShafts(meshes.shaft, layout.buildings, t)
-  stackTiers(meshes.tier, layout, t)
+  stackBuildings(meshes.shaft, layout, health, t)
   stackMasts(meshes.mast, layout, lit, t)
-  readHealth(layout, runs.shaft, t)
-  readHealth(layout, runs.tier, t)
-  for (const mesh of Object.values(meshes)) touch(mesh)
+  touch(meshes.shaft)
+  const attr = meshes.shaft.geometry.getAttribute('aHealth')
+  if (attr) attr.needsUpdate = true
+  touch(meshes.mast)
 }

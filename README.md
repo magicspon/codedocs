@@ -6,6 +6,8 @@
 >
 > The architecture and reasoning are documented in [`docs/`](docs/), so if you're interested in how it works, that's the place to start.
 
+News flash... This doesn't work. First test saved 35% in token usage, second took 185% more. maybe there is something here, maybe not... What there is though, there is fooking awesome art. run `codedocs art` in a typescript repo and you'll get a galaxy and city visualisation of your codebase. The city is a bit meh, the galaxy is fucking awesome.
+
 # codedocs
 
 **A deterministic structural index for TypeScript repositories.**
@@ -461,31 +463,31 @@ Most operations — `analyse`, `trace`, `impact`, `docs check`, `docs affected`,
 
 ```json
 {
-  "operation": "trace",
-  "schemaVersion": 5,
-  "request": {
-    "subject": "…#getPaymentAppData",
-    "resolved": ["…#getPaymentAppData"],
-    "limit": null,
-    "depth": null,
-    "scope": {
-      "include": [{ "axis": "authorship", "value": "authored" }],
-      "exclude": [],
-      "excluded": 0
-    }
-  },
-  "snapshot": {
-    "commit": "176037d0…",
-    "dirty": false
-  },
-  "conditions": [],
-  "blindSpots": [],
-  "budget": {
-    "returned": 1,
-    "available": 1,
-    "truncated": false
-  },
-  "result": []
+	"operation": "trace",
+	"schemaVersion": 5,
+	"request": {
+		"subject": "…#getPaymentAppData",
+		"resolved": ["…#getPaymentAppData"],
+		"limit": null,
+		"depth": null,
+		"scope": {
+			"include": [{ "axis": "authorship", "value": "authored" }],
+			"exclude": [],
+			"excluded": 0
+		}
+	},
+	"snapshot": {
+		"commit": "176037d0…",
+		"dirty": false
+	},
+	"conditions": [],
+	"blindSpots": [],
+	"budget": {
+		"returned": 1,
+		"available": 1,
+		"truncated": false
+	},
+	"result": []
 }
 ```
 
@@ -497,47 +499,47 @@ codedocs callees 'getPaymentAppData' 'chargePayment' --json
 
 ```json
 {
-  "operation": "callees",
-  "schemaVersion": 5,
-  "request": {
-    "subjects": ["getPaymentAppData", "chargePayment"],
-    "resolved": [
-      { "subject": "getPaymentAppData", "resolved": ["…#getPaymentAppData"] },
-      { "subject": "chargePayment", "resolved": ["…#chargePayment"] }
-    ],
-    "limit": null,
-    "depth": null,
-    "scope": {
-      "include": [{ "axis": "authorship", "value": "authored" }],
-      "exclude": []
-    }
-  },
-  "snapshot": {
-    "commit": "176037d0…",
-    "dirty": false
-  },
-  "conditions": [],
-  "result": [
-    {
-      "subject": "getPaymentAppData",
-      "resolved": ["…#getPaymentAppData"],
-      "budget": { "returned": 0, "available": 0, "truncated": false },
-      "excluded": 0,
-      "blindSpots": [],
-      "result": []
-    },
-    {
-      "subject": "chargePayment",
-      "resolved": ["…#chargePayment"],
-      "budget": { "returned": 2, "available": 2, "truncated": false },
-      "excluded": 0,
-      "blindSpots": [],
-      "result": [
-        { "from": "…#chargePayment", "to": "…#audit", "kind": "calls" },
-        { "from": "…#chargePayment", "to": "…#post", "kind": "calls" }
-      ]
-    }
-  ]
+	"operation": "callees",
+	"schemaVersion": 5,
+	"request": {
+		"subjects": ["getPaymentAppData", "chargePayment"],
+		"resolved": [
+			{ "subject": "getPaymentAppData", "resolved": ["…#getPaymentAppData"] },
+			{ "subject": "chargePayment", "resolved": ["…#chargePayment"] }
+		],
+		"limit": null,
+		"depth": null,
+		"scope": {
+			"include": [{ "axis": "authorship", "value": "authored" }],
+			"exclude": []
+		}
+	},
+	"snapshot": {
+		"commit": "176037d0…",
+		"dirty": false
+	},
+	"conditions": [],
+	"result": [
+		{
+			"subject": "getPaymentAppData",
+			"resolved": ["…#getPaymentAppData"],
+			"budget": { "returned": 0, "available": 0, "truncated": false },
+			"excluded": 0,
+			"blindSpots": [],
+			"result": []
+		},
+		{
+			"subject": "chargePayment",
+			"resolved": ["…#chargePayment"],
+			"budget": { "returned": 2, "available": 2, "truncated": false },
+			"excluded": 0,
+			"blindSpots": [],
+			"result": [
+				{ "from": "…#chargePayment", "to": "…#audit", "kind": "calls" },
+				{ "from": "…#chargePayment", "to": "…#post", "kind": "calls" }
+			]
+		}
+	]
 }
 ```
 
@@ -565,12 +567,12 @@ or use MCP:
 
 ```json
 {
-  "mcpServers": {
-    "codedocs": {
-      "command": "codedocs",
-      "args": ["mcp"]
-    }
-  }
+	"mcpServers": {
+		"codedocs": {
+			"command": "codedocs",
+			"args": ["mcp"]
+		}
+	}
 }
 ```
 
@@ -592,23 +594,23 @@ An optional `codedocs.jsonc` can provide facts that codedocs cannot infer:
 
 ```jsonc
 {
-  "version": 1,
-  "classify": {
-    "vendor/**": {
-      "authorship": "generated",
-    },
-  },
-  "baselines": 3,
-  "discover": {
-    "projects": ["packages/*/tsconfig.build.json"],
-    "skip": ["repos"],
-  },
-  "remediations": [
-    {
-      "specifier": "@calcom/prisma/*",
-      "run": "pnpm prisma generate",
-    },
-  ],
+	"version": 1,
+	"classify": {
+		"vendor/**": {
+			"authorship": "generated",
+		},
+	},
+	"baselines": 3,
+	"discover": {
+		"projects": ["packages/*/tsconfig.build.json"],
+		"skip": ["repos"],
+	},
+	"remediations": [
+		{
+			"specifier": "@calcom/prisma/*",
+			"run": "pnpm prisma generate",
+		},
+	],
 }
 ```
 
