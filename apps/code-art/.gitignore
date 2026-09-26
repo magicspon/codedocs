@@ -1,2 +1,4 @@
 # Per-commit analyses cached by `pnpm timeline`.
 .cache
+# The public site, from `pnpm build:web`.
+dist-web

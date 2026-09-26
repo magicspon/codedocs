@@ -1,64 +1,30 @@
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import type { FileSymbols } from './lib/atlas.ts'
-import { DATASETS, loadSeries } from './lib/load.ts'
 import { loadNames } from './lib/names.ts'
-import type { Series } from './lib/series.ts'
-import type { Direction, TraceQuery } from './lib/trace.ts'
+import type { TraceQuery } from './lib/trace.ts'
+import { searchOf } from './search.ts'
 
-/** Reads `?data=…&scene=…&lens=health&isolate=on&q=…` so a view can be bookmarked. */
-export function initial(key: string, fallback: string): string {
-  return new URLSearchParams(location.search).get(key) ?? fallback
-}
-
-/** The dataset to open: whatever the URL asks for, else the first exported. */
-export function initialDataset(): string {
-  return initial('data', DATASETS[0] ?? '')
-}
-
-/** The search to open with: `?q=` from the URL, traced both ways, two hops deep. */
-export function initialQuery(): TraceQuery {
-  const flow = initial('flow', 'both')
-  return {
-    text: initial('q', ''),
-    direction: (['in', 'out', 'both'].includes(flow)
-      ? flow
-      : 'both') as Direction,
-    via: initial('via', 'calls') === 'imports' ? 'imports' : 'calls',
-    depth: 2,
-  }
-}
-
-/** A loaded series and the file hovered inside it. */
-export interface SeriesView {
-  /** Null while loading, and between datasets. */
-  readonly series: Series | null
-  /** An index into `series.merged.files`. */
+/** The file hovered in the current view. */
+export interface HoverView {
+  /** An index into the series' `merged.files`. */
   readonly hovered: number | null
   readonly setHovered: (index: number | null) => void
 }
 
 /**
- * Loads a dataset, and holds what the pointer is over in it.
- *
- * A loaded dataset stays cached, so switching back to it is instant; each
- * scene still lays it out afresh. The hover is an index into the series it
- * came from, so it is kept against the view it was made in and dropped when
- * the dataset or scene changes, rather than left to point at another file.
+ * Holds what the pointer is over in `view` (a dataset and scene). The hover
+ * is an index into the series it came from, so it is kept against the view it
+ * was made in and dropped when the view changes, rather than left to point at
+ * another file.
  */
-export function useSeries(dataset: string, scene: string): SeriesView {
-  const { data } = useQuery({
-    queryKey: ['series', dataset],
-    queryFn: () => loadSeries(dataset),
-    enabled: dataset !== '',
-  })
-  const view = `${dataset}/${scene}`
+export function useHover(view: string): HoverView {
   const [held, setHeld] = useState<{ view: string; index: number | null }>({
     view,
     index: null,
   })
   return {
-    series: data ?? null,
     hovered: held.view === view ? held.index : null,
     // The pointer moves far more often than it changes file; an unchanged
     // hover keeps the same state, or every move re-renders the whole scene.
@@ -70,21 +36,20 @@ export function useSeries(dataset: string, scene: string): SeriesView {
 }
 
 /** Keeps the URL in step with the view, so the address bar is always shareable. */
-export function useBookmark(
-  dataset: string,
-  scene: string,
-  lens: boolean,
-  isolate: boolean,
-  search: string,
-): void {
+export function useBookmark(view: {
+  scene: string
+  lens: boolean
+  isolate: boolean
+  query: TraceQuery
+}): void {
+  const navigate = useNavigate({ from: '/$dataset' })
+  const search = searchOf(view)
+  const key = JSON.stringify(search)
   useEffect(() => {
-    if (!dataset) return
-    let query = `?data=${encodeURIComponent(dataset)}&scene=${scene}`
-    if (lens) query += '&lens=health'
-    if (isolate) query += '&isolate=on'
-    if (search.trim()) query += `&q=${encodeURIComponent(search.trim())}`
-    history.replaceState(null, '', query)
-  }, [dataset, scene, lens, isolate, search])
+    // Replaced, not pushed: Back leaves the art rather than undoing a keystroke.
+    void navigate({ search, replace: true })
+    // `key` stands for `search`, which is a new object every render.
+  }, [navigate, key])
 }
 
 /**

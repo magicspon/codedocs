@@ -4,6 +4,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
+    // A private app that never emits a `.d.ts`, so the root's reason for
+    // isolated declarations does not apply, and the router's registered type
+    // is inferred and cannot be spelled out.
+    "isolatedDeclarations": false,
+    "declaration": false,
     "types": ["vite/client", "node"]
   },
   "include": ["src", "scripts", "vite.config.ts"],

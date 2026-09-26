@@ -36,18 +36,6 @@ interface HudProps {
 export function Hud(props: HudProps): JSX.Element {
   // Held here, not in the panel, so it stays shut across files until reopened.
   const [collapsed, setCollapsed] = useState(false)
-  if (props.datasets.length === 0) {
-    return (
-      <div className="hud empty">
-        <h1>No data yet</h1>
-        <p>
-          Run <code>pnpm --filter @codedocs/code-art export &lt;repo&gt;</code>{' '}
-          and reload.
-        </p>
-      </div>
-    )
-  }
-
   const fallow = props.series?.merged.fallow
   const shown = detailFile(props.hovered, props.trace?.matches)
   const file = hoveredFile(props.series, props.frame, shown)
