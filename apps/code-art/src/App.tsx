@@ -15,6 +15,7 @@ import { keyFrames } from './lib/time-warp.ts'
 import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { GalaxyHud } from './GalaxyHud.tsx'
 import { Hud } from './Hud.tsx'
+import { Loader } from './Loader.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { toggleTracks } from './scenes/tracks.ts'
 import { TimelineBar } from './TimelineBar.tsx'
@@ -68,6 +69,11 @@ export function App(): JSX.Element {
   const playhead = useMemo<Playhead>(() => ({ t: 0 }), [series, scene])
   // The galaxy keeps its own bare overlay; with no data, the HUD says so.
   const bare = scene === 'galaxy' && DATASETS.length > 0
+  // The view whose first frame has drawn. Keyed like the canvas, so a new
+  // dataset or scene shows the spinner again until it too has drawn.
+  const view = `${dataset}/${scene}`
+  const [drawn, setDrawn] = useState<string | null>(null)
+  const loading = dataset !== '' && drawn !== view
 
   return (
     <>
@@ -85,8 +91,10 @@ export function App(): JSX.Element {
           aim={nav.aim}
           onClaims={setClaims}
           fly={flying}
+          onReady={() => setDrawn(view)}
         />
       )}
+      {loading && <Loader />}
       {bare ? (
         <GalaxyHud
           fly={flying}

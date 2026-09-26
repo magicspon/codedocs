@@ -49,10 +49,18 @@ const loaders = sources()
 /** Dataset names, sorted. */
 export const DATASETS: readonly string[] = Object.keys(loaders).sort()
 
+/** Resolves once the browser has painted a frame. */
+function nextPaint(): Promise<void> {
+  // A frame callback runs just before paint; the timeout lands just after it.
+  return new Promise((done) => requestAnimationFrame(() => setTimeout(done, 0)))
+}
+
 /** Loads one dataset by name. */
 export async function loadSeries(name: string): Promise<Series> {
   const load = loaders[name]
   if (!load) throw new Error(`no dataset named ${name}`)
+  // Let the spinner paint first: the parse below blocks the main thread.
+  await nextPaint()
   const data = await load()
   return 'frames' in data ? seriesOf(data) : fromAtlas(data)
 }

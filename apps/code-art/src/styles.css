@@ -27,6 +27,45 @@ canvas {
   display: block;
 }
 
+.loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Only `transform` animates, so the compositor keeps it turning while the
+   main thread is stuck in a JSON parse or a layout. */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--edge);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.loader-label {
+  font-size: var(--text-small);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 3s;
+  }
+}
+
 .hud {
   position: fixed;
   inset: 16px;

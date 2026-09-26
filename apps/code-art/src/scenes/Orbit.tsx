@@ -1,6 +1,8 @@
 import { Html } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import {
+  memo,
+  type MemoExoticComponent,
   useLayoutEffect,
   useRef,
   useState,
@@ -23,6 +25,7 @@ import { KIND_COLORS } from '../lib/palette.ts'
 import { bodyColor, poseBody, useBodyLook } from './body-look.ts'
 import { Glimpses, type MoonsFor } from './Glimpses.tsx'
 import { placeOf } from './place.ts'
+import { PLANET_SPHERE } from './spheres.ts'
 import { useTracks } from './tracks.ts'
 
 const dummy = new Object3D()
@@ -86,11 +89,11 @@ function Track(props: { ring: Ring; color: Color }): JSX.Element | null {
 function Marker(props: { ring: Ring; planet: Planet }): JSX.Element {
   return (
     <mesh
+      geometry={PLANET_SPHERE}
       position={placeOf(props.ring, props.planet)}
       scale={props.ring.size * 2.2}
       raycast={() => null}
     >
-      <sphereGeometry args={[1, 16, 12]} />
       <meshBasicMaterial
         color="#ffffff"
         wireframe
@@ -103,7 +106,7 @@ function Marker(props: { ring: Ring; planet: Planet }): JSX.Element {
 }
 
 /** What an orbit carries at its focused planet, when one of its planets is focused. */
-export interface Focused {
+interface Focused {
   /** The focused planet's symbol. */
   readonly symbol: number
   /** Drawn at the planet and carried round with it: its moons. */
@@ -137,7 +140,7 @@ function marksOf(
  * One orbit: its faint line, and its bodies turning on it. Clicking a body
  * names its symbol to `onSelect`; a focused body carries its moons round.
  */
-export function Orbit({
+function OrbitRing({
   ring,
   symbols,
   focused,
@@ -232,3 +235,6 @@ export function Orbit({
     </group>
   )
 }
+
+/** `OrbitRing`, re-rendered only when its ring or marks change. */
+export const Orbit: MemoExoticComponent<typeof OrbitRing> = memo(OrbitRing)

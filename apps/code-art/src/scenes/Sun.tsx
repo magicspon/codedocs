@@ -1,4 +1,5 @@
 import type { JSX } from 'react'
+import { SUN_SPHERE } from './spheres.ts'
 
 /** The sun's radius, against a system's first ring 1.1 from it. */
 const RADIUS = 0.16
@@ -9,8 +10,7 @@ const RADIUS = 0.16
  */
 export function Sun(): JSX.Element {
   return (
-    <mesh scale={RADIUS} raycast={() => null}>
-      <sphereGeometry args={[1, 24, 16]} />
+    <mesh geometry={SUN_SPHERE} scale={RADIUS} raycast={() => null}>
       <meshBasicMaterial color={[2.6, 2.3, 1.9]} toneMapped={false} />
     </mesh>
   )

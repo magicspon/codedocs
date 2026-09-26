@@ -1,6 +1,6 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, type JSX } from 'react'
+import { useCallback, useEffect, useMemo, useRef, type JSX } from 'react'
 import { Vector3, type Group, type Points } from 'three'
 import { approach, type Shot } from '../lib/flight.ts'
 import { galaxyLayout } from '../lib/galaxy-layout.ts'
@@ -57,6 +57,9 @@ export function Galaxy(props: SceneProps): JSX.Element {
     }),
     [],
   )
+  // Listed once, so the frame loop does not build arrays sixty times a second.
+  const every = useMemo(() => Object.values(materials), [materials])
+  const lit = useMemo(() => [materials.stars, materials.cores], [materials])
   useEffect(() => {
     for (const m of [materials.stars, materials.cores]) {
       m.uniforms.uHealth!.value = health.texture
@@ -171,10 +174,9 @@ export function Galaxy(props: SceneProps): JSX.Element {
   )
 
   useFrame((state) => {
-    for (const m of Object.values(materials))
-      m.uniforms.uTime!.value = playhead.t
+    for (const m of every) m.uniforms.uTime!.value = playhead.t
     health.follow(playhead.t, lens.current)
-    for (const m of [materials.stars, materials.cores]) {
+    for (const m of lit) {
       m.uniforms.uLens!.value = lens.current
       m.uniforms.uClock!.value = state.clock.elapsedTime
       m.uniforms.uFocus!.value = focus.mix.current
@@ -196,6 +198,28 @@ export function Galaxy(props: SceneProps): JSX.Element {
     !isolation.hidden(file)
   const hover = (file: number | null): void =>
     onHover(file !== null && present(file) ? file : null)
+  // The systems round the craft are memoised, so they get callbacks that
+  // never change: a click reads the latest pick through this ref, and a
+  // star's light changes only with the data, not with every hover.
+  const latest = useRef({ present, onPick: props.onPick })
+  latest.current = { present, onPick: props.onPick }
+  const pickNear = useCallback((file: number): void => {
+    const { present, onPick } = latest.current
+    if (present(file)) onPick(file)
+  }, [])
+  const focusMix = focus.mix
+  const isolationMix = isolation.mix
+  const lightNear = useCallback(
+    (file: number): number =>
+      starLight(
+        series.fileLife[file]!,
+        playhead.t,
+        trace?.focus[file] ?? 1,
+        focusMix.current,
+        isolationMix.current,
+      ),
+    [series, playhead, trace, focusMix, isolationMix],
+  )
 
   return (
     <>
@@ -236,22 +260,14 @@ export function Galaxy(props: SceneProps): JSX.Element {
         />
         {flying && (
           <Nearby
-            light={(file) =>
-              starLight(
-                series.fileLife[file]!,
-                playhead.t,
-                trace?.focus[file] ?? 1,
-                focus.mix.current,
-                isolation.mix.current,
-              )
-            }
+            light={lightNear}
             repo={series.merged.name}
             files={series.merged.files}
             anchors={shape.anchors}
             ranges={ranges}
             craft={craft}
             skip={pick}
-            onPick={(file) => present(file) && props.onPick(file)}
+            onPick={pickNear}
           />
         )}
         {props.aim != null && (

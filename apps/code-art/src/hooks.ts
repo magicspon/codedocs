@@ -60,7 +60,12 @@ export function useSeries(dataset: string, scene: string): SeriesView {
   return {
     series: data ?? null,
     hovered: held.view === view ? held.index : null,
-    setHovered: (index) => setHeld({ view, index }),
+    // The pointer moves far more often than it changes file; an unchanged
+    // hover keeps the same state, or every move re-renders the whole scene.
+    setHovered: (index) =>
+      setHeld((h) =>
+        h.view === view && h.index === index ? h : { view, index },
+      ),
   }
 }
 

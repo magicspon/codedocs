@@ -1,5 +1,13 @@
 import { useFrame } from '@react-three/fiber'
-import { useMemo, useRef, useState, type JSX, type RefObject } from 'react'
+import {
+  memo,
+  type MemoExoticComponent,
+  useMemo,
+  useRef,
+  useState,
+  type JSX,
+  type RefObject,
+} from 'react'
 import type { Group, Vector3 } from 'three'
 import { useSymbols } from '../hooks.ts'
 import { isTest, type FileDatum } from '../lib/atlas.ts'
@@ -30,6 +38,8 @@ function place(g: Group | null, grow: number, seen: number): void {
   // An ease-out on the scale, as when a picked file's planets unfold.
   g.scale.setScalar(Math.max(1 - (1 - grow) ** 3, 1e-4))
   g.visible = seen > 0
+  // Most slots are out of sight; walking their trees would cost the most frames.
+  if (!g.visible) return
   fadeAll(g, seen)
   lightFrom(g)
 }
@@ -115,7 +125,7 @@ function NearSystem(props: {
  * A slot: a system while a star holds it. A star handed the slot fades in
  * while the one before it fades out.
  */
-function Slot(props: {
+const Slot = memo(function Slot(props: {
   repo: string
   files: readonly FileDatum[]
   file: number | null
@@ -154,7 +164,7 @@ function Slot(props: {
       {held.leaving !== null && system(held.leaving, true)}
     </>
   )
-}
+})
 
 /**
  * The planets and moons of the stars round the craft, growing out of each
@@ -163,7 +173,7 @@ function Slot(props: {
  * see by `light`; `skip` is the picked file, whose own system is already
  * drawn. Drawn inside the galaxy's group, whose frame `craft` is in.
  */
-export function Nearby(props: {
+function NearbySystems(props: {
   repo: string
   files: readonly FileDatum[]
   anchors: readonly Anchor[]
@@ -215,3 +225,7 @@ export function Nearby(props: {
     </>
   )
 }
+
+/** `NearbySystems`, re-rendered only when its data or callbacks change. */
+export const Nearby: MemoExoticComponent<typeof NearbySystems> =
+  memo(NearbySystems)

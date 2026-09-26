@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react'
 import {
-  SphereGeometry,
   type BufferGeometry,
   type Color,
   type Material,
@@ -11,6 +10,7 @@ import type { Planet, Ring } from '../lib/orbits.ts'
 import { starLitMaterial } from '../lib/star-lit.ts'
 import { streakGeometry } from '../lib/streak.ts'
 import { placeOf } from './place.ts'
+import { PLANET_SPHERE } from './spheres.ts'
 
 /** How far a disc body is drawn out along its orbit, against its size. */
 const STREAK = 12
@@ -43,13 +43,13 @@ export function poseBody(ring: Ring, p: Planet, out: Object3D): void {
 }
 
 /**
- * The shape of a ring's bodies: a unit sphere for a planet, which its pose
- * sizes, or on a disc a streak bent round the ring, so the disc reads as
- * fine arcs of hot matter.
+ * The shape of a ring's bodies: the shared unit sphere for a planet, which
+ * its pose sizes, or on a disc a streak bent round the ring, so the disc
+ * reads as fine arcs of hot matter.
  */
 function bodyGeometry(ring: Ring): BufferGeometry {
   return ring.heat === null
-    ? new SphereGeometry(1, 16, 12)
+    ? PLANET_SPHERE
     : streakGeometry(ring.radius, ring.size * STREAK, ring.size * 0.4)
 }
 
@@ -77,7 +77,11 @@ export function useBodyLook(ring: Ring): {
   const hot = ring.heat !== null
   const lit = useMemo(() => bodyMaterial(hot), [hot])
   const shape = useMemo(() => bodyGeometry(ring), [ring])
-  useEffect(() => () => shape.dispose(), [shape])
+  // The shared sphere outlives any one ring; only a ring's own streak is freed.
+  useEffect(
+    () => () => void (shape !== PLANET_SPHERE && shape.dispose()),
+    [shape],
+  )
   useEffect(() => () => lit.dispose(), [lit])
   return { lit, shape }
 }

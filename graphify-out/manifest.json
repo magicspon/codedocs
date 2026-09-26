@@ -1810,8 +1810,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790443855.4894757,
-    "ast_hash": "829ebe9007c22676acbaacf86f61eab4",
+    "mtime": 1790444745.3108263,
+    "ast_hash": "3d819486218026986104720705ec5fc7",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1825,28 +1825,28 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/cal.com.json": {
-    "mtime": 1790028980.5624764,
-    "ast_hash": "5549ae6f6a59cf609737779d3aee1001",
+    "mtime": 1790444440.1851866,
+    "ast_hash": "4e73c50a6961b79069435173d72f6a8f",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.json": {
-    "mtime": 1790028980.6340876,
-    "ast_hash": "8b28746aaf23db59533709636e750a41",
+    "mtime": 1790444440.5853248,
+    "ast_hash": "c5843d11d138225200be70225c2ad511",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/next-fullstack-realworld-app.json": {
-    "mtime": 1790028980.7022967,
-    "ast_hash": "ddb84d450603f802c28576c38379d2fa",
+    "mtime": 1790444441.2995636,
+    "ast_hash": "fdbfda954f11451c1601f3161c5c21e7",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/redwood-realworld-example-app.json": {
-    "mtime": 1790028980.7344356,
-    "ast_hash": "188c91247efdcb58575518ada23582de",
+    "mtime": 1790444441.3236668,
+    "ast_hash": "062a24416c4a8ad5007cd94a2a02d8b0",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/vscode.json": {
-    "mtime": 1790028980.7920122,
-    "ast_hash": "385a05a2438d87e0fd3488c7ae24bf3c",
+    "mtime": 1790444450.9722311,
+    "ast_hash": "2aae05c773234acfe3e20ae15bf00cf4",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/atlas.ts": {
@@ -1865,8 +1865,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/load.ts": {
-    "mtime": 1790192248.8843567,
-    "ast_hash": "3b61ec3a6acc8437cdea31498a922a45",
+    "mtime": 1790444736.2759583,
+    "ast_hash": "db0c6d53e25115893cb156482250b9f8",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/palette.ts": {
@@ -1885,8 +1885,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Galaxy.tsx": {
-    "mtime": 1790443175.3912673,
-    "ast_hash": "cfae596c8eb3a2c76d262143d00af367",
+    "mtime": 1790444570.4015698,
+    "ast_hash": "4ac07c3acd770552ea37e4a9b137f401",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/scene.ts": {
@@ -1920,8 +1920,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
-    "mtime": 1790192248.8761392,
-    "ast_hash": "5eab686d74177a92e19574843b4d9310",
+    "mtime": 1790444736.2233837,
+    "ast_hash": "1a92cca0445ff131d2f550cfc6a8b65e",
     "semantic_hash": ""
   },
   "docs/adr/0015-trim-flag-for-context-budget.md": {
@@ -1960,8 +1960,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.timeline.json": {
-    "mtime": 1790028980.669895,
-    "ast_hash": "ebb0282e36d052ef4450ad48cdc0693e",
+    "mtime": 1790444441.2849858,
+    "ast_hash": "8bbdf99fa65590a8ee71670991880709",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/series.ts": {
@@ -1980,8 +1980,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/code-art.timeline.json": {
-    "mtime": 1790028980.602028,
-    "ast_hash": "b443f113e76a46921bcc6a4f22cb9768",
+    "mtime": 1790444440.5339458,
+    "ast_hash": "742e2a664dd32299f6c32e6b0be1dea8",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/vscode.timeline.json": {
@@ -2055,18 +2055,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Controls.tsx": {
-    "mtime": 1790435462.7982767,
+    "mtime": 1790444518.4712813,
     "ast_hash": "936c2e64dd5bb2482bdf388f11495816",
     "semantic_hash": ""
   },
   "apps/code-art/src/Stage.tsx": {
-    "mtime": 1790435462.798002,
-    "ast_hash": "47afa8dfb50d98dacff278508e34abbd",
+    "mtime": 1790444745.3105886,
+    "ast_hash": "ca2c407adce2548821a9b3ad0195a5bb",
     "semantic_hash": ""
   },
   "apps/code-art/src/hooks.ts": {
-    "mtime": 1790192248.8811383,
-    "ast_hash": "faeb4b78602734aa9321fe5c83decd74",
+    "mtime": 1790444570.401089,
+    "ast_hash": "38e58474cbfa01b5fb1b748d8a114ac0",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/frame.ts": {
@@ -2220,8 +2220,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/codedocs.symbols.json": {
-    "mtime": 1790081653.8607078,
-    "ast_hash": "adacafa97f0b16ba4197f56d59440e13",
+    "mtime": 1790444440.8932676,
+    "ast_hash": "d95479ec091aab02d21c5f64b7281614",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/names.ts": {
@@ -2270,13 +2270,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Orbit.tsx": {
-    "mtime": 1790443848.2950504,
-    "ast_hash": "ebabd2739352fb0cd24a24b083da5f60",
+    "mtime": 1790444570.4022226,
+    "ast_hash": "fdd29476886f5fa4bade1d683c1bc979",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/follow.ts": {
-    "mtime": 1790192248.8908587,
-    "ast_hash": "da8ef07d5b676b852522f6c3d2afc9b9",
+    "mtime": 1790444570.4033432,
+    "ast_hash": "e48133400c3c8c75598eba4f6ffefc74",
     "semantic_hash": ""
   },
   "apps/code-art/test/orbits.test.ts": {
@@ -2305,13 +2305,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Glimpses.tsx": {
-    "mtime": 1790432955.2827516,
-    "ast_hash": "ed029fda5d166a61af567e205b7ed730",
+    "mtime": 1790444588.7484345,
+    "ast_hash": "9e78db6b6926380c9dc4ead82a98ea71",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/place.ts": {
-    "mtime": 1790192248.8913949,
-    "ast_hash": "1a9aae0714ba9669f9ceaceb2f38cf5a",
+    "mtime": 1790444570.4036193,
+    "ast_hash": "d2ab900524c24a1fa4509a9d7a911e9a",
     "semantic_hash": ""
   },
   "apps/code-art/test/glimpses.test.ts": {
@@ -2375,18 +2375,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/data/router.json": {
-    "mtime": 1790430040.6960192,
-    "ast_hash": "a5450da0965366b80717d6777d702537",
+    "mtime": 1790444442.8758104,
+    "ast_hash": "c4c1c5514a35be15d962f8873a645282",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/router.symbols.json": {
-    "mtime": 1790430041.0864964,
-    "ast_hash": "b92ffaf70aef7250febc9ecb4e4c345d",
+    "mtime": 1790444448.1657212,
+    "ast_hash": "767792e0b632830164a02ff51d2de2d7",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/craft.ts": {
-    "mtime": 1790433642.2454767,
-    "ast_hash": "1862a142a46b0e15b86b23e79ef3efa3",
+    "mtime": 1790444570.4013393,
+    "ast_hash": "f73783bfafa71ac092be9425fd33d8f0",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Craft.tsx": {
@@ -2395,8 +2395,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Nearby.tsx": {
-    "mtime": 1790443175.3915458,
-    "ast_hash": "2f45ecf350daa26dae1cf1880642e7da",
+    "mtime": 1790444570.4020052,
+    "ast_hash": "2a100645898f1eea4d835578399f35c7",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/craft-keys.ts": {
@@ -2410,8 +2410,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/fade.ts": {
-    "mtime": 1790432955.282953,
-    "ast_hash": "b9d3d9adbd06a28982c654287981234c",
+    "mtime": 1790444570.4030046,
+    "ast_hash": "87241fabfd71d722ed95ef03d68bf82a",
     "semantic_hash": ""
   },
   "apps/code-art/test/fade.test.ts": {
@@ -2435,8 +2435,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Sun.tsx": {
-    "mtime": 1790432955.2834926,
-    "ast_hash": "caf6dad3ac3867d2e3f20f748b49abaa",
+    "mtime": 1790444570.4023879,
+    "ast_hash": "8aa849e9184bb2a8f173f5d527afaa5b",
     "semantic_hash": ""
   },
   "apps/code-art/test/star-lit.test.ts": {
@@ -2620,8 +2620,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/body-look.ts": {
-    "mtime": 1790443201.8014448,
-    "ast_hash": "bf60d56e7f88102b6d73ce7b506e114d",
+    "mtime": 1790444570.4027166,
+    "ast_hash": "6bc2dddcaa2706d7a4544176a4f9778e",
     "semantic_hash": ""
   },
   "apps/code-art/test/body-look.test.ts": {
@@ -2657,6 +2657,16 @@
   "apps/code-art/src/scenes/tracks.ts": {
     "mtime": 1790443847.4816742,
     "ast_hash": "d90ca1ce9e7c39a17b62ddb80fe0e32b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/spheres.ts": {
+    "mtime": 1790444374.3959954,
+    "ast_hash": "dd5a3293b9291bfe9b815999cfec841e",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/Loader.tsx": {
+    "mtime": 1790444736.1990008,
+    "ast_hash": "40a2d9cadb6fb029277a1030adce57fe",
     "semantic_hash": ""
   }
 }

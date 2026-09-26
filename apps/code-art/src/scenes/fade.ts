@@ -10,16 +10,21 @@ export function fadeAll(root: Object3D, opacity: number): void {
   root.traverse((o) => {
     const found = (o as { material?: Material | Material[] }).material
     if (!found) return
-    for (const m of Array.isArray(found) ? found : [found]) {
-      if (m.userData.full === undefined) {
-        m.userData.full = m.opacity
-        m.transparent = true
-        m.needsUpdate = true
-      }
-      m.opacity = (m.userData.full as number) * opacity
-      // A shader material reads its opacity from a uniform, if it has one.
-      if (m instanceof ShaderMaterial && m.uniforms.uOpacity)
-        m.uniforms.uOpacity.value = m.opacity
-    }
+    // No array for a lone material: this runs for every object, every frame.
+    if (Array.isArray(found)) for (const m of found) fade(m, opacity)
+    else fade(found, opacity)
   })
+}
+
+/** Sets one material to `opacity` of its full strength. */
+function fade(m: Material, opacity: number): void {
+  if (m.userData.full === undefined) {
+    m.userData.full = m.opacity
+    m.transparent = true
+    m.needsUpdate = true
+  }
+  m.opacity = (m.userData.full as number) * opacity
+  // A shader material reads its opacity from a uniform, if it has one.
+  if (m instanceof ShaderMaterial && m.uniforms.uOpacity)
+    m.uniforms.uOpacity.value = m.opacity
 }

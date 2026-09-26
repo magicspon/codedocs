@@ -120,11 +120,14 @@ export function nearby(
   keep: (file: number) => boolean = () => true,
 ): number[] {
   const found: { file: number; d: number }[] = []
+  // A set, as every file in the galaxy is checked against it.
+  const held = new Set(shown)
   anchors.forEach(([x, y, z], file) => {
     if (!keep(file)) return
-    const d = Math.hypot(x - at.x, y - at.y, z - at.z)
-    const range = ranges[file]! * (shown.includes(file) ? 1.15 : 1)
-    if (d < range) found.push({ file, d: shown.includes(file) ? d * HOLD : d })
+    const d = Math.sqrt((x - at.x) ** 2 + (y - at.y) ** 2 + (z - at.z) ** 2)
+    const was = held.has(file)
+    const range = ranges[file]! * (was ? 1.15 : 1)
+    if (d < range) found.push({ file, d: was ? d * HOLD : d })
   })
   return found
     .sort((a, b) => a.d - b.d)
@@ -181,10 +184,13 @@ export function nearest(
   anchors: readonly (readonly [number, number, number])[],
   at: Vector3,
 ): number {
+  // Compared squared, with one root at the end: this runs every frame.
   let best = Infinity
-  for (const [x, y, z] of anchors)
-    best = Math.min(best, Math.hypot(x - at.x, y - at.y, z - at.z))
-  return best
+  for (const [x, y, z] of anchors) {
+    const d = (x - at.x) ** 2 + (y - at.y) ** 2 + (z - at.z) ** 2
+    if (d < best) best = d
+  }
+  return Math.sqrt(best)
 }
 
 /** `v`, held within `limit` either side of zero. */
