@@ -19,11 +19,6 @@ const LENS: Record<string, { hot: string; unused: string; rest: string }> = {
     unused: 'Grey stars are files no entry point reaches.',
     rest: 'Pale blue threads join files that share copied code.',
   },
-  city: {
-    hot: 'A pillar of warning light marks a hotspot: taller and redder is hotter, and its windows flush red. A pulse climbing the pillar means heating up; a low grey one means cooling.',
-    unused: 'Unlit, concrete-grey towers are files no entry point reaches.',
-    rest: 'Rust shows code that is hard to change, and the air thickens with smog as the whole repository does.',
-  },
 }
 
 /** A label and its value, one row of the file panel. */
@@ -68,7 +63,7 @@ export function healthRows(health: FileHealth, fallow: FallowMeta): Row[] {
 
 /**
  * What the lens shows in `scene`, in words. Says so when unused files are left
- * out, so a repo with no dark towers is not mistaken for one with no dead code.
+ * out, so a repo with no grey stars is not mistaken for one with no dead code.
  */
 export function lensLegend(scene: string, fallow: FallowMeta): string {
   const lens = LENS[scene]

@@ -27,15 +27,18 @@ function embedded(): Record<string, Load> {
  *
  * `name.json` is one index; `name.timeline.json` is a history. Both load as a
  * `Series`, so no scene has to know which it was given. The `embed` build
- * drops the glob, so no dev export is bundled into the page the CLI ships.
+ * drops the glob, so no dev export is bundled into the page the CLI ships;
+ * dev and the `web` build both show only the listed repositories. Either way
+ * a dataset is a bundle chunk, never a `fetch`.
  */
 function sources(): Record<string, Load> {
   if (import.meta.env.MODE === 'embed') return embedded()
-  // Symbol names are not a dataset; `names.ts` loads them on demand.
-  const modules = import.meta.glob<{ default: Atlas | Timeline }>([
-    '../data/*.json',
-    '!../data/*.symbols.json',
-  ])
+  // Only the repositories the site shows, and no timelines. Globs must be
+  // literal, so the list lives here and in `names.ts`. Symbol names are not
+  // a dataset; `names.ts` loads them on demand.
+  const modules = import.meta.glob<{ default: Atlas | Timeline }>(
+    '../data/{router,typescript,vscode}.json',
+  )
   return Object.fromEntries(
     Object.entries(modules).map(([path, load]) => [
       path.replace(/^.*\/(.+)\.json$/, '$1'),
@@ -49,10 +52,18 @@ const loaders = sources()
 /** Dataset names, sorted. */
 export const DATASETS: readonly string[] = Object.keys(loaders).sort()
 
+/** Resolves once the browser has painted a frame. */
+function nextPaint(): Promise<void> {
+  // A frame callback runs just before paint; the timeout lands just after it.
+  return new Promise((done) => requestAnimationFrame(() => setTimeout(done, 0)))
+}
+
 /** Loads one dataset by name. */
 export async function loadSeries(name: string): Promise<Series> {
   const load = loaders[name]
   if (!load) throw new Error(`no dataset named ${name}`)
+  // Let the spinner paint first: the parse below blocks the main thread.
+  await nextPaint()
   const data = await load()
   return 'frames' in data ? seriesOf(data) : fromAtlas(data)
 }

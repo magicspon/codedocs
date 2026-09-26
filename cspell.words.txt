@@ -11,6 +11,7 @@ emissivemap
 esbuild
 expando
 fallowrc
+fooking
 fract
 frontmatter
 gitdir
@@ -33,6 +34,7 @@ mattpocock
 metacharacter
 metalness
 mhmm
+multisampling
 npmjs
 nums
 numstat
@@ -45,6 +47,7 @@ reindent
 remediations
 renovatebot
 reprepares
+reslot
 SCIP
 sperno
 squarified

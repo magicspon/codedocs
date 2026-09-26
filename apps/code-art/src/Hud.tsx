@@ -19,6 +19,9 @@ interface HudProps {
   readonly onLens: (on: boolean) => void
   readonly isolate: boolean
   readonly onIsolate: (on: boolean) => void
+  /** Whether the camera rides the spacecraft. */
+  readonly fly: boolean
+  readonly onFly: (on: boolean) => void
   readonly series: Series | null
   /** The whole frame under the playhead, which the hovered file's facts come from. */
   readonly frame: number
@@ -33,18 +36,6 @@ interface HudProps {
 export function Hud(props: HudProps): JSX.Element {
   // Held here, not in the panel, so it stays shut across files until reopened.
   const [collapsed, setCollapsed] = useState(false)
-  if (props.datasets.length === 0) {
-    return (
-      <div className="hud empty">
-        <h1>No data yet</h1>
-        <p>
-          Run <code>pnpm --filter @codedocs/code-art export &lt;repo&gt;</code>{' '}
-          and reload.
-        </p>
-      </div>
-    )
-  }
-
   const fallow = props.series?.merged.fallow
   const shown = detailFile(props.hovered, props.trace?.matches)
   const file = hoveredFile(props.series, props.frame, shown)
@@ -62,6 +53,8 @@ export function Hud(props: HudProps): JSX.Element {
           onLens={props.onLens}
           isolate={props.isolate}
           onIsolate={props.onIsolate}
+          fly={props.fly}
+          onFly={props.onFly}
           fallow={fallow}
           series={props.series}
           frame={props.frame}
@@ -79,6 +72,13 @@ export function Hud(props: HudProps): JSX.Element {
             collapsed={collapsed}
             onCollapse={setCollapsed}
           />
+        )}
+        {props.fly && (
+          <div className="panel">
+            <p className="legend system-keys">
+              W S thrust · A D turn · Q E dive and climb · Shift boost · F land
+            </p>
+          </div>
         )}
         {/* Only the galaxy draws a picked file as a system to walk. */}
         {props.scene === 'galaxy' && props.nav.selected !== null && (

@@ -133,8 +133,8 @@ function particleMaterial(uniforms: FlowUniforms): ShaderMaterial {
 }
 
 /**
- * Markers: a searched file wears a slow ripple; a reached one a dot that
- * flashes as light lands on it.
+ * Markers: a searched file wears a steady glow at its heart; a reached one a
+ * dot that flashes as light lands on it.
  */
 function markerMaterial(uniforms: FlowUniforms): ShaderMaterial {
   return additive(
@@ -162,21 +162,14 @@ function markerMaterial(uniforms: FlowUniforms): ShaderMaterial {
       }
     `,
     /* glsl */ `
-      uniform float uClock;
       varying vec3 vColor;
       varying float vRoot;
       varying float vFlash;
       void main() {
         float d = length(gl_PointCoord - 0.5) * 2.0;
         float spot = pow(smoothstep(1.0, 0.0, d), 3.0) * (0.35 + vFlash * 1.4);
-        // Two ripples a beat apart, each spreading and fading as it goes.
-        float r1 = fract(uClock * 0.45);
-        float r2 = fract(uClock * 0.45 + 0.5);
-        float ring =
-          smoothstep(0.06, 0.0, abs(d - r1)) * (1.0 - r1) +
-          smoothstep(0.06, 0.0, abs(d - r2)) * (1.0 - r2);
         float core = pow(smoothstep(0.3, 0.0, d), 2.0) * (0.9 + vFlash);
-        float a = mix(spot, ring * 0.9 + core, vRoot);
+        float a = mix(spot, core, vRoot);
         gl_FragColor = vec4(vColor * a, 1.0);
       }
     `,

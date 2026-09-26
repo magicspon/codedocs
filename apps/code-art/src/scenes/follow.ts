@@ -15,6 +15,8 @@ type Leg =
     }
 
 const at = new Vector3()
+const now = new Vector3()
+const moved = new Vector3()
 
 /**
  * Flies the camera to a moving body and rides along with it: once there, the
@@ -106,18 +108,20 @@ function fly(
   return leg.t >= 1
 }
 
-/** Moves the camera by whatever `body` moved since `last`; returns where it is now. */
+/**
+ * Moves the camera by whatever `body` moved since `last`; returns where it
+ * is now, in `last` itself once there is one, so riding allocates nothing.
+ */
 function ride(
   controls: Controls,
   body: Object3D,
   last: Vector3 | null,
 ): Vector3 {
-  const now = body.getWorldPosition(new Vector3())
-  if (last) {
-    const moved = now.clone().sub(last)
-    controls.target.add(moved)
-    controls.object.position.add(moved)
-    controls.object.lookAt(controls.target)
-  }
-  return now
+  body.getWorldPosition(now)
+  if (!last) return now.clone()
+  moved.copy(now).sub(last)
+  controls.target.add(moved)
+  controls.object.position.add(moved)
+  controls.object.lookAt(controls.target)
+  return last.copy(now)
 }

@@ -17,7 +17,8 @@
     "**/snap/**",
     "**/vite.config.*.timestamp-*.*",
     "graphify-out/**",
-    "repos/**"
+    "repos/**",
+    "apps/code-art/archive/**"
   ],
   "rules": {
     "no-restricted-imports": [

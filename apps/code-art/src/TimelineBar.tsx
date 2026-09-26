@@ -12,6 +12,8 @@ interface TimelineBarProps {
   readonly onFrame: (frame: number) => void
   /** The only frames to play, from `keyFrames`, when isolation squeezes time; `null` plays them all. */
   readonly keys: readonly number[] | null
+  /** Out of sight but still playing, so the scene keeps growing behind it. */
+  readonly hidden?: boolean
 }
 
 /**
@@ -25,6 +27,7 @@ export function TimelineBar({
   playhead,
   onFrame,
   keys: squeezed,
+  hidden = false,
 }: TimelineBarProps): JSX.Element {
   const frames = series.commits.length
   const keys = useMemo(
@@ -78,7 +81,7 @@ export function TimelineBar({
 
   const commit = series.commits[frame]
   return (
-    <div className="panel timeline">
+    <div className="panel timeline" hidden={hidden}>
       <button onClick={toggle} aria-label={playing ? 'Pause' : 'Play'}>
         {playing ? '❚❚' : '▶'}
       </button>

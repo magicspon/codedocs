@@ -24,8 +24,9 @@ function embedded(): Record<string, Load> {
 
 function sources(): Record<string, Load> {
   if (import.meta.env.MODE === 'embed') return embedded()
+  // The site's repositories, as in `load.ts`.
   const modules = import.meta.glob<{ default: SymbolNames }>(
-    '../data/*.symbols.json',
+    '../data/{router,typescript,vscode}.symbols.json',
   )
   return Object.fromEntries(
     Object.entries(modules).map(([path, load]) => [

@@ -21,8 +21,10 @@ export function bodyAt(
   time: number,
   out: Vector3,
 ): Vector3 {
+  // Written straight into `out`: this runs for every moon, every frame.
+  const r = ring.radius + p.drift
   return out
-    .set(...placeOf(ring, p))
+    .set(Math.cos(p.phase) * r, p.lift, Math.sin(p.phase) * r)
     .applyAxisAngle(Y, -ring.speed * time)
     .applyAxisAngle(X, ring.tilt)
     .applyAxisAngle(Y, ring.node)

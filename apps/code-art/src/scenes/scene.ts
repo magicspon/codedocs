@@ -19,6 +19,8 @@ export interface SceneProps {
   readonly aim?: number | null
   /** Whether to isolate the trace: hide what it does not reach and draw the rest in close. */
   readonly isolate?: boolean
+  /** Whether the camera rides the spacecraft, flown by keyboard, instead of orbiting. */
+  readonly fly?: boolean
   /** Told which plain keys a picked file's system is using, so the rest stand aside. */
   readonly onClaims?: (claims: SystemClaims) => void
 }

@@ -1,7 +1,7 @@
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, type RefObject } from 'react'
 import type { Points } from 'three'
-import type { PointCloud } from '../lib/galaxy-layout.ts'
+import type { PointCloud } from '../lib/point-cloud.ts'
 
 /** One cloud whose points follow their files when isolation gathers them. */
 export interface Gathered {

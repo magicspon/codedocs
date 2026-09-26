@@ -1,8 +1,8 @@
 import { Html } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
-import type { JSX, Ref, RefObject } from 'react'
+import { useRef, type JSX, type Ref, type RefObject } from 'react'
 import type { Group, Points, ShaderMaterial } from 'three'
-import type { PointCloud } from '../lib/galaxy-layout.ts'
+import type { PointCloud } from '../lib/point-cloud.ts'
 import type { Threads } from '../lib/threads.ts'
 
 /** The galaxy's building blocks: its clouds, its threads, its turn and its tags. */
@@ -83,6 +83,29 @@ export function useSpin(
 ): void {
   useFrame((_, delta) => {
     if (group.current && turning) group.current.rotation.y += delta * 0.02
+  })
+}
+
+/** Pixels per unit of point size at unit distance, before any spread. */
+const DOTS = 300
+/** How much larger points are drawn while flying: near their true size, so close stars do not swamp their planets. */
+const FLY_DOTS = 2
+
+/**
+ * Draws the galaxy's points `spread` times larger from afar, matching how far
+ * its stars were spread apart, so the overview looks as dense as ever. In
+ * flight it eases them back towards their true size.
+ */
+export function useDotScale(
+  materials: readonly ShaderMaterial[],
+  flying: boolean,
+  spread: number,
+): void {
+  const now = useRef(spread)
+  useFrame((_, delta) => {
+    const target = flying ? Math.min(FLY_DOTS, spread) : spread
+    now.current += (target - now.current) * Math.min(1, delta * 2)
+    for (const m of materials) m.uniforms.uScale!.value = DOTS * now.current
   })
 }
 

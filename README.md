@@ -6,6 +6,8 @@
 >
 > The architecture and reasoning are documented in [`docs/`](docs/), so if you're interested in how it works, that's the place to start.
 
+News flash... This doesn't work. First test saved 35% in token usage, second took 185% more. maybe there is something here, maybe not... What there is though, there is fooking awesome art. run `codedocs art` in a typescript repo and you'll get a galaxy and city visualisation of your codebase. The city is a bit meh, the galaxy is fucking awesome.
+
 # codedocs
 
 **A deterministic structural index for TypeScript repositories.**
@@ -695,7 +697,7 @@ Nothing is transmitted automatically.
 
 # `codedocs art`
 
-Draws the index as an interactive 3D city and galaxy:
+Draws the index as an interactive 3D galaxy:
 
 ```sh
 codedocs art
@@ -703,7 +705,7 @@ codedocs art
 
 This writes `.codedocs/art/index.html`. Open it in a browser. It is one file, and it makes no network requests.
 
-Each shape stands for a fact about the code. For example, a building's footprint is the file's size, and its height is how many symbols it declares.
+Each shape stands for a fact about the code. For example, each folder is a spiral arm, each file is a cluster of stars, and each star is one symbol, coloured by its kind.
 
 To watch the repository grow, add `--frames` to replay that many commits from its history:
 

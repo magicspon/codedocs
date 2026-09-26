@@ -3,24 +3,23 @@ import { useEffect, useRef } from 'react'
 import type { CityLayout } from '../lib/city-layout.ts'
 import type { FacadeUniforms } from '../lib/facade-material.ts'
 import { easeInOut } from '../lib/flight.ts'
-import type { Playhead } from '../lib/series.ts'
 import { FLIGHT_SECONDS } from './fly.ts'
-import { heightAt, LIFT } from './stack.ts'
+import { LIFT } from './stack.ts'
 
-/** How long the scan takes to climb a tower, in seconds. */
+/** How long the scan takes to climb a settlement, in seconds. */
 const SCAN_SECONDS = 1.4
 
 /**
- * Lights a picked tower as the camera lands on it: a band of light climbs
- * from the street to the roof, switching on every window it passes, so the
- * eye is led up the building the flight arrived at. It starts as the camera
- * slows for the landing rather than after, so the two read as one move.
+ * Lights a picked settlement as the camera lands on it: a band of light
+ * climbs from the street to its landmark's roof, switching on every building
+ * it passes -- shortest first -- so the eye is led up the skyline the flight
+ * arrived at. It starts as the camera slows for the landing rather than
+ * after, so the two read as one move.
  */
 export function useScan(
   uniforms: FacadeUniforms,
   layout: CityLayout,
   pick: number | null,
-  playhead: Playhead,
 ): void {
   const started = useRef(Number.NaN)
   // Stepped like the flight's clock, so the two stay in time on a slow frame.
@@ -42,11 +41,10 @@ export function useScan(
     const now = clock.current
     if (Number.isNaN(started.current))
       started.current = now + FLIGHT_SECONDS * 0.55
-    const b = layout.buildings[file]!
-    // A few floors of margin at each end, so the band enters and leaves whole.
-    const margin = uniforms.uWindow.value * 4
+    const s = layout.settlements[file]!
+    // A little margin at each end, so the band enters and leaves whole.
+    const margin = layout.unit * 0.6
     const climb = easeInOut((now - started.current) / SCAN_SECONDS)
-    uniforms.uScanY.value =
-      LIFT - margin + (heightAt(b, playhead.t) + margin * 2) * climb
+    uniforms.uScanY.value = LIFT - margin + (s.h + margin * 2) * climb
   })
 }

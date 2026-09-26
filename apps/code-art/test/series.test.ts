@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import type { Atlas, Timeline } from '../src/lib/atlas.ts'
-import { cityLayout } from '../src/lib/city-layout.ts'
 import { galaxyLayout } from '../src/lib/galaxy-layout.ts'
 import { fromAtlas, seriesOf, visibility } from '../src/lib/series.ts'
 import { atlas, file } from './fixture.ts'
@@ -101,12 +100,5 @@ describe('layouts over a history', () => {
     expect(births.filter((b) => b === 0)).toHaveLength(2)
     expect(births.filter((b) => b === 1)).toHaveLength(7)
     expect(stars.deaths.slice(0, 9).every((d) => d === 2)).toBe(true)
-  })
-
-  it('gives a building no height in frames its file does not exist', () => {
-    const [a, b] = cityLayout(series).buildings
-    expect(a!.heights[2]).toBe(0)
-    expect(b!.heights[0]).toBe(0)
-    expect(a!.heights[1]).toBeGreaterThan(a!.heights[0]!)
   })
 })

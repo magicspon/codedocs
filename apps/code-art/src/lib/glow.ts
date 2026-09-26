@@ -119,7 +119,8 @@ export function healthGlowMaterial(flare: number): ShaderMaterial {
         float swell = (1.0 + health.r * uFlare * 2.5 * pulse) * mix(1.0, 0.6, away) *
           (1.0 - found * uAbsorb) * (1.0 - uIsolate * step(focusOf(file), 0.0));
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        gl_PointSize = size * swell * visibility(birth, death, uTime) * uScale / -mv.z;
+        // Capped, so a craft flying past a star is not blinded by one point.
+        gl_PointSize = min(size * swell * visibility(birth, death, uTime) * uScale / -mv.z, 120.0);
         gl_Position = projectionMatrix * mv;
       }
     `,

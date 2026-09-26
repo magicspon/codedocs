@@ -23,6 +23,7 @@
     "playwright-report",
     "graphify-out",
     "dist",
+    "dist-web",
     "coverage",
     "storybook-static",
     "**/.storybook/**/*.ts",

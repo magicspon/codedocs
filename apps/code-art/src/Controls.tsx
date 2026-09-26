@@ -12,7 +12,6 @@ import { useSearchControls } from './useSearchControls.ts'
 const LEGENDS: Record<string, string> = {
   galaxy:
     'Arms are top-level folders. The core holds the code everything else leans on. Stars are symbols, coloured by kind. Red haze marks calls the analysis could not resolve.',
-  city: 'Districts are folders. Footprint is file size, height is symbol count, and each setback is another kind of symbol the file declares. Lit windows are the traffic through the file, tinted by the kind it mostly holds. Roof masts glow with incoming calls.',
 }
 
 /** Leva's tokens, matched to the rest of the overlay. */
@@ -44,6 +43,8 @@ interface ControlsProps {
   readonly onLens: (on: boolean) => void
   readonly isolate: boolean
   readonly onIsolate: (on: boolean) => void
+  readonly fly: boolean
+  readonly onFly: (on: boolean) => void
   readonly fallow: FallowMeta | undefined
   /** Null while loading, when there is nothing to say about the frame. */
   readonly series: Series | null
@@ -117,6 +118,19 @@ export function Controls(props: ControlsProps): JSX.Element {
         },
         transient: false,
       },
+      // Only the galaxy has stars to fly between.
+      'fly ( f )': {
+        value: props.fly,
+        disabled: props.scene !== 'galaxy',
+        onChange: (
+          v: boolean | undefined,
+          _: string,
+          ctx: { initial: boolean },
+        ) => {
+          if (!ctx.initial && v !== undefined) props.onFly(v)
+        },
+        transient: false,
+      },
       showing: { value: shown, editable: false },
     }),
     [props.datasets, props.scenes, available, props.scene],
@@ -129,6 +143,8 @@ export function Controls(props: ControlsProps): JSX.Element {
   useEffect(() => set({ showing: shown }), [set, shown])
   // The `i` key toggles isolation outside Leva.
   useEffect(() => set({ 'isolate ( i )': props.isolate }), [set, props.isolate])
+  // So does `f` for flying.
+  useEffect(() => set({ 'fly ( f )': props.fly }), [set, props.fly])
 
   return (
     <div className="panel controls">

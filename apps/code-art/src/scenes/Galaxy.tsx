@@ -1,6 +1,6 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, type JSX } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useCallback, useEffect, useMemo, useRef, type JSX } from 'react'
 import { Vector3, type Group, type Points } from 'three'
 import { approach, type Shot } from '../lib/flight.ts'
 import { galaxyLayout } from '../lib/galaxy-layout.ts'
@@ -11,19 +11,23 @@ import {
 } from '../lib/glow.ts'
 import { healthTexture } from '../lib/health-texture.ts'
 import { visibility } from '../lib/series.ts'
-import { orbitsOf, SYSTEM_VIEW } from '../lib/orbits.ts'
+import { starLight } from '../lib/star-light.ts'
+import { orbitsOf, reachOf, SYSTEM_VIEW } from '../lib/orbits.ts'
+import { Craft, useLanding, type Goal } from './Craft.tsx'
 import { useFlight } from './fly.ts'
 import { useFocus } from './focus.ts'
-import { Aim, Cloud, Lines, useSpin } from './galaxy-parts.tsx'
+import { Aim, Cloud, Lines, useDotScale, useSpin } from './galaxy-parts.tsx'
 import { useIsolation } from './isolation.ts'
 import { useLens } from './lens.ts'
+import { Nearby } from './Nearby.tsx'
 import { Planets } from './Planets.tsx'
 import type { SceneProps } from './scene.ts'
 import { TraceFlow } from './TraceFlow.tsx'
 
 /**
  * The codebase as a spiral galaxy: arms are top-level directories, the core is
- * the code everything else leans on, stars are symbols, red haze is blind spots.
+ * the code everything else leans on, stars are symbols, red haze is blind spots
+ * and dust lanes are the heaviest calls.
  * Over a timeline, stars ignite as their file gains symbols. Under the health
  * lens, hotspots flare (pulsing when heating up, dull red when cooling),
  * unused files grey out and copies pair up. Under a search, the rest of the
@@ -31,7 +35,9 @@ import { TraceFlow } from './TraceFlow.tsx'
  * file and the galaxy stops turning, the camera flies to its star, and its
  * symbols swing out round it as planets. Isolate it, and everything the
  * trace does not reach goes out, while what it does reach is drawn in round
- * the pick, a ring per hop: callers above, callees below.
+ * the pick, a ring per hop: callers above, callees below. Take off, and the
+ * camera rides a little spacecraft instead, and each star's planets and
+ * moons grow out of it as the craft draws near.
  */
 export function Galaxy(props: SceneProps): JSX.Element {
   const { series, playhead, onHover } = props
@@ -43,14 +49,17 @@ export function Galaxy(props: SceneProps): JSX.Element {
   const materials = useMemo(
     () => ({
       nebulae: glowMaterial(),
+      dust: glowMaterial(),
       // A hot file's core blazes; its stars only warm, or the arm would drown.
       stars: healthGlowMaterial(0.25),
       cores: healthGlowMaterial(1),
-      links: lifeLineMaterial(),
       clones: lifeLineMaterial(),
     }),
     [],
   )
+  // Listed once, so the frame loop does not build arrays sixty times a second.
+  const every = useMemo(() => Object.values(materials), [materials])
+  const lit = useMemo(() => [materials.stars, materials.cores], [materials])
   useEffect(() => {
     for (const m of [materials.stars, materials.cores]) {
       m.uniforms.uHealth!.value = health.texture
@@ -117,7 +126,42 @@ export function Galaxy(props: SceneProps): JSX.Element {
         : { file: series.merged.files[pick]!, at: shape.anchors[pick]! },
     [pick, series, shape],
   )
-  useSpin(group, pick === null)
+  const flying = props.fly ?? false
+  // Where the craft is, in the galaxy's frame, and where it last looked.
+  const craft = useRef(new Vector3())
+  const ahead = useRef<Vector3 | null>(null)
+  // A star shows its planets from this far out: well beyond the view of its
+  // system, so they are already there as the craft closes in.
+  const ranges = useMemo(
+    () => series.merged.files.map((f) => reachOf(f) * SYSTEM_VIEW * 12),
+    [series],
+  )
+  useLanding(flying, ahead)
+  // In flight, a picked file is somewhere to fly to, not a view to cut to.
+  const goal = useMemo<Goal | null>(
+    () =>
+      pick === null
+        ? null
+        : {
+            star: shape.anchors[pick]!,
+            distance:
+              orbitsOf(series.merged.files[pick]!, null).reach * SYSTEM_VIEW,
+          },
+    [pick, shape, series],
+  )
+  // A star answers the pointer within this much of it; wider as the stars
+  // spread, or from the viewing distance it would be too small to hit.
+  const raycaster = useThree((s) => s.raycaster)
+  useEffect(() => {
+    raycaster.params.Points = { threshold: 0.4 * layout.spread }
+  }, [raycaster, layout.spread])
+  useDotScale(
+    [materials.nebulae, materials.dust, materials.stars, materials.cores],
+    flying,
+    layout.spread,
+  )
+  // Held still while flying, or every star would slide past the craft.
+  useSpin(group, pick === null && !flying)
   useFlight(
     pick,
     (file: number, from: Shot) => {
@@ -130,10 +174,9 @@ export function Galaxy(props: SceneProps): JSX.Element {
   )
 
   useFrame((state) => {
-    for (const m of Object.values(materials))
-      m.uniforms.uTime!.value = playhead.t
+    for (const m of every) m.uniforms.uTime!.value = playhead.t
     health.follow(playhead.t, lens.current)
-    for (const m of [materials.stars, materials.cores]) {
+    for (const m of lit) {
       m.uniforms.uLens!.value = lens.current
       m.uniforms.uClock!.value = state.clock.elapsedTime
       m.uniforms.uFocus!.value = focus.mix.current
@@ -145,8 +188,8 @@ export function Galaxy(props: SceneProps): JSX.Element {
     // Isolation takes the rest away altogether: threads and haze belong to files it hides.
     const quiet = (1 - focus.mix.current * 0.88) * (1 - isolation.mix.current)
     materials.clones.uniforms.uOpacity!.value = lens.current * quiet
-    materials.links.uniforms.uOpacity!.value = quiet
     materials.nebulae.uniforms.uDim!.value = quiet
+    materials.dust.uniforms.uDim!.value = quiet
   })
 
   // A file not yet written at this point in history is still in the buffer; it must not answer the pointer.
@@ -155,6 +198,28 @@ export function Galaxy(props: SceneProps): JSX.Element {
     !isolation.hidden(file)
   const hover = (file: number | null): void =>
     onHover(file !== null && present(file) ? file : null)
+  // The systems round the craft are memoised, so they get callbacks that
+  // never change: a click reads the latest pick through this ref, and a
+  // star's light changes only with the data, not with every hover.
+  const latest = useRef({ present, onPick: props.onPick })
+  latest.current = { present, onPick: props.onPick }
+  const pickNear = useCallback((file: number): void => {
+    const { present, onPick } = latest.current
+    if (present(file)) onPick(file)
+  }, [])
+  const focusMix = focus.mix
+  const isolationMix = isolation.mix
+  const lightNear = useCallback(
+    (file: number): number =>
+      starLight(
+        series.fileLife[file]!,
+        playhead.t,
+        trace?.focus[file] ?? 1,
+        focusMix.current,
+        isolationMix.current,
+      ),
+    [series, playhead, trace, focusMix, isolationMix],
+  )
 
   return (
     <>
@@ -163,11 +228,12 @@ export function Galaxy(props: SceneProps): JSX.Element {
         makeDefault
         position={[0, layout.radius * 0.9, layout.radius * 1.5]}
         fov={55}
+        near={0.01}
         far={layout.radius * 20}
       />
       <group ref={group}>
         <Cloud cloud={layout.nebulae} material={materials.nebulae} />
-        <Lines threads={layout.links} material={materials.links} />
+        <Cloud cloud={layout.dust} material={materials.dust} />
         <Lines threads={layout.clones} material={materials.clones} />
         <Cloud ref={stars} cloud={layout.stars} material={materials.stars} />
         <Cloud
@@ -183,7 +249,7 @@ export function Galaxy(props: SceneProps): JSX.Element {
           files={series.merged.files}
           playhead={playhead}
           focus={isolation.flow}
-          scale={300}
+          scale={300 * layout.spread}
         />
         <Planets
           repo={series.merged.name}
@@ -192,6 +258,18 @@ export function Galaxy(props: SceneProps): JSX.Element {
           starOf={starOf}
           onClaims={props.onClaims}
         />
+        {flying && (
+          <Nearby
+            light={lightNear}
+            repo={series.merged.name}
+            files={series.merged.files}
+            anchors={shape.anchors}
+            ranges={ranges}
+            craft={craft}
+            skip={pick}
+            onPick={pickNear}
+          />
+        )}
         {props.aim != null && (
           <Aim
             at={isolation.shape.anchors[props.aim]!}
@@ -199,11 +277,21 @@ export function Galaxy(props: SceneProps): JSX.Element {
           />
         )}
       </group>
-      <OrbitControls
-        makeDefault
-        enableDamping
-        maxDistance={layout.radius * 4}
-      />
+      {flying ? (
+        <Craft
+          galaxy={group}
+          anchors={shape.anchors}
+          local={craft}
+          ahead={ahead}
+          goal={goal}
+        />
+      ) : (
+        <OrbitControls
+          makeDefault
+          enableDamping
+          maxDistance={layout.radius * 4}
+        />
+      )}
     </>
   )
 }

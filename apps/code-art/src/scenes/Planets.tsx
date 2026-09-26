@@ -2,8 +2,9 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState, type JSX, type RefObject } from 'react'
 import { Vector3, type Group } from 'three'
 import { useSymbols } from '../hooks.ts'
-import type { FileDatum, FileSymbols } from '../lib/atlas.ts'
+import { isTest, type FileDatum, type FileSymbols } from '../lib/atlas.ts'
 import { approach } from '../lib/flight.ts'
+import { lightFrom } from '../lib/star-lit.ts'
 import {
   moonsOf,
   orbitsOf,
@@ -26,6 +27,8 @@ import { useFollow } from './follow.ts'
 import type { MoonsFor } from './Glimpses.tsx'
 import { MoonLinks, type StarOf } from './MoonLinks.tsx'
 import { Orbit } from './Orbit.tsx'
+import { BlackHole } from './BlackHole.tsx'
+import { Sun } from './Sun.tsx'
 import { useReportClaims, useSystemKeys } from './system-keys.ts'
 
 /** A picked file, and where its star sits in the galaxy. */
@@ -53,6 +56,7 @@ function useUnfold(
     // An ease-out on the scale, so they fly out fast and settle into orbit.
     g.scale.setScalar(Math.max(1 - (1 - grow.current) ** 3, 1e-4))
     g.visible = grow.current > 0
+    lightFrom(g)
   })
 }
 
@@ -78,9 +82,9 @@ function Satellites(props: {
   const deepest = depth === systems.length - 2
   return (
     <>
-      {systems[depth]!.rings.map((ring) => (
+      {systems[depth]!.rings.map((ring, i) => (
         <Orbit
-          key={ring.kind}
+          key={i}
           ring={ring}
           symbols={props.symbols}
           moonsFor={props.moonsFor}
@@ -161,9 +165,12 @@ function System(props: {
   return (
     <>
       <group ref={props.system} position={at} visible={false}>
-        {/* The star lights its own planets; nothing else in the galaxy is lit. */}
-        <pointLight intensity={4} decay={0} distance={orbits.reach * 3} />
-        <ambientLight intensity={0.12} />
+        {/* The star lights its own planets and moons, through their material. */}
+        {isTest(file) ? (
+          <BlackHole rings={symbols === undefined ? [] : orbits.rings} />
+        ) : (
+          <Sun />
+        )}
         {/* Drawn once the names are in, or known absent, so the rings never regroup in view. */}
         {symbols !== undefined && (
           <Satellites

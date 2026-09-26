@@ -1,23 +1,20 @@
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
-import { Canvas } from '@react-three/fiber'
-import type { JSX } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useRef, type JSX } from 'react'
 import type { Playhead, Series } from './lib/series.ts'
 import type { SystemClaims } from './lib/system-nav.ts'
 import type { Trace } from './lib/trace.ts'
-import { City } from './scenes/City.tsx'
 import { Galaxy } from './scenes/Galaxy.tsx'
 import type { SceneProps } from './scenes/scene.ts'
 
 /** Every scene, by the name the switcher shows. */
 export const SCENES: Record<string, (props: SceneProps) => JSX.Element> = {
   galaxy: Galaxy,
-  city: City,
 }
 
 /** Bloom strength per scene: the galaxy is all light. */
 const BLOOM: Record<string, number> = {
   galaxy: 1.1,
-  city: 0.9,
 }
 
 interface StageProps {
@@ -33,6 +30,20 @@ interface StageProps {
   readonly onPick: (index: number) => void
   readonly aim: number | null
   readonly onClaims: (claims: SystemClaims) => void
+  readonly fly: boolean
+  /** Called once the first frame is drawn, so the page can drop its spinner. */
+  readonly onReady: () => void
+}
+
+/** Calls `onReady` after the first frame: by then the scene has laid out. */
+function FirstFrame({ onReady }: { onReady: () => void }): null {
+  const done = useRef(false)
+  useFrame(() => {
+    if (done.current) return
+    done.current = true
+    onReady()
+  })
+  return null
 }
 
 /** The canvas: one scene, under the bloom that scene wants. */
@@ -41,10 +52,14 @@ export function Stage(props: StageProps): JSX.Element {
   // The lens stays chosen across datasets, but only draws where fallow ran.
   const healthy = props.series.merged.fallow !== undefined
   return (
+    // The composer draws into its own buffer and smooths edges there, so the
+    // canvas's own antialiasing would be wasted. Density is held to 1.5: bloom
+    // runs over every pixel, and past that a retina screen costs far more
+    // than it shows.
     <Canvas
       key={`${props.dataset}/${props.scene}`}
-      dpr={[1, 2]}
-      raycaster={{ params: { Points: { threshold: 0.4 } } as never }}
+      dpr={[1, 1.5]}
+      gl={{ antialias: false }}
     >
       <Scene
         series={props.series}
@@ -56,8 +71,10 @@ export function Stage(props: StageProps): JSX.Element {
         onPick={props.onPick}
         aim={props.aim}
         onClaims={props.onClaims}
+        fly={props.fly}
       />
-      <EffectComposer>
+      <FirstFrame onReady={props.onReady} />
+      <EffectComposer multisampling={4}>
         <Bloom
           intensity={BLOOM[props.scene] ?? 1}
           luminanceThreshold={0.35}

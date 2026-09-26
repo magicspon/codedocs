@@ -1,6 +1,8 @@
 import { Html } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import {
+  memo,
+  type MemoExoticComponent,
   useLayoutEffect,
   useRef,
   useState,
@@ -13,14 +15,18 @@ import {
   BufferGeometry,
   Object3D,
   Vector3,
+  type Color,
   type Group,
   type InstancedMesh,
 } from 'three'
 import { KINDS, type FileSymbols } from '../lib/atlas.ts'
 import type { Planet, Ring } from '../lib/orbits.ts'
 import { KIND_COLORS } from '../lib/palette.ts'
+import { bodyColor, poseBody, useBodyLook } from './body-look.ts'
 import { Glimpses, type MoonsFor } from './Glimpses.tsx'
 import { placeOf } from './place.ts'
+import { PLANET_SPHERE } from './spheres.ts'
+import { useTracks } from './tracks.ts'
 
 const dummy = new Object3D()
 
@@ -55,15 +61,39 @@ function PlanetLabel(props: {
   )
 }
 
+/** Lets the pointer through a body drawn only to be seen. */
+const passThrough = (): null => null
+
+/**
+ * A ring's faint orbit line. A disc, a belt or a cloud is loose matter, not a
+ * track, and draws none. O hides every line at once.
+ */
+function Track(props: { ring: Ring; color: Color }): JSX.Element | null {
+  const shown = useTracks()
+  if (!shown || props.ring.heat !== null || props.ring.form !== 'orbit')
+    return null
+  return (
+    <lineLoop geometry={CIRCLE} scale={props.ring.radius}>
+      <lineBasicMaterial
+        color={props.color}
+        transparent
+        opacity={0.22}
+        depthWrite={false}
+        blending={AdditiveBlending}
+      />
+    </lineLoop>
+  )
+}
+
 /** A faint shell round the body picked out by keyboard, so it can be found in a belt. */
 function Marker(props: { ring: Ring; planet: Planet }): JSX.Element {
   return (
     <mesh
+      geometry={PLANET_SPHERE}
       position={placeOf(props.ring, props.planet)}
       scale={props.ring.size * 2.2}
       raycast={() => null}
     >
-      <sphereGeometry args={[1, 16, 12]} />
       <meshBasicMaterial
         color="#ffffff"
         wireframe
@@ -76,7 +106,7 @@ function Marker(props: { ring: Ring; planet: Planet }): JSX.Element {
 }
 
 /** What an orbit carries at its focused planet, when one of its planets is focused. */
-export interface Focused {
+interface Focused {
   /** The focused planet's symbol. */
   readonly symbol: number
   /** Drawn at the planet and carried round with it: its moons. */
@@ -110,13 +140,14 @@ function marksOf(
  * One orbit: its faint line, and its bodies turning on it. Clicking a body
  * names its symbol to `onSelect`; a focused body carries its moons round.
  */
-export function Orbit({
+function OrbitRing({
   ring,
   symbols,
   focused,
   moonsFor,
   highlight,
   onSelect,
+  ghost = false,
 }: {
   ring: Ring
   symbols: FileSymbols | null
@@ -126,9 +157,12 @@ export function Orbit({
   /** The symbol picked out by keyboard, if it is on this ring. */
   highlight: number | null
   onSelect: (symbol: number) => void
+  /** Drawn only to be seen, as a black hole's lensed image: the pointer passes through. */
+  ghost?: boolean
 }): JSX.Element {
   const spin = useRef<Group>(null)
   const mesh = useRef<InstancedMesh>(null)
+  const { lit, shape } = useBodyLook(ring)
   const [hovered, setHovered] = useState<number | null>(null)
   const color = KIND_COLORS[ring.kind]!
   const { focus, picked, named } = marksOf(ring, focused, highlight, hovered)
@@ -137,11 +171,9 @@ export function Orbit({
     const m = mesh.current
     if (!m) return
     ring.planets.forEach((p, k) => {
-      dummy.position.set(...placeOf(ring, p))
-      dummy.scale.setScalar(ring.size)
-      dummy.updateMatrix()
+      poseBody(ring, p, dummy)
       m.setMatrixAt(k, dummy.matrix)
-      m.setColorAt(k, color)
+      m.setColorAt(k, bodyColor(ring, p, color))
     })
     m.instanceMatrix.needsUpdate = true
     if (m.instanceColor) m.instanceColor.needsUpdate = true
@@ -159,19 +191,12 @@ export function Orbit({
   return (
     <group rotation-y={ring.node}>
       <group rotation-x={ring.tilt}>
-        <lineLoop geometry={CIRCLE} scale={ring.radius}>
-          <lineBasicMaterial
-            color={color}
-            transparent
-            opacity={0.22}
-            depthWrite={false}
-            blending={AdditiveBlending}
-          />
-        </lineLoop>
+        <Track ring={ring} color={color} />
         <group ref={spin}>
           <instancedMesh
             ref={mesh}
-            args={[undefined, undefined, ring.planets.length]}
+            args={[shape, lit, ring.planets.length]}
+            raycast={ghost ? passThrough : undefined}
             // A planet names itself; the star behind it keeps the file's panel.
             onPointerMove={(e: ThreeEvent<PointerEvent>) => {
               e.stopPropagation()
@@ -184,14 +209,7 @@ export function Orbit({
               // Without names there is no tree, so nothing to zoom into.
               if (symbol >= 0) onSelect(symbol)
             }}
-          >
-            <sphereGeometry args={[1, 16, 12]} />
-            <meshStandardMaterial
-              roughness={0.7}
-              emissive={color}
-              emissiveIntensity={0.12}
-            />
-          </instancedMesh>
+          ></instancedMesh>
           {moonsFor && (
             <Glimpses
               ring={ring}
@@ -217,3 +235,6 @@ export function Orbit({
     </group>
   )
 }
+
+/** `OrbitRing`, re-rendered only when its ring or marks change. */
+export const Orbit: MemoExoticComponent<typeof OrbitRing> = memo(OrbitRing)

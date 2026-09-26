@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import { cityLayout } from '../src/lib/city-layout.ts'
 import { galaxyLayout } from '../src/lib/galaxy-layout.ts'
 import { gaussian, hash, rng } from '../src/lib/rng.ts'
 import { fromAtlas } from '../src/lib/series.ts'
@@ -19,10 +18,11 @@ describe('rng', () => {
 describe('galaxyLayout', () => {
   const layout = galaxyLayout(fromAtlas(atlas()))
 
-  it('draws one core per file, one star per symbol and one line per call', () => {
+  it('draws one core per file, one star per symbol and dust along each call', () => {
     expect(layout.cores.sizes.length).toBe(5)
     expect(layout.stars.sizes.length).toBe(8 + 1 + 1 + 1 + 0)
-    expect(layout.links.positions.length).toBe(2 * 6)
+    // Two calls: the heaviest gets the most puffs, the lighter at least the fewest.
+    expect(layout.dust.sizes.length).toBeGreaterThanOrEqual(2 * 3)
   })
 
   it('puts the most-called file nearest the centre', () => {
@@ -43,19 +43,5 @@ describe('galaxyLayout', () => {
       }),
     )
     expect(empty.nebulae.sizes.length).toBe(0)
-  })
-})
-
-describe('cityLayout', () => {
-  const layout = cityLayout(fromAtlas(atlas()))
-
-  it('builds one building per file and lights the most-called roof', () => {
-    expect(layout.buildings).toHaveLength(5)
-    expect(layout.buildings[0]!.beacon).toBeGreaterThan(0)
-    expect(layout.buildings[4]!.beacon).toBe(0)
-  })
-
-  it('makes a file with more symbols taller', () => {
-    expect(layout.buildings[0]!.h).toBeGreaterThan(layout.buildings[4]!.h)
   })
 })
