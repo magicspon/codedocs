@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import type { Atlas, FileHealth } from '../src/lib/atlas.ts'
-import { cityLayout } from '../src/lib/city-layout.ts'
 import { galaxyLayout } from '../src/lib/galaxy-layout.ts'
 import { healthGlowMaterial, lifeLineMaterial } from '../src/lib/glow.ts'
 import {
@@ -8,7 +7,6 @@ import {
   heatOf,
   healthTracks,
   sampleHealth,
-  smogPerFrame,
   trendOf,
   wearOf,
 } from '../src/lib/health.ts'
@@ -140,10 +138,6 @@ describe('health readings', () => {
 })
 
 describe('health in the scenes', () => {
-  it('lets only hotspots burn in the city', () => {
-    expect(cityLayout(timeline(true)).hot).toEqual([0])
-  })
-
   it('pairs cloned files in the galaxy and tags every point with its file', () => {
     const layout = galaxyLayout(timeline(true))
     expect(layout.clones.positions.length).toBe(6)
@@ -170,23 +164,6 @@ describe('health in the scenes', () => {
     expect(data[0]).toBe(0)
     follow(1, 0.5)
     expect(data[0]).toBeCloseTo(0.8)
-  })
-
-  it("reads the whole city's trouble as weather, frame by frame", () => {
-    const series = timeline(true)
-    const smog = smogPerFrame(healthTracks(series), series)
-    expect(smog).toHaveLength(2)
-    // The fixture's first frame is sound; by the second, one file has gone hot
-    // and worn and the other is unreachable, so the air thickens.
-    expect(smog[0]!).toBe(0)
-    expect(smog[1]!).toBeGreaterThan(0.3)
-    for (const air of smog) expect(air).toBeGreaterThanOrEqual(0)
-    for (const air of smog) expect(air).toBeLessThan(1)
-  })
-
-  it('reads a repository with nothing wrong as clear air', () => {
-    const series = fromAtlas(atlas())
-    expect(smogPerFrame(healthTracks(series), series)[0]).toBe(0)
   })
 
   it('gives the shaders a lens to fade and a texture to read', () => {
@@ -222,14 +199,12 @@ describe('health in words', () => {
   })
 
   it('says when unused files are left out of the lens', () => {
-    expect(lensLegend('city', meta(true))).toContain('Unlit, concrete-grey')
-    expect(lensLegend('city', meta(false))).toContain('no fallow config')
+    expect(lensLegend('galaxy', meta(true))).toContain('Grey stars')
+    expect(lensLegend('galaxy', meta(false))).toContain('no fallow config')
     expect(lensLegend('nowhere', meta(true))).toBe('')
-    expect(lensNote('city', undefined, true)).toContain('fallow on your PATH')
-    expect(lensNote('city', meta(true), false)).toBe('')
-    expect(lensNote('city', meta(true), true)).toContain(
-      'pillar of warning light',
-    )
+    expect(lensNote('galaxy', undefined, true)).toContain('fallow on your PATH')
+    expect(lensNote('galaxy', meta(true), false)).toBe('')
+    expect(lensNote('galaxy', meta(true), true)).toContain('Hotspots flare')
     expect(lensLegend('galaxy', meta(true))).toContain('heating up')
   })
 })

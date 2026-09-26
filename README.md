@@ -463,31 +463,31 @@ Most operations — `analyse`, `trace`, `impact`, `docs check`, `docs affected`,
 
 ```json
 {
-	"operation": "trace",
-	"schemaVersion": 5,
-	"request": {
-		"subject": "…#getPaymentAppData",
-		"resolved": ["…#getPaymentAppData"],
-		"limit": null,
-		"depth": null,
-		"scope": {
-			"include": [{ "axis": "authorship", "value": "authored" }],
-			"exclude": [],
-			"excluded": 0
-		}
-	},
-	"snapshot": {
-		"commit": "176037d0…",
-		"dirty": false
-	},
-	"conditions": [],
-	"blindSpots": [],
-	"budget": {
-		"returned": 1,
-		"available": 1,
-		"truncated": false
-	},
-	"result": []
+  "operation": "trace",
+  "schemaVersion": 5,
+  "request": {
+    "subject": "…#getPaymentAppData",
+    "resolved": ["…#getPaymentAppData"],
+    "limit": null,
+    "depth": null,
+    "scope": {
+      "include": [{ "axis": "authorship", "value": "authored" }],
+      "exclude": [],
+      "excluded": 0
+    }
+  },
+  "snapshot": {
+    "commit": "176037d0…",
+    "dirty": false
+  },
+  "conditions": [],
+  "blindSpots": [],
+  "budget": {
+    "returned": 1,
+    "available": 1,
+    "truncated": false
+  },
+  "result": []
 }
 ```
 
@@ -499,47 +499,47 @@ codedocs callees 'getPaymentAppData' 'chargePayment' --json
 
 ```json
 {
-	"operation": "callees",
-	"schemaVersion": 5,
-	"request": {
-		"subjects": ["getPaymentAppData", "chargePayment"],
-		"resolved": [
-			{ "subject": "getPaymentAppData", "resolved": ["…#getPaymentAppData"] },
-			{ "subject": "chargePayment", "resolved": ["…#chargePayment"] }
-		],
-		"limit": null,
-		"depth": null,
-		"scope": {
-			"include": [{ "axis": "authorship", "value": "authored" }],
-			"exclude": []
-		}
-	},
-	"snapshot": {
-		"commit": "176037d0…",
-		"dirty": false
-	},
-	"conditions": [],
-	"result": [
-		{
-			"subject": "getPaymentAppData",
-			"resolved": ["…#getPaymentAppData"],
-			"budget": { "returned": 0, "available": 0, "truncated": false },
-			"excluded": 0,
-			"blindSpots": [],
-			"result": []
-		},
-		{
-			"subject": "chargePayment",
-			"resolved": ["…#chargePayment"],
-			"budget": { "returned": 2, "available": 2, "truncated": false },
-			"excluded": 0,
-			"blindSpots": [],
-			"result": [
-				{ "from": "…#chargePayment", "to": "…#audit", "kind": "calls" },
-				{ "from": "…#chargePayment", "to": "…#post", "kind": "calls" }
-			]
-		}
-	]
+  "operation": "callees",
+  "schemaVersion": 5,
+  "request": {
+    "subjects": ["getPaymentAppData", "chargePayment"],
+    "resolved": [
+      { "subject": "getPaymentAppData", "resolved": ["…#getPaymentAppData"] },
+      { "subject": "chargePayment", "resolved": ["…#chargePayment"] }
+    ],
+    "limit": null,
+    "depth": null,
+    "scope": {
+      "include": [{ "axis": "authorship", "value": "authored" }],
+      "exclude": []
+    }
+  },
+  "snapshot": {
+    "commit": "176037d0…",
+    "dirty": false
+  },
+  "conditions": [],
+  "result": [
+    {
+      "subject": "getPaymentAppData",
+      "resolved": ["…#getPaymentAppData"],
+      "budget": { "returned": 0, "available": 0, "truncated": false },
+      "excluded": 0,
+      "blindSpots": [],
+      "result": []
+    },
+    {
+      "subject": "chargePayment",
+      "resolved": ["…#chargePayment"],
+      "budget": { "returned": 2, "available": 2, "truncated": false },
+      "excluded": 0,
+      "blindSpots": [],
+      "result": [
+        { "from": "…#chargePayment", "to": "…#audit", "kind": "calls" },
+        { "from": "…#chargePayment", "to": "…#post", "kind": "calls" }
+      ]
+    }
+  ]
 }
 ```
 
@@ -567,12 +567,12 @@ or use MCP:
 
 ```json
 {
-	"mcpServers": {
-		"codedocs": {
-			"command": "codedocs",
-			"args": ["mcp"]
-		}
-	}
+  "mcpServers": {
+    "codedocs": {
+      "command": "codedocs",
+      "args": ["mcp"]
+    }
+  }
 }
 ```
 
@@ -594,23 +594,23 @@ An optional `codedocs.jsonc` can provide facts that codedocs cannot infer:
 
 ```jsonc
 {
-	"version": 1,
-	"classify": {
-		"vendor/**": {
-			"authorship": "generated",
-		},
-	},
-	"baselines": 3,
-	"discover": {
-		"projects": ["packages/*/tsconfig.build.json"],
-		"skip": ["repos"],
-	},
-	"remediations": [
-		{
-			"specifier": "@calcom/prisma/*",
-			"run": "pnpm prisma generate",
-		},
-	],
+  "version": 1,
+  "classify": {
+    "vendor/**": {
+      "authorship": "generated",
+    },
+  },
+  "baselines": 3,
+  "discover": {
+    "projects": ["packages/*/tsconfig.build.json"],
+    "skip": ["repos"],
+  },
+  "remediations": [
+    {
+      "specifier": "@calcom/prisma/*",
+      "run": "pnpm prisma generate",
+    },
+  ],
 }
 ```
 
@@ -697,7 +697,7 @@ Nothing is transmitted automatically.
 
 # `codedocs art`
 
-Draws the index as an interactive 3D city and galaxy:
+Draws the index as an interactive 3D galaxy:
 
 ```sh
 codedocs art
@@ -705,7 +705,7 @@ codedocs art
 
 This writes `.codedocs/art/index.html`. Open it in a browser. It is one file, and it makes no network requests.
 
-Each shape stands for a fact about the code. For example, a building's footprint is the file's size, and its height is how many symbols it declares.
+Each shape stands for a fact about the code. For example, each folder is a spiral arm, each file is a cluster of stars, and each star is one symbol, coloured by its kind.
 
 To watch the repository grow, add `--frames` to replay that many commits from its history:
 

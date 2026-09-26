@@ -48,7 +48,8 @@
     "**/snap/**",
     "**/storybook-static/**",
     "**/vite.config.*.timestamp-*.*",
-    "graphify-out/**"
+    "graphify-out/**",
+    "**/archive/**"
   ],
 
   "health": {

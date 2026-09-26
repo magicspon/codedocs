@@ -22,7 +22,11 @@ import { usePathKeys } from './usePathKeys.ts'
 /** The viewer: one dataset, one scene, the file under the pointer, and a search traced through it. */
 export function App(): JSX.Element {
   const [dataset, setDataset] = useState(initialDataset)
-  const [scene, setScene] = useState(() => initial('scene', 'galaxy'))
+  // A bookmark can name a scene that is gone, such as the archived city.
+  const [scene, setScene] = useState(() => {
+    const named = initial('scene', 'galaxy')
+    return named in SCENES ? named : 'galaxy'
+  })
   const [lens, setLens] = useState(() => initial('lens', '') === 'health')
   const [isolate, setIsolate] = useState(() => initial('isolate', '') === 'on')
   useHotkey('I', () => setIsolate((on) => !on))

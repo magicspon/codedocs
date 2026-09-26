@@ -4,20 +4,17 @@ import type { JSX } from 'react'
 import type { Playhead, Series } from './lib/series.ts'
 import type { SystemClaims } from './lib/system-nav.ts'
 import type { Trace } from './lib/trace.ts'
-import { City } from './scenes/City.tsx'
 import { Galaxy } from './scenes/Galaxy.tsx'
 import type { SceneProps } from './scenes/scene.ts'
 
 /** Every scene, by the name the switcher shows. */
 export const SCENES: Record<string, (props: SceneProps) => JSX.Element> = {
   galaxy: Galaxy,
-  city: City,
 }
 
 /** Bloom strength per scene: the galaxy is all light. */
 const BLOOM: Record<string, number> = {
   galaxy: 1.1,
-  city: 0.9,
 }
 
 interface StageProps {

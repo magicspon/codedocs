@@ -23,15 +23,25 @@ pnpm art
 
 Exports land in `src/data/` and are git-ignored. Each export also writes
 `<name>.symbols.json`, the names of every symbol. The viewer reads it only when
-you pick a file, so it does not slow down opening a dataset. Pick a dataset and a scene in
-the top-left panel. Point at anything to see the file behind it.
-`?data=vscode&scene=city` in the URL opens a view directly; add `&lens=health`
-to open it with the health lens on.
+you pick a file, so it does not slow down opening a dataset. `?data=vscode` in
+the URL opens that dataset; add `&lens=health` to open it with the health lens
+on.
+
+## Getting around
+
+The screen starts empty apart from a few round buttons:
+
+- **Rocket (bottom centre), or F:** take off and fly the camera yourself. The
+  flying keys appear beside it. Press it or F again to land.
+- **Magnifier (top left), or `/`:** open the search.
+- **Calls and imports (bottom left):** choose which links a trace follows.
+- **Info (top right):** appears when a file is picked. It opens the file's
+  facts, its fallow health readings and its links.
 
 ## Search and trace
 
 Type part of a path in the search box, or click any file, to trace it. Press
-`/` to jump to the box and Escape to clear it.
+`/` to open the box and Escape to clear it.
 
 - Every word you type must appear in the path. Case does not matter. A full
   path traces that one file alone.
@@ -41,23 +51,22 @@ Type part of a path in the search box, or click any file, to trace it. Press
   hop at a time. Blue light flows in (the callers), and amber light flows out
   (the callees). The callers fire first, so you watch the flow arrive at the
   file and then leave it.
-- Choose **Calls** or **Imports** to follow, which way to follow them, and how
-  many hops (1 to 4).
+- Choose **Calls** or **Imports** with the buttons at the bottom left. A
+  trace always follows links both ways, up to 6 hops. Six is where most call
+  traces stop finding new files, and one loop of the light still takes only
+  about 15 seconds.
 - When the search finds exactly one file, the camera flies to it. Clear the
   search and the camera flies back to where it was. Drag the view at any time
   to stop the flight.
-  - **Galaxy:** the galaxy stops turning. The file's symbols move out from its
-    star as planets, with one orbit for each kind of symbol. The orbits are in
-    kind order: functions are nearest the star. Point at a planet to see the
-    name of its symbol. The names load the first time you pick a file. A
-    dataset exported before names were added shows only the kind.
-  - **City:** the camera flies up over the rooftops and down to the
-    settlement. A band of light climbs it and turns on every building it
-    passes, shortest first.
+- The galaxy stops turning. The file's symbols move out from its star as
+  planets, with one orbit for each kind of symbol. The orbits are in kind
+  order: functions are nearest the star. Point at a planet to see the name of
+  its symbol. The names load the first time you pick a file. A dataset
+  exported before names were added shows only the kind.
 - A trace starts from at most 60 matches, and a busy file shows only its 24
   heaviest links at each hop. This keeps the picture readable.
 - `&q=` in the URL opens a search directly, for example
-  `?data=codedocs&scene=city&q=operations/trace.ts`.
+  `?data=codedocs&q=operations/trace.ts`.
 
 ## Health readings
 
@@ -76,54 +85,29 @@ share copied code are linked in `clones`. Add `--no-fallow` to skip it.
 
 ### The health lens
 
-Tick **Health lens** in the top-left panel to draw these readings over the
-scene. It is only offered for data that fallow ran over. Over a timeline, the
-readings blend from commit to commit, just as heights do.
+Add `&lens=health` to the URL to draw these readings over the galaxy. It only
+draws for data that fallow ran over. Over a timeline, the readings blend from
+commit to commit.
 
-| Reading        | Galaxy                                  | City                                                                                                |
-| -------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Hotspot        | the file's core flares, orange to white | a pillar of warning light on the settlement's landmark, taller and redder as it heats; its buildings flush red |
-| Heating up     | the flare pulses                        | a pulse climbs the pillar and the buildings throb                                                   |
-| Cooling        | the flare sinks to a dull red           | the pillar burns low and greys towards smoke                                                        |
-| Unused file    | the file's stars fade to grey           | the buildings go dark and the shells cool to concrete                                                |
-| Hard to change | —                                       | the shells rust                                                                                      |
-| Whole repo     | —                                       | the air thickens with smog and the stars go out                                                     |
-| Copied code    | a pale blue thread joins the two files  | —                                                                                                     |
+| Reading     | Galaxy                                  |
+| ----------- | --------------------------------------- |
+| Hotspot     | the file's core flares, orange to white |
+| Heating up  | the flare pulses                        |
+| Cooling     | the flare sinks to a dull red           |
+| Unused file | the file's stars fade to grey           |
+| Copied code | a pale blue thread joins the two files  |
 
 - Heat is the square root of the hotspot score, so a score of 10 still shows
   without the hottest file drowning the rest.
-- Rust starts at a maintainability of 85 and is full at 50. Real files sit
-  between about 50 and 99, and a healthy repo's worst file lands near 85.
 - The trend is fallow's: it compares the file's recent commits with its older
   ones inside the hotspot window. Over a timeline it blends from commit to
   commit, so you can watch a file start to pulse before it gets hot.
-- The weather is the one reading no single building gives. It averages every
-  file's heat, wear and unreachability, and a repository where a tenth of the
-  files are fully in trouble reads as half choked. A city can raise only a few
-  pillars and still be hard to breathe in.
+- Pick a file and open the info button to see fallow's numbers for it.
 
-## The city
+## The city (archived)
 
-Away from the lens, the city is built from the index alone, on the galaxy's
-own terms: every file is a **settlement**, standing on its directory's
-district exactly as a building used to.
-
-| Shape             | Reading                                                                                                                                      |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Settlement tier    | population (symbols declared): a village if there are few, a town if there are plenty, a city if it is both symbol-dense and well connected  |
-| Buildings          | the settlement's own symbols, scattered from its `kinds` counts the way the galaxy scatters stars, laid out as a small street                |
-| Building footprint | the symbol's kind: classes and namespaces stand wider than functions and variables                                                            |
-| Building height     | the kind, scaled by how much of the codebase calls and references the file -- two files with the same population read as different skylines |
-| Building colour     | the shell is the file's role tinted by project; a lit building glows its own kind's colour                                                    |
-| Lit buildings       | calls and references touching the file, per symbol; a file nothing reaches keeps only its stairwell light                                     |
-| Landmark mast       | calls arriving from other files, on the settlement's tallest building                                                                          |
-| Arcs                | the heaviest call routes, with light travelling along them                                                                                     |
-
-A settlement's buildings pop in as its file gains symbols, the way the
-galaxy's stars do, rather than one tower growing taller. Seen from far enough
-away a settlement's buildings average into a wash rather than shimmering.
-
-- Point at a file to see fallow's numbers for it in the file panel.
+The city scene has been moved to `archive/city/`, with notes on how to bring
+it back. It is not built or tested.
 
 ## Watch a repo grow
 
@@ -159,19 +143,16 @@ automatically; use the bar at the bottom to pause or drag through the commits.
 - A repo without `node_modules` still works, at `syntactic` fidelity. The
   vscode fixture has none, so its timeline matches its existing index.
 
-Files keep one position for the whole history. Galaxy stars and city
-buildings both light up as a file gains symbols, rather than growing taller.
+Files keep one position for the whole history. A file's stars light up as it
+gains symbols.
 
-## Scenes
+## The galaxy
 
-| Scene  | Folder       | File                                                                | Calls                                | Blind spots (unresolved calls) |
-| ------ | ------------ | -------------------------------------------------------------------- | ------------------------------------- | ------------------------------- |
-| Galaxy | a spiral arm | a cluster of stars, one per symbol                                   | light threads; hubs at core           | faint red haze                  |
-| City   | a district   | a settlement: village, town or city by population, buildings by symbol | pulses along arcs; a landmark mast    | —                                |
+| Folder       | File                               | Calls                       | Blind spots (unresolved calls) |
+| ------------ | ---------------------------------- | --------------------------- | ------------------------------ |
+| a spiral arm | a cluster of stars, one per symbol | light threads; hubs at core | faint red haze                 |
 
-Star colours show symbol kind; so do a settlement's building colours, tinted
-by role (grey for source, teal for test, amber for config, violet for
-generated code) when lit.
+Star colours show symbol kind.
 
 ## How it fits together
 

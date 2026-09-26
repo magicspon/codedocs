@@ -1,10 +1,6 @@
 import { ROLE_COLORS } from './palette.ts'
-import {
-  everHot,
-  healthTracks,
-  smogPerFrame,
-  type HealthTracks,
-} from './health.ts'
+import { everHot, smogPerFrame } from './city-health.ts'
+import { healthTracks, type HealthTracks } from './health.ts'
 import { hash, rng } from './rng.ts'
 import { settlementsOf, type Buildings, type Settlement } from './settlement.ts'
 import type { Series } from './series.ts'

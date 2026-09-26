@@ -113,7 +113,7 @@ export function GalaxyHud(props: GalaxyHudProps): JSX.Element {
   // Held here so it stays open across files until closed.
   const [info, setInfo] = useState(false)
   // The galaxy offers no trace settings, so any left over from the address
-  // or the city are put back to its own.
+  // are put back to its own.
   const { query, onQuery } = props
   useEffect(() => {
     if (query.direction !== TRACE.direction || query.depth !== TRACE.depth)

@@ -1,4 +1,8 @@
-import { defineConfig, type ViteUserConfig } from 'vitest/config'
+import {
+  configDefaults,
+  defineConfig,
+  type ViteUserConfig,
+} from 'vitest/config'
 
 /**
  * One run for the whole workspace.
@@ -16,8 +20,16 @@ const config: ViteUserConfig = defineConfig({
     projects: [
       'packages/*',
       // The art viewer: its layouts are pure functions of an index, so they are tested
-      // like any other code even though the package is never published.
-      'apps/code-art',
+      // like any other code even though the package is never published. Its
+      // `archive/` holds retired scenes kept to restore, never run.
+      {
+        extends: 'apps/code-art/vite.config.ts',
+        test: {
+          name: '@codedocs/code-art',
+          root: 'apps/code-art',
+          exclude: [...configDefaults.exclude, 'archive/**'],
+        },
+      },
       // The repository's own invariants belong to no package: ADR 0011's "no
       // codedocs package reaches the network" is a fact about the workspace and
       // its dependency closure, and there is no package it could sit inside

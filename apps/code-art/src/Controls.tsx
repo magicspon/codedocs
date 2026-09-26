@@ -12,7 +12,6 @@ import { useSearchControls } from './useSearchControls.ts'
 const LEGENDS: Record<string, string> = {
   galaxy:
     'Arms are top-level folders. The core holds the code everything else leans on. Stars are symbols, coloured by kind. Red haze marks calls the analysis could not resolve.',
-  city: 'Districts are folders. Every file is a settlement: a village if it declares few symbols, a town if it declares plenty, a city if it is both symbol-dense and well connected. Its buildings are its own symbols, coloured by kind and lit by the traffic through the file. A landmark mast glows with incoming calls.',
 }
 
 /** Leva's tokens, matched to the rest of the overlay. */

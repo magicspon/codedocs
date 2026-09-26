@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import type { Atlas, Timeline } from '../src/lib/atlas.ts'
-import { cityLayout } from '../src/lib/city-layout.ts'
 import { galaxyLayout } from '../src/lib/galaxy-layout.ts'
 import { fromAtlas, seriesOf, visibility } from '../src/lib/series.ts'
 import { atlas, file } from './fixture.ts'
@@ -101,23 +100,5 @@ describe('layouts over a history', () => {
     expect(births.filter((b) => b === 0)).toHaveLength(2)
     expect(births.filter((b) => b === 1)).toHaveLength(7)
     expect(stars.deaths.slice(0, 9).every((d) => d === 2)).toBe(true)
-  })
-
-  it('pops a settlement’s buildings in as its file gains symbols, and clears them once its file is gone', () => {
-    const { buildings, settlements } = cityLayout(series)
-    const a = settlements[0]!
-    const b = settlements[1]!
-    // `a.ts` declares 9 symbols at its largest, capped to the settlement's limit.
-    expect(a.count).toBeLessThan(9)
-    // Some of its buildings exist from the first frame, the rest from the second.
-    const aBirths = buildings.births.subarray(a.offset, a.offset + a.count)
-    expect([...aBirths].filter((f) => f === 0).length).toBeGreaterThan(0)
-    expect([...aBirths].filter((f) => f === 1).length).toBeGreaterThan(0)
-    // `a.ts` is deleted in frame 2, so every one of its buildings is gone by then.
-    const aDeaths = buildings.deaths.subarray(a.offset, a.offset + a.count)
-    expect([...aDeaths].every((f) => f === 2)).toBe(true)
-    // `b.ts` exists from frame 1 onward.
-    expect(buildings.births[b.offset]).toBe(1)
-    expect(buildings.deaths[b.offset]).toBe(3)
   })
 })
