@@ -9,6 +9,7 @@
 
 import { DatabaseSync } from 'node:sqlite'
 import type { Atlas, Link } from '../src/lib/atlas.ts'
+import { isSkipped } from './skip.ts'
 
 /** vscode has ~200k file pairs that call each other; the faintest add nothing visible. */
 const MAX_CALL_LINKS = 40_000
@@ -53,7 +54,10 @@ function fileAt(reader: Reader, pathId: unknown): Mutable | undefined {
   return i === undefined ? undefined : reader.files[i]
 }
 
-function readFiles(all: Reader['all']): {
+function readFiles(
+  all: Reader['all'],
+  skip: readonly string[],
+): {
   files: Mutable[]
   byPathId: Map<number, number>
 } {
@@ -63,7 +67,7 @@ function readFiles(all: Reader['all']): {
   const rows = all(
     `select f.path_id as id, p.path, f.size from file f join path p on p.id = f.path_id
      where p.path not like '../%' order by p.path`,
-  )
+  ).filter((r) => !isSkipped(String(r.path), skip))
   const byPathId = new Map<number, number>()
   const files = rows.map((r, i): Mutable => {
     byPathId.set(Number(r.id), i)
@@ -178,11 +182,15 @@ function readImports(reader: Reader): Link[] {
   return imports
 }
 
-/** Aggregates the index at `dbPath` to one row per file. */
+/**
+ * Aggregates the index at `dbPath` to one row per file, leaving out files
+ * under any folder named in `skip`. Links to a left-out file go with it.
+ */
 export function readAtlas(
   dbPath: string,
   name: string,
   limits: Limits = {},
+  skip: readonly string[] = [],
 ): Atlas {
   const db = new DatabaseSync(dbPath, { readOnly: true })
   try {
@@ -198,7 +206,7 @@ export function readAtlas(
     const reader: Reader = {
       all,
       allIf,
-      ...readFiles(all),
+      ...readFiles(all, skip),
       limits: {
         calls: limits.calls ?? MAX_CALL_LINKS,
         imports: limits.imports ?? MAX_IMPORT_LINKS,

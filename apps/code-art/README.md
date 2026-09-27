@@ -21,6 +21,11 @@ pnpm --filter @codedocs/code-art export repos/vscode
 pnpm art
 ```
 
+Add `--skip examples` to leave out every file under a folder of that name, at
+any depth; repeat it for more folders. It catches files a parent tsconfig still
+includes after `discover.skip` has kept codedocs out of the folder's own
+projects.
+
 Exports land in `src/data/` and are git-ignored. Each export also writes
 `<name>.symbols.json`, the names of every symbol. The viewer reads it only when
 you pick a file, so it does not slow down opening a dataset. `?data=vscode` in

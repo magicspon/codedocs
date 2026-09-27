@@ -38,10 +38,9 @@ export function HowItWorks(): JSX.Element {
           <section>
             <h2>1. Read the code</h2>
             <p>
-              <a href="https://github.com/magicspon/codedocs">codedocs</a> reads
-              the project and records every file, every symbol in it (functions,
-              classes, types and so on), and which symbols call or import each
-              other.
+              The tool reads the project and records every file, every symbol in
+              it (functions, classes, types and so on), and which symbols call
+              or import each other.
             </p>
           </section>
 

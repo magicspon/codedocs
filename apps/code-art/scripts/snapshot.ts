@@ -11,15 +11,20 @@ import { readFallow } from './read-fallow.ts'
 
 /**
  * Reads the index at `dbPath` into an atlas named `name`, and runs fallow over
- * the repo it belongs to unless `fallow` is false.
+ * the repo it belongs to unless `fallow` is false. Files under a folder named
+ * in `skip` are left out.
  */
 export function snapshot(
   dbPath: string,
-  options: { readonly name: string; readonly fallow: boolean },
+  options: {
+    readonly name: string
+    readonly fallow: boolean
+    readonly skip?: readonly string[]
+  },
 ): Atlas {
   // The repo root is two levels above `.codedocs/index.db`.
   const root = resolve(dirname(dbPath), '..')
-  const indexed = readAtlas(dbPath, options.name)
+  const indexed = readAtlas(dbPath, options.name, {}, options.skip)
   const reading = options.fallow ? readFallow(root) : null
   return reading
     ? withHealth(indexed, reading.report, reading.deadCode)

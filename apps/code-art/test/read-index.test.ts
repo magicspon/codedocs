@@ -100,3 +100,12 @@ describe('readAtlas limits', () => {
     expect(capped.files[0]!.callsIn).toBe(2)
   })
 })
+
+describe('readAtlas skip', () => {
+  it('leaves out files under a skipped folder, and their links with them', () => {
+    const skipped = readAtlas(index('skipped', true), 'skipped', {}, ['src'])
+    expect(skipped.files).toEqual([])
+    expect(skipped.calls).toEqual([])
+    expect(skipped.imports).toEqual([])
+  })
+})

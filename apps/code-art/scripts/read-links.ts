@@ -6,6 +6,7 @@
 
 import type { DatabaseSync } from 'node:sqlite'
 import { LINK_WIDTH } from '../src/lib/atlas.ts'
+import { isSkipped } from './skip.ts'
 
 /** A hub symbol can be called from hundreds of places; its heaviest say enough. */
 const MAX_PER_SYMBOL = 24
@@ -38,6 +39,7 @@ type Row = Record<string, number | string>
 function endsOf(
   db: DatabaseSync,
   symbolAt: ReadonlyMap<number, End>,
+  skip: readonly string[],
 ): Map<number, End> {
   const ends = new Map(symbolAt)
   const rows = db
@@ -48,6 +50,8 @@ function endsOf(
     .all() as Row[]
   for (const r of rows) {
     const id = Number(r.id)
+    // A left-out file has no end, so its links are dropped with it.
+    if (isSkipped(String(r.path), skip)) continue
     if (!ends.has(id)) ends.set(id, { path: String(r.path), symbol: -1 })
   }
   return ends
@@ -101,12 +105,14 @@ function capped(rows: number[][]): number[] {
  * Each file's links, keyed by path. `symbolAt` maps a symbol's node id to
  * its place in `readNames`' order. Calls are way `0`; references are way
  * `1 +` their stored kind, so extends and implements keep their own colour.
+ * Links to a file under a folder named in `skip` are left out.
  */
 export function readLinks(
   db: DatabaseSync,
   symbolAt: ReadonlyMap<number, End>,
+  skip: readonly string[] = [],
 ): Map<string, FileLinks> {
-  const ends = endsOf(db, symbolAt)
+  const ends = endsOf(db, symbolAt, skip)
   const edges = [
     ...(db
       .prepare(

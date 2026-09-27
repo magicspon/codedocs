@@ -43,6 +43,8 @@ multisampling
 npmjs
 nums
 numstat
+nuxt
+opencode
 pinnable
 playhead
 Pocock
@@ -59,6 +61,7 @@ SCIP
 sperno
 squarified
 squarify
+sst
 stackback
 strobing
 tanstack

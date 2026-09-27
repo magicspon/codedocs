@@ -29,6 +29,18 @@ export function designation(name: string): string {
  * landing page must not parse; re-exporting one means updating it here.
  */
 const SITE: Readonly<Record<string, { label: string; commit: string }>> = {
+  nextjs: {
+    label: 'next.js',
+    commit: '0423222b7eb3a1373b5bff4c939fd69858928993',
+  },
+  nuxt: {
+    label: 'nuxt',
+    commit: '9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945',
+  },
+  opencode: {
+    label: 'opencode',
+    commit: 'b471c2b4495747353af768fbf2e0790c9d820ce2',
+  },
   payload: {
     label: 'payload',
     commit: '124b55a8747d9b45db0af30aad337569d37a9b3e',
@@ -40,6 +52,10 @@ const SITE: Readonly<Record<string, { label: string; commit: string }>> = {
   sentry: {
     label: '@sentry/javascript',
     commit: 'bd3ce5fa6913130868e1547df810655770e3becd',
+  },
+  sst: {
+    label: 'sst',
+    commit: 'a0bd20f762883e72a35caccb4896c42ce5b3f707',
   },
   typescript: {
     label: 'typescript version 6 (excluding tests)',

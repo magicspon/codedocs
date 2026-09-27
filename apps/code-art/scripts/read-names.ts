@@ -7,6 +7,7 @@
 import { DatabaseSync } from 'node:sqlite'
 import type { FileSymbols, SymbolNames } from '../src/lib/atlas.ts'
 import { readLinks } from './read-links.ts'
+import { isSkipped } from './skip.ts'
 
 interface Row {
   readonly id: number
@@ -42,9 +43,13 @@ function parentsOf(rows: readonly Row[]): number[] {
 
 /**
  * Every file's symbols, in the order they appear in the file, each with its
- * parent and the calls and references that touch it.
+ * parent and the calls and references that touch it. Files under a folder
+ * named in `skip` are left out, as the atlas leaves them out.
  */
-export function readNames(dbPath: string): SymbolNames {
+export function readNames(
+  dbPath: string,
+  skip: readonly string[] = [],
+): SymbolNames {
   const db = new DatabaseSync(dbPath, { readOnly: true })
   try {
     // Paths escaping the root are skipped, as the atlas skips them.
@@ -58,6 +63,7 @@ export function readNames(dbPath: string): SymbolNames {
     // Rows arrive ordered by path, so each file's rows are one run.
     const byFile = new Map<string, Row[]>()
     for (const row of rows) {
+      if (isSkipped(row.path, skip)) continue
       const file = byFile.get(row.path)
       if (file) file.push(row)
       else byFile.set(row.path, [row])
@@ -66,7 +72,7 @@ export function readNames(dbPath: string): SymbolNames {
     const symbolAt = new Map<number, { path: string; symbol: number }>()
     for (const [path, file] of byFile)
       file.forEach((row, symbol) => symbolAt.set(row.id, { path, symbol }))
-    const links = readLinks(db, symbolAt)
+    const links = readLinks(db, symbolAt, skip)
     const names: Record<string, FileSymbols> = {}
     for (const [path, file] of byFile) {
       names[path] = {
