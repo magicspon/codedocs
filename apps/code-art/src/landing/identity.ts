@@ -37,6 +37,10 @@ const SITE: Readonly<Record<string, { label: string; commit: string }>> = {
     label: '@tanstack/router',
     commit: '763ac8b8add670ccb31887dab6509343e4827d5a',
   },
+  sentry: {
+    label: '@sentry/javascript',
+    commit: 'bd3ce5fa6913130868e1547df810655770e3becd',
+  },
   typescript: {
     label: 'typescript version 6 (excluding tests)',
     commit: '050880ce59e30b356b686bd3144efe24f875ebc8',
