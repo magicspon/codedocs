@@ -1810,8 +1810,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790465129.0641248,
-    "ast_hash": "5ef496b118cf8f1d76502c5bbdaa1627",
+    "mtime": 1790547135.1300638,
+    "ast_hash": "104e3ecdf6c06e2283fd807212aa0989",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790531765.61396,
-    "ast_hash": "7d1ab3800d1c487f172537fa02cf1944",
+    "mtime": 1790548219.2329206,
+    "ast_hash": "d59f6d4a44e40e517b51143e71cfd6fd",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -2030,8 +2030,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Stage.tsx": {
-    "mtime": 1790447277.603823,
-    "ast_hash": "ca2c407adce2548821a9b3ad0195a5bb",
+    "mtime": 1790546881.8458886,
+    "ast_hash": "3db2d909009bf65116138bc7f8c7f361",
     "semantic_hash": ""
   },
   "apps/code-art/src/hooks.ts": {
@@ -2415,13 +2415,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/GalaxyHud.tsx": {
-    "mtime": 1790465129.0642688,
-    "ast_hash": "250f782c67000f1c9ebcabf21a78b98c",
+    "mtime": 1790547135.1295407,
+    "ast_hash": "572efbaafd59d5ccacca80826be3bfc7",
     "semantic_hash": ""
   },
   "apps/code-art/src/icons.tsx": {
-    "mtime": 1790465129.0640743,
-    "ast_hash": "06baf2887ae818fdc414ad786e1a33aa",
+    "mtime": 1790547123.2526097,
+    "ast_hash": "c85f45943fd15e24f8ba6366ddd2e158",
     "semantic_hash": ""
   },
   "apps/code-art/src/SearchCorner.tsx": {
@@ -3152,6 +3152,66 @@
   "apps/code-art/test/galaxy-shape.test.ts": {
     "mtime": 1790533883.79302,
     "ast_hash": "46a41abc60ca9003968170a2afd467ea",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/SceneSwitch.tsx": {
+    "mtime": 1790547123.2592688,
+    "ast_hash": "7dc2bada60b5aac1eee42548269b47c2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/TerrainHud.tsx": {
+    "mtime": 1790547350.5471394,
+    "ast_hash": "f07a778a42e1117d8b9761089efd16aa",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-field.ts": {
+    "mtime": 1790547350.6937208,
+    "ast_hash": "feb37bf5d72be4691013e8cdddfbea5a",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-layout.ts": {
+    "mtime": 1790548219.231482,
+    "ast_hash": "e0764e8aa7c4d545934877f7d6956bea",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-noise.ts": {
+    "mtime": 1790547350.6679196,
+    "ast_hash": "b76aa924309dfac82cdc28018c936214",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-rivers.ts": {
+    "mtime": 1790547350.6981888,
+    "ast_hash": "c7de0674cc762e73aed354c781076a49",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-text.ts": {
+    "mtime": 1790548219.2327316,
+    "ast_hash": "c2cec49dcdf1b905b8a6a257651e469a",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-tree.ts": {
+    "mtime": 1790547350.6630273,
+    "ast_hash": "9eb3b518d0d53526b7d1b20880dc6cca",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/Terrain.tsx": {
+    "mtime": 1790548219.2319868,
+    "ast_hash": "a17acc5f58dcc1db4e648e373d6c0ac2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/terrain-material.ts": {
+    "mtime": 1790548095.8177674,
+    "ast_hash": "d455ec36ae22808e2a3331cd2a88282b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/terrain.test.ts": {
+    "mtime": 1790548219.2321332,
+    "ast_hash": "099d6f3fb6500408347498d6544dada2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-strata.ts": {
+    "mtime": 1790547987.862567,
+    "ast_hash": "3f95ecb26c66bcb020e6dcb12a521d90",
     "semantic_hash": ""
   }
 }

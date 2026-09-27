@@ -566,9 +566,48 @@ kbd {
   background: var(--accent);
 }
 
-/* On a narrow screen, lift the dock clear of the pill. */
+/* On a narrow screen, lift the dock clear of the pill, and drop the file's
+   name: there is no room for it beside the corner buttons. */
 @media (max-width: 640px) {
   .dock {
     bottom: 72px;
   }
+
+  .file-name {
+    display: none;
+  }
+}
+
+/* Flying needs a keyboard, so a touch device gets no rocket. Keyed on the
+   primary pointer, so a laptop with a touch screen keeps it. */
+@media (hover: none) and (pointer: coarse) {
+  .dock {
+    display: none;
+  }
+}
+
+/* Which scene draws the data: the follow pill's twin, at the bottom right. */
+.follow.scene-switch {
+  left: auto;
+  right: 16px;
+}
+
+/* What each shape in the terrain means, under the info button. */
+.terrain-legend dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.terrain-legend dt {
+  color: var(--ink);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.terrain-legend dd {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.45;
 }
