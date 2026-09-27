@@ -49,7 +49,11 @@
     "**/storybook-static/**",
     "**/vite.config.*.timestamp-*.*",
     "graphify-out/**",
-    "**/archive/**"
+    "**/archive/**",
+    // CodeSong's Ableton extension: its own npm project outside the workspace,
+    // built against an SDK that is never committed, so fallow can resolve
+    // neither its dependencies nor Live, which is what loads it.
+    "apps/codesong/live/**"
   ],
 
   "health": {

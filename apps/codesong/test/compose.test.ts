@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Atlas } from '@codedocs/code-art/atlas'
 import { describe, expect, it } from 'vitest'
-import { compose, DEFAULT_OPTIONS } from '../src/compose/compose.ts'
+import { compose, DEFAULT_OPTIONS, tonic } from '../src/compose/compose.ts'
 import type { Composition } from '../src/model.ts'
 import { analyse } from '../src/regions.ts'
 import { readStructure } from '../src/structure.ts'
@@ -43,9 +43,20 @@ describe('compose', () => {
     const b = compose(codedocs, { ...DEFAULT_OPTIONS, seed: 1234 })
     expect(b).not.toEqual(a)
     expect(b.sections).toEqual(a.sections)
+    expect(b.key).toBe(a.key)
     const sources = (p: Composition) =>
       new Set(p.motifs.map((m) => JSON.stringify(m.source)))
     expect(sources(b)).toEqual(sources(a))
+  })
+
+  it('takes the key from how tightly the files are coupled', () => {
+    const coupled = (meanFanOut: number) =>
+      tonic({ ...codedocs.structure, meanFanOut })
+    expect(coupled(0)).toBe(0) // C
+    expect(coupled(2)).toBe(9) // A, three fifths up
+    expect(coupled(4)).toBe(6) // F#, six fifths up
+    expect(coupled(100)).toBe(5) // F: clamped at eleven fifths, not back to C
+    expect(piece.key).toBe(tonic(vscode.structure))
   })
 
   it('builds sections from the subsystems, foundations first, the biggest as chorus', () => {

@@ -4,7 +4,8 @@
  *     pnpm --filter @codedocs/codesong compose <repo | index.db | atlas.json>
  *       [--seed n] [--bars n] [--tempo n] [--scale name] [--tracks n] [--out dir]
  *
- * Writes `<name>.composition.json` and `<name>.mid`. A repository or index is
+ * Writes `<name>.composition.json`, `<name>.mid` and `<name>.live.json`, the
+ * plan the Live extension builds from (`pnpm live`). A repository or index is
  * read through code-art's pipeline; an atlas JSON that code-art already
  * exported is read as it is.
  */
@@ -25,6 +26,9 @@ import {
   analyse,
   compose,
   DEFAULT_OPTIONS,
+  DEFAULT_PALETTE,
+  findKit,
+  livePlan,
   readStructure,
   realise,
   toMidi,
@@ -108,8 +112,15 @@ const outDir = values.out
 mkdirSync(outDir, { recursive: true })
 const json = join(outDir, `${atlas.name}.composition.json`)
 const mid = join(outDir, `${atlas.name}.mid`)
+const live = join(outDir, `${atlas.name}.live.json`)
+const kit = findKit(DEFAULT_PALETTE)
 writeFileSync(json, `${JSON.stringify(composition, null, 2)}\n`)
 writeFileSync(mid, toMidi(composition, tracks))
+writeFileSync(
+  live,
+  `${JSON.stringify(livePlan(composition, tracks, DEFAULT_PALETTE, kit), null, 2)}\n`,
+)
+const missing = Object.keys(DEFAULT_PALETTE.kit).filter((v) => !(v in kit))
 
 const beats = composition.sections.reduce((sum, s) => sum + s.length, 0)
 const seconds = Math.round((beats * 60) / composition.tempo)
@@ -119,4 +130,10 @@ console.log(`${atlas.name}
   ${NOTE_NAMES[composition.key]} ${composition.scale}, ${composition.tempo} bpm, ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}
   ${tracks.reduce((n, t) => n + t.notes.length, 0)} notes
 ✓ ${json}
-✓ ${mid}`)
+✓ ${mid}
+✓ ${live}`)
+if (missing.length > 0) {
+  console.warn(
+    `  no Ableton Live drum samples found for ${missing.join(', ')}; those pads stay empty`,
+  )
+}

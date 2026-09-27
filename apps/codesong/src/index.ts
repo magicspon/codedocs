@@ -17,3 +17,21 @@ export {
   type Structure,
   type StructureNode,
 } from './structure.ts'
+export {
+  buildPlan,
+  type BuildReport,
+  type LiveHost,
+  type LiveTrackHost,
+  type Progress,
+} from './live/apply.ts'
+export { DEFAULT_PALETTE, type Palette, type Voice } from './live/palette.ts'
+export {
+  livePlan,
+  parsePlan,
+  type DrumPad,
+  type LiveClip,
+  type LiveNote,
+  type LivePlan,
+  type LiveTrackPlan,
+} from './live/plan.ts'
+export { findKit } from './live/samples.ts'

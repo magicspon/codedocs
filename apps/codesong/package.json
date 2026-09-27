@@ -8,6 +8,8 @@
   },
   "scripts": {
     "compose": "node scripts/compose.ts",
+    "live:setup": "npm --prefix live run setup",
+    "live": "npm --prefix live start",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {

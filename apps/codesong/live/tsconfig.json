@@ -1,0 +1,19 @@
+{
+  // Standalone: this project sits outside the pnpm workspace and the root
+  // typecheck, because it needs the SDK that `npm run setup` copies in.
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["src", "build.ts", "setup.ts"]
+}

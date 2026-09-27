@@ -38,7 +38,7 @@ export interface RealisedTrack {
 const OCTAVE: Readonly<Record<Register, number>> = { low: 2, mid: 4, high: 5 }
 
 /** General MIDI drum notes, by `DRUM_VOICES` index. */
-const DRUM_NOTES = [36, 38, 42, 46]
+export const DRUM_NOTES: readonly number[] = [36, 38, 42, 46]
 
 function transformed(note: MotifNote, first: number, t: Transform): number {
   const degree = t.invert ? 2 * first - note.degree : note.degree

@@ -1,7 +1,8 @@
 /**
  * Analysis in, composition out. The only randomness comes from a generator
  * seeded by the repository's name and the caller's seed, so the same code and
- * options always compose the same piece.
+ * options always compose the same piece. The key comes from the code alone,
+ * so a new seed varies the piece without moving it to a new key.
  */
 
 import { hash, rng } from '@codedocs/code-art/rng'
@@ -53,6 +54,17 @@ export const DEFAULT_OPTIONS: ComposeOptions = {
   scale: 'minor',
   tracks: 6,
   maxMotifs: 16,
+}
+
+/**
+ * The tonic, from how tightly the files are coupled. Every two dependencies
+ * per file move the key three steps round the circle of fifths from C, so a
+ * loosely coupled codebase plays near C and a tangled one in the remote keys.
+ * Clamped rather than wrapped, so the most tangled never lands back on C.
+ */
+export function tonic(structure: Structure): number {
+  const fifths = Math.min(11, Math.round(structure.meanFanOut * 1.5))
+  return (fifths * 7) % 12
 }
 
 /** A subsystem's harmony and phrases, which every section built from it shares. */
@@ -124,7 +136,7 @@ export function compose(
     throw new Error(`need at least 16 bars, got ${options.bars}`)
   }
   const random = rng(hash(structure.name) ^ options.seed)
-  const key = Math.floor(random() * 12)
+  const key = tonic(structure)
   const motto = theme(structure)
 
   const perRegion = Math.max(

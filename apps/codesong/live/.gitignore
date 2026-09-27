@@ -1,0 +1,8 @@
+# Ableton's SDK is confidential under its licence; `npm run setup` copies it in.
+vendor/
+node_modules/
+dist/
+*.ablx
+.env
+# Records the vendored SDK's hashes, which differ per download.
+package-lock.json

@@ -1,0 +1,23 @@
+{
+  "name": "codesong-live",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Builds a CodeSong composition in Ableton Live. Not a workspace package: its SDK is not committed. See README.md.",
+  "type": "module",
+  "main": "dist/extension.js",
+  "scripts": {
+    "setup": "node setup.ts",
+    "build": "tsc --noEmit && node build.ts",
+    "start": "node build.ts && ableton-extensions-cli run --storage-directory ../out",
+    "package": "tsc --noEmit && node build.ts --production && ableton-extensions-cli package"
+  },
+  "dependencies": {
+    "@ableton-extensions/sdk": "file:vendor/sdk.tgz"
+  },
+  "devDependencies": {
+    "@ableton-extensions/cli": "file:vendor/cli.tgz",
+    "@types/node": "^24.13.3",
+    "esbuild": "0.28.1",
+    "typescript": "^5.9.3"
+  }
+}
