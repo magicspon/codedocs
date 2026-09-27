@@ -1,4 +1,5 @@
 import { AdditiveBlending, DoubleSide, ShaderMaterial, Vector3 } from 'three'
+import { HUBS } from '../lib/terrain-layout.ts'
 
 /**
  * The terrain's shaders. The ground is drawn as light, not as lit rock: fine
@@ -42,7 +43,9 @@ function shared(radius: number): Record<string, { value: unknown }> {
 /**
  * The ground. Rows run along x every `cell`, with fainter cross lines every
  * third, and contour lines ring each peak. `uHover` lights the ground round
- * the file under the pointer; `uPeak` scales height to `0`–`1`.
+ * the file under the pointer; `uPeak` scales height to `0`–`1`. `uHubs`
+ * holds up to `HUBS` most-called files as `[x, z, share]`, and amber rings
+ * close in on each along the grid lines, as if the calls were flowing in.
  */
 export function surfaceMaterial(
   radius: number,
@@ -58,6 +61,8 @@ export function surfaceMaterial(
       uRadius: { value: radius },
       uHover: { value: new Vector3() },
       uHoverOn: { value: 0 },
+      uHubs: { value: Array.from({ length: HUBS }, () => new Vector3()) },
+      uHubCount: { value: 0 },
     },
     vertexShader: /* glsl */ `
       attribute float wet;
@@ -82,12 +87,28 @@ export function surfaceMaterial(
       uniform float uRadius;
       uniform vec3 uHover;
       uniform float uHoverOn;
+      uniform vec3 uHubs[${HUBS}];
+      uniform int uHubCount;
       varying vec3 vColor;
       varying vec3 vWorld;
       varying float vWet;
       varying float vDepth;
       ${FOG_GLSL}
       ${LINE_GLSL}
+      // Rings closing in on each hub: the phase grows with distance plus
+      // time, so a crest moves inwards. Busier hubs reach further and burn brighter.
+      float ripplesAt(vec2 at) {
+        float sum = 0.0;
+        for (int i = 0; i < ${HUBS}; i++) {
+          if (i >= uHubCount) break;
+          vec3 hub = uHubs[i];
+          float d = length(at - hub.xy);
+          float reach = uRadius * (0.09 + 0.15 * hub.z);
+          float wave = pow(0.5 + 0.5 * sin(d / (uRadius * 0.012) + uClock * 2.2 + float(i) * 1.7), 6.0);
+          sum += wave * (1.0 - smoothstep(0.0, reach, d)) * (0.35 + 0.65 * hub.z);
+        }
+        return sum;
+      }
       void main() {
         float up = clamp(vWorld.y / uPeak, -1.0, 1.5);
         float high = clamp(up, 0.0, 1.0);
@@ -107,7 +128,10 @@ export function surfaceMaterial(
         float ring = mod(uClock * uRadius * 0.12, uRadius * 1.8);
         float ping = exp(-pow((r - ring) / (uRadius * 0.03), 2.0)) * (1.0 - ring / (uRadius * 1.8));
         float near = uHoverOn * exp(-pow(length(vWorld.xz - uHover.xz) / (uRadius * 0.05), 2.0));
-        vec3 color = fill + ink * lines * (0.42 + ping * 1.2 + near * 1.4) + river;
+        float ripple = ripplesAt(vWorld.xz);
+        vec3 amber = vec3(1.0, 0.7, 0.32);
+        vec3 color = fill + ink * lines * (0.42 + ping * 1.2 + near * 1.4) + river
+          + amber * ripple * (lines * 1.8 + 0.07);
         gl_FragColor = vec4(color * fogOf(vDepth), 1.0);
       }
     `,

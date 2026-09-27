@@ -1640,7 +1640,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_k",
-      "community": 43,
+      "community": 7,
       "norm_label": "k()"
     },
     {
@@ -1680,7 +1680,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_p",
-      "community": 267,
+      "community": 7,
       "norm_label": "p()"
     },
     {
@@ -1750,7 +1750,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_settimeout",
-      "community": 7,
+      "community": 267,
       "norm_label": "settimeout()"
     },
     {
@@ -1900,7 +1900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_subscribe",
-      "community": 68,
+      "community": 29,
       "norm_label": "subscribe()"
     },
     {
@@ -1990,7 +1990,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setonline",
-      "community": 68,
+      "community": 29,
       "norm_label": "setonline()"
     },
     {
@@ -2000,7 +2000,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_isonline",
-      "community": 4,
+      "community": 282,
       "norm_label": "isonline()"
     },
     {
@@ -2030,7 +2030,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_v",
-      "community": 267,
+      "community": 7,
       "norm_label": "v()"
     },
     {
@@ -2160,7 +2160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setstate",
-      "community": 29,
+      "community": 185,
       "norm_label": "setstate()"
     },
     {
@@ -2190,7 +2190,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_reset",
-      "community": 8,
+      "community": 282,
       "norm_label": "reset()"
     },
     {
@@ -2550,7 +2550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_remove",
-      "community": 185,
+      "community": 43,
       "norm_label": "remove()"
     },
     {
@@ -2590,7 +2590,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getall",
-      "community": 4,
+      "community": 282,
       "norm_label": "getall()"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_findall",
-      "community": 4,
+      "community": 282,
       "norm_label": "findall()"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_resumepausedmutations",
-      "community": 4,
+      "community": 282,
       "norm_label": "resumepausedmutations()"
     },
     {
@@ -2650,7 +2650,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_mount",
-      "community": 68,
+      "community": 29,
       "norm_label": "mount()"
     },
     {
@@ -2670,7 +2670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_isfetching",
-      "community": 4,
+      "community": 282,
       "norm_label": "isfetching()"
     },
     {
@@ -2680,7 +2680,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ismutating",
-      "community": 4,
+      "community": 282,
       "norm_label": "ismutating()"
     },
     {
@@ -2710,7 +2710,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getqueriesdata",
-      "community": 4,
+      "community": 282,
       "norm_label": "getqueriesdata()"
     },
     {
@@ -2940,7 +2940,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getmutationdefaults",
-      "community": 68,
+      "community": 185,
       "norm_label": "getmutationdefaults()"
     },
     {
@@ -2960,7 +2960,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_defaultmutationoptions",
-      "community": 68,
+      "community": 185,
       "norm_label": "defaultmutationoptions()"
     },
     {
@@ -3050,7 +3050,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ut",
-      "community": 225,
+      "community": 7,
       "norm_label": "ut()"
     },
     {
@@ -3330,7 +3330,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_xr",
-      "community": 65,
+      "community": 17,
       "norm_label": "xr()"
     },
     {
@@ -3430,7 +3430,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updatefinished",
-      "community": 27,
+      "community": 75,
       "norm_label": "updatefinished()"
     },
     {
@@ -3440,7 +3440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_notifyfinished",
-      "community": 27,
+      "community": 75,
       "norm_label": "notifyfinished()"
     },
     {
@@ -3470,7 +3470,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updatetime",
-      "community": 27,
+      "community": 75,
       "norm_label": "updatetime()"
     },
     {
@@ -3530,7 +3530,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_speed",
-      "community": 27,
+      "community": 75,
       "norm_label": "speed()"
     },
     {
@@ -3540,7 +3540,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_play",
-      "community": 27,
+      "community": 75,
       "norm_label": "play()"
     },
     {
@@ -3550,7 +3550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_pause",
-      "community": 27,
+      "community": 75,
       "norm_label": "pause()"
     },
     {
@@ -3560,7 +3560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_complete",
-      "community": 27,
+      "community": 75,
       "norm_label": "complete()"
     },
     {
@@ -3570,7 +3570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_finish",
-      "community": 27,
+      "community": 75,
       "norm_label": "finish()"
     },
     {
@@ -3580,7 +3580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_teardown",
-      "community": 27,
+      "community": 75,
       "norm_label": "teardown()"
     },
     {
@@ -3590,7 +3590,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_stopdriver",
-      "community": 27,
+      "community": 75,
       "norm_label": "stopdriver()"
     },
     {
@@ -3600,7 +3600,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_sample",
-      "community": 27,
+      "community": 75,
       "norm_label": "sample()"
     },
     {
@@ -3710,7 +3710,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_scheduleresolve",
-      "community": 27,
+      "community": 75,
       "norm_label": "scheduleresolve()"
     },
     {
@@ -3740,7 +3740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_measureinitialstate",
-      "community": 27,
+      "community": 75,
       "norm_label": "measureinitialstate()"
     },
     {
@@ -3760,7 +3760,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_measureendstate",
-      "community": 27,
+      "community": 75,
       "norm_label": "measureendstate()"
     },
     {
@@ -3770,7 +3770,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_resume",
-      "community": 27,
+      "community": 75,
       "norm_label": "resume()"
     },
     {
@@ -3820,7 +3820,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_bi",
-      "community": 225,
+      "community": 73,
       "norm_label": "bi()"
     },
     {
@@ -3840,7 +3840,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_stop",
-      "community": 27,
+      "community": 75,
       "norm_label": "stop()"
     },
     {
@@ -3850,7 +3850,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_commitstyles",
-      "community": 27,
+      "community": 75,
       "norm_label": "commitstyles()"
     },
     {
@@ -3900,7 +3900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updatemotionvalue",
-      "community": 27,
+      "community": 75,
       "norm_label": "updatemotionvalue()"
     },
     {
@@ -3910,7 +3910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_xi",
-      "community": 225,
+      "community": 73,
       "norm_label": "xi()"
     },
     {
@@ -3930,7 +3930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ra",
-      "community": 43,
+      "community": 9,
       "norm_label": "ra()"
     },
     {
@@ -3940,7 +3940,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_onkeyframesresolved",
-      "community": 43,
+      "community": 267,
       "norm_label": "onkeyframesresolved()"
     },
     {
@@ -3950,7 +3950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_animation",
-      "community": 27,
+      "community": 75,
       "norm_label": "animation()"
     },
     {
@@ -4060,7 +4060,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setwithvelocity",
-      "community": 27,
+      "community": 75,
       "norm_label": "setwithvelocity()"
     },
     {
@@ -4070,7 +4070,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_jump",
-      "community": 27,
+      "community": 75,
       "norm_label": "jump()"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_clearanimation",
-      "community": 27,
+      "community": 75,
       "norm_label": "clearanimation()"
     },
     {
@@ -4240,7 +4240,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_aa",
-      "community": 73,
+      "community": 43,
       "norm_label": "aa()"
     },
     {
@@ -4340,7 +4340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_measure",
-      "community": 27,
+      "community": 75,
       "norm_label": "measure()"
     },
     {
@@ -4400,7 +4400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_uo",
-      "community": 225,
+      "community": 73,
       "norm_label": "uo()"
     },
     {
@@ -4410,7 +4410,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_po",
-      "community": 43,
+      "community": 73,
       "norm_label": "po()"
     },
     {
@@ -4560,7 +4560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ts",
-      "community": 68,
+      "community": 29,
       "norm_label": "ts()"
     },
     {
@@ -4670,7 +4670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ks",
-      "community": 73,
+      "community": 43,
       "norm_label": "ks()"
     },
     {
@@ -4730,7 +4730,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_bindtomotionvalue",
-      "community": 191,
+      "community": 7,
       "norm_label": "bindtomotionvalue()"
     },
     {
@@ -4750,7 +4750,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updatefeatures",
-      "community": 68,
+      "community": 29,
       "norm_label": "updatefeatures()"
     },
     {
@@ -4870,7 +4870,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_addvalue",
-      "community": 73,
+      "community": 43,
       "norm_label": "addvalue()"
     },
     {
@@ -4890,7 +4890,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_hasvalue",
-      "community": 73,
+      "community": 43,
       "norm_label": "hasvalue()"
     },
     {
@@ -4900,7 +4900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getvalue",
-      "community": 73,
+      "community": 43,
       "norm_label": "getvalue()"
     },
     {
@@ -4910,7 +4910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_readvalue",
-      "community": 73,
+      "community": 9,
       "norm_label": "readvalue()"
     },
     {
@@ -4930,7 +4930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getbasetarget",
-      "community": 73,
+      "community": 9,
       "norm_label": "getbasetarget()"
     },
     {
@@ -4940,7 +4940,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_schedulerendermicrotask",
-      "community": 218,
+      "community": 144,
       "norm_label": "schedulerendermicrotask()"
     },
     {
@@ -4960,7 +4960,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getbasetargetfromprops",
-      "community": 73,
+      "community": 9,
       "norm_label": "getbasetargetfromprops()"
     },
     {
@@ -5280,7 +5280,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_foreach",
-      "community": 68,
+      "community": 29,
       "norm_label": "foreach()"
     },
     {
@@ -5330,7 +5330,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_exitanimationcomplete",
-      "community": 68,
+      "community": 29,
       "norm_label": "exitanimationcomplete()"
     },
     {
@@ -5370,7 +5370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ll",
-      "community": 43,
+      "community": 9,
       "norm_label": "ll()"
     },
     {
@@ -5570,7 +5570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_render",
-      "community": 218,
+      "community": 144,
       "norm_label": "render()"
     },
     {
@@ -5810,7 +5810,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updateanimationcontrolssubscription",
-      "community": 68,
+      "community": 29,
       "norm_label": "updateanimationcontrolssubscription()"
     },
     {
@@ -5910,7 +5910,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_id",
-      "community": 267,
+      "community": 68,
       "norm_label": "id()"
     },
     {
@@ -5920,7 +5920,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ad",
-      "community": 267,
+      "community": 68,
       "norm_label": "ad()"
     },
     {
@@ -5930,7 +5930,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_od",
-      "community": 267,
+      "community": 68,
       "norm_label": "od()"
     },
     {
@@ -6000,7 +6000,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_md",
-      "community": 7,
+      "community": 29,
       "norm_label": "md()"
     },
     {
@@ -6110,7 +6110,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_addlisteners",
-      "community": 68,
+      "community": 29,
       "norm_label": "addlisteners()"
     },
     {
@@ -6130,7 +6130,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_yd",
-      "community": 225,
+      "community": 68,
       "norm_label": "yd()"
     },
     {
@@ -6180,7 +6180,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_componentwillunmount",
-      "community": 185,
+      "community": 43,
       "norm_label": "componentwillunmount()"
     },
     {
@@ -6210,7 +6210,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_jd",
-      "community": 267,
+      "community": 68,
       "norm_label": "jd()"
     },
     {
@@ -6440,7 +6440,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_xt",
-      "community": 73,
+      "community": 7,
       "norm_label": "xt()"
     },
     {
@@ -6460,7 +6460,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_tn",
-      "community": 267,
+      "community": 7,
       "norm_label": "tn()"
     },
     {
@@ -6610,7 +6610,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_na",
-      "community": 73,
+      "community": 9,
       "norm_label": "na()"
     },
     {
@@ -6890,7 +6890,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_au",
-      "community": 8,
+      "community": 282,
       "norm_label": "au()"
     },
     {
@@ -6930,7 +6930,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_gd",
-      "community": 225,
+      "community": 73,
       "norm_label": "gd()"
     },
     {
@@ -6970,7 +6970,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_tf",
-      "community": 267,
+      "community": 225,
       "norm_label": "tf()"
     },
     {
@@ -7320,7 +7320,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_mp",
-      "community": 43,
+      "community": 9,
       "norm_label": "mp()"
     },
     {
@@ -7340,7 +7340,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_yp",
-      "community": 267,
+      "community": 7,
       "norm_label": "yp()"
     },
     {
@@ -7450,7 +7450,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_qp",
-      "community": 267,
+      "community": 7,
       "norm_label": "qp()"
     },
     {
@@ -7710,7 +7710,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_eh",
-      "community": 65,
+      "community": 27,
       "norm_label": "eh()"
     },
     {
@@ -7930,7 +7930,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_kh",
-      "community": 68,
+      "community": 29,
       "norm_label": "kh()"
     },
     {
@@ -8160,7 +8160,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_pg",
-      "community": 8,
+      "community": 282,
       "norm_label": "pg()"
     },
     {
@@ -8170,7 +8170,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_mg",
-      "community": 8,
+      "community": 282,
       "norm_label": "mg()"
     },
     {
@@ -8220,7 +8220,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ng",
-      "community": 8,
+      "community": 282,
       "norm_label": "ng()"
     },
     {
@@ -8330,7 +8330,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_register",
-      "community": 29,
+      "community": 185,
       "norm_label": "register()"
     },
     {
@@ -8340,7 +8340,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_triggerregistration",
-      "community": 29,
+      "community": 185,
       "norm_label": "triggerregistration()"
     },
     {
@@ -8460,7 +8460,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_fv",
-      "community": 68,
+      "community": 29,
       "norm_label": "fv()"
     },
     {
@@ -8630,7 +8630,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ey",
-      "community": 98,
+      "community": 144,
       "norm_label": "ey()"
     },
     {
@@ -8700,7 +8700,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_dy",
-      "community": 98,
+      "community": 144,
       "norm_label": "dy()"
     },
     {
@@ -8900,7 +8900,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_fb",
-      "community": 7,
+      "community": 29,
       "norm_label": "fb()"
     },
     {
@@ -8910,7 +8910,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_mb",
-      "community": 65,
+      "community": 17,
       "norm_label": "mb()"
     },
     {
@@ -8940,7 +8940,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_yb",
-      "community": 68,
+      "community": 29,
       "norm_label": "yb()"
     },
     {
@@ -9000,7 +9000,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_tostring",
-      "community": 7,
+      "community": 191,
       "norm_label": "tostring()"
     },
     {
@@ -9270,7 +9270,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ux",
-      "community": 7,
+      "community": 29,
       "norm_label": "ux()"
     },
     {
@@ -9580,7 +9580,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setactive",
-      "community": 267,
+      "community": 68,
       "norm_label": "setactive()"
     },
     {
@@ -10170,7 +10170,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_kd",
-      "community": 267,
+      "community": 68,
       "norm_label": "kd()"
     },
     {
@@ -10640,7 +10640,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setscalar",
-      "community": 44,
+      "community": 8,
       "norm_label": "setscalar()"
     },
     {
@@ -10670,7 +10670,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setcomponent",
-      "community": 65,
+      "community": 27,
       "norm_label": "setcomponent()"
     },
     {
@@ -10680,7 +10680,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getcomponent",
-      "community": 65,
+      "community": 27,
       "norm_label": "getcomponent()"
     },
     {
@@ -11050,7 +11050,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_equals",
-      "community": 59,
+      "community": 268,
       "norm_label": "equals()"
     },
     {
@@ -11150,7 +11150,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setfromeuler",
-      "community": 155,
+      "community": 8,
       "norm_label": "setfromeuler()"
     },
     {
@@ -11310,7 +11310,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_applyeuler",
-      "community": 155,
+      "community": 8,
       "norm_label": "applyeuler()"
     },
     {
@@ -11320,7 +11320,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_applyaxisangle",
-      "community": 155,
+      "community": 8,
       "norm_label": "applyaxisangle()"
     },
     {
@@ -11350,7 +11350,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_applyquaternion",
-      "community": 155,
+      "community": 8,
       "norm_label": "applyquaternion()"
     },
     {
@@ -11730,7 +11730,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_addupdaterange",
-      "community": 282,
+      "community": 27,
       "norm_label": "addupdaterange()"
     },
     {
@@ -11930,7 +11930,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_makerotationfromquaternion",
-      "community": 155,
+      "community": 8,
       "norm_label": "makerotationfromquaternion()"
     },
     {
@@ -12080,7 +12080,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setfromquaternion",
-      "community": 155,
+      "community": 8,
       "norm_label": "setfromquaternion()"
     },
     {
@@ -12100,7 +12100,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_reorder",
-      "community": 155,
+      "community": 8,
       "norm_label": "reorder()"
     },
     {
@@ -12230,7 +12230,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setrotationfromeuler",
-      "community": 155,
+      "community": 8,
       "norm_label": "setrotationfromeuler()"
     },
     {
@@ -12310,7 +12310,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_translateonaxis",
-      "community": 155,
+      "community": 8,
       "norm_label": "translateonaxis()"
     },
     {
@@ -12320,7 +12320,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_translatex",
-      "community": 155,
+      "community": 8,
       "norm_label": "translatex()"
     },
     {
@@ -12330,7 +12330,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_translatey",
-      "community": 155,
+      "community": 8,
       "norm_label": "translatey()"
     },
     {
@@ -12340,7 +12340,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_translatez",
-      "community": 155,
+      "community": 8,
       "norm_label": "translatez()"
     },
     {
@@ -12420,7 +12420,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getworldposition",
-      "community": 44,
+      "community": 8,
       "norm_label": "getworldposition()"
     },
     {
@@ -12690,7 +12690,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_gethex",
-      "community": 267,
+      "community": 191,
       "norm_label": "gethex()"
     },
     {
@@ -12700,7 +12700,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_gethexstring",
-      "community": 267,
+      "community": 191,
       "norm_label": "gethexstring()"
     },
     {
@@ -13040,7 +13040,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getparameter",
-      "community": 98,
+      "community": 144,
       "norm_label": "getparameter()"
     },
     {
@@ -13170,7 +13170,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_fromhalffloat",
-      "community": 65,
+      "community": 17,
       "norm_label": "fromhalffloat()"
     },
     {
@@ -13230,7 +13230,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_gety",
-      "community": 65,
+      "community": 17,
       "norm_label": "gety()"
     },
     {
@@ -13240,7 +13240,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getz",
-      "community": 65,
+      "community": 17,
       "norm_label": "getz()"
     },
     {
@@ -13250,7 +13250,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getw",
-      "community": 65,
+      "community": 17,
       "norm_label": "getw()"
     },
     {
@@ -13310,7 +13310,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getindex",
-      "community": 65,
+      "community": 27,
       "norm_label": "getindex()"
     },
     {
@@ -13320,7 +13320,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setindex",
-      "community": 65,
+      "community": 27,
       "norm_label": "setindex()"
     },
     {
@@ -13350,7 +13350,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getattribute",
-      "community": 65,
+      "community": 27,
       "norm_label": "getattribute()"
     },
     {
@@ -13360,7 +13360,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setattribute",
-      "community": 65,
+      "community": 27,
       "norm_label": "setattribute()"
     },
     {
@@ -13390,7 +13390,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_addgroup",
-      "community": 65,
+      "community": 27,
       "norm_label": "addgroup()"
     },
     {
@@ -13450,7 +13450,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_computetangents",
-      "community": 65,
+      "community": 27,
       "norm_label": "computetangents()"
     },
     {
@@ -13480,7 +13480,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_tononindexed",
-      "community": 65,
+      "community": 27,
       "norm_label": "tononindexed()"
     },
     {
@@ -13610,7 +13610,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_customprogramcachekey",
-      "community": 7,
+      "community": 191,
       "norm_label": "customprogramcachekey()"
     },
     {
@@ -13630,7 +13630,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_removelevel",
-      "community": 185,
+      "community": 43,
       "norm_label": "removelevel()"
     },
     {
@@ -14010,7 +14010,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_initializegeometry",
-      "community": 65,
+      "community": 27,
       "norm_label": "_initializegeometry()"
     },
     {
@@ -14020,7 +14020,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_validategeometry",
-      "community": 65,
+      "community": 27,
       "norm_label": "_validategeometry()"
     },
     {
@@ -14070,7 +14070,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_addgeometry",
-      "community": 65,
+      "community": 27,
       "norm_label": "addgeometry()"
     },
     {
@@ -14080,7 +14080,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setgeometryat",
-      "community": 65,
+      "community": 27,
       "norm_label": "setgeometryat()"
     },
     {
@@ -14110,7 +14110,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_optimize",
-      "community": 282,
+      "community": 27,
       "norm_label": "optimize()"
     },
     {
@@ -14210,7 +14210,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_computelinedistances",
-      "community": 65,
+      "community": 27,
       "norm_label": "computelinedistances()"
     },
     {
@@ -14240,7 +14240,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getpoint",
-      "community": 59,
+      "community": 268,
       "norm_label": "getpoint()"
     },
     {
@@ -14250,7 +14250,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getpointat",
-      "community": 59,
+      "community": 268,
       "norm_label": "getpointat()"
     },
     {
@@ -14260,7 +14260,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getpoints",
-      "community": 59,
+      "community": 268,
       "norm_label": "getpoints()"
     },
     {
@@ -14270,7 +14270,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getspacedpoints",
-      "community": 59,
+      "community": 268,
       "norm_label": "getspacedpoints()"
     },
     {
@@ -14280,7 +14280,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getlength",
-      "community": 59,
+      "community": 268,
       "norm_label": "getlength()"
     },
     {
@@ -14290,7 +14290,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getlengths",
-      "community": 59,
+      "community": 268,
       "norm_label": "getlengths()"
     },
     {
@@ -14300,7 +14300,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updatearclengths",
-      "community": 59,
+      "community": 268,
       "norm_label": "updatearclengths()"
     },
     {
@@ -14310,7 +14310,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getutotmapping",
-      "community": 59,
+      "community": 268,
       "norm_label": "getutotmapping()"
     },
     {
@@ -14320,7 +14320,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_gettangent",
-      "community": 59,
+      "community": 17,
       "norm_label": "gettangent()"
     },
     {
@@ -14330,7 +14330,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_gettangentat",
-      "community": 59,
+      "community": 17,
       "norm_label": "gettangentat()"
     },
     {
@@ -14350,7 +14350,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_closepath",
-      "community": 59,
+      "community": 268,
       "norm_label": "closepath()"
     },
     {
@@ -14360,7 +14360,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getcurvelengths",
-      "community": 59,
+      "community": 268,
       "norm_label": "getcurvelengths()"
     },
     {
@@ -14370,7 +14370,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_moveto",
-      "community": 59,
+      "community": 268,
       "norm_label": "moveto()"
     },
     {
@@ -14380,7 +14380,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_lineto",
-      "community": 59,
+      "community": 268,
       "norm_label": "lineto()"
     },
     {
@@ -14430,7 +14430,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_absarc",
-      "community": 59,
+      "community": 268,
       "norm_label": "absarc()"
     },
     {
@@ -14440,7 +14440,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_ellipse",
-      "community": 59,
+      "community": 268,
       "norm_label": "ellipse()"
     },
     {
@@ -14450,7 +14450,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_absellipse",
-      "community": 59,
+      "community": 268,
       "norm_label": "absellipse()"
     },
     {
@@ -14460,7 +14460,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getpointsholes",
-      "community": 59,
+      "community": 268,
       "norm_label": "getpointsholes()"
     },
     {
@@ -14470,7 +14470,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_extractpoints",
-      "community": 59,
+      "community": 268,
       "norm_label": "extractpoints()"
     },
     {
@@ -14600,7 +14600,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_wg",
-      "community": 282,
+      "community": 27,
       "norm_label": "wg()"
     },
     {
@@ -14670,7 +14670,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_subclip",
-      "community": 282,
+      "community": 27,
       "norm_label": "subclip()"
     },
     {
@@ -14690,7 +14690,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_evaluate",
-      "community": 8,
+      "community": 282,
       "norm_label": "evaluate()"
     },
     {
@@ -14700,7 +14700,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getsettings",
-      "community": 8,
+      "community": 282,
       "norm_label": "getsettings_()"
     },
     {
@@ -14710,7 +14710,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_copysamplevalue",
-      "community": 8,
+      "community": 282,
       "norm_label": "copysamplevalue_()"
     },
     {
@@ -14720,7 +14720,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_interpolate",
-      "community": 8,
+      "community": 282,
       "norm_label": "interpolate_()"
     },
     {
@@ -14730,7 +14730,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_intervalchanged",
-      "community": 8,
+      "community": 282,
       "norm_label": "intervalchanged_()"
     },
     {
@@ -14740,7 +14740,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_interpolantfactorymethoddiscrete",
-      "community": 282,
+      "community": 27,
       "norm_label": "interpolantfactorymethoddiscrete()"
     },
     {
@@ -14750,7 +14750,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_interpolantfactorymethodlinear",
-      "community": 282,
+      "community": 27,
       "norm_label": "interpolantfactorymethodlinear()"
     },
     {
@@ -14760,7 +14760,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_interpolantfactorymethodsmooth",
-      "community": 282,
+      "community": 27,
       "norm_label": "interpolantfactorymethodsmooth()"
     },
     {
@@ -14770,7 +14770,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_interpolantfactorymethodbezier",
-      "community": 282,
+      "community": 27,
       "norm_label": "interpolantfactorymethodbezier()"
     },
     {
@@ -14790,7 +14790,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getvaluesize",
-      "community": 282,
+      "community": 27,
       "norm_label": "getvaluesize()"
     },
     {
@@ -14800,7 +14800,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_shift",
-      "community": 43,
+      "community": 225,
       "norm_label": "shift()"
     },
     {
@@ -14820,7 +14820,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_validate",
-      "community": 282,
+      "community": 27,
       "norm_label": "validate()"
     },
     {
@@ -14870,7 +14870,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_resetduration",
-      "community": 282,
+      "community": 27,
       "norm_label": "resetduration()"
     },
     {
@@ -14910,7 +14910,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_load",
-      "community": 7,
+      "community": 267,
       "norm_label": "load()"
     },
     {
@@ -15470,7 +15470,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getdelta",
-      "community": 218,
+      "community": 144,
       "norm_label": "getdelta()"
     },
     {
@@ -15510,7 +15510,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_rq",
-      "community": 98,
+      "community": 144,
       "norm_label": "rq()"
     },
     {
@@ -15620,7 +15620,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setbuffer",
-      "community": 27,
+      "community": 75,
       "norm_label": "setbuffer()"
     },
     {
@@ -15650,7 +15650,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setdetune",
-      "community": 27,
+      "community": 75,
       "norm_label": "setdetune()"
     },
     {
@@ -15670,7 +15670,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setplaybackrate",
-      "community": 27,
+      "community": 75,
       "norm_label": "setplaybackrate()"
     },
     {
@@ -15890,7 +15890,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_apply",
-      "community": 7,
+      "community": 29,
       "norm_label": "apply()"
     },
     {
@@ -16000,7 +16000,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_create",
-      "community": 267,
+      "community": 7,
       "norm_label": "create()"
     },
     {
@@ -16290,7 +16290,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_seteffectiveweight",
-      "community": 8,
+      "community": 282,
       "norm_label": "seteffectiveweight()"
     },
     {
@@ -16350,7 +16350,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_stopfading",
-      "community": 8,
+      "community": 282,
       "norm_label": "stopfading()"
     },
     {
@@ -16360,7 +16360,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_seteffectivetimescale",
-      "community": 8,
+      "community": 282,
       "norm_label": "seteffectivetimescale()"
     },
     {
@@ -16380,7 +16380,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setduration",
-      "community": 8,
+      "community": 282,
       "norm_label": "setduration()"
     },
     {
@@ -16390,7 +16390,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_syncwith",
-      "community": 8,
+      "community": 282,
       "norm_label": "syncwith()"
     },
     {
@@ -16420,7 +16420,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_stopwarping",
-      "community": 8,
+      "community": 282,
       "norm_label": "stopwarping()"
     },
     {
@@ -16460,7 +16460,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updateweight",
-      "community": 8,
+      "community": 282,
       "norm_label": "_updateweight()"
     },
     {
@@ -16470,7 +16470,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_updatetimescale",
-      "community": 8,
+      "community": 282,
       "norm_label": "_updatetimescale()"
     },
     {
@@ -16480,7 +16480,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_setendings",
-      "community": 27,
+      "community": 75,
       "norm_label": "_setendings()"
     },
     {
@@ -16650,7 +16650,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_takebackcontrolinterpolant",
-      "community": 8,
+      "community": 282,
       "norm_label": "_takebackcontrolinterpolant()"
     },
     {
@@ -16680,7 +16680,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_stopallaction",
-      "community": 27,
+      "community": 75,
       "norm_label": "stopallaction()"
     },
     {
@@ -16830,7 +16830,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_getelapsedtime",
-      "community": 218,
+      "community": 144,
       "norm_label": "getelapsedtime()"
     },
     {
@@ -18050,7 +18050,7 @@
       "source_location": "L4257",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_l1",
-      "community": 218,
+      "community": 144,
       "norm_label": "l1()"
     },
     {
@@ -18060,7 +18060,7 @@
       "source_location": "L4257",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_u1",
-      "community": 218,
+      "community": 144,
       "norm_label": "u1()"
     },
     {
@@ -18070,7 +18070,7 @@
       "source_location": "L4257",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_p1",
-      "community": 218,
+      "community": 144,
       "norm_label": "p1()"
     },
     {
@@ -18080,7 +18080,7 @@
       "source_location": "L4257",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_y1",
-      "community": 218,
+      "community": 144,
       "norm_label": "y1()"
     },
     {
@@ -18090,7 +18090,7 @@
       "source_location": "L4257",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_b1",
-      "community": 68,
+      "community": 29,
       "norm_label": "b1()"
     },
     {
@@ -18100,7 +18100,7 @@
       "source_location": "L4257",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_x1",
-      "community": 218,
+      "community": 144,
       "norm_label": "x1()"
     },
     {
@@ -18550,7 +18550,7 @@
       "source_location": "L4301",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_multisampling",
-      "community": 218,
+      "community": 144,
       "norm_label": "multisampling()"
     },
     {
@@ -18600,7 +18600,7 @@
       "source_location": "L4301",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_blitdepthbuffer",
-      "community": 218,
+      "community": 144,
       "norm_label": "blitdepthbuffer()"
     },
     {
@@ -19930,7 +19930,7 @@
       "source_location": "L4477",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_z2",
-      "community": 7,
+      "community": 29,
       "norm_label": "z2()"
     },
     {
@@ -20060,7 +20060,7 @@
       "source_location": "L4514",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_z4",
-      "community": 268,
+      "community": 17,
       "norm_label": "z4()"
     },
     {
@@ -20070,7 +20070,7 @@
       "source_location": "L4514",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_b4",
-      "community": 268,
+      "community": 17,
       "norm_label": "b4()"
     },
     {
@@ -20110,7 +20110,7 @@
       "source_location": "L4514",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_k4",
-      "community": 268,
+      "community": 17,
       "norm_label": "k4()"
     },
     {
@@ -20320,7 +20320,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_x3",
-      "community": 68,
+      "community": 29,
       "norm_label": "x3()"
     },
     {
@@ -20440,7 +20440,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_b6",
-      "community": 68,
+      "community": 29,
       "norm_label": "b6()"
     },
     {
@@ -20520,7 +20520,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_y6",
-      "community": 44,
+      "community": 8,
       "norm_label": "y6()"
     },
     {
@@ -20550,7 +20550,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_6",
-      "community": 155,
+      "community": 268,
       "norm_label": "$6()"
     },
     {
@@ -20560,7 +20560,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_t8",
-      "community": 155,
+      "community": 268,
       "norm_label": "t8()"
     },
     {
@@ -20570,7 +20570,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_n8",
-      "community": 44,
+      "community": 8,
       "norm_label": "n8()"
     },
     {
@@ -20580,7 +20580,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_r8",
-      "community": 155,
+      "community": 268,
       "norm_label": "r8()"
     },
     {
@@ -20590,7 +20590,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_i8",
-      "community": 155,
+      "community": 268,
       "norm_label": "i8()"
     },
     {
@@ -20600,7 +20600,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_a8",
-      "community": 65,
+      "community": 27,
       "norm_label": "a8()"
     },
     {
@@ -20620,7 +20620,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_s8",
-      "community": 155,
+      "community": 268,
       "norm_label": "s8()"
     },
     {
@@ -20630,7 +20630,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_u8",
-      "community": 155,
+      "community": 268,
       "norm_label": "u8()"
     },
     {
@@ -20650,7 +20650,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_p8",
-      "community": 155,
+      "community": 8,
       "norm_label": "p8()"
     },
     {
@@ -20660,7 +20660,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_m8",
-      "community": 155,
+      "community": 268,
       "norm_label": "m8()"
     },
     {
@@ -20670,7 +20670,7 @@
       "source_location": "L4607",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_8",
-      "community": 155,
+      "community": 268,
       "norm_label": "_8()"
     },
     {
@@ -20680,7 +20680,7 @@
       "source_location": "L4637",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_y8",
-      "community": 44,
+      "community": 8,
       "norm_label": "y8()"
     },
     {
@@ -20690,7 +20690,7 @@
       "source_location": "L4637",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_b8",
-      "community": 44,
+      "community": 8,
       "norm_label": "b8()"
     },
     {
@@ -20730,7 +20730,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_v8",
-      "community": 65,
+      "community": 27,
       "norm_label": "v8()"
     },
     {
@@ -20750,7 +20750,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_w8",
-      "community": 44,
+      "community": 8,
       "norm_label": "w8()"
     },
     {
@@ -20780,7 +20780,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_e5",
-      "community": 68,
+      "community": 29,
       "norm_label": "e5()"
     },
     {
@@ -20800,7 +20800,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_i5",
-      "community": 44,
+      "community": 8,
       "norm_label": "i5()"
     },
     {
@@ -20820,7 +20820,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_s5",
-      "community": 44,
+      "community": 8,
       "norm_label": "s5()"
     },
     {
@@ -20830,7 +20830,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_l5",
-      "community": 44,
+      "community": 8,
       "norm_label": "l5()"
     },
     {
@@ -20840,7 +20840,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_u5",
-      "community": 44,
+      "community": 8,
       "norm_label": "u5()"
     },
     {
@@ -20890,7 +20890,7 @@
       "source_location": "L4654",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_c5",
-      "community": 44,
+      "community": 8,
       "norm_label": "c5()"
     },
     {
@@ -20960,7 +20960,7 @@
       "source_location": "L4673",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_z5",
-      "community": 68,
+      "community": 29,
       "norm_label": "z5()"
     },
     {
@@ -21130,7 +21130,7 @@
       "source_location": "L4773",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_x7",
-      "community": 155,
+      "community": 268,
       "norm_label": "x7()"
     },
     {
@@ -21230,7 +21230,7 @@
       "source_location": "L4773",
       "_origin": "ast",
       "id": "assets_index_bbjpdwa1_g7",
-      "community": 59,
+      "community": 268,
       "norm_label": "g7()"
     },
     {
@@ -26857,7 +26857,7 @@
       "label": "terrainLayout",
       "file_type": "code",
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
-      "source_location": "L204",
+      "source_location": "L196",
       "_origin": "ast",
       "id": "lib_terrain_layout_terrainlayout",
       "community": 47,
@@ -26924,14 +26924,14 @@
       "norm_label": "waterof()"
     },
     {
-      "label": "beaconsOf()",
+      "label": "hubsOf()",
       "file_type": "code",
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L177",
       "_origin": "ast",
-      "id": "lib_terrain_layout_beaconsof",
+      "id": "lib_terrain_layout_hubsof",
       "community": 47,
-      "norm_label": "beaconsof()"
+      "norm_label": "hubsof()"
     },
     {
       "label": "terrain-noise.ts",
@@ -28087,7 +28087,7 @@
       "label": "Terrain()",
       "file_type": "code",
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
-      "source_location": "L32",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "scenes_terrain_terrain",
       "community": 47,
@@ -28747,7 +28747,7 @@
       "label": "shared()",
       "file_type": "code",
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
-      "source_location": "L34",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "scenes_terrain_material_shared",
       "community": 47,
@@ -28757,7 +28757,7 @@
       "label": "surfaceMaterial()",
       "file_type": "code",
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
-      "source_location": "L47",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "scenes_terrain_material_surfacematerial",
       "community": 47,
@@ -28767,7 +28767,7 @@
       "label": "skirtMaterial()",
       "file_type": "code",
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
-      "source_location": "L118",
+      "source_location": "L142",
       "_origin": "ast",
       "id": "scenes_terrain_material_skirtmaterial",
       "community": 47,
@@ -28777,7 +28777,7 @@
       "label": "waterMaterial()",
       "file_type": "code",
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
-      "source_location": "L161",
+      "source_location": "L185",
       "_origin": "ast",
       "id": "scenes_terrain_material_watermaterial",
       "community": 47,
@@ -32210,7 +32210,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_hierarchy",
-      "community": 179,
+      "community": 195,
       "norm_label": "hierarchy.ts"
     },
     {
@@ -32220,7 +32220,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_hierarchy_subsystem",
-      "community": 179,
+      "community": 195,
       "norm_label": "subsystem"
     },
     {
@@ -32230,7 +32230,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_hierarchy_group",
-      "community": 179,
+      "community": 195,
       "norm_label": "group"
     },
     {
@@ -32240,7 +32240,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_hierarchy_children",
-      "community": 179,
+      "community": 195,
       "norm_label": "children()"
     },
     {
@@ -32250,7 +32250,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "src_hierarchy_compress",
-      "community": 179,
+      "community": 195,
       "norm_label": "compress()"
     },
     {
@@ -32260,7 +32260,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_hierarchy_generic",
-      "community": 179,
+      "community": 195,
       "norm_label": "generic"
     },
     {
@@ -32270,7 +32270,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "src_hierarchy_displayname",
-      "community": 179,
+      "community": 195,
       "norm_label": "displayname()"
     },
     {
@@ -32280,7 +32280,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "src_hierarchy_split",
-      "community": 179,
+      "community": 195,
       "norm_label": "split()"
     },
     {
@@ -32290,7 +32290,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "src_hierarchy_subsystems",
-      "community": 179,
+      "community": 195,
       "norm_label": "subsystems()"
     },
     {
@@ -32780,7 +32780,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_paths",
-      "community": 95,
+      "community": 195,
       "norm_label": "paths.ts"
     },
     {
@@ -32810,7 +32810,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_regions",
-      "community": 95,
+      "community": 195,
       "norm_label": "regions.ts"
     },
     {
@@ -32820,7 +32820,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_regions_region",
-      "community": 95,
+      "community": 251,
       "norm_label": "region"
     },
     {
@@ -32830,7 +32830,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_regions_analysis",
-      "community": 95,
+      "community": 195,
       "norm_label": "analysis"
     },
     {
@@ -32840,7 +32840,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_regions_bycentrality",
-      "community": 95,
+      "community": 251,
       "norm_label": "bycentrality()"
     },
     {
@@ -33070,7 +33070,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_structure_structure",
-      "community": 95,
+      "community": 195,
       "norm_label": "structure"
     },
     {
@@ -37180,7 +37180,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_args",
-      "community": 13,
+      "community": 100,
       "norm_label": "args.ts"
     },
     {
@@ -37190,7 +37190,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_args_parsedargs",
-      "community": 13,
+      "community": 100,
       "norm_label": "parsedargs"
     },
     {
@@ -37200,7 +37200,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_args_command",
-      "community": 13,
+      "community": 100,
       "norm_label": "command"
     },
     {
@@ -37210,7 +37210,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "src_args_options",
-      "community": 13,
+      "community": 100,
       "norm_label": "options"
     },
     {
@@ -37230,7 +37230,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_args_failed",
-      "community": 13,
+      "community": 100,
       "norm_label": "failed()"
     },
     {
@@ -37240,7 +37240,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_args_parse",
-      "community": 13,
+      "community": 100,
       "norm_label": "parse()"
     },
     {
@@ -37260,7 +37260,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_args_parseoptions",
-      "community": 13,
+      "community": 100,
       "norm_label": "parseoptions()"
     },
     {
@@ -37280,7 +37280,7 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "src_args_partition",
-      "community": 13,
+      "community": 100,
       "norm_label": "partition()"
     },
     {
@@ -37290,7 +37290,7 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "src_args_invocation",
-      "community": 13,
+      "community": 100,
       "norm_label": "invocation"
     },
     {
@@ -37300,7 +37300,7 @@
       "source_location": "L293",
       "_origin": "ast",
       "id": "src_args_resolveinvocation",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolveinvocation()"
     },
     {
@@ -37310,7 +37310,7 @@
       "source_location": "L317",
       "_origin": "ast",
       "id": "src_args_named",
-      "community": 13,
+      "community": 100,
       "norm_label": "named()"
     },
     {
@@ -37320,7 +37320,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "src_args_resolvevariadic",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolvevariadic()"
     },
     {
@@ -37340,7 +37340,7 @@
       "source_location": "L392",
       "_origin": "ast",
       "id": "src_args_resolvemultiple",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolvemultiple()"
     },
     {
@@ -37350,7 +37350,7 @@
       "source_location": "L416",
       "_origin": "ast",
       "id": "src_args_checkflags",
-      "community": 13,
+      "community": 100,
       "norm_label": "checkflags()"
     },
     {
@@ -37360,7 +37360,7 @@
       "source_location": "L439",
       "_origin": "ast",
       "id": "src_args_resolvelimit",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolvelimit()"
     },
     {
@@ -37370,7 +37370,7 @@
       "source_location": "L465",
       "_origin": "ast",
       "id": "src_args_resolvedepth",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolvedepth()"
     },
     {
@@ -37390,7 +37390,7 @@
       "source_location": "L526",
       "_origin": "ast",
       "id": "src_args_fail_on",
-      "community": 13,
+      "community": 100,
       "norm_label": "fail_on"
     },
     {
@@ -37400,7 +37400,7 @@
       "source_location": "L535",
       "_origin": "ast",
       "id": "src_args_resolveverdict",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolveverdict()"
     },
     {
@@ -37410,7 +37410,7 @@
       "source_location": "L549",
       "_origin": "ast",
       "id": "src_args_resolvecolor",
-      "community": 13,
+      "community": 100,
       "norm_label": "resolvecolor()"
     },
     {
@@ -37420,7 +37420,7 @@
       "source_location": "L561",
       "_origin": "ast",
       "id": "src_args_spelled",
-      "community": 13,
+      "community": 100,
       "norm_label": "spelled()"
     },
     {
@@ -37430,7 +37430,7 @@
       "source_location": "L571",
       "_origin": "ast",
       "id": "src_args_flagwidth",
-      "community": 13,
+      "community": 100,
       "norm_label": "flagwidth()"
     },
     {
@@ -37440,7 +37440,7 @@
       "source_location": "L588",
       "_origin": "ast",
       "id": "src_args_usage",
-      "community": 13,
+      "community": 100,
       "norm_label": "usage()"
     },
     {
@@ -37640,7 +37640,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "src_main_outcome",
-      "community": 1,
+      "community": 100,
       "norm_label": "outcome"
     },
     {
@@ -38190,7 +38190,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_messages",
-      "community": 13,
+      "community": 100,
       "norm_label": "messages.ts"
     },
     {
@@ -38200,7 +38200,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_messages_formaterror",
-      "community": 13,
+      "community": 100,
       "norm_label": "formaterror()"
     },
     {
@@ -38210,7 +38210,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_messages_variadic",
-      "community": 13,
+      "community": 100,
       "norm_label": "variadic()"
     },
     {
@@ -38460,7 +38460,7 @@
       "source_location": "L470",
       "_origin": "ast",
       "id": "src_render_symbolline",
-      "community": 12,
+      "community": 1,
       "norm_label": "symbolline()"
     },
     {
@@ -38490,7 +38490,7 @@
       "source_location": "L513",
       "_origin": "ast",
       "id": "src_render_referenceline",
-      "community": 12,
+      "community": 1,
       "norm_label": "referenceline()"
     },
     {
@@ -39080,7 +39080,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_args_test",
-      "community": 13,
+      "community": 100,
       "norm_label": "args.test.ts"
     },
     {
@@ -39090,7 +39090,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "test_args_test_errorof",
-      "community": 13,
+      "community": 100,
       "norm_label": "errorof()"
     },
     {
@@ -39100,7 +39100,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "test_args_test_commandof",
-      "community": 13,
+      "community": 100,
       "norm_label": "commandof()"
     },
     {
@@ -39370,7 +39370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_messages_test",
-      "community": 13,
+      "community": 100,
       "norm_label": "messages.test.ts"
     },
     {
@@ -39380,7 +39380,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "test_messages_test_every",
-      "community": 13,
+      "community": 100,
       "norm_label": "every"
     },
     {
@@ -40230,7 +40230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ts7_index",
-      "community": 12,
+      "community": 55,
       "norm_label": "index.ts"
     },
     {
@@ -40290,7 +40290,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "ts7_program_analyse",
-      "community": 12,
+      "community": 55,
       "norm_label": "analyse()"
     },
     {
@@ -40300,7 +40300,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "ts7_program_openanalysis",
-      "community": 12,
+      "community": 55,
       "norm_label": "openanalysis()"
     },
     {
@@ -42450,7 +42450,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_envelope_operationname",
-      "community": 13,
+      "community": 100,
       "norm_label": "operationname"
     },
     {
@@ -42580,7 +42580,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "src_envelope_envelopeerror",
-      "community": 45,
+      "community": 100,
       "norm_label": "envelopeerror"
     },
     {
@@ -43020,7 +43020,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "labels_scope_scope",
-      "community": 13,
+      "community": 100,
       "norm_label": "scope"
     },
     {
@@ -43200,7 +43200,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_manifest",
-      "community": 13,
+      "community": 100,
       "norm_label": "manifest.ts"
     },
     {
@@ -43210,7 +43210,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_manifest_subjectspec",
-      "community": 13,
+      "community": 100,
       "norm_label": "subjectspec"
     },
     {
@@ -43220,7 +43220,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "src_manifest_operationflag",
-      "community": 13,
+      "community": 100,
       "norm_label": "operationflag"
     },
     {
@@ -43230,7 +43230,7 @@
       "source_location": "L511",
       "_origin": "ast",
       "id": "src_manifest_operationspec",
-      "community": 13,
+      "community": 100,
       "norm_label": "operationspec"
     },
     {
@@ -43240,7 +43240,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "src_manifest_identifier",
-      "community": 13,
+      "community": 100,
       "norm_label": "identifier"
     },
     {
@@ -43250,7 +43250,7 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "src_manifest_operations",
-      "community": 13,
+      "community": 100,
       "norm_label": "operations"
     },
     {
@@ -43270,7 +43270,7 @@
       "source_location": "L506",
       "_origin": "ast",
       "id": "src_manifest_operation_names",
-      "community": 13,
+      "community": 100,
       "norm_label": "operation_names"
     },
     {
@@ -43280,7 +43280,7 @@
       "source_location": "L516",
       "_origin": "ast",
       "id": "src_manifest_operationstaking",
-      "community": 13,
+      "community": 100,
       "norm_label": "operationstaking()"
     },
     {
@@ -43290,7 +43290,7 @@
       "source_location": "L523",
       "_origin": "ast",
       "id": "src_manifest_operation_flags",
-      "community": 13,
+      "community": 100,
       "norm_label": "operation_flags"
     },
     {
@@ -43800,7 +43800,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "operations_claims",
-      "community": 12,
+      "community": 1,
       "norm_label": "claims.ts"
     },
     {
@@ -43810,7 +43810,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "operations_claims_predicates",
-      "community": 12,
+      "community": 1,
       "norm_label": "predicates"
     },
     {
@@ -43820,7 +43820,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "operations_claims_candidate",
-      "community": 12,
+      "community": 1,
       "norm_label": "candidate"
     },
     {
@@ -43830,7 +43830,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "operations_claims_over",
-      "community": 12,
+      "community": 1,
       "norm_label": "over()"
     },
     {
@@ -43850,7 +43850,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "operations_claims_importclaims",
-      "community": 12,
+      "community": 1,
       "norm_label": "importclaims()"
     },
     {
@@ -43860,7 +43860,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "operations_claims_callclaim",
-      "community": 12,
+      "community": 1,
       "norm_label": "callclaim()"
     },
     {
@@ -43870,7 +43870,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "operations_claims_referenceclaim",
-      "community": 12,
+      "community": 1,
       "norm_label": "referenceclaim()"
     },
     {
@@ -43880,7 +43880,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "operations_claims_labelclaim",
-      "community": 12,
+      "community": 1,
       "norm_label": "labelclaim()"
     },
     {
@@ -45070,7 +45070,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "operations_report_bug_reproduction",
-      "community": 45,
+      "community": 100,
       "norm_label": "reproduction"
     },
     {
@@ -47750,7 +47750,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_symbol_id_descriptor",
-      "community": 12,
+      "community": 55,
       "norm_label": "descriptor"
     },
     {
@@ -47850,7 +47850,7 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "src_symbol_id_shorthandof",
-      "community": 12,
+      "community": 1,
       "norm_label": "shorthandof()"
     },
     {
@@ -47930,7 +47930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_adapter_test",
-      "community": 12,
+      "community": 55,
       "norm_label": "adapter.test.ts"
     },
     {
@@ -47940,7 +47940,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "test_adapter_test_fixture",
-      "community": 12,
+      "community": 55,
       "norm_label": "fixture()"
     },
     {
@@ -47950,7 +47950,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "test_adapter_test_root",
-      "community": 12,
+      "community": 55,
       "norm_label": "root"
     },
     {
@@ -47960,7 +47960,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "test_adapter_test_result",
-      "community": 12,
+      "community": 55,
       "norm_label": "result"
     },
     {
@@ -47970,7 +47970,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "test_adapter_test_edge",
-      "community": 12,
+      "community": 55,
       "norm_label": "edge()"
     },
     {
@@ -48150,7 +48150,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_descriptors_test",
-      "community": 12,
+      "community": 1,
       "norm_label": "descriptors.test.ts"
     },
     {
@@ -48160,7 +48160,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "test_descriptors_test_fixtureroot",
-      "community": 12,
+      "community": 1,
       "norm_label": "fixtureroot"
     },
     {
@@ -48170,7 +48170,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "test_descriptors_test_result",
-      "community": 12,
+      "community": 1,
       "norm_label": "result"
     },
     {
@@ -48180,7 +48180,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "test_descriptors_test_at",
-      "community": 12,
+      "community": 1,
       "norm_label": "at()"
     },
     {
@@ -48190,7 +48190,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "test_descriptors_test_claiming",
-      "community": 12,
+      "community": 1,
       "norm_label": "claiming()"
     },
     {
@@ -50330,7 +50330,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "test_references_test_named",
-      "community": 12,
+      "community": 1,
       "norm_label": "named()"
     },
     {
@@ -50510,7 +50510,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "test_symbol_id_test",
-      "community": 12,
+      "community": 55,
       "norm_label": "symbol-id.test.ts"
     },
     {
@@ -50520,7 +50520,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "test_symbol_id_test_write",
-      "community": 12,
+      "community": 55,
       "norm_label": "write()"
     },
     {
@@ -50530,7 +50530,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "test_symbol_id_test_manifest",
-      "community": 12,
+      "community": 55,
       "norm_label": "manifest()"
     },
     {
@@ -50540,7 +50540,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "test_symbol_id_test_sweep",
-      "community": 12,
+      "community": 55,
       "norm_label": "sweep()"
     },
     {
@@ -50550,7 +50550,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "test_symbol_id_test_idof",
-      "community": 12,
+      "community": 55,
       "norm_label": "idof()"
     },
     {
@@ -52177,7 +52177,7 @@
       "label": "How it fits together",
       "file_type": "document",
       "source_file": "apps/code-art/README.md",
-      "source_location": "L188",
+      "source_location": "L189",
       "_origin": "ast",
       "id": "code_art_readme_how_it_fits_together",
       "community": 182,
@@ -52187,7 +52187,7 @@
       "label": "What `codedocs art` ships",
       "file_type": "document",
       "source_file": "apps/code-art/README.md",
-      "source_location": "L207",
+      "source_location": "L208",
       "_origin": "ast",
       "id": "code_art_readme_what_codedocs_art_ships",
       "community": 182,
@@ -62485,7 +62485,7 @@
       "file_type": "code",
       "source_location": "packages/cli/src/args.ts#Command",
       "source_file": "packages/cli/src/args.ts",
-      "community": 69,
+      "community": 82,
       "norm_label": "command (type, incl. `out`)",
       "id": "packages/cli/src/args.ts#Command"
     },
@@ -62548,7 +62548,7 @@
       "file_type": "code",
       "source_location": "packages/cli/src/main.ts#targetFor",
       "source_file": "packages/cli/src/main.ts",
-      "community": 82,
+      "community": 69,
       "norm_label": "targetfor",
       "id": "packages/cli/src/main.ts#targetFor"
     },
@@ -62611,7 +62611,7 @@
       "file_type": "code",
       "source_location": "packages/cli/src/mcp.ts#tools",
       "source_file": "packages/cli/src/mcp.ts",
-      "community": 69,
+      "community": 82,
       "norm_label": "tools",
       "id": "packages/cli/src/mcp.ts#tools"
     },
@@ -62647,7 +62647,7 @@
       "file_type": "code",
       "source_location": "packages/cli/src/mcp.ts#describe",
       "source_file": "packages/cli/src/mcp.ts",
-      "community": 69,
+      "community": 82,
       "norm_label": "describe",
       "id": "packages/cli/src/mcp.ts#describe"
     },
@@ -62656,7 +62656,7 @@
       "file_type": "code",
       "source_location": "packages/cli/src/mcp.ts#schemaFor",
       "source_file": "packages/cli/src/mcp.ts",
-      "community": 69,
+      "community": 82,
       "norm_label": "schemafor",
       "id": "packages/cli/src/mcp.ts#schemaFor"
     },
@@ -62793,7 +62793,7 @@
       "source_location": "docs/adr/0013-drafting-a-document.md",
       "rationale": "The refusal to overwrite an existing file is what makes the derived-path default safe, and there is no flag to bypass it. It was the guard on a flag somebody had to pass to get a write; it is now the guard on what happens when nobody says anything. A --force was considered and rejected: the flag exists to be passed, and the file it destroys is a document someone wrote by hand \u2014 deleting it first is a gesture that names its own consequence. Any future softening (a --force, an 'only if unchanged', a silent skip) is a change to the command's default behaviour and reopens ADR 0013.",
       "source_file": "docs/adr/0013-drafting-a-document.md",
-      "community": 82,
+      "community": 69,
       "norm_label": "draft overwrite refusal",
       "id": "concept:draft-overwrite-refusal"
     },
@@ -62823,7 +62823,7 @@
       "source_location": "docs/adr/0013-drafting-a-document.md",
       "rationale": "Writes a Markdown file prefilled with everything the index holds about one symbol or file \u2014 facts as prose material plus every claim those facts would support as candidates \u2014 and writes no sentence of its own prose. Considered and rejected alternatives include leaving the decision alone (an `evidence --json --claims` recipe, rejected because every agent would invent its own layout) and drafting from a `trace` (rejected because heading depth would track call depth).",
       "source_file": "docs/adr/0013-drafting-a-document.md",
-      "community": 69,
+      "community": 82,
       "norm_label": "`docs draft` operation",
       "id": "concept:docs-draft-operation"
     },
@@ -149512,9 +149512,9 @@
       "source_file": "apps/code-art/src/App.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app",
-      "target": "src_terrainhud",
-      "confidence_score": 1.0
+      "target": "src_terrainhud"
     },
     {
       "relation": "imports",
@@ -149523,9 +149523,9 @@
       "source_file": "apps/code-art/src/App.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app",
-      "target": "src_terrainhud_terrainhud",
-      "confidence_score": 1.0
+      "target": "src_terrainhud_terrainhud"
     },
     {
       "relation": "imports_from",
@@ -150669,9 +150669,9 @@
       "source_file": "apps/code-art/src/GalaxyHud.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_galaxyhud",
-      "target": "src_sceneswitch",
-      "confidence_score": 1.0
+      "target": "src_sceneswitch"
     },
     {
       "relation": "imports",
@@ -150680,9 +150680,9 @@
       "source_file": "apps/code-art/src/GalaxyHud.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_galaxyhud",
-      "target": "src_sceneswitch_sceneswitch",
-      "confidence_score": 1.0
+      "target": "src_sceneswitch_sceneswitch"
     },
     {
       "relation": "imports_from",
@@ -151459,9 +151459,9 @@
       "source_file": "apps/code-art/src/SceneSwitch.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_sceneswitch",
-      "target": "src_icons",
-      "confidence_score": 1.0
+      "target": "src_icons"
     },
     {
       "relation": "imports",
@@ -151470,9 +151470,9 @@
       "source_file": "apps/code-art/src/SceneSwitch.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_sceneswitch",
-      "target": "src_icons_galaxyicon",
-      "confidence_score": 1.0
+      "target": "src_icons_galaxyicon"
     },
     {
       "relation": "imports",
@@ -151481,9 +151481,9 @@
       "source_file": "apps/code-art/src/SceneSwitch.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_sceneswitch",
-      "target": "src_icons_terrainicon",
-      "confidence_score": 1.0
+      "target": "src_icons_terrainicon"
     },
     {
       "relation": "contains",
@@ -151491,9 +151491,9 @@
       "source_file": "apps/code-art/src/SceneSwitch.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_sceneswitch",
-      "target": "src_sceneswitch_looks",
-      "confidence_score": 1.0
+      "target": "src_sceneswitch_looks"
     },
     {
       "relation": "contains",
@@ -151501,9 +151501,9 @@
       "source_file": "apps/code-art/src/SceneSwitch.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_sceneswitch",
-      "target": "src_sceneswitch_sceneswitch",
-      "confidence_score": 1.0
+      "target": "src_sceneswitch_sceneswitch"
     },
     {
       "relation": "imports_from",
@@ -151512,9 +151512,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_sceneswitch",
-      "confidence_score": 1.0
+      "target": "src_sceneswitch"
     },
     {
       "relation": "imports",
@@ -151523,9 +151523,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_sceneswitch_sceneswitch",
-      "confidence_score": 1.0
+      "target": "src_sceneswitch_sceneswitch"
     },
     {
       "relation": "imports_from",
@@ -152033,9 +152033,9 @@
       "source_file": "apps/code-art/src/Stage.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_stage",
-      "target": "scenes_terrain",
-      "confidence_score": 1.0
+      "target": "scenes_terrain"
     },
     {
       "relation": "imports",
@@ -152044,9 +152044,9 @@
       "source_file": "apps/code-art/src/Stage.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_stage",
-      "target": "scenes_terrain_terrain",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_terrain"
     },
     {
       "relation": "contains",
@@ -152149,9 +152149,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_frame",
-      "confidence_score": 1.0
+      "target": "lib_frame"
     },
     {
       "relation": "imports",
@@ -152160,9 +152160,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_frame_hoveredfile",
-      "confidence_score": 1.0
+      "target": "lib_frame_hoveredfile"
     },
     {
       "relation": "imports_from",
@@ -152171,9 +152171,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_motion",
-      "confidence_score": 1.0
+      "target": "lib_motion"
     },
     {
       "relation": "imports",
@@ -152182,9 +152182,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_motion_panel",
-      "confidence_score": 1.0
+      "target": "lib_motion_panel"
     },
     {
       "relation": "imports_from",
@@ -152193,9 +152193,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_series",
-      "confidence_score": 1.0
+      "target": "lib_series"
     },
     {
       "relation": "imports",
@@ -152204,9 +152204,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_series_series",
-      "confidence_score": 1.0
+      "target": "lib_series_series"
     },
     {
       "relation": "imports_from",
@@ -152215,9 +152215,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_terrain_text",
-      "confidence_score": 1.0
+      "target": "lib_terrain_text"
     },
     {
       "relation": "imports",
@@ -152226,9 +152226,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "lib_terrain_text_terrain_legend",
-      "confidence_score": 1.0
+      "target": "lib_terrain_text_terrain_legend"
     },
     {
       "relation": "imports_from",
@@ -152237,9 +152237,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_icons",
-      "confidence_score": 1.0
+      "target": "src_icons"
     },
     {
       "relation": "imports",
@@ -152248,9 +152248,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_icons_homeicon",
-      "confidence_score": 1.0
+      "target": "src_icons_homeicon"
     },
     {
       "relation": "imports",
@@ -152259,9 +152259,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_icons_icontoggle",
-      "confidence_score": 1.0
+      "target": "src_icons_icontoggle"
     },
     {
       "relation": "imports",
@@ -152270,9 +152270,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_icons_infoicon",
-      "confidence_score": 1.0
+      "target": "src_icons_infoicon"
     },
     {
       "relation": "contains",
@@ -152280,9 +152280,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_terrainhud_drop_in",
-      "confidence_score": 1.0
+      "target": "src_terrainhud_drop_in"
     },
     {
       "relation": "contains",
@@ -152290,9 +152290,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_terrainhud_legend",
-      "confidence_score": 1.0
+      "target": "src_terrainhud_legend"
     },
     {
       "relation": "contains",
@@ -152300,9 +152300,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_terrainhud_terrainhud",
-      "confidence_score": 1.0
+      "target": "src_terrainhud_terrainhud"
     },
     {
       "relation": "contains",
@@ -152310,9 +152310,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud",
-      "target": "src_terrainhud_terrainhudprops",
-      "confidence_score": 1.0
+      "target": "src_terrainhud_terrainhudprops"
     },
     {
       "relation": "references",
@@ -152321,9 +152321,9 @@
       "source_file": "apps/code-art/src/TerrainHud.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_terrainhud_terrainhudprops",
-      "target": "lib_series_series",
-      "confidence_score": 1.0
+      "target": "lib_series_series"
     },
     {
       "relation": "calls",
@@ -152753,9 +152753,9 @@
       "source_file": "apps/code-art/src/icons.tsx",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_icons",
-      "target": "src_icons_galaxyicon",
-      "confidence_score": 1.0
+      "target": "src_icons_galaxyicon"
     },
     {
       "relation": "contains",
@@ -152833,9 +152833,9 @@
       "source_file": "apps/code-art/src/icons.tsx",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_icons",
-      "target": "src_icons_terrainicon",
-      "confidence_score": 1.0
+      "target": "src_icons_terrainicon"
     },
     {
       "relation": "imports_from",
@@ -153706,9 +153706,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_atlas",
-      "confidence_score": 1.0
+      "target": "lib_atlas"
     },
     {
       "relation": "imports_from",
@@ -153717,9 +153717,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_atlas",
-      "confidence_score": 1.0
+      "target": "lib_atlas"
     },
     {
       "relation": "imports_from",
@@ -153728,9 +153728,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_atlas",
-      "confidence_score": 1.0
+      "target": "lib_atlas"
     },
     {
       "relation": "imports_from",
@@ -153739,9 +153739,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_atlas",
-      "confidence_score": 1.0
+      "target": "lib_atlas"
     },
     {
       "relation": "imports_from",
@@ -154047,9 +154047,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_atlas_istest",
-      "confidence_score": 1.0
+      "target": "lib_atlas_istest"
     },
     {
       "relation": "imports",
@@ -154058,18 +154058,18 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_atlas_istest",
-      "confidence_score": 1.0
+      "target": "lib_atlas_istest"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
-      "source_location": "L184",
+      "source_location": "L183",
       "weight": 1.0,
-      "source": "lib_terrain_layout_beaconsof",
+      "source": "lib_terrain_layout_hubsof",
       "target": "lib_atlas_istest",
       "confidence_score": 1.0
     },
@@ -154201,9 +154201,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_atlas_filedatum",
-      "confidence_score": 1.0
+      "target": "lib_atlas_filedatum"
     },
     {
       "relation": "references",
@@ -154212,9 +154212,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field_fieldoptions",
-      "target": "lib_atlas_filedatum",
-      "confidence_score": 1.0
+      "target": "lib_atlas_filedatum"
     },
     {
       "relation": "imports",
@@ -154223,9 +154223,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_atlas_filedatum",
-      "confidence_score": 1.0
+      "target": "lib_atlas_filedatum"
     },
     {
       "relation": "imports",
@@ -154234,9 +154234,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_atlas_filedatum",
-      "confidence_score": 1.0
+      "target": "lib_atlas_filedatum"
     },
     {
       "relation": "imports",
@@ -154432,9 +154432,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_atlas_link",
-      "confidence_score": 1.0
+      "target": "lib_atlas_link"
     },
     {
       "relation": "imports",
@@ -154839,9 +154839,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_atlas_symbolcount",
-      "confidence_score": 1.0
+      "target": "lib_atlas_symbolcount"
     },
     {
       "relation": "imports",
@@ -154850,9 +154850,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_atlas_symbolcount",
-      "confidence_score": 1.0
+      "target": "lib_atlas_symbolcount"
     },
     {
       "relation": "calls",
@@ -154861,9 +154861,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree_fileweight",
-      "target": "lib_atlas_symbolcount",
-      "confidence_score": 1.0
+      "target": "lib_atlas_symbolcount"
     },
     {
       "relation": "imports",
@@ -157889,9 +157889,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_galaxy_palette",
-      "confidence_score": 1.0
+      "target": "lib_galaxy_palette"
     },
     {
       "relation": "imports_from",
@@ -157944,9 +157944,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_galaxy_palette_galaxypalette",
-      "confidence_score": 1.0
+      "target": "lib_galaxy_palette_galaxypalette"
     },
     {
       "relation": "calls",
@@ -157955,9 +157955,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_groundcolors",
-      "target": "lib_galaxy_palette_galaxypalette",
-      "confidence_score": 1.0
+      "target": "lib_galaxy_palette_galaxypalette"
     },
     {
       "relation": "imports",
@@ -158586,9 +158586,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "lib_glow",
-      "confidence_score": 1.0
+      "target": "lib_glow"
     },
     {
       "relation": "imports_from",
@@ -158619,9 +158619,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "lib_glow_glowmaterial",
-      "confidence_score": 1.0
+      "target": "lib_glow_glowmaterial"
     },
     {
       "relation": "imports",
@@ -161854,9 +161854,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_rng",
-      "confidence_score": 1.0
+      "target": "lib_rng"
     },
     {
       "relation": "imports_from",
@@ -161865,9 +161865,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_rng",
-      "confidence_score": 1.0
+      "target": "lib_rng"
     },
     {
       "relation": "imports_from",
@@ -161876,9 +161876,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_rng",
-      "confidence_score": 1.0
+      "target": "lib_rng"
     },
     {
       "relation": "imports_from",
@@ -161942,9 +161942,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_rng_hash",
-      "confidence_score": 1.0
+      "target": "lib_rng_hash"
     },
     {
       "relation": "calls",
@@ -161953,9 +161953,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L158",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_waterof",
-      "target": "lib_rng_hash",
-      "confidence_score": 1.0
+      "target": "lib_rng_hash"
     },
     {
       "relation": "imports",
@@ -161964,9 +161964,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_rng_hash",
-      "confidence_score": 1.0
+      "target": "lib_rng_hash"
     },
     {
       "relation": "calls",
@@ -161975,9 +161975,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers_edgepath",
-      "target": "lib_rng_hash",
-      "confidence_score": 1.0
+      "target": "lib_rng_hash"
     },
     {
       "relation": "imports",
@@ -161986,9 +161986,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_rng_hash",
-      "confidence_score": 1.0
+      "target": "lib_rng_hash"
     },
     {
       "relation": "imports",
@@ -162041,9 +162041,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_rng_rng",
-      "confidence_score": 1.0
+      "target": "lib_rng_rng"
     },
     {
       "relation": "calls",
@@ -162052,9 +162052,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers_edgepath",
-      "target": "lib_rng_rng",
-      "confidence_score": 1.0
+      "target": "lib_rng_rng"
     },
     {
       "relation": "imports",
@@ -162063,9 +162063,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_rng_rng",
-      "confidence_score": 1.0
+      "target": "lib_rng_rng"
     },
     {
       "relation": "imports",
@@ -162262,9 +162262,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_series",
-      "confidence_score": 1.0
+      "target": "lib_series"
     },
     {
       "relation": "imports_from",
@@ -162405,9 +162405,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_series",
-      "confidence_score": 1.0
+      "target": "lib_series"
     },
     {
       "relation": "imports_from",
@@ -162427,9 +162427,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_series_series",
-      "confidence_score": 1.0
+      "target": "lib_series_series"
     },
     {
       "relation": "imports",
@@ -162702,9 +162702,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_series_fromatlas",
-      "confidence_score": 1.0
+      "target": "lib_series_fromatlas"
     },
     {
       "relation": "calls",
@@ -163853,9 +163853,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_around",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_around"
     },
     {
       "relation": "contains",
@@ -163863,9 +163863,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_field",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_field"
     },
     {
       "relation": "contains",
@@ -163873,9 +163873,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_fieldoptions",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_fieldoptions"
     },
     {
       "relation": "contains",
@@ -163883,9 +163883,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_grid",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_grid"
     },
     {
       "relation": "contains",
@@ -163893,9 +163893,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_ground",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_ground"
     },
     {
       "relation": "contains",
@@ -163903,9 +163903,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L185",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_heightat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_heightat"
     },
     {
       "relation": "contains",
@@ -163913,9 +163913,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_ownerat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_ownerat"
     },
     {
       "relation": "contains",
@@ -163923,9 +163923,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_rgb",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_rgb"
     },
     {
       "relation": "contains",
@@ -163933,9 +163933,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_smooth",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_smooth"
     },
     {
       "relation": "contains",
@@ -163943,9 +163943,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_field_terrainfield",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_terrainfield"
     },
     {
       "relation": "imports_from",
@@ -163954,9 +163954,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_noise",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise"
     },
     {
       "relation": "imports",
@@ -163965,9 +163965,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_noise_ridged",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_ridged"
     },
     {
       "relation": "imports",
@@ -163976,9 +163976,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_noise_valuenoise",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_valuenoise"
     },
     {
       "relation": "imports_from",
@@ -163987,9 +163987,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_rivers",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers"
     },
     {
       "relation": "imports",
@@ -163998,9 +163998,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_rivers_river",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_river"
     },
     {
       "relation": "imports_from",
@@ -164009,9 +164009,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_tree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree"
     },
     {
       "relation": "imports",
@@ -164020,9 +164020,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "imports",
@@ -164031,9 +164031,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field",
-      "target": "lib_terrain_tree_treenode",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_treenode"
     },
     {
       "relation": "imports_from",
@@ -164042,9 +164042,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_field",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field"
     },
     {
       "relation": "imports_from",
@@ -164053,9 +164053,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "lib_terrain_field",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field"
     },
     {
       "relation": "imports_from",
@@ -164064,9 +164064,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_field",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field"
     },
     {
       "relation": "imports",
@@ -164075,9 +164075,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_field_field",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_field"
     },
     {
       "relation": "references",
@@ -164086,9 +164086,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_field_field",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_field"
     },
     {
       "relation": "imports",
@@ -164097,9 +164097,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_field_rgb",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_rgb"
     },
     {
       "relation": "calls",
@@ -164108,9 +164108,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field_terrainfield",
-      "target": "lib_terrain_field_around",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_around"
     },
     {
       "relation": "references",
@@ -164119,9 +164119,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field_fieldoptions",
-      "target": "lib_terrain_rivers_river",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_river"
     },
     {
       "relation": "references",
@@ -164130,9 +164130,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field_fieldoptions",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "references",
@@ -164141,9 +164141,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field_fieldoptions",
-      "target": "lib_terrain_tree_treenode",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_treenode"
     },
     {
       "relation": "calls",
@@ -164152,9 +164152,9 @@
       "source_file": "apps/code-art/src/lib/terrain-field.ts",
       "source_location": "L167",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_field_terrainfield",
-      "target": "lib_terrain_field_smooth",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_smooth"
     },
     {
       "relation": "calls",
@@ -164185,9 +164185,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_field_terrainfield",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_terrainfield"
     },
     {
       "relation": "calls",
@@ -164207,9 +164207,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_field_terrainfield",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_terrainfield"
     },
     {
       "relation": "imports",
@@ -164218,20 +164218,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_field_heightat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
-      "source_location": "L193",
-      "weight": 1.0,
-      "source": "lib_terrain_layout_beaconsof",
-      "target": "lib_terrain_field_heightat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_heightat"
     },
     {
       "relation": "calls",
@@ -164251,9 +164240,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L163",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_waterof",
-      "target": "lib_terrain_field_heightat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_heightat"
     },
     {
       "relation": "imports",
@@ -164262,9 +164251,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_field_heightat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_heightat"
     },
     {
       "relation": "imports",
@@ -164273,9 +164262,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "lib_terrain_field_ownerat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_ownerat"
     },
     {
       "relation": "imports",
@@ -164284,9 +164273,19 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_field_ownerat",
-      "confidence_score": 1.0
+      "target": "lib_terrain_field_ownerat"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_terrain_layout",
+      "target": "lib_terrain_layout_groundcolors"
     },
     {
       "relation": "contains",
@@ -164295,17 +164294,7 @@
       "source_location": "L177",
       "weight": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_beaconsof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
-      "source_location": "L68",
-      "weight": 1.0,
-      "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_groundcolors",
+      "target": "lib_terrain_layout_hubsof",
       "confidence_score": 1.0
     },
     {
@@ -164314,9 +164303,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_mesh",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_mesh"
     },
     {
       "relation": "contains",
@@ -164324,9 +164313,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_rimof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_rimof"
     },
     {
       "relation": "contains",
@@ -164334,9 +164323,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_skirtof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_skirtof"
     },
     {
       "relation": "contains",
@@ -164344,9 +164333,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_surfaceof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_surfaceof"
     },
     {
       "relation": "contains",
@@ -164354,9 +164343,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L204",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_terrainlayout",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_terrainlayout"
     },
     {
       "relation": "contains",
@@ -164364,9 +164353,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_layout_waterof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_waterof"
     },
     {
       "relation": "imports_from",
@@ -164375,9 +164364,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_rivers",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers"
     },
     {
       "relation": "imports",
@@ -164386,9 +164375,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_rivers_edgeflows",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_edgeflows"
     },
     {
       "relation": "imports",
@@ -164397,9 +164386,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_rivers_river",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_river"
     },
     {
       "relation": "imports",
@@ -164408,9 +164397,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_rivers_riversof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_riversof"
     },
     {
       "relation": "imports_from",
@@ -164419,9 +164408,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_tree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree"
     },
     {
       "relation": "imports",
@@ -164430,9 +164419,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "imports",
@@ -164441,9 +164430,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout",
-      "target": "lib_terrain_tree_treenode",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_treenode"
     },
     {
       "relation": "imports_from",
@@ -164452,7 +164441,18 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
+      "target": "lib_terrain_layout"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/code-art/src/scenes/terrain-material.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "scenes_terrain_material",
       "target": "lib_terrain_layout",
       "confidence_score": 1.0
     },
@@ -164463,20 +164463,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_layout",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
-      "source_location": "L224",
-      "weight": 1.0,
-      "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_layout_beaconsof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout"
     },
     {
       "relation": "calls",
@@ -164485,20 +164474,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L212",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_layout_groundcolors",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
-      "source_location": "L222",
-      "weight": 1.0,
-      "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_layout_skirtof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_groundcolors"
     },
     {
       "relation": "calls",
@@ -164508,8 +164486,30 @@
       "source_location": "L216",
       "weight": 1.0,
       "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_layout_surfaceof",
+      "target": "lib_terrain_layout_hubsof",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
+      "source_location": "L222",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_terrain_layout_terrainlayout",
+      "target": "lib_terrain_layout_skirtof"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/code-art/src/lib/terrain-layout.ts",
+      "source_location": "L216",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_terrain_layout_terrainlayout",
+      "target": "lib_terrain_layout_surfaceof"
     },
     {
       "relation": "calls",
@@ -164518,9 +164518,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_layout_waterof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_waterof"
     },
     {
       "relation": "calls",
@@ -164540,9 +164540,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_rivers_river",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_river"
     },
     {
       "relation": "calls",
@@ -164562,9 +164562,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_terrainlayout",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "imports",
@@ -164573,9 +164573,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "lib_terrain_layout_terrainlayout",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_terrainlayout"
     },
     {
       "relation": "imports",
@@ -164584,9 +164584,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_layout_terrainlayout",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_terrainlayout"
     },
     {
       "relation": "calls",
@@ -164595,9 +164595,9 @@
       "source_file": "apps/code-art/src/lib/terrain-layout.ts",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_layout_skirtof",
-      "target": "lib_terrain_layout_rimof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_layout_rimof"
     },
     {
       "relation": "contains",
@@ -164605,9 +164605,9 @@
       "source_file": "apps/code-art/src/lib/terrain-noise.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_noise",
-      "target": "lib_terrain_noise_lattice",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_lattice"
     },
     {
       "relation": "contains",
@@ -164615,9 +164615,9 @@
       "source_file": "apps/code-art/src/lib/terrain-noise.ts",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_noise",
-      "target": "lib_terrain_noise_ridged",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_ridged"
     },
     {
       "relation": "contains",
@@ -164625,9 +164625,9 @@
       "source_file": "apps/code-art/src/lib/terrain-noise.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_noise",
-      "target": "lib_terrain_noise_valuenoise",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_valuenoise"
     },
     {
       "relation": "imports_from",
@@ -164636,9 +164636,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_noise",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise"
     },
     {
       "relation": "calls",
@@ -164647,9 +164647,9 @@
       "source_file": "apps/code-art/src/lib/terrain-noise.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_noise_valuenoise",
-      "target": "lib_terrain_noise_lattice",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_lattice"
     },
     {
       "relation": "calls",
@@ -164658,9 +164658,9 @@
       "source_file": "apps/code-art/src/lib/terrain-noise.ts",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_noise_ridged",
-      "target": "lib_terrain_noise_valuenoise",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_valuenoise"
     },
     {
       "relation": "imports",
@@ -164669,9 +164669,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_noise_valuenoise",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_valuenoise"
     },
     {
       "relation": "imports",
@@ -164680,9 +164680,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_noise_ridged",
-      "confidence_score": 1.0
+      "target": "lib_terrain_noise_ridged"
     },
     {
       "relation": "contains",
@@ -164690,9 +164690,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_rivers_edgeflow",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_edgeflow"
     },
     {
       "relation": "contains",
@@ -164700,9 +164700,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_rivers_edgeflows",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_edgeflows"
     },
     {
       "relation": "contains",
@@ -164710,9 +164710,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_rivers_edgepath",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_edgepath"
     },
     {
       "relation": "contains",
@@ -164720,9 +164720,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_rivers_river",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_river"
     },
     {
       "relation": "contains",
@@ -164730,9 +164730,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_rivers_riversof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_riversof"
     },
     {
       "relation": "imports_from",
@@ -164741,9 +164741,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_tree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree"
     },
     {
       "relation": "imports",
@@ -164752,9 +164752,9 @@
       "source_file": "apps/code-art/src/lib/terrain-rivers.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_rivers",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "imports_from",
@@ -164763,9 +164763,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_rivers",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers"
     },
     {
       "relation": "imports",
@@ -164774,9 +164774,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_rivers_edgeflows",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_edgeflows"
     },
     {
       "relation": "imports",
@@ -164785,9 +164785,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_rivers_riversof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_rivers_riversof"
     },
     {
       "relation": "contains",
@@ -164795,9 +164795,9 @@
       "source_file": "apps/code-art/src/lib/terrain-text.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_text",
-      "target": "lib_terrain_text_terrain_legend",
-      "confidence_score": 1.0
+      "target": "lib_terrain_text_terrain_legend"
     },
     {
       "relation": "contains",
@@ -164805,9 +164805,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_collapse",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_collapse"
     },
     {
       "relation": "contains",
@@ -164815,9 +164815,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L102",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_depthof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_depthof"
     },
     {
       "relation": "contains",
@@ -164825,9 +164825,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_draft",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_draft"
     },
     {
       "relation": "contains",
@@ -164835,9 +164835,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_fileweight",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_fileweight"
     },
     {
       "relation": "contains",
@@ -164845,9 +164845,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_grow",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_grow"
     },
     {
       "relation": "contains",
@@ -164855,9 +164855,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "contains",
@@ -164865,9 +164865,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree",
-      "target": "lib_terrain_tree_treenode",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_treenode"
     },
     {
       "relation": "imports_from",
@@ -164876,9 +164876,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_tree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree"
     },
     {
       "relation": "calls",
@@ -164887,9 +164887,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree_radialtree",
-      "target": "lib_terrain_tree_collapse",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_collapse"
     },
     {
       "relation": "calls",
@@ -164898,9 +164898,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree_radialtree",
-      "target": "lib_terrain_tree_depthof",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_depthof"
     },
     {
       "relation": "calls",
@@ -164909,9 +164909,9 @@
       "source_file": "apps/code-art/src/lib/terrain-tree.ts",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_terrain_tree_radialtree",
-      "target": "lib_terrain_tree_grow",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_grow"
     },
     {
       "relation": "imports",
@@ -164920,9 +164920,9 @@
       "source_file": "apps/code-art/test/terrain.test.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "test_terrain_test",
-      "target": "lib_terrain_tree_radialtree",
-      "confidence_score": 1.0
+      "target": "lib_terrain_tree_radialtree"
     },
     {
       "relation": "contains",
@@ -167438,9 +167438,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_scene",
-      "confidence_score": 1.0
+      "target": "scenes_scene"
     },
     {
       "relation": "imports",
@@ -167449,9 +167449,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_scene_sceneprops",
-      "confidence_score": 1.0
+      "target": "scenes_scene_sceneprops"
     },
     {
       "relation": "imports_from",
@@ -167460,9 +167460,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_terrain_material",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material"
     },
     {
       "relation": "imports",
@@ -167471,9 +167471,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_terrain_material_skirtmaterial",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_skirtmaterial"
     },
     {
       "relation": "imports",
@@ -167482,9 +167482,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_terrain_material_surfacematerial",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_surfacematerial"
     },
     {
       "relation": "imports",
@@ -167493,9 +167493,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_terrain_material_watermaterial",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_watermaterial"
     },
     {
       "relation": "contains",
@@ -167503,9 +167503,9 @@
       "source_file": "apps/code-art/src/scenes/Terrain.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain",
-      "target": "scenes_terrain_terrain",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_terrain"
     },
     {
       "relation": "contains",
@@ -168278,9 +168278,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material",
-      "target": "scenes_terrain_material_shared",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_shared"
     },
     {
       "relation": "contains",
@@ -168288,9 +168288,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material",
-      "target": "scenes_terrain_material_skirtmaterial",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_skirtmaterial"
     },
     {
       "relation": "contains",
@@ -168298,9 +168298,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material",
-      "target": "scenes_terrain_material_surfacematerial",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_surfacematerial"
     },
     {
       "relation": "contains",
@@ -168308,9 +168308,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material",
-      "target": "scenes_terrain_material_watermaterial",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_watermaterial"
     },
     {
       "relation": "calls",
@@ -168319,9 +168319,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L122",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material_skirtmaterial",
-      "target": "scenes_terrain_material_shared",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_shared"
     },
     {
       "relation": "calls",
@@ -168330,9 +168330,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material_surfacematerial",
-      "target": "scenes_terrain_material_shared",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_shared"
     },
     {
       "relation": "calls",
@@ -168341,9 +168341,9 @@
       "source_file": "apps/code-art/src/scenes/terrain-material.ts",
       "source_location": "L166",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scenes_terrain_material_watermaterial",
-      "target": "scenes_terrain_material_shared",
-      "confidence_score": 1.0
+      "target": "scenes_terrain_material_shared"
     },
     {
       "relation": "contains",
@@ -233798,9 +233798,9 @@
       "source_file": "apps/code-art/README.md",
       "source_location": "L164",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "code_art_readme_code_art",
-      "target": "code_art_readme_the_terrain",
-      "confidence_score": 1.0
+      "target": "code_art_readme_the_terrain"
     },
     {
       "relation": "contains",
@@ -246415,5 +246415,5 @@
       "description": "The manifest declares --out with no --force; the envelope's closed error set enforces refusal to overwrite (draft-exists) and surfaces write failures (draft-unwritable); the candidate marker ensures the file that could be overwritten is never mistaken for a checked document."
     }
   ],
-  "built_at_commit": "f9259fb52e6fcfde694a05564cd706473f865ee3"
+  "built_at_commit": "8298bf7673853d5cef23e99a69a39394d7557d78"
 }

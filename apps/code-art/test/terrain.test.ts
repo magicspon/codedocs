@@ -149,9 +149,9 @@ describe('terrainLayout', () => {
       expect(buffer.every(Number.isFinite)).toBe(true)
   })
 
-  it('stands a beacon over each called file, the most called first', () => {
-    expect(layout.beacons.files).toEqual([0])
-    expect(layout.beacons.tips[1]).toBeGreaterThan(layout.beacons.masts[1]!)
+  it('finds each called file as a hub, the most called at full share', () => {
+    expect(layout.hubs.files).toEqual([0])
+    expect(layout.hubs.spots[2]).toBe(1)
   })
 })
 

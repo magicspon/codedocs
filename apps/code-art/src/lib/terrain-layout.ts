@@ -33,15 +33,15 @@ export interface TerrainLayout {
     readonly along: Float32Array
     readonly flow: Float32Array
   }
-  /** Beacons over the most-called files: a mast and a light at its tip. */
-  readonly beacons: {
+  /**
+   * The most-called files, most called first: ripples close in on each.
+   * `spots` packs `[x, z, share]` per hub, `share` being `0`–`1` against the
+   * most-called file.
+   */
+  readonly hubs: {
     readonly files: readonly number[]
-    readonly masts: Float32Array
-    readonly tips: Float32Array
-    readonly sizes: Float32Array
+    readonly spots: Float32Array
   }
-  /** Where the root stands: every river meets here. */
-  readonly root: readonly [number, number, number]
 }
 
 /** Triangles with per-vertex colours. */
@@ -53,8 +53,8 @@ export interface Mesh {
 
 /** Disc radius, in world units; everything else scales from it. */
 export const TERRAIN_RADIUS = 50
-/** How many files get a beacon. */
-const BEACONS = 12
+/** How many files ripples close in on; the shader loops over this many. */
+export const HUBS = 12
 /** The floor the slab's sides hang down to, below the lowest ground. */
 const FLOOR = -0.35
 
@@ -174,30 +174,22 @@ function waterOf(
   }
 }
 
-function beaconsOf(
-  field: Field,
+function hubsOf(
   tree: RadialTree,
   files: readonly FileDatum[],
-): TerrainLayout['beacons'] {
+): TerrainLayout['hubs'] {
   const picked = files
     .map((f, i) => [i, f.callsIn] as const)
     .filter(([i, calls]) => calls > 0 && !isTest(files[i]!))
     .sort((a, b) => b[1] - a[1] || a[0] - b[0])
-    .slice(0, BEACONS)
+    .slice(0, HUBS)
   const most = Math.log1p(picked[0]?.[1] ?? 1)
-  const masts = new Float32Array(picked.length * 6)
-  const tips = new Float32Array(picked.length * 3)
-  const sizes = new Float32Array(picked.length)
+  const spots = new Float32Array(picked.length * 3)
   picked.forEach(([file, calls], n) => {
     const node = tree.nodes[tree.fileNode[file]!]!
-    const base = heightAt(field, node.x, node.z)
-    const share = Math.log1p(calls) / most
-    const top = base + field.peak * (0.35 + 0.9 * share)
-    masts.set([node.x, base, node.z, node.x, top, node.z], n * 6)
-    tips.set([node.x, top, node.z], n * 3)
-    sizes[n] = 0.35 + 0.5 * share
+    spots.set([node.x, node.z, Math.log1p(calls) / most], n * 3)
   })
-  return { files: picked.map(([i]) => i), masts, tips, sizes }
+  return { files: picked.map(([i]) => i), spots }
 }
 
 /** Lays out a series as terrain, from its merged files: each file at its largest. */
@@ -221,7 +213,6 @@ export function terrainLayout(series: Series, size?: number): TerrainLayout {
     surface,
     skirt: skirtOf(field, surface),
     water: waterOf(field, rivers),
-    beacons: beaconsOf(field, tree, files),
-    root: [0, heightAt(field, 0, 0), 0],
+    hubs: hubsOf(tree, files),
   }
 }

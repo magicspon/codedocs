@@ -8,7 +8,7 @@ export const TERRAIN_LEGEND: readonly (readonly [
 ])[] = [
   [
     'Ranges',
-    'The bright block at the centre is the root of the repository. Each folder fans out from it, and each top-level folder takes its own band of colour.',
+    'The root of the repository is at the centre, where the rivers meet. Each folder fans out from it, and each top-level folder takes its own band of colour.',
   ],
   [
     'Peaks',
@@ -18,6 +18,9 @@ export const TERRAIN_LEGEND: readonly (readonly [
     'Rivers',
     'Calls run as rivers along the folder tree. Where folders call each other a lot, the rivers join into bright trunks. Faint veins are parts of the tree that no call uses.',
   ],
-  ['Beacons', 'Beacons stand over the files that other files call most.'],
+  [
+    'Ripples',
+    'Rings of amber light close in on the files that other files call most. The more calls a file gets, the brighter and wider its ripples.',
+  ],
   ['Timelines', 'In a timeline, each file is drawn at its largest.'],
 ]
