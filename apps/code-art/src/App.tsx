@@ -11,6 +11,7 @@ import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { queryOf } from './search.ts'
 import { GalaxyHud } from './GalaxyHud.tsx'
 import { Hud } from './Hud.tsx'
+import { TerrainHud } from './TerrainHud.tsx'
 import { Loader } from './Loader.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { toggleTracks } from './scenes/tracks.ts'
@@ -79,8 +80,8 @@ export function App(): JSX.Element {
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
   const playhead = useMemo<Playhead>(() => ({ t: 0 }), [series, scene])
-  // The galaxy keeps its own bare overlay.
-  const bare = scene === 'galaxy'
+  // The galaxy and the terrain keep their own bare overlays.
+  const bare = scene === 'galaxy' || scene === 'terrain'
   // Keyed like the canvas, so a new dataset or scene shows the spinner again
   // until it too has drawn.
   const [drawn, setDrawn] = useState<string | null>(null)
@@ -104,8 +105,20 @@ export function App(): JSX.Element {
         onReady={() => setDrawn(view)}
       />
       {loading && <Loader />}
-      {bare ? (
+      {scene === 'terrain' ? (
+        <TerrainHud
+          scenes={Object.keys(SCENES)}
+          scene={scene}
+          onScene={setScene}
+          series={series}
+          frame={frame}
+          hovered={hovered}
+        />
+      ) : bare ? (
         <GalaxyHud
+          scenes={Object.keys(SCENES)}
+          scene={scene}
+          onScene={setScene}
           fly={flying}
           onFly={setFly}
           series={series}

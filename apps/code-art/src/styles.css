@@ -572,3 +572,29 @@ kbd {
     bottom: 72px;
   }
 }
+
+/* Which scene draws the data: the follow pill's twin, at the bottom right. */
+.follow.scene-switch {
+  left: auto;
+  right: 16px;
+}
+
+/* What each shape in the terrain means, under the info button. */
+.terrain-legend dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.terrain-legend dt {
+  color: var(--ink);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.terrain-legend dd {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.45;
+}

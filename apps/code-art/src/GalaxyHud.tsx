@@ -11,6 +11,7 @@ import { FilePanel } from './FilePanel.tsx'
 import { HomeIcon, IconToggle, InfoIcon, RocketIcon } from './icons.tsx'
 import { FollowSwitch } from './FollowSwitch.tsx'
 import { PathsPanel } from './PathsPanel.tsx'
+import { SceneSwitch } from './SceneSwitch.tsx'
 import { SearchCorner } from './SearchCorner.tsx'
 import type { PathNav } from './usePathKeys.ts'
 
@@ -32,6 +33,9 @@ const FLIGHT_KEYS: readonly (readonly [
 const TRACE = { direction: 'both', depth: 6 } as const
 
 interface GalaxyHudProps {
+  readonly scenes: readonly string[]
+  readonly scene: string
+  readonly onScene: (scene: string) => void
   /** Whether the camera rides the spacecraft. */
   readonly fly: boolean
   readonly onFly: (on: boolean) => void
@@ -176,7 +180,9 @@ function FileCorner(
 /**
  * The galaxy's overlay: nothing but a rocket until asked. The rocket (or F)
  * takes off and shows the flying keys; the magnifier (or /) opens the
- * search; the bottom-left pair picks calls or imports to follow; picking a file adds an info button that opens its details.
+ * search; the bottom-left pair picks calls or imports to follow, and the
+ * bottom-right pair picks the scene; picking a file adds an info button that
+ * opens its details.
  */
 export function GalaxyHud(props: GalaxyHudProps): JSX.Element {
   // Held here so it stays open across files until closed.
@@ -198,6 +204,11 @@ export function GalaxyHud(props: GalaxyHudProps): JSX.Element {
         <HomeIcon />
       </Link>
       <Dock fly={props.fly} onFly={props.onFly} />
+      <SceneSwitch
+        scenes={props.scenes}
+        scene={props.scene}
+        onScene={props.onScene}
+      />
       <FollowSwitch
         via={props.query.via}
         onVia={(via) => props.onQuery({ ...props.query, via })}

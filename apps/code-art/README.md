@@ -161,6 +161,30 @@ gains symbols.
 Star colours show symbol kind. Test files are black holes: their symbols form a
 glowing disc round a dark middle.
 
+## The terrain
+
+Press the mountains button at the bottom right (or add `?scene=terrain` to the
+URL) to see the same data as a landscape drawn in lines of light. The galaxy
+button beside it goes back. The terrain is an art piece: pointing at a peak
+names its file, but there is no search, trace, lens or flying. The info button
+at the top right explains each shape.
+
+| Shape   | Reading                                                                                                  |
+| ------- | -------------------------------------------------------------------------------------------------------- |
+| Centre  | the root of the repository, drawn as a small bright block                                                |
+| Ranges  | folders fan out from the root, one ring per depth; each top-level folder takes its own band of colour    |
+| Peaks   | one per file, taller for more symbols; test files sink into small lakes                                  |
+| Rivers  | calls, routed up the folder tree to the folder both files share and down again, so they join into trunks |
+| Veins   | parts of the folder tree that no call uses                                                               |
+| Beacons | the 12 files other files call most; a taller mast means more calls                                       |
+
+- Colours come from the galaxy's palette, so a repository's terrain and galaxy
+  match.
+- A timeline is drawn at its largest: each file as big as it ever got.
+- `src/lib/terrain-*.ts` build the layout and are tested
+  (`test/terrain.test.ts`); `src/scenes/Terrain.tsx` and
+  `terrain-material.ts` draw it.
+
 ## How it fits together
 
 - `scripts/read-index.ts` reads the SQLite index read-only and aggregates it to

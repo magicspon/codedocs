@@ -6,15 +6,18 @@ import type { SystemClaims } from './lib/system-nav.ts'
 import type { Trace } from './lib/trace.ts'
 import { Galaxy } from './scenes/Galaxy.tsx'
 import type { SceneProps } from './scenes/scene.ts'
+import { Terrain } from './scenes/Terrain.tsx'
 
 /** Every scene, by the name the switcher shows. */
 export const SCENES: Record<string, (props: SceneProps) => JSX.Element> = {
   galaxy: Galaxy,
+  terrain: Terrain,
 }
 
-/** Bloom strength per scene: the galaxy is all light. */
+/** Bloom strength per scene: the galaxy is all light; the terrain's lines are thin, so a little less. */
 const BLOOM: Record<string, number> = {
   galaxy: 1.1,
+  terrain: 0.9,
 }
 
 interface StageProps {
