@@ -89,16 +89,6 @@ export function HowItWorks(): JSX.Element {
               hard to read flare from orange to white.
             </p>
           </section>
-
-          <section>
-            <h2>Make your own</h2>
-            <p>
-              Install codedocs, then run <code>codedocs art</code> in your
-              project. It writes the galaxy to{' '}
-              <code>.codedocs/art/index.html</code>. The page works offline and
-              never sends your code anywhere.
-            </p>
-          </section>
         </article>
 
         <Link to="/" className="about-back">
