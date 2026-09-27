@@ -8,10 +8,16 @@
  */
 
 /** Bumped whenever the same inputs would compose a different piece. */
-export const COMPOSER_VERSION = '0.1.0'
+export const COMPOSER_VERSION = '0.2.0'
 
 /** What a track does in the piece; the renderer turns a role into a sound. */
-export type MusicalRole = 'bass' | 'lead' | 'pad' | 'percussion'
+export type MusicalRole =
+  | 'lead'
+  | 'counter'
+  | 'bass'
+  | 'pad'
+  | 'arp'
+  | 'percussion'
 
 /** Scales the composer knows, by name. */
 export type ScaleName =
@@ -26,14 +32,17 @@ export type ScaleName =
 export interface ComposeOptions {
   /** Varies the piece without changing what it is derived from. */
   readonly seed: number
-  /** Beats per minute. Phase 1 holds it fixed for the whole piece. */
+  /** Beats per minute, fixed for the whole piece. */
   readonly tempo: number
-  /** Length in 4/4 bars. The piece does not grow with the repository. */
-  readonly bars: number
+  /**
+   * Length in 4/4 bars, or `'auto'` to let the subsystems decide. Either way
+   * the piece does not grow with the repository.
+   */
+  readonly bars: number | 'auto'
   readonly scale: ScaleName
-  /** 1–4: roles are dropped from the end of `ROLE_ORDER` first. */
+  /** 1–6: roles are dropped from the end of `ROLE_ORDER` first. */
   readonly tracks: number
-  /** Most motifs the lead may carry. */
+  /** Most melodic motifs across the whole piece, the theme included. */
   readonly maxMotifs: number
 }
 
@@ -63,14 +72,23 @@ export interface MotifNote {
   readonly velocity: number
 }
 
-/** Where a motif came from. Phase 1 reads a file-level graph, so files, not symbols. */
+/** The structure a motif was read from. */
+export type SourceStructure =
+  | 'dependency-path'
+  | 'central-files'
+  | 'clusters'
+  | 'cycle'
+  | 'leaf-files'
+
+/** Where a motif came from. The graph is file-level, so files, not symbols. */
 export interface Provenance {
   /** The tsconfig most of the files belong to, if any. */
   readonly project?: string
+  /** The subsystem directory it belongs to; absent for the whole-repo theme. */
+  readonly subsystem?: string
   /** Repository-relative paths, in the order the motif plays them. */
   readonly files: readonly string[]
-  /** Why these files: the structure the motif was read from. */
-  readonly structure: 'dependency-path' | 'central-files' | 'leaf-files'
+  readonly structure: SourceStructure
 }
 
 /** A musical idea derived from one structural relationship. */
@@ -90,6 +108,10 @@ export interface Transform {
   readonly invert: boolean
   /** Octaves to shift by. */
   readonly octave: number
+  /** Multiplies time: 2 plays the motif at half speed. */
+  readonly stretch: number
+  /** Plays only the first this many notes; absent plays them all. */
+  readonly fragment?: number
 }
 
 /** One placement of a motif on a track. */
@@ -116,15 +138,26 @@ export interface Track {
   readonly parts: readonly Part[]
 }
 
+/** What a section does in the form of the piece. */
+export type Form = 'intro' | 'verse' | 'chorus' | 'breakdown' | 'outro'
+
 /** A named stretch of the piece. */
 export interface Section {
   readonly name: string
+  readonly form: Form
+  /** The subsystem directory the section is built from. */
+  readonly source: string
   /** Beats from the start of the piece. */
   readonly start: number
   /** Beats. */
   readonly length: number
   /** 0–1: how much is happening, which the arrangement uses to choose tracks. */
   readonly intensity: number
+  /**
+   * Scale degrees the section's harmony is shifted by: 0 is home. A diatonic
+   * shift, so the piece stays in one key while its centre moves.
+   */
+  readonly area: number
 }
 
 /** The whole piece, before any renderer has touched it. */
@@ -140,7 +173,7 @@ export interface Composition {
   /** Tonic as a pitch class, 0 (C) to 11 (B). */
   readonly key: number
   readonly scale: ScaleName
-  /** Beats per bar. Phase 1 is always 4/4. */
+  /** Beats per bar. Always 4/4 for now. */
   readonly beatsPerBar: number
   readonly tracks: readonly Track[]
   readonly motifs: readonly Motif[]

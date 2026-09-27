@@ -1,11 +1,14 @@
 /**
- * Percussion from the graph's leaves: files that depend on nothing are the
- * small, frequent events, so they set how busy the hats are and where extra
- * kicks fall.
+ * Percussion for one section, from its subsystem. Patterns are Euclidean:
+ * `k` hits spread as evenly as possible over sixteen steps, the shape behind
+ * most of the world's dance rhythms. The code decides how many hits; the
+ * spreading keeps any number of them musical.
  */
 
-import type { Motif, MotifNote } from '../model.ts'
+import type { Form, Motif, MotifNote, Provenance } from '../model.ts'
+import type { Region } from '../regions.ts'
 import type { Structure } from '../structure.ts'
+import { quantise } from '../theory.ts'
 
 /** Indexes into `DRUM_VOICES`. */
 const KICK = 0
@@ -13,72 +16,129 @@ const SNARE = 1
 const HAT = 2
 const OPEN_HAT = 3
 
+const STEPS = 16
+const STEP = 0.25
 /** Leaf files named as provenance; the rest are counted, not listed. */
 const NAMED_LEAVES = 8
 
-function hit(voice: number, start: number, velocity: number): MotifNote {
-  return { degree: voice, start, duration: 0.25, velocity }
+/** `pulses` hits spread evenly over `steps`, turned right by `rotation`. */
+export function euclid(pulses: number, steps: number, rotation = 0): boolean[] {
+  return Array.from({ length: steps }, (_, i) => {
+    const at = (i - rotation + steps) % steps
+    return (at * pulses) % steps < pulses
+  })
 }
 
-/** The most-used leaves, as the files the groove is read from. */
-function leafFiles(structure: Structure): string[] {
-  return structure.nodes
-    .filter((n) => n.fanOut === 0)
-    .sort((a, b) => b.fanIn - a.fanIn || a.path.localeCompare(b.path))
+function hit(voice: number, step: number, velocity: number): MotifNote {
+  return { degree: voice, start: step * STEP, duration: STEP, velocity }
+}
+
+function provenance(structure: Structure, region: Region): Provenance {
+  const leaves = region.files
+    .filter((i) => structure.nodes[i]!.fanOut === 0)
+    .sort(
+      (a, b) => structure.nodes[b]!.fanIn - structure.nodes[a]!.fanIn || a - b,
+    )
     .slice(0, NAMED_LEAVES)
-    .map((n) => n.path)
+  return {
+    subsystem: region.path,
+    files: leaves.map((i) => structure.nodes[i]!.path),
+    structure: 'leaf-files',
+  }
+}
+
+/** One bar's patterns, a step each. */
+interface Patterns {
+  readonly kicks: readonly boolean[]
+  readonly hats: readonly boolean[]
+  readonly ghosts: readonly boolean[]
+}
+
+/** Which drums a form lets play: the intro keeps hats only, the breakdown drops the kick. */
+function kit(form: Form): { readonly kick: boolean; readonly snare: boolean } {
+  return {
+    kick: form !== 'intro' && form !== 'breakdown',
+    snare: form !== 'intro',
+  }
+}
+
+/** The backbeat on 2 and 4, or a ghost note where no kick lands. */
+function snareAt(i: number, p: Patterns): MotifNote[] {
+  if (i === 4 || i === 12) return [hit(SNARE, i, 100)]
+  return p.ghosts[i] && !p.kicks[i] ? [hit(SNARE, i, 40)] : []
+}
+
+/** What plays on step `i`. */
+function stepHits(i: number, p: Patterns, form: Form): MotifNote[] {
+  const allowed = kit(form)
+  return [
+    ...(p.hats[i] ? [hit(HAT, i, i % 4 === 0 ? 84 : 60)] : []),
+    ...(allowed.kick && p.kicks[i] ? [hit(KICK, i, i === 0 ? 112 : 96)] : []),
+    ...(allowed.snare ? snareAt(i, p) : []),
+  ]
+}
+
+const byStart = (a: MotifNote, b: MotifNote): number =>
+  a.start - b.start || a.degree - b.degree
+
+/**
+ * One bar of groove for a section.
+ *
+ * - Kicks: three to five, more when the region has more leaves.
+ * - Hats: eight to sixteen, more when the region is denser.
+ * - Snare: the backbeat, plus a ghost note for every doubling of its clusters.
+ *
+ * The intro keeps only hats and the breakdown drops the kick, so the form is
+ * audible in the drums. `random` turns the hat pattern, which a seed may vary.
+ */
+export function groove(
+  structure: Structure,
+  region: Region,
+  form: Form,
+  random: () => number,
+): Motif {
+  const kicks = euclid(3 + quantise(region.leafShare / 0.4, 0, 2), STEPS)
+  const hatPulses = [8, 10, 12, 16][
+    quantise(region.density / (region.density + 4), 0, 3)
+  ]!
+  const hats = euclid(hatPulses, STEPS, Math.floor(random() * 2))
+  const ghosts = euclid(
+    Math.min(3, Math.floor(Math.log2(region.clusters.length + 1))),
+    STEPS,
+    3,
+  )
+
+  const notes = Array.from({ length: STEPS }, (_, i) =>
+    stepHits(i, { kicks, hats, ghosts }, form),
+  ).flat()
+  if (form === 'chorus') notes.push(hit(OPEN_HAT, 14, 80))
+  return {
+    id: `groove:${region.path}:${form}`,
+    source: provenance(structure, region),
+    notes: notes.sort(byStart),
+    length: STEPS * STEP,
+  }
 }
 
 /**
- * Two one-bar grooves: `groove` (kick and hats) and `groove-full` (with
- * backbeat snare and an open hat to close the bar).
- *
- * A dense graph plays sixteenth hats rather than eighths. `random` places the
- * extra kicks, as many as the leaf share allows, so a seed changes where they
- * fall but not how many there are.
+ * The bar before a new section: a kick, then a snare roll that gets louder
+ * and, in a busy section, faster.
  */
-export function grooves(structure: Structure, random: () => number): Motif[] {
-  const sixteenths = structure.meanFanOut >= 4
-  const hatStep = sixteenths ? 0.25 : 0.5
-  const hats: MotifNote[] = []
-  for (let t = 0; t < 4; t += hatStep) {
-    const onBeat = t % 1 === 0
-    hats.push(hit(HAT, t, onBeat ? 84 : 56 + Math.floor(random() * 16)))
+export function fill(
+  structure: Structure,
+  region: Region,
+  form: Form,
+  intensity: number,
+): Motif {
+  const every = intensity > 0.6 ? 1 : 2
+  const notes: MotifNote[] = [hit(KICK, 0, 110)]
+  for (let i = 8; i < STEPS; i += every) {
+    notes.push(hit(SNARE, i, 60 + Math.round(((i - 8) / 8) * 60)))
   }
-
-  const offbeats = [0.75, 1.5, 2.5, 3.25, 3.5]
-  const extra = Math.round(structure.leafShare * 3)
-  const kicks = [hit(KICK, 0, 112), hit(KICK, 2, 104)]
-  const pool = [...offbeats]
-  for (let k = 0; k < extra && pool.length > 0; k++) {
-    const [at] = pool.splice(Math.floor(random() * pool.length), 1)
-    kicks.push(hit(KICK, at!, 88))
+  return {
+    id: `fill:${region.path}:${form}`,
+    source: provenance(structure, region),
+    notes,
+    length: STEPS * STEP,
   }
-
-  const source = {
-    files: leafFiles(structure),
-    structure: 'leaf-files' as const,
-  }
-  const byStart = (a: MotifNote, b: MotifNote): number =>
-    a.start - b.start || a.degree - b.degree
-  return [
-    {
-      id: 'groove',
-      source,
-      notes: [...kicks, ...hats].sort(byStart),
-      length: 4,
-    },
-    {
-      id: 'groove-full',
-      source,
-      notes: [
-        ...kicks,
-        ...hats.filter((h) => h.start !== 3.5),
-        hit(SNARE, 1, 100),
-        hit(SNARE, 3, 100),
-        hit(OPEN_HAT, 3.5, 80),
-      ].sort(byStart),
-      length: 4,
-    },
-  ]
 }

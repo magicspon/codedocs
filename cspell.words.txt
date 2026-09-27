@@ -1,6 +1,7 @@
 attero
 calcom
 callees
+charang
 codedocs
 codegen
 codegens
@@ -58,6 +59,7 @@ squarify
 stackback
 strobing
 tanstack
+Tarjan
 Tauri
 Thinger
 treemap

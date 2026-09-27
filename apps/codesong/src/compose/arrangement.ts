@@ -1,51 +1,53 @@
 /**
- * The form of the piece and which motifs play where. Phase 1 uses one fixed
- * five-part form; the code decides what fills it, the seed decides the order.
+ * Which tracks play what in each kind of section. The form decides the
+ * texture; the subsystem supplies the material; the theme ties the sections
+ * together by coming back, changed, in every one of them.
  */
 
-import type { Motif, Part, Section, Transform } from '../model.ts'
+import type { Motif, MusicalRole, Part, Section, Transform } from '../model.ts'
 
 const BAR = 4
 
-const PLAIN: Transform = { transpose: 0, invert: false, octave: 0 }
-/** The development answers the theme upside down and a third higher. */
-const DEVELOPED: Transform = { transpose: 2, invert: true, octave: 0 }
+/** What one subsystem gives its section. */
+export interface Material {
+  readonly pad: Motif
+  readonly bass: Motif
+  /** Absent when the subsystem has no dependency cycle. */
+  readonly arp?: Motif
+  /** Melodic motifs from the subsystem's own dependency paths; may be empty. */
+  readonly phrases: readonly Motif[]
+  readonly groove: Motif
+  readonly fill: Motif
+}
 
-/**
- * Intro, theme, development, return, outro in the proportions 1:2:2:2:1. The
- * outro absorbs any bars the division leaves over.
- */
-export function sections(bars: number): Section[] {
-  const unit = Math.max(1, Math.round(bars / 8))
-  const plan: [string, number, number][] = [
-    ['intro', unit, 0.3],
-    ['theme', unit * 2, 0.6],
-    ['development', unit * 2, 0.9],
-    ['return', unit * 2, 0.8],
-    ['outro', Math.max(1, bars - unit * 7), 0.3],
-  ]
-  let start = 0
-  return plan.map(([name, length, intensity]) => {
-    const section = { name, start, length: length * BAR, intensity }
-    start += length * BAR
-    return section
-  })
+/** Parts for one section, by role. */
+export type SectionParts = Partial<Record<MusicalRole, Part[]>>
+
+/** A transform shifted into the section's harmonic area. */
+export function shift(area: number, extra: Partial<Transform> = {}): Transform {
+  return { transpose: area, invert: false, octave: 0, stretch: 1, ...extra }
+}
+
+/** One part over `[start, start + length)` of a section. */
+function part(
+  motif: Motif,
+  start: number,
+  length: number,
+  transform: Transform,
+): Part {
+  return { motif: motif.id, start, length, transform }
 }
 
 /** One part that lasts the whole section. */
-export function span(
-  motif: string,
-  section: Section,
-  transform: Transform = PLAIN,
-): Part {
-  return { motif, start: section.start, length: section.length, transform }
+function span(motif: Motif, section: Section, transform: Transform): Part {
+  return part(motif, section.start, section.length, transform)
 }
 
 /**
- * Lead motifs back to back from `first` until the section is full, the last
- * one cut short if it does not fit.
+ * Motifs back to back from `first` until the section is full, the last one
+ * cut short if it does not fit.
  */
-export function fill(
+export function sequence(
   motifs: readonly Motif[],
   section: Section,
   first: number,
@@ -57,36 +59,110 @@ export function fill(
   let i = first
   while (time < end && motifs.length > 0) {
     const motif = motifs[i % motifs.length]!
-    const length = Math.min(motif.length, end - time)
-    parts.push({ motif: motif.id, start: time, length, transform })
+    const length = Math.min(motif.length * transform.stretch, end - time)
+    parts.push(part(motif, time, length, transform))
     time += length
     i++
   }
   return parts
 }
 
-/** The lead across the form: silent in the intro, one motif to close. */
-export function leadParts(
-  motifs: readonly Motif[],
-  form: readonly Section[],
-  random: () => number,
-): Part[] {
-  // The seed picks where each section enters the cycle of motifs.
-  const offset = (): number => Math.floor(random() * motifs.length)
-  const [, theme, development, reprise, outro] = form
-  const parts = [
-    ...fill(motifs, theme!, offset(), PLAIN),
-    ...fill(motifs, development!, offset(), DEVELOPED),
-    ...fill(motifs, reprise!, offset(), PLAIN),
+/** The groove until the last bar, then the fill into the next section. */
+function drums(material: Material, section: Section): Part[] {
+  const end = section.start + section.length
+  const plain = shift(0)
+  return [
+    part(material.groove, section.start, section.length - BAR, plain),
+    part(material.fill, end - BAR, BAR, plain),
   ]
-  const closing = motifs[0]
-  if (closing) {
-    parts.push({
-      motif: closing.id,
-      start: outro!.start,
-      length: Math.min(closing.length, outro!.length),
-      transform: PLAIN,
-    })
+}
+
+/** The theme's opening, as a link into the next section over its last bars. */
+function motto(
+  theme: Motif,
+  section: Section,
+  notes: number,
+  bars: number,
+): Part {
+  const length = Math.min(bars * BAR, section.length)
+  return part(
+    theme,
+    section.start + section.length - length,
+    length,
+    shift(section.area, { fragment: notes }),
+  )
+}
+
+/**
+ * Every role's parts for one section. `offset` is where the counter-melody
+ * enters its cycle of phrases, which the seed chooses.
+ */
+export function arrange(
+  section: Section,
+  material: Material,
+  theme: Motif,
+  offset: number,
+): SectionParts {
+  const home = shift(section.area)
+  const half = Math.max(BAR, Math.floor(section.length / 2 / BAR) * BAR)
+  const { arp } = material
+  switch (section.form) {
+    case 'intro':
+      // The theme at half speed over a bare pad; the loop creeps in halfway.
+      return {
+        pad: [span(material.pad, section, home)],
+        lead: [span(theme, section, shift(0, { stretch: 2, octave: -1 }))],
+        arp: arp
+          ? [part(arp, section.start + half, section.length - half, home)]
+          : [],
+        percussion: drums(material, section),
+      }
+    case 'verse':
+      return {
+        pad: [span(material.pad, section, home)],
+        bass: [span(material.bass, section, home)],
+        counter: sequence(material.phrases, section, offset, home),
+        lead: [motto(theme, section, 3, 2)],
+        arp: arp && section.intensity >= 0.6 ? [span(arp, section, home)] : [],
+        percussion: drums(material, section),
+      }
+    case 'chorus':
+      // Everything at once, the theme in full and at home.
+      return {
+        pad: [span(material.pad, section, home)],
+        bass: [span(material.bass, section, home)],
+        counter: sequence(material.phrases, section, offset, home),
+        lead: [span(theme, section, shift(0))],
+        arp: arp ? [span(arp, section, home)] : [],
+        percussion: drums(material, section),
+      }
+    case 'breakdown':
+      // No bass or drums: the loop, the pad and the phrases upside down.
+      return {
+        pad: [span(material.pad, section, home)],
+        counter: sequence(
+          material.phrases,
+          section,
+          offset,
+          shift(section.area, { invert: true }),
+        ),
+        lead: [motto(theme, section, 2, 4)],
+        arp: arp ? [span(arp, section, home)] : [],
+      }
+    case 'outro':
+      // The theme once more, then again at half speed as the bass drops out.
+      return {
+        pad: [span(material.pad, section, home)],
+        bass: [part(material.bass, section.start, half, home)],
+        lead: [
+          part(theme, section.start, half, shift(0)),
+          part(
+            theme,
+            section.start + half,
+            section.length - half,
+            shift(0, { stretch: 2 }),
+          ),
+        ],
+      }
   }
-  return parts
 }

@@ -11,6 +11,7 @@ export {
   type NoteEvent,
   type RealisedTrack,
 } from './render/realise.ts'
+export { analyse, type Analysis, type Region } from './regions.ts'
 export {
   readStructure,
   type Structure,

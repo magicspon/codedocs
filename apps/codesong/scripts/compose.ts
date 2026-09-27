@@ -22,6 +22,7 @@ import type { Atlas } from '@codedocs/code-art/atlas'
 import { snapshot } from '@codedocs/code-art/pipeline'
 import { SCALES, NOTE_NAMES } from '../src/theory.ts'
 import {
+  analyse,
   compose,
   DEFAULT_OPTIONS,
   readStructure,
@@ -89,7 +90,7 @@ if (!(scale in SCALES)) {
 const options: ComposeOptions = {
   ...DEFAULT_OPTIONS,
   seed: number(values.seed, DEFAULT_OPTIONS.seed),
-  bars: number(values.bars, DEFAULT_OPTIONS.bars),
+  bars: values.bars === undefined ? 'auto' : number(values.bars, 0),
   tempo: number(values.tempo, DEFAULT_OPTIONS.tempo),
   tracks: number(values.tracks, DEFAULT_OPTIONS.tracks),
   scale: scale as ScaleName,
@@ -97,7 +98,8 @@ const options: ComposeOptions = {
 
 const atlas = readAtlas(fromCaller(given))
 const structure = readStructure(atlas)
-const composition = compose(structure, options)
+const analysis = analyse(structure)
+const composition = compose(analysis, options)
 const tracks = realise(composition)
 
 const outDir = values.out

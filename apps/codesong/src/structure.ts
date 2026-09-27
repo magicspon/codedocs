@@ -40,6 +40,14 @@ export interface Structure {
 }
 
 /**
+ * Directories that hold code about the code: test suites, fixtures and
+ * benchmarks. `isTest` only knows test files by name, and a fixture repo's
+ * `src/` would otherwise become a subsystem of its own.
+ */
+const HARNESS =
+  /(^|\/)(tests?|__tests__|e2e|fixtures|__fixtures__|__mocks__|benchmarks?|testRunner)\//
+
+/**
  * Keeps hand-written source only. Tests and generated code are real
  * structure, but they describe the code rather than make it up, and generated
  * files would let a codegen tool write the tune.
@@ -47,8 +55,9 @@ export interface Structure {
 function sourceFiles(atlas: Atlas): number[] {
   const kept: number[] = []
   atlas.files.forEach((file, i) => {
-    if (!file.generated && ROLES[file.role] !== 'config' && !isTest(file))
-      kept.push(i)
+    if (file.generated || ROLES[file.role] === 'config') return
+    if (isTest(file) || HARNESS.test(file.path)) return
+    kept.push(i)
   })
   return kept
 }

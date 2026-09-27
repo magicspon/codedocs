@@ -15,9 +15,11 @@ const PPQ = 480
 
 /** General MIDI programs (zero-based) per role. */
 const PROGRAM: Readonly<Record<MusicalRole, number>> = {
-  bass: 38, // Synth Bass 1
   lead: 80, // Lead 1 (square)
+  counter: 11, // Vibraphone
+  bass: 38, // Synth Bass 1
   pad: 89, // Pad 2 (warm)
+  arp: 84, // Lead 5 (charang)
   percussion: 0, // ignored on the drum channel
 }
 const DRUM_CHANNEL = 9

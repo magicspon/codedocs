@@ -38,7 +38,17 @@ const piece: Composition = {
   key: 0,
   scale: 'major',
   beatsPerBar: 4,
-  sections: [{ name: 'only', start: 0, length: 8, intensity: 1 }],
+  sections: [
+    {
+      name: 'only',
+      form: 'chorus',
+      source: 'src',
+      start: 0,
+      length: 8,
+      intensity: 1,
+      area: 0,
+    },
+  ],
   motifs: [
     {
       id: 'm',
@@ -67,7 +77,7 @@ const piece: Composition = {
           motif: 'm',
           start: 0,
           length: 6,
-          transform: { transpose: 1, invert: true, octave: 0 },
+          transform: { transpose: 1, invert: true, octave: 0, stretch: 1 },
         },
       ],
     },
@@ -81,7 +91,7 @@ const piece: Composition = {
           motif: 'kick',
           start: 0,
           length: 8,
-          transform: { transpose: 0, invert: false, octave: 0 },
+          transform: { transpose: 0, invert: false, octave: 0, stretch: 1 },
         },
       ],
     },
@@ -99,6 +109,36 @@ describe('realise', () => {
       [62, 4, 2],
     ])
     expect(lead!.notes.every((n) => n.motif === 'm')).toBe(true)
+  })
+
+  it('stretches time and plays only the fragment', () => {
+    const lead = piece.tracks[0]!
+    const slow = {
+      ...piece,
+      tracks: [
+        {
+          ...lead,
+          parts: [
+            {
+              motif: 'm',
+              start: 0,
+              length: 8,
+              transform: {
+                transpose: 0,
+                invert: false,
+                octave: 0,
+                stretch: 2,
+                fragment: 1,
+              },
+            },
+          ],
+        },
+      ],
+    }
+    const [notes] = realise(slow)
+    expect(notes!.notes.map((n) => [n.pitch, n.start, n.duration])).toEqual([
+      [60, 0, 4],
+    ])
   })
 
   it('plays percussion as General MIDI drums', () => {

@@ -25,6 +25,7 @@
     "dist",
     "dist-web",
     "coverage",
+    "apps/codesong/out",
     "storybook-static",
     "**/.storybook/**/*.ts",
     "repos",

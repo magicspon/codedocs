@@ -62,22 +62,26 @@ function pitcher(composition: Composition, track: Track): Pitcher {
 }
 
 /**
- * One part's notes. The motif loops until the part ends; a note is cut rather
- * than let ring into whatever comes next.
+ * One part's notes. The motif, stretched and cut to its fragment, loops until
+ * the part ends; a note is cut rather than let ring into whatever comes next.
  */
 function partNotes(part: Part, motif: Motif, pitch: Pitcher): NoteEvent[] {
   const notes: NoteEvent[] = []
-  if (motif.length <= 0) return notes
+  const { stretch, fragment } = part.transform
+  const length = motif.length * stretch
+  if (length <= 0) return notes
+  const played =
+    fragment === undefined ? motif.notes : motif.notes.slice(0, fragment)
   const first = motif.notes[0]?.degree ?? 0
   const end = part.start + part.length
-  for (let loop = part.start; loop < end; loop += motif.length) {
-    for (const note of motif.notes) {
-      const start = loop + note.start
+  for (let loop = part.start; loop < end; loop += length) {
+    for (const note of played) {
+      const start = loop + note.start * stretch
       if (start >= end) continue
       notes.push({
         pitch: pitch(note, first, part),
         start,
-        duration: Math.min(note.duration, end - start),
+        duration: Math.min(note.duration * stretch, end - start),
         velocity: note.velocity,
         motif: motif.id,
       })

@@ -1,9 +1,11 @@
 /**
- * Harmony and bass from the most central files: the code everything leans on
- * becomes the chords everything sits on.
+ * Harmony and bass for one subsystem. Each of its largest clusters is one
+ * chord, voiced by the cluster's most central file: a group of files that
+ * work together becomes a group of notes that sound together.
  */
 
 import type { Motif, MotifNote, Provenance } from '../model.ts'
+import type { Region } from '../regions.ts'
 import type { Structure, StructureNode } from '../structure.ts'
 import { quantise } from '../theory.ts'
 
@@ -17,19 +19,30 @@ const BAR = 4
  */
 const ROOTS = [3, 4, 5, 1, 2]
 
-/** The `CHORDS` most central files, most central first. */
-export function centralFiles(structure: Structure): number[] {
-  return structure.nodes
-    .map((node, i) => ({ node, i }))
-    .sort((a, b) => b.node.centrality - a.node.centrality || a.i - b.i)
-    .slice(0, CHORDS)
-    .map(({ i }) => i)
+/** Files that voice a region's chords, one per chord. */
+export interface ChordSource {
+  readonly nodes: readonly StructureNode[]
+  readonly structure: Provenance['structure']
 }
 
 /**
- * One chord root per central file. The first is always the tonic: the most
- * central file is the piece's home. The rest are chosen by how deep the file
- * sits, and never repeat the chord before them.
+ * The most central file of each of the region's largest clusters. A region
+ * with fewer than two clusters has no harmonic groups to read, so its most
+ * central files stand in, and the provenance says so.
+ */
+export function chordSource(structure: Structure, region: Region): ChordSource {
+  const heads = region.clusters.slice(0, CHORDS).map((c) => c[0]!)
+  const files = heads.length >= 2 ? heads : region.files.slice(0, CHORDS)
+  return {
+    nodes: files.map((i) => structure.nodes[i]!),
+    structure: heads.length >= 2 ? 'clusters' : 'central-files',
+  }
+}
+
+/**
+ * One chord root per file. The first is always the tonic: the most central
+ * file is the region's home. The rest are chosen by how deep the file sits,
+ * and never repeat the chord before them.
  */
 export function progression(nodes: readonly StructureNode[]): number[] {
   const roots: number[] = []
@@ -45,50 +58,52 @@ export function progression(nodes: readonly StructureNode[]): number[] {
   return roots
 }
 
-function provenance(nodes: readonly StructureNode[]): Provenance {
+function provenance(region: Region, source: ChordSource): Provenance {
   return {
-    project: nodes[0]?.project,
-    files: nodes.map((n) => n.path),
-    structure: 'central-files',
+    project: source.nodes[0]?.project,
+    subsystem: region.path,
+    files: source.nodes.map((n) => n.path),
+    structure: source.structure,
   }
 }
 
 /**
- * Sustained triads, one bar each. Louder when the graph is dense: a tangled
- * codebase makes a thicker pad.
+ * Sustained chords, one bar each. A region denser than the codebase around
+ * it adds the seventh: tangled code, richer chords.
  */
 export function padMotif(
   structure: Structure,
-  nodes: readonly StructureNode[],
+  region: Region,
+  source: ChordSource,
 ): Motif {
-  const roots = progression(nodes)
-  const velocity =
-    56 + quantise(structure.meanFanOut / (structure.meanFanOut + 4), 0, 32)
+  const roots = progression(source.nodes)
+  const tones = region.density > structure.meanFanOut ? [0, 2, 4, 6] : [0, 2, 4]
+  const velocity = 56 + quantise(region.density / (region.density + 4), 0, 32)
   const notes: MotifNote[] = roots.flatMap((root, bar) =>
-    [0, 2, 4].map((third) => ({
-      degree: root + third,
+    tones.map((tone) => ({
+      degree: root + tone,
       start: bar * BAR,
       duration: BAR,
       velocity,
     })),
   )
   return {
-    id: 'pad-progression',
-    source: provenance(nodes),
+    id: `pad:${region.path}`,
+    source: provenance(region, source),
     notes,
     length: roots.length * BAR,
   }
 }
 
 /**
- * The chord roots again, with a rhythm per bar from that bar's file: a file
+ * The chord roots again, with a rhythm per bar from that chord's file: a file
  * that depends on a lot pulses faster. Past two notes a bar, every other note
  * is the fifth, so busy bass lines still outline the chord.
  */
-export function bassMotif(nodes: readonly StructureNode[]): Motif {
-  const roots = progression(nodes)
+export function bassMotif(region: Region, source: ChordSource): Motif {
+  const roots = progression(source.nodes)
   const notes: MotifNote[] = roots.flatMap((root, bar) => {
-    const node = nodes[bar]!
+    const node = source.nodes[bar]!
     const pulses = [1, 2, 4, 8][quantise(node.rank.fanOut, 0, 3)]!
     const step = BAR / pulses
     const velocity = 80 + quantise(node.rank.centrality, 0, 30)
@@ -100,8 +115,8 @@ export function bassMotif(nodes: readonly StructureNode[]): Motif {
     }))
   })
   return {
-    id: 'bass-line',
-    source: provenance(nodes),
+    id: `bass:${region.path}`,
+    source: provenance(region, source),
     notes,
     length: roots.length * BAR,
   }

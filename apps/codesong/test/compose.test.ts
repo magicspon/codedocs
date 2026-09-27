@@ -2,108 +2,123 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Atlas } from '@codedocs/code-art/atlas'
 import { describe, expect, it } from 'vitest'
-import { fill, sections } from '../src/compose/arrangement.ts'
-import { progression } from '../src/compose/harmony.ts'
 import { compose, DEFAULT_OPTIONS } from '../src/compose/compose.ts'
+import type { Composition } from '../src/model.ts'
+import { analyse } from '../src/regions.ts'
 import { readStructure } from '../src/structure.ts'
 import { atlas } from './fixture.ts'
 
-/** The codedocs repository itself, as code-art exported it: a real small repo. */
-const real = JSON.parse(
-  readFileSync(
-    join(import.meta.dirname, '../../code-art/src/data/codedocs.json'),
-    'utf8',
-  ),
-) as Atlas
+/** A repository as code-art exported it. */
+function exported(name: string): Atlas {
+  const path = join(import.meta.dirname, `../../code-art/src/data/${name}.json`)
+  return JSON.parse(readFileSync(path, 'utf8')) as Atlas
+}
+
+const codedocs = analyse(readStructure(exported('codedocs')))
+const vscode = analyse(readStructure(exported('vscode')))
+
+const bars = (piece: Composition): number =>
+  piece.sections.reduce((n, s) => n + s.length, 0) / 4
+
+/** Whether `role` has a part sounding anywhere in `section`. */
+function plays(piece: Composition, role: string, section: number): boolean {
+  const s = piece.sections[section]!
+  const track = piece.tracks.find((t) => t.role === role)
+  return !!track?.parts.some(
+    (p) => p.start < s.start + s.length && p.start + p.length > s.start,
+  )
+}
 
 describe('compose', () => {
-  const structure = readStructure(real)
+  const piece = compose(vscode, DEFAULT_OPTIONS)
 
   it('is deterministic', () => {
-    expect(compose(structure, DEFAULT_OPTIONS)).toEqual(
-      compose(structure, DEFAULT_OPTIONS),
+    expect(compose(codedocs, DEFAULT_OPTIONS)).toEqual(
+      compose(codedocs, DEFAULT_OPTIONS),
     )
   })
 
   it('varies with the seed but keeps what the piece is derived from', () => {
-    const a = compose(structure, DEFAULT_OPTIONS)
-    const b = compose(structure, { ...DEFAULT_OPTIONS, seed: 1234 })
+    const a = compose(codedocs, DEFAULT_OPTIONS)
+    const b = compose(codedocs, { ...DEFAULT_OPTIONS, seed: 1234 })
     expect(b).not.toEqual(a)
-    expect(b.motifs.map((m) => m.source)).toEqual(a.motifs.map((m) => m.source))
+    expect(b.sections).toEqual(a.sections)
+    const sources = (p: Composition) =>
+      new Set(p.motifs.map((m) => JSON.stringify(m.source)))
+    expect(sources(b)).toEqual(sources(a))
+  })
+
+  it('builds sections from the subsystems, foundations first, the biggest as chorus', () => {
+    expect(piece.sections.map((s) => `${s.form}:${s.name}`)).toEqual([
+      'intro:intro',
+      'verse:base',
+      'verse:platform',
+      'verse:editor',
+      'chorus:workbench',
+      'breakdown:sessions',
+      'verse:extensions',
+      'outro:outro',
+    ])
+  })
+
+  it('brings the theme back in every section', () => {
+    piece.sections.forEach((_, i) => expect(plays(piece, 'lead', i)).toBe(true))
+    const theme = piece.motifs.find((m) => m.id === 'theme')
+    expect(theme?.source.structure).toBe('dependency-path')
+    expect(piece.tracks[0]!.parts.every((p) => p.motif === 'theme')).toBe(true)
+  })
+
+  it('drops the bass and drums for the breakdown', () => {
+    const breakdown = piece.sections.findIndex((s) => s.form === 'breakdown')
+    expect(plays(piece, 'bass', breakdown)).toBe(false)
+    expect(plays(piece, 'percussion', breakdown)).toBe(false)
+    expect(plays(piece, 'pad', breakdown)).toBe(true)
   })
 
   it('traces every motif a track plays back to files in the repository', () => {
-    const piece = compose(structure, DEFAULT_OPTIONS)
-    const files = new Set(real.files.map((f) => f.path))
+    const known = new Set(exported('vscode').files.map((f) => f.path))
     const motifs = new Map(piece.motifs.map((m) => [m.id, m]))
     for (const track of piece.tracks) {
       for (const part of track.parts) {
         const motif = motifs.get(part.motif)
         expect(motif?.source.files.length).toBeGreaterThan(0)
-        for (const path of motif!.source.files) expect(files).toContain(path)
+        for (const path of motif!.source.files) expect(known).toContain(path)
       }
     }
   })
 
   it('does not grow with the repository', () => {
-    const small = compose(readStructure(atlas), DEFAULT_OPTIONS)
-    const large = compose(structure, DEFAULT_OPTIONS)
-    expect(small.sections).toEqual(large.sections)
+    // vscode has sixty times the files of codedocs.
+    const small = bars(compose(codedocs, DEFAULT_OPTIONS))
+    const large = bars(piece)
+    expect(small).toBeGreaterThanOrEqual(48)
+    expect(large).toBeLessThanOrEqual(small * 1.25)
+  })
+
+  it('fits a bar budget', () => {
+    expect(bars(compose(vscode, { ...DEFAULT_OPTIONS, bars: 48 }))).toBeCloseTo(
+      48,
+      -1,
+    )
+    expect(() => compose(vscode, { ...DEFAULT_OPTIONS, bars: 8 })).toThrow(
+      /at least 16/,
+    )
   })
 
   it('drops roles from the end of the budget', () => {
-    const piece = compose(structure, { ...DEFAULT_OPTIONS, tracks: 2 })
-    expect(piece.tracks.map((t) => t.role)).toEqual(['lead', 'bass'])
-    expect(piece.motifs.map((m) => m.id)).not.toContain('pad-progression')
+    const small = compose(codedocs, { ...DEFAULT_OPTIONS, tracks: 2 })
+    expect(small.tracks.map((t) => t.role)).toEqual(['lead', 'bass'])
+    expect(small.motifs.some((m) => m.id.startsWith('pad:'))).toBe(false)
   })
 
   it('refuses to invent structure the code does not have', () => {
     const empty: Atlas = { ...atlas, files: [], calls: [], imports: [] }
-    expect(() => compose(readStructure(empty), DEFAULT_OPTIONS)).toThrow(
-      /no hand-written source/,
-    )
+    expect(() =>
+      compose(analyse(readStructure(empty)), DEFAULT_OPTIONS),
+    ).toThrow(/no hand-written source/)
     const flat: Atlas = { ...atlas, calls: [], imports: [] }
-    expect(() => compose(readStructure(flat), DEFAULT_OPTIONS)).toThrow(
-      /no dependency path/,
-    )
-  })
-})
-
-describe('arrangement', () => {
-  it('divides the bars 1:2:2:2:1 with no gaps', () => {
-    const form = sections(32)
-    expect(form.map((s) => s.length / 4)).toEqual([4, 8, 8, 8, 4])
-    for (let i = 1; i < form.length; i++) {
-      expect(form[i]!.start).toBe(form[i - 1]!.start + form[i - 1]!.length)
-    }
-  })
-
-  it('fills a section with motifs in turn and cuts the last to fit', () => {
-    const motif = (id: string, length: number) => ({
-      id,
-      length,
-      notes: [],
-      source: { files: [], structure: 'dependency-path' as const },
-    })
-    const section = { name: 'x', start: 16, length: 20, intensity: 1 }
-    const plain = { transpose: 0, invert: false, octave: 0 }
-    const parts = fill([motif('a', 8), motif('b', 4)], section, 1, plain)
-    expect(parts.map((p) => [p.motif, p.start, p.length])).toEqual([
-      ['b', 16, 4],
-      ['a', 20, 8],
-      ['b', 28, 4],
-      ['a', 32, 4],
-    ])
-  })
-})
-
-describe('progression', () => {
-  it('starts home and never repeats a chord back to back', () => {
-    const node = (depth: number) =>
-      ({ rank: { depth, fanIn: 0, fanOut: 0, centrality: 0 } }) as never
-    const roots = progression([node(0.9), node(0.5), node(0.5), node(0.5)])
-    expect(roots[0]).toBe(0)
-    for (let i = 1; i < roots.length; i++)
-      expect(roots[i]).not.toBe(roots[i - 1])
+    expect(() =>
+      compose(analyse(readStructure(flat)), DEFAULT_OPTIONS),
+    ).toThrow(/no dependency path/)
   })
 })

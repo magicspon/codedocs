@@ -39,11 +39,15 @@ function noteFor(node: StructureNode, previous: number | undefined): number {
   return fold(previous + STEPS[quantise(node.rank.fanIn, 0, STEPS.length - 1)]!)
 }
 
-/** One dependency path as a motif. */
+/**
+ * One dependency path as a motif. `subsystem` names the region it was read
+ * from; the whole-repository theme has none.
+ */
 export function pathMotif(
   structure: Structure,
   path: readonly number[],
   id: string,
+  subsystem?: string,
 ): Motif {
   const nodes = path.map((i) => structure.nodes[i]!)
   const notes: MotifNote[] = []
@@ -66,6 +70,7 @@ export function pathMotif(
     id,
     source: {
       project: nodes[0]!.project,
+      subsystem,
       // Only the files that made it into the motif, so provenance never names
       // a file you cannot hear.
       files: nodes.slice(0, notes.length).map((n) => n.path),

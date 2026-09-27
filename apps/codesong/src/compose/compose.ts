@@ -1,5 +1,5 @@
 /**
- * Structure in, composition out. The only randomness comes from a generator
+ * Analysis in, composition out. The only randomness comes from a generator
  * seeded by the repository's name and the caller's seed, so the same code and
  * options always compose the same piece.
  */
@@ -9,24 +9,39 @@ import {
   COMPOSER_VERSION,
   type ComposeOptions,
   type Composition,
+  type Motif,
   type MusicalRole,
+  type Part,
   type Register,
+  type Section,
   type Track,
 } from '../model.ts'
 import { dependencyPaths } from '../paths.ts'
+import type { Analysis, Region } from '../regions.ts'
 import type { Structure } from '../structure.ts'
-import { leadParts, sections, span } from './arrangement.ts'
-import { bassMotif, centralFiles, padMotif } from './harmony.ts'
+import { arrange, type Material } from './arrangement.ts'
+import { arpMotif } from './arp.ts'
+import { plan, sections } from './form.ts'
+import { bassMotif, chordSource, padMotif } from './harmony.ts'
 import { pathMotif } from './melody.ts'
-import { grooves } from './rhythm.ts'
+import { fill, groove } from './rhythm.ts'
 
 /** Which roles survive a smaller track budget: the last is dropped first. */
-const ROLE_ORDER: readonly MusicalRole[] = ['lead', 'bass', 'pad', 'percussion']
+const ROLE_ORDER: readonly MusicalRole[] = [
+  'lead',
+  'bass',
+  'pad',
+  'percussion',
+  'counter',
+  'arp',
+]
 
 const REGISTER: Readonly<Record<MusicalRole, Register>> = {
   lead: 'high',
+  counter: 'mid',
   bass: 'low',
   pad: 'mid',
+  arp: 'high',
   percussion: 'mid',
 }
 
@@ -34,74 +49,130 @@ const REGISTER: Readonly<Record<MusicalRole, Register>> = {
 export const DEFAULT_OPTIONS: ComposeOptions = {
   seed: 0,
   tempo: 96,
-  bars: 32,
+  bars: 'auto',
   scale: 'minor',
-  tracks: 4,
-  maxMotifs: 6,
+  tracks: 6,
+  maxMotifs: 16,
 }
 
-function track(role: MusicalRole, parts: Track['parts']): Track {
-  return { id: role, name: role, role, register: REGISTER[role], parts }
-}
+/** A subsystem's harmony and phrases, which every section built from it shares. */
+type RegionMaterial = Omit<Material, 'groove' | 'fill'>
 
-/**
- * Composes one piece from `structure`.
- *
- * Throws when the structure has no source files or no dependency path long
- * enough for a motif: the piece would be invented, not derived, and the
- * design says to report that rather than fill the gap.
- */
-export function compose(
+function regionMaterial(
   structure: Structure,
-  options: ComposeOptions,
-): Composition {
-  if (options.bars < 8)
-    throw new Error(`need at least 8 bars, got ${options.bars}`)
-  if (structure.nodes.length === 0) {
-    throw new Error(
-      `${structure.name}: no hand-written source files to compose from`,
-    )
+  region: Region,
+  phrases: number,
+): RegionMaterial {
+  const chords = chordSource(structure, region)
+  const within = new Set(region.files)
+  return {
+    pad: padMotif(structure, region, chords),
+    bass: bassMotif(region, chords),
+    arp: arpMotif(structure, region, chords),
+    phrases: dependencyPaths(structure, phrases, within).map((path, i) =>
+      pathMotif(structure, path, `phrase:${region.path}:${i + 1}`, region.path),
+    ),
   }
-  const random = rng(hash(structure.name) ^ options.seed)
-  const key = Math.floor(random() * 12)
+}
 
-  const paths = dependencyPaths(structure, options.maxMotifs)
-  if (paths.length === 0) {
+/** The dependency path through the whole codebase that every section recalls. */
+function theme(structure: Structure): Motif {
+  const [path] = dependencyPaths(structure, 1)
+  if (path === undefined) {
     throw new Error(
       `${structure.name}: no dependency path of three or more files`,
     )
   }
-  const lead = paths.map((path, i) =>
-    pathMotif(structure, path, `path-${i + 1}`),
-  )
-  const central = centralFiles(structure).map((i) => structure.nodes[i]!)
-  const pad = padMotif(structure, central)
-  const bass = bassMotif(central)
-  const [groove, grooveFull] = grooves(structure, random)
+  return pathMotif(structure, path, 'theme')
+}
 
-  const form = sections(options.bars)
-  // The pad alone plays the intro; the outro adds only the lead's closing motif.
-  const [, theme, development, reprise] = form
-  const built: Record<MusicalRole, Track> = {
-    lead: track('lead', leadParts(lead, form, random)),
-    bass: track(
-      'bass',
-      [theme!, development!, reprise!].map((s) => span(bass.id, s)),
-    ),
-    pad: track(
-      'pad',
-      form.map((s) => span(pad.id, s)),
-    ),
-    percussion: track('percussion', [
-      span(groove!.id, theme!),
-      span(grooveFull!.id, development!),
-      span(grooveFull!.id, reprise!),
-    ]),
+/** Adds each section's parts to its role's track, noting which motifs they play. */
+function collect(
+  parts: Map<MusicalRole, Part[]>,
+  used: Map<string, Motif>,
+  byRole: Partial<Record<MusicalRole, Part[]>>,
+  motifs: readonly Motif[],
+): void {
+  const byId = new Map(motifs.map((m) => [m.id, m]))
+  for (const role of ROLE_ORDER) {
+    for (const p of byRole[role] ?? []) {
+      parts.get(role)!.push(p)
+      const motif = byId.get(p.motif)
+      if (motif) used.set(motif.id, motif)
+    }
   }
+}
 
-  const roles = ROLE_ORDER.slice(0, Math.min(4, Math.max(1, options.tracks)))
-  const tracks = roles.map((role) => built[role])
-  const used = new Set(tracks.flatMap((t) => t.parts.map((p) => p.motif)))
+/**
+ * Composes one piece from `analysis`.
+ *
+ * Throws when there are no source files or no dependency path long enough
+ * for a theme: the piece would be invented, not derived, and the design says
+ * to report that rather than fill the gap.
+ */
+export function compose(
+  analysis: Analysis,
+  options: ComposeOptions,
+): Composition {
+  const { structure, regions } = analysis
+  if (structure.nodes.length === 0 || regions.length === 0) {
+    throw new Error(
+      `${structure.name}: no hand-written source files to compose from`,
+    )
+  }
+  if (options.bars !== 'auto' && options.bars < 16) {
+    throw new Error(`need at least 16 bars, got ${options.bars}`)
+  }
+  const random = rng(hash(structure.name) ^ options.seed)
+  const key = Math.floor(random() * 12)
+  const motto = theme(structure)
+
+  const perRegion = Math.max(
+    1,
+    Math.floor((options.maxMotifs - 1) / regions.length),
+  )
+  const materials = new Map(
+    regions.map((r) => [r, regionMaterial(structure, r, perRegion)]),
+  )
+  const planned = plan(regions)
+  const form: Section[] = sections(planned, options.bars)
+
+  const parts = new Map<MusicalRole, Part[]>(
+    ROLE_ORDER.map((role) => [role, []]),
+  )
+  const used = new Map<string, Motif>([[motto.id, motto]])
+  form.forEach((section, i) => {
+    const { region } = planned[i]!
+    const base = materials.get(region)!
+    const material: Material = {
+      ...base,
+      groove: groove(structure, region, section.form, random),
+      fill: fill(structure, region, section.form, section.intensity),
+    }
+    const offset = Math.floor(random() * Math.max(1, base.phrases.length))
+    const { groove: beat, fill: link, pad, bass, arp, phrases } = material
+    collect(parts, used, arrange(section, material, motto, offset), [
+      pad,
+      bass,
+      beat,
+      link,
+      ...phrases,
+      ...(arp ? [arp] : []),
+    ])
+  })
+
+  const roles = ROLE_ORDER.slice(
+    0,
+    Math.min(ROLE_ORDER.length, Math.max(1, options.tracks)),
+  )
+  const tracks: Track[] = roles.map((role) => ({
+    id: role,
+    name: role,
+    role,
+    register: REGISTER[role],
+    parts: parts.get(role)!,
+  }))
+  const heard = new Set(tracks.flatMap((t) => t.parts.map((p) => p.motif)))
   return {
     composerVersion: COMPOSER_VERSION,
     origin: { repository: structure.name, commit: structure.commit, options },
@@ -110,9 +181,7 @@ export function compose(
     scale: options.scale,
     beatsPerBar: 4,
     tracks,
-    motifs: [...lead, pad, bass, groove!, grooveFull!].filter((m) =>
-      used.has(m.id),
-    ),
+    motifs: [...used.values()].filter((m) => heard.has(m.id)),
     sections: form,
   }
 }
