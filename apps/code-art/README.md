@@ -179,7 +179,6 @@ at the top right explains each shape.
 | Veins   | parts of the folder tree that no call uses                                                               |
 | Ripples | amber rings closing in on the 12 files other files call most; brighter and wider for more calls          |
 | Bands   | one per symbol kind up each peak, in the galaxy's star colours; thicker for more symbols of that kind    |
-| Mist    | rose haze in the valleys round the blindest tenth of files, by unresolved calls                          |
 
 - Colours come from the galaxy's palette, so a repository's terrain and galaxy
   match.

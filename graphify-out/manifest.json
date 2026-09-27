@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790548123.9980276,
-    "ast_hash": "12a77b9a64b0b388e296b7a1205a89ef",
+    "mtime": 1790548219.2329206,
+    "ast_hash": "d59f6d4a44e40e517b51143e71cfd6fd",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -3170,8 +3170,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-layout.ts": {
-    "mtime": 1790547987.9069412,
-    "ast_hash": "af2e3de506f74a011546b19c7978cc8d",
+    "mtime": 1790548219.231482,
+    "ast_hash": "e0764e8aa7c4d545934877f7d6956bea",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-noise.ts": {
@@ -3185,8 +3185,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-text.ts": {
-    "mtime": 1790548122.7780519,
-    "ast_hash": "58b01f6bc94a26e0a2c112da25a72489",
+    "mtime": 1790548219.2327316,
+    "ast_hash": "c2cec49dcdf1b905b8a6a257651e469a",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-tree.ts": {
@@ -3195,8 +3195,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Terrain.tsx": {
-    "mtime": 1790548033.2856576,
-    "ast_hash": "e18e0deb9521837436ab0cb712180bf4",
+    "mtime": 1790548219.2319868,
+    "ast_hash": "a17acc5f58dcc1db4e648e373d6c0ac2",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/terrain-material.ts": {
@@ -3205,23 +3205,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/terrain.test.ts": {
-    "mtime": 1790548144.7694836,
-    "ast_hash": "247248b3540339276eaa874f252ae22e",
-    "semantic_hash": ""
-  },
-  "apps/code-art/src/lib/terrain-mist.ts": {
-    "mtime": 1790547987.8649173,
-    "ast_hash": "d2d663da33cf71f50cd10ed526164d84",
+    "mtime": 1790548219.2321332,
+    "ast_hash": "099d6f3fb6500408347498d6544dada2",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-strata.ts": {
     "mtime": 1790547987.862567,
     "ast_hash": "3f95ecb26c66bcb020e6dcb12a521d90",
-    "semantic_hash": ""
-  },
-  "apps/code-art/src/scenes/mist-material.ts": {
-    "mtime": 1790548046.3719459,
-    "ast_hash": "471adef5b18e859bb7957babfb405394",
     "semantic_hash": ""
   }
 }
