@@ -104,6 +104,14 @@ const ALLOWED: readonly {
   },
 ]
 
+/**
+ * Workspace packages whose runtime dependencies are not read, as pnpm
+ * filters. code-art's runtime dependencies serve only its public website
+ * (`build:web`); the page `codedocs art` ships is the `embed` build, which
+ * never loads them and refuses every request with its CSP.
+ */
+const EXCLUDED_WORKSPACES: readonly string[] = ['@codedocs/code-art']
+
 /** One place in one file where the network is within reach. */
 export interface NetworkUse {
   /** Path to the file, relative to the package that ships it. */
@@ -218,7 +226,15 @@ interface ListedPackage {
 export function productionClosure(root: string): Map<string, InstalledPackage> {
   const output = execFileSync(
     'pnpm',
-    ['list', '--recursive', '--prod', '--depth', 'Infinity', '--json'],
+    [
+      'list',
+      '--recursive',
+      ...EXCLUDED_WORKSPACES.map((name) => `--filter=!${name}`),
+      '--prod',
+      '--depth',
+      'Infinity',
+      '--json',
+    ],
     { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
   )
 

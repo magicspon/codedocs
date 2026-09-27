@@ -10,87 +10,87 @@
     "semantic_hash": "7df4954b8dd2873f525118470005db90"
   },
   ".claude/settings.local.json": {
-    "mtime": 1790446597.1382158,
-    "ast_hash": "48b21fa23a892c838e4e3ee43ff938e4",
+    "mtime": 1790514077.3367543,
+    "ast_hash": "fb95fc0b029c7bd0fefc8748d0931dbc",
     "semantic_hash": ""
   },
   ".husky/_/applypatch-msg": {
-    "mtime": 1790451553.474917,
+    "mtime": 1790513883.2285063,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/commit-msg": {
-    "mtime": 1790451553.4747646,
+    "mtime": 1790513883.2283711,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/h": {
-    "mtime": 1790451553.4743192,
+    "mtime": 1790513883.2279692,
     "ast_hash": "15239a01c5554e56ff745570fb583a91",
     "semantic_hash": "15239a01c5554e56ff745570fb583a91"
   },
   ".husky/_/husky.sh": {
-    "mtime": 1790451553.4758894,
+    "mtime": 1790513883.229156,
     "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
     "semantic_hash": "13871d2ab13e8423790ecb2c01c78c18"
   },
   ".husky/_/post-applypatch": {
-    "mtime": 1790451553.4751408,
+    "mtime": 1790513883.228639,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-checkout": {
-    "mtime": 1790451553.4754379,
+    "mtime": 1790513883.2288516,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-commit": {
-    "mtime": 1790451553.4748387,
+    "mtime": 1790513883.2284386,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-merge": {
-    "mtime": 1790451553.475559,
+    "mtime": 1790513883.2289097,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-rewrite": {
-    "mtime": 1790451553.4753432,
+    "mtime": 1790513883.2287912,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-applypatch": {
-    "mtime": 1790451553.475012,
+    "mtime": 1790513883.2285767,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-auto-gc": {
-    "mtime": 1790451553.4757395,
+    "mtime": 1790513883.2290466,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-commit": {
-    "mtime": 1790451553.4744825,
+    "mtime": 1790513883.2280734,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-merge-commit": {
-    "mtime": 1790451553.4745722,
+    "mtime": 1790513883.2282329,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-push": {
-    "mtime": 1790451553.475648,
+    "mtime": 1790513883.2289844,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-rebase": {
-    "mtime": 1790451553.4752448,
+    "mtime": 1790513883.2287169,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/prepare-commit-msg": {
-    "mtime": 1790451553.474686,
+    "mtime": 1790513883.2283022,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
@@ -110,8 +110,8 @@
     "semantic_hash": "8f6e7b204d54987b17bf027230fec44f"
   },
   "cspell.json": {
-    "mtime": 1790447278.0165591,
-    "ast_hash": "de041b82c2573c581f23a655ae41a178",
+    "mtime": 1790508741.32231,
+    "ast_hash": "f5356503d100fba80949e0999a38642f",
     "semantic_hash": ""
   },
   "nano-staged.js": {
@@ -140,13 +140,13 @@
     "semantic_hash": "11578622d4e5e25bab7e8f18f1b91244"
   },
   "tsconfig.json": {
-    "mtime": 1789777809.3122594,
-    "ast_hash": "bd4462f7221ce2e8fe624a780a6ae33b",
+    "mtime": 1790514076.604998,
+    "ast_hash": "0f5ace3b1b54169b42b093735d0e2a8a",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1790447278.3969307,
-    "ast_hash": "78b7a332cfbd6a298d4fb1f35cac5f09",
+    "mtime": 1790505239.0573957,
+    "ast_hash": "7b7e39ae00d59aac3138fb53d3203d91",
     "semantic_hash": ""
   },
   ".changeset/README.md": {
@@ -190,8 +190,8 @@
     "semantic_hash": ""
   },
   "cspell.words.txt": {
-    "mtime": 1790447278.0454564,
-    "ast_hash": "9e7820981330e99d4c6fa995dd3e7173",
+    "mtime": 1790514719.2105153,
+    "ast_hash": "61dd5ac6c5cbcd99f208212d9205a9c3",
     "semantic_hash": ""
   },
   "docs/REQUIREMENTS.md": {
@@ -635,9 +635,9 @@
     "semantic_hash": "2cdde71313d47585c5f14683f8dbf7bb"
   },
   "scripts/no-network.ts": {
-    "mtime": 1788290992.1051555,
-    "ast_hash": "b3a4963b81020dc9295b4d59f742a61c",
-    "semantic_hash": "b3a4963b81020dc9295b4d59f742a61c"
+    "mtime": 1790514286.8030913,
+    "ast_hash": "4825462a8ef163a8280eaa47162a4f9a",
+    "semantic_hash": ""
   },
   "test/no-network.test.ts": {
     "mtime": 1788381017.9702044,
@@ -1800,8 +1800,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/package.json": {
-    "mtime": 1790451553.4876204,
-    "ast_hash": "54b45728869eecda9ac0dd4bd2c1f205",
+    "mtime": 1790505206.8173487,
+    "ast_hash": "51c55e1e029f31ba3e8e7204fb07093f",
     "semantic_hash": ""
   },
   "apps/code-art/scripts/export.ts": {
@@ -1850,8 +1850,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/load.ts": {
-    "mtime": 1790462759.3581395,
-    "ast_hash": "c53bc0f82cb47f92e4ae7db6718d357a",
+    "mtime": 1790515305.10567,
+    "ast_hash": "36852cbda2c783a7e79334980ba81094",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/palette.ts": {
@@ -2190,8 +2190,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/names.ts": {
-    "mtime": 1790462759.3593066,
-    "ast_hash": "50087ae64f952ef1f147354473c125b9",
+    "mtime": 1790515305.106467,
+    "ast_hash": "050c225a693104783dc36956ac9597c8",
     "semantic_hash": ""
   },
   "apps/code-art/src/useSearchControls.ts": {
@@ -2630,23 +2630,23 @@
     "semantic_hash": ""
   },
   "apps/code-art/dist-web/assets/router-BBDrPCfG.js": {
-    "mtime": 1790452949.4319181,
+    "mtime": 1790515359.537336,
     "ast_hash": "b07d81b745c7dd8681892a88432b1bcf",
     "semantic_hash": ""
   },
   "apps/code-art/dist-web/assets/vscode-D9oUKMEz.js": {
-    "mtime": 1790452949.4330556,
+    "mtime": 1790515359.546121,
     "ast_hash": "d7fde2a39bc04bf0113523c05df8e123",
     "semantic_hash": ""
   },
   "apps/code-art/src/Landing.tsx": {
-    "mtime": 1790447829.5498743,
-    "ast_hash": "30677f24535246d1eafebc7e691c79ae",
+    "mtime": 1790513920.821947,
+    "ast_hash": "3ed3e8d57cae5f80c7f753d98818f954",
     "semantic_hash": ""
   },
   "apps/code-art/src/router.tsx": {
-    "mtime": 1790447277.7396839,
-    "ast_hash": "944a1e0a88f0e23e77c4d394f94a4177",
+    "mtime": 1790513920.8225408,
+    "ast_hash": "21eb750d96ce21169cd6c04c0545dd65",
     "semantic_hash": ""
   },
   "apps/code-art/src/search.ts": {
@@ -2655,8 +2655,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/dist-web/index.html": {
-    "mtime": 1790452949.4364085,
-    "ast_hash": "e31df19c28e6962fa98d5f6be162332a",
+    "mtime": 1790515359.5506313,
+    "ast_hash": "f843fd0c9840897c358224a85ea00322",
     "semantic_hash": ""
   },
   "apps/code-art/src/landing/Starfield.tsx": {
@@ -2670,12 +2670,12 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/landing/identity.ts": {
-    "mtime": 1790462763.9655385,
-    "ast_hash": "dfeed0d2a751784931d81d77825672ff",
+    "mtime": 1790515305.2125323,
+    "ast_hash": "e1ab1bd4e691123fe2e43c570f3afe25",
     "semantic_hash": ""
   },
   "apps/code-art/dist-web/assets/typescript-Dd9mTZE3.js": {
-    "mtime": 1790452949.432324,
+    "mtime": 1790515359.5454988,
     "ast_hash": "6d4330ffe8cf03a74682f9b4e224dbb7",
     "semantic_hash": ""
   },
@@ -2687,11 +2687,6 @@
   "apps/code-art/src/lib/motion.ts": {
     "mtime": 1790447817.898409,
     "ast_hash": "5b04fbcab86bbd1ef0599e1cc84f034e",
-    "semantic_hash": ""
-  },
-  "apps/code-art/dist-web/assets/index-Bi2f6tt-.js": {
-    "mtime": 1790452949.431291,
-    "ast_hash": "9685110bf47c552fc1730c42d293dceb",
     "semantic_hash": ""
   },
   "apps/code-art/vercel.json": {
@@ -2707,6 +2702,326 @@
   "apps/code-art/src/data/payload.symbols.json": {
     "mtime": 1790464059.4764194,
     "ast_hash": "d6caa97cb98869600a23bce929834367",
+    "semantic_hash": ""
+  },
+  "apps/codesong/package.json": {
+    "mtime": 1790513920.8230188,
+    "ast_hash": "1ba46bf5b7941b1fe1db5561cd6b8ed6",
+    "semantic_hash": ""
+  },
+  "apps/codesong/scripts/compose.ts": {
+    "mtime": 1790513920.8233438,
+    "ast_hash": "398a27d1e42b878534f039eb2aabba84",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/arrangement.ts": {
+    "mtime": 1790508666.3628793,
+    "ast_hash": "ef0aaaf9892a358290924802b63fdba5",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/compose.ts": {
+    "mtime": 1790513920.8236442,
+    "ast_hash": "6d7045bb23826f8cc0d9a2b75e10a354",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/harmony.ts": {
+    "mtime": 1790508377.5568686,
+    "ast_hash": "30533c73a7d0c67cfb2d1b4cd934920f",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/melody.ts": {
+    "mtime": 1790508397.0990193,
+    "ast_hash": "49f02c11fbd376a5b3dcb25bf32cd041",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/rhythm.ts": {
+    "mtime": 1790508684.6487768,
+    "ast_hash": "18d807d9535497fca7be91791017b8c9",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/index.ts": {
+    "mtime": 1790513920.8239102,
+    "ast_hash": "85095dac678f1a814873747184a4029e",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/metrics.ts": {
+    "mtime": 1790505168.7569172,
+    "ast_hash": "ea0fb8dc377a87cbff7b2f929f30e300",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/model.ts": {
+    "mtime": 1790513920.8241851,
+    "ast_hash": "b5d60555379cd808a3be94996e84b258",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/paths.ts": {
+    "mtime": 1790508360.7174628,
+    "ast_hash": "b1d7ffee9278f4bece4b854d7690ab57",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/render/midi.ts": {
+    "mtime": 1790508340.1521893,
+    "ast_hash": "8e859844a30feb22a4a94660f674201c",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/render/realise.ts": {
+    "mtime": 1790513920.824433,
+    "ast_hash": "a942323b1950a2bd219efe334fec6a2f",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/structure.ts": {
+    "mtime": 1790508213.9677398,
+    "ast_hash": "e19d11f562e1ddb22ad446031e3551a0",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/theory.ts": {
+    "mtime": 1790505168.7570932,
+    "ast_hash": "b8a3637846dd40d763e973788e5854e1",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/compose.test.ts": {
+    "mtime": 1790513920.8246853,
+    "ast_hash": "7058c16be8fb1937cf7ac533fd915eac",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/fixture.ts": {
+    "mtime": 1790505057.1779943,
+    "ast_hash": "f6fde43dbaa8cfe6540f66a4b5fcc444",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/render.test.ts": {
+    "mtime": 1790508606.4524112,
+    "ast_hash": "e56b1874eb6278868d8b6cf6d9bcef1e",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/structure.test.ts": {
+    "mtime": 1790505168.7574806,
+    "ast_hash": "7ee7a8685a99c5dc40185fc578bb4e3a",
+    "semantic_hash": ""
+  },
+  "apps/codesong/tsconfig.json": {
+    "mtime": 1790505239.0789328,
+    "ast_hash": "3caa3b1c104d57fa1ab7aa2e9c1151b3",
+    "semantic_hash": ""
+  },
+  "apps/codesong/vitest.config.ts": {
+    "mtime": 1790505239.0335913,
+    "ast_hash": "549c4b962ddfd360ad3f69f254eb0da2",
+    "semantic_hash": ""
+  },
+  "docs/AUDIO.md": {
+    "mtime": 1790507391.9116914,
+    "ast_hash": "1258d1301f4aa16cace02e2bae665774",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/clusters.ts": {
+    "mtime": 1790508656.8802168,
+    "ast_hash": "37563f6497f64b5c3d13ce52f754cda8",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/arp.ts": {
+    "mtime": 1790508498.545953,
+    "ast_hash": "a69735ce1caa6bba5fe7b777985dc2db",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/form.ts": {
+    "mtime": 1790508498.5461335,
+    "ast_hash": "0e4be2527c7b8b98ac9b292ea86456d4",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/hierarchy.ts": {
+    "mtime": 1790508616.7372677,
+    "ast_hash": "40e9d403334130a55512e98bbc4b1045",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/regions.ts": {
+    "mtime": 1790508498.5460846,
+    "ast_hash": "f69c828f3fde8960493662c46f2a2b84",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/analysis.test.ts": {
+    "mtime": 1790508606.4523413,
+    "ast_hash": "13d3cd47c1299956e31860152adea01f",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/parts.test.ts": {
+    "mtime": 1790508606.4525473,
+    "ast_hash": "66c280f33c399e969c0487fcb71cc63d",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/build.ts": {
+    "mtime": 1790512459.520422,
+    "ast_hash": "499c4c4d8f4612a33c5d323a60292725",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/manifest.json": {
+    "mtime": 1790512459.5160992,
+    "ast_hash": "b302276825796d712af870f505b31918",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/package.json": {
+    "mtime": 1790512459.5181992,
+    "ast_hash": "440ecb8fcaeb5fd843983886693fea7b",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/setup.ts": {
+    "mtime": 1790512511.0489936,
+    "ast_hash": "15569e5968b1f845cec2640b70453900",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/src/extension.ts": {
+    "mtime": 1790512459.3329163,
+    "ast_hash": "48617e92363833d1dabc7f301a8d082d",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/tsconfig.json": {
+    "mtime": 1790512459.522605,
+    "ast_hash": "5636e9fa5f12a98427d33658f540220b",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/live/apply.ts": {
+    "mtime": 1790512337.430908,
+    "ast_hash": "0e1d091213ceb72a1f8835db7f27977b",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/live/palette.ts": {
+    "mtime": 1790512511.0481977,
+    "ast_hash": "a33548f4f00a213eea32e88c705f23ab",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/live/plan.ts": {
+    "mtime": 1790512560.0303352,
+    "ast_hash": "2d260c583c43920590ec7f1a89b300f0",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/live/samples.ts": {
+    "mtime": 1790512303.705213,
+    "ast_hash": "916169e852ec2f9959e958cb0e38406c",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/live.test.ts": {
+    "mtime": 1790512384.1673155,
+    "ast_hash": "193f9d4d83233e9b9b186fa528f68192",
+    "semantic_hash": ""
+  },
+  "apps/codesong/live/README.md": {
+    "mtime": 1790512489.7653348,
+    "ast_hash": "b8e0c5949fc056a3dad2f59fae367e92",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/package.json": {
+    "mtime": 1790513563.2596173,
+    "ast_hash": "24addbe5b63ce9499ecf0153033b2e25",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/Layout.tsx": {
+    "mtime": 1790513861.450361,
+    "ast_hash": "811c03fbd4461922c7c1047cdc2a220e",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/SongList.tsx": {
+    "mtime": 1790513728.160941,
+    "ast_hash": "67ec7be9eef498863bc2dabf3f408fdb",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/SongPage.tsx": {
+    "mtime": 1790513601.6736314,
+    "ast_hash": "fdc1da81af145963b1bcf9b6c765b031",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/main.tsx": {
+    "mtime": 1790513584.9382374,
+    "ast_hash": "cd7783c352319342f16a6323c2ebc797",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/router.tsx": {
+    "mtime": 1790513861.4502103,
+    "ast_hash": "d0b6ea409478b607bc5660ac4e75b9c3",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/songs.ts": {
+    "mtime": 1790513728.160744,
+    "ast_hash": "b77c587c78dc8c50b78c728dabc028cf",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/tsconfig.json": {
+    "mtime": 1790513563.2618325,
+    "ast_hash": "7cc3190f8a9247aa33105433b18b1440",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/vercel.json": {
+    "mtime": 1790513563.265989,
+    "ast_hash": "9cc29b6019f4695d8f82fffce80d1f6f",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/vite.config.ts": {
+    "mtime": 1790513728.160624,
+    "ast_hash": "cc278f5272a4a612d00f6b7e956fb128",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/index.html": {
+    "mtime": 1790513563.2680676,
+    "ast_hash": "35e0619193b265e6008403a5f66c7231",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/public/payload.mp3": {
+    "mtime": 1790509484.3304498,
+    "ast_hash": "de71aca593f826b11ec5f90958b55045",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/public/router.mp3": {
+    "mtime": 1790510777.2239728,
+    "ast_hash": "17f1ef426b40b37de6a5fd8ccebf6e00",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/public/vscode.mp3": {
+    "mtime": 1790507347.8375914,
+    "ast_hash": "6aa8a367fd2ea7fd876e698be0a00069",
+    "semantic_hash": ""
+  },
+  "apps/code-art/dist-web/assets/payload-C4T5IXdO.js": {
+    "mtime": 1790515359.5358472,
+    "ast_hash": "985052032ecd8c22ac0d6d01ef5fd61f",
+    "semantic_hash": ""
+  },
+  "apps/code-art/dist-web/assets/payload.symbols-BIinsQN7.js": {
+    "mtime": 1790515359.5365129,
+    "ast_hash": "3e7100650e93831ca47612ba8fa6a21d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/HowItWorks.tsx": {
+    "mtime": 1790513862.2495441,
+    "ast_hash": "b1334fc819933d499a6fd7375d2e1dc9",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/HowItWorks.tsx": {
+    "mtime": 1790513862.2418268,
+    "ast_hash": "2d15b3bdf8fb10259310c40a84fd40b8",
+    "semantic_hash": ""
+  },
+  "apps/code-art/dist-web/assets/index-kdHJ22n7.js": {
+    "mtime": 1790515359.5322301,
+    "ast_hash": "6ba5293f6e67db4020925244db63338c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/dist-web/assets/sentry-BtDd80pr.js": {
+    "mtime": 1790515359.537675,
+    "ast_hash": "33f38c4c47f8eb63dbb153abe26edbc5",
+    "semantic_hash": ""
+  },
+  "apps/code-art/dist-web/assets/sentry.symbols-C27qf8cs.js": {
+    "mtime": 1790515359.5427947,
+    "ast_hash": "881282dbb8a3495852a4b4fda9ae3d69",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/data/sentry.json": {
+    "mtime": 1790515351.9902482,
+    "ast_hash": "3204535791ccb44ca4cfbd324520c832",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/data/sentry.symbols.json": {
+    "mtime": 1790515352.330945,
+    "ast_hash": "99c8e3db6db3dcf76d9440f47b7cdf7a",
     "semantic_hash": ""
   }
 }

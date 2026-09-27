@@ -114,6 +114,15 @@
   letter-spacing: 0.08em;
 }
 
+/* The how-it-works link under the headline. */
+.landing-links {
+  margin: 16px 0 0;
+}
+
+.landing-links a {
+  color: var(--accent);
+}
+
 .landing code {
   font-family: ui-monospace, monospace;
   color: var(--ink);

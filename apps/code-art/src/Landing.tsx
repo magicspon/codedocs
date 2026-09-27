@@ -54,6 +54,9 @@ export function Landing(): JSX.Element {
     <Shell>
       <header className="landing-head">
         <h1>Every codebase is a galaxy</h1>
+        <p className="landing-links">
+          <Link to="/how-it-works">How it works</Link>
+        </p>
       </header>
       <Galaxies />
     </Shell>

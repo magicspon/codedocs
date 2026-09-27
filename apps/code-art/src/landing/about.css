@@ -1,0 +1,73 @@
+/* The how-it-works page: a readable column over the landing sky. */
+
+.about {
+  width: min(40rem, 100%);
+  padding: 8px 24px 24px;
+  border: 1px solid var(--edge);
+  border-radius: 14px;
+  background: var(--panel);
+  backdrop-filter: blur(6px);
+  text-align: left;
+  line-height: 1.6;
+  animation: rise 0.9s ease-out 0.1s both;
+}
+
+.about h2 {
+  margin: 24px 0 8px;
+  font-size: 1.15rem;
+}
+
+.about p,
+.about ul {
+  margin: 0 0 12px;
+}
+
+.about a,
+.about-back {
+  color: var(--accent);
+}
+
+.about kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+}
+
+.legend {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.legend div {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 12px;
+}
+
+.legend dt {
+  font-weight: 600;
+}
+
+.legend dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .about {
+    padding: 4px 16px 16px;
+  }
+
+  .legend div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

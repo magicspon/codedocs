@@ -1,0 +1,19 @@
+{
+  "name": "@codedocs/codesong",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "compose": "node scripts/compose.ts",
+    "live:setup": "npm --prefix live run setup",
+    "live": "npm --prefix live start",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@codedocs/code-art": "workspace:*",
+    "@types/node": "^24.13.3"
+  }
+}

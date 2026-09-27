@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-router'
 import type { JSX } from 'react'
 import { App } from './App.tsx'
+import { HowItWorks } from './HowItWorks.tsx'
 import { Loader } from './Loader.tsx'
 import { Landing, UnknownDataset } from './Landing.tsx'
 import { DATASETS, loadSeries } from './lib/load.ts'
@@ -40,6 +41,16 @@ const indexRoute = createRoute({
   component: Landing,
 })
 
+/**
+ * `/how-it-works` explains the art. A fixed path outranks `$dataset`, so it
+ * wins over a dataset of the same name.
+ */
+const howItWorksRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'how-it-works',
+  component: HowItWorks,
+})
+
 /** `/name` opens one dataset; the view within it lives in the search. */
 const datasetRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -65,7 +76,7 @@ const datasetRoute = createRoute({
  * hash can carry a route; everywhere else it is the path.
  */
 const router = createRouter({
-  routeTree: rootRoute.addChildren([indexRoute, datasetRoute]),
+  routeTree: rootRoute.addChildren([indexRoute, howItWorksRoute, datasetRoute]),
   history:
     import.meta.env.MODE === 'embed'
       ? createHashHistory()

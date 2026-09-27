@@ -30,6 +30,8 @@ const config: ViteUserConfig = defineConfig({
           exclude: [...configDefaults.exclude, 'archive/**'],
         },
       },
+      // CodeSong: every stage is a pure function of an atlas, tested like a package.
+      'apps/codesong',
       // The repository's own invariants belong to no package: ADR 0011's "no
       // codedocs package reaches the network" is a fact about the workspace and
       // its dependency closure, and there is no package it could sit inside
@@ -47,6 +49,7 @@ const config: ViteUserConfig = defineConfig({
         'scripts/**/*.ts',
         'apps/code-art/src/lib/**/*.ts',
         'apps/code-art/scripts/read-index.ts',
+        'apps/codesong/src/**/*.ts',
       ],
       exclude: [
         // Type-only surface compiles to nothing; v8 would report it as

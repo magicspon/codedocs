@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./pipeline": "./scripts/pipeline.ts"
+    "./pipeline": "./scripts/pipeline.ts",
+    "./atlas": "./src/lib/atlas.ts",
+    "./rng": "./src/lib/rng.ts"
   },
   "scripts": {
     "export": "node scripts/export.ts",
