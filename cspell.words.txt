@@ -48,6 +48,7 @@ remediations
 renovatebot
 reprepares
 reslot
+rspack
 SCIP
 sperno
 squarified
