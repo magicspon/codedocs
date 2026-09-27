@@ -5,6 +5,7 @@ codedocs
 codegen
 codegens
 codeguide
+codesong
 devicecard
 drei
 emissivemap
@@ -34,6 +35,7 @@ mattpocock
 metacharacter
 metalness
 mhmm
+mixolydian
 multisampling
 npmjs
 nums

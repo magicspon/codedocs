@@ -1,0 +1,13 @@
+{
+  // Its own project, like code-art: it reads code-art's pipeline, whose files
+  // the root config excludes, so the root `tsc` cannot check it.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    // A private app that never emits a `.d.ts`.
+    "isolatedDeclarations": false,
+    "declaration": false,
+    "types": ["node"]
+  },
+  "include": ["src", "scripts", "test", "vitest.config.ts"],
+  "exclude": []
+}
