@@ -38,14 +38,3 @@ export const LINK_COLORS: readonly Color[] = [
 
 /** Generated code, whatever its role: it was written by a tool, so it is drawn apart. */
 export const GENERATED_COLOR: Color = new Color('#8b5cf6')
-
-/** A stable hue per project, for tinting districts and arms. */
-export function projectColor(
-  project: number,
-  saturation = 0.45,
-  lightness = 0.55,
-): Color {
-  if (project < 0) return new Color().setHSL(0, 0, lightness * 0.6)
-  // The golden angle keeps neighbouring indices far apart on the wheel.
-  return new Color().setHSL((project * 0.618034) % 1, saturation, lightness)
-}

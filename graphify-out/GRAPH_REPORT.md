@@ -1,16 +1,16 @@
 # Graph Report - codedocs  (2026-09-27)
 
 ## Corpus Check
-- 602 files · ~6,967,926 words
+- 618 files · ~9,041,424 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 6156 nodes · 16935 edges · 262 communities (223 shown, 39 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 1654 edges (avg confidence: 0.8)
+- 6185 nodes · 17023 edges · 263 communities (224 shown, 39 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 1657 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0e1d2663`
+- Built from commit: `17e6767f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -121,7 +121,7 @@
 - [[_COMMUNITY_Docs ADR Preflight & Signal|Docs ADR: Preflight & Signal]]
 - [[_COMMUNITY_Fixtures Basic Tsconfig & Compiler Options|Fixtures Basic: Tsconfig & Compiler Options]]
 - [[_COMMUNITY_Community 106|Community 106]]
-- [[_COMMUNITY_Bench Cached Judgement & Cached Replicates|Bench: Cached Judgement & Cached Replicates]]
+- [[_COMMUNITY_Community 107|Community 107]]
 - [[_COMMUNITY_Community 108|Community 108]]
 - [[_COMMUNITY_cspell.json Cspell & Dictionaries|cspell.json: Cspell & Dictionaries]]
 - [[_COMMUNITY_.oxfmtrc.json|.oxfmtrc.json]]
@@ -153,8 +153,8 @@
 - [[_COMMUNITY_Scripts Renovate & Changeset|Scripts: Renovate & Changeset]]
 - [[_COMMUNITY_Bench Prospects Code & Services Accessor|Bench Prospects: Code & Services Accessor]]
 - [[_COMMUNITY_Community 139|Community 139]]
-- [[_COMMUNITY_Bench Difficulty & Levels|Bench: Difficulty & Levels]]
-- [[_COMMUNITY_Bench What & Counts|Bench: What & Counts]]
+- [[_COMMUNITY_Community 140|Community 140]]
+- [[_COMMUNITY_Community 141|Community 141]]
 - [[_COMMUNITY_CLI Tsconfig & Compiler Options|CLI: Tsconfig & Compiler Options]]
 - [[_COMMUNITY_Community 143|Community 143]]
 - [[_COMMUNITY_Community 144|Community 144]]
@@ -231,18 +231,9 @@
 - [[_COMMUNITY_Community 225|Community 225]]
 - [[_COMMUNITY_Community 226|Community 226]]
 - [[_COMMUNITY_Community 227|Community 227]]
-- [[_COMMUNITY_Community 228|Community 228]]
-- [[_COMMUNITY_Community 229|Community 229]]
-- [[_COMMUNITY_Community 230|Community 230]]
-- [[_COMMUNITY_Community 231|Community 231]]
 - [[_COMMUNITY_Community 232|Community 232]]
-- [[_COMMUNITY_Community 233|Community 233]]
-- [[_COMMUNITY_Community 234|Community 234]]
-- [[_COMMUNITY_Community 235|Community 235]]
-- [[_COMMUNITY_Community 236|Community 236]]
 - [[_COMMUNITY_Community 237|Community 237]]
 - [[_COMMUNITY_Community 238|Community 238]]
-- [[_COMMUNITY_Community 241|Community 241]]
 - [[_COMMUNITY_Community 247|Community 247]]
 - [[_COMMUNITY_Community 248|Community 248]]
 - [[_COMMUNITY_Community 250|Community 250]]
@@ -250,8 +241,14 @@
 - [[_COMMUNITY_Community 253|Community 253]]
 - [[_COMMUNITY_Community 256|Community 256]]
 - [[_COMMUNITY_Community 257|Community 257]]
-- [[_COMMUNITY_Community 271|Community 271]]
+- [[_COMMUNITY_Community 267|Community 267]]
+- [[_COMMUNITY_Community 268|Community 268]]
+- [[_COMMUNITY_Community 276|Community 276]]
+- [[_COMMUNITY_Community 278|Community 278]]
+- [[_COMMUNITY_Community 282|Community 282]]
+- [[_COMMUNITY_Community 285|Community 285]]
 - [[_COMMUNITY_Community 294|Community 294]]
+- [[_COMMUNITY_Community 296|Community 296]]
 - [[_COMMUNITY_Community 302|Community 302]]
 - [[_COMMUNITY_Community 309|Community 309]]
 - [[_COMMUNITY_Community 311|Community 311]]
@@ -300,63 +297,63 @@
 - **candidate/claim consistency guarantee** — claims.ts#claimsFor, evidence.ts#evidence, draft.ts#symbolBody, draft.ts#fileBody [INFERRED]
 - **draft file safety contract** — envelope.ts#draft-exists, envelope.ts#draft-unwritable, manifest.ts#docsDraftSpec, draft-markdown.ts#CANDIDATE_MARKER [INFERRED]
 
-## Communities (262 total, 39 thin omitted)
+## Communities (263 total, 39 thin omitted)
 
 ### Community 0 - "TS7 Adapter Symbol Resolution"
 Cohesion: 0.06
-Nodes (67): toRepoPath(), classOfKind(), DescriptorClass, callerOf(), CallSite, collectCallSites(), record(), resolveBatch() (+59 more)
+Nodes (67): toRepoPath(), DescriptorClass, callerOf(), CallSite, collectCallSites(), record(), resolveBatch(), resolveSite() (+59 more)
 
 ### Community 1 - "Document Claims & Verdicts"
 Cohesion: 0.05
-Nodes (105): CheckContext, applyScope(), Scoping, AnalysisTotals, BaselineRequest, ProjectSummary, callEdgesOf(), callees() (+97 more)
+Nodes (80): applyScope(), callEdgesOf(), callees(), callers(), collect(), claimsFor(), bodyOf(), draft() (+72 more)
 
 ### Community 2 - "Preflight Fingerprinting"
-Cohesion: 0.07
-Nodes (56): installFor(), at(), compare(), fingerprint(), globbed(), incomplete(), MeasuredSignal, nodeModules() (+48 more)
+Cohesion: 0.08
+Nodes (51): at(), compare(), fingerprint(), globbed(), incomplete(), MeasuredSignal, nodeModules(), postinstall() (+43 more)
 
 ### Community 3 - "Config Classification & Errors"
 Cohesion: 0.07
-Nodes (48): ConfigError, ConfigRefusal, configSentence(), misplacedConfig(), remediationFor(), ClassifyRule, DEFAULT_CONFIG, Discover (+40 more)
+Nodes (52): ClassifyRule, DEFAULTS, effective(), EffectiveLabels, labelsOf(), PRECEDENCE, rank(), valueOf() (+44 more)
 
 ### Community 4 - "CLI Render Notes"
 Cohesion: 0.00
-Nodes (197): #_(), a1(), accumulate(), accumulateAdditive(), addDependent(), addLayerUpdate(), addVariantChild(), adoptCameraSettings() (+189 more)
+Nodes (188): #_(), a1(), addDependent(), addLayerUpdate(), addVariantChild(), adoptCameraSettings(), ag(), ak() (+180 more)
 
 ### Community 5 - "Session Assembly"
 Cohesion: 0.09
 Nodes (47): levelName(), levelOf(), LEVELS, armId(), armsIn(), LegacyRecord, makeArm(), modelLabel() (+39 more)
 
 ### Community 6 - "Baseline Selection via Git"
-Cohesion: 0.05
-Nodes (85): BaselineChoice, chooseBaseline(), requestedCommit(), byAncestry(), byNewest(), capture, directoryFor(), evict() (+77 more)
+Cohesion: 0.15
+Nodes (29): BaselineChoice, chooseBaseline(), requestedCommit(), byAncestry(), byNewest(), capture, directoryFor(), evict() (+21 more)
 
 ### Community 7 - "Operation Reports & Envelopes"
-Cohesion: 0.03
-Nodes (179): a4(), addScalar(), addScaledSH(), addScaledVector(), addVectors(), angleTo(), applyBoneTransform(), applyMatrix3() (+171 more)
+Cohesion: 0.13
+Nodes (64): abort(), am(), apply(), b(), bm(), Bn(), clearTimeout(), cm() (+56 more)
 
 ### Community 8 - "CLI Draft & Stack Traces"
-Cohesion: 0.05
-Nodes (99): A(), Aa(), ah(), An(), Ao(), bo(), bounds(), bp() (+91 more)
+Cohesion: 0.03
+Nodes (99): a4(), accumulate(), accumulateAdditive(), applyAxisAngle(), applyEuler(), applyQuaternion(), attach(), b8() (+91 more)
 
 ### Community 9 - "Cold-Start Project Indexing"
-Cohesion: 0.04
-Nodes (85): add(), addChild(), addValue(), attachTimeline(), Au(), bindToMotionValue(), cancel(), cd() (+77 more)
+Cohesion: 0.10
+Nodes (57): Ap(), bl(), bu(), ci(), componentDidUpdate(), cu(), di(), ea() (+49 more)
 
 ### Community 10 - "Store Symbol Naming"
 Cohesion: 0.10
 Nodes (39): ACTIVE, loadCases(), flag(), has(), parseArms(), BENCH, CODEDOCS, INDEX_CACHE (+31 more)
 
 ### Community 11 - "Evidence & Reference Resolution"
-Cohesion: 0.08
-Nodes (52): Provenance, CallerAttribution, Derivation, EdgeKind, ProjectNode, ReferenceKind, SpecifierSite, SymbolKind (+44 more)
+Cohesion: 0.05
+Nodes (92): EvidenceReport, TraceStep, Provenance, CallEdge, CallerAttribution, CallSite, Derivation, EdgeKind (+84 more)
 
 ### Community 12 - "Core Test Fixtures & Symbols"
 Cohesion: 0.06
-Nodes (64): reaches(), witnessFor(), excludedBy(), resolveSubject(), extend(), filesOf(), finish(), PathTerminus (+56 more)
+Nodes (45): callClaim(), Candidate, labelClaim(), over(), PREDICATES, referenceClaim(), extend(), filesOf() (+37 more)
 
 ### Community 13 - "CLI Args & Messages"
-Cohesion: 0.08
-Nodes (38): parseFilter(), Scope, scopeOf(), checkFlags(), Command, FAIL_ON, failed(), Invocation (+30 more)
+Cohesion: 0.11
+Nodes (28): Scope, checkFlags(), Command, FAIL_ON, failed(), Invocation, named(), OPTIONS (+20 more)
 
 ### Community 14 - "Bench Harness Setup (Preflight/Worktree)"
 Cohesion: 0.09
@@ -371,16 +368,16 @@ Cohesion: 0.06
 Nodes (47): Changesets Versioning, Changeset: first published release, First published release of @codedocs/cli, Agent skills, codedocs, codedocs Agent Instructions, Comments, Domain docs (+39 more)
 
 ### Community 17 - "Docs Draft Facts Assembly"
-Cohesion: 0.09
-Nodes (83): ac(), Ai(), al(), ba(), bc(), bf(), Bi(), cc() (+75 more)
+Cohesion: 0.05
+Nodes (95): addLevel(), addScaledSH(), addScaledVector(), angleTo(), at(), bezierCurveTo(), clampLength(), clampPoint() (+87 more)
 
 ### Community 18 - "MCP Binding"
 Cohesion: 0.06
-Nodes (51): analyseAt(), art(), ART_USAGE, ArtIo, ArtOptions, datasets(), DEFAULT_IO, parseArt() (+43 more)
+Nodes (52): analyseAt(), art(), ART_USAGE, ArtIo, ArtOptions, datasets(), DEFAULT_IO, parseArt() (+44 more)
 
 ### Community 19 - "Store Write (Files/Calls/Imports)"
-Cohesion: 0.06
-Nodes (64): FileSymbols, isTest(), KINDS, linksOf(), SymbolLink, glimpsesOf(), Drawn, drawnIn() (+56 more)
+Cohesion: 0.11
+Nodes (28): FileSymbols, isTest(), KINDS, glimpsesOf(), Place, View, membersOf(), moonsOf() (+20 more)
 
 ### Community 20 - "No-Network Audit Script"
 Cohesion: 0.08
@@ -392,35 +389,35 @@ Nodes (33): Correctness, JudgeVerdict, Similarity, upstreamFix(), askJudge(), gr
 
 ### Community 22 - "Label Precedence & Defaults"
 Cohesion: 0.08
-Nodes (57): checkDocument(), checkSection(), ClaimReport, DocumentFault, LinkReport, pathsIn(), reportLink(), resolveRelative() (+49 more)
+Nodes (57): checkDocument(), checkSection(), ClaimReport, DocumentFault, DocumentReport, LinkReport, pathsIn(), reportLink() (+49 more)
 
 ### Community 23 - "Bench Difficulty Levels"
 Cohesion: 0.06
 Nodes (33): analyse, callers and callees, codedocs and fallow, codedocs (working title), Commands, Configuration, Contents, Development (+25 more)
 
 ### Community 24 - "Bench Summarise Report"
-Cohesion: 0.07
-Nodes (72): af(), bd(), bh(), canRun(), cf(), ch(), Cn(), df() (+64 more)
+Cohesion: 0.08
+Nodes (35): atlas(), file(), Atlas, SymbolNames, Timeline, embedded(), Load, loaders (+27 more)
 
 ### Community 25 - "CLI Package Manifest"
 Cohesion: 0.07
 Nodes (29): bin, codedocs, bugs, dependencies, typescript, description, devDependencies, @codedocs/code-art (+21 more)
 
 ### Community 26 - "Doctor Diagnostics"
-Cohesion: 0.04
-Nodes (99): atlas(), file(), Atlas, Commit, FallowMeta, FileDatum, Link, ROLES (+91 more)
+Cohesion: 0.05
+Nodes (69): Commit, FallowMeta, FileDatum, Link, detailFile(), frameSummary, hoveredFile(), rowAt() (+61 more)
 
 ### Community 27 - "Bench Writeup Comparisons"
-Cohesion: 0.09
-Nodes (26): howItWorksRoute, indexRoute, Register, rootRoute, router, designation(), labelOf(), DATASETS (+18 more)
+Cohesion: 0.07
+Nodes (29): howItWorksRoute, indexRoute, Register, rootRoute, router, designation(), labelOf(), SITE (+21 more)
 
 ### Community 28 - "Bench Judge Grading"
 Cohesion: 0.08
-Nodes (39): random(), randomDirection(), hueOf(), SITE, COOL, discStar, HOT, Tilt (+31 more)
+Nodes (43): random(), randomDirection(), COOL, discStar, HOT, Tilt, tiltOf(), dust() (+35 more)
 
 ### Community 29 - "Preflight & Fidelity Concepts (CONTEXT/ADR)"
-Cohesion: 0.10
-Nodes (57): addListeners(), Ap(), bl(), bu(), ci(), componentDidMount(), componentDidUpdate(), cu() (+49 more)
+Cohesion: 0.08
+Nodes (59): addChild(), addListeners(), applyConfig(), applyHandlers(), as(), attachTimeline(), bd(), bind() (+51 more)
 
 ### Community 30 - "Documentation Analysis Concepts"
 Cohesion: 0.04
@@ -431,8 +428,8 @@ Cohesion: 0.07
 Nodes (26): 1. Method, and what "verified" means here, 2. The required facts, 3. The candidates, 4. The matrix, 5. Cost, 6. Facts with no producer, 7. Verdict, 8. Licensing note (§30) (+18 more)
 
 ### Community 32 - "Docs Claim Predicate Checking"
-Cohesion: 0.06
-Nodes (56): ad(), Ar(), Bn(), br(), c6(), calculateInverses(), cr(), CreateClipsFromMorphTargetSequences() (+48 more)
+Cohesion: 0.08
+Nodes (33): symbolCount(), everHot(), smogPerFrame(), WEIGHTS, cityLayout, LAMP, lampOf(), litOf() (+25 more)
 
 ### Community 33 - "Bench Token Tally & Streaming"
 Cohesion: 0.16
@@ -447,20 +444,20 @@ Cohesion: 0.08
 Nodes (23): 1. SCIP (Sourcegraph → `scip-code`), 2. LSIF (Microsoft) — SCIP's predecessor, 3. Stack Graphs (GitHub), 4. Kythe (Google), 5. Glean (Meta), 6. CodeQL (GitHub), A. Nobody has solved cross-commit symbol identity, B. Transmission format ≠ storage format (+15 more)
 
 ### Community 36 - "Impact & Baseline Scoping"
-Cohesion: 0.09
-Nodes (29): along(), approach(), easeInOut(), route(), Shot, glowMaterial(), healthGlowMaterial(), lifeLineMaterial() (+21 more)
+Cohesion: 0.14
+Nodes (22): Playhead, SystemClaims, keyFrames(), shapeOf(), unwarp(), warp(), City(), Districts() (+14 more)
 
 ### Community 37 - "Effective Labels Configuration"
-Cohesion: 0.05
-Nodes (48): COOL, discGlowMaterial(), edgeGlowMaterial(), heatColor(), HOT, Glimpse, Planet, Ring (+40 more)
+Cohesion: 0.09
+Nodes (36): discGlowMaterial(), heatColor(), Glimpse, Planet, Ring, starLitMaterial(), streakGeometry(), bodyColor() (+28 more)
 
 ### Community 38 - "tsconfig.json Compiler Options"
 Cohesion: 0.09
 Nodes (22): compilerOptions, allowImportingTsExtensions, declaration, erasableSyntaxOnly, isolatedDeclarations, isolatedModules, lib, module (+14 more)
 
 ### Community 39 - "Benchmark Arms & Signatures"
-Cohesion: 0.18
-Nodes (26): invalid(), blank(), blankComments(), blankTrailingCommas(), endOfString(), parseJsonc(), stripJsonc(), units() (+18 more)
+Cohesion: 0.12
+Nodes (37): ConfigError, ConfigRefusal, configSentence(), invalid(), misplacedConfig(), blank(), blankComments(), blankTrailingCommas() (+29 more)
 
 ### Community 40 - "ADR: Durable Symbol Anchors"
 Cohesion: 0.15
@@ -471,28 +468,28 @@ Cohesion: 0.10
 Nodes (26): Provenance, chunk(), conductor(), noteTrack(), PROGRAM, text(), ticks(), toMidi() (+18 more)
 
 ### Community 42 - "Bench README Comparisons"
-Cohesion: 0.16
-Nodes (17): Difficulty levels, How the harness is laid out, One tree per run, Running it, Take-up, and why the bias is reported rather than repaired, The cases, The fix benchmark, The index cache (+9 more)
+Cohesion: 0.08
+Nodes (33): An exploration step, Difficulty levels, How the harness is laid out, Judging the fix, Lines of source read, One tree per run, Running it, Take-up, and why the bias is reported rather than repaired (+25 more)
 
 ### Community 43 - "Bench VS Code Issue Seeds"
-Cohesion: 0.18
-Nodes (13): add(), capped(), End, endsOf(), FileLinks, Gathered, readLinks(), Row (+5 more)
+Cohesion: 0.12
+Nodes (42): Ao(), be(), Co(), dD(), dk(), fa(), fd(), gl() (+34 more)
 
 ### Community 44 - "Community 44"
 Cohesion: 0.05
-Nodes (56): addLevel(), _applyTexData(), bezierCurveTo(), Bg(), bindLightTargets(), bindSkeletons(), cg(), clone() (+48 more)
+Nodes (60): a8(), addInstance(), _applyTexData(), Bg(), bindLightTargets(), bindSkeletons(), cg(), createDataTexture() (+52 more)
 
 ### Community 45 - "Docs: Codedocs Pricing/Guide"
-Cohesion: 0.11
-Nodes (22): unfiltered(), add(), assemble(), BaselineReport, CAUSE_ORDER, compareProject(), compareText(), doctor() (+14 more)
+Cohesion: 0.05
+Nodes (93): analyse(), AnalysisTotals, BaselineRequest, ProjectSummary, add(), assemble(), BaselineReport, CAUSE_ORDER (+85 more)
 
 ### Community 46 - "GitHub Workflows & Renovate"
 Cohesion: 0.10
 Nodes (29): buildPlan(), BuildReport, LiveHost, LiveTrackHost, Progress, DEFAULT_PALETTE, DrumSample, Palette (+21 more)
 
 ### Community 47 - "README: Edge Kinds"
-Cohesion: 0.08
-Nodes (46): callClaim(), Candidate, claimsFor(), over(), PREDICATES, referenceClaim(), bodyOf(), callFact() (+38 more)
+Cohesion: 0.12
+Nodes (22): Change, changedFiles(), fidelities(), fromGit(), fromIndexes(), BaselineUsed, impact(), ImpactedSymbol (+14 more)
 
 ### Community 48 - "ADR: Signals & Fallow Confidence"
 Cohesion: 0.13
@@ -503,8 +500,8 @@ Cohesion: 0.12
 Nodes (18): The repository root is the nearest enclosing .git, Strict parsing and unknown keys, Hashing paths and SymbolIds rejected, No network, checked at build time, The Report and its default shape, Split by reader, not by sensitivity, The report is a reproduction, not a recollection, EnvelopeError as code plus typed params (+10 more)
 
 ### Community 50 - "Docs: Domain Documentation Conventions"
-Cohesion: 0.08
-Nodes (53): addObserver(), be(), build(), ce(), clearGcTimeout(), createResult(), D(), de() (+45 more)
+Cohesion: 0.19
+Nodes (19): System, AT_STAR, bodiesOf(), claimsOf(), enter(), leave(), NO_CLAIMS, select() (+11 more)
 
 ### Community 51 - "Bench Prospects: Agent/Host Difficulty"
 Cohesion: 0.18
@@ -519,8 +516,8 @@ Cohesion: 0.10
 Nodes (20): scripts, art, bench, bench:report, bench:writeup, build, check, check:network (+12 more)
 
 ### Community 55 - "README Overview"
-Cohesion: 0.06
-Nodes (88): loadConfig(), Config, LabelPass, UNSCOPED, SpecifierEvidence, Disagreement, fidelityOf(), preflightProjects() (+80 more)
+Cohesion: 0.07
+Nodes (85): Config, DoctorOptions, fidelityOf(), preflightProjects(), ProjectPreflight, classifySpecifiers(), extractProject(), ProjectSlice (+77 more)
 
 ### Community 56 - "renovate.json Config"
 Cohesion: 0.11
@@ -531,16 +528,16 @@ Cohesion: 0.15
 Nodes (14): ADR 0005: claim expressions & shorthand, ADR 0009: precondition cause, claimsFor(), callFact(), cautionFor(), groups(), hedge(), labelFact() (+6 more)
 
 ### Community 58 - "Bench Levels: Copilot Agent Cases"
-Cohesion: 0.15
-Nodes (13): Level 1 — local, Level 2 — one subsystem, no address, Level 3 — across layers, Level 4 — a relationship, not a location, The levels, #326185 (VS Code copilotAgent.ts / copilotCliEnvironment.ts), #327194 (VS Code extensionManagement.ts), #331102 (VS Code tunnelAgentHost.contribution.ts) (+5 more)
+Cohesion: 0.07
+Nodes (33): Difficulty levels, Level 1 — local, Level 2 — one subsystem, no address, Level 3 — across layers, Level 4 — a relationship, not a location, Lines changed is not a difficulty signal, The current cases, The levels (+25 more)
 
 ### Community 59 - "ADR/CONTEXT: SymbolId Types"
-Cohesion: 0.18
-Nodes (52): abort(), am(), b(), bm(), clearTimeout(), cm(), dm(), dp() (+44 more)
+Cohesion: 0.14
+Nodes (20): absarc(), absellipse(), closePath(), ellipse(), equals(), extractPoints(), G7(), getCurveLengths() (+12 more)
 
 ### Community 60 - "ADR/CONTEXT: Label Axes"
-Cohesion: 0.08
-Nodes (41): Consequences, Considered Options, Preconditions lower fidelity; honesty is evidence, not a score, Four generic preflight signals, Discard the index on a version mismatch, never migrate, node:sqlite as the index store, Stat signature, not git, decides staleness, Benchmark baseline arm (+33 more)
+Cohesion: 0.06
+Nodes (50): Consequences, Considered Options, Preconditions lower fidelity; honesty is evidence, not a score, Four generic preflight signals, Discard the index on a version mismatch, never migrate, An interrupted build leaves a partial index, not an invalid one, Concurrency, which SQLite mostly decides, Consequences (+42 more)
 
 ### Community 61 - "Research: Candidate Call Resolution"
 Cohesion: 0.15
@@ -559,8 +556,8 @@ Cohesion: 0.12
 Nodes (16): devDependencies, @changesets/changelog-github, @changesets/cli, @codedocs/cli, @commitlint/cli, @commitlint/config-conventional, @commitlint/types, oxfmt (+8 more)
 
 ### Community 65 - "CLI Test Fixtures (Draft)"
-Cohesion: 0.06
-Nodes (51): addTo(), axisIntent(), aZ(), bx(), bZ(), clean(), compute(), computeMovement() (+43 more)
+Cohesion: 0.04
+Nodes (99): addGeometry(), addUpdateRange(), addVectors(), applyBoneTransform(), applyMatrix3(), applyMatrix4(), applyNormalMatrix(), center() (+91 more)
 
 ### Community 66 - "Bench Judgements: Chat Widgets Case"
 Cohesion: 0.08
@@ -571,36 +568,36 @@ Cohesion: 0.12
 Nodes (16): howItWorksRoute, indexRoute, Register, rootRoute, router, Layout(), Site(), songRoute (+8 more)
 
 ### Community 68 - "Research: Call Site Dispatch"
-Cohesion: 0.06
-Nodes (42): $6(), _8(), A5(), a6(), b8(), bv(), C5(), cv() (+34 more)
+Cohesion: 0.09
+Nodes (33): Aa(), ad(), addValue(), Ca(), da(), getAxisMotionValue(), getProps(), getValue() (+25 more)
 
 ### Community 69 - "CLI Docs Draft Command"
-Cohesion: 0.24
-Nodes (11): Draft overwrite refusal, usage, writeDraft, HANDLERS, drafted, targetFor, toStdout, formatError (+3 more)
+Cohesion: 0.18
+Nodes (14): `docs draft` operation, Command (type, incl. `out`), usage, writeDraft, HANDLERS, drafted, toStdout, describe (+6 more)
 
 ### Community 70 - "Docs: Performance & Embeddability"
 Cohesion: 0.07
 Nodes (31): 1. Install, 2. Analyse a repository, 3. Ask questions, `callers` and `callees`, codedocs, codedocs and fallow, `codedocs art`, Commands (+23 more)
 
 ### Community 71 - "Docs: Local Static Analysis Layer"
-Cohesion: 0.13
-Nodes (42): apply(), applyConfig(), applyHandlers(), as(), bind(), bs(), clamp(), clampScalar() (+34 more)
+Cohesion: 0.31
+Nodes (30): Aw(), Bw(), cw(), dw(), Ew(), fw(), gw(), hw() (+22 more)
 
 ### Community 72 - ".oxlintrc.json Restricted Categories"
 Cohesion: 0.14
 Nodes (13): categories, correctness, env, builtin, ignorePatterns, options, typeAware, overrides (+5 more)
 
 ### Community 73 - "Community 73"
-Cohesion: 0.07
-Nodes (38): absarc(), absellipse(), arc(), b3(), b7(), ceil(), closePath(), computeBoneTexture() (+30 more)
+Cohesion: 0.09
+Nodes (77): ac(), Ai(), al(), bc(), bf(), Bi(), cc(), cl() (+69 more)
 
 ### Community 74 - "ADR: Claim Derivation Matching"
 Cohesion: 0.18
 Nodes (13): Ranked candidate list, content-hash derivation, Continuity as a separate inferred layer, Derivation precedence ranking, Two-step git rename probe, name-in-head derivation, path-prefix-rewrite derivation, Snapshot matching (+5 more)
 
 ### Community 75 - "Community 75"
-Cohesion: 0.08
-Nodes (38): addEventListener(), addGroup(), addInstance(), Ae(), autoReset(), bindMethods(), Ca(), computeTangents() (+30 more)
+Cohesion: 0.05
+Nodes (42): _activateAction(), _addInactiveAction(), _addInactiveBinding(), _bindAction(), clipAction(), complete(), _deactivateAction(), existingAction() (+34 more)
 
 ### Community 76 - "Bench Results: Sonnet Comparisons"
 Cohesion: 0.14
@@ -627,16 +624,16 @@ Cohesion: 0.18
 Nodes (9): ADR 0011: report-bug payload / no-network, cli draft.test.ts, EnvelopeError.stack, draft-exists error, run() (CLI entry), docs draft OperationSpec, report-bug OperationSpec, MCP binding (mcp.ts) (+1 more)
 
 ### Community 82 - "ADR: Drafting a Document"
-Cohesion: 0.24
-Nodes (15): ADR 0013: Drafting a document, `codedocs?:` candidate marker, `docs draft` operation, `docs generate` — deleted by ADR 0006, reversed by ADR 0013, Draft's derived default path (not stdout), How codedocs works (SOLUTION.md), ADR 0005: Document claims and verdicts, ADR 0006: Operation set and renderer contract (+7 more)
+Cohesion: 0.30
+Nodes (12): ADR 0013: Drafting a document, `codedocs?:` candidate marker, `docs generate` — deleted by ADR 0006, reversed by ADR 0013, Draft's derived default path (not stdout), Draft overwrite refusal, How codedocs works (SOLUTION.md), ADR 0005: Document claims and verdicts, ADR 0006: Operation set and renderer contract (+4 more)
 
 ### Community 83 - "ADR: Report-Bug Fields"
 Cohesion: 0.17
 Nodes (11): codedocs never transmits it, and that is checked, Consequences, Considered Options, Exit codes, Free text is the hole no field rule closes, Hashing is not on the table, `report-bug` reproduces the failure, writes two shapes, and the safe one is the default, The field list (+3 more)
 
 ### Community 84 - "Community 84"
-Cohesion: 0.08
-Nodes (38): _allocateTargets(), _applyGGXFilter(), _applyPMREM(), Ax(), axisThreshold(), _blur(), _blurPass(), by() (+30 more)
+Cohesion: 0.05
+Nodes (63): add(), An(), Au(), bindToMotionValue(), BQ(), clear(), clearListeners(), commitUpdate() (+55 more)
 
 ### Community 86 - "Community 86"
 Cohesion: 0.12
@@ -645,10 +642,6 @@ Nodes (16): 26. Performance, 10. Success criteria, 11. Where the detail lives, 1
 ### Community 87 - "Core Package Manifest"
 Cohesion: 0.17
 Nodes (11): dependencies, typescript, devDependencies, @types/node, exports, name, private, scripts (+3 more)
-
-### Community 88 - "Community 88"
-Cohesion: 0.07
-Nodes (37): a8(), addGeometry(), E8(), eh(), fromHalfFloat(), getComponent(), getIndex(), getW() (+29 more)
 
 ### Community 89 - "CLI Command Parse & Execute"
 Cohesion: 0.17
@@ -675,8 +668,8 @@ Cohesion: 0.18
 Nodes (10): `codedocs.jsonc` holds facts codedocs cannot determine, and nothing else, Consequences, Considered Options, `discover`, which is what `discovery.ts`'s project-path TODO actually wanted, Discovery, and a repository root that means one thing, Parsing, versioning, and unknown keys, `remediations`, which is [#17](https://github.com/magicspon/codedocs/issues/17)'s residue, The file (+2 more)
 
 ### Community 95 - "Bench Judge Session Plan"
-Cohesion: 0.12
-Nodes (29): arpMotif(), TONES, Material, compose(), DEFAULT_OPTIONS, RegionMaterial, REGISTER, ROLE_ORDER (+21 more)
+Cohesion: 0.11
+Nodes (33): arpMotif(), TONES, Material, compose(), DEFAULT_OPTIONS, RegionMaterial, REGISTER, ROLE_ORDER (+25 more)
 
 ### Community 96 - "Change Detection From Git"
 Cohesion: 0.25
@@ -687,24 +680,24 @@ Cohesion: 0.25
 Nodes (6): audit(), charge(), StripeGateway, Money, TestGateway, Gateway
 
 ### Community 98 - "Community 98"
-Cohesion: 0.06
-Nodes (37): _activateAction(), _addInactiveAction(), _addInactiveBinding(), addUpdateRange(), _bindAction(), clipAction(), _deactivateAction(), existingAction() (+29 more)
+Cohesion: 0.11
+Nodes (40): byEvidence(), Continuation, continuationOf(), derivationsFor(), directoryOf(), merge(), MovedFile, movedPaths() (+32 more)
 
 ### Community 99 - "Community 99"
 Cohesion: 0.10
 Nodes (33): axis(), grabbed(), pilot(), plan(), toward, travel(), Trip, clamp() (+25 more)
 
 ### Community 100 - "Bench: No-Tools Judging Scale"
-Cohesion: 0.04
-Nodes (117): DEFAULT_SCOPE, analyse(), resolve(), DraftSection, BaselineUsed, ImpactedSymbol, ImpactEnvelope, trace() (+109 more)
+Cohesion: 0.03
+Nodes (126): Candidate, resolve(), DraftSection, trace(), fixture, flagsIn(), derivedDraftPath(), segment() (+118 more)
 
 ### Community 101 - "Research: Tree-sitter/AST"
-Cohesion: 0.05
-Nodes (55): addPass(), blitDepthBuffer(), cloneMaterial(), createDepthTexture(), deleteDepthTexture(), depth(), dispose(), disposeMaterials() (+47 more)
+Cohesion: 0.20
+Nodes (14): glowMaterial(), healthGlowMaterial(), lifeLineMaterial(), threads, useLanding(), Galaxy(), Aim(), Cloud() (+6 more)
 
 ### Community 102 - "Community 102"
-Cohesion: 0.07
-Nodes (36): baseHeight(), baseWidth(), blendFunction(), complete(), connect(), disconnect(), dispatchEvent(), finish() (+28 more)
+Cohesion: 0.20
+Nodes (13): along(), approach(), easeInOut(), route(), Shot, Controls, Leg, snapshot() (+5 more)
 
 ### Community 103 - "Community 103"
 Cohesion: 0.40
@@ -722,9 +715,9 @@ Nodes (8): compilerOptions, jsx, module, moduleResolution, noEmit, strict, targe
 Cohesion: 0.10
 Nodes (19): analysis, atlas, beats, composition, fromCaller(), json, kit, live (+11 more)
 
-### Community 107 - "Bench: Cached Judgement & Cached Replicates"
-Cohesion: 0.07
-Nodes (30): applyAxisAngle(), applyEuler(), applyQuaternion(), compose(), conjugate(), makeRotationFromQuaternion(), makeRotationX(), makeRotationY() (+22 more)
+### Community 107 - "Community 107"
+Cohesion: 0.12
+Nodes (17): A5(), addScalar(), bv(), expandByScalar(), F5(), iv(), j5(), k5() (+9 more)
 
 ### Community 109 - "cspell.json: Cspell & Dictionaries"
 Cohesion: 0.22
@@ -807,8 +800,8 @@ Cohesion: 0.43
 Nodes (7): Using codedocs from an agent, Choosing a tool, How to investigate, Keep the two jobs apart, Read the answer honestly, Using codedocs from an agent, When to reach for it
 
 ### Community 130 - "Community 130"
-Cohesion: 0.07
-Nodes (31): Anchor, arcLines(), bezier(), control(), Flow, FlowLines, FlowMarkers, flowOf() (+23 more)
+Cohesion: 0.08
+Nodes (28): Anchor, arcLines(), bezier(), control(), Flow, FlowLines, FlowMarkers, flowOf() (+20 more)
 
 ### Community 131 - "Bench: Ask Judge & Grade"
 Cohesion: 0.50
@@ -823,8 +816,8 @@ Cohesion: 0.33
 Nodes (5): Charging, Gateways, Payments, Uncovered, What does not happen
 
 ### Community 135 - "Community 135"
-Cohesion: 0.11
-Nodes (22): Five node types, Consequences, Considered Options, Symbol identity is a normalised SCIP string, scoped to one snapshot, The edge kinds, The node types, SCIP symbol string in a codedocs scheme, Classification is a label layer on two axes, recomputed on every run (+14 more)
+Cohesion: 0.16
+Nodes (13): linksOf(), SymbolLink, Drawn, drawnIn(), farEnd(), MoonLink, moonLinksOf(), placeIn() (+5 more)
 
 ### Community 137 - "Scripts: Renovate & Changeset"
 Cohesion: 0.33
@@ -835,28 +828,28 @@ Cohesion: 0.60
 Nodes (5): VS Code #329610 — ServicesAccessor used outside its invocation, VS Code #331914 — stale isActive in cached tab DTO, VS Code #333230 — Invalid array length in listView getVisibleRange, Difficulty level 1 — address handed over, Case shape: file-named
 
 ### Community 139 - "Community 139"
-Cohesion: 0.31
-Nodes (30): Aw(), Bw(), cw(), dw(), Ew(), fw(), gw(), hw() (+22 more)
+Cohesion: 0.22
+Nodes (12): keplerSpeed(), moonReach(), beltWidth(), cloudOf(), Member, placed(), Spec, Zone (+4 more)
 
-### Community 140 - "Bench: Difficulty & Levels"
-Cohesion: 0.11
-Nodes (24): labelClaim(), ambiguityNote(), ambiguityNoteFor(), referenceLine(), symbolLine(), shorthandOf(), edge(), result (+16 more)
+### Community 140 - "Community 140"
+Cohesion: 0.19
+Nodes (9): at, lightFrom(), fadeAll(), Anchor, Nearby, NearSystem(), place(), Slot (+1 more)
 
-### Community 141 - "Bench: What & Counts"
-Cohesion: 0.18
-Nodes (20): Aj(), Bj(), contain(), cover(), getByteLength(), Gj(), Hj(), Ij() (+12 more)
+### Community 141 - "Community 141"
+Cohesion: 0.25
+Nodes (4): COOL, edgeGlowMaterial(), HOT, BlackHole()
 
 ### Community 142 - "CLI: Tsconfig & Compiler Options"
 Cohesion: 0.40
 Nodes (4): compilerOptions, types, extends, include
 
 ### Community 143 - "Community 143"
-Cohesion: 0.08
-Nodes (38): Nine edge kinds, closed enum, Three bindings, one to one with the operation set, Arm (toolset@model), baseline arm, codedocs arm, codedocs, fallow, Report (+30 more)
+Cohesion: 0.13
+Nodes (21): Five node types, Consequences, Considered Options, Symbol identity is a normalised SCIP string, scoped to one snapshot, The edge kinds, The node types, Nine edge kinds, closed enum, SCIP symbol string in a codedocs scheme (+13 more)
 
 ### Community 144 - "Community 144"
-Cohesion: 0.12
-Nodes (20): deleteGeometry(), deleteInstance(), getColorAt(), getGeometryIdAt(), getGeometryRangeAt(), getHSL(), getVisibleAt(), lerpHSL() (+12 more)
+Cohesion: 0.03
+Nodes (79): addPass(), baseHeight(), baseWidth(), blendFunction(), blitDepthBuffer(), cloneMaterial(), connect(), createDepthTexture() (+71 more)
 
 ### Community 146 - "Fixtures Basic: Payments & Charge"
 Cohesion: 0.60
@@ -871,8 +864,8 @@ Cohesion: 0.25
 Nodes (7): A path knows which way it runs, Consequences, Considered Options, Reopening the comment that refused this, The inbound walk is the less honest direction, and has to say so, The inward walk needs a subject, and `trace` is where the direction flag belongs, Why this is not a second traversal
 
 ### Community 149 - "Community 149"
-Cohesion: 0.21
-Nodes (14): addCounts(), addLabels(), addProjects(), addSymbols(), fileAt(), Limits, Mutable, readAtlas() (+6 more)
+Cohesion: 0.19
+Nodes (15): addCounts(), addLabels(), addProjects(), addSymbols(), fileAt(), Limits, Mutable, readAtlas() (+7 more)
 
 ### Community 150 - "Claude Settings: Claude & Local"
 Cohesion: 0.50
@@ -891,12 +884,12 @@ Cohesion: 0.14
 Nodes (13): devDependencies, @codedocs/code-art, @types/node, exports, name, private, scripts, compose (+5 more)
 
 ### Community 155 - "Community 155"
-Cohesion: 0.17
-Nodes (19): _3(), c3(), f7(), floor(), forEach(), fv(), g3(), G4() (+11 more)
+Cohesion: 0.24
+Nodes (10): $6(), _8(), i8(), m8(), p8(), r8(), s8(), t8() (+2 more)
 
 ### Community 157 - "Community 157"
 Cohesion: 0.09
-Nodes (23): 1. Install, 2. Analyse a repository, 3. Ask questions, codedocs, codedocs and fallow, `codedocs art`, Configuration, Design and architecture (+15 more)
+Nodes (34): Three bindings, one to one with the operation set, Arm (toolset@model), baseline arm, codedocs arm, codedocs, fallow, Report, Envelope (+26 more)
 
 ### Community 158 - "Docs: Results & Reliability"
 Cohesion: 0.29
@@ -911,16 +904,16 @@ Cohesion: 0.22
 Nodes (8): compilerOptions, declaration, isolatedDeclarations, jsx, types, exclude, extends, include
 
 ### Community 179 - "Community 179"
-Cohesion: 0.20
-Nodes (10): An interrupted build leaves a partial index, not an invalid one, Concurrency, which SQLite mostly decides, Consequences, Considered Options, Detecting drift, One index file is one snapshot, The index is one SQLite file per working tree, holding one snapshot, that heals itself, What invalidates what (+2 more)
+Cohesion: 0.36
+Nodes (8): children(), compress(), displayName(), GENERIC, Group, split(), Subsystem, subsystems()
 
 ### Community 180 - "Community 180"
 Cohesion: 0.33
 Nodes (5): A trim flag that shrinks the envelope, not the truth it carries, Open questions for review, The rule: reconstructible or redundant, never a fact, What never trims, Where it applies, and how a caller knows it happened
 
 ### Community 181 - "Community 181"
-Cohesion: 0.12
-Nodes (19): copySampleValue_(), evaluate(), getSettings_(), interpolate_(), intervalChanged_(), multiplyQuaternionsFlat(), Ng(), pg() (+11 more)
+Cohesion: 0.08
+Nodes (33): addTo(), axisIntent(), aZ(), bx(), bZ(), clean(), compute(), computeMovement() (+25 more)
 
 ### Community 182 - "Community 182"
 Cohesion: 0.17
@@ -935,28 +928,28 @@ Cohesion: 0.12
 Nodes (17): Code Comment Conventions, Architecture Decision Records, Before exploring, read these, CONTEXT.md Glossary, Domain Docs, File structure, Flag ADR conflicts, Lazy Domain Doc Creation (+9 more)
 
 ### Community 185 - "Community 185"
-Cohesion: 0.19
-Nodes (10): SymbolNames, Timeline, embedded(), Load, loaders, loadNames(), sources(), artPage() (+2 more)
+Cohesion: 0.07
+Nodes (54): addObserver(), build(), canRun(), ce(), clearGcTimeout(), continue(), createResult(), D() (+46 more)
 
 ### Community 186 - "Community 186"
-Cohesion: 0.21
-Nodes (9): DocumentReport, DocsEnvelope, check(), claimNamed(), claimsOf(), fixture, plant(), plantRelations() (+1 more)
+Cohesion: 0.19
+Nodes (14): discoverDocuments(), CheckContext, assemble(), contextFor(), docsAffected(), docsCheck(), DocsEnvelope, check() (+6 more)
 
 ### Community 187 - "Community 187"
 Cohesion: 0.25
 Nodes (7): compilerOptions, declaration, isolatedDeclarations, types, exclude, extends, include
 
 ### Community 189 - "Community 189"
-Cohesion: 0.23
-Nodes (11): FileScore, deadRows(), healthRows(), hotspotRow(), LENS, lensLegend(), lensNote(), Row (+3 more)
+Cohesion: 0.17
+Nodes (13): FileScore, ROLES, deadRows(), healthRows(), hotspotRow(), LENS, lensLegend(), lensNote() (+5 more)
 
 ### Community 190 - "Community 190"
-Cohesion: 0.12
-Nodes (31): Two orthogonal classification axes, Closed predicate set for claims, Pointers cannot decide staleness (measurement), Three channels of honesty that must not blur, Authorship, Draft, Edge, Evidence (+23 more)
+Cohesion: 0.07
+Nodes (44): Classification is a label layer on two axes, recomputed on every run, Consequences, Considered Options, The signals, The two axes, Two orthogonal classification axes, Closed predicate set for claims, Claim coverage (+36 more)
 
 ### Community 191 - "Community 191"
-Cohesion: 0.27
-Nodes (11): BQ(), commitUpdate(), EQ(), Hq(), jQ(), Q_(), QQ(), vQ() (+3 more)
+Cohesion: 0.07
+Nodes (64): _3(), A(), a6(), ah(), ba(), bo(), bounds(), bp() (+56 more)
 
 ### Community 192 - "Community 192"
 Cohesion: 0.29
@@ -967,24 +960,24 @@ Cohesion: 0.29
 Nodes (7): Development phases, Phase 1: Prove the concept, Phase 2: VS Code, Phase 3: Ableton, Phase 4: Multiple repositories, Phase 5: Remix, Phase 6: Audiovisual performance
 
 ### Community 194 - "Community 194"
-Cohesion: 0.20
-Nodes (10): Analysis honesty, Classification, codedocs, Documentation, Language, Observing the repository, The index on disk, The internal representation (+2 more)
+Cohesion: 0.06
+Nodes (33): Analysis honesty, Classification, codedocs, Documentation, Language, Observing the repository, The index on disk, The internal representation (+25 more)
 
 ### Community 195 - "Community 195"
-Cohesion: 0.13
-Nodes (26): close(), clusters(), cycles(), enter(), Tarjan, undirected(), vote(), walk() (+18 more)
+Cohesion: 0.18
+Nodes (16): close(), clusters(), cycles(), enter(), Tarjan, undirected(), vote(), walk() (+8 more)
 
 ### Community 197 - "Community 197"
 Cohesion: 0.33
 Nodes (6): Cycles, Dense clusters, Dependency chains, Highly connected nodes, Musical analysis, Repetition
 
 ### Community 198 - "Community 198"
-Cohesion: 0.20
-Nodes (12): #329610 (VS Code chatAttachmentWidgets.ts), #331914 (VS Code mainThreadEditorTabs.ts), #333230 (VS Code listView.ts), ensureContextKeyService (chatAttachmentWidgets.ts), setResourceContext (chatAttachmentWidgets.ts), getVisibleRange (listView.ts), probeDynamicHeights (listView.ts), Difficulty level (+4 more)
+Cohesion: 0.29
+Nodes (6): fromCaller(), cli, out, repo, timeline, { values, positionals }
 
 ### Community 199 - "Community 199"
-Cohesion: 0.04
-Nodes (89): alarmMaterial(), FileHealth, symbolCount(), everHot(), smogPerFrame(), WEIGHTS, cityLayout, LAMP (+81 more)
+Cohesion: 0.06
+Nodes (51): alarmMaterial(), FileHealth, facadeMaterial(), Facades, FacadeUniforms, focusTexture(), blend(), HealthSample (+43 more)
 
 ### Community 200 - "Community 200"
 Cohesion: 0.22
@@ -995,8 +988,8 @@ Cohesion: 0.40
 Nodes (5): 1. Code graph, 2. Musical analysis, 3. Composer, 4. Renderer, Core architecture
 
 ### Community 218 - "Community 218"
-Cohesion: 0.22
-Nodes (9): Claim coverage, Consequences, Considered Options, Discovery, and `docs affected`, Documents make claims, and every verdict has exactly one source, Pointers cannot decide staleness, measured, The four verdicts, What a claim is (+1 more)
+Cohesion: 0.08
+Nodes (40): _allocateTargets(), _applyGGXFilter(), _applyPMREM(), Ax(), axisThreshold(), _blur(), _blurPass(), by() (+32 more)
 
 ### Community 219 - "Community 219"
 Cohesion: 0.20
@@ -1007,64 +1000,32 @@ Cohesion: 0.33
 Nodes (5): buildCommand, framework, outputDirectory, rewrites, $schema
 
 ### Community 221 - "Community 221"
-Cohesion: 0.38
-Nodes (7): Judging the fix, Three readings, and what they disagree about, What judging costs, and who pays, What the judge cannot see, correctness scale (correct/partial/incorrect), Judging the fix, similarity scale (same-change/same-mechanism/same-area/unrelated)
+Cohesion: 0.39
+Nodes (6): isScope(), isWorkspace(), linkTarget(), mirror(), mirrorEntry(), Tree
 
 ### Community 222 - "Community 222"
 Cohesion: 0.33
 Nodes (5): buildCommand, framework, outputDirectory, rewrites, $schema
 
 ### Community 225 - "Community 225"
-Cohesion: 0.33
-Nodes (9): _9(), b9(), C9(), g9(), h9(), S9(), v9(), x9() (+1 more)
+Cohesion: 0.05
+Nodes (91): Ae(), af(), Ar(), bh(), br(), cf(), ch(), Cn() (+83 more)
 
 ### Community 226 - "Community 226"
-Cohesion: 0.22
-Nodes (9): clearViewOffset(), getFilmHeight(), getFilmWidth(), getFocalLength(), makeOrthographic(), makePerspective(), setFocalLength(), setViewOffset() (+1 more)
+Cohesion: 0.52
+Nodes (5): churnAt(), ChurnEvent, ChurnFile, notShallow(), parseLog()
 
 ### Community 227 - "Community 227"
-Cohesion: 0.32
-Nodes (8): continue(), execute(), isFocused(), onFocus(), onOnline(), refetch(), runNext(), setFocused()
-
-### Community 228 - "Community 228"
-Cohesion: 0.40
-Nodes (4): Difficulty levels, Lines changed is not a difficulty signal, The current cases, What the level does measure
-
-### Community 229 - "Community 229"
-Cohesion: 0.40
-Nodes (5): An exploration step, Lines of source read, What counts as touching a symbol, What is measured, Where the counts are wrong, and which way
-
-### Community 230 - "Community 230"
-Cohesion: 0.32
-Nodes (8): crossFadeFrom(), crossFadeTo(), fadeIn(), fadeOut(), halt(), _lendControlInterpolant(), _scheduleFading(), warp()
-
-### Community 231 - "Community 231"
-Cohesion: 0.29
-Nodes (7): fQ(), i4(), intersectObject(), intersectObjects(), n4(), project(), Uq()
-
-### Community 233 - "Community 233"
 Cohesion: 0.33
-Nodes (4): BatchEntry, fixture, here, invoke()
-
-### Community 234 - "Community 234"
-Cohesion: 0.50
-Nodes (5): _5(), e7(), n7(), Q5(), t7()
-
-### Community 235 - "Community 235"
-Cohesion: 0.50
-Nodes (4): #329074 (VS Code code/electron-main/app.ts), #329326 (VS Code contextview.ts), #331452 (VS Code agentService.ts migration), Level 4 (a relationship, not a location)
-
-### Community 236 - "Community 236"
-Cohesion: 0.67
-Nodes (3): getNormalMatrix(), setFromMatrix4(), transpose()
+Nodes (4): Track(), listeners, toggleTracks(), useTracks()
 
 ### Community 238 - "Community 238"
 Cohesion: 0.11
 Nodes (18): dependencies, @ableton-extensions/sdk, description, devDependencies, @ableton-extensions/cli, esbuild, @types/node, typescript (+10 more)
 
 ### Community 247 - "Community 247"
-Cohesion: 0.20
-Nodes (9): fromCaller(), args, atlas, out, outDir, positional, root, skip (+1 more)
+Cohesion: 0.22
+Nodes (8): args, atlas, out, outDir, positional, root, skip, target
 
 ### Community 248 - "Community 248"
 Cohesion: 0.23
@@ -1075,28 +1036,52 @@ Cohesion: 0.56
 Nodes (8): arrange(), drums(), motto(), part(), SectionParts, sequence(), shift(), span()
 
 ### Community 251 - "Community 251"
-Cohesion: 0.17
-Nodes (18): AREAS, order(), plan(), Planned, roles(), sections(), euclid(), fill() (+10 more)
+Cohesion: 0.18
+Nodes (16): AREAS, order(), plan(), Planned, roles(), sections(), euclid(), fill() (+8 more)
 
 ### Community 253 - "Community 253"
-Cohesion: 0.13
-Nodes (24): analyse(), analyseOrEmpty(), buildTimeline(), cached(), emptyFrame(), frameAt(), LazyTree, pickCommits() (+16 more)
+Cohesion: 0.25
+Nodes (13): analyse(), analyseOrEmpty(), buildTimeline(), cached(), emptyFrame(), frameAt(), LazyTree, pickCommits() (+5 more)
 
 ### Community 256 - "Community 256"
-Cohesion: 0.16
-Nodes (15): churnAt(), ChurnEvent, ChurnFile, notShallow(), parseLog(), FallowReport, churnArgs(), fallow() (+7 more)
+Cohesion: 0.24
+Nodes (9): FallowReport, churnArgs(), fallow(), FallowReading, readFallow(), trimReport(), report(), Score (+1 more)
 
 ### Community 257 - "Community 257"
 Cohesion: 0.13
 Nodes (14): compilerOptions, allowImportingTsExtensions, module, moduleDetection, moduleResolution, noEmit, noUncheckedIndexedAccess, noUncheckedSideEffectImports (+6 more)
 
-### Community 271 - "Community 271"
-Cohesion: 0.13
-Nodes (12): nameIn(), OWN, OwnPackage, ownPackages(), packageAt(), relativise(), resolveQuietly(), Carried (+4 more)
+### Community 267 - "Community 267"
+Cohesion: 0.05
+Nodes (74): addEventListener(), addGroup(), autoReset(), Bt(), c6(), calculateInverses(), constructor(), cr() (+66 more)
+
+### Community 268 - "Community 268"
+Cohesion: 0.07
+Nodes (46): Aj(), arc(), b3(), b7(), Bj(), ceil(), computeBoneTexture(), contain() (+38 more)
+
+### Community 276 - "Community 276"
+Cohesion: 0.12
+Nodes (20): deleteGeometry(), deleteInstance(), getColorAt(), getGeometryIdAt(), getGeometryRangeAt(), getHSL(), getVisibleAt(), lerpHSL() (+12 more)
+
+### Community 278 - "Community 278"
+Cohesion: 0.33
+Nodes (9): _9(), b9(), C9(), g9(), h9(), S9(), v9(), x9() (+1 more)
+
+### Community 282 - "Community 282"
+Cohesion: 0.10
+Nodes (23): conjugate(), copySampleValue_(), evaluate(), getSettings_(), interpolate_(), intervalChanged_(), makeClipAdditive(), mg() (+15 more)
+
+### Community 285 - "Community 285"
+Cohesion: 0.32
+Nodes (8): crossFadeFrom(), crossFadeTo(), fadeIn(), fadeOut(), halt(), _lendControlInterpolant(), _scheduleFading(), warp()
 
 ### Community 294 - "Community 294"
 Cohesion: 0.33
 Nodes (5): author, entry, minimumApiVersion, name, version
+
+### Community 296 - "Community 296"
+Cohesion: 0.50
+Nodes (5): _5(), e7(), n7(), Q5(), t7()
 
 ### Community 302 - "Community 302"
 Cohesion: 0.33
@@ -1140,5 +1125,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `getVisibleRange (listView.ts)` and `probeDynamicHeights (listView.ts)`?**
   _Edge tagged AMBIGUOUS (relation: calls) - confidence is low._
-- **Why does `#_()` connect `CLI Render Notes` to `Operation Reports & Envelopes`, `CLI Draft & Stack Traces`, `Cold-Start Project Indexing`, `Community 139`, `Bench: What & Counts`, `Community 144`, `Docs Draft Facts Assembly`, `Bench Summarise Report`, `Community 155`, `Bench Judge Grading`, `Preflight & Fidelity Concepts (CONTEXT/ADR)`, `Docs Claim Predicate Checking`, `Community 44`, `Docs: Domain Documentation Conventions`, `Community 181`, `ADR/CONTEXT: SymbolId Types`, `Community 191`, `CLI Test Fixtures (Draft)`, `Research: Call Site Dispatch`, `Docs: Local Static Analysis Layer`, `Community 73`, `Community 75`, `Community 84`, `Community 88`, `Community 225`, `Community 98`, `Community 99`, `Community 226`, `Research: Tree-sitter/AST`, `Community 102`, `Community 227`, `Community 230`, `Community 231`, `Community 234`, `Bench: Cached Judgement & Cached Replicates`, `Community 236`?**
-  _High betweenness centrality (0.348) - this node is a cross-community bridge._
+- **Why does `#_()` connect `CLI Render Notes` to `Operation Reports & Envelopes`, `CLI Draft & Stack Traces`, `Cold-Start Project Indexing`, `Community 267`, `Community 268`, `Community 144`, `Docs Draft Facts Assembly`, `Community 276`, `Community 278`, `Community 282`, `Community 155`, `Bench Judge Grading`, `Preflight & Fidelity Concepts (CONTEXT/ADR)`, `Community 285`, `Community 296`, `Bench VS Code Issue Seeds`, `Community 44`, `Community 181`, `Community 185`, `ADR/CONTEXT: SymbolId Types`, `Community 191`, `CLI Test Fixtures (Draft)`, `Research: Call Site Dispatch`, `Docs: Local Static Analysis Layer`, `Community 73`, `Community 75`, `Community 84`, `Community 218`, `Community 225`, `Community 99`, `Community 107`?**
+  _High betweenness centrality (0.355) - this node is a cross-community bridge._

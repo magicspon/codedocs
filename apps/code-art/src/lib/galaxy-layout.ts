@@ -1,11 +1,13 @@
 import { Color } from 'three'
 import { isTest, symbolCount } from './atlas.ts'
 import { healthTracks, type HealthTracks } from './health.ts'
-import { KIND_COLORS, projectColor } from './palette.ts'
+import { galaxyPalette } from './galaxy-palette.ts'
 import { discStar, tiltOf } from './accretion.ts'
 import { dust } from './dust.ts'
 import { cloud, type PointCloud } from './point-cloud.ts'
 import { gaussian, hash, rng } from './rng.ts'
+import { placeFiles } from './galaxy-placement.ts'
+import { galaxyStructure, type GalaxyShape } from './galaxy-shape.ts'
 import { starLook } from './star-look.ts'
 import type { Life, Series } from './series.ts'
 import { threads, type Threads } from './threads.ts'
@@ -13,13 +15,16 @@ import { threads, type Threads } from './threads.ts'
 /**
  * The galaxy's geometry, computed once per dataset.
  *
+ * - **Shape** is how the code is organised (`galaxy-shape.ts`): spiral,
+ *   barred, elliptical or irregular.
  * - **Arms** are the largest top-level directories; everything else orbits in
  *   the halo.
  * - **Radius** is gravity: the most-called, most-referenced, most-imported
  *   files sit in the bright core, and leaf code drifts to the rim.
  * - **Stars** are symbols, clustered around their file and coloured by kind.
+ * - **Colours** lean to the dataset's own palette (`galaxy-palette.ts`).
  * - **Black holes** are test files: their symbols ring a dark middle as a disc.
- * - **Nebulae** (reds through blues) are unresolved calls: where the analysis could not see.
+ * - **Nebulae** (astrophotography inks) are unresolved calls: where the analysis could not see.
  * - **Dust lanes** are the heaviest calls, bowed the way the arms wind.
  * - **Health** (when fallow ran): hotspots flare, unused files grey out, and
  *   files sharing copied code are drawn as binary pairs joined by a thread.
@@ -39,13 +44,14 @@ export interface GalaxyLayout {
   readonly clones: Threads
   readonly health: HealthTracks
   readonly radius: number
+  /** The galaxy's Hubble type, read from how the code is organised. */
+  readonly shape: GalaxyShape
   /** How far the files' stars were spread apart, against their points' size. */
   readonly spread: number
 }
 
 const MAX_STARS_PER_FILE = 300
 const MAX_LINKS = 1800
-const MAX_ARMS = 8
 /**
  * How far apart files' stars sit, against the galaxy's shape. Only the
  * centres spread: each star's cloud of symbols and haze keeps its place
@@ -55,40 +61,8 @@ const MAX_ARMS = 8
  */
 const SPREAD = 4
 const CLONE_COLOR = new Color('#9fd8ff')
-
-/**
- * Nebula hues, kept this dim because the puffs glow additively and stack.
- * Red, crimson, magenta, violet, indigo, blue and teal: enough spread that
- * neighbouring blind spots read as separate clouds.
- */
-const NEBULA_HUES: readonly (readonly [number, number, number])[] = [
-  [0.065, 0.004, 0.012],
-  [0.06, 0.006, 0.03],
-  [0.05, 0.004, 0.05],
-  [0.032, 0.006, 0.06],
-  [0.014, 0.01, 0.065],
-  [0.006, 0.022, 0.065],
-  [0.004, 0.04, 0.05],
-]
-
-/**
- * Finds the shallowest directory depth that splits the repo into at least
- * three sizeable groups, none holding most of the files — otherwise vscode's
- * `src/` would be one arm and the spiral would read as a disc.
- */
-function armKeys(paths: readonly string[]): string[] {
-  for (let depth = 1; depth <= 5; depth++) {
-    const keys = paths.map((p) => p.split('/').slice(0, depth).join('/'))
-    const counts = new Map<string, number>()
-    for (const k of keys) counts.set(k, (counts.get(k) ?? 0) + 1)
-    const sizeable = [...counts.values()].filter(
-      (n) => n >= paths.length * 0.02,
-    )
-    const largest = Math.max(...counts.values())
-    if (sizeable.length >= 3 && largest <= paths.length * 0.45) return keys
-  }
-  return paths.map((p) => p.split('/')[0]!)
-}
+/** How far a dust lane leans from its files' colours to its grain. */
+const GRAIN_LEAN = 0.6
 
 /**
  * When star `k` of a file lives: while the file has enough symbols that its
@@ -121,50 +95,15 @@ export function galaxyLayout(series: Series): GalaxyLayout {
   const random = rng(hash(atlas.name))
   const radius = 18 + Math.sqrt(n) * 0.9
 
-  // Gravity: how much of the rest of the codebase leans on this file.
-  const importsIn = Array.from({ length: n }, () => 0)
-  for (const [, to] of atlas.imports) importsIn[to]!++
-  const gravity = files.map(
-    (f, i) => f.callsIn + f.refsIn * 0.5 + importsIn[i]! * 2,
+  const structure = galaxyStructure(atlas)
+  const { keys, rank } = structure
+  const armOf = new Map(structure.arms.map((k, i) => [k, i]))
+  const centres = placeFiles(
+    structure,
+    radius,
+    random,
+    rng(hash(`${atlas.name}:clumps`)),
   )
-  const order = files.map((_, i) => i).sort((a, b) => gravity[b]! - gravity[a]!)
-  const rank: number[] = Array.from({ length: n }, () => 0)
-  order.forEach((file, r) => (rank[file] = r / Math.max(1, n - 1)))
-
-  const keys = armKeys(files.map((f) => f.path))
-  const counts = new Map<string, number>()
-  for (const k of keys) counts.set(k, (counts.get(k) ?? 0) + 1)
-  const arms = [...counts.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, MAX_ARMS)
-    .map(([k]) => k)
-  const armOf = new Map(arms.map((k, i) => [k, i]))
-
-  const centres: [number, number, number][] = files.map((_, i) => {
-    const arm = armOf.get(keys[i]!)
-    const r = radius * (0.04 + 0.96 * Math.pow(rank[i]!, 0.75))
-    if (arm === undefined) {
-      // Halo: a loose flattened shell for code outside the main arms.
-      const theta = random() * Math.PI * 2
-      const phi = Math.acos(2 * random() - 1)
-      const shell = radius * (0.5 + random() * 0.8)
-      return [
-        shell * Math.sin(phi) * Math.cos(theta),
-        shell * Math.cos(phi) * 0.45,
-        shell * Math.sin(phi) * Math.sin(theta),
-      ]
-    }
-    const t = r / radius
-    const theta =
-      (arm / arms.length) * Math.PI * 2 + t * 4.2 + gaussian(random) * 0.13
-    const spread = gaussian(random) * radius * 0.018
-    const thickness = 0.35 + 3 * Math.exp(-t * t * 10)
-    return [
-      Math.cos(theta) * r + spread,
-      gaussian(random) * thickness,
-      Math.sin(theta) * r + spread,
-    ]
-  })
 
   for (const c of centres) {
     c[0] *= SPREAD
@@ -172,10 +111,15 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     c[2] *= SPREAD
   }
 
+  const palette = galaxyPalette(atlas.name, files)
+  // An irregular galaxy is all clumps and no arms, so every folder gets a colour.
+  const groups = new Map([...new Set(keys)].sort().map((k, i) => [k, i]))
   const tint = files.map((f, i) =>
-    armOf.has(keys[i]!)
-      ? projectColor(armOf.get(keys[i]!)!, 0.55, 0.7)
-      : projectColor(f.project, 0.2, 0.6),
+    structure.shape === 'irregular'
+      ? palette.arm(groups.get(keys[i]!)!)
+      : armOf.has(keys[i]!)
+        ? palette.arm(armOf.get(keys[i]!)!)
+        : palette.halo(f.project),
   )
 
   const cores = cloud(n)
@@ -222,7 +166,7 @@ export function galaxyLayout(series: Series): GalaxyLayout {
         stars.colors.set([star.color.r, star.color.g, star.color.b], s * 3)
         stars.sizes[s] = star.size
       } else {
-        const { color, size } = starLook(KIND_COLORS[kind]!, rank[i]!, random)
+        const { color, size } = starLook(palette.kinds[kind]!, rank[i]!, random)
         stars.positions.set(
           [
             cx + gaussian(random) * sigma,
@@ -257,8 +201,8 @@ export function galaxyLayout(series: Series): GalaxyLayout {
   for (const i of hazy) {
     const puffs = Math.min(6, Math.ceil(Math.log1p(files[i]!.unresolved)))
     const [cx, cy, cz] = centres[i]!
-    // Hue from the path, not `random`, so the stream (and every later draw) is unchanged.
-    const [hr, hg, hb] = NEBULA_HUES[hash(files[i]!.path) % NEBULA_HUES.length]!
+    // Colour from the path, not `random`, so the stream (and every later draw) is unchanged.
+    const { r: hr, g: hg, b: hb } = palette.nebula(files[i]!.path)
     for (let k = 0; k < puffs; k++, b++) {
       nebulae.positions.set(
         [
@@ -279,7 +223,14 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     atlas.calls.slice(0, MAX_LINKS),
     series.callLife,
     centres,
-    (from, to) => [tint[from]!, tint[to]!],
+    (from, to) => {
+      // Dust is starlight on grains: the two files' colours, leant to the lane's grain.
+      const grain = palette.grain(from, to)
+      return [
+        tint[from]!.clone().lerp(grain, GRAIN_LEAN),
+        tint[to]!.clone().lerp(grain, GRAIN_LEAN),
+      ]
+    },
     random,
   )
   // Pale blue-white, like a pair of hot young stars; the copy is the bond.
@@ -299,6 +250,7 @@ export function galaxyLayout(series: Series): GalaxyLayout {
     clones,
     health: healthTracks(series),
     radius: radius * SPREAD,
+    shape: structure.shape,
     spread: SPREAD,
   }
 }

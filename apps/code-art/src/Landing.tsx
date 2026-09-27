@@ -1,7 +1,8 @@
 import { getRouteApi, Link } from '@tanstack/react-router'
 import type { CSSProperties, JSX, ReactNode } from 'react'
 import { DATASETS } from './lib/load.ts'
-import { designation, hueOf, labelOf } from './landing/identity.ts'
+import { hueOf } from './lib/hue.ts'
+import { designation, labelOf } from './landing/identity.ts'
 import { Starfield } from './landing/Starfield.tsx'
 import './landing/landing.css'
 

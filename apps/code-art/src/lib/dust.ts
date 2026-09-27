@@ -13,8 +13,6 @@ const THICKEST = 2.4
 const BOW = 0.18
 /** Lanes this long are half as bright; far-flung calls stay a whisper. */
 const REACH = 25
-/** Dust is starlight on grains: the two files' colours, reddened towards rust. */
-const GRAIN = new Color('#b0502a')
 
 /**
  * Calls as dust lanes. Each link scatters many small, faint puffs along a
@@ -24,7 +22,8 @@ const GRAIN = new Color('#b0502a')
  * heavier call lays them thicker. Long lanes fade, leaving the dust where
  * related files sit close: along the arms. Each puff lives as long as its call.
  *
- * `ends` gives the colours at the two ends, which blend along the lane.
+ * `ends` gives the colours at the two ends, which blend along the lane. The
+ * caller mixes in the dust's own colour there, so each galaxy picks its grain.
  */
 export function dust(
   links: readonly Link[],
@@ -86,7 +85,7 @@ export function dust(
         ],
         p * 3,
       )
-      colour.lerpColors(ca, cb, t).lerp(GRAIN, 0.6).multiplyScalar(k)
+      colour.lerpColors(ca, cb, t).multiplyScalar(k)
       out.colors.set([colour.r, colour.g, colour.b], p * 3)
       out.sizes[p] = (0.5 + width * 0.25) * (0.5 + random() * (0.5 + swell))
       out.births[p] = birth

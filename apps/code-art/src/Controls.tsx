@@ -1,8 +1,10 @@
-import { useEffect, type JSX } from 'react'
+import { useEffect, useMemo, type JSX } from 'react'
 import { Leva, useControls } from 'leva'
 import type { FallowMeta } from './lib/atlas.ts'
 import { frameSummary } from './lib/frame.ts'
+import { galaxyStructure } from './lib/galaxy-shape.ts'
 import { lensNote } from './lib/health-text.ts'
+import { shapeNote } from './lib/shape-text.ts'
 import type { Series } from './lib/series.ts'
 import type { Trace, TraceQuery } from './lib/trace.ts'
 import { SearchResults } from './SearchResults.tsx'
@@ -11,7 +13,7 @@ import { useSearchControls } from './useSearchControls.ts'
 /** What each scene maps, in one line, so the picture can be read and not just looked at. */
 const LEGENDS: Record<string, string> = {
   galaxy:
-    'Arms are top-level folders. The core holds the code everything else leans on. Stars are symbols, coloured by kind. Red haze marks calls the analysis could not resolve.',
+    'The core holds the code everything else leans on. Stars are symbols, coloured by kind. Coloured haze marks calls the analysis could not resolve.',
 }
 
 /** Leva's tokens, matched to the rest of the overlay. */
@@ -65,7 +67,12 @@ function showing(series: Series | null, frame: number): string {
 export function Controls(props: ControlsProps): JSX.Element {
   const available = props.fallow !== undefined
   const shown = showing(props.series, props.frame)
+  const shape = useMemo(
+    () => (props.series ? galaxyStructure(props.series.merged).shape : null),
+    [props.series],
+  )
   const legend = [
+    props.scene === 'galaxy' && shape ? shapeNote(shape) : null,
     LEGENDS[props.scene],
     lensNote(props.scene, props.fallow, props.lens),
   ]

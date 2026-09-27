@@ -6,6 +6,10 @@ import './landing/about.css'
 
 /** What each part of a galaxy stands for in the code. */
 const LEGEND: readonly (readonly [string, string])[] = [
+  [
+    'The shape of the galaxy',
+    'How the code is organised. Folders that split the code evenly make a spiral. A few files that everything leans on make a bar, or an elliptical ball when they hold nearly all of it. Code spread across many small folders makes an irregular galaxy',
+  ],
   ['A spiral arm', 'A folder'],
   ['A cluster of stars', 'A file, with one star for each symbol in it'],
   ['The colour of a star', 'The kind of symbol: function, class, type…'],
@@ -13,7 +17,10 @@ const LEGEND: readonly (readonly [string, string])[] = [
     'Dust lanes',
     'Calls between files. The most-called files sit near the core',
   ],
-  ['Faint red haze', 'Calls that codedocs could not follow to their target'],
+  [
+    'Faint coloured haze',
+    'Calls that codedocs could not follow to their target',
+  ],
   ['A black hole', 'A test file'],
 ]
 
