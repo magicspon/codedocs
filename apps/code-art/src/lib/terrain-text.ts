@@ -22,5 +22,13 @@ export const TERRAIN_LEGEND: readonly (readonly [
     'Ripples',
     'Rings of amber light close in on the files that other files call most. The more calls a file gets, the brighter and wider its ripples.',
   ],
+  [
+    'Bands',
+    'Coloured bands run up each peak, one for each kind of symbol, in the same colours as the stars in the galaxy. The thicker a band, the more symbols of that kind the file declares.',
+  ],
+  [
+    'Mist',
+    'Rose mist hangs in the valleys round the files with the most calls the analysis could not resolve. It marks where the picture is least certain.',
+  ],
   ['Timelines', 'In a timeline, each file is drawn at its largest.'],
 ]

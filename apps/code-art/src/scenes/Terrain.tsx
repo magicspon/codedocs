@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, type JSX } from 'react'
 import type { Vector3 } from 'three'
 import { ownerAt } from '../lib/terrain-field.ts'
 import { TERRAIN_RADIUS, terrainLayout } from '../lib/terrain-layout.ts'
+import { mistMaterial } from './mist-material.ts'
 import type { SceneProps } from './scene.ts'
 import {
   skirtMaterial,
@@ -17,7 +18,8 @@ import {
  * its own colour. Every file raises a peak as tall as its symbol count; test
  * files sink small lakes. Calls run as rivers along the folder tree, joining
  * into trunks where folders lean on each other, and amber ripples close in on
- * the files the rest of the code calls most. An art piece: it names the file
+ * the files the rest of the code calls most. Each peak is banded by its mix
+ * of symbol kinds, and rose mist pools round files with unresolved calls. An art piece: it names the file
  * under the pointer, and draws the latest state of a timeline.
  */
 export function Terrain(props: SceneProps): JSX.Element {
@@ -30,6 +32,7 @@ export function Terrain(props: SceneProps): JSX.Element {
       surface: surfaceMaterial(TERRAIN_RADIUS, field.peak, cell),
       skirt: skirtMaterial(TERRAIN_RADIUS, cell),
       water: waterMaterial(TERRAIN_RADIUS),
+      mist: mistMaterial(TERRAIN_RADIUS),
     }),
     [field.peak, cell],
   )
@@ -49,7 +52,7 @@ export function Terrain(props: SceneProps): JSX.Element {
     u.uHubCount!.value = spots.length / 3
   }, [materials, layout])
   const clocked = useMemo(
-    () => [materials.surface, materials.skirt, materials.water],
+    () => [materials.surface, materials.skirt, materials.water, materials.mist],
     [materials],
   )
 
@@ -74,7 +77,7 @@ export function Terrain(props: SceneProps): JSX.Element {
     hover(file === -1 ? null : file)
   }
 
-  const { surface, skirt, water } = layout
+  const { surface, skirt, water, strata, mist } = layout
   return (
     <>
       <color attach="background" args={['#010105']} />
@@ -100,6 +103,15 @@ export function Terrain(props: SceneProps): JSX.Element {
             args={[surface.colors, 3]}
           />
           <bufferAttribute attach="attributes-wet" args={[surface.wet, 1]} />
+          <bufferAttribute
+            attach="attributes-strataLow"
+            args={[strata.lower, 4]}
+          />
+          <bufferAttribute
+            attach="attributes-strataHigh"
+            args={[strata.upper, 4]}
+          />
+          <bufferAttribute attach="attributes-rise" args={[strata.rise, 1]} />
           <bufferAttribute attach="index" args={[surface.index, 1]} />
         </bufferGeometry>
       </mesh>
@@ -125,6 +137,16 @@ export function Terrain(props: SceneProps): JSX.Element {
           <bufferAttribute attach="attributes-flow" args={[water.flow, 1]} />
         </bufferGeometry>
       </lineSegments>
+      <points material={materials.mist}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[mist.positions, 3]}
+          />
+          <bufferAttribute attach="attributes-size" args={[mist.sizes, 1]} />
+          <bufferAttribute attach="attributes-seed" args={[mist.seeds, 1]} />
+        </bufferGeometry>
+      </points>
       <OrbitControls
         makeDefault
         enableDamping

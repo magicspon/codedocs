@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { fromAtlas } from '../src/lib/series.ts'
 import { heightAt, ownerAt, terrainField } from '../src/lib/terrain-field.ts'
 import { TERRAIN_RADIUS, terrainLayout } from '../src/lib/terrain-layout.ts'
+import { mistOf, mistyFiles } from '../src/lib/terrain-mist.ts'
 import { ridged, valueNoise } from '../src/lib/terrain-noise.ts'
+import { kindBands, strataOf } from '../src/lib/terrain-strata.ts'
 import { edgeFlows, riversOf } from '../src/lib/terrain-rivers.ts'
 import { radialTree } from '../src/lib/terrain-tree.ts'
 import { atlas, file } from './fixture.ts'
@@ -164,5 +166,65 @@ describe('noise', () => {
       expect(r).toBeGreaterThanOrEqual(0)
       expect(r).toBeLessThanOrEqual(1)
     }
+  })
+})
+
+describe('strata', () => {
+  it('stacks each kind by its share of the file', () => {
+    // 2 functions, 1 class, 1 variable.
+    const bands = kindBands(file('a.ts', { kinds: [2, 1, 0, 0, 0, 1, 0, 0] }))
+    expect(bands).toEqual([0.5, 0.75, 0.75, 0.75, 0.75, 1, 1, 1])
+    expect(
+      kindBands(file('b.ts', { kinds: [0, 0, 0, 0, 0, 0, 0, 0] })),
+    ).toEqual(Array.from({ length: 8 }, () => 1))
+  })
+
+  it('measures each vertex up its own peak, and leaves open ground without bands', () => {
+    const files = [file('a/big.ts', { kinds: [9, 3, 0, 0, 0, 0, 0, 0] })]
+    const tree = radialTree(files, TERRAIN_RADIUS)
+    const field = terrainField({
+      tree,
+      files,
+      rivers: [],
+      colorOf: () => [1, 1, 1],
+      seed: 1,
+      size: 80,
+    })
+    const strata = strataOf(field, files)
+    const rises = [...strata.rise].filter((r) => r >= 0)
+    expect(Math.max(...rises)).toBeCloseTo(1)
+    expect(Math.min(...strata.rise)).toBe(-1)
+    const v = strata.rise.indexOf(Math.max(...rises))
+    expect(strata.lower[v * 4]).toBeCloseTo(0.75)
+  })
+})
+
+describe('mist', () => {
+  const files = Array.from({ length: 20 }, (_, i) =>
+    file(`d${i % 3}/f${i}.ts`, { unresolved: i === 7 ? 500 : i }),
+  )
+
+  it('only clouds the blindest tenth of files', () => {
+    expect(mistyFiles(files)).toEqual([7, 19])
+    expect(mistyFiles([file('a.ts')])).toEqual([])
+  })
+
+  it('settles puffs near their file, above the ground', () => {
+    const tree = radialTree(files, TERRAIN_RADIUS)
+    const field = terrainField({
+      tree,
+      files,
+      rivers: [],
+      colorOf: () => [1, 1, 1],
+      seed: 1,
+      size: 80,
+    })
+    const mist = mistOf(field, tree, files)
+    expect(mist.positions.length).toBe(mist.sizes.length * 3)
+    expect(mist.sizes.length).toBeGreaterThan(0)
+    const x = mist.positions[0]!
+    const y = mist.positions[1]!
+    const z = mist.positions[2]!
+    expect(y).toBeGreaterThan(heightAt(field, x, z))
   })
 })

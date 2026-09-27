@@ -1,4 +1,5 @@
 import { AdditiveBlending, DoubleSide, ShaderMaterial, Vector3 } from 'three'
+import { KIND_COLORS } from '../lib/palette.ts'
 import { HUBS } from '../lib/terrain-layout.ts'
 
 /**
@@ -46,6 +47,8 @@ function shared(radius: number): Record<string, { value: unknown }> {
  * the file under the pointer; `uPeak` scales height to `0`–`1`. `uHubs`
  * holds up to `HUBS` most-called files as `[x, z, share]`, and amber rings
  * close in on each along the grid lines, as if the calls were flowing in.
+ * The rock is banded by kind (`strataLow`, `strataHigh`, `rise`: see
+ * `terrain-strata.ts`), in the galaxy's star colours.
  */
 export function surfaceMaterial(
   radius: number,
@@ -63,9 +66,16 @@ export function surfaceMaterial(
       uHoverOn: { value: 0 },
       uHubs: { value: Array.from({ length: HUBS }, () => new Vector3()) },
       uHubCount: { value: 0 },
+      uKinds: { value: KIND_COLORS },
     },
     vertexShader: /* glsl */ `
       attribute float wet;
+      attribute vec4 strataLow;
+      attribute vec4 strataHigh;
+      attribute float rise;
+      flat varying vec4 vLow;
+      flat varying vec4 vHigh;
+      varying float vRise;
       varying vec3 vColor;
       varying vec3 vWorld;
       varying float vWet;
@@ -73,6 +83,9 @@ export function surfaceMaterial(
       void main() {
         vColor = color;
         vWet = wet;
+        vLow = strataLow;
+        vHigh = strataHigh;
+        vRise = rise;
         vec4 world = modelMatrix * vec4(position, 1.0);
         vWorld = world.xyz;
         vec4 mv = viewMatrix * world;
@@ -89,6 +102,10 @@ export function surfaceMaterial(
       uniform float uHoverOn;
       uniform vec3 uHubs[${HUBS}];
       uniform int uHubCount;
+      uniform vec3 uKinds[8];
+      flat varying vec4 vLow;
+      flat varying vec4 vHigh;
+      varying float vRise;
       varying vec3 vColor;
       varying vec3 vWorld;
       varying float vWet;
@@ -109,6 +126,21 @@ export function surfaceMaterial(
         }
         return sum;
       }
+      // The kind band at this height up the peak, and how near its top edge.
+      // Empty kinds have no width, so the loop steps straight past them.
+      vec4 strata(out float seam) {
+        float bands[8] = float[8](vLow.x, vLow.y, vLow.z, vLow.w, vHigh.x, vHigh.y, vHigh.z, vHigh.w);
+        seam = 0.0;
+        for (int k = 0; k < 8; k++) {
+          if (vRise <= bands[k]) {
+            float edge = abs(vRise - bands[k]) / max(fwidth(vRise), 1e-4);
+            // No seam at the summit: the last band ends at the top, not at a neighbour.
+            seam = bands[k] < 0.999 ? 1.0 - smoothstep(0.0, 1.2, edge) : 0.0;
+            return vec4(uKinds[k], 1.0);
+          }
+        }
+        return vec4(0.0);
+      }
       void main() {
         float up = clamp(vWorld.y / uPeak, -1.0, 1.5);
         float high = clamp(up, 0.0, 1.0);
@@ -117,7 +149,12 @@ export function surfaceMaterial(
         float contour = lineAt(vWorld.y / (uPeak * 0.08), 1.0) * 0.4 * smoothstep(0.05, 0.3, high);
         float lines = max(max(rows, cross), contour);
         // Low ground is dim, summits run towards white.
-        vec3 ink = mix(vColor * (0.3 + 0.9 * high), vec3(1.0, 0.96, 0.92), high * high * 0.3);
+        // Strata tint the rock, not the open ground, and fade in up the slope.
+        float seam;
+        vec4 band = strata(seam);
+        float layered = band.a * step(0.0, vRise) * smoothstep(0.03, 0.18, high);
+        vec3 base = mix(vColor, band.rgb, layered * 0.85);
+        vec3 ink = mix(base * (0.3 + 0.9 * high), vec3(1.0, 0.96, 0.92), high * high * 0.25);
         // Water below sea level: lakes of tests and the deepest river beds.
         float sea = smoothstep(0.0, -0.12, up);
         vec3 fill = vColor * 0.035 + vec3(0.02, 0.05, 0.09) * sea;
@@ -131,7 +168,9 @@ export function surfaceMaterial(
         float ripple = ripplesAt(vWorld.xz);
         vec3 amber = vec3(1.0, 0.7, 0.32);
         vec3 color = fill + ink * lines * (0.42 + ping * 1.2 + near * 1.4) + river
-          + amber * ripple * (lines * 1.8 + 0.07);
+          + amber * ripple * (lines * 1.8 + 0.07)
+          // A thin bright seam where one kind's band meets the next.
+          + band.rgb * (seam * 1.1 + 0.035) * layered;
         gl_FragColor = vec4(color * fogOf(vDepth), 1.0);
       }
     `,

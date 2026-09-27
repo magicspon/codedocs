@@ -9,7 +9,9 @@ import {
   type Field,
   type Rgb,
 } from './terrain-field.ts'
+import { mistOf, type Mist } from './terrain-mist.ts'
 import { edgeFlows, riversOf, type River } from './terrain-rivers.ts'
+import { strataOf, type Strata } from './terrain-strata.ts'
 import { radialTree, type RadialTree, type TreeNode } from './terrain-tree.ts'
 
 /**
@@ -22,6 +24,10 @@ export interface TerrainLayout {
   readonly rivers: readonly River[]
   /** The surface grid: positions, colours, wetness and triangle indexes. */
   readonly surface: Mesh & { readonly wet: Float32Array }
+  /** Bands of symbol kinds up each peak. */
+  readonly strata: Strata
+  /** Haze round the files with the most unresolved calls. */
+  readonly mist: Mist
   /** The slab's four sides, hanging from the surface's rim to the floor. */
   readonly skirt: Mesh & {
     readonly drop: Float32Array
@@ -211,6 +217,8 @@ export function terrainLayout(series: Series, size?: number): TerrainLayout {
     field,
     rivers,
     surface,
+    strata: strataOf(field, files),
+    mist: mistOf(field, tree, files),
     skirt: skirtOf(field, surface),
     water: waterOf(field, rivers),
     hubs: hubsOf(tree, files),

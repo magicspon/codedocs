@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790547683.725124,
-    "ast_hash": "5f429ace37140d43b63fea24332d2d53",
+    "mtime": 1790548123.9980276,
+    "ast_hash": "12a77b9a64b0b388e296b7a1205a89ef",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -3170,8 +3170,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-layout.ts": {
-    "mtime": 1790547642.3989828,
-    "ast_hash": "f5ab18bd7479c0410a677a912d2d04e5",
+    "mtime": 1790547987.9069412,
+    "ast_hash": "af2e3de506f74a011546b19c7978cc8d",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-noise.ts": {
@@ -3185,8 +3185,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-text.ts": {
-    "mtime": 1790547642.3994138,
-    "ast_hash": "a74964719dda0a045a0f24889e05d953",
+    "mtime": 1790548122.7780519,
+    "ast_hash": "58b01f6bc94a26e0a2c112da25a72489",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-tree.ts": {
@@ -3195,18 +3195,33 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Terrain.tsx": {
-    "mtime": 1790547703.7376082,
-    "ast_hash": "5e06ebfb75aea06a727232f000392055",
+    "mtime": 1790548033.2856576,
+    "ast_hash": "e18e0deb9521837436ab0cb712180bf4",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/terrain-material.ts": {
-    "mtime": 1790547739.254927,
-    "ast_hash": "a3b639577e1149af0e3ede8c1731b253",
+    "mtime": 1790548095.8177674,
+    "ast_hash": "d455ec36ae22808e2a3331cd2a88282b",
     "semantic_hash": ""
   },
   "apps/code-art/test/terrain.test.ts": {
-    "mtime": 1790547642.399162,
-    "ast_hash": "7c25943fc436e149ec701b673a4af61d",
+    "mtime": 1790548144.7694836,
+    "ast_hash": "247248b3540339276eaa874f252ae22e",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-mist.ts": {
+    "mtime": 1790547987.8649173,
+    "ast_hash": "d2d663da33cf71f50cd10ed526164d84",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-strata.ts": {
+    "mtime": 1790547987.862567,
+    "ast_hash": "3f95ecb26c66bcb020e6dcb12a521d90",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/mist-material.ts": {
+    "mtime": 1790548046.3719459,
+    "ast_hash": "471adef5b18e859bb7957babfb405394",
     "semantic_hash": ""
   }
 }
