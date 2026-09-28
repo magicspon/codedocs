@@ -12,6 +12,7 @@
     "build": "pnpm --filter @codedocs/code-art build && pnpm --filter @codedocs/cli build",
     "codedocs": "node packages/cli/dist/bin.js",
     "art": "pnpm --filter @codedocs/code-art dev",
+    "audio": "pnpm --filter @codedocs/codesong-site dev",
     "bench": "node bench/run.ts",
     "bench:report": "node bench/report.ts",
     "bench:writeup": "node bench/writeup.ts",

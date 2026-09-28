@@ -15,6 +15,10 @@ emissivemap
 esbuild
 expando
 fallowrc
+fatsawtooth
+fatsine
+fatsquare
+fattriangle
 fooking
 fract
 frontmatter
@@ -22,6 +26,7 @@ gitdir
 glsl
 graphify
 graphifyy
+harmonicity
 heightfield
 Hihat
 inspectable

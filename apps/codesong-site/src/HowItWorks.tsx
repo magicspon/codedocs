@@ -65,8 +65,14 @@ export function HowItWorks(): JSX.Element {
 
       <h2>4. Play it</h2>
       <p>
-        The finished piece is built as a set in Ableton Live, with a synth for
-        each part and a 909 drum kit, then recorded to mp3.
+        Each song page plays the piece in your browser. The bars run across a
+        floor, and every note stands above its track. Pick a note to see the
+        file it came from and why it sounds the way it does. Pick a section to
+        see which part of the code it was built from.
+      </p>
+      <p>
+        The same piece is also built as a set in Ableton Live, with a synth for
+        each part and a 909 drum kit.
       </p>
 
       <h2>Same code, same song</h2>

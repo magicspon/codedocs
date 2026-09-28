@@ -32,6 +32,8 @@ const config: ViteUserConfig = defineConfig({
       },
       // CodeSong: every stage is a pure function of an atlas, tested like a package.
       'apps/codesong',
+      // Its site: how a played note is traced back to the files behind it.
+      'apps/codesong-site',
       // The repository's own invariants belong to no package: ADR 0011's "no
       // codedocs package reaches the network" is a fact about the workspace and
       // its dependency closure, and there is no package it could sit inside

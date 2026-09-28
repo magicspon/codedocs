@@ -69,14 +69,6 @@ a {
   text-decoration: underline;
 }
 
-.song h1 {
-  margin: 0 0 1.25rem;
-}
-
-.song audio {
-  width: 100%;
-}
-
 .actions {
   display: flex;
   gap: 1.5rem;
@@ -117,4 +109,402 @@ a {
     grid-template-columns: 1fr;
     gap: 0;
   }
+}
+
+/* The song page is the scene: it fills the window, with no site header. */
+.page:has(.player) {
+  max-width: none;
+  padding: 0;
+}
+
+.page:has(.player) > header {
+  display: none;
+}
+
+/* The scene is always dark, so its overlay keeps the dark tokens whatever the page's scheme. */
+.player {
+  --ink: #e8ebf3;
+  --muted: #9aa3b8;
+  --accent: #ffc56b;
+  --edge: #262a38;
+  color: var(--ink);
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #07080f;
+}
+
+/* The transport, then the details under it, down the left. Clicks pass to the scene between them. */
+.hud {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.icon-button {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  background: rgb(10 12 22 / 72%);
+  backdrop-filter: blur(8px);
+  color: var(--muted);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.icon-button:hover,
+.icon-button:focus-visible {
+  color: var(--ink);
+  transform: scale(1.08);
+}
+
+.icon-button:active {
+  transform: scale(0.92);
+}
+
+.icon-button[aria-expanded='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #111;
+}
+
+.transport {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(#07080fe6, #07080f00);
+  pointer-events: none;
+}
+
+.transport > * {
+  pointer-events: auto;
+}
+
+.transport-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.transport h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.transport .time {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  color: #9aa3b8;
+}
+
+.transport button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.play {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: #ffc56b;
+  color: #07080f;
+}
+
+.scrub {
+  width: 100%;
+  accent-color: #ffc56b;
+}
+
+.track {
+  display: inline-flex;
+  border: 1px solid var(--role);
+  border-radius: 1rem;
+  overflow: hidden;
+  font-size: 0.85rem;
+}
+
+.track button {
+  padding: 0.15rem 0.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--role);
+}
+
+/* The open track fills with its colour, so it is clear what the panel changes. */
+.track button[aria-pressed='true']:not(.mute) {
+  background: var(--role);
+  color: #07080f;
+}
+
+.track .mute {
+  padding: 0.15rem 0.45rem;
+  border-left: 1px solid var(--role);
+  font-size: 0.75rem;
+}
+
+.track[data-muted='true'] {
+  border-style: dashed;
+  opacity: 0.45;
+}
+
+.track[data-muted='true'] button:not(.mute) {
+  text-decoration: line-through;
+}
+
+.sound-panel {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(20rem, calc(100% - 2rem));
+  max-height: calc(100% - 9rem);
+  overflow: auto;
+  border: 1px solid var(--role);
+  border-radius: 0.5rem;
+  background: rgb(10 12 22 / 85%);
+}
+
+.sound-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.6rem;
+  color: var(--role);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sound-panel-head button {
+  border: 0;
+  background: transparent;
+  color: #9aa3b8;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.follow {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #9aa3b8;
+}
+
+.scene-label {
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: #9aa3b8;
+  pointer-events: none;
+  user-select: none;
+}
+
+.section-label b {
+  color: #e8ebf3;
+}
+
+.symbol-name {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  border-radius: 0.3rem;
+  background: #07080fcc;
+  white-space: nowrap;
+  font:
+    600 0.95rem/1 ui-monospace,
+    monospace;
+  text-shadow: 0 0 8px color-mix(in srgb, currentColor 60%, transparent);
+  pointer-events: none;
+  user-select: none;
+  animation: rise 2.4s ease-out forwards;
+}
+
+/* A name lifts off its note, holds long enough to read, then fades. */
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.8);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(-0.5rem) scale(1.08);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-3rem) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .symbol-name {
+    animation: fade 2.4s linear forwards;
+  }
+
+  @keyframes fade {
+    70% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+.lane-label {
+  transform: translateX(-100%);
+  font-weight: 600;
+}
+
+.inspector {
+  flex: 0 1 auto;
+  min-height: 0;
+  width: min(26rem, calc(100% - 2rem));
+  margin: 0 1rem 1rem;
+  padding: 1rem;
+  overflow-y: auto;
+  border: 1px solid var(--edge);
+  border-radius: 0.5rem;
+  background: rgb(10 12 22 / 85%);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+}
+
+.inspector h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+}
+
+.inspector h3 {
+  margin: 1.5rem 0 0.4rem;
+  font-size: 1rem;
+}
+
+.inspector p {
+  margin: 0.4rem 0;
+}
+
+.inspector code {
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.back {
+  margin-bottom: 1rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 0.3rem 0.75rem;
+  margin: 0;
+}
+
+.facts div {
+  display: contents;
+}
+
+.facts dt {
+  font-weight: 600;
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.reasons {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
+}
+
+.reasons li + li {
+  margin-top: 0.35rem;
+}
+
+.picks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--edge);
+}
+
+.picks button {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.45rem 0.25rem;
+  border: 0;
+  border-bottom: 1px solid var(--edge);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.picks button:hover,
+.picks button:focus-visible {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.picks i {
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 2px;
+}
+
+.picks .right {
+  margin-left: auto;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.files {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.files li {
+  padding: 0.2rem 0;
+}
+
+.files li span {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.files .current {
+  color: var(--accent);
+}
+
+.note {
+  margin: 1rem 0;
+  padding: 0.25rem 0.9rem 0.6rem;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+.note h3 {
+  margin-top: 0.5rem;
 }

@@ -63,8 +63,12 @@ export const DEFAULT_OPTIONS: ComposeOptions = {
  * Clamped rather than wrapped, so the most tangled never lands back on C.
  */
 export function tonic(structure: Structure): number {
-  const fifths = Math.min(11, Math.round(structure.meanFanOut * 1.5))
-  return (fifths * 7) % 12
+  return (fifths(structure) * 7) % 12
+}
+
+/** Steps round the circle of fifths from C that `tonic` takes. */
+export function fifths(structure: Structure): number {
+  return Math.min(11, Math.round(structure.meanFanOut * 1.5))
 }
 
 /** A subsystem's harmony and phrases, which every section built from it shares. */
