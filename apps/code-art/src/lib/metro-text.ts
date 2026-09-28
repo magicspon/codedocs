@@ -23,7 +23,7 @@ export const METRO_LEGEND: Legend = [
   ],
   [
     'Buildings',
-    'Each file is a building. The more symbols a file declares, the taller it is. The bigger the file, the wider it is. The name of the building you are facing shows at the top right, with the names of its symbols under it.',
+    'Each file is a building. The more symbols a file declares, the taller it is. The bigger the file, the wider it is. The name of the building you are facing shows at the top right, and a poster on the wall facing you lists what the file declares.',
   ],
   [
     'Shapes',
@@ -47,7 +47,7 @@ export const METRO_LEGEND: Legend = [
   ],
   [
     'Named cars',
-    'On the roads round you, the heaviest calls drive as cars you can read: the file calling over the file called, and how many calls. Only the five nearest show their names. Blue cards name the sky lanes overhead the same way.',
+    'On the roads round you, the heaviest calls drive as cars you can read: the function, method or variable making the call, over the export it calls, each with its file, and how many times. Where a repository was exported without symbol names, the cards show files only. Only the five nearest show their names. Blue cards name the sky lanes overhead the same way.',
   ],
   [
     'Sky lanes',

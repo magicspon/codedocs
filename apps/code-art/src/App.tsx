@@ -15,7 +15,6 @@ import { ArtHud } from './ArtHud.tsx'
 import { METRO_LEGEND } from './lib/metro-text.ts'
 import { TERRAIN_LEGEND } from './lib/terrain-text.ts'
 import { MetroDash } from './MetroDash.tsx'
-import { MetroSymbols } from './MetroSymbols.tsx'
 import { Loader } from './Loader.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { toggleTracks } from './scenes/tracks.ts'
@@ -118,16 +117,6 @@ export function App(): JSX.Element {
           series={series}
           frame={frame}
           hovered={hovered}
-          detail={
-            scene === 'metro' &&
-            hovered !== null &&
-            series.merged.files[hovered] ? (
-              <MetroSymbols
-                repo={series.name}
-                file={series.merged.files[hovered]}
-              />
-            ) : null
-          }
           {...(scene === 'metro'
             ? {
                 legend: METRO_LEGEND,

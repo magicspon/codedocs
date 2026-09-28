@@ -6,6 +6,11 @@ import { metroLayout } from '../src/lib/metro-layout.ts'
 import { jamsOf, ribbonsOf } from '../src/lib/metro-ribbons.ts'
 import { RoadKind, type Road } from '../src/lib/metro-roads.ts'
 import { signName, signsOf } from '../src/lib/metro-signs.ts'
+import {
+  facedSymbols,
+  posterLines,
+  posterSpot,
+} from '../src/lib/metro-poster.ts'
 import { arc, fromDisc, type Vec3 } from '../src/lib/metro-sphere.ts'
 import { deal } from '../src/lib/metro-warp.ts'
 import { file } from './fixture.ts'
@@ -233,5 +238,51 @@ describe('jamsOf', () => {
   it('never queues on a ring road, nor at a street’s dead end', () => {
     expect(jamsOf(road(RoadKind.ring, 1, 1))).toEqual([0, 0])
     expect(jamsOf(road(RoadKind.street, 1, 1))[1]).toBe(0)
+  })
+})
+
+describe('posters', () => {
+  it('lists a file’s own symbols, top level first, with their kinds', () => {
+    const symbols = {
+      names: ['inner', 'Outer', 'main'],
+      kinds: [6, 1, 0],
+      parents: [1, -1, -1],
+    }
+    const lines = posterLines(file('a.ts'), symbols)
+    expect(lines.map((l) => l.text)).toEqual(['Outer', 'main', 'inner'])
+    expect(lines[0]).toMatchObject({ kind: 1, note: 'class' })
+  })
+
+  it('waits for names, and knows when there are none', () => {
+    const names = { 'a.ts': { names: ['x'], kinds: [0], parents: [-1] } }
+    expect(facedSymbols(undefined, 'a.ts')).toBeUndefined()
+    expect(facedSymbols(names, undefined)).toBeUndefined()
+    expect(facedSymbols(null, 'a.ts')).toBeNull()
+    expect(facedSymbols(names, 'a.ts')?.names).toEqual(['x'])
+  })
+
+  it('counts kinds instead when the names were not exported', () => {
+    const lines = posterLines(
+      file('a.ts', { kinds: [3, 1, 0, 0, 0, 0, 0, 0] }),
+      null,
+    )
+    expect(lines.map((l) => l.text)).toEqual(['3 functions', '1 class'])
+  })
+
+  it('pastes it on the wall facing the driver, standing on the pavement', () => {
+    const layout = metroLayout(town(120))
+    const frames = framesOf(layout.place)
+    const foot = new Vector3().fromArray(layout.place.foot, 5 * 3)
+    const up = foot.clone().normalize()
+    const out = new Vector3().fromArray(frames.x, 5 * 3)
+    const from = foot.clone().addScaledVector(out, 30)
+    const spot = posterSpot(layout, frames, 5, from.toArray(), 0.5)
+    const middle = new Vector3(...spot.middle)
+    // On the near side of the building, low down, and no taller than it.
+    expect(middle.clone().sub(foot).dot(out)).toBeGreaterThan(0)
+    expect(middle.clone().sub(foot).dot(up)).toBeLessThan(
+      layout.blocks.height[5]!,
+    )
+    expect(spot.height).toBeLessThanOrEqual(layout.blocks.height[5]!)
   })
 })

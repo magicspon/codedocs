@@ -24,8 +24,6 @@ interface ArtHudProps {
   readonly legend: Legend
   /** The info button's labels, to show and to hide the legend. */
   readonly labels: readonly [show: string, hide: string]
-  /** More about the file under the pointer, under its name. */
-  readonly detail?: ReactNode
   /** Anything else the scene puts on screen. */
   readonly children?: ReactNode
 }
@@ -89,7 +87,6 @@ export function ArtHud(props: ArtHudProps): JSX.Element {
             <InfoIcon />
           </IconToggle>
         </div>
-        {props.detail}
         <AnimatePresence>
           {info && <LegendPanel legend={props.legend} />}
         </AnimatePresence>

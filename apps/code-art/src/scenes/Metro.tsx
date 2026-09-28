@@ -1,15 +1,18 @@
 import { PerspectiveCamera } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useEffect, useMemo, type JSX } from 'react'
+import { useEffect, useMemo, useState, type JSX } from 'react'
 import { BufferAttribute, BufferGeometry, Color } from 'three'
+import { useNames } from '../hooks.ts'
 import { galaxyPalette } from '../lib/galaxy-palette.ts'
 import { framesOf } from '../lib/metro-frames.ts'
 import { metroLayout } from '../lib/metro-layout.ts'
+import { facedSymbols } from '../lib/metro-poster.ts'
 import { ribbonsOf } from '../lib/metro-ribbons.ts'
 import { groundColors } from '../lib/terrain-layout.ts'
 import { Buggy } from './Buggy.tsx'
 import { MetroAir } from './MetroAir.tsx'
 import { MetroBuildings } from './MetroBuildings.tsx'
+import { MetroPoster } from './MetroPoster.tsx'
 import { MetroRain } from './MetroRain.tsx'
 import { MetroSigns } from './MetroSigns.tsx'
 import { MetroSkyTags } from './MetroSkyTags.tsx'
@@ -74,6 +77,18 @@ export function Metro(props: SceneProps): JSX.Element {
     [materials, roads],
   )
   useFrame((state) => void (shared.uClock.value = state.clock.elapsedTime))
+  // The building faced, for the overlay and for the poster on its wall.
+  const [ahead, setAhead] = useState<number | null>(null)
+  const names = useNames(name)
+  const symbols = facedSymbols(
+    names,
+    ahead === null ? undefined : files[ahead]?.path,
+  )
+  const inkOf = useMemo(
+    () => (file: number) =>
+      `#${new Color(...looks.district(file)).getHexString()}`,
+    [looks],
+  )
   // An icosahedron's edge is about its radius; split so each is a ground cell.
   const detail = Math.min(96, Math.ceil(layout.radius / GROUND_CELL))
 
@@ -104,13 +119,24 @@ export function Metro(props: SceneProps): JSX.Element {
       />
       <MetroAir layout={layout} shared={shared} glow={looks.glow} />
       <MetroRain />
-      <MetroTagged layout={layout} files={files} />
-      <MetroSkyTags layout={layout} files={files} />
+      <MetroPoster
+        layout={layout}
+        frames={frames}
+        files={files}
+        ahead={ahead}
+        symbols={symbols}
+        inkOf={inkOf}
+      />
+      <MetroTagged layout={layout} files={files} repo={name} />
+      <MetroSkyTags layout={layout} files={files} repo={name} />
       <Buggy
         layout={layout}
         frames={frames}
         neon={looks.neon}
-        onAhead={onHover}
+        onAhead={(file) => {
+          setAhead(file)
+          onHover(file)
+        }}
       />
     </>
   )

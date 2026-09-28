@@ -749,62 +749,7 @@ kbd {
   }
 }
 
-/* The symbols in the building ahead, under its name. */
-.metro-symbols {
-  box-sizing: border-box;
-  width: min(300px, calc(100vw - 32px));
-  padding: 10px 12px;
-  color: var(--muted);
-  font:
-    var(--text-small) / 1.5 ui-monospace,
-    monospace;
-}
-
-.metro-symbols ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.metro-symbols li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-.metro-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* The kind, in words, pushed to the right. */
-.metro-what {
-  margin-left: auto;
-  padding-left: 8px;
-  color: var(--muted);
-}
-
-.metro-symbols p {
-  margin: 4px 0 0;
-}
-
-.metro-kind {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-/* The corner is for the road on a small screen. */
-@media (max-width: 640px) {
-  .metro-symbols {
-    display: none;
-  }
-}
-
-/* A named car's label: the file calling over the file called, and how often. */
+/* A named car's label: the symbol calling over the symbol called, with their files, and how often. */
 .metro-tag {
   display: flex;
   flex-direction: column;
@@ -827,6 +772,17 @@ kbd {
 .metro-tag.aloft {
   border-color: rgb(77 217 255 / 60%);
   color: #b5ecff;
+}
+
+.metro-tag b {
+  font-weight: 600;
+}
+
+/* The file a symbol lives in, after its name. */
+.metro-tag i {
+  margin-left: 6px;
+  font-style: normal;
+  opacity: 0.55;
 }
 
 .metro-tag em {

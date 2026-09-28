@@ -9,11 +9,14 @@ import {
   type RefObject,
 } from 'react'
 import { Vector3, type Group } from 'three'
-import type { FileDatum } from '../lib/atlas.ts'
+import type { FileDatum, SymbolNames } from '../lib/atlas.ts'
 import { dash } from '../lib/metro-dash.ts'
 import type { MetroLayout } from '../lib/metro-layout.ts'
 import type { RoadCall } from '../lib/metro-road-calls.ts'
-import { taggedRoads, tagName } from '../lib/metro-tags.ts'
+import { taggedRoads } from '../lib/metro-tags.ts'
+import { namedCall } from '../lib/call-names.ts'
+import { CallCard } from '../CallCard.tsx'
+import { useNames } from '../hooks.ts'
 
 /** Seconds between looking for the nearest roads again. */
 const LOOK_EVERY = 0.5
@@ -84,8 +87,20 @@ function Car(props: {
   cars: Set<Named>
   /** Which of three heights its label floats at, so neighbours' labels stack rather than overlap. */
   tier: number
+  /** The repository's symbol names, to name the calling and called symbols; absent without them. */
+  names: SymbolNames | null | undefined
 }): JSX.Element {
-  const { track, call, start, files, cars, tier } = props
+  const { track, call, start, files, cars, tier, names } = props
+  const label = useMemo(
+    () =>
+      namedCall(
+        names,
+        files[call.from]!.path,
+        files[call.to]!.path,
+        call.count,
+      ),
+    [names, files, call],
+  )
   const g = useRef<Group>(null)
   const tag = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -121,15 +136,13 @@ function Car(props: {
         zIndexRange={[10, 0]}
         style={{ pointerEvents: 'none' }}
       >
-        <div
-          ref={tag}
-          style={{ visibility: 'hidden' }}
-          className={call.toRoot ? 'metro-tag' : 'metro-tag away'}
-        >
-          <span>{tagName(files[call.from]!.path)}</span>
-          <span>
-            → {tagName(files[call.to]!.path)} <em>{call.count}</em>
-          </span>
+        <div ref={tag} style={{ visibility: 'hidden' }}>
+          <CallCard
+            from={files[call.from]!.path}
+            to={files[call.to]!.path}
+            names={label}
+            className={call.toRoot ? '' : 'away'}
+          />
         </div>
       </Html>
     </group>
@@ -153,16 +166,19 @@ function showNearest(cars: ReadonlySet<Named>): void {
 
 /**
  * The traffic on the roads round the buggy, named: each of the heaviest calls
- * a road carries drives along it as a car labelled with the file calling and
- * the file called, in the lane for its way, white towards the root and red
+ * a road carries drives along it as a car labelled with the symbol calling
+ * and the symbol called, and their files, in the lane for its way, white towards the root and red
  * away. Only the nearest few show their labels, so the road stays readable.
  * The rest of the traffic stays painted on the road.
  */
 export function MetroTagged(props: {
   layout: MetroLayout
   files: readonly FileDatum[]
+  /** The repository's name, to read its symbol names by. */
+  repo: string
 }): JSX.Element {
-  const { layout, files } = props
+  const { layout, files, repo } = props
+  const names = useNames(repo)
   const [roads, setRoads] = useState<number[]>([])
   const since = useRef(LOOK_EVERY)
   const cars = useMemo(() => new Set<Named>(), [])
@@ -195,6 +211,7 @@ export function MetroTagged(props: {
             files={files}
             cars={cars}
             tier={k % 3}
+            names={names}
           />
         ))
       })}

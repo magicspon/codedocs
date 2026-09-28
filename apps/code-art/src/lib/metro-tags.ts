@@ -34,11 +34,6 @@ export function taggedRoads(layout: MetroLayout, at: Vector3): number[] {
     .map(([r]) => r)
 }
 
-/** A file's name as a label shows it: no folders. */
-export function tagName(path: string): string {
-  return path.slice(path.lastIndexOf('/') + 1)
-}
-
 /** How many sky lanes get named, and how far off their highest point may be. */
 const LANES = 3
 const LANE_REACH = 160

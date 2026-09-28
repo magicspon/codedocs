@@ -3,21 +3,27 @@ import { useFrame } from '@react-three/fiber'
 import { useRef, useState, type JSX } from 'react'
 import type { FileDatum } from '../lib/atlas.ts'
 import type { MetroLayout } from '../lib/metro-layout.ts'
-import { taggedLanes, tagName } from '../lib/metro-tags.ts'
+import { taggedLanes } from '../lib/metro-tags.ts'
+import { namedCall } from '../lib/call-names.ts'
+import { CallCard } from '../CallCard.tsx'
+import { useNames } from '../hooks.ts'
 
 /** Seconds between looking for the nearest lanes again. */
 const LOOK_EVERY = 0.5
 
 /**
  * Names over the sky lanes nearest the driver, at the top of each arch: the
- * file calling over the file called, and how often. Only a few at a time,
+ * symbol calling over the symbol called, with their files, and how often. Only a few at a time,
  * and only those the planet is not hiding.
  */
 export function MetroSkyTags(props: {
   layout: MetroLayout
   files: readonly FileDatum[]
+  /** The repository's name, to read its symbol names by. */
+  repo: string
 }): JSX.Element {
-  const { layout, files } = props
+  const { layout, files, repo } = props
+  const names = useNames(repo)
   const [lanes, setLanes] = useState<number[]>([])
   const since = useRef(LOOK_EVERY)
   useFrame(({ camera }, dt) => {
@@ -40,12 +46,17 @@ export function MetroSkyTags(props: {
             zIndexRange={[10, 0]}
             style={{ pointerEvents: 'none' }}
           >
-            <div className="metro-tag aloft">
-              <span>{tagName(files[from]!.path)}</span>
-              <span>
-                → {tagName(files[to]!.path)} <em>{count}</em>
-              </span>
-            </div>
+            <CallCard
+              from={files[from]!.path}
+              to={files[to]!.path}
+              names={namedCall(
+                names,
+                files[from]!.path,
+                files[to]!.path,
+                count,
+              )}
+              className="aloft"
+            />
           </Html>
         )
       })}

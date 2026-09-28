@@ -21,6 +21,7 @@ import { atlas, file } from './fixture.ts'
 import { town } from './metro-fixture.ts'
 import { fromAtlas } from '../src/lib/series.ts'
 import { hidden } from '../src/lib/metro-tags.ts'
+import { callNames, namedCall } from '../src/lib/call-names.ts'
 
 describe('drive', () => {
   const radius = 100
@@ -246,5 +247,42 @@ describe('hidden', () => {
     expect(
       hidden(new Vector3(0, r + 1, 0), new Vector3(10, r + 20, 0), r),
     ).toBe(false)
+  })
+})
+
+describe('callNames', () => {
+  // `a.ts`'s `run` calls `b.ts`'s `lex` 5 times and its `parse` twice.
+  const names = {
+    'a.ts': {
+      names: ['run', 'helper'],
+      kinds: [0, 0],
+      parents: [-1, -1],
+      peers: ['b.ts'],
+      links: [0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 5, 1, 1, 0, 0, 0, 9],
+    },
+    'b.ts': { names: ['lex', 'parse'], kinds: [0, 0], parents: [-1, -1] },
+  }
+
+  it('names the heaviest call between two files, symbol to symbol', () => {
+    // The reference (via 1) is heavier, but only calls count.
+    expect(callNames(names, 'a.ts', 'b.ts')).toEqual({
+      caller: 'run',
+      callee: 'lex',
+      count: 5,
+    })
+  })
+
+  it('falls back to files alone, with all their calls, without names', () => {
+    expect(namedCall(null, 'a.ts', 'b.ts', 12)).toEqual({
+      caller: null,
+      callee: null,
+      count: 12,
+    })
+    expect(namedCall(names, 'a.ts', 'b.ts', 12).callee).toBe('lex')
+  })
+
+  it('knows nothing of files the names do not link', () => {
+    expect(callNames(names, 'b.ts', 'a.ts')).toBeNull()
+    expect(callNames(names, 'c.ts', 'b.ts')).toBeNull()
   })
 })
