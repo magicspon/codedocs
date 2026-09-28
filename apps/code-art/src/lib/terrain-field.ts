@@ -30,7 +30,7 @@ export interface Field {
 export type Rgb = readonly [number, number, number]
 
 /** The ground no file claims: a deep blue-grey, so its grid lines still show. */
-const GROUND: Rgb = [0.1, 0.12, 0.2]
+export const GROUND: Rgb = [0.1, 0.12, 0.2]
 
 interface Grid {
   readonly size: number
@@ -162,7 +162,7 @@ export function terrainField(options: FieldOptions): Field {
     // so a busy folder reads as a range without towering over the rest.
     const swell = soft * Math.tanh(raised[v]! / soft) * 0.3
     const rock = (Math.cbrt(cubed[v]!) + swell) * crag
-    // The slab's rim settles to a floor, so its sides read as one block.
+    // The rim settles to sea level, to meet the open ground flush.
     const edge = Math.max(Math.abs(x), Math.abs(z)) / extent
     const rim = 1 - smooth(0.88, 1, edge)
     heights[v] = (rock + sunk[v]! + roll) * rim - carve[v]!

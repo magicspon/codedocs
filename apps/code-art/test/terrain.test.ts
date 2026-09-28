@@ -141,13 +141,27 @@ describe('terrainLayout', () => {
   const layout = terrainLayout(fromAtlas(atlas()), 60)
 
   it('builds finite buffers of matching sizes', () => {
-    const { surface, skirt, water } = layout
+    const { surface, apron, water } = layout
     expect(surface.positions.length).toBe(60 * 60 * 3)
     expect(surface.index.length).toBe(59 * 59 * 6)
-    expect(skirt.positions.length).toBe(skirt.drop.length * 3)
+    expect(apron.positions.length).toBe(apron.rise.length * 3)
     expect(water.positions.length).toBe(water.along.length * 3)
-    for (const buffer of [surface.positions, skirt.positions, water.positions])
+    for (const buffer of [surface.positions, apron.positions, water.positions])
       expect(buffer.every(Number.isFinite)).toBe(true)
+  })
+
+  it('rings the terrain with flat ground, flush with its edge', () => {
+    const { apron, field } = layout
+    const at = (v: number): number[] => [
+      ...apron.positions.subarray(v * 3, v * 3 + 3),
+    ]
+    for (let v = 0; v < 4; v++) {
+      const [x, y, z] = at(v).map(Math.abs)
+      expect(x).toBeCloseTo(field.extent, 4)
+      expect(z).toBeCloseTo(field.extent, 4)
+      expect(y).toBe(0)
+      expect(Math.abs(at(v + 4)[0]!)).toBeGreaterThan(TERRAIN_RADIUS * 4)
+    }
   })
 
   it('finds each called file as a hub, the most called at full share', () => {

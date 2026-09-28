@@ -1,15 +1,12 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, type JSX } from 'react'
-import type { Vector3 } from 'three'
+import type { ShaderMaterial, Vector3 } from 'three'
 import { ownerAt } from '../lib/terrain-field.ts'
+import type { Apron } from '../lib/terrain-apron.ts'
 import { TERRAIN_RADIUS, terrainLayout } from '../lib/terrain-layout.ts'
 import type { SceneProps } from './scene.ts'
-import {
-  skirtMaterial,
-  surfaceMaterial,
-  waterMaterial,
-} from './terrain-material.ts'
+import { surfaceMaterial, waterMaterial } from './terrain-material.ts'
 
 /**
  * The codebase as a landscape, drawn in lines of light. The repository root
@@ -29,7 +26,6 @@ export function Terrain(props: SceneProps): JSX.Element {
   const materials = useMemo(
     () => ({
       surface: surfaceMaterial(TERRAIN_RADIUS, field.peak, cell),
-      skirt: skirtMaterial(TERRAIN_RADIUS, cell),
       water: waterMaterial(TERRAIN_RADIUS),
     }),
     [field.peak, cell],
@@ -50,7 +46,7 @@ export function Terrain(props: SceneProps): JSX.Element {
     u.uHubCount!.value = spots.length / 3
   }, [materials, layout])
   const clocked = useMemo(
-    () => [materials.surface, materials.skirt, materials.water],
+    () => [materials.surface, materials.water],
     [materials],
   )
 
@@ -75,7 +71,7 @@ export function Terrain(props: SceneProps): JSX.Element {
     hover(file === -1 ? null : file)
   }
 
-  const { surface, skirt, water, strata } = layout
+  const { surface, apron, water, strata } = layout
   return (
     <>
       <color attach="background" args={['#010105']} />
@@ -86,45 +82,18 @@ export function Terrain(props: SceneProps): JSX.Element {
         near={0.1}
         far={TERRAIN_RADIUS * 12}
       />
-      <mesh
+      <Ground
+        buffers={{
+          ...surface,
+          strataLow: strata.lower,
+          strataHigh: strata.upper,
+          rise: strata.rise,
+        }}
         material={materials.surface}
         onPointerMove={move}
         onPointerOut={() => hover(null)}
-      >
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[surface.positions, 3]}
-          />
-          <bufferAttribute
-            attach="attributes-color"
-            args={[surface.colors, 3]}
-          />
-          <bufferAttribute attach="attributes-wet" args={[surface.wet, 1]} />
-          <bufferAttribute
-            attach="attributes-strataLow"
-            args={[strata.lower, 4]}
-          />
-          <bufferAttribute
-            attach="attributes-strataHigh"
-            args={[strata.upper, 4]}
-          />
-          <bufferAttribute attach="attributes-rise" args={[strata.rise, 1]} />
-          <bufferAttribute attach="index" args={[surface.index, 1]} />
-        </bufferGeometry>
-      </mesh>
-      <mesh material={materials.skirt}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[skirt.positions, 3]}
-          />
-          <bufferAttribute attach="attributes-color" args={[skirt.colors, 3]} />
-          <bufferAttribute attach="attributes-drop" args={[skirt.drop, 1]} />
-          <bufferAttribute attach="attributes-along" args={[skirt.along, 1]} />
-          <bufferAttribute attach="index" args={[skirt.index, 1]} />
-        </bufferGeometry>
-      </mesh>
+      />
+      <Ground buffers={apron} material={materials.surface} />
       <lineSegments material={materials.water}>
         <bufferGeometry>
           <bufferAttribute
@@ -149,5 +118,41 @@ export function Terrain(props: SceneProps): JSX.Element {
         maxPolarAngle={Math.PI * 0.46}
       />
     </>
+  )
+}
+
+/**
+ * A stretch of ground in the surface shader: the terrain itself, or the open
+ * ground round it. Both carry the same attributes, so the grid runs across.
+ */
+function Ground(props: {
+  buffers: Apron
+  material: ShaderMaterial
+  onPointerMove?: (e: ThreeEvent<PointerEvent>) => void
+  onPointerOut?: () => void
+}): JSX.Element {
+  const { buffers: b, material, onPointerMove, onPointerOut } = props
+  return (
+    <mesh
+      material={material}
+      onPointerMove={onPointerMove}
+      onPointerOut={onPointerOut}
+    >
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[b.positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[b.colors, 3]} />
+        <bufferAttribute attach="attributes-wet" args={[b.wet, 1]} />
+        <bufferAttribute
+          attach="attributes-strataLow"
+          args={[b.strataLow, 4]}
+        />
+        <bufferAttribute
+          attach="attributes-strataHigh"
+          args={[b.strataHigh, 4]}
+        />
+        <bufferAttribute attach="attributes-rise" args={[b.rise, 1]} />
+        <bufferAttribute attach="index" args={[b.index, 1]} />
+      </bufferGeometry>
+    </mesh>
   )
 }

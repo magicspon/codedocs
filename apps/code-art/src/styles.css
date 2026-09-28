@@ -90,6 +90,7 @@ canvas {
   padding: 12px 14px;
   backdrop-filter: blur(8px);
   max-width: min(340px, calc(100vw - 32px));
+  overflow: auto;
 }
 
 .controls {
@@ -682,11 +683,6 @@ kbd {
   color: #111;
 }
 
-/* The touch controls only show where there is no keyboard. */
-.metro-touch {
-  display: none;
-}
-
 /* No room for the keys beside the speed on a narrow screen. */
 @media (max-width: 640px) {
   .metro-keys {
@@ -694,58 +690,16 @@ kbd {
   }
 }
 
-/* A touch screen: the dashboard moves up out of the thumbs' way, and the
-   steering pad and pedals take the bottom corners. */
+/* A touch screen: no keys to drive by, so the autopilot drives, and the
+   meter with its speed and switch goes, leaving a smaller minimap. */
 @media (hover: none) and (pointer: coarse) {
-  .metro-keys,
-  .metro-switch kbd {
+  .metro-meter {
     display: none;
-  }
-
-  .metro-dash {
-    top: 16px;
-    bottom: auto;
   }
 
   .metro-map {
     width: 112px;
     height: 112px;
-  }
-
-  .metro-touch {
-    position: fixed;
-    inset: auto 16px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    pointer-events: none;
-  }
-
-  .metro-steer {
-    width: 150px;
-    height: 110px;
-    pointer-events: auto;
-    touch-action: none;
-    border: 1px dashed var(--edge);
-    border-radius: 20px;
-    background: rgb(255 255 255 / 4%);
-  }
-
-  .metro-pedals {
-    display: flex;
-    gap: 12px;
-  }
-
-  .metro-pedals button {
-    width: 68px;
-    height: 68px;
-    pointer-events: auto;
-    touch-action: none;
-    border: 1px solid var(--edge);
-    border-radius: 50%;
-    background: var(--panel);
-    color: var(--ink);
-    font-size: 22px;
   }
 }
 

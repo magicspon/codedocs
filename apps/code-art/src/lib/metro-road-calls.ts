@@ -10,6 +10,9 @@ import type { RadialTree } from './terrain-tree.ts'
  * and out of its folder's own files.
  */
 
+/** How fast the road traffic drives, in world units (metres) a second: about 47 km/h. */
+export const TRAFFIC_PACE = 13
+
 /** One call on a road: which file calls which, how often, and which way it drives. */
 export interface RoadCall {
   readonly from: number

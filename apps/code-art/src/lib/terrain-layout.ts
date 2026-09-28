@@ -2,6 +2,7 @@ import { Color } from 'three'
 import type { FileDatum } from './atlas.ts'
 import { galaxyPalette } from './galaxy-palette.ts'
 import { mostCalled } from './most-called.ts'
+import { apronOf, type Apron } from './terrain-apron.ts'
 import { hash } from './rng.ts'
 import type { Series } from './series.ts'
 import {
@@ -26,11 +27,8 @@ export interface TerrainLayout {
   readonly surface: Mesh & { readonly wet: Float32Array }
   /** Bands of symbol kinds up each peak. */
   readonly strata: Strata
-  /** The slab's four sides, hanging from the surface's rim to the floor. */
-  readonly skirt: Mesh & {
-    readonly drop: Float32Array
-    readonly along: Float32Array
-  }
+  /** Flat open ground round the terrain, out past the fog. */
+  readonly apron: Apron
   /** River segments, draped on the ground, with distance along the flow and its weight. */
   readonly water: {
     readonly positions: Float32Array
@@ -59,8 +57,11 @@ export interface Mesh {
 export const TERRAIN_RADIUS = 50
 /** How many files ripples close in on; the shader loops over this many. */
 export const HUBS = 12
-/** The floor the slab's sides hang down to, below the lowest ground. */
-const FLOOR = -0.35
+/**
+ * How far the open ground reaches, in terrain radii. The fog is thick by four
+ * radii from the camera, and the camera stays within two of the centre.
+ */
+const APRON_REACH = 8
 
 /**
  * The ground's colour, by angle round the centre: the key hue and fan come
@@ -102,51 +103,6 @@ function surfaceOf(field: Field): TerrainLayout['surface'] {
       k += 6
     }
   return { positions, colors: field.colors, wet: field.wet, index }
-}
-
-/** The rim's vertices, once round the square, in order. */
-function rimOf(size: number): number[] {
-  const out: number[] = []
-  for (let i = 0; i < size - 1; i++) out.push(i)
-  for (let j = 0; j < size - 1; j++) out.push(j * size + size - 1)
-  for (let i = size - 1; i > 0; i--) out.push((size - 1) * size + i)
-  for (let j = size - 1; j > 0; j--) out.push(j * size)
-  out.push(0)
-  return out
-}
-
-function skirtOf(
-  field: Field,
-  surface: TerrainLayout['surface'],
-): TerrainLayout['skirt'] {
-  const rim = rimOf(field.size)
-  const floor = FLOOR * field.peak * 4
-  const positions = new Float32Array(rim.length * 6)
-  const colors = new Float32Array(rim.length * 6)
-  const drop = new Float32Array(rim.length * 2)
-  const along = new Float32Array(rim.length * 2)
-  const cell = (field.extent * 2) / (field.size - 1)
-  rim.forEach((v, n) => {
-    for (const [end, y] of [
-      [0, surface.positions[v * 3 + 1]!],
-      [1, floor],
-    ] as const) {
-      const at = n * 2 + end
-      positions.set(
-        [surface.positions[v * 3]!, y, surface.positions[v * 3 + 2]!],
-        at * 3,
-      )
-      colors.set(surface.colors.subarray(v * 3, v * 3 + 3), at * 3)
-      drop[at] = end
-      along[at] = n * cell
-    }
-  })
-  const index = new Uint32Array((rim.length - 1) * 6)
-  for (let n = 0; n < rim.length - 1; n++) {
-    const a = n * 2
-    index.set([a, a + 1, a + 2, a + 2, a + 1, a + 3], n * 6)
-  }
-  return { positions, colors, index, drop, along }
 }
 
 function waterOf(
@@ -214,7 +170,7 @@ export function terrainLayout(series: Series, size?: number): TerrainLayout {
     rivers,
     surface,
     strata: strataOf(field, files),
-    skirt: skirtOf(field, surface),
+    apron: apronOf(field, TERRAIN_RADIUS * APRON_REACH),
     water: waterOf(field, rivers),
     hubs: hubsOf(tree, files),
   }

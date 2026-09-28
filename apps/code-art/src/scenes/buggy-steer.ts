@@ -1,4 +1,4 @@
-import { useMemo, useRef, type RefObject } from 'react'
+import { useRef, type RefObject } from 'react'
 import type { Vector3 } from 'three'
 import type { Buggy } from '../lib/buggy.ts'
 import type { Stick } from '../lib/craft.ts'
@@ -6,25 +6,22 @@ import { autopilot, type Pilot } from '../lib/metro-autopilot.ts'
 import { dash, pressed } from '../lib/metro-dash.ts'
 import type { MetroLayout } from '../lib/metro-layout.ts'
 import { lookingAt } from '../lib/metro-sight.ts'
-import { rng } from '../lib/rng.ts'
 import { useCraftKeys } from './craft-keys.ts'
 
 /** How often the file ahead is looked up, in seconds. */
 const LOOK_EVERY = 0.15
 
 /**
- * Who has the wheel this frame: the keys, else the touch controls, else the
- * autopilot. Touching either takes the wheel back from the autopilot.
+ * Who has the wheel this frame: the keys, else the autopilot. Pressing a
+ * key takes the wheel back from the autopilot.
  */
 export function useSteering(
   layout: MetroLayout,
   pilot: RefObject<Pilot | null>,
 ): (buggy: Buggy, dt: number) => Stick {
   const keys = useCraftKeys(true)
-  // Seeded by the city, so a tour of it takes the same turnings each time.
-  const random = useMemo(() => rng(layout.blocks.count), [layout])
   return (buggy, dt) => {
-    const hand = pressed(keys.current) ? keys.current : dash.touch
+    const hand = keys.current
     if (pressed(hand)) dash.autopilot = false
     if (!dash.autopilot) return hand
     const out = autopilot(
@@ -32,7 +29,6 @@ export function useSteering(
       layout.roads,
       buggy,
       pilot.current,
-      random,
       dt,
     )
     pilot.current = out.pilot

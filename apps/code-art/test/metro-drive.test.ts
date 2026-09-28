@@ -13,7 +13,6 @@ import { metroLayout, type MetroLayout } from '../src/lib/metro-layout.ts'
 import { roadIndexOf } from '../src/lib/metro-road-index.ts'
 import { RoadKind, type Road } from '../src/lib/metro-roads.ts'
 import { autopilot, type Pilot } from '../src/lib/metro-autopilot.ts'
-import { rng } from '../src/lib/rng.ts'
 import { lookingAt } from '../src/lib/metro-sight.ts'
 import { hopTo } from '../src/lib/metro-hop.ts'
 import type { Vec3 } from '../src/lib/metro-sphere.ts'
@@ -105,7 +104,8 @@ describe('lookingAt', () => {
 })
 
 describe('autopilot', () => {
-  // A road running north from the pole, and one crossing its far end east to west.
+  // A road running north from the pole, a ring road crossing its far end
+  // east to west, and a street crossing the ring further east.
   const radius = 200
   const line = (from: Vec3, to: Vec3, n: number): Float32Array => {
     const out = new Float32Array((n + 1) * 3)
@@ -120,36 +120,63 @@ describe('autopilot', () => {
     }
     return out
   }
-  const road = (points: Float32Array): Road => ({
-    kind: RoadKind.avenue,
+  const road = (points: Float32Array, kind: RoadKind): Road => ({
+    kind,
     width: 6,
     points,
     up: 0,
     down: 0,
     angle: 0,
+    node: -1,
   })
   const roads = [
-    road(line([0, 0, 0], [0, 0, -60], 40)),
-    road(line([-40, 0, -60], [40, 0, -60], 54)),
+    road(line([0, 0, 0], [0, 0, -60], 40), RoadKind.avenue),
+    road(line([-40, 0, -60], [40, 0, -60], 54), RoadKind.ring),
+    road(line([20, 0, -40], [20, 0, -80], 27), RoadKind.street),
   ]
   const index = roadIndexOf(roads, radius, 16)
 
-  it('follows the road and turns onto the next at its end', () => {
+  it('makes for the ring road and never leaves it', () => {
     const b = park(new Vector3(0, radius, -2), new Vector3(0, 0, -1), radius)
     let pilot: Pilot | null = null
-    const random = rng(3)
-    const onRoad = new Set<number>()
+    const after = new Set<number>()
+    let ringed = false
     let across = 0
-    for (let i = 0; i < 60 * 8; i++) {
-      const out = autopilot(index, roads, b, pilot, random, 1 / 60)
+    for (let i = 0; i < 60 * 12; i++) {
+      const out = autopilot(index, roads, b, pilot, 1 / 60)
       pilot = out.pilot
-      if (pilot) onRoad.add(index.road[pilot.at]!)
+      if (pilot) {
+        const r = index.road[pilot.at]!
+        ringed ||= r === 1
+        if (ringed) after.add(r)
+      }
       drive(b, out.stick, 1 / 60, radius, () => {})
       across = Math.max(across, Math.abs(b.position.x))
     }
-    // It reached the crossing road and drove off along it, one way or the other.
-    expect(onRoad.has(1)).toBe(true)
+    expect([...after]).toEqual([1])
     expect(across).toBeGreaterThan(15)
+  })
+
+  it('finds its way from the start of a city to a ring road, and stays on it', () => {
+    const layout = metroLayout(town(240))
+    const { roadIndex, roads: all } = layout
+    const b = park(
+      new Vector3(...layout.start.at),
+      new Vector3(...layout.start.facing),
+      layout.radius,
+    )
+    let pilot: Pilot | null = null
+    const after = new Set<RoadKind>()
+    for (let i = 0; i < 60 * 60; i++) {
+      const out = autopilot(roadIndex, all, b, pilot, 1 / 60)
+      pilot = out.pilot
+      if (pilot) {
+        const kind = all[roadIndex.road[pilot.at]!]!.kind
+        if (kind === RoadKind.ring || after.size) after.add(kind)
+      }
+      drive(b, out.stick, 1 / 60, layout.radius, () => {})
+    }
+    expect([...after]).toEqual([RoadKind.ring])
   })
 
   it('backs off when wedged against a wall', () => {
@@ -164,7 +191,7 @@ describe('autopilot', () => {
     let pilot: Pilot | null = null
     let reversed = false
     for (let i = 0; i < 60 * 4; i++) {
-      const out = autopilot(index, roads, b, pilot, () => 0.99, 1 / 60)
+      const out = autopilot(index, roads, b, pilot, 1 / 60)
       pilot = out.pilot
       if (out.stick.thrust < 0 && b.velocity.dot(b.forward) < -0.5)
         reversed = true
@@ -177,7 +204,7 @@ describe('autopilot', () => {
     const b = park(new Vector3(0, radius, -2), new Vector3(0, 0, -1), radius)
     let pilot: Pilot | null = null
     for (let i = 0; i < 60 * 2; i++) {
-      const out = autopilot(index, roads, b, pilot, () => 0.99, 1 / 60)
+      const out = autopilot(index, roads, b, pilot, 1 / 60)
       pilot = out.pilot
       drive(b, out.stick, 1 / 60, radius, () => {})
     }
