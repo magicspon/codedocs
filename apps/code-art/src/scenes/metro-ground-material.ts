@@ -1,4 +1,5 @@
 import { DoubleSide, ShaderMaterial } from 'three'
+import { TRAFFIC_PACE } from '../lib/metro-road-calls.ts'
 import { METRO_GLSL, type MetroUniforms } from './metro-glsl.ts'
 
 /**
@@ -105,7 +106,7 @@ export function roadMaterial(shared: MetroUniforms): ShaderMaterial {
         float near = exp(-toEnd / QUEUE);
         float squeeze = 1.0 + jam * near;
         float warped = toEnd + jam * QUEUE * (1.0 - near);
-        float at = (warped + uClock * 13.0) / spacing;
+        float at = (warped + uClock * ${TRAFFIC_PACE.toFixed(1)}) / spacing;
         float slot = floor(at);
         float here = step(hash21(vec2(slot, seed * 53.0)), 0.35 + pace * 0.6);
         // Along the lane from the car's middle, in world units; positive is behind it.

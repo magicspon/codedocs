@@ -1,4 +1,4 @@
-import { AdditiveBlending, DoubleSide, ShaderMaterial, Vector3 } from 'three'
+import { AdditiveBlending, ShaderMaterial, Vector3 } from 'three'
 import { KIND_COLORS } from '../lib/palette.ts'
 import { HUBS } from '../lib/terrain-layout.ts'
 
@@ -171,46 +171,6 @@ export function surfaceMaterial(
           + amber * ripple * (lines * 1.8 + 0.07)
           // A thin bright seam where one kind's band meets the next.
           + band.rgb * (seam * 1.1 + 0.035) * layered;
-        gl_FragColor = vec4(color * fogOf(vDepth), 1.0);
-      }
-    `,
-  })
-}
-
-/** The slab's sides: vertical lines in the rim's colour, fading to the floor. */
-export function skirtMaterial(radius: number, cell: number): ShaderMaterial {
-  return new ShaderMaterial({
-    vertexColors: true,
-    side: DoubleSide,
-    uniforms: { ...shared(radius), uCell: { value: cell } },
-    vertexShader: /* glsl */ `
-      attribute float drop;
-      attribute float along;
-      varying vec3 vColor;
-      varying float vDrop;
-      varying float vAlong;
-      varying float vDepth;
-      void main() {
-        vColor = color;
-        vDrop = drop;
-        vAlong = along;
-        vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        vDepth = -mv.z;
-        gl_Position = projectionMatrix * mv;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform float uCell;
-      varying vec3 vColor;
-      varying float vDrop;
-      varying float vAlong;
-      varying float vDepth;
-      ${FOG_GLSL}
-      ${LINE_GLSL}
-      void main() {
-        float line = lineAt(vAlong / uCell, 1.0);
-        float fade = pow(1.0 - vDrop, 2.2);
-        vec3 color = vColor * (0.02 + line * 0.55 * fade);
         gl_FragColor = vec4(color * fogOf(vDepth), 1.0);
       }
     `,

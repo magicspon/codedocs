@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1790516894.8208663,
-    "ast_hash": "7b7e39ae00d59aac3138fb53d3203d91",
+    "mtime": 1790555075.7861705,
+    "ast_hash": "37100f22d50432db68b7a4a692d93ac7",
     "semantic_hash": ""
   },
   ".changeset/README.md": {
@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790554416.384251,
-    "ast_hash": "bbe7753a300ab7b5dfc850185b348439",
+    "mtime": 1790605631.5516224,
+    "ast_hash": "eab9e97bd1b47aebe5a7b630e823ef66",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -3155,13 +3155,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-field.ts": {
-    "mtime": 1790547350.6937208,
-    "ast_hash": "feb37bf5d72be4691013e8cdddfbea5a",
+    "mtime": 1790606503.1164978,
+    "ast_hash": "1a398ffa3d2594d16b9dce97d3bf6016",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-layout.ts": {
-    "mtime": 1790549876.8710139,
-    "ast_hash": "42011234e4edfd2951d5f6fbc2618f05",
+    "mtime": 1790606525.2243521,
+    "ast_hash": "b0f1d3f3354385d757c6d016387fe491",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-noise.ts": {
@@ -3185,18 +3185,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Terrain.tsx": {
-    "mtime": 1790548219.2319868,
-    "ast_hash": "a17acc5f58dcc1db4e648e373d6c0ac2",
+    "mtime": 1790606525.1856365,
+    "ast_hash": "54e13b0b6592c6eb1674be40b449ffb9",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/terrain-material.ts": {
-    "mtime": 1790548095.8177674,
-    "ast_hash": "d455ec36ae22808e2a3331cd2a88282b",
+    "mtime": 1790606516.2490985,
+    "ast_hash": "4d75962c1490c8328eb78722bd0f85ac",
     "semantic_hash": ""
   },
   "apps/code-art/test/terrain.test.ts": {
-    "mtime": 1790548219.2321332,
-    "ast_hash": "099d6f3fb6500408347498d6544dada2",
+    "mtime": 1790606539.008036,
+    "ast_hash": "59e9620a2dbcc310e2ad3a2ccec98061",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-strata.ts": {
@@ -3210,8 +3210,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/MetroDash.tsx": {
-    "mtime": 1790552739.232335,
-    "ast_hash": "bfef176fd9e19d9a8e8e7303dfcd08b2",
+    "mtime": 1790605652.541221,
+    "ast_hash": "47481718c1ec148bb7af750a05c1c44b",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/buggy.ts": {
@@ -3230,8 +3230,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-dash.ts": {
-    "mtime": 1790551406.4621222,
-    "ast_hash": "f8846ebdd935eb9f2ec9198c7e21d065",
+    "mtime": 1790605625.1280546,
+    "ast_hash": "722b0ef94c5a6e66b44528416bc2894f",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-frames.ts": {
@@ -3285,8 +3285,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-text.ts": {
-    "mtime": 1790554398.4407058,
-    "ast_hash": "8605c2013b14be512a74c565471349ef",
+    "mtime": 1790605625.1282842,
+    "ast_hash": "0bd39eaa5fb5d825395446542bc57c94",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-traffic.ts": {
@@ -3360,8 +3360,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-ground-material.ts": {
-    "mtime": 1790553582.8203366,
-    "ast_hash": "34c43e5cfd44a581dcb2297ff411ce0e",
+    "mtime": 1790605766.9774399,
+    "ast_hash": "9694a0fdd2556c5ddbdd70ce7e6b4e7e",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-shapes.ts": {
@@ -3384,14 +3384,9 @@
     "ast_hash": "c058c7dc10e6dd4095c890d05790e9c7",
     "semantic_hash": ""
   },
-  "apps/code-art/src/MetroTouch.tsx": {
-    "mtime": 1790551498.4290178,
-    "ast_hash": "373f5b62b8c3b971d37e69824647a32d",
-    "semantic_hash": ""
-  },
   "apps/code-art/src/lib/metro-autopilot.ts": {
-    "mtime": 1790552000.86353,
-    "ast_hash": "46c5dff455ebd41279d7335d53332f2b",
+    "mtime": 1790605915.2671185,
+    "ast_hash": "4b39f0cdc8b84c3c87dce3a79fe08af4",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-hop.ts": {
@@ -3405,8 +3400,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-road-calls.ts": {
-    "mtime": 1790553395.6943238,
-    "ast_hash": "9dfe9aabc812cdcd1886da3ad901425c",
+    "mtime": 1790605766.976642,
+    "ast_hash": "324ab9c4aee318151170c5ba8940fe58",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-road-index.ts": {
@@ -3429,11 +3424,6 @@
     "ast_hash": "4b970086bf1968bae0affee08c671a57",
     "semantic_hash": ""
   },
-  "apps/code-art/src/metro-sound.ts": {
-    "mtime": 1790551498.8441694,
-    "ast_hash": "69cf1e5623e63e625c13412ac6296ceb",
-    "semantic_hash": ""
-  },
   "apps/code-art/src/scenes/MetroSigns.tsx": {
     "mtime": 1790552579.712749,
     "ast_hash": "6d40c97ef6b07aeedad04f976691c6f2",
@@ -3445,8 +3435,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroTagged.tsx": {
-    "mtime": 1790554770.233054,
-    "ast_hash": "cca2f294cda2ede7643b2edc0d35f872",
+    "mtime": 1790605766.9772213,
+    "ast_hash": "fc164ddbad12d0d799f1ac99702d433f",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/buggy-keys.ts": {
@@ -3455,8 +3445,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/buggy-steer.ts": {
-    "mtime": 1790553739.3462732,
-    "ast_hash": "4f5659078892d23a15a94b57542c335d",
+    "mtime": 1790605348.815336,
+    "ast_hash": "6aa14693f6b26cceb7bb699141f0172b",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-sign-material.ts": {
@@ -3465,8 +3455,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/test/metro-drive.test.ts": {
-    "mtime": 1790554787.1307983,
-    "ast_hash": "0537acbdfca2589b0d2a9eafe148c974",
+    "mtime": 1790605915.2673028,
+    "ast_hash": "ee9c73ce1dbcfb9dbc1b9478632c0288",
     "semantic_hash": ""
   },
   "apps/code-art/test/metro-fixture.ts": {
@@ -3490,8 +3480,18 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroPoster.tsx": {
-    "mtime": 1790554846.0222716,
-    "ast_hash": "868a1fbcbe3dc761022ee4fd904704f6",
+    "mtime": 1790554953.631212,
+    "ast_hash": "69259b169912425fb69603fd48edd574",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-highway.ts": {
+    "mtime": 1790605348.8153512,
+    "ast_hash": "779a194662c19f70d1ed4049bb1c2513",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-apron.ts": {
+    "mtime": 1790606525.1963527,
+    "ast_hash": "9b81f4073a0f377b9806afe45e695d29",
     "semantic_hash": ""
   }
 }

@@ -193,23 +193,22 @@ Press the skyline button at the bottom right (or add `?scene=metro` to the URL)
 to drive round the same data as a small neon city on a planet. You start in a
 buggy near the north pole, on the busiest avenue out of the root.
 
-| Key   | Does                                             |
-| ----- | ------------------------------------------------ |
-| W / S | drive; brake, then reverse                       |
-| A / D | steer                                            |
-| Shift | go faster, and let the back slide round corners  |
-| V     | swap the driver's seat for a view from behind    |
-| R     | go back to the start                             |
-| N     | go to the next landmark (a most-called file)     |
-| P     | autopilot: tour the city by road until you steer |
-| M     | engine and rain sound on or off                  |
-| Drag  | look round; let go to look ahead again           |
+| Key   | Does                                            |
+| ----- | ----------------------------------------------- |
+| W / S | drive; brake, then reverse                      |
+| A / D | steer                                           |
+| Shift | go faster, and let the back slide round corners |
+| V     | swap the driver's seat for a view from behind   |
+| R     | go back to the start                            |
+| N     | go to the next landmark (a most-called file)    |
+| P     | autopilot: drive to a ring road and stay on it  |
+| Drag  | look round; let go to look ahead again          |
 
 The planet is sized to the repository, so the horizon is near and most of the
 city is round the curve. The name of the building ahead shows at the top
 right, and a poster on the wall facing you lists what the file declares. A
-heading-up minimap sits at the bottom left. A touch screen gets a steering
-pad and pedals. The info button explains each shape.
+heading-up minimap sits at the bottom left. On a touch screen the autopilot
+drives. The info button explains each shape.
 
 | Shape     | Reading                                                                                                                         |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |

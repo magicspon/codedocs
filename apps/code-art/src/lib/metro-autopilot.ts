@@ -1,15 +1,16 @@
 import { Vector3 } from 'three'
 import type { Buggy } from './buggy.ts'
 import type { Stick } from './craft.ts'
+import { highwayOf, type Highway } from './metro-highway.ts'
 import type { RoadIndex } from './metro-road-index.ts'
 import type { Road } from './metro-roads.ts'
 
 /**
- * Drives the buggy along the roads by itself: a tour of the city. It picks
- * the road it is on, keeps to the right-hand lane, and steers for a point a
- * little way ahead, slowing into bends. At a crossing it sometimes turns off,
- * and at a road's end it takes whichever road carries on best, or turns
- * round. It only ever works the same stick the keys do.
+ * Drives the buggy along the roads by itself. It makes for the nearest ring
+ * road, the pink highway, turning off only where a road leads nearer to
+ * one, and once on the ring it never leaves: round and round the planet. It
+ * keeps to the right-hand lane and steers for a point a little way ahead,
+ * slowing into bends. It only ever works the same stick the keys do.
  */
 
 /** Where the autopilot is: which point of which road it follows, and which way. */
@@ -17,8 +18,6 @@ export interface Pilot {
   /** Index into the road index's points. */
   at: number
   dir: 1 | -1
-  /** Points to pass before it may turn off again, so it does not dither at a junction. */
-  settle: number
   /** Seconds spent pushing against something without moving. */
   stuck: number
   /** Seconds left backing away from it. */
@@ -33,12 +32,10 @@ const BACK_OFF = 1.2
 const LOST = 14
 /** Points ahead to steer for, about twelve world units. */
 const LOOK = 8
-/** The cruising speed on a straight, in world units a second. */
+/** The cruising speed on a straight, in world units a second: about 72 km/h. */
 const CRUISE = 20
-/** How often it turns off at a crossing it passes. */
-const TURN_OFF = 0.3
-/** How close another road must pass to count as a crossing. */
-const CROSSING = 3
+/** How much nearer a ring road counts when finding a road again. */
+const RING_PULL = 6
 
 const at = new Vector3()
 const next = new Vector3()
@@ -46,6 +43,8 @@ const tangent = new Vector3()
 const up = new Vector3()
 const side = new Vector3()
 const aim = new Vector3()
+const head = new Vector3()
+const tail = new Vector3()
 
 /** Sets `out` to point `k` of the index. */
 function point(index: RoadIndex, k: number, out: Vector3): Vector3 {
@@ -58,6 +57,25 @@ function ends(index: RoadIndex, k: number): [number, number] {
   return [index.first[r]!, index.first[r]! + index.length[r]! - 1]
 }
 
+/** Whether the road through point `k` closes on itself, as a ring road does. */
+function loops(index: RoadIndex, k: number): boolean {
+  const [lo, hi] = ends(index, k)
+  return point(index, lo, head).distanceTo(point(index, hi, tail)) < 1
+}
+
+/**
+ * The point `n` steps on from `k` heading `dir`: round the join on a loop
+ * (whose last point repeats its first), else `-1` off the road's end.
+ */
+function step(index: RoadIndex, k: number, dir: number, n: number): number {
+  const [lo, hi] = ends(index, k)
+  const to = k + dir * n
+  if (to >= lo && to <= hi) return to
+  if (!loops(index, k)) return -1
+  const span = hi - lo
+  return lo + ((((to - lo) % span) + span) % span)
+}
+
 /** Sets `out` to the unit way the road runs at point `k`, heading `dir`. */
 function runAt(
   index: RoadIndex,
@@ -66,124 +84,121 @@ function runAt(
   out: Vector3,
 ): Vector3 {
   const [lo, hi] = ends(index, k)
-  point(index, Math.min(hi, k + 1), out)
-  point(index, Math.max(lo, k - 1), next)
+  const ahead = step(index, k, 1, 1)
+  const behind = step(index, k, -1, 1)
+  point(index, ahead === -1 ? hi : ahead, out)
+  point(index, behind === -1 ? lo : behind, next)
   return out.sub(next).normalize().multiplyScalar(dir)
 }
 
-/**
- * The best road point within `reach` of `from` running along `heading`,
- * skipping road `not`; `null` for none. With `random`, any near one will do,
- * taken the way that best follows `heading`, so the tour wanders.
- */
-function pick(
+/** Which way to take road point `k` on: towards its turning, or on a ring, the way that follows `heading`. */
+function wayOn(
   index: RoadIndex,
-  from: Vector3,
+  highway: Highway,
+  k: number,
   heading: Vector3,
-  reach: number,
-  not: number,
-  random: (() => number) | null,
-): Pilot | null {
-  let best: Pilot | null = null
-  let score = Infinity
-  index.hash.near(from.x, from.y, from.z, (k) => {
-    if (index.road[k] === not) return
-    const d = point(index, k, at).distanceTo(from)
-    if (d > reach) return
-    const align = runAt(index, k, 1, tangent).dot(heading)
-    const s = random ? random() : d - 6 * Math.abs(align)
-    if (s >= score) return
-    score = s
-    // A road met square could be taken either way; a coin decides.
-    const way = random && Math.abs(align) < 0.2 ? random() - 0.5 : align
-    best = { at: k, dir: way >= 0 ? 1 : -1, settle: 20, stuck: 0, backing: 0 }
-  })
-  return best
+): 1 | -1 {
+  const leave = highway.leave[index.road[k]!]!
+  if (leave !== -1 && leave !== k) return leave > k ? 1 : -1
+  return runAt(index, k, 1, tangent).dot(heading) >= 0 ? 1 : -1
 }
 
-/** Moves the pilot to the road point nearest the buggy, on along its road. */
-function advance(index: RoadIndex, pilot: Pilot, from: Vector3): boolean {
-  const [lo, hi] = ends(index, pilot.at)
-  let moved = false
-  for (let n = 0; n < 50; n++) {
-    const k = pilot.at + pilot.dir
-    if (k < lo || k > hi) break
+/** The nearest road point within `reach` of `from`, a ring road's counting nearer; `null` for none. */
+function pick(
+  index: RoadIndex,
+  highway: Highway,
+  from: Vector3,
+  heading: Vector3,
+): Pilot | null {
+  let best = -1
+  let score = Infinity
+  index.hash.near(from.x, from.y, from.z, (k) => {
+    const d = point(index, k, at).distanceTo(from)
+    if (d > LOST) return
+    const align = Math.abs(runAt(index, k, 1, tangent).dot(heading))
+    const ring = highway.hops[index.road[k]!] === 0 ? RING_PULL : 0
+    const s = d - 6 * align - ring
+    if (s >= score) return
+    score = s
+    best = k
+  })
+  if (best === -1) return null
+  return {
+    at: best,
+    dir: wayOn(index, highway, best, heading),
+    stuck: 0,
+    backing: 0,
+  }
+}
+
+/**
+ * Moves the pilot to the road point nearest the buggy, on along its road,
+ * but no further than `stop`, the turning, so it cannot overshoot it.
+ */
+function advance(
+  index: RoadIndex,
+  pilot: Pilot,
+  from: Vector3,
+  stop: number,
+): void {
+  for (let n = 0; n < 50 && pilot.at !== stop; n++) {
+    const k = step(index, pilot.at, pilot.dir, 1)
+    if (k === -1) break
     if (
       point(index, k, next).distanceTo(from) >
       point(index, pilot.at, at).distanceTo(from)
     )
       break
     pilot.at = k
-    pilot.settle = Math.max(0, pilot.settle - 1)
-    moved = true
   }
-  return moved
 }
 
-/** At a crossing, now and then, turns off down the other road. */
-function turnOff(index: RoadIndex, pilot: Pilot, random: () => number): Pilot {
-  if (pilot.settle > 0 || random() > TURN_OFF) return pilot
-  point(index, pilot.at, at)
-  runAt(index, pilot.at, pilot.dir, aim)
-  const other = pick(
-    index,
-    at.clone(),
-    aim.clone(),
-    CROSSING,
-    index.road[pilot.at]!,
-    random,
-  )
-  return other ?? pilot
-}
-
-/** Near a road's end, the road that carries on best from the end, or back the way it came. */
-function carryOn(index: RoadIndex, pilot: Pilot, random: () => number): Pilot {
-  const [lo, hi] = ends(index, pilot.at)
-  const end = pilot.dir === 1 ? hi : lo
-  point(index, end, at)
-  runAt(index, end, pilot.dir, aim)
-  const other = pick(
-    index,
-    at.clone(),
-    aim.clone(),
-    10,
-    index.road[end]!,
-    random,
-  )
-  return other ?? { ...pilot, dir: pilot.dir === 1 ? -1 : 1, settle: 20 }
+/**
+ * Keeps the pilot heading for the ring: at its road's turning it crosses to
+ * the next road; at a dead end with no way to the ring, it turns round.
+ */
+function route(index: RoadIndex, highway: Highway, pilot: Pilot): Pilot {
+  const r = index.road[pilot.at]!
+  const leave = highway.leave[r]!
+  if (leave !== -1 && Math.abs(leave - pilot.at) <= 1) {
+    runAt(index, pilot.at, pilot.dir, aim)
+    const land = highway.land[r]!
+    return { ...pilot, at: land, dir: wayOn(index, highway, land, aim) }
+  }
+  if (leave !== -1) return { ...pilot, dir: leave > pilot.at ? 1 : -1 }
+  if (step(index, pilot.at, pilot.dir, LOOK) === -1)
+    return { ...pilot, dir: pilot.dir === 1 ? -1 : 1 }
+  return pilot
 }
 
 /**
  * The stick for `dt` seconds from now, and the pilot to use next frame
- * (`null` while no road is near). `random` decides the turnings, so a seeded
- * one makes the tour repeatable. Wedged against something, it backs off for
- * a moment, steering the other way, then carries on.
+ * (`null` while no road is near). Wedged against something, it backs off
+ * for a moment, steering the other way, then carries on.
  */
 export function autopilot(
   index: RoadIndex,
   roads: readonly Road[],
   buggy: Buggy,
   pilot: Pilot | null,
-  random: () => number,
   dt: number,
 ): { stick: Stick; pilot: Pilot | null } {
   const { position, forward, velocity } = buggy
+  const highway = highwayOf(index, roads)
   let p = pilot
   if (!p || point(index, p.at, at).distanceTo(position) > LOST)
-    p = pick(index, position, forward, LOST, -1, null)
+    p = pick(index, highway, position, forward)
   if (!p)
     return {
       stick: { thrust: 0, turn: 0, climb: 0, boost: false },
       pilot: null,
     }
-  if (advance(index, p, position)) p = turnOff(index, p, random)
-  const [lo, hi] = ends(index, p.at)
-  if (p.at + p.dir * LOOK > hi || p.at + p.dir * LOOK < lo)
-    p = carryOn(index, p, random)
+  advance(index, p, position, highway.leave[index.road[p.at]!]!)
+  p = route(index, highway, p)
 
   // The point to steer for: a way down the road, over in the right-hand lane.
-  const [first, last] = ends(index, p.at)
-  const k = Math.min(last, Math.max(first, p.at + p.dir * LOOK))
+  const ahead = step(index, p.at, p.dir, LOOK)
+  const k = ahead === -1 ? ends(index, p.at)[p.dir === 1 ? 1 : 0] : ahead
   up.copy(position).normalize()
   runAt(index, k, p.dir, tangent)
   side.crossVectors(tangent, up)

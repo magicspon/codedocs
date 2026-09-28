@@ -7,11 +7,11 @@ import type { Legend } from './legend.ts'
 export const METRO_LEGEND: Legend = [
   [
     'Driving',
-    'W to drive, S to brake and reverse, A and D to steer. Hold Shift to go faster and slide round corners. V swaps between the driver’s seat and a view from behind. R takes you back to the start. Drag to look around. On a touch screen, slide on the left pad to steer and use the pedals on the right.',
+    'W to drive, S to brake and reverse, A and D to steer. Hold Shift to go faster and slide round corners. V swaps between the driver’s seat and a view from behind. R takes you back to the start. Drag to look around. On a touch screen the autopilot drives, and you drag to look around.',
   ],
   [
     'Getting about',
-    'P turns the autopilot on: it tours the city by road, picking turnings as it goes, until you touch the controls. N takes you to the next landmark, one of the files the rest of the code calls most. M turns the engine and the rain sound on or off.',
+    'P turns the autopilot on: it drives by road to the nearest pink ring road, then stays on it round the planet, until you press a key. N takes you to the next landmark, one of the files the rest of the code calls most.',
   ],
   [
     'Minimap',

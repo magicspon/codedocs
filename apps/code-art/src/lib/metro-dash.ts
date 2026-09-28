@@ -1,12 +1,12 @@
 import { Vector3 } from 'three'
-import { IDLE, type Stick } from './craft.ts'
+import type { Stick } from './craft.ts'
 import type { MetroLayout } from './metro-layout.ts'
 
 /**
  * What passes between the metro scene and its overlay, written and read on
  * each side's own clock. Kept out of React state: a speed changing sixty
  * times a second would re-render the whole page as often. The scene writes
- * the buggy's state; the overlay writes the touch controls and the switches.
+ * the buggy's state; the overlay writes the switches.
  */
 export const dash = {
   /** World units (about metres) per second, forwards; negative in reverse. */
@@ -18,10 +18,6 @@ export const dash = {
   layout: null as MetroLayout | null,
   /** Whether the autopilot is driving. */
   autopilot: false,
-  /** Whether the engine and the rain can be heard. */
-  sound: false,
-  /** The on-screen controls' stick, for a touch screen. */
-  touch: IDLE as Stick,
 }
 
 /** Whether a stick asks for anything at all. */

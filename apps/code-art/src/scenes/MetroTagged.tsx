@@ -12,7 +12,7 @@ import { Vector3, type Group } from 'three'
 import type { FileDatum, SymbolNames } from '../lib/atlas.ts'
 import { dash } from '../lib/metro-dash.ts'
 import type { MetroLayout } from '../lib/metro-layout.ts'
-import type { RoadCall } from '../lib/metro-road-calls.ts'
+import { TRAFFIC_PACE, type RoadCall } from '../lib/metro-road-calls.ts'
 import { taggedRoads } from '../lib/metro-tags.ts'
 import { namedCall } from '../lib/call-names.ts'
 import { CallCard } from '../CallCard.tsx'
@@ -20,8 +20,6 @@ import { useNames } from '../hooks.ts'
 
 /** Seconds between looking for the nearest roads again. */
 const LOOK_EVERY = 0.5
-/** The same pace as the painted traffic, in world units a second. */
-const PACE = 13
 /**
  * Farther than this from the buggy and a car's label hides: labels are drawn
  * over the canvas, so they would otherwise show through the planet.
@@ -112,7 +110,7 @@ function Car(props: {
   useFrame(({ clock }) => {
     if (!g.current || length <= 0) return
     // Loops along the road the way its lane runs.
-    const run = (start + clock.elapsedTime * PACE) % length
+    const run = (start + clock.elapsedTime * TRAFFIC_PACE) % length
     place(g.current, track, call.toRoot ? length - run : run, call.toRoot)
     g.current.visible = g.current.position.distanceTo(dash.position) <= SHOWN
   })
