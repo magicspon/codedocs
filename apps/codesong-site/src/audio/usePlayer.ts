@@ -1,12 +1,10 @@
 import type { Composition, RealisedTrack } from '@codedocs/codesong/browser'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Player } from './player.ts'
 import type { Sound } from './sound.ts'
 
-/** The player as the page sees it: state to render, and actions to call. */
-export interface PlayerControls {
-  readonly playing: boolean
-  readonly muted: ReadonlySet<string>
+/** What the page can ask of the player. */
+interface Actions {
   /** Where the music is, in beats. Cheap enough to call every frame. */
   readonly beats: () => number
   readonly toggle: () => void
@@ -19,61 +17,65 @@ export interface PlayerControls {
   readonly tune: (track: string, sound: Sound) => void
 }
 
+/** The player as the page sees it: state to render, and actions to call. */
+export interface PlayerControls extends Actions {
+  readonly playing: boolean
+  readonly muted: ReadonlySet<string>
+}
+
+/** What the page can call before the first player is built: nothing happens. */
+const IDLE: Actions = {
+  beats: () => 0,
+  toggle: () => {},
+  seek: () => {},
+  mute: () => {},
+  sound: () => ({}),
+  tune: () => {},
+}
+
 /**
  * One Tone.js player for one song. Moving to another song disposes the old
- * player's synths before the new one's are built.
+ * player's synths before the new one's are built. The actions are made with
+ * the player, so none can reach a player that has been disposed.
  */
 export function usePlayer(
   composition: Composition,
   tracks: readonly RealisedTrack[],
   length: number,
 ): PlayerControls {
-  const [player, setPlayer] = useState<Player>()
+  const [actions, setActions] = useState<Actions>(IDLE)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState<ReadonlySet<string>>(new Set())
 
   useEffect(() => {
     const p = new Player(composition, tracks, length, () => setPlaying(false))
-    setPlayer(p)
+    // Held beside the player, so muting never reads a stale render's set.
+    const off = new Set<string>()
+    setActions({
+      beats: () => p.beats,
+      toggle: () => {
+        if (p.playing) {
+          p.pause()
+          setPlaying(false)
+        } else {
+          // Browsers start audio only after a click, so this waits for Tone.
+          void p.play().then(() => setPlaying(p.playing))
+        }
+      },
+      seek: (at) => p.seek(at),
+      mute: (track) => {
+        if (off.has(track)) off.delete(track)
+        else off.add(track)
+        p.mute(track, off.has(track))
+        setMuted(new Set(off))
+      },
+      sound: (track) => p.sound(track),
+      tune: (track, sound) => p.tune(track, sound),
+    })
     setPlaying(false)
     setMuted(new Set())
     return () => p.dispose()
   }, [composition, tracks, length])
 
-  const beats = useCallback(() => player?.beats ?? 0, [player])
-
-  const toggle = useCallback(() => {
-    if (!player) return
-    if (player.playing) {
-      player.pause()
-      setPlaying(false)
-    } else {
-      // Browsers start audio only after a click, so this waits for Tone.
-      void player.play().then(() => setPlaying(player.playing))
-    }
-  }, [player])
-
-  const seek = useCallback((at: number) => player?.seek(at), [player])
-
-  const mute = useCallback(
-    (track: string) => {
-      const next = new Set(muted)
-      if (next.has(track)) next.delete(track)
-      else next.add(track)
-      player?.mute(track, next.has(track))
-      setMuted(next)
-    },
-    [player, muted],
-  )
-
-  const sound = useCallback(
-    (track: string) => player?.sound(track) ?? {},
-    [player],
-  )
-  const tune = useCallback(
-    (track: string, next: Sound) => player?.tune(track, next),
-    [player],
-  )
-
-  return { playing, muted, beats, toggle, seek, mute, sound, tune }
+  return { ...actions, playing, muted }
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { defaults, SETTINGS } from '../src/audio/sound.ts'
+import { controls, defaults, SETTINGS } from '../src/audio/sound.ts'
 
 describe('SETTINGS', () => {
   for (const [role, groups] of Object.entries(SETTINGS)) {
@@ -25,5 +25,19 @@ describe('SETTINGS', () => {
   it('gives every track a volume and a pan', () => {
     for (const role of Object.keys(SETTINGS) as (keyof typeof SETTINGS)[])
       expect(defaults(role)).toMatchObject({ volume: 0, pan: 0 })
+  })
+})
+
+describe('controls', () => {
+  it('opens at the values a track was left at, and the defaults elsewhere', () => {
+    const groups = controls('bass', { attack: 0.5, wave: 'sine' })
+    expect(groups.Envelope!.attack!.value).toBe(0.5)
+    expect(groups.Envelope!.release!.value).toBe(0.2)
+    expect(groups.Oscillator!.wave!.value).toBe('sine')
+  })
+
+  it('keeps each value the kind its control expects', () => {
+    const groups = controls('lead', { attack: '0.3' })
+    expect(groups.Envelope!.attack!.value).toBe(0.3)
   })
 })
