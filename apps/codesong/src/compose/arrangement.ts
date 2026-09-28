@@ -5,6 +5,7 @@
  */
 
 import type { Motif, MusicalRole, Part, Section, Transform } from '../model.ts'
+import type { Genre } from './genre.ts'
 
 const BAR = 4
 
@@ -83,86 +84,123 @@ function motto(
   section: Section,
   notes: number,
   bars: number,
+  stretch: number,
 ): Part {
   const length = Math.min(bars * BAR, section.length)
   return part(
     theme,
     section.start + section.length - length,
     length,
-    shift(section.area, { fragment: notes }),
+    shift(section.area, { fragment: notes, stretch }),
   )
 }
 
+/** What every kind of section builds its parts from. */
+interface Scene {
+  readonly section: Section
+  readonly material: Material
+  readonly theme: Motif
+  /** Where the counter-melody enters its cycle of phrases. */
+  readonly offset: number
+  /** Multiplies the time of the melodies. */
+  readonly m: number
+  /** The section's harmonic area, for accompaniment. */
+  readonly home: Transform
+  /** The harmonic area at the melodies' speed. */
+  readonly tune: Transform
+  /** Half the section in whole bars. */
+  readonly half: number
+}
+
+/** The pad through the whole section; every form has it. */
+const pad = (c: Scene): Part[] => [span(c.material.pad, c.section, c.home)]
+
+/** The arpeggio over the whole section, if the subsystem has one. */
+const loop = (c: Scene): Part[] =>
+  c.material.arp ? [span(c.material.arp, c.section, c.home)] : []
+
+/** The subsystem's own phrases, back to back, in `transform`. */
+const phrases = (c: Scene, transform: Transform): Part[] =>
+  sequence(c.material.phrases, c.section, c.offset, transform)
+
+/** Each kind of section's texture. */
+const TEXTURES: Readonly<Record<Section['form'], (c: Scene) => SectionParts>> =
+  {
+    // The theme at half speed over a bare pad; the loop creeps in halfway.
+    intro: (c) => ({
+      pad: pad(c),
+      lead: [
+        span(c.theme, c.section, shift(0, { stretch: 2 * c.m, octave: -1 })),
+      ],
+      arp: loop(c).map((p) => ({
+        ...p,
+        start: p.start + c.half,
+        length: p.length - c.half,
+      })),
+      percussion: drums(c.material, c.section),
+    }),
+    verse: (c) => ({
+      pad: pad(c),
+      bass: [span(c.material.bass, c.section, c.home)],
+      counter: phrases(c, c.tune),
+      lead: [motto(c.theme, c.section, 3, 2, c.m)],
+      arp: c.section.intensity >= 0.6 ? loop(c) : [],
+      percussion: drums(c.material, c.section),
+    }),
+    // Everything at once, the theme in full and at home.
+    chorus: (c) => ({
+      pad: pad(c),
+      bass: [span(c.material.bass, c.section, c.home)],
+      counter: phrases(c, c.tune),
+      lead: [span(c.theme, c.section, shift(0, { stretch: c.m }))],
+      arp: loop(c),
+      percussion: drums(c.material, c.section),
+    }),
+    // No bass or drums: the loop, the pad and the phrases upside down.
+    breakdown: (c) => ({
+      pad: pad(c),
+      counter: phrases(c, { ...c.tune, invert: true }),
+      lead: [motto(c.theme, c.section, 2, 4, c.m)],
+      arp: loop(c),
+    }),
+    // The theme once more, then again at half speed as the bass drops out.
+    outro: (c) => ({
+      pad: pad(c),
+      bass: [part(c.material.bass, c.section.start, c.half, c.home)],
+      lead: [
+        part(c.theme, c.section.start, c.half, shift(0, { stretch: c.m })),
+        part(
+          c.theme,
+          c.section.start + c.half,
+          c.section.length - c.half,
+          shift(0, { stretch: 2 * c.m }),
+        ),
+      ],
+    }),
+  }
+
 /**
- * Every role's parts for one section. `offset` is where the counter-melody
- * enters its cycle of phrases, which the seed chooses.
+ * Every role's parts for one section, in `genre`. `offset` is where the
+ * counter-melody enters its cycle of phrases, which the seed chooses.
  */
 export function arrange(
   section: Section,
   material: Material,
   theme: Motif,
   offset: number,
+  genre: Pick<Genre, 'melody' | 'rests'>,
 ): SectionParts {
-  const home = shift(section.area)
-  const half = Math.max(BAR, Math.floor(section.length / 2 / BAR) * BAR)
-  const { arp } = material
-  switch (section.form) {
-    case 'intro':
-      // The theme at half speed over a bare pad; the loop creeps in halfway.
-      return {
-        pad: [span(material.pad, section, home)],
-        lead: [span(theme, section, shift(0, { stretch: 2, octave: -1 }))],
-        arp: arp
-          ? [part(arp, section.start + half, section.length - half, home)]
-          : [],
-        percussion: drums(material, section),
-      }
-    case 'verse':
-      return {
-        pad: [span(material.pad, section, home)],
-        bass: [span(material.bass, section, home)],
-        counter: sequence(material.phrases, section, offset, home),
-        lead: [motto(theme, section, 3, 2)],
-        arp: arp && section.intensity >= 0.6 ? [span(arp, section, home)] : [],
-        percussion: drums(material, section),
-      }
-    case 'chorus':
-      // Everything at once, the theme in full and at home.
-      return {
-        pad: [span(material.pad, section, home)],
-        bass: [span(material.bass, section, home)],
-        counter: sequence(material.phrases, section, offset, home),
-        lead: [span(theme, section, shift(0))],
-        arp: arp ? [span(arp, section, home)] : [],
-        percussion: drums(material, section),
-      }
-    case 'breakdown':
-      // No bass or drums: the loop, the pad and the phrases upside down.
-      return {
-        pad: [span(material.pad, section, home)],
-        counter: sequence(
-          material.phrases,
-          section,
-          offset,
-          shift(section.area, { invert: true }),
-        ),
-        lead: [motto(theme, section, 2, 4)],
-        arp: arp ? [span(arp, section, home)] : [],
-      }
-    case 'outro':
-      // The theme once more, then again at half speed as the bass drops out.
-      return {
-        pad: [span(material.pad, section, home)],
-        bass: [part(material.bass, section.start, half, home)],
-        lead: [
-          part(theme, section.start, half, shift(0)),
-          part(
-            theme,
-            section.start + half,
-            section.length - half,
-            shift(0, { stretch: 2 }),
-          ),
-        ],
-      }
-  }
+  const m = genre.melody
+  const parts = TEXTURES[section.form]({
+    section,
+    material,
+    theme,
+    offset,
+    m,
+    home: shift(section.area),
+    tune: shift(section.area, { stretch: m }),
+    half: Math.max(BAR, Math.floor(section.length / 2 / BAR) * BAR),
+  })
+  for (const role of genre.rests[section.form] ?? []) delete parts[role]
+  return parts
 }

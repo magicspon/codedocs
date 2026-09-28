@@ -1,7 +1,8 @@
-import { realise, type Song } from '@codedocs/codesong/browser'
+import { realise } from '@codedocs/codesong/browser'
 import { describe, expect, it } from 'vitest'
 import {
   fileOf,
+  genreReason,
   keyName,
   keyReason,
   motifKind,
@@ -11,8 +12,9 @@ import {
   transformReason,
 } from '../src/explain/explain.ts'
 import router from '../songs/router.song.json' with { type: 'json' }
+import { heard } from './heard.ts'
 
-const { composition, evidence } = router as unknown as Song
+const { composition, evidence } = heard(router)
 const tracks = realise(composition)
 const motifs = new Map(composition.motifs.map((m) => [m.id, m]))
 
@@ -75,8 +77,17 @@ describe('explaining', () => {
   })
 
   it('gives the key from the coupling', () => {
-    expect(keyName(composition)).toBe('D minor')
+    // Router's code suggests ambient, which plays in major.
+    expect(keyName(composition)).toBe('D major')
     expect(keyReason({ composition, evidence })).toContain('2 steps')
+  })
+
+  it('says why the code suggested its genre, and when another is playing', () => {
+    const suggested = genreReason({ composition, evidence })
+    expect(suggested.join(' ')).toContain('suggests ambient')
+    expect(suggested).toHaveLength(2)
+    const picked = genreReason(heard(router, 'techno'))
+    expect(picked.at(-1)).toContain('hearing it as techno')
   })
 
   it('gives every section a reason for its place', () => {

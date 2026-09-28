@@ -198,6 +198,17 @@ a {
   font-size: 1.25rem;
 }
 
+.genre {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 0.375rem;
+  background: rgb(10 12 22 / 85%);
+  color: #e8ebf3;
+  cursor: pointer;
+}
+
 .transport .time {
   margin-left: auto;
   font-variant-numeric: tabular-nums;

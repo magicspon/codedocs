@@ -1,5 +1,6 @@
 import type { JSX } from 'react'
-import { keyName, keyReason } from '../explain/explain.ts'
+import { GENRES } from '@codedocs/codesong/browser'
+import { genreReason, keyName, keyReason } from '../explain/explain.ts'
 import { FORM_COLOUR, ROLE_COLOUR } from '../scene/layout.ts'
 import type { ViewProps } from './Inspector.tsx'
 
@@ -36,6 +37,11 @@ export function SongView({
 
       <h3>Key: {keyName(composition)}</h3>
       <p>{keyReason(score)}</p>
+
+      <h3>Genre: {GENRES[composition.genre].label}</h3>
+      {genreReason(score).map((line) => (
+        <p key={line}>{line}</p>
+      ))}
 
       <h3>Settings</h3>
       <dl className="facts">

@@ -13,6 +13,10 @@ const LEGEND: readonly (readonly [string, string])[] = [
   ['Chords', 'Groups of files that work closely together'],
   ['Arpeggios', 'Files that depend on each other in a loop'],
   ['Drums', 'How busy each part is: denser code, busier hats'],
+  [
+    'The genre',
+    'How busy and how tangled the code is. Calm code plays slow, busy code fast',
+  ],
 ]
 
 /**
@@ -69,6 +73,12 @@ export function HowItWorks(): JSX.Element {
         floor, and every note stands above its track. Pick a note to see the
         file it came from and why it sounds the way it does. Pick a section to
         see which part of the code it was built from.
+      </p>
+      <p>
+        Each song starts in the genre its code suggests: ambient, lo-fi hip hop,
+        techno or drum and bass. You can switch to another genre while it plays.
+        The notes still come from the same code. Only the tempo, scale, drums,
+        bass rhythm and sounds change.
       </p>
       <p>
         The same piece is also built as a set in Ableton Live, with a synth for

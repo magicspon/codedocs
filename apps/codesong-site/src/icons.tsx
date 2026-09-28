@@ -36,6 +36,17 @@ export function InfoIcon(): JSX.Element {
   )
 }
 
+/** An arrow down onto a tray, for saving a file. */
+export function DownloadIcon(): JSX.Element {
+  return (
+    <Icon>
+      <path d="M12 4v11" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M5 20h14" />
+    </Icon>
+  )
+}
+
 /** A house, for going back to the list of songs. */
 export function HomeIcon(): JSX.Element {
   return (

@@ -2,7 +2,8 @@
  * Analysis in, composition out. The only randomness comes from a generator
  * seeded by the repository's name and the caller's seed, so the same code and
  * options always compose the same piece. The key comes from the code alone,
- * so a new seed varies the piece without moving it to a new key.
+ * so a new seed varies the piece without moving it to a new key. The genre
+ * comes from the code too, unless the caller names one.
  */
 
 import { hash, rng } from '@codedocs/code-art/rng'
@@ -23,6 +24,7 @@ import type { Structure } from '../structure.ts'
 import { arrange, type Material } from './arrangement.ts'
 import { arpMotif } from './arp.ts'
 import { plan, sections } from './form.ts'
+import { GENRES, suggest, type Genre } from './genre.ts'
 import { bassMotif, chordSource, padMotif } from './harmony.ts'
 import { pathMotif } from './melody.ts'
 import { fill, groove } from './rhythm.ts'
@@ -49,9 +51,8 @@ const REGISTER: Readonly<Record<MusicalRole, Register>> = {
 /** What `codesong` composes with when the caller says nothing. */
 export const DEFAULT_OPTIONS: ComposeOptions = {
   seed: 0,
-  tempo: 96,
+  genre: 'auto',
   bars: 'auto',
-  scale: 'minor',
   tracks: 6,
   maxMotifs: 16,
 }
@@ -78,12 +79,13 @@ function regionMaterial(
   structure: Structure,
   region: Region,
   phrases: number,
+  genre: Genre,
 ): RegionMaterial {
   const chords = chordSource(structure, region)
   const within = new Set(region.files)
   return {
     pad: padMotif(structure, region, chords),
-    bass: bassMotif(region, chords),
+    bass: bassMotif(region, chords, genre.bass),
     arp: arpMotif(structure, region, chords),
     phrases: dependencyPaths(structure, phrases, within).map((path, i) =>
       pathMotif(structure, path, `phrase:${region.path}:${i + 1}`, region.path),
@@ -140,6 +142,8 @@ export function compose(
     throw new Error(`need at least 16 bars, got ${options.bars}`)
   }
   const random = rng(hash(structure.name) ^ options.seed)
+  const genre =
+    GENRES[options.genre === 'auto' ? suggest(analysis).genre : options.genre]
   const key = tonic(structure)
   const motto = theme(structure)
 
@@ -148,7 +152,7 @@ export function compose(
     Math.floor((options.maxMotifs - 1) / regions.length),
   )
   const materials = new Map(
-    regions.map((r) => [r, regionMaterial(structure, r, perRegion)]),
+    regions.map((r) => [r, regionMaterial(structure, r, perRegion, genre)]),
   )
   const planned = plan(regions)
   const form: Section[] = sections(planned, options.bars)
@@ -162,12 +166,18 @@ export function compose(
     const base = materials.get(region)!
     const material: Material = {
       ...base,
-      groove: groove(structure, region, section.form, random),
-      fill: fill(structure, region, section.form, section.intensity),
+      groove: groove(structure, region, section.form, random, genre.drums),
+      fill: fill(
+        structure,
+        region,
+        section.form,
+        section.intensity,
+        genre.drums,
+      ),
     }
     const offset = Math.floor(random() * Math.max(1, base.phrases.length))
     const { groove: beat, fill: link, pad, bass, arp, phrases } = material
-    collect(parts, used, arrange(section, material, motto, offset), [
+    collect(parts, used, arrange(section, material, motto, offset, genre), [
       pad,
       bass,
       beat,
@@ -192,9 +202,11 @@ export function compose(
   return {
     composerVersion: COMPOSER_VERSION,
     origin: { repository: structure.name, commit: structure.commit, options },
-    tempo: options.tempo,
+    tempo: options.tempo ?? genre.tempo,
+    genre: genre.name,
+    swing: genre.swing,
     key,
-    scale: options.scale,
+    scale: options.scale ?? genre.scale,
     beatsPerBar: 4,
     tracks,
     motifs: [...used.values()].filter((m) => heard.has(m.id)),

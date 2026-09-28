@@ -12,4 +12,13 @@ export {
   type NoteEvent,
   type RealisedTrack,
 } from './render/realise.ts'
+export { toMidi } from './render/midi.ts'
 export { NOTE_NAMES, SCALES } from './theory.ts'
+export {
+  BUSY,
+  GENRE_NAMES,
+  GENRES,
+  TANGLED,
+  type Genre,
+  type Suggestion,
+} from './compose/genre.ts'

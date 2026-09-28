@@ -6,7 +6,8 @@
 
 import type { SymbolNames } from '@codedocs/code-art/atlas'
 import { fifths } from './compose/compose.ts'
-import type { Composition } from './model.ts'
+import { suggest, type Suggestion } from './compose/genre.ts'
+import type { Composition, GenreName } from './model.ts'
 import type { Analysis } from './regions.ts'
 import type { StructureNode } from './structure.ts'
 
@@ -35,6 +36,8 @@ export interface Evidence {
   readonly leafShare: number
   /** Steps round the circle of fifths from C that the coupling picked. */
   readonly fifths: number
+  /** The genre the code suggested, and the two measures behind it. */
+  readonly genre: Suggestion
   /** Regions in path order. */
   readonly regions: readonly RegionEvidence[]
   /** Measures of every file a heard motif names, by path. */
@@ -57,23 +60,34 @@ function topLevel(names: SymbolNames, path: string): string[] {
   return [...new Set(kept)].slice(0, MAX_SYMBOLS)
 }
 
-/** A composition and its evidence: one song, as the site loads it. */
+/** A composition and its evidence: one song in one genre. */
 export interface Song {
   readonly composition: Composition
   readonly evidence: Evidence
 }
 
 /**
- * The evidence for `composition`, which `analysis` composed. `names`, when
+ * One song in every genre, as the site loads it. The versions share their
+ * evidence, since they were all composed from the same code.
+ */
+export interface SongFile {
+  readonly versions: Readonly<Record<GenreName, Composition>>
+  readonly evidence: Evidence
+}
+
+/**
+ * The evidence for `compositions`, which `analysis` composed. `names`, when
  * the repository was exported with them, adds each file's symbol names.
  */
 export function evidence(
   analysis: Analysis,
-  composition: Composition,
+  compositions: readonly Composition[],
   names?: SymbolNames,
 ): Evidence {
   const { structure, regions } = analysis
-  const named = new Set(composition.motifs.flatMap((m) => m.source.files))
+  const named = new Set(
+    compositions.flatMap((c) => c.motifs.flatMap((m) => m.source.files)),
+  )
   const measures: Record<string, FileMeasures> = {}
   for (const { path, project: _, ...rest } of structure.nodes) {
     if (named.has(path)) measures[path] = rest
@@ -83,6 +97,7 @@ export function evidence(
     meanFanOut: structure.meanFanOut,
     leafShare: structure.leafShare,
     fifths: fifths(structure),
+    genre: suggest(analysis),
     regions: regions.map((r) => ({
       path: r.path,
       name: r.name,

@@ -1,4 +1,4 @@
-import type { RealisedTrack } from '@codedocs/codesong/browser'
+import type { GenreName, RealisedTrack } from '@codedocs/codesong/browser'
 import { button, folder, LevaPanel, useControls, useCreateStore } from 'leva'
 import type { Schema } from 'leva/plugin'
 import { useEffect, useMemo, type JSX } from 'react'
@@ -7,6 +7,8 @@ import { ROLE_COLOUR } from './scene/layout.ts'
 
 interface Props {
   readonly track: RealisedTrack
+  /** The genre playing, whose sound reset goes back to. */
+  readonly genre: GenreName
   /** The track's sound when the panel opens, so earlier changes are kept. */
   readonly initial: Sound
   readonly onTune: (track: string, sound: Sound) => void
@@ -55,10 +57,11 @@ const schema = (track: RealisedTrack, initial: Sound): Schema =>
 /**
  * The synth settings for one track, in a Leva panel over the scene. Each
  * panel has its own Leva store, so opening another track never shows this
- * one's values. Key it by track id.
+ * one's values. Key it by genre and track id.
  */
 export function SoundPanel({
   track,
+  genre,
   initial,
   onTune,
   onClose,
@@ -68,10 +71,11 @@ export function SoundPanel({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const inputs = useMemo(() => schema(track, initial), [track.id])
   const [values, set] = useControls(() => inputs, { store }, [inputs])
-  useControls({ reset: button(() => set(defaults(track.role))) }, { store }, [
-    set,
-    track.role,
-  ])
+  useControls(
+    { reset: button(() => set(defaults(track.role, genre))) },
+    { store },
+    [set, track.role, genre],
+  )
 
   // A dynamic schema loses Leva's value types; every input here is a number or a string.
   useEffect(

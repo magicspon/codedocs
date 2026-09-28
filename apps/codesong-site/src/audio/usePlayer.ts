@@ -1,5 +1,6 @@
 import type { Composition, RealisedTrack } from '@codedocs/codesong/browser'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { takeOver, type Handover } from './handover.ts'
 import { Player } from './player.ts'
 import type { Sound } from './sound.ts'
 
@@ -34,9 +35,14 @@ const IDLE: Actions = {
 }
 
 /**
- * One Tone.js player for one song. Moving to another song disposes the old
- * player's synths before the new one's are built. The actions are made with
- * the player, so none can reach a player that has been disposed.
+ * One Tone.js player for one song. Moving to another composition disposes
+ * the old player's synths before the new one's are built. The actions are
+ * made with the player, so none can reach a player that has been disposed.
+ *
+ * Every genre of a song has the same sections at the same beats, so a new
+ * composition in the same hook (a genre switch) carries on from where the
+ * last one was, with the same tracks muted. Key the hook's component by
+ * song so a new song starts over.
  */
 export function usePlayer(
   composition: Composition,
@@ -46,11 +52,14 @@ export function usePlayer(
   const [actions, setActions] = useState<Actions>(IDLE)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState<ReadonlySet<string>>(new Set())
+  const handover = useRef<Handover | null>(null)
 
   useEffect(() => {
     const p = new Player(composition, tracks, length, () => setPlaying(false))
+    setPlaying(false)
     // Held beside the player, so muting never reads a stale render's set.
-    const off = new Set<string>()
+    const off = takeOver(p, handover.current, setPlaying)
+    setMuted(new Set(off))
     setActions({
       beats: () => p.beats,
       toggle: () => {
@@ -72,9 +81,10 @@ export function usePlayer(
       sound: (track) => p.sound(track),
       tune: (track, sound) => p.tune(track, sound),
     })
-    setPlaying(false)
-    setMuted(new Set())
-    return () => p.dispose()
+    return () => {
+      handover.current = { beats: p.beats, playing: p.playing, muted: off }
+      p.dispose()
+    }
   }, [composition, tracks, length])
 
   return { ...actions, playing, muted }

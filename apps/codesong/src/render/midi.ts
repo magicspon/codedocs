@@ -111,7 +111,7 @@ function noteTrack(track: RealisedTrack, channel: number): number[] {
 export function toMidi(
   composition: Composition,
   tracks: readonly RealisedTrack[],
-): Uint8Array {
+): Uint8Array<ArrayBuffer> {
   let channel = 0
   const chunks = tracks.map((track) => {
     if (track.role === 'percussion') return noteTrack(track, DRUM_CHANNEL)

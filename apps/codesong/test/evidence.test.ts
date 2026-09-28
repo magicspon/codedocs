@@ -12,7 +12,7 @@ const analysis = analyse(
   readStructure(JSON.parse(readFileSync(path, 'utf8')) as Atlas),
 )
 const piece = compose(analysis, DEFAULT_OPTIONS)
-const found = evidence(analysis, piece)
+const found = evidence(analysis, [piece])
 
 describe('evidence', () => {
   it('records the fifths the key was read from', () => {
@@ -41,7 +41,7 @@ describe('evidence with symbol names', () => {
   }
 
   it('keeps each file’s top-level names once, in order', () => {
-    const withNames = evidence(analysis, piece, names)
+    const withNames = evidence(analysis, [piece], names)
     const [file] = Object.keys(names)
     expect(withNames.symbols?.[file!]).toEqual(['outer', 'other'])
   })

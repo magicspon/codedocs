@@ -1066,6 +1066,18 @@ can change.
 
 This allows the same repository to produce multiple musical interpretations.
 
+**Built (composer 0.4.0).** Four genres live in `apps/codesong/src/compose/genre.ts`: ambient,
+lo-fi hip hop, techno and drum and bass. Each sets the tempo, scale, swing, a drum style, a bass
+style, a melody speed and the roles that rest in each kind of section. The code still decides the
+key, chords, melodies, form and how many drum hits there are.
+
+The code suggests a genre from two measures. Energy is the mean dependencies per file inside each
+subsystem, weighted by size (busy from 2.5). Tangle is the share of files in a dependency cycle
+(tangled from 15%). Calm and orderly is ambient, calm and tangled lo-fi, busy and orderly techno,
+busy and tangled drum and bass. `compose --genre name` overrides it. The site's `<name>.song.json`
+holds the piece in every genre, so a listener can switch while it plays. The browser sound for each
+genre is in `apps/codesong-site/src/audio/genres.ts`. The Live palette is still one for every genre.
+
 ---
 
 # Development phases

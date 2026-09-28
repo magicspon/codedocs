@@ -6,6 +6,8 @@ interface Props {
   /** Buttons before the play button, such as home and info. */
   readonly corner?: ReactNode
   readonly title: string
+  /** Controls after the title, such as the genre picker. */
+  readonly beside?: ReactNode
   readonly composition: Composition
   readonly tracks: readonly RealisedTrack[]
   readonly length: number
@@ -104,7 +106,8 @@ export function Transport(props: Props): JSX.Element {
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
       const target = e.target as HTMLElement
-      if (e.code !== 'Space' || target.closest('button, input, a')) return
+      if (e.code !== 'Space' || target.closest('button, input, select, a'))
+        return
       e.preventDefault()
       onToggle()
     }
@@ -125,6 +128,7 @@ export function Transport(props: Props): JSX.Element {
           {props.playing ? '❚❚' : '▶'}
         </button>
         <h1>{props.title}</h1>
+        {props.beside}
         <span ref={time} className="time" aria-live="off" />
       </div>
       <input

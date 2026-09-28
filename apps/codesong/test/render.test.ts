@@ -27,6 +27,7 @@ const piece: Composition = {
     commit: 'c',
     options: {
       seed: 0,
+      genre: 'techno',
       tempo: 120,
       bars: 8,
       scale: 'major',
@@ -35,6 +36,8 @@ const piece: Composition = {
     },
   },
   tempo: 120,
+  genre: 'techno',
+  swing: 0,
   key: 0,
   scale: 'major',
   beatsPerBar: 4,
