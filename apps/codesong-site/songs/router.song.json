@@ -1,6 +1,6 @@
 {
   "composition": {
-    "composerVersion": "0.2.1",
+    "composerVersion": "0.3.0",
     "origin": {
       "repository": "router",
       "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
@@ -314,7 +314,7 @@
           {
             "motif": "phrase:examples/react:1",
             "start": 32,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 0,
               "invert": false,
@@ -324,7 +324,7 @@
           },
           {
             "motif": "phrase:examples/react:2",
-            "start": 36,
+            "start": 40,
             "length": 8,
             "transform": {
               "transpose": 0,
@@ -335,17 +335,6 @@
           },
           {
             "motif": "phrase:examples/react:3",
-            "start": 44,
-            "length": 4,
-            "transform": {
-              "transpose": 0,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/react:4",
             "start": 48,
             "length": 4,
             "transform": {
@@ -356,7 +345,7 @@
             }
           },
           {
-            "motif": "phrase:examples/react:5",
+            "motif": "phrase:examples/react:4",
             "start": 52,
             "length": 4,
             "transform": {
@@ -367,7 +356,7 @@
             }
           },
           {
-            "motif": "phrase:examples/react:1",
+            "motif": "phrase:examples/react:5",
             "start": 56,
             "length": 4,
             "transform": {
@@ -378,7 +367,7 @@
             }
           },
           {
-            "motif": "phrase:examples/react:2",
+            "motif": "phrase:examples/react:1",
             "start": 60,
             "length": 8,
             "transform": {
@@ -389,52 +378,8 @@
             }
           },
           {
-            "motif": "phrase:examples/react:3",
-            "start": 68,
-            "length": 4,
-            "transform": {
-              "transpose": 0,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/react:4",
-            "start": 72,
-            "length": 4,
-            "transform": {
-              "transpose": 0,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/react:5",
-            "start": 76,
-            "length": 4,
-            "transform": {
-              "transpose": 0,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/react:1",
-            "start": 80,
-            "length": 4,
-            "transform": {
-              "transpose": 0,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
             "motif": "phrase:examples/react:2",
-            "start": 84,
+            "start": 68,
             "length": 8,
             "transform": {
               "transpose": 0,
@@ -445,8 +390,41 @@
           },
           {
             "motif": "phrase:examples/react:3",
-            "start": 92,
+            "start": 76,
             "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:4",
+            "start": 80,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:5",
+            "start": 84,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:1",
+            "start": 88,
+            "length": 8,
             "transform": {
               "transpose": 0,
               "invert": false,
@@ -457,7 +435,7 @@
           {
             "motif": "phrase:examples/solid:1",
             "start": 96,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 4,
               "invert": false,
@@ -467,8 +445,8 @@
           },
           {
             "motif": "phrase:examples/solid:2",
-            "start": 100,
-            "length": 4,
+            "start": 104,
+            "length": 8,
             "transform": {
               "transpose": 4,
               "invert": false,
@@ -478,28 +456,6 @@
           },
           {
             "motif": "phrase:examples/solid:3",
-            "start": 104,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/solid:4",
-            "start": 108,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/solid:5",
             "start": 112,
             "length": 4,
             "transform": {
@@ -510,7 +466,7 @@
             }
           },
           {
-            "motif": "phrase:examples/solid:1",
+            "motif": "phrase:examples/solid:4",
             "start": 116,
             "length": 4,
             "transform": {
@@ -521,7 +477,7 @@
             }
           },
           {
-            "motif": "phrase:examples/solid:2",
+            "motif": "phrase:examples/solid:5",
             "start": 120,
             "length": 4,
             "transform": {
@@ -532,42 +488,9 @@
             }
           },
           {
-            "motif": "phrase:examples/solid:3",
-            "start": 124,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/solid:4",
-            "start": 128,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:examples/solid:5",
-            "start": 132,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
             "motif": "phrase:examples/solid:1",
-            "start": 136,
-            "length": 4,
+            "start": 124,
+            "length": 8,
             "transform": {
               "transpose": 4,
               "invert": false,
@@ -577,6 +500,17 @@
           },
           {
             "motif": "phrase:examples/solid:2",
+            "start": 132,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:3",
             "start": 140,
             "length": 4,
             "transform": {
@@ -748,52 +682,52 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 4,
+            "degree": 1,
             "start": 0.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 7,
-            "start": 1,
-            "duration": 1,
-            "velocity": 110
+            "degree": -1,
+            "start": 1.5,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 3,
-            "start": 2,
+            "degree": -1,
+            "start": 2.75,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 6,
-            "start": 2.5,
+            "degree": 1,
+            "start": 3.25,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 9,
-            "start": 3,
-            "duration": 0.5,
-            "velocity": 108
+            "degree": 0,
+            "start": 3.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 5,
-            "start": 3.5,
+            "degree": 2,
+            "start": 4.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 4,
+            "degree": 0,
+            "start": 5,
             "duration": 0.5,
-            "velocity": 109
+            "velocity": 86
           }
         ],
         "length": 8
@@ -1843,37 +1777,37 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
             "degree": 6,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 110
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 1.5,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 9,
+            "degree": 4,
             "start": 2,
-            "duration": 0.5,
-            "velocity": 108
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 5,
-            "start": 2.5,
+            "degree": 3,
+            "start": 2.75,
+            "duration": 0.75,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 74
           }
         ],
-        "length": 4
+        "length": 8
       },
       {
         "id": "phrase:examples/react:2",
@@ -1891,34 +1825,34 @@
         },
         "notes": [
           {
-            "degree": 4,
+            "degree": 7,
             "start": 0,
-            "duration": 0.5,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
             "degree": 5,
-            "start": 0.5,
+            "start": 1.25,
             "duration": 0.5,
-            "velocity": 108
+            "velocity": 74
+          },
+          {
+            "degree": 5,
+            "start": 2.25,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
             "degree": 6,
-            "start": 1,
-            "duration": 1,
-            "velocity": 108
-          },
-          {
-            "degree": 8,
-            "start": 2,
-            "duration": 1,
-            "velocity": 108
-          },
-          {
-            "degree": 4,
             "start": 3,
+            "duration": 0.75,
+            "velocity": 86
+          },
+          {
+            "degree": 7,
+            "start": 4.25,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 74
           }
         ],
         "length": 8
@@ -1937,22 +1871,22 @@
         },
         "notes": [
           {
-            "degree": 4,
-            "start": 0,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
             "degree": 7,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "start": 0,
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 8,
+            "degree": 6,
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
             "start": 1.5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 4
@@ -1974,19 +1908,19 @@
             "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 108
+            "velocity": 100
           },
           {
-            "degree": 3,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 97
+            "degree": 2,
+            "start": 1,
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 4,
-            "start": 1.5,
+            "degree": 2,
+            "start": 2.25,
             "duration": 1.5,
-            "velocity": 105
+            "velocity": 74
           }
         ],
         "length": 4
@@ -2008,19 +1942,19 @@
             "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 108
+            "velocity": 100
           },
           {
-            "degree": 3,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 97
+            "degree": 2,
+            "start": 1,
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 4,
-            "start": 1.5,
+            "degree": 2,
+            "start": 2.25,
             "duration": 1.5,
-            "velocity": 105
+            "velocity": 74
           }
         ],
         "length": 4
@@ -2540,31 +2474,31 @@
         },
         "notes": [
           {
-            "degree": 4,
+            "degree": 7,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 6,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "degree": 5,
+            "start": 1,
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 8,
-            "start": 1.5,
-            "duration": 1,
-            "velocity": 110
+            "degree": 5,
+            "start": 1.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 9,
-            "start": 2.5,
+            "degree": 4,
+            "start": 3,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 86
           }
         ],
-        "length": 4
+        "length": 8
       },
       {
         "id": "phrase:examples/solid:2",
@@ -2582,37 +2516,37 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
             "degree": 6,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 110
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 1.5,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 9,
+            "degree": 4,
             "start": 2,
-            "duration": 0.5,
-            "velocity": 108
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 5,
-            "start": 2.5,
+            "degree": 3,
+            "start": 2.75,
+            "duration": 0.75,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 74
           }
         ],
-        "length": 4
+        "length": 8
       },
       {
         "id": "phrase:examples/solid:3",
@@ -2628,22 +2562,22 @@
         },
         "notes": [
           {
-            "degree": 4,
-            "start": 0,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
             "degree": 7,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "start": 0,
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 8,
+            "degree": 6,
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
             "start": 1.5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 4
@@ -2665,19 +2599,19 @@
             "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 108
+            "velocity": 100
           },
           {
-            "degree": 3,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 97
+            "degree": 2,
+            "start": 1,
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 4,
-            "start": 1.5,
+            "degree": 2,
+            "start": 2.25,
             "duration": 1.5,
-            "velocity": 105
+            "velocity": 74
           }
         ],
         "length": 4
@@ -2696,22 +2630,22 @@
         },
         "notes": [
           {
-            "degree": 1,
-            "start": 0,
-            "duration": 1,
-            "velocity": 106
-          },
-          {
             "degree": 2,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 108
+            "start": 0,
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 3,
-            "start": 1.5,
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.5,
+            "velocity": 74
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
             "duration": 1.5,
-            "velocity": 94
+            "velocity": 74
           }
         ],
         "length": 4
@@ -3640,52 +3574,52 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 4,
+            "degree": 1,
             "start": 0.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 7,
-            "start": 1,
-            "duration": 1,
-            "velocity": 110
+            "degree": -1,
+            "start": 1.5,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 3,
-            "start": 2,
+            "degree": -1,
+            "start": 2.75,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 6,
-            "start": 2.5,
+            "degree": 1,
+            "start": 3.25,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 9,
-            "start": 3,
-            "duration": 0.5,
-            "velocity": 108
+            "degree": 0,
+            "start": 3.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 5,
-            "start": 3.5,
+            "degree": 2,
+            "start": 4.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 4,
+            "degree": 0,
+            "start": 5,
             "duration": 0.5,
-            "velocity": 109
+            "velocity": 86
           }
         ],
         "length": 8
@@ -3709,52 +3643,52 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 4,
+            "degree": 0,
             "start": 0.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 7,
+            "degree": 2,
             "start": 1,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 86
           },
           {
-            "degree": 3,
-            "start": 1.5,
-            "duration": 1,
-            "velocity": 110
+            "degree": 0,
+            "start": 2,
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 6,
-            "start": 2.5,
+            "degree": 0,
+            "start": 3.25,
             "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 9,
-            "start": 3,
-            "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
             "degree": 4,
-            "start": 3.5,
+            "start": 3.75,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 7,
-            "start": 4,
+            "degree": 0,
+            "start": 4.25,
+            "duration": 0.5,
+            "velocity": 74
+          },
+          {
+            "degree": 0,
+            "start": 4.75,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 74
           }
         ],
         "length": 8
@@ -3775,20 +3709,20 @@
           {
             "degree": 2,
             "start": 0,
-            "duration": 0.5,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 5,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "degree": 4,
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 7,
+            "degree": 0,
             "start": 1.5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 4
@@ -3809,20 +3743,20 @@
           {
             "degree": 2,
             "start": 0,
-            "duration": 0.5,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 5,
-            "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "degree": 4,
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 7,
+            "degree": 0,
             "start": 1.5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 4
@@ -3844,19 +3778,19 @@
             "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 5,
+            "degree": 3,
             "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 7,
-            "start": 1.5,
+            "degree": 0,
+            "start": 1.25,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 4

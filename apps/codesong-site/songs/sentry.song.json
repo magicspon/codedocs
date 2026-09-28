@@ -1,6 +1,6 @@
 {
   "composition": {
-    "composerVersion": "0.2.1",
+    "composerVersion": "0.3.0",
     "origin": {
       "repository": "sentry",
       "commit": "bd3ce5fa6913130868e1547df810655770e3becd",
@@ -779,31 +779,31 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 1,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 5,
+            "degree": 0,
             "start": 1,
-            "duration": 0.5,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 86
           },
           {
-            "degree": 8,
-            "start": 1.5,
+            "degree": 2,
+            "start": 1.75,
             "duration": 1,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 4,
-            "start": 2.5,
+            "degree": 0,
+            "start": 2.75,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
-        "length": 4
+        "length": 8
       },
       {
         "id": "pad:dev-packages/e2e-tests/test-applications",
@@ -1311,22 +1311,22 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 1,
-            "velocity": 109
+            "velocity": 100
           },
           {
-            "degree": 6,
+            "degree": 4,
             "start": 1,
             "duration": 1,
-            "velocity": 110
+            "velocity": 86
           },
           {
-            "degree": 8,
+            "degree": 2,
             "start": 2,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 86
           }
         ],
         "length": 4
@@ -1345,22 +1345,22 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 106
+            "velocity": 100
           },
           {
-            "degree": 5,
-            "start": 0.5,
-            "duration": 0.5,
-            "velocity": 104
-          },
-          {
-            "degree": 8,
+            "degree": 4,
             "start": 1,
+            "duration": 0.75,
+            "velocity": 86
+          },
+          {
+            "degree": 4,
+            "start": 2.25,
             "duration": 1.5,
-            "velocity": 107
+            "velocity": 74
           }
         ],
         "length": 4
@@ -1379,22 +1379,22 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 1,
-            "velocity": 104
+            "velocity": 100
           },
           {
-            "degree": 6,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 9,
+            "degree": 5,
             "start": 1.5,
+            "duration": 0.75,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
+            "start": 2.25,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 74
           }
         ],
         "length": 4
@@ -1877,22 +1877,22 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 6,
+            "degree": 0,
             "start": 0.5,
             "duration": 1,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 9,
+            "degree": 0,
             "start": 1.5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 4
@@ -1914,40 +1914,40 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 6,
-            "start": 0.5,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 9,
+            "degree": 2,
             "start": 1,
             "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 5,
-            "start": 1.5,
-            "duration": 1,
-            "velocity": 110
-          },
-          {
-            "degree": 8,
-            "start": 2.5,
-            "duration": 1,
-            "velocity": 110
+            "velocity": 86
           },
           {
             "degree": 4,
-            "start": 3.5,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 86
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 1,
+            "velocity": 86
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 1,
+            "velocity": 100
+          },
+          {
+            "degree": 0,
+            "start": 5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 86
           }
         ],
         "length": 8
@@ -1971,52 +1971,52 @@
         },
         "notes": [
           {
-            "degree": 3,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 86
           },
           {
             "degree": 6,
-            "start": 0.5,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 9,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 5,
-            "start": 1.5,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 8,
             "start": 2,
             "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 4,
-            "start": 2.5,
-            "duration": 1,
-            "velocity": 110
+            "velocity": 86
           },
           {
             "degree": 7,
-            "start": 3.5,
-            "duration": 1,
-            "velocity": 110
+            "start": 2.5,
+            "duration": 0.5,
+            "velocity": 74
           },
           {
-            "degree": 3,
+            "degree": 6,
+            "start": 3.5,
+            "duration": 0.5,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
             "start": 4.5,
+            "duration": 1,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
+            "start": 5.5,
+            "duration": 1,
+            "velocity": 74
+          },
+          {
+            "degree": 2,
+            "start": 6.5,
             "duration": 1.5,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 8
@@ -2785,22 +2785,22 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 1,
-            "velocity": 82
+            "velocity": 100
           },
           {
-            "degree": 3,
+            "degree": 4,
             "start": 1,
             "duration": 1,
-            "velocity": 106
+            "velocity": 86
           },
           {
-            "degree": 5,
+            "degree": 4,
             "start": 2,
             "duration": 1.5,
-            "velocity": 108
+            "velocity": 86
           }
         ],
         "length": 4

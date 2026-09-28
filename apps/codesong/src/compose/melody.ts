@@ -1,6 +1,12 @@
 /**
  * Lead motifs from dependency paths: each file on the chain is one note, and
- * how the file sits in the graph decides its step, length and weight.
+ * how the file differs from the one before it decides the interval, length
+ * and any breath before it.
+ *
+ * The files on a dependency path are nearly all hubs, so any measure ranked
+ * across the whole repository (fan-in, centrality) sits near the top for all
+ * of them and every phrase comes out the same shape. Comparing neighbours on
+ * the path keeps the contour tied to the code but different for each path.
  */
 
 import type { Motif, MotifNote } from '../model.ts'
@@ -11,15 +17,20 @@ import { quantise } from '../theory.ts'
 const MAX_BEATS = 8
 const BAR = 4
 
+/** Where a phrase may start: the tonic chord, picked by the first file's depth. */
+const OPENINGS = [0, 2, 4, 7]
+
 /**
- * Scale steps from one note to the next, chosen by the next file's fan-in.
- * Thirds dominate, so an average chain climbs like an arpeggio; a file few
- * things use steps down.
+ * Interval sizes in scale steps, by how much more or less used the next file
+ * is: a repeat, a step, a third or a fifth.
  */
-const STEPS = [-2, -1, 1, 2, 2, 3]
+const LEAPS = [0, 1, 2, 4]
 
 /** Note lengths in beats, chosen by fan-out: a file that does a lot moves fast. */
-const DURATIONS = [2, 1.5, 1, 0.5]
+const DURATIONS = [2, 1.5, 1, 0.75, 0.5]
+
+/** The pause before a note whose file sits in another folder. */
+const BREATH = 0.5
 
 /** Keeps a long climb inside a playable range around the tonic. */
 function fold(degree: number): number {
@@ -28,15 +39,28 @@ function fold(degree: number): number {
   return degree
 }
 
+/** Scale degrees of the tonic chord, which a phrase comes to rest on. */
+function settle(degree: number): number {
+  const within = ((degree % 7) + 7) % 7
+  // The leading note rises to the tonic; any other note off the chord falls
+  // a step onto it, so most phrases end by falling.
+  if (within === 6) return degree + 1
+  return within % 2 === 1 ? degree - 1 : degree
+}
+
+const folder = (node: StructureNode): string =>
+  node.path.slice(0, node.path.lastIndexOf('/'))
+
 /**
- * One file as one note. The first file's depth picks where the phrase starts
- * (not its centrality: paths start from the most central files, so that would
- * start every phrase on the same note). Every later note moves from the one
- * before.
+ * The step from `from` to `to`. Up when `to` is used by more files, down
+ * when by fewer, and further the bigger the ratio: log2 of it, so twice as
+ * many callers is a step and eight times is a fifth.
  */
-function noteFor(node: StructureNode, previous: number | undefined): number {
-  if (previous === undefined) return quantise(node.rank.depth, 0, 4)
-  return fold(previous + STEPS[quantise(node.rank.fanIn, 0, STEPS.length - 1)]!)
+export function interval(from: StructureNode, to: StructureNode): number {
+  const ratio = Math.log2((to.fanIn + 1) / (from.fanIn + 1))
+  const size = Math.abs(ratio)
+  const leap = LEAPS[size < 0.2 ? 0 : size < 1 ? 1 : size < 2.5 ? 2 : 3]!
+  return ratio < 0 ? -leap : leap
 }
 
 /**
@@ -52,20 +76,27 @@ export function pathMotif(
   const nodes = path.map((i) => structure.nodes[i]!)
   const notes: MotifNote[] = []
   let time = 0
-  let degree: number | undefined
-  for (const node of nodes) {
+  let degree = OPENINGS[quantise(nodes[0]!.rank.depth, 0, OPENINGS.length - 1)]!
+  for (const [k, node] of nodes.entries()) {
+    const previous = nodes[k - 1]
     const duration =
       DURATIONS[quantise(node.rank.fanOut, 0, DURATIONS.length - 1)]!
-    if (time + duration > MAX_BEATS) break
-    degree = noteFor(node, degree)
+    // Crossing into another folder is a new clause, so leave a gap.
+    const start =
+      previous && folder(previous) !== folder(node) ? time + BREATH : time
+    if (start + duration > MAX_BEATS) break
+    if (previous) degree = fold(degree + interval(previous, node))
     notes.push({
       degree,
-      start: time,
+      start,
       duration,
-      velocity: 70 + quantise(node.rank.centrality, 0, 40),
+      // Accent the downbeats, so the phrase has a metre as well as a line.
+      velocity: start % BAR === 0 ? 100 : start % 1 === 0 ? 86 : 74,
     })
-    time += duration
+    time = start + duration
   }
+  const last = notes.at(-1)!
+  notes[notes.length - 1] = { ...last, degree: settle(last.degree) }
   return {
     id,
     source: {

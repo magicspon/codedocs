@@ -10,82 +10,82 @@
     "semantic_hash": "7df4954b8dd2873f525118470005db90"
   },
   ".husky/_/applypatch-msg": {
-    "mtime": 1790516804.6396859,
+    "mtime": 1790611192.947764,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/commit-msg": {
-    "mtime": 1790516804.639555,
+    "mtime": 1790611192.9476233,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/h": {
-    "mtime": 1790516804.63923,
+    "mtime": 1790611192.9472752,
     "ast_hash": "15239a01c5554e56ff745570fb583a91",
     "semantic_hash": "15239a01c5554e56ff745570fb583a91"
   },
   ".husky/_/husky.sh": {
-    "mtime": 1790516804.6409435,
+    "mtime": 1790611192.948657,
     "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
     "semantic_hash": "13871d2ab13e8423790ecb2c01c78c18"
   },
   ".husky/_/post-applypatch": {
-    "mtime": 1790516804.6398473,
+    "mtime": 1790611192.94794,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-checkout": {
-    "mtime": 1790516804.6404822,
+    "mtime": 1790611192.948266,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-commit": {
-    "mtime": 1790516804.6396205,
+    "mtime": 1790611192.9476924,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-merge": {
-    "mtime": 1790516804.6405551,
+    "mtime": 1790611192.9483848,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/post-rewrite": {
-    "mtime": 1790516804.6403556,
+    "mtime": 1790611192.9481254,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-applypatch": {
-    "mtime": 1790516804.6397672,
+    "mtime": 1790611192.947839,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-auto-gc": {
-    "mtime": 1790516804.6408427,
+    "mtime": 1790611192.9485438,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-commit": {
-    "mtime": 1790516804.6393507,
+    "mtime": 1790611192.9473908,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-merge-commit": {
-    "mtime": 1790516804.6394248,
+    "mtime": 1790611192.9474642,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-push": {
-    "mtime": 1790516804.6407363,
+    "mtime": 1790611192.9484596,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/pre-rebase": {
-    "mtime": 1790516804.6401706,
+    "mtime": 1790611192.9480257,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
   ".husky/_/prepare-commit-msg": {
-    "mtime": 1790516804.6394875,
+    "mtime": 1790611192.9475307,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": "0b71c2e7d39daa010985d529f1320b37"
   },
@@ -105,7 +105,7 @@
     "semantic_hash": "8f6e7b204d54987b17bf027230fec44f"
   },
   "cspell.json": {
-    "mtime": 1790611138.057357,
+    "mtime": 1790611693.5863981,
     "ast_hash": "ac40c6934bbe23b842ee73fd7b0bc2a0",
     "semantic_hash": ""
   },
@@ -115,7 +115,7 @@
     "semantic_hash": "44be96c75aff88f72e74b3c7ba5f5440"
   },
   "package.json": {
-    "mtime": 1790607746.4950697,
+    "mtime": 1790611693.5953562,
     "ast_hash": "2820c1e00f04b95cb3e476a998c2112d",
     "semantic_hash": ""
   },
@@ -140,7 +140,7 @@
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1790611138.074017,
+    "mtime": 1790611693.596087,
     "ast_hash": "726b7d171d3eef2e8efba22f143e2a1c",
     "semantic_hash": ""
   },
@@ -185,7 +185,7 @@
     "semantic_hash": ""
   },
   "cspell.words.txt": {
-    "mtime": 1790611138.057843,
+    "mtime": 1790611693.5865989,
     "ast_hash": "886f4ab17d9faf6e4c3d42400b278c1d",
     "semantic_hash": ""
   },
@@ -1555,7 +1555,7 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790554398.4402165,
+    "mtime": 1790611693.5597181,
     "ast_hash": "9f2f71c3deae1153674d1b4a32041942",
     "semantic_hash": ""
   },
@@ -1645,7 +1645,7 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790605631.5516224,
+    "mtime": 1790611693.5592809,
     "ast_hash": "eab9e97bd1b47aebe5a7b630e823ef66",
     "semantic_hash": ""
   },
@@ -1775,12 +1775,12 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Stage.tsx": {
-    "mtime": 1790549952.2982714,
+    "mtime": 1790611693.5616567,
     "ast_hash": "cbf3b78a0273434dfec56b83b5ba6ac9",
     "semantic_hash": ""
   },
   "apps/code-art/src/hooks.ts": {
-    "mtime": 1790554103.6351707,
+    "mtime": 1790611693.5618649,
     "ast_hash": "df46f59cb5360a72e85efacf0f20d57e",
     "semantic_hash": ""
   },
@@ -2150,12 +2150,12 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/GalaxyHud.tsx": {
-    "mtime": 1790547135.1295407,
+    "mtime": 1790611693.5605717,
     "ast_hash": "572efbaafd59d5ccacca80826be3bfc7",
     "semantic_hash": ""
   },
   "apps/code-art/src/icons.tsx": {
-    "mtime": 1790549952.2987487,
+    "mtime": 1790611693.5620682,
     "ast_hash": "ebe07d55708cbf042067bf786ad2bad5",
     "semantic_hash": ""
   },
@@ -2420,12 +2420,12 @@
     "semantic_hash": ""
   },
   "apps/codesong/package.json": {
-    "mtime": 1790611138.0542307,
+    "mtime": 1790611693.5848958,
     "ast_hash": "000588f38919ab62f97cb52f3688d630",
     "semantic_hash": ""
   },
   "apps/codesong/scripts/compose.ts": {
-    "mtime": 1790611138.0549476,
+    "mtime": 1790611693.5852892,
     "ast_hash": "c304c67438f11dd21214f9589ee2c126",
     "semantic_hash": ""
   },
@@ -2435,7 +2435,7 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/compose.ts": {
-    "mtime": 1790611138.05587,
+    "mtime": 1790611693.5857108,
     "ast_hash": "5da3231d56554ffd223a73749d7372d3",
     "semantic_hash": ""
   },
@@ -2445,8 +2445,8 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/melody.ts": {
-    "mtime": 1790516894.7667983,
-    "ast_hash": "49f02c11fbd376a5b3dcb25bf32cd041",
+    "mtime": 1790611958.5308187,
+    "ast_hash": "9d83db9e4a44b0e5fa0b5dd073ca6820",
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/rhythm.ts": {
@@ -2455,7 +2455,7 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/index.ts": {
-    "mtime": 1790611138.0564425,
+    "mtime": 1790611693.5860517,
     "ast_hash": "35d75574d7b18bd90b43a47b73be03ee",
     "semantic_hash": ""
   },
@@ -2465,8 +2465,8 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/model.ts": {
-    "mtime": 1790516894.7705905,
-    "ast_hash": "b5d60555379cd808a3be94996e84b258",
+    "mtime": 1790612128.1430845,
+    "ast_hash": "ef4610e654d7a15f3f22c949c95d4391",
     "semantic_hash": ""
   },
   "apps/codesong/src/paths.ts": {
@@ -2625,7 +2625,7 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/package.json": {
-    "mtime": 1790611138.035938,
+    "mtime": 1790611693.575277,
     "ast_hash": "6bd4a255af7e8768037fb769af051603",
     "semantic_hash": ""
   },
@@ -2635,12 +2635,12 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/SongList.tsx": {
-    "mtime": 1790611138.044393,
+    "mtime": 1790611693.5789926,
     "ast_hash": "225ae558f6c6bb2c65eb7ac6a5a52adf",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/SongPage.tsx": {
-    "mtime": 1790611138.044812,
+    "mtime": 1790611693.5791674,
     "ast_hash": "c9384eb2b31e6a88e009ffb52c379aec",
     "semantic_hash": ""
   },
@@ -2650,17 +2650,17 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/router.tsx": {
-    "mtime": 1790611138.0492392,
+    "mtime": 1790611693.5821593,
     "ast_hash": "3c1886ffc5c663e23aca1d579f7a1ae0",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/songs.ts": {
-    "mtime": 1790611138.0511076,
+    "mtime": 1790611693.583104,
     "ast_hash": "d5e3475cd906732fe8c668ef93038270",
     "semantic_hash": ""
   },
   "apps/codesong-site/tsconfig.json": {
-    "mtime": 1790611138.0531,
+    "mtime": 1790611693.5842266,
     "ast_hash": "6ab019822959cf74f12c8e564d2430cb",
     "semantic_hash": ""
   },
@@ -2670,7 +2670,7 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/vite.config.ts": {
-    "mtime": 1790611138.0534668,
+    "mtime": 1790611693.5844114,
     "ast_hash": "5e0fd82a6e7fb652b0991df41c216700",
     "semantic_hash": ""
   },
@@ -2685,7 +2685,7 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/HowItWorks.tsx": {
-    "mtime": 1790611138.0437784,
+    "mtime": 1790611693.5787086,
     "ast_hash": "728494474323f485e6693b1d0e0d441c",
     "semantic_hash": ""
   },
@@ -2790,548 +2790,548 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/SceneSwitch.tsx": {
-    "mtime": 1790549952.298647,
+    "mtime": 1790611693.5613458,
     "ast_hash": "266523ae140a8d4f2ca7aba0d2180ac6",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-field.ts": {
-    "mtime": 1790606503.1164978,
+    "mtime": 1790611693.5674162,
     "ast_hash": "1a398ffa3d2594d16b9dce97d3bf6016",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-layout.ts": {
-    "mtime": 1790607785.7602794,
+    "mtime": 1790611693.5677059,
     "ast_hash": "90d7f98c21cd777a4ce9188e587ac0ab",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-noise.ts": {
-    "mtime": 1790547350.6679196,
+    "mtime": 1790611693.5679328,
     "ast_hash": "b76aa924309dfac82cdc28018c936214",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-rivers.ts": {
-    "mtime": 1790547350.6981888,
+    "mtime": 1790611693.5681098,
     "ast_hash": "c7de0674cc762e73aed354c781076a49",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-text.ts": {
-    "mtime": 1790549920.2972748,
+    "mtime": 1790611693.5683525,
     "ast_hash": "74a77aea8a16cdab7c382f459b94de15",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-tree.ts": {
-    "mtime": 1790547350.6630273,
+    "mtime": 1790611693.5685463,
     "ast_hash": "9eb3b518d0d53526b7d1b20880dc6cca",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Terrain.tsx": {
-    "mtime": 1790607785.760107,
+    "mtime": 1790611693.5709872,
     "ast_hash": "c5169ca2a934955a99e7dc6b9e3cf456",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/terrain-material.ts": {
-    "mtime": 1790606516.2490985,
+    "mtime": 1790611693.573315,
     "ast_hash": "4d75962c1490c8328eb78722bd0f85ac",
     "semantic_hash": ""
   },
   "apps/code-art/test/terrain.test.ts": {
-    "mtime": 1790607785.7602732,
+    "mtime": 1790611693.5750566,
     "ast_hash": "1e86d42d78bb41bac8ae8aa01f4f70dd",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-strata.ts": {
-    "mtime": 1790547987.862567,
+    "mtime": 1790611693.568227,
     "ast_hash": "3f95ecb26c66bcb020e6dcb12a521d90",
     "semantic_hash": ""
   },
   "apps/code-art/src/ArtHud.tsx": {
-    "mtime": 1790554398.4403625,
+    "mtime": 1790611693.5598533,
     "ast_hash": "4f5a1512f4321bc773abf1e9e00bd5ec",
     "semantic_hash": ""
   },
   "apps/code-art/src/MetroDash.tsx": {
-    "mtime": 1790605652.541221,
+    "mtime": 1790611693.5609794,
     "ast_hash": "47481718c1ec148bb7af750a05c1c44b",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/buggy.ts": {
-    "mtime": 1790550658.8612137,
+    "mtime": 1790611693.562428,
     "ast_hash": "1a718eda5e088ebfc4d8eebb4dfc936d",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/legend.ts": {
-    "mtime": 1790549920.2747397,
+    "mtime": 1790611693.562652,
     "ast_hash": "78f046d953551cd06ebefd403126980a",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-buildings.ts": {
-    "mtime": 1790550658.8684132,
+    "mtime": 1790611693.5631518,
     "ast_hash": "849fa2858c9f50ca0a2d20e9101038b6",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-dash.ts": {
-    "mtime": 1790605625.1280546,
+    "mtime": 1790611693.5633857,
     "ast_hash": "722b0ef94c5a6e66b44528416bc2894f",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-frames.ts": {
-    "mtime": 1790550553.6864386,
+    "mtime": 1790611693.5635102,
     "ast_hash": "58a32c536413778c40e4328d00c60a8b",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-hash.ts": {
-    "mtime": 1790550553.7099175,
+    "mtime": 1790611693.563627,
     "ast_hash": "4897de1c86a98af54177c90146c454c6",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-layout.ts": {
-    "mtime": 1790552960.1912396,
+    "mtime": 1790611693.5640426,
     "ast_hash": "83c5d3da4e2b2f84212263009ab5399d",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-paths.ts": {
-    "mtime": 1790550553.7091205,
+    "mtime": 1790611693.5645316,
     "ast_hash": "68170b5fd76738d8d2c25bb977365a28",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-relax.ts": {
-    "mtime": 1790553410.8679376,
+    "mtime": 1790611693.564883,
     "ast_hash": "d91f00a063b67d0ea988e2519d1ad4ed",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-ribbons.ts": {
-    "mtime": 1790553583.4311059,
+    "mtime": 1790611693.5650444,
     "ast_hash": "8f14f121722bd11a14180ccca5d0083d",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-roads.ts": {
-    "mtime": 1790552911.5742326,
+    "mtime": 1790611693.565536,
     "ast_hash": "885f423768aa0e60975db573c521c747",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-sight.ts": {
-    "mtime": 1790550640.8157098,
+    "mtime": 1790611693.5656507,
     "ast_hash": "3d2d33373b6f834711fd4e6378ad910f",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-sites.ts": {
-    "mtime": 1790550600.7922163,
+    "mtime": 1790611693.565904,
     "ast_hash": "26dfda8efde35bc5b5a470d1c485e37f",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-sphere.ts": {
-    "mtime": 1790550600.790989,
+    "mtime": 1790611693.5660162,
     "ast_hash": "ba80e20c0e85e888e6c1b6471f9118f7",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-text.ts": {
-    "mtime": 1790605625.1282842,
+    "mtime": 1790611693.566441,
     "ast_hash": "0bd39eaa5fb5d825395446542bc57c94",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-traffic.ts": {
-    "mtime": 1790553215.453759,
+    "mtime": 1790611693.566602,
     "ast_hash": "62c234d1eb367bb28d137d590bf59f59",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-warp.ts": {
-    "mtime": 1790550553.705943,
+    "mtime": 1790611693.5667315,
     "ast_hash": "bc33feb4eeef25cd6b85eb7d0c31207f",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/most-called.ts": {
-    "mtime": 1790549249.3809795,
+    "mtime": 1790611693.5668569,
     "ast_hash": "16f812975f67bd2da236caf4f1f08a08",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Buggy.tsx": {
-    "mtime": 1790553739.3546126,
+    "mtime": 1790611693.568922,
     "ast_hash": "45197f1a9d6c163df3742223db879046",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/BuggyBody.tsx": {
-    "mtime": 1790550930.9210904,
+    "mtime": 1790611693.5691118,
     "ast_hash": "56d9cd8000bcfb5eb2740a0a58078b76",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/Metro.tsx": {
-    "mtime": 1790554770.235768,
+    "mtime": 1790611693.5692785,
     "ast_hash": "1c802111ae6ad21cd3465a3be9dfb9cd",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroAir.tsx": {
-    "mtime": 1790550553.675199,
+    "mtime": 1790611693.56951,
     "ast_hash": "e1196d73f54595908a764e56f3c8bcec",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroBuildings.tsx": {
-    "mtime": 1790550553.6766381,
+    "mtime": 1790611693.5696628,
     "ast_hash": "f6a9d70699fc70e3e185ab032d0c9020",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroRain.tsx": {
-    "mtime": 1790550842.5934043,
+    "mtime": 1790611693.5699663,
     "ast_hash": "e5e4725053c6a059d5ef818372370c6e",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/buggy-view.ts": {
-    "mtime": 1790550692.535109,
+    "mtime": 1790611693.5715535,
     "ast_hash": "41e070fb743da96fb138310c85040050",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/drag-look.ts": {
-    "mtime": 1790552262.2232285,
+    "mtime": 1790611693.5716982,
     "ast_hash": "f057f531499142c7aaa87075d28713f0",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-air-material.ts": {
-    "mtime": 1790553151.241734,
+    "mtime": 1790611693.57194,
     "ast_hash": "d470d74bc3c7d9ba10660a01f6013f52",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-building-material.ts": {
-    "mtime": 1790550946.5411365,
+    "mtime": 1790611693.5721304,
     "ast_hash": "e763b78f03920debea170f9f65534621",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-glsl.ts": {
-    "mtime": 1790549687.9339497,
+    "mtime": 1790611693.5722618,
     "ast_hash": "172a8be789f57acdc24a074d81702c70",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-ground-material.ts": {
-    "mtime": 1790605766.9774399,
+    "mtime": 1790611693.5725653,
     "ast_hash": "9694a0fdd2556c5ddbdd70ce7e6b4e7e",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-shapes.ts": {
-    "mtime": 1790550553.6784105,
+    "mtime": 1790611693.5727272,
     "ast_hash": "5acc2241b1569535cc533da595feef18",
     "semantic_hash": ""
   },
   "apps/code-art/test/metro.test.ts": {
-    "mtime": 1790554787.1310117,
+    "mtime": 1790611693.5747447,
     "ast_hash": "66b99f644fcaaafc5d9b971304e370e5",
     "semantic_hash": ""
   },
   "apps/code-art/src/MetroMap.tsx": {
-    "mtime": 1790553679.5238287,
+    "mtime": 1790611693.5611079,
     "ast_hash": "c058c7dc10e6dd4095c890d05790e9c7",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-autopilot.ts": {
-    "mtime": 1790605915.2671185,
+    "mtime": 1790611693.56295,
     "ast_hash": "4b39f0cdc8b84c3c87dce3a79fe08af4",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-hop.ts": {
-    "mtime": 1790552579.670309,
+    "mtime": 1790611693.5638754,
     "ast_hash": "566cfa4cff16ed5d59b9d8f00b4eb755",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-obstacles.ts": {
-    "mtime": 1790553691.8456933,
+    "mtime": 1790611693.56425,
     "ast_hash": "7aea265321471f08b566159807624d45",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-road-calls.ts": {
-    "mtime": 1790605766.976642,
+    "mtime": 1790611693.5652647,
     "ast_hash": "324ab9c4aee318151170c5ba8940fe58",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-road-index.ts": {
-    "mtime": 1790551183.3140388,
+    "mtime": 1790611693.5653827,
     "ast_hash": "8354431cdf2ca95d1e23ce4969685be4",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-signs.ts": {
-    "mtime": 1790552421.0268283,
+    "mtime": 1790611693.5657978,
     "ast_hash": "5ad84e04bc212cd06d9285f54d5007f6",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-tags.ts": {
-    "mtime": 1790554132.2802222,
+    "mtime": 1790611693.5661309,
     "ast_hash": "f9ee4d0ea16ae293acb879804ca15cf4",
     "semantic_hash": ""
   },
   "apps/code-art/src/metro-map-draw.ts": {
-    "mtime": 1790553679.5235372,
+    "mtime": 1790611693.5687163,
     "ast_hash": "4b970086bf1968bae0affee08c671a57",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroSigns.tsx": {
-    "mtime": 1790552579.712749,
+    "mtime": 1790611693.5701087,
     "ast_hash": "6d40c97ef6b07aeedad04f976691c6f2",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroSkyTags.tsx": {
-    "mtime": 1790554770.215643,
+    "mtime": 1790611693.5703607,
     "ast_hash": "02413aede716d8a3ff1c38a8df8fe2ec",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroTagged.tsx": {
-    "mtime": 1790605766.9772213,
+    "mtime": 1790611693.5706708,
     "ast_hash": "fc164ddbad12d0d799f1ac99702d433f",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/buggy-keys.ts": {
-    "mtime": 1790553480.420752,
+    "mtime": 1790611693.5711007,
     "ast_hash": "fc6799c45c7172b1848086bc46c4e144",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/buggy-steer.ts": {
-    "mtime": 1790605348.815336,
+    "mtime": 1790611693.5713165,
     "ast_hash": "6aa14693f6b26cceb7bb699141f0172b",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/metro-sign-material.ts": {
-    "mtime": 1790553338.9896872,
+    "mtime": 1790611693.5729527,
     "ast_hash": "128109a1c82b49b97970e89ff8ade031",
     "semantic_hash": ""
   },
   "apps/code-art/test/metro-drive.test.ts": {
-    "mtime": 1790605915.2673028,
+    "mtime": 1790611693.574383,
     "ast_hash": "ee9c73ce1dbcfb9dbc1b9478632c0288",
     "semantic_hash": ""
   },
   "apps/code-art/test/metro-fixture.ts": {
-    "mtime": 1790552756.576185,
+    "mtime": 1790611693.5745504,
     "ast_hash": "27c41711203760c94b0722cedc24d003",
     "semantic_hash": ""
   },
   "apps/code-art/src/CallCard.tsx": {
-    "mtime": 1790554770.1461916,
+    "mtime": 1790611693.5601397,
     "ast_hash": "397c73a4f235e590f3a57b617c11f2da",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/call-names.ts": {
-    "mtime": 1790554770.1083813,
+    "mtime": 1790611693.562542,
     "ast_hash": "bc8ba2c5aabdcd5e9a7af30abacecc0c",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-poster.ts": {
-    "mtime": 1790554769.5622067,
+    "mtime": 1790611693.5646973,
     "ast_hash": "6999178c9077d9a07042ded8b5c2eb0e",
     "semantic_hash": ""
   },
   "apps/code-art/src/scenes/MetroPoster.tsx": {
-    "mtime": 1790554953.631212,
+    "mtime": 1790611693.5698488,
     "ast_hash": "69259b169912425fb69603fd48edd574",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/nextjs.song.json": {
-    "mtime": 1790611138.0367339,
-    "ast_hash": "0dca2237092cc564d441aab86cf131a5",
+    "mtime": 1790612159.4564,
+    "ast_hash": "56d5dd6f8f812be48d29d368b4aa4aa0",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/nuxt.song.json": {
-    "mtime": 1790611138.037423,
-    "ast_hash": "4f3e200138c6541f26bc5b55185edba3",
+    "mtime": 1790612160.180174,
+    "ast_hash": "63d03cb8fa383d2e3c95aaa2977ba93c",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/opencode.song.json": {
-    "mtime": 1790611138.0386324,
-    "ast_hash": "1bfcaf707467159481402ae8216f18d0",
+    "mtime": 1790612160.9663303,
+    "ast_hash": "860f31f5c3ce7c99235b3f57b1f7cc1f",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/payload.song.json": {
-    "mtime": 1790611138.0395823,
-    "ast_hash": "8e297105e3bf16449d9c28ff8498907f",
+    "mtime": 1790612161.8159642,
+    "ast_hash": "c7a529962b85082b6c24a6dfee18837c",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/router.song.json": {
-    "mtime": 1790611138.040122,
-    "ast_hash": "538dc00b4d8d033628028d41dbb1d104",
+    "mtime": 1790612162.5734074,
+    "ast_hash": "d12476a8b92d36a64f3292f1a64ead1f",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/sentry.song.json": {
-    "mtime": 1790611138.0409331,
-    "ast_hash": "d45a72a0eeef6339e80a0bbe94714e6a",
+    "mtime": 1790612163.4567683,
+    "ast_hash": "f9215ba8bf7a22786d4b1d7540596a49",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/sst.song.json": {
-    "mtime": 1790611138.041384,
-    "ast_hash": "154c25f8491dc75d18d9ade803a1d72b",
+    "mtime": 1790612164.1625972,
+    "ast_hash": "e9aec59158357b010c12c8a5a5885948",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/typescript.song.json": {
-    "mtime": 1790611138.0421124,
-    "ast_hash": "b2ccbf32e24b454d6e3539a822828c02",
+    "mtime": 1790612164.8794363,
+    "ast_hash": "db8ac3d2f4627a3ff1b04c2198642c82",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/vscode.song.json": {
-    "mtime": 1790611138.042972,
-    "ast_hash": "23fc7c466be74086c433690d81f040bc",
+    "mtime": 1790612165.7744985,
+    "ast_hash": "e2a3caf2471ea6473ccfb6d318fb814d",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/SoundPanel.tsx": {
-    "mtime": 1790611138.0450647,
+    "mtime": 1790611693.5792904,
     "ast_hash": "a028d48d53076fff298f26c2a6bda8c5",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/Transport.tsx": {
-    "mtime": 1790611138.0453777,
+    "mtime": 1790611693.5794482,
     "ast_hash": "2ae9be53a42ddcf62ef4ea5541de047b",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/UnknownSong.tsx": {
-    "mtime": 1790611138.045659,
+    "mtime": 1790611693.5796626,
     "ast_hash": "cc66a5a20457dc531e020c9cda189753",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/instruments.ts": {
-    "mtime": 1790611138.0459409,
+    "mtime": 1790611693.5798979,
     "ast_hash": "b50cf54a6384655fe8ec09093a7445db",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/player.ts": {
-    "mtime": 1790611138.0462751,
+    "mtime": 1790611693.5800796,
     "ast_hash": "4195b42a06f26b49479a593dfa42a128",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/sound.ts": {
-    "mtime": 1790611138.0464675,
+    "mtime": 1790611693.5802495,
     "ast_hash": "f158de3bed9d79ad633f87c24228188a",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/usePlayer.ts": {
-    "mtime": 1790611138.0466373,
+    "mtime": 1790611693.580375,
     "ast_hash": "9b497cc157c25708bf09b2a693159659",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/explain/explain.ts": {
-    "mtime": 1790611138.0470479,
+    "mtime": 1790611693.5805876,
     "ast_hash": "f7fa7bd95b7697890d72835ea77ee75a",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/explain/names.ts": {
-    "mtime": 1790611138.0472937,
+    "mtime": 1790611693.5807168,
     "ast_hash": "10da3878486b6ffdaebefb058e6a3c84",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/icons.tsx": {
-    "mtime": 1790611138.0474577,
+    "mtime": 1790611693.5808446,
     "ast_hash": "3accdf9f623b719f0faa351d0d8131ab",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/Inspector.tsx": {
-    "mtime": 1790611138.0476868,
+    "mtime": 1790611693.5810153,
     "ast_hash": "dd079fcee4fc10f6841c1d6c4efacf64",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/MotifView.tsx": {
-    "mtime": 1790611138.047878,
+    "mtime": 1790611693.5811474,
     "ast_hash": "c087cd91c9e42015eaed3e27d30b2714",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/SectionView.tsx": {
-    "mtime": 1790611138.0481634,
+    "mtime": 1790611693.581289,
     "ast_hash": "ca806a653e76546805955cbb5a727598",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/SongView.tsx": {
-    "mtime": 1790611138.0483572,
+    "mtime": 1790611693.5814261,
     "ast_hash": "951d10884a6cf363454a846bb7bdbf26",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/ThisNote.tsx": {
-    "mtime": 1790611138.0485198,
+    "mtime": 1790611693.5815449,
     "ast_hash": "2aa59a549f09f8c005d011d7d2eb1e24",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/scene/Floor.tsx": {
-    "mtime": 1790611138.049505,
+    "mtime": 1790611693.5823202,
     "ast_hash": "713ca3f59e11b224ae5fb517616422fe",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/scene/Names.tsx": {
-    "mtime": 1790611138.049672,
+    "mtime": 1790611693.5824347,
     "ast_hash": "1c7e7e0e913d8b60dc3afbd7f9eb311a",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/scene/Notes.tsx": {
-    "mtime": 1790611138.0499184,
+    "mtime": 1790611693.5825562,
     "ast_hash": "f63b3d9b21597596d6bee44841e43ea0",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/scene/Stage.tsx": {
-    "mtime": 1790611138.050213,
+    "mtime": 1790611693.5827072,
     "ast_hash": "1376c72bd0b73978c7ddeae39e758930",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/scene/layout.ts": {
-    "mtime": 1790611138.0507317,
+    "mtime": 1790611693.5829327,
     "ast_hash": "6c31c59e9ad401d7a6c5cf5e0eda51c7",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/explain.test.ts": {
-    "mtime": 1790611138.0516977,
+    "mtime": 1790611693.5834785,
     "ast_hash": "39e9cdf6072de06d4e077aab6c83c480",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/names.test.ts": {
-    "mtime": 1790611138.0523176,
+    "mtime": 1790611693.5838256,
     "ast_hash": "929c832bb166c70d9f440e62e6b3e73f",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/sound.test.ts": {
-    "mtime": 1790611138.0526736,
+    "mtime": 1790611693.5840533,
     "ast_hash": "fa250e78ac4490013a30e4b68f56be66",
     "semantic_hash": ""
   },
   "apps/codesong-site/vitest.config.ts": {
-    "mtime": 1790611138.0537372,
+    "mtime": 1790611693.5846267,
     "ast_hash": "5ce3140d8414b856f849d4deb1405234",
     "semantic_hash": ""
   },
   "apps/codesong/src/browser.ts": {
-    "mtime": 1790611138.0552683,
+    "mtime": 1790611693.585457,
     "ast_hash": "5acd174868430fa4f2634e14fe43e586",
     "semantic_hash": ""
   },
   "apps/codesong/src/evidence.ts": {
-    "mtime": 1790611138.0560741,
+    "mtime": 1790611693.5858495,
     "ast_hash": "812416102e65dab160ed454896893288",
     "semantic_hash": ""
   },
   "apps/codesong/test/evidence.test.ts": {
-    "mtime": 1790611138.0568066,
+    "mtime": 1790611693.5862057,
     "ast_hash": "ae111f572c59f4897fc3d38da8936ecc",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/select.ts": {
-    "mtime": 1790611138.0488148,
+    "mtime": 1790611693.5816798,
     "ast_hash": "f1e5670155a37f7515ca4526a86bf11c",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/useSelection.ts": {
-    "mtime": 1790611138.0489967,
+    "mtime": 1790611693.5818243,
     "ast_hash": "9089cbc10c209fe211ecc7d048921ced",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/scene/launch.ts": {
-    "mtime": 1790611138.0504687,
+    "mtime": 1790611693.5828192,
     "ast_hash": "c5b7e14eba530b959e1b62ad94c67f27",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/inspector.test.tsx": {
-    "mtime": 1790611138.0518696,
+    "mtime": 1790611693.5835938,
     "ast_hash": "5c604a5210f6a40d425496f52a846972",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/launch.test.ts": {
-    "mtime": 1790611138.0520484,
+    "mtime": 1790611693.5837088,
     "ast_hash": "27e1c778b7106f9dd70bd74c68af5810",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/select.test.ts": {
-    "mtime": 1790611138.0524871,
+    "mtime": 1790611693.583943,
     "ast_hash": "cc172bf7e4bf7e544181c437f8f342ff",
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1790552405.3203754,
-    "ast_hash": "73320b512cdfcfebe6e857d4a8367d3a",
+    "mtime": 1790612128.0609493,
+    "ast_hash": "6032be0fb734322048b913842213242a",
     "semantic_hash": ""
   },
   ".codedocs/art/data/codedocs.json": {
@@ -3420,12 +3420,12 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/metro-highway.ts": {
-    "mtime": 1790605348.8153512,
+    "mtime": 1790611693.5637593,
     "ast_hash": "779a194662c19f70d1ed4049bb1c2513",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/terrain-apron.ts": {
-    "mtime": 1790607785.759923,
+    "mtime": 1790611693.5670087,
     "ast_hash": "fd6b2fcc776b729f2ef76ed0fcc1f2bf",
     "semantic_hash": ""
   },
@@ -3687,6 +3687,11 @@
   "packages/cli/README.md": {
     "mtime": 1790026632.9067352,
     "ast_hash": "59d277d5f302c04b83bc53275fd79932",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/melody.test.ts": {
+    "mtime": 1790612146.3151443,
+    "ast_hash": "b8380cd968fac5465cd32afafa2e0e1d",
     "semantic_hash": ""
   }
 }

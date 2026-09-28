@@ -1,6 +1,6 @@
 {
   "composition": {
-    "composerVersion": "0.2.1",
+    "composerVersion": "0.3.0",
     "origin": {
       "repository": "sst",
       "commit": "a0bd20f762883e72a35caccb4896c42ce5b3f707",
@@ -449,7 +449,7 @@
           {
             "motif": "phrase:platform/src/components:1",
             "start": 32,
-            "length": 8,
+            "length": 4,
             "transform": {
               "transpose": 0,
               "invert": false,
@@ -459,7 +459,7 @@
           },
           {
             "motif": "phrase:platform/src/components:2",
-            "start": 40,
+            "start": 36,
             "length": 8,
             "transform": {
               "transpose": 0,
@@ -470,6 +470,17 @@
           },
           {
             "motif": "phrase:platform/src/components:1",
+            "start": 44,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:platform/src/components:2",
             "start": 48,
             "length": 8,
             "transform": {
@@ -480,9 +491,20 @@
             }
           },
           {
-            "motif": "phrase:platform/src/components:2",
+            "motif": "phrase:platform/src/components:1",
             "start": 56,
-            "length": 8,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:platform/src/components:2",
+            "start": 60,
+            "length": 4,
             "transform": {
               "transpose": 0,
               "invert": false,
@@ -669,7 +691,7 @@
           {
             "motif": "phrase:platform/src/components/cloudflare:2",
             "start": 224,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 5,
               "invert": false,
@@ -679,30 +701,8 @@
           },
           {
             "motif": "phrase:platform/src/components/cloudflare:1",
-            "start": 228,
-            "length": 4,
-            "transform": {
-              "transpose": 5,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:platform/src/components/cloudflare:2",
             "start": 232,
-            "length": 4,
-            "transform": {
-              "transpose": 5,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:platform/src/components/cloudflare:1",
-            "start": 236,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 5,
               "invert": false,
@@ -713,7 +713,7 @@
           {
             "motif": "phrase:platform/src/components/cloudflare:2",
             "start": 240,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 5,
               "invert": false,
@@ -723,30 +723,8 @@
           },
           {
             "motif": "phrase:platform/src/components/cloudflare:1",
-            "start": 244,
-            "length": 4,
-            "transform": {
-              "transpose": 5,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:platform/src/components/cloudflare:2",
             "start": 248,
-            "length": 4,
-            "transform": {
-              "transpose": 5,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:platform/src/components/cloudflare:1",
-            "start": 252,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 5,
               "invert": false,
@@ -815,19 +793,19 @@
             "degree": 0,
             "start": 0,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 100
           },
           {
-            "degree": 2,
+            "degree": -2,
             "start": 1.5,
             "duration": 1.5,
-            "velocity": 109
+            "velocity": 74
           },
           {
-            "degree": 4,
+            "degree": -3,
             "start": 3,
             "duration": 2,
-            "velocity": 109
+            "velocity": 86
           }
         ],
         "length": 8
@@ -1367,25 +1345,25 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 1,
-            "velocity": 106
+            "velocity": 100
           },
           {
-            "degree": 4,
+            "degree": 6,
             "start": 1,
-            "duration": 1.5,
-            "velocity": 110
+            "duration": 1,
+            "velocity": 86
           },
           {
             "degree": 7,
-            "start": 2.5,
+            "start": 2,
             "duration": 2,
-            "velocity": 110
+            "velocity": 86
           }
         ],
-        "length": 8
+        "length": 4
       },
       {
         "id": "phrase:platform/src/components:2",
@@ -1401,22 +1379,22 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
             "duration": 1,
-            "velocity": 105
-          },
-          {
-            "degree": 5,
-            "start": 1,
-            "duration": 1.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
             "degree": 8,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 74
+          },
+          {
+            "degree": 7,
             "start": 2.5,
             "duration": 2,
-            "velocity": 110
+            "velocity": 74
           }
         ],
         "length": 8
@@ -2624,34 +2602,34 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
-            "duration": 1.5,
-            "velocity": 107
-          },
-          {
-            "degree": 4,
-            "start": 1.5,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 7,
-            "start": 2,
-            "duration": 0.5,
-            "velocity": 103
+            "duration": 1,
+            "velocity": 100
           },
           {
             "degree": 3,
-            "start": 2.5,
+            "start": 1,
             "duration": 0.5,
-            "velocity": 98
+            "velocity": 86
           },
           {
-            "degree": 6,
-            "start": 3,
+            "degree": 1,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 74
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 86
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
             "duration": 1,
-            "velocity": 103
+            "velocity": 74
           }
         ],
         "length": 4
@@ -2670,22 +2648,22 @@
         },
         "notes": [
           {
-            "degree": 4,
+            "degree": 7,
             "start": 0,
             "duration": 0.5,
-            "velocity": 108
+            "velocity": 100
+          },
+          {
+            "degree": 9,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 74
           },
           {
             "degree": 7,
-            "start": 0.5,
-            "duration": 0.5,
-            "velocity": 110
-          },
-          {
-            "degree": 3,
             "start": 1,
-            "duration": 1.5,
-            "velocity": 107
+            "duration": 1,
+            "velocity": 86
           }
         ],
         "length": 4
@@ -3449,25 +3427,25 @@
         },
         "notes": [
           {
-            "degree": 4,
+            "degree": 7,
             "start": 0,
             "duration": 1,
-            "velocity": 97
+            "velocity": 100
           },
           {
-            "degree": 6,
-            "start": 1,
+            "degree": 9,
+            "start": 1.5,
             "duration": 0.5,
-            "velocity": 98
+            "velocity": 74
           },
           {
             "degree": 7,
-            "start": 1.5,
+            "start": 2.5,
             "duration": 2,
-            "velocity": 95
+            "velocity": 74
           }
         ],
-        "length": 4
+        "length": 8
       },
       {
         "id": "phrase:platform/src/components/cloudflare:1",
@@ -3483,25 +3461,25 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 106
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 86
           },
           {
             "degree": 4,
-            "start": 0.5,
-            "duration": 1.5,
-            "velocity": 99
-          },
-          {
-            "degree": 7,
-            "start": 2,
+            "start": 3,
             "duration": 2,
-            "velocity": 108
+            "velocity": 86
           }
         ],
-        "length": 4
+        "length": 8
       }
     ],
     "sections": [

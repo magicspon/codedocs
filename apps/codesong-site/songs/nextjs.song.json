@@ -1,6 +1,6 @@
 {
   "composition": {
-    "composerVersion": "0.2.1",
+    "composerVersion": "0.3.0",
     "origin": {
       "repository": "nextjs",
       "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -681,7 +681,7 @@
           {
             "motif": "phrase:packages/next/src/next-devtools:1",
             "start": 96,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 4,
               "invert": false,
@@ -691,17 +691,6 @@
           },
           {
             "motif": "phrase:packages/next/src/next-devtools:2",
-            "start": 100,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:packages/next/src/next-devtools:1",
             "start": 104,
             "length": 4,
             "transform": {
@@ -712,20 +701,9 @@
             }
           },
           {
-            "motif": "phrase:packages/next/src/next-devtools:2",
-            "start": 108,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
             "motif": "phrase:packages/next/src/next-devtools:1",
-            "start": 112,
-            "length": 4,
+            "start": 108,
+            "length": 8,
             "transform": {
               "transpose": 4,
               "invert": false,
@@ -747,18 +725,7 @@
           {
             "motif": "phrase:packages/next/src/next-devtools:1",
             "start": 120,
-            "length": 4,
-            "transform": {
-              "transpose": 4,
-              "invert": false,
-              "octave": 0,
-              "stretch": 1
-            }
-          },
-          {
-            "motif": "phrase:packages/next/src/next-devtools:2",
-            "start": 124,
-            "length": 4,
+            "length": 8,
             "transform": {
               "transpose": 4,
               "invert": false,
@@ -1165,22 +1132,22 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 5,
-            "start": 1,
-            "duration": 1,
-            "velocity": 110
+            "degree": 6,
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 8,
+            "degree": 2,
             "start": 2,
-            "duration": 1.5,
-            "velocity": 110
+            "duration": 1,
+            "velocity": 86
           }
         ],
         "length": 4
@@ -1615,22 +1582,22 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
             "degree": 5,
             "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 1.5,
+            "degree": 0,
+            "start": 1.25,
             "duration": 2,
-            "velocity": 109
+            "velocity": 74
           }
         ],
         "length": 4
@@ -1649,22 +1616,22 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 5,
-            "start": 1,
-            "duration": 1,
-            "velocity": 110
+            "degree": 6,
+            "start": 0.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 8,
+            "degree": 2,
             "start": 2,
-            "duration": 1.5,
-            "velocity": 110
+            "duration": 1,
+            "velocity": 86
           }
         ],
         "length": 4
@@ -2099,22 +2066,22 @@
         },
         "notes": [
           {
-            "degree": 4,
+            "degree": 7,
             "start": 0,
-            "duration": 1.5,
-            "velocity": 104
+            "duration": 1,
+            "velocity": 100
+          },
+          {
+            "degree": 8,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 86
           },
           {
             "degree": 7,
             "start": 1.5,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 9,
-            "start": 2,
             "duration": 2,
-            "velocity": 102
+            "velocity": 74
           }
         ],
         "length": 4
@@ -2133,22 +2100,22 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
-            "duration": 1,
-            "velocity": 101
+            "duration": 0.75,
+            "velocity": 100
           },
           {
-            "degree": 4,
-            "start": 1,
-            "duration": 1,
-            "velocity": 106
+            "degree": 3,
+            "start": 1.25,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
             "degree": 7,
             "start": 2,
-            "duration": 1.5,
-            "velocity": 110
+            "duration": 1,
+            "velocity": 86
           }
         ],
         "length": 4
@@ -2565,25 +2532,25 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
-            "duration": 1.5,
-            "velocity": 107
+            "duration": 1,
+            "velocity": 100
           },
           {
-            "degree": 5,
+            "degree": 8,
             "start": 1.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 6,
-            "start": 2,
+            "degree": 4,
+            "start": 2.5,
             "duration": 2,
-            "velocity": 104
+            "velocity": 74
           }
         ],
-        "length": 4
+        "length": 8
       },
       {
         "id": "phrase:packages/next/src/next-devtools:2",
@@ -2599,22 +2566,22 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 107
+            "velocity": 100
           },
           {
-            "degree": 4,
-            "start": 0.5,
-            "duration": 0.5,
-            "velocity": 103
-          },
-          {
-            "degree": 6,
+            "degree": 5,
             "start": 1,
+            "duration": 0.5,
+            "velocity": 86
+          },
+          {
+            "degree": 7,
+            "start": 2,
             "duration": 2,
-            "velocity": 107
+            "velocity": 86
           }
         ],
         "length": 4
@@ -3103,22 +3070,22 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 109
+            "velocity": 100
           },
           {
-            "degree": 2,
+            "degree": -2,
             "start": 0.5,
-            "duration": 1,
-            "velocity": 102
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 4,
-            "start": 1.5,
-            "duration": 1.5,
-            "velocity": 101
+            "degree": 0,
+            "start": 1.25,
+            "duration": 1,
+            "velocity": 74
           }
         ],
         "length": 4
@@ -3140,40 +3107,40 @@
         },
         "notes": [
           {
-            "degree": 1,
-            "start": 0,
-            "duration": 1,
-            "velocity": 109
-          },
-          {
             "degree": 2,
-            "start": 1,
+            "start": 0,
+            "duration": 0.75,
+            "velocity": 100
+          },
+          {
+            "degree": -2,
+            "start": 1.25,
             "duration": 0.5,
-            "velocity": 109
+            "velocity": 74
           },
           {
-            "degree": 3,
-            "start": 1.5,
-            "duration": 1,
-            "velocity": 103
+            "degree": -2,
+            "start": 1.75,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 5,
+            "degree": -1,
             "start": 2.5,
             "duration": 0.5,
-            "velocity": 106
+            "velocity": 74
           },
           {
-            "degree": 7,
+            "degree": -1,
             "start": 3,
-            "duration": 1.5,
-            "velocity": 105
+            "duration": 1,
+            "velocity": 86
           },
           {
-            "degree": 3,
+            "degree": 0,
             "start": 4.5,
             "duration": 2,
-            "velocity": 109
+            "velocity": 74
           }
         ],
         "length": 8
@@ -3639,28 +3606,28 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 107
+            "velocity": 100
           },
           {
             "degree": 5,
             "start": 0.5,
             "duration": 0.5,
-            "velocity": 102
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 1,
-            "duration": 1,
-            "velocity": 108
+            "degree": 5,
+            "start": 1.5,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
             "degree": 4,
-            "start": 2,
-            "duration": 1,
-            "velocity": 108
+            "start": 2.25,
+            "duration": 0.75,
+            "velocity": 74
           }
         ],
         "length": 4
@@ -3682,40 +3649,40 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 4,
+            "degree": 0,
             "start": 0.5,
-            "duration": 1,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 6,
-            "start": 1.5,
-            "duration": 1,
-            "velocity": 109
+            "degree": -2,
+            "start": 1.25,
+            "duration": 0.75,
+            "velocity": 74
           },
           {
-            "degree": 9,
+            "degree": 0,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 86
+          },
+          {
+            "degree": 0,
             "start": 2.5,
             "duration": 0.5,
-            "velocity": 109
+            "velocity": 74
           },
           {
-            "degree": 5,
+            "degree": 0,
             "start": 3,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 8,
-            "start": 3.5,
             "duration": 2,
-            "velocity": 106
+            "velocity": 86
           }
         ],
         "length": 8
@@ -4156,22 +4123,22 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 4,
-            "start": 0.5,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 7,
+            "degree": 2,
             "start": 1,
-            "duration": 1,
-            "velocity": 109
+            "duration": 0.5,
+            "velocity": 86
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.75,
+            "velocity": 74
           }
         ],
         "length": 4
@@ -4194,46 +4161,46 @@
         },
         "notes": [
           {
-            "degree": 2,
+            "degree": 4,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 5,
+            "degree": 2,
             "start": 0.5,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 8,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 4,
+            "degree": 1,
             "start": 1.5,
-            "duration": 1,
-            "velocity": 107
+            "duration": 0.5,
+            "velocity": 74
           },
           {
-            "degree": 7,
+            "degree": -1,
             "start": 2.5,
-            "duration": 0.5,
-            "velocity": 110
+            "duration": 0.75,
+            "velocity": 74
           },
           {
             "degree": 3,
-            "start": 3,
+            "start": 3.25,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 74
           },
           {
-            "degree": 6,
-            "start": 3.5,
+            "degree": 3,
+            "start": 4.25,
+            "duration": 0.5,
+            "velocity": 74
+          },
+          {
+            "degree": 2,
+            "start": 4.75,
             "duration": 2,
-            "velocity": 108
+            "velocity": 74
           }
         ],
         "length": 8
@@ -4893,22 +4860,22 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
-            "duration": 1,
-            "velocity": 109
+            "duration": 0.75,
+            "velocity": 100
+          },
+          {
+            "degree": 3,
+            "start": 1.25,
+            "duration": 0.5,
+            "velocity": 74
           },
           {
             "degree": 4,
-            "start": 1,
-            "duration": 0.5,
-            "velocity": 109
-          },
-          {
-            "degree": 7,
-            "start": 1.5,
-            "duration": 1,
-            "velocity": 110
+            "start": 2.25,
+            "duration": 0.75,
+            "velocity": 74
           }
         ],
         "length": 4
@@ -4927,22 +4894,22 @@
         },
         "notes": [
           {
-            "degree": 1,
+            "degree": 2,
             "start": 0,
             "duration": 0.5,
-            "velocity": 110
+            "velocity": 100
           },
           {
-            "degree": 4,
+            "degree": 0,
             "start": 0.5,
-            "duration": 1.5,
-            "velocity": 110
+            "duration": 1,
+            "velocity": 74
           },
           {
-            "degree": 7,
-            "start": 2,
-            "duration": 1,
-            "velocity": 110
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.75,
+            "velocity": 74
           }
         ],
         "length": 4
