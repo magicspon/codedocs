@@ -10,6 +10,7 @@ import type {
   MotifNote,
   Part,
   Register,
+  Swing,
   Track,
   Transform,
 } from '../model.ts'
@@ -62,12 +63,13 @@ function pitcher(composition: Composition, track: Track): Pitcher {
 }
 
 /**
- * `start` pushed late by `swing` if it falls on an off-beat sixteenth (the
- * "e" or "a" of a beat), which is what makes a straight beat lean.
+ * `start` pushed late if it falls on the off-beat of the swing's grid (the
+ * "and" for eighths, the "e" and "a" for sixteenths), which is what makes a
+ * straight beat lean.
  */
-export function swung(start: number, swing: number): number {
-  const within = start % 0.5
-  return Math.abs(within - 0.25) < 1e-6 ? start + swing : start
+export function swung(start: number, { unit, late }: Swing): number {
+  const within = start % (2 * unit)
+  return Math.abs(within - unit) < 1e-6 ? start + late : start
 }
 
 /**
@@ -78,7 +80,7 @@ function partNotes(
   part: Part,
   motif: Motif,
   pitch: Pitcher,
-  swing: number,
+  swing: Swing,
 ): NoteEvent[] {
   const notes: NoteEvent[] = []
   const { stretch, fragment } = part.transform

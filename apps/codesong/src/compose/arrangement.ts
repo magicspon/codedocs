@@ -11,10 +11,13 @@ const BAR = 4
 
 /** What one subsystem gives its section. */
 export interface Material {
-  readonly pad: Motif
-  readonly bass: Motif
-  /** Absent when the subsystem has no dependency cycle. */
-  readonly arp?: Motif
+  /** The chords in the genre's rhythm: the call, then the answer. */
+  readonly pad: readonly Motif[]
+  /** The same chords held a bar each. */
+  readonly held: readonly Motif[]
+  readonly bass: readonly Motif[]
+  /** Empty when the subsystem has no dependency cycle. */
+  readonly arp: readonly Motif[]
   /** Melodic motifs from the subsystem's own dependency paths; may be empty. */
   readonly phrases: readonly Motif[]
   readonly groove: Motif
@@ -112,12 +115,30 @@ interface Scene {
   readonly half: number
 }
 
-/** The pad through the whole section; every form has it. */
-const pad = (c: Scene): Part[] => [span(c.material.pad, c.section, c.home)]
+/**
+ * Call and answer back to back over `[from, from + length)` of the section,
+ * taking up where they would be had they played from its start, so a part
+ * that enters late still lines up with the chords.
+ */
+function inTurn(
+  motifs: readonly Motif[],
+  c: Scene,
+  from = 0,
+  length = c.section.length - from,
+): Part[] {
+  const unit = motifs[0]?.length ?? BAR
+  const window = { ...c.section, start: c.section.start + from, length }
+  return sequence(motifs, window, Math.floor(from / unit), c.home)
+}
+
+/** The chords in the genre's rhythm, for the sections with a groove. */
+const pad = (c: Scene): Part[] => inTurn(c.material.pad, c)
+
+/** The chords held, for the sections that open, break down and close. */
+const held = (c: Scene): Part[] => inTurn(c.material.held, c)
 
 /** The arpeggio over the whole section, if the subsystem has one. */
-const loop = (c: Scene): Part[] =>
-  c.material.arp ? [span(c.material.arp, c.section, c.home)] : []
+const loop = (c: Scene): Part[] => inTurn(c.material.arp, c)
 
 /** The subsystem's own phrases, back to back, in `transform`. */
 const phrases = (c: Scene, transform: Transform): Part[] =>
@@ -126,22 +147,18 @@ const phrases = (c: Scene, transform: Transform): Part[] =>
 /** Each kind of section's texture. */
 const TEXTURES: Readonly<Record<Section['form'], (c: Scene) => SectionParts>> =
   {
-    // The theme at half speed over a bare pad; the loop creeps in halfway.
+    // The theme at half speed over held chords; the loop creeps in halfway.
     intro: (c) => ({
-      pad: pad(c),
+      pad: held(c),
       lead: [
         span(c.theme, c.section, shift(0, { stretch: 2 * c.m, octave: -1 })),
       ],
-      arp: loop(c).map((p) => ({
-        ...p,
-        start: p.start + c.half,
-        length: p.length - c.half,
-      })),
+      arp: inTurn(c.material.arp, c, c.half),
       percussion: drums(c.material, c.section),
     }),
     verse: (c) => ({
       pad: pad(c),
-      bass: [span(c.material.bass, c.section, c.home)],
+      bass: inTurn(c.material.bass, c),
       counter: phrases(c, c.tune),
       lead: [motto(c.theme, c.section, 3, 2, c.m)],
       arp: c.section.intensity >= 0.6 ? loop(c) : [],
@@ -150,23 +167,23 @@ const TEXTURES: Readonly<Record<Section['form'], (c: Scene) => SectionParts>> =
     // Everything at once, the theme in full and at home.
     chorus: (c) => ({
       pad: pad(c),
-      bass: [span(c.material.bass, c.section, c.home)],
+      bass: inTurn(c.material.bass, c),
       counter: phrases(c, c.tune),
       lead: [span(c.theme, c.section, shift(0, { stretch: c.m }))],
       arp: loop(c),
       percussion: drums(c.material, c.section),
     }),
-    // No bass or drums: the loop, the pad and the phrases upside down.
+    // No bass or drums: the loop, held chords and the phrases upside down.
     breakdown: (c) => ({
-      pad: pad(c),
+      pad: held(c),
       counter: phrases(c, { ...c.tune, invert: true }),
       lead: [motto(c.theme, c.section, 2, 4, c.m)],
       arp: loop(c),
     }),
     // The theme once more, then again at half speed as the bass drops out.
     outro: (c) => ({
-      pad: pad(c),
-      bass: [part(c.material.bass, c.section.start, c.half, c.home)],
+      pad: held(c),
+      bass: inTurn(c.material.bass, c, 0, c.half),
       lead: [
         part(c.theme, c.section.start, c.half, shift(0, { stretch: c.m })),
         part(

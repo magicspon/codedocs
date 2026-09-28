@@ -35,14 +35,16 @@ describe('genres', () => {
 
   it('suggests from how busy and how tangled the code is', () => {
     expect(suggest(exported('sentry')).genre).toBe('ambient')
-    expect(suggest(exported('typescript')).genre).toBe('dnb')
+    expect(suggest(exported('payload')).genre).toBe('dnb')
   })
 
   it('plays the same code-derived material in every genre', () => {
     const pieces = GENRE_NAMES.map(inGenre)
+    const form = (p: Composition) =>
+      p.sections.map((s) => `${s.form}:${s.name}`)
     for (const piece of pieces) {
       expect(piece.key).toBe(pieces[0]!.key)
-      expect(piece.sections).toEqual(pieces[0]!.sections)
+      expect(form(piece)).toEqual(form(pieces[0]!))
       expect(piece.motifs.find((m) => m.id === 'theme')).toEqual(
         pieces[0]!.motifs.find((m) => m.id === 'theme'),
       )
@@ -97,11 +99,92 @@ describe('genres', () => {
     )
   })
 
+  it('plays fast genres in longer sections, so they last about as long', () => {
+    const minutes = (p: Composition) =>
+      p.sections.reduce((n, s) => n + s.length, 0) / p.tempo
+    const slow = minutes(inGenre('ambient'))
+    for (const genre of ['techno', 'dnb', 'jazz'] as const)
+      expect(minutes(inGenre(genre)) / slow).toBeGreaterThan(0.75)
+    // A bar budget is the caller's, whatever the genre.
+    const fixed = compose(vscode, {
+      ...DEFAULT_OPTIONS,
+      genre: 'dnb',
+      bars: 48,
+    })
+    expect(fixed.sections.reduce((n, s) => n + s.length, 0)).toBeCloseTo(
+      48 * 4,
+      -2,
+    )
+  })
+
   it('swings off-beat sixteenths late and leaves the rest alone', () => {
-    expect(swung(1.25, 0.08)).toBeCloseTo(1.33)
-    expect(swung(1.75, 0.08)).toBeCloseTo(1.83)
-    expect(swung(1.5, 0.08)).toBe(1.5)
+    const sixteenths = { unit: 0.25, late: 0.08 }
+    expect(swung(1.25, sixteenths)).toBeCloseTo(1.33)
+    expect(swung(1.75, sixteenths)).toBeCloseTo(1.83)
+    expect(swung(1.5, sixteenths)).toBe(1.5)
     const lofi = realise(inGenre('lofi')).flatMap((t) => t.notes)
     expect(lofi.some((n) => Math.abs((n.start % 0.5) - 0.33) < 1e-6)).toBe(true)
+  })
+
+  it('swings jazz eighths as triplets', () => {
+    const eighths = GENRES.jazz.swing
+    expect(swung(2.5, eighths)).toBeCloseTo(2 + 2 / 3)
+    expect(swung(2.25, eighths)).toBe(2.25)
+  })
+
+  it('plays jazz on a ride, ding, ding-a ding, over a feathered kick', () => {
+    const piece = inGenre('jazz')
+    const chorus = piece.sections.findIndex((s) => s.form === 'chorus')
+    const bar = firstBar(piece, chorus)
+    const ride = bar.filter((n) => n.pitch === 42).map((n) => n.start % 4)
+    expect(ride.map((t) => t.toFixed(2))).toEqual([
+      '0.00',
+      '1.00',
+      '1.67',
+      '2.00',
+      '3.00',
+      '3.67',
+    ])
+    expect(
+      bar.filter((n) => n.pitch === 36).every((n) => n.velocity < 40),
+    ).toBe(true)
+  })
+
+  it('walks the jazz bass a note a beat, stepping into the next chord', () => {
+    const piece = inGenre('jazz')
+    const bass = piece.motifs.find((m) => m.id.startsWith('bass:'))!
+    expect(bass.notes.map((n) => n.start)).toEqual(
+      Array.from({ length: bass.notes.length }, (_, i) => i),
+    )
+  })
+
+  it('always adds the seventh to jazz chords', () => {
+    const pad = inGenre('jazz').motifs.find((m) => m.id.startsWith('pad:'))!
+    const firstChord = pad.notes.filter((n) => n.start === 0)
+    expect(firstChord.length).toBeGreaterThanOrEqual(4)
+  })
+
+  it('plays the chords in the genre’s rhythm, but holds them in the intro', () => {
+    const piece = inGenre('techno')
+    const pad = piece.tracks.find((t) => t.role === 'pad')!
+    const motif = (id: string) => piece.motifs.find((m) => m.id === id)!
+    const intro = pad.parts.filter((p) => p.start < piece.sections[1]!.start)
+    const chorus = piece.sections.find((s) => s.form === 'chorus')!
+    const groove = pad.parts.filter((p) => p.start === chorus.start)
+    expect(intro.every((p) => motif(p.motif).notes[0]!.duration === 4)).toBe(
+      true,
+    )
+    expect(motif(groove[0]!.motif).notes[0]!.duration).toBeLessThan(1)
+  })
+
+  it('answers each four-bar progression rather than looping it', () => {
+    const pad = inGenre('ambient').tracks.find((t) => t.role === 'pad')!
+    const ids = pad.parts.map((p) => p.motif)
+    expect(ids.some((id) => id.endsWith(':answer'))).toBe(true)
+  })
+
+  it('suggests jazz for code knotted into loops, busy or calm', () => {
+    expect(suggest(exported('typescript')).genre).toBe('jazz')
+    expect(suggest(exported('sst')).genre).toBe('jazz')
   })
 })

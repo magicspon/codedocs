@@ -18,6 +18,7 @@ export {
   BUSY,
   GENRE_NAMES,
   GENRES,
+  KNOTTED,
   TANGLED,
   type Genre,
   type Suggestion,

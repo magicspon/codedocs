@@ -8,7 +8,7 @@
  */
 
 /** Bumped whenever the same inputs would compose a different piece. */
-export const COMPOSER_VERSION = '0.4.0'
+export const COMPOSER_VERSION = '0.7.0'
 
 /** What a track does in the piece; the renderer turns a role into a sound. */
 export type MusicalRole =
@@ -32,7 +32,7 @@ export type ScaleName =
  * The genres a piece can be played in. A genre is a way of playing the same
  * code-derived material, not a different composition: see `compose/genre.ts`.
  */
-export type GenreName = 'ambient' | 'lofi' | 'techno' | 'dnb'
+export type GenreName = 'ambient' | 'lofi' | 'techno' | 'dnb' | 'jazz'
 
 /** What the caller controls. Everything else comes from the code and the seed. */
 export interface ComposeOptions {
@@ -169,6 +169,16 @@ export interface Section {
   readonly area: number
 }
 
+/**
+ * Every other note on a grid played late: `unit` is the grid in beats (0.5
+ * swings eighths, 0.25 sixteenths) and `late` how many beats late. A `late`
+ * of 0 is straight.
+ */
+export interface Swing {
+  readonly unit: number
+  readonly late: number
+}
+
 /** The whole piece, before any renderer has touched it. */
 export interface Composition {
   readonly composerVersion: string
@@ -182,10 +192,10 @@ export interface Composition {
   /** The genre it was composed in, which the renderers use to pick sounds. */
   readonly genre: GenreName
   /**
-   * Beats by which every off-beat sixteenth is played late: 0 is straight.
-   * Kept apart from the notes so the score stays on the grid.
+   * How the off-beats lean. Kept apart from the notes so the score stays on
+   * the grid.
    */
-  readonly swing: number
+  readonly swing: Swing
   /** Tonic as a pitch class, 0 (C) to 11 (B). */
   readonly key: number
   readonly scale: ScaleName

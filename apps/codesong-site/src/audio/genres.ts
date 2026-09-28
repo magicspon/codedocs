@@ -68,6 +68,8 @@ export const GENRE_SOUND: Readonly<Record<GenreName, GenreSound>> = {
         filterDecay: 0.12,
         filterSustain: 0.1,
       },
+      // Fast enough for the chord stabs, still sustaining the held chords.
+      pad: { attack: 0.005, decay: 0.25, sustain: 0.4, release: 0.3 },
       arp: { wave: 'sawtooth' },
       percussion: {
         kickPitch: 0.05,
@@ -91,6 +93,48 @@ export const GENRE_SOUND: Readonly<Record<GenreName, GenreSound>> = {
         snareDecay: 0.12,
         closedDecay: 0.03,
         hatLevel: -20,
+      },
+    },
+  },
+  jazz: {
+    reverb: { decay: 2, wet: 0.25 },
+    // Warm, like a small room recorded on tape, not muffled like lo-fi.
+    tone: 6000,
+    sounds: {
+      // A breathy, horn-like lead.
+      lead: { wave: 'fattriangle', attack: 0.04, sustain: 0.6, release: 0.3 },
+      counter: {
+        harmonicity: 1,
+        modulationIndex: 1.5,
+        attack: 0.005,
+        decay: 0.8,
+        sustain: 0.2,
+        release: 0.8,
+      },
+      // An upright: a thump that fades.
+      bass: {
+        wave: 'triangle',
+        cutoff: 250,
+        attack: 0.005,
+        decay: 0.3,
+        sustain: 0.4,
+        release: 0.15,
+      },
+      // Piano-like comping rather than a held pad.
+      pad: {
+        harmonicity: 1,
+        attack: 0.02,
+        decay: 1.2,
+        sustain: 0.3,
+        release: 0.6,
+      },
+      arp: { wave: 'sine', release: 0.3 },
+      // The closed hat plays the ride, so it rings.
+      percussion: {
+        closedDecay: 0.3,
+        hatLevel: -20,
+        kickDecay: 0.2,
+        snareDecay: 0.1,
       },
     },
   },

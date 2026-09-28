@@ -9,7 +9,13 @@ import type {
   Section,
   Song,
 } from '@codedocs/codesong/browser'
-import { BUSY, GENRES, NOTE_NAMES, TANGLED } from '@codedocs/codesong/browser'
+import {
+  BUSY,
+  GENRES,
+  KNOTTED,
+  NOTE_NAMES,
+  TANGLED,
+} from '@codedocs/codesong/browser'
 
 /**
  * Why the piece is the way it is, in plain words. Each explanation restates
@@ -42,21 +48,24 @@ export function keyReason({ composition, evidence }: Song): string {
 export function genreReason({ composition, evidence }: Song): string[] {
   const { genre, energy, tangle } = evidence.genre
   const busy = energy >= BUSY ? 'busy' : 'calm'
-  const tangled = tangle >= TANGLED ? 'tangled' : 'orderly'
+  const tangled =
+    tangle >= KNOTTED ? 'knotted' : tangle >= TANGLED ? 'tangled' : 'orderly'
   const reason = [
     `Inside each part of the code, a file uses ${decimal(energy)} other ` +
       `files on average, so the code is ${busy} (busy from ${BUSY}). ` +
       `${percent(tangle)} of files sit in loops of files that depend on each ` +
-      `other, so it is ${tangled} (tangled from ${percent(TANGLED)}).`,
+      `other, so it is ${tangled} (tangled from ${percent(TANGLED)}, knotted ` +
+      `from ${percent(KNOTTED)}).`,
     `Calm, orderly code suggests ambient; calm, tangled code lo-fi hip hop; ` +
-      `busy, orderly code techno; busy, tangled code drum and bass. This ` +
-      `code suggests ${GENRES[genre].label.toLowerCase()}.`,
+      `busy, orderly code techno; busy, tangled code drum and bass. Knotted ` +
+      `code, busy or calm, suggests jazz. This code suggests ` +
+      `${GENRES[genre].label.toLowerCase()}.`,
   ]
   if (composition.genre !== genre) {
     reason.push(
       `You are hearing it as ${GENRES[composition.genre].label.toLowerCase()} ` +
         `instead. The notes still come from the same code; only the tempo, ` +
-        `scale, drums, bass rhythm and sounds change.`,
+        `scale, section lengths, drums, bass and chord rhythms and sounds change.`,
     )
   }
   return reason
@@ -110,10 +119,16 @@ export function motifReason(motif: Motif): string {
       return 'The theme: the longest chain of files in the whole project, where each file uses the next. It returns, changed, in every section.'
     case 'phrase':
       return 'A melody from a chain of files in this part of the code, where each file uses the next. One note for each file.'
-    case 'pad':
-      return motif.source.structure === 'clusters'
-        ? 'Chords. Each chord comes from a group of files that work closely together, voiced by the group’s most central file.'
-        : 'Chords from this part’s most central files, because it has too few groups of files to read chords from.'
+    case 'pad': {
+      const chords =
+        motif.source.structure === 'clusters'
+          ? 'Chords. Each chord comes from a group of files that work closely together, voiced by the group’s most central file.'
+          : 'Chords from this part’s most central files, because it has too few groups of files to read chords from.'
+      // The answer is the second pass over the same files.
+      return motif.id.includes(':answer')
+        ? `${chords} This is the answer: the same files again, with the later chords taking a different turn.`
+        : chords
+    }
     case 'bass':
       return 'The bass line follows the roots of the chords, which come from the same groups of files.'
     case 'arp':

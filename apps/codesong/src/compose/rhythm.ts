@@ -123,11 +123,40 @@ const breaks: Placer = (i, p, form) => {
   ]
 }
 
+/** The ride's ding, ding-a ding by step, loudest on two and four. */
+const RIDE: ReadonlyMap<number, number> = new Map([
+  [0, 62],
+  [4, 80],
+  [6, 62],
+  [8, 62],
+  [12, 80],
+  [14, 62],
+])
+
+/** Whether the snare comps on step `i`: an eighth off the beat where the code asks for a kick. */
+const comps = (i: number, p: Patterns): boolean => p.kicks[i]! && i % 4 === 2
+
+/**
+ * Swing time. The closed hat plays the ride pattern; the kick feathers
+ * every beat under it; the snare comps where the code asks for a kick, so
+ * busier code comps more.
+ */
+const ride: Placer = (i, p, form) => {
+  const allowed = kit(form)
+  const ding = RIDE.get(i)
+  return [
+    ...(ding ? [hit(HAT, i, ding)] : []),
+    ...(allowed.kick && i % 4 === 0 ? [hit(KICK, i, 34)] : []),
+    ...(allowed.snare && comps(i, p) ? [hit(SNARE, i, 52)] : []),
+  ]
+}
+
 const PLACERS: Readonly<Record<DrumStyle, Placer>> = {
   boombap,
   hush,
   four,
   breaks,
+  ride,
 }
 
 const byStart = (a: MotifNote, b: MotifNote): number =>

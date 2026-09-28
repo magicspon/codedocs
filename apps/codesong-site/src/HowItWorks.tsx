@@ -76,9 +76,9 @@ export function HowItWorks(): JSX.Element {
       </p>
       <p>
         Each song starts in the genre its code suggests: ambient, lo-fi hip hop,
-        techno or drum and bass. You can switch to another genre while it plays.
-        The notes still come from the same code. Only the tempo, scale, drums,
-        bass rhythm and sounds change.
+        techno, drum and bass or jazz. You can switch to another genre while it
+        plays. The notes still come from the same code. Only the tempo, scale,
+        section lengths, drums, bass rhythm and sounds change.
       </p>
       <p>
         The same piece is also built as a set in Ableton Live, with a synth for

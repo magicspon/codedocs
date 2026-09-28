@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sequence, shift } from '../src/compose/arrangement.ts'
 import { plan, sections } from '../src/compose/form.ts'
-import { progression } from '../src/compose/harmony.ts'
+import { phrase } from '../src/compose/harmony.ts'
 import { euclid, groove } from '../src/compose/rhythm.ts'
 import type { Motif } from '../src/model.ts'
 import type { Region } from '../src/regions.ts'
@@ -124,14 +124,41 @@ describe('sequence', () => {
   })
 })
 
-describe('progression', () => {
+describe('phrase', () => {
+  const node = (depth: number, fanOut = 0.2) =>
+    ({ rank: { depth, fanIn: 0.9, fanOut, centrality: 1 } }) as never
+
   it('starts home and never repeats a chord back to back', () => {
-    const node = (depth: number) =>
-      ({ rank: { depth, fanIn: 0, fanOut: 0, centrality: 0 } }) as never
-    const roots = progression([node(0.9), node(0.5), node(0.5), node(0.5)])
-    expect(roots[0]).toBe(0)
-    for (let i = 1; i < roots.length; i++)
-      expect(roots[i]).not.toBe(roots[i - 1])
+    const { call } = phrase([node(0.9), node(0.5), node(0.5), node(0.5)])
+    expect(call[0]).toBe(0)
+    for (let i = 1; i < call.length; i++) expect(call[i]).not.toBe(call[i - 1])
+  })
+
+  it('uses four different chords and does not end on the tonic', () => {
+    const { call } = phrase([node(0.3), node(0.3), node(0.3), node(0.3)])
+    expect(new Set(call).size).toBe(4)
+    expect(call.at(-1)).not.toBe(0)
+  })
+
+  it('finds another call when this one is taken', () => {
+    const nodes = [node(0.3), node(0.6), node(0.3), node(0.9)]
+    const first = phrase(nodes).call
+    const second = phrase(nodes, new Set([first.join()])).call
+    expect(second[0]).toBe(0)
+    expect(second).not.toEqual(first)
+  })
+
+  it('answers with the same opening and a different ending', () => {
+    const { call, answer } = phrase([
+      node(0.3),
+      node(0.6),
+      node(0.3),
+      node(0.9),
+    ])
+    expect(answer).toBeDefined()
+    expect(answer!.slice(0, 2)).toEqual(call.slice(0, 2))
+    expect(answer!.slice(2)).not.toEqual(call.slice(2))
+    expect(answer!.at(-1)).not.toBe(0)
   })
 })
 
