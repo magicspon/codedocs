@@ -65,7 +65,7 @@ export function genreReason({ composition, evidence }: Song): string[] {
     reason.push(
       `You are hearing it as ${GENRES[composition.genre].label.toLowerCase()} ` +
         `instead. The notes still come from the same code; only the tempo, ` +
-        `scale, section lengths, drums, bass rhythm and sounds change.`,
+        `scale, section lengths, drums, bass and chord rhythms and sounds change.`,
     )
   }
   return reason
@@ -119,10 +119,16 @@ export function motifReason(motif: Motif): string {
       return 'The theme: the longest chain of files in the whole project, where each file uses the next. It returns, changed, in every section.'
     case 'phrase':
       return 'A melody from a chain of files in this part of the code, where each file uses the next. One note for each file.'
-    case 'pad':
-      return motif.source.structure === 'clusters'
-        ? 'Chords. Each chord comes from a group of files that work closely together, voiced by the group’s most central file.'
-        : 'Chords from this part’s most central files, because it has too few groups of files to read chords from.'
+    case 'pad': {
+      const chords =
+        motif.source.structure === 'clusters'
+          ? 'Chords. Each chord comes from a group of files that work closely together, voiced by the group’s most central file.'
+          : 'Chords from this part’s most central files, because it has too few groups of files to read chords from.'
+      // The answer is the second pass over the same files.
+      return motif.id.includes(':answer')
+        ? `${chords} This is the answer: the same files again, with the later chords taking a different turn.`
+        : chords
+    }
     case 'bass':
       return 'The bass line follows the roots of the chords, which come from the same groups of files.'
     case 'arp':

@@ -22,11 +22,12 @@ import { dependencyPaths } from '../paths.ts'
 import type { Analysis, Region } from '../regions.ts'
 import type { Structure } from '../structure.ts'
 import { arrange, type Material } from './arrangement.ts'
-import { arpMotif } from './arp.ts'
+import { arpMotifs } from './arp.ts'
 import { plan, sections } from './form.ts'
 import { GENRES, suggest, type Genre } from './genre.ts'
-import { bassMotif, chordSource, padMotif } from './harmony.ts'
+import { bassMotifs, chordSource } from './harmony.ts'
 import { pathMotif } from './melody.ts'
+import { pads } from './pad.ts'
 import { fill, groove } from './rhythm.ts'
 
 /** Which roles survive a smaller track budget: the last is dropped first. */
@@ -80,13 +81,16 @@ function regionMaterial(
   region: Region,
   phrases: number,
   genre: Genre,
+  taken: Set<string>,
 ): RegionMaterial {
-  const chords = chordSource(structure, region)
+  const chords = chordSource(structure, region, taken)
   const within = new Set(region.files)
+  const { played, held } = pads(structure, region, chords, genre)
   return {
-    pad: padMotif(structure, region, chords, genre.sevenths),
-    bass: bassMotif(region, chords, genre.bass),
-    arp: arpMotif(structure, region, chords),
+    pad: played,
+    held,
+    bass: bassMotifs(region, chords, genre.bass),
+    arp: arpMotifs(structure, region, chords),
     phrases: dependencyPaths(structure, phrases, within).map((path, i) =>
       pathMotif(structure, path, `phrase:${region.path}:${i + 1}`, region.path),
     ),
@@ -151,8 +155,13 @@ export function compose(
     1,
     Math.floor((options.maxMotifs - 1) / regions.length),
   )
+  // Progressions the piece already plays, so each subsystem gets its own.
+  const taken = new Set<string>()
   const materials = new Map(
-    regions.map((r) => [r, regionMaterial(structure, r, perRegion, genre)]),
+    regions.map((r) => [
+      r,
+      regionMaterial(structure, r, perRegion, genre, taken),
+    ]),
   )
   const planned = plan(regions)
   const form: Section[] = sections(planned, options.bars, genre.length)
@@ -176,14 +185,15 @@ export function compose(
       ),
     }
     const offset = Math.floor(random() * Math.max(1, base.phrases.length))
-    const { groove: beat, fill: link, pad, bass, arp, phrases } = material
+    const { groove: beat, fill: link, pad, held, bass, arp, phrases } = material
     collect(parts, used, arrange(section, material, motto, offset, genre), [
-      pad,
-      bass,
+      ...pad,
+      ...held,
+      ...bass,
       beat,
       link,
       ...phrases,
-      ...(arp ? [arp] : []),
+      ...arp,
     ])
   })
 

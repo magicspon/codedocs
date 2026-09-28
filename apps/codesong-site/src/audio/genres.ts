@@ -68,6 +68,8 @@ export const GENRE_SOUND: Readonly<Record<GenreName, GenreSound>> = {
         filterDecay: 0.12,
         filterSustain: 0.1,
       },
+      // Fast enough for the chord stabs, still sustaining the held chords.
+      pad: { attack: 0.005, decay: 0.25, sustain: 0.4, release: 0.3 },
       arp: { wave: 'sawtooth' },
       percussion: {
         kickPitch: 0.05,

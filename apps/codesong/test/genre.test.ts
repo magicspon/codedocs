@@ -164,6 +164,25 @@ describe('genres', () => {
     expect(firstChord.length).toBeGreaterThanOrEqual(4)
   })
 
+  it('plays the chords in the genre’s rhythm, but holds them in the intro', () => {
+    const piece = inGenre('techno')
+    const pad = piece.tracks.find((t) => t.role === 'pad')!
+    const motif = (id: string) => piece.motifs.find((m) => m.id === id)!
+    const intro = pad.parts.filter((p) => p.start < piece.sections[1]!.start)
+    const chorus = piece.sections.find((s) => s.form === 'chorus')!
+    const groove = pad.parts.filter((p) => p.start === chorus.start)
+    expect(intro.every((p) => motif(p.motif).notes[0]!.duration === 4)).toBe(
+      true,
+    )
+    expect(motif(groove[0]!.motif).notes[0]!.duration).toBeLessThan(1)
+  })
+
+  it('answers each four-bar progression rather than looping it', () => {
+    const pad = inGenre('ambient').tracks.find((t) => t.role === 'pad')!
+    const ids = pad.parts.map((p) => p.motif)
+    expect(ids.some((id) => id.endsWith(':answer'))).toBe(true)
+  })
+
   it('suggests jazz for code knotted into loops, busy or calm', () => {
     expect(suggest(exported('typescript')).genre).toBe('jazz')
     expect(suggest(exported('sst')).genre).toBe('jazz')

@@ -40,6 +40,17 @@ export type BassStyle =
   /** A note a beat, climbing or falling through the chord to the next root. */
   | 'walking'
 
+/** How the pad plays each chord. */
+export type PadStyle =
+  /** Held for the whole bar. */
+  | 'held'
+  /** Struck, then struck again on the and-of-three: a lazy keyboard. */
+  | 'push'
+  /** Short stabs, three-three-two across the bar. */
+  | 'stab'
+  /** A pianist's comping: the Charleston, on one and the and-of-two. */
+  | 'comp'
+
 /** Everything a genre changes. */
 export interface Genre {
   readonly name: GenreName
@@ -57,6 +68,8 @@ export interface Genre {
   readonly sevenths: boolean
   readonly drums: DrumStyle
   readonly bass: BassStyle
+  /** How the pad plays in verses and chorus; elsewhere it holds its chords. */
+  readonly pad: PadStyle
   /** Multiplies the time of lead and counter melodies: 2 is half speed. */
   readonly melody: number
   /** Roles that sit out a kind of section. */
@@ -77,6 +90,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     sevenths: false,
     drums: 'hush',
     bass: 'held',
+    pad: 'held',
     melody: 2,
     // Nothing ticks until the first verse.
     rests: { intro: ['percussion'] },
@@ -92,6 +106,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     sevenths: false,
     drums: 'boombap',
     bass: 'pulse',
+    pad: 'push',
     melody: 1,
     rests: {},
   },
@@ -105,6 +120,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     sevenths: false,
     drums: 'four',
     bass: 'offbeat',
+    pad: 'stab',
     melody: 1,
     // Techno builds from the beat: the intro is the kick under the pad.
     rests: { intro: ['lead', 'arp'] },
@@ -119,6 +135,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     sevenths: false,
     drums: 'breaks',
     bass: 'sub',
+    pad: 'held',
     // Melodies float at half time over the breaks.
     melody: 2,
     rests: {},
@@ -134,6 +151,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     sevenths: true,
     drums: 'ride',
     bass: 'walking',
+    pad: 'comp',
     melody: 1,
     // Horn and piano alone for the intro; the drums come in with the verse.
     rests: { intro: ['percussion', 'arp'] },
