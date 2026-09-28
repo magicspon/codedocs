@@ -100,71 +100,49 @@ function drums(out: Tone.ToneAudioNode): Voice {
   return kit
 }
 
-/** The role's synth, before any sound is set. Volumes balance the parts against each other. */
-function build(role: MusicalRole, out: Tone.ToneAudioNode): Voice {
-  switch (role) {
-    case 'lead':
-      return poly(
-        new Tone.PolySynth(Tone.Synth, { volume: -14 }),
-        out,
-        (s) => ({
-          oscillator: { ...wave(s), count: 2, spread: 18 },
-          envelope: envelope(s),
-        }),
-      )
-    case 'counter':
-      return poly(
-        new Tone.PolySynth(Tone.FMSynth, { volume: -16 }),
-        out,
-        (s) => ({
-          harmonicity: num(s, 'harmonicity'),
-          modulationIndex: num(s, 'modulationIndex'),
-          envelope: envelope(s),
-        }),
-      )
-    case 'bass':
-      return poly(
-        new Tone.PolySynth(Tone.MonoSynth, { volume: -12 }),
-        out,
-        (s) => ({
-          oscillator: wave(s),
-          filter: { Q: num(s, 'resonance'), type: 'lowpass' as const },
-          filterEnvelope: {
-            attack: num(s, 'filterAttack'),
-            decay: num(s, 'filterDecay'),
-            sustain: num(s, 'filterSustain'),
-            baseFrequency: num(s, 'cutoff'),
-            octaves: num(s, 'octaves'),
-          },
-          envelope: envelope(s),
-        }),
-      )
-    case 'pad':
-      return poly(
-        new Tone.PolySynth(Tone.AMSynth, { volume: -20 }),
-        out,
-        (s) => ({
-          harmonicity: num(s, 'harmonicity'),
-          envelope: envelope(s),
-        }),
-      )
-    case 'arp':
-      return poly(
-        new Tone.PolySynth(Tone.Synth, { volume: -22 }),
-        out,
-        (s) => ({
-          oscillator: wave(s),
-          envelope: envelope(s),
-        }),
-      )
-    case 'percussion':
-      return drums(out)
+/** Each role's synth, before any sound is set. Volumes balance the parts against each other. */
+const BUILD: Readonly<Record<MusicalRole, (out: Tone.ToneAudioNode) => Voice>> =
+  {
+    lead: (out) =>
+      poly(new Tone.PolySynth(Tone.Synth, { volume: -14 }), out, (s) => ({
+        oscillator: { ...wave(s), count: 2, spread: 18 },
+        envelope: envelope(s),
+      })),
+    counter: (out) =>
+      poly(new Tone.PolySynth(Tone.FMSynth, { volume: -16 }), out, (s) => ({
+        harmonicity: num(s, 'harmonicity'),
+        modulationIndex: num(s, 'modulationIndex'),
+        envelope: envelope(s),
+      })),
+    bass: (out) =>
+      poly(new Tone.PolySynth(Tone.MonoSynth, { volume: -12 }), out, (s) => ({
+        oscillator: wave(s),
+        filter: { Q: num(s, 'resonance'), type: 'lowpass' as const },
+        filterEnvelope: {
+          attack: num(s, 'filterAttack'),
+          decay: num(s, 'filterDecay'),
+          sustain: num(s, 'filterSustain'),
+          baseFrequency: num(s, 'cutoff'),
+          octaves: num(s, 'octaves'),
+        },
+        envelope: envelope(s),
+      })),
+    pad: (out) =>
+      poly(new Tone.PolySynth(Tone.AMSynth, { volume: -20 }), out, (s) => ({
+        harmonicity: num(s, 'harmonicity'),
+        envelope: envelope(s),
+      })),
+    arp: (out) =>
+      poly(new Tone.PolySynth(Tone.Synth, { volume: -22 }), out, (s) => ({
+        oscillator: wave(s),
+        envelope: envelope(s),
+      })),
+    percussion: drums,
   }
-}
 
 /** Builds the voice for `role` at its default sound, playing into `out`. */
 export function voice(role: MusicalRole, out: Tone.ToneAudioNode): Voice {
-  const sound = build(role, out)
+  const sound = BUILD[role](out)
   sound.tune(defaults(role))
   return sound
 }

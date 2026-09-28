@@ -2,6 +2,7 @@ import type { RealisedTrack } from '@codedocs/codesong/browser'
 import { Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState, type JSX } from 'react'
+import { due, fly, jumped, readerAt, type Reader } from './launch.ts'
 import { blocks, ROLE_COLOUR, type Block } from './layout.ts'
 
 interface Props {
@@ -26,16 +27,6 @@ interface Flying {
 const LIFE = 2400
 /** Most names in the air at once, so a busy passage stays readable. */
 const MOST = 16
-/** Least beats between two names from one track. */
-const GAP = 1
-/** A jump this far means the viewer seeked rather than the music moved on. */
-const JUMP = 2
-
-/** The first note at or after `beats`. Notes are in start order. */
-function firstFrom(track: RealisedTrack, beats: number): number {
-  const i = track.notes.findIndex((n) => n.start >= beats)
-  return i === -1 ? track.notes.length : i
-}
 
 /**
  * The symbol names the music is playing, rising off their notes as they
@@ -48,50 +39,35 @@ export function Names({ tracks, names, muted, beats }: Props): JSX.Element {
     [tracks],
   )
   const [flying, setFlying] = useState<readonly Flying[]>([])
-  const cursor = useRef<number[]>([])
-  const lastLaunch = useRef<number[]>([])
+  const reader = useRef<Reader>({ cursor: [], lastLaunch: [] })
   const last = useRef(-Infinity)
   const nextId = useRef(0)
 
+  // Standing still, rewinding or seeking: start reading from here, silently.
+  const restart = (now: number): void => {
+    const moved = now !== last.current
+    reader.current = readerAt(tracks, now)
+    last.current = now
+    // Names from where the music was no longer belong in the air.
+    if (moved && flying.length > 0) setFlying([])
+  }
+
   useFrame(() => {
     const now = beats()
-    const clock = performance.now()
-    // Standing still, rewinding or seeking: start reading from here, silently.
-    if (now <= last.current || now - last.current > JUMP) {
-      const moved = now !== last.current
-      cursor.current = tracks.map((track) => firstFrom(track, now))
-      lastLaunch.current = tracks.map(() => -Infinity)
-      last.current = now
-      // Names from where the music was no longer belong in the air.
-      if (moved && flying.length > 0) setFlying([])
-      return
-    }
+    if (jumped(last.current, now)) return restart(now)
     last.current = now
-
-    const launched: Flying[] = []
-    tracks.forEach((track, t) => {
-      let i = cursor.current[t] ?? 0
-      for (; i < track.notes.length && track.notes[i]!.start <= now; i++) {
-        const note = track.notes[i]!
-        const text = names[t]?.[i]
-        if (!text || muted.has(track.id)) continue
-        if (note.start - (lastLaunch.current[t] ?? -Infinity) < GAP) continue
-        lastLaunch.current[t] = note.start
-        launched.push({
-          id: nextId.current++,
-          text,
-          colour: ROLE_COLOUR[track.role],
-          at: layout[t]![i]!,
-          born: clock,
-        })
-      }
-      cursor.current[t] = i
-    })
-
-    const alive = flying.filter((f) => clock - f.born < LIFE)
-    if (launched.length > 0 || alive.length !== flying.length) {
-      setFlying([...alive, ...launched].slice(-MOST))
-    }
+    const clock = performance.now()
+    const launched = due(tracks, names, muted, reader.current, now).map(
+      ({ track, note }) => ({
+        id: nextId.current++,
+        text: names[track]![note]!,
+        colour: ROLE_COLOUR[tracks[track]!.role],
+        at: layout[track]![note]!,
+        born: clock,
+      }),
+    )
+    const next = fly(flying, launched, clock, LIFE, MOST)
+    if (next !== flying) setFlying(next)
   })
 
   return (

@@ -1,11 +1,11 @@
 import { realise } from '@codedocs/codesong/browser'
 import { getRouteApi, Link } from '@tanstack/react-router'
-import { useEffect, useMemo, useState, type JSX } from 'react'
+import { useMemo, useState, type JSX } from 'react'
 import { usePlayer } from './audio/usePlayer.ts'
 import { noteNames } from './explain/names.ts'
-import { Inspector, type Selection } from './inspect/Inspector.tsx'
+import { Inspector } from './inspect/Inspector.tsx'
+import { useSelection } from './inspect/useSelection.ts'
 import { length } from './scene/layout.ts'
-import type { NotePick } from './scene/Notes.tsx'
 import { Stage } from './scene/Stage.tsx'
 import { SoundPanel } from './SoundPanel.tsx'
 import { HomeIcon, IconToggle, InfoIcon } from './icons.tsx'
@@ -59,32 +59,8 @@ export function SongPage(): JSX.Element {
 
   const player = usePlayer(composition, tracks, beats)
   const [follow, setFollow] = useState(true)
-  // The details start hidden so the score has the whole window.
-  const [info, setInfo] = useState(false)
-  const [hover, setHover] = useState<NotePick>()
-  const [selection, setSelection] = useState<Selection>({ kind: 'song' })
-  // The track whose synth settings are open.
-  const [tuning, setTuning] = useState<string>()
-  const tuned = tracks.find((t) => t.id === tuning)
-
-  // A new song starts with the panel on the whole song and no synth open.
-  useEffect(() => {
-    setSelection({ kind: 'song' })
-    setTuning(undefined)
-  }, [composition])
-
-  const pick = (p: NotePick): void => {
-    const note = tracks.find((t) => t.id === p.track)?.notes[p.index]
-    if (!note) return
-    setSelection({ kind: 'motif', motif: note.motif, pick: p })
-    // Picking asks what a note is, so show the answer.
-    setInfo(true)
-  }
-
-  const hovered = hover
-    ? tracks.find((t) => t.id === hover.track)?.notes[hover.index]?.motif
-    : undefined
-  const selectedMotif = selection.kind === 'motif' ? selection.motif : undefined
+  const view = useSelection(composition, tracks)
+  const tuned = tracks.find((t) => t.id === view.tuning)
 
   return (
     <article className="player">
@@ -97,20 +73,19 @@ export function SongPage(): JSX.Element {
           names={names}
           beats={player.beats}
           follow={follow && player.playing}
-          motif={hovered ?? selectedMotif}
-          picked={selection.kind === 'motif' ? selection.pick : undefined}
-          section={selection.kind === 'section' ? selection.index : undefined}
-          onHover={setHover}
-          onPick={pick}
+          motif={view.highlight.motif}
+          picked={view.highlight.picked}
+          section={view.highlight.section}
+          onHover={view.setHover}
+          onPick={view.pick}
           onSection={(index, at) => {
-            setSelection({ kind: 'section', index })
-            setInfo(true)
+            view.section(index)
             player.seek(at)
           }}
         />
         <div className="hud">
           <Transport
-            corner={<Corner info={info} onInfo={setInfo} />}
+            corner={<Corner info={view.info} onInfo={view.setInfo} />}
             title={slug}
             tracks={tracks}
             length={beats}
@@ -123,17 +98,15 @@ export function SongPage(): JSX.Element {
             onSeek={player.seek}
             onMute={player.mute}
             onFollow={setFollow}
-            selected={tuning}
-            onSelect={(id) =>
-              setTuning((open) => (open === id ? undefined : id))
-            }
+            selected={view.tuning}
+            onSelect={view.tune}
           />
-          {info && (
+          {view.info && (
             <Inspector
               score={score}
               tracks={tracks}
-              selection={selection}
-              onSelect={setSelection}
+              selection={view.selection}
+              onSelect={view.setSelection}
               onSeek={player.seek}
             />
           )}
@@ -144,7 +117,7 @@ export function SongPage(): JSX.Element {
             track={tuned}
             initial={player.sound(tuned.id)}
             onTune={player.tune}
-            onClose={() => setTuning(undefined)}
+            onClose={view.closeTuning}
           />
         )}
       </div>

@@ -49,7 +49,9 @@ a {
   color: var(--muted);
 }
 
-.songs {
+/* A ruled list of links: the songs, and the panel's picks. */
+.songs,
+.picks {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -67,11 +69,6 @@ a {
 .songs a:hover,
 .songs a:focus-visible {
   text-decoration: underline;
-}
-
-.actions {
-  display: flex;
-  gap: 1.5rem;
 }
 
 .about h1 {
@@ -438,13 +435,6 @@ a {
 
 .reasons li + li {
   margin-top: 0.35rem;
-}
-
-.picks {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--edge);
 }
 
 .picks button {

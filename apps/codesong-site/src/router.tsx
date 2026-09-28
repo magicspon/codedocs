@@ -43,7 +43,10 @@ const songRoute = createRoute({
   },
   // Loaded on demand: the scene and the synths are most of the site's code,
   // and the list and the explainer need none of it.
-  component: lazyRouteComponent(() => import('./SongPage.tsx'), 'SongPage'),
+  // Picked off by name here, so fallow can see the export is used.
+  component: lazyRouteComponent(() =>
+    import('./SongPage.tsx').then((m) => ({ default: m.SongPage })),
+  ),
   notFoundComponent: UnknownSong,
 })
 

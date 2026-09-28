@@ -129,3 +129,28 @@ export const num = (sound: Sound, key: string): number => {
   const value = sound[key]
   return typeof value === 'number' ? value : 0
 }
+
+/**
+ * A role's settings, grouped for the panel, each starting at the track's
+ * current value where it has one. Values are coerced to the setting's kind,
+ * so a stale value of the wrong type cannot reach a slider.
+ */
+export function controls(
+  role: MusicalRole,
+  current: Sound,
+): Readonly<Record<string, Readonly<Record<string, Setting>>>> {
+  const at = (key: string, setting: Setting): Setting => {
+    const value = current[key] ?? setting.value
+    return 'options' in setting
+      ? { ...setting, value: String(value) }
+      : { ...setting, value: Number(value) }
+  }
+  return Object.fromEntries(
+    Object.entries(SETTINGS[role]).map(([group, settings]) => [
+      group,
+      Object.fromEntries(
+        Object.entries(settings).map(([key, s]) => [key, at(key, s)]),
+      ),
+    ]),
+  )
+}
