@@ -8,7 +8,7 @@
  */
 
 /** Bumped whenever the same inputs would compose a different piece. */
-export const COMPOSER_VERSION = '0.7.0'
+export const COMPOSER_VERSION = '0.8.0'
 
 /** What a track does in the piece; the renderer turns a role into a sound. */
 export type MusicalRole =
@@ -32,7 +32,13 @@ export type ScaleName =
  * The genres a piece can be played in. A genre is a way of playing the same
  * code-derived material, not a different composition: see `compose/genre.ts`.
  */
-export type GenreName = 'ambient' | 'lofi' | 'techno' | 'dnb' | 'jazz'
+export type GenreName =
+  | 'ambient'
+  | 'lofi'
+  | 'techno'
+  | 'dnb'
+  | 'jazz'
+  | 'mathrock'
 
 /** What the caller controls. Everything else comes from the code and the seed. */
 export interface ComposeOptions {

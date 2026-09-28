@@ -10,6 +10,7 @@ import type { Region } from '../regions.ts'
 import type { Structure } from '../structure.ts'
 import { quantise } from '../theory.ts'
 import type { DrumStyle } from './genre.ts'
+import { oddDrums, oddFill, phrasing, type Stroke } from './odd.ts'
 
 /** Indexes into `DRUM_VOICES`. */
 const KICK = 0
@@ -151,13 +152,26 @@ const ride: Placer = (i, p, form) => {
   ]
 }
 
-const PLACERS: Readonly<Record<DrumStyle, Placer>> = {
+const PLACERS: Readonly<Record<Exclude<DrumStyle, 'odd'>, Placer>> = {
   boombap,
   hush,
   four,
   breaks,
   ride,
 }
+
+const VOICES: Readonly<Record<Stroke[0], number>> = {
+  kick: KICK,
+  snare: SNARE,
+  hat: HAT,
+  open: OPEN_HAT,
+}
+
+/** The odd phrasing's strokes as drum notes, in order. */
+const strokes = (list: readonly Stroke[]): MotifNote[] =>
+  list
+    .map(([voice, step, velocity]) => hit(VOICES[voice], step, velocity))
+    .sort(byStart)
 
 const byStart = (a: MotifNote, b: MotifNote): number =>
   a.start - b.start || a.degree - b.degree
@@ -192,12 +206,23 @@ export function groove(
     3,
   )
 
+  const id = `groove:${region.path}:${form}`
+  if (style === 'odd') {
+    const groups = phrasing(region)
+    const last = groups.at(-1)!
+    return {
+      id,
+      source: provenance(structure, region),
+      notes: strokes(oddDrums(groups, { kicks, hats, ghosts }, form)),
+      length: (last.start + last.length) * STEP,
+    }
+  }
   const place = PLACERS[style]
   const notes = Array.from({ length: STEPS }, (_, i) =>
     place(i, { kicks, hats, ghosts }, form),
   ).flat()
   return {
-    id: `groove:${region.path}:${form}`,
+    id,
     source: provenance(structure, region),
     notes: notes.sort(byStart),
     length: STEPS * STEP,
@@ -220,6 +245,14 @@ export function fill(
     return {
       ...groove(structure, region, form, () => 0, style),
       id: `fill:${region.path}:${form}`,
+    }
+  }
+  if (style === 'odd') {
+    return {
+      id: `fill:${region.path}:${form}`,
+      source: provenance(structure, region),
+      notes: strokes(oddFill()),
+      length: STEPS * STEP,
     }
   }
   const every = intensity > 0.6 ? 1 : 2

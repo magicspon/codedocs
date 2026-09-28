@@ -1,4 +1,5 @@
 ablx
+arps
 attero
 boombap
 calcom
@@ -42,6 +43,7 @@ logomark
 LSIF
 magicspon
 manypkg
+mathrock
 mattpocock
 metacharacter
 metalness
@@ -57,6 +59,7 @@ opencode
 pinnable
 playhead
 Pocock
+polymeter
 predev
 raycaster
 reindent

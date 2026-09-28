@@ -26,6 +26,8 @@ export type DrumStyle =
   | 'breaks'
   /** A ride cymbal's ding, ding-a ding, over a feathered kick and comping snare. */
   | 'ride'
+  /** Four-bar phrases in odd groups of sixteenths, ending on a stop: see `odd.ts`. */
+  | 'odd'
 
 /** How the bass plays each chord root. */
 export type BassStyle =
@@ -39,6 +41,8 @@ export type BassStyle =
   | 'sub'
   /** A note a beat, climbing or falling through the chord to the next root. */
   | 'walking'
+  /** Locked to the odd drums' groups, pulling across them into each next root. */
+  | 'locked'
 
 /** How the pad plays each chord. */
 export type PadStyle =
@@ -50,6 +54,21 @@ export type PadStyle =
   | 'stab'
   /** A pianist's comping: the Charleston, on one and the and-of-two. */
   | 'comp'
+
+/** How the arpeggio plays a cycle's figure. */
+export type ArpStyle =
+  /** Slow eighths over two octaves, each note ringing into the next. */
+  | 'drift'
+  /** Eighths in the order the files come, with gaps. */
+  | 'broken'
+  /** Sixteenths, the lowest note between each of the others. */
+  | 'pedal'
+  /** Sixteenths rising over two octaves. */
+  | 'roll'
+  /** Eighth-note triplets up and down the chord. */
+  | 'triplet'
+  /** Low and high hands in turn, an odd length that crosses the bar line. */
+  | 'tapped'
 
 /** Everything a genre changes. */
 export interface Genre {
@@ -70,6 +89,8 @@ export interface Genre {
   readonly bass: BassStyle
   /** How the pad plays in verses and chorus; elsewhere it holds its chords. */
   readonly pad: PadStyle
+  /** How the arpeggio plays the region's dependency cycles. */
+  readonly arp: ArpStyle
   /** Multiplies the time of lead and counter melodies: 2 is half speed. */
   readonly melody: number
   /** Roles that sit out a kind of section. */
@@ -91,6 +112,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     drums: 'hush',
     bass: 'held',
     pad: 'held',
+    arp: 'drift',
     melody: 2,
     // Nothing ticks until the first verse.
     rests: { intro: ['percussion'] },
@@ -107,6 +129,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     drums: 'boombap',
     bass: 'pulse',
     pad: 'push',
+    arp: 'broken',
     melody: 1,
     rests: {},
   },
@@ -121,6 +144,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     drums: 'four',
     bass: 'offbeat',
     pad: 'stab',
+    arp: 'pedal',
     melody: 1,
     // Techno builds from the beat: the intro is the kick under the pad.
     rests: { intro: ['lead', 'arp'] },
@@ -136,6 +160,7 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     drums: 'breaks',
     bass: 'sub',
     pad: 'held',
+    arp: 'roll',
     // Melodies float at half time over the breaks.
     melody: 2,
     rests: {},
@@ -152,9 +177,28 @@ export const GENRES: Readonly<Record<GenreName, Genre>> = {
     drums: 'ride',
     bass: 'walking',
     pad: 'comp',
+    arp: 'triplet',
     melody: 1,
     // Horn and piano alone for the intro; the drums come in with the verse.
     rests: { intro: ['percussion', 'arp'] },
+  },
+  mathrock: {
+    name: 'mathrock',
+    label: 'Math rock',
+    tempo: 144,
+    // Bright and a little strange: the raised fourth.
+    scale: 'lydian',
+    swing: STRAIGHT,
+    length: 1.5,
+    // Clean guitar chords: major sevenths and add-nines.
+    sevenths: true,
+    drums: 'odd',
+    bass: 'locked',
+    pad: 'stab',
+    arp: 'tapped',
+    melody: 1,
+    // Held chords, then the tapped guitar; the band comes in with the verse.
+    rests: { intro: ['percussion', 'lead'] },
   },
 }
 
@@ -165,6 +209,7 @@ export const GENRE_NAMES: readonly GenreName[] = [
   'techno',
   'dnb',
   'jazz',
+  'mathrock',
 ]
 
 /**

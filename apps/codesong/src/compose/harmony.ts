@@ -10,6 +10,7 @@ import type { Region } from '../regions.ts'
 import type { Structure, StructureNode } from '../structure.ts'
 import { quantise } from '../theory.ts'
 import type { BassStyle } from './genre.ts'
+import { oddBass, phrasing } from './odd.ts'
 
 /** Chords per progression, one per bar. */
 const CHORDS = 4
@@ -87,7 +88,7 @@ export function turns(
  * little. Three ranks rather than depth alone, because depth takes only a
  * handful of values and would give most files the same chord.
  */
-function tension(node: StructureNode): number {
+export function tension(node: StructureNode): number {
   const { depth, fanOut, fanIn } = node.rank
   return (depth + fanOut + (1 - fanIn)) / 3
 }
@@ -178,7 +179,9 @@ interface BassBar {
 }
 
 /** Each bass style's bar, starts relative to the bar. */
-const BASS: Readonly<Record<BassStyle, (b: BassBar) => MotifNote[]>> = {
+const BASS: Readonly<
+  Record<Exclude<BassStyle, 'locked'>, (b: BassBar) => MotifNote[]>
+> = {
   held: ({ root, note }) => [note(root, 0, BAR, true)],
   // A file that depends on a lot moves to the fifth halfway through.
   sub: ({ root, node, note }) => [
@@ -217,7 +220,7 @@ const BASS: Readonly<Record<BassStyle, (b: BassBar) => MotifNote[]>> = {
 
 /** One bar of bass under `root` in `style`. */
 function bar(
-  style: BassStyle,
+  style: Exclude<BassStyle, 'locked'>,
   root: number,
   next: number,
   node: StructureNode,
@@ -250,12 +253,18 @@ export function bassMotifs(
   return turns(source).map(({ roots, suffix }) => ({
     id: `bass:${region.path}${suffix}`,
     source: provenance(region, source),
-    notes: roots.flatMap((root, i) =>
-      // Call and answer both start home, so the last bar walks back to it.
-      bar(style, root, roots[(i + 1) % roots.length]!, source.nodes[i]!).map(
-        (n) => ({ ...n, start: i * BAR + n.start }),
-      ),
-    ),
+    notes:
+      style === 'locked'
+        ? oddBass(phrasing(region, roots.length), roots)
+        : roots.flatMap((root, i) =>
+            // Call and answer both start home, so the last bar walks back to it.
+            bar(
+              style,
+              root,
+              roots[(i + 1) % roots.length]!,
+              source.nodes[i]!,
+            ).map((n) => ({ ...n, start: i * BAR + n.start })),
+          ),
     length: roots.length * BAR,
   }))
 }

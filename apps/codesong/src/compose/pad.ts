@@ -23,7 +23,11 @@ const NINTH = [0, 2, 4, 6, 8]
  * adds the seventh: tangled code, richer chords. With `sevenths`, the genre
  * always adds it, and dense code adds the ninth as well.
  */
-function voicing(structure: Structure, region: Region, sevenths: boolean) {
+export function voicing(
+  structure: Structure,
+  region: Region,
+  sevenths: boolean,
+) {
   const dense = region.density > structure.meanFanOut
   if (sevenths) return dense ? NINTH : SEVENTH
   return dense ? SEVENTH : TRIAD
