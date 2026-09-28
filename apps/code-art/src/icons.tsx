@@ -83,6 +83,16 @@ export function TerrainIcon(): JSX.Element {
   )
 }
 
+/** A skyline on a curve of ground, for the metro. */
+export function MetroIcon(): JSX.Element {
+  return (
+    <Icon>
+      <path d="M3 20c5.5-2.5 12.5-2.5 18 0" />
+      <path d="M6 18.5V11h3v7M10.5 17.8V5.5h3v12.3M15 18.5V9l3 2v7.5" />
+    </Icon>
+  )
+}
+
 /** A magnifying glass, for the search. */
 export function SearchIcon(): JSX.Element {
   return (

@@ -1,11 +1,10 @@
+import type { Legend } from './legend.ts'
+
 /**
  * What the terrain shows, in plain words, one line per shape. Kept apart from
  * the overlay so the wording can be read and changed in one place.
  */
-export const TERRAIN_LEGEND: readonly (readonly [
-  shape: string,
-  meaning: string,
-])[] = [
+export const TERRAIN_LEGEND: Legend = [
   [
     'Ranges',
     'The root of the repository is at the centre, where the rivers meet. Each folder fans out from it, and each top-level folder takes its own band of colour.',
