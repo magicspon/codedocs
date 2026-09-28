@@ -1,0 +1,5612 @@
+{
+  "composition": {
+    "composerVersion": "0.2.1",
+    "origin": {
+      "repository": "router",
+      "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
+      "options": {
+        "seed": 0,
+        "tempo": 96,
+        "bars": "auto",
+        "scale": "minor",
+        "tracks": 6,
+        "maxMotifs": 16
+      }
+    },
+    "tempo": 96,
+    "key": 2,
+    "scale": "minor",
+    "beatsPerBar": 4,
+    "tracks": [
+      {
+        "id": "lead",
+        "name": "lead",
+        "role": "lead",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "theme",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": -1,
+              "stretch": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 136,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 184,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 192,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 208,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 2
+            }
+          }
+        ]
+      },
+      {
+        "id": "bass",
+        "name": "bass",
+        "role": "bass",
+        "register": "low",
+        "parts": [
+          {
+            "motif": "bass:examples/react",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:examples/solid",
+            "start": 96,
+            "length": 48,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages",
+            "start": 144,
+            "length": 48,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:examples/react",
+            "start": 192,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "pad",
+        "name": "pad",
+        "role": "pad",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "pad:examples/react",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:examples/react",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:examples/solid",
+            "start": 96,
+            "length": 48,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages",
+            "start": 144,
+            "length": 48,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:examples/react",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "percussion",
+        "name": "percussion",
+        "role": "percussion",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "groove:examples/react:intro",
+            "start": 0,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:examples/react:intro",
+            "start": 28,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:examples/react:chorus",
+            "start": 32,
+            "length": 60,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:examples/react:chorus",
+            "start": 92,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:examples/solid:verse",
+            "start": 96,
+            "length": 44,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:examples/solid:verse",
+            "start": 140,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages:verse",
+            "start": 144,
+            "length": 44,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages:verse",
+            "start": 188,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "counter",
+        "name": "counter",
+        "role": "counter",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "phrase:examples/react:1",
+            "start": 32,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:2",
+            "start": 36,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:3",
+            "start": 44,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:4",
+            "start": 48,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:5",
+            "start": 52,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:1",
+            "start": 56,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:2",
+            "start": 60,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:3",
+            "start": 68,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:4",
+            "start": 72,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:5",
+            "start": 76,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:1",
+            "start": 80,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:2",
+            "start": 84,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/react:3",
+            "start": 92,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:1",
+            "start": 96,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:2",
+            "start": 100,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:3",
+            "start": 104,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:4",
+            "start": 108,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:5",
+            "start": 112,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:1",
+            "start": 116,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:2",
+            "start": 120,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:3",
+            "start": 124,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:4",
+            "start": 128,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:5",
+            "start": 132,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:1",
+            "start": 136,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:examples/solid:2",
+            "start": 140,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 144,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 152,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:3",
+            "start": 160,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:4",
+            "start": 164,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:5",
+            "start": 168,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 172,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 180,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:3",
+            "start": 188,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "arp",
+        "name": "arp",
+        "role": "arp",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "arp:examples/react",
+            "start": 16,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:examples/react",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:examples/solid",
+            "start": 96,
+            "length": 48,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:packages",
+            "start": 144,
+            "length": 48,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      }
+    ],
+    "motifs": [
+      {
+        "id": "theme",
+        "source": {
+          "project": "packages/router-core/tsconfig.json",
+          "files": [
+            "packages/router-core/src/router.ts",
+            "packages/router-core/src/utils.ts",
+            "packages/router-core/src/isServer/development.ts",
+            "packages/router-core/src/load-server.ts",
+            "packages/router-core/src/load-client.ts",
+            "packages/router-core/src/not-found.ts",
+            "packages/router-core/src/routeInfo.ts",
+            "packages/router-core/src/fileRoute.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 1,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 3,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 5,
+            "start": 3.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 0.5,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "pad:examples/react",
+        "source": {
+          "project": "examples/react/basic-virtual-file-based/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/basic-virtual-file-based/src/routeTree.gen.ts",
+            "examples/react/basic-virtual-inside-file-based/src/routeTree.gen.ts",
+            "examples/react/large-file-based/src/routeTree.gen.ts",
+            "examples/react/start-basic-react-query/src/routeTree.gen.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 63
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:examples/react:intro",
+        "source": {
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/start-basic-cloudflare/worker-configuration.d.ts",
+            "examples/react/start-trellaux/src/invariant.ts",
+            "examples/react/kitchen-sink-file-based/src/components/Spinner.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/components/Spinner.tsx",
+            "examples/react/start-convex-trellaux/src/invariant.ts",
+            "examples/react/search-validator-adapters/src/components/Content.tsx",
+            "examples/react/search-validator-adapters/src/components/Header.tsx",
+            "examples/react/start-basic-auth/src/prisma-generated/enums.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:examples/react:intro",
+        "source": {
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/start-basic-cloudflare/worker-configuration.d.ts",
+            "examples/react/start-trellaux/src/invariant.ts",
+            "examples/react/kitchen-sink-file-based/src/components/Spinner.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/components/Spinner.tsx",
+            "examples/react/start-convex-trellaux/src/invariant.ts",
+            "examples/react/search-validator-adapters/src/components/Content.tsx",
+            "examples/react/search-validator-adapters/src/components/Header.tsx",
+            "examples/react/start-basic-auth/src/prisma-generated/enums.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "arp:examples/react",
+        "source": {
+          "project": "examples/react/kitchen-sink-react-query-file-based/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/kitchen-sink-react-query-file-based/src/utils/queryOptions.ts",
+            "examples/react/kitchen-sink-react-query-file-based/src/main.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/routeTree.gen.ts",
+            "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.index.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.invoices.$invoiceId.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.invoices.index.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.invoices.route.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.users.route.tsx"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 7,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 11,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 11,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 12,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 12,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "bass:examples/react",
+        "source": {
+          "project": "examples/react/basic-virtual-file-based/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/basic-virtual-file-based/src/routeTree.gen.ts",
+            "examples/react/basic-virtual-inside-file-based/src/routeTree.gen.ts",
+            "examples/react/large-file-based/src/routeTree.gen.ts",
+            "examples/react/start-basic-react-query/src/routeTree.gen.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 104
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 104
+          },
+          {
+            "degree": 8,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 8,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 8,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 104
+          },
+          {
+            "degree": 9,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 6,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 2,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 6,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 2,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 6,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 2,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 6,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 85
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:examples/react:chorus",
+        "source": {
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/start-basic-cloudflare/worker-configuration.d.ts",
+            "examples/react/start-trellaux/src/invariant.ts",
+            "examples/react/kitchen-sink-file-based/src/components/Spinner.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/components/Spinner.tsx",
+            "examples/react/start-convex-trellaux/src/invariant.ts",
+            "examples/react/search-validator-adapters/src/components/Content.tsx",
+            "examples/react/search-validator-adapters/src/components/Header.tsx",
+            "examples/react/start-basic-auth/src/prisma-generated/enums.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 3,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 80
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:examples/react:chorus",
+        "source": {
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/start-basic-cloudflare/worker-configuration.d.ts",
+            "examples/react/start-trellaux/src/invariant.ts",
+            "examples/react/kitchen-sink-file-based/src/components/Spinner.tsx",
+            "examples/react/kitchen-sink-react-query-file-based/src/components/Spinner.tsx",
+            "examples/react/start-convex-trellaux/src/invariant.ts",
+            "examples/react/search-validator-adapters/src/components/Content.tsx",
+            "examples/react/search-validator-adapters/src/components/Header.tsx",
+            "examples/react/start-basic-auth/src/prisma-generated/enums.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/react:1",
+        "source": {
+          "project": "examples/react/start-basic-auth/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/start-basic-auth/src/prisma-generated/internal/class.ts",
+            "examples/react/start-basic-auth/src/prisma-generated/internal/prismaNamespace.ts",
+            "examples/react/start-basic-auth/src/prisma-generated/models.ts",
+            "examples/react/start-basic-auth/src/prisma-generated/commonInputTypes.ts",
+            "examples/react/start-basic-auth/src/prisma-generated/enums.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 5,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 109
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/react:2",
+        "source": {
+          "project": "examples/react/start-convex-trellaux/convex/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/start-convex-trellaux/convex/_generated/api.d.ts",
+            "examples/react/start-convex-trellaux/convex/board.ts",
+            "examples/react/start-convex-trellaux/convex/_generated/server.d.ts",
+            "examples/react/start-convex-trellaux/convex/_generated/dataModel.d.ts",
+            "examples/react/start-convex-trellaux/convex/schema.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 1,
+            "velocity": 108
+          },
+          {
+            "degree": 8,
+            "start": 2,
+            "duration": 1,
+            "velocity": 108
+          },
+          {
+            "degree": 4,
+            "start": 3,
+            "duration": 1.5,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:examples/react:3",
+        "source": {
+          "project": "examples/react/kitchen-sink-react-query-file-based/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/kitchen-sink-react-query-file-based/src/utils/queryOptions.ts",
+            "examples/react/kitchen-sink-react-query-file-based/src/utils/mockTodos.ts",
+            "examples/react/kitchen-sink-react-query-file-based/src/utils/utils.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 7,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/react:4",
+        "source": {
+          "project": "examples/react/basic-ssr-file-based/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/basic-ssr-file-based/src/routeTree.gen.ts",
+            "examples/react/basic-ssr-file-based/src/routes/__root.tsx",
+            "examples/react/basic-ssr-file-based/src/routerContext.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/react:5",
+        "source": {
+          "project": "examples/react/basic-ssr-streaming-file-based/tsconfig.json",
+          "subsystem": "examples/react",
+          "files": [
+            "examples/react/basic-ssr-streaming-file-based/src/routeTree.gen.ts",
+            "examples/react/basic-ssr-streaming-file-based/src/routes/__root.tsx",
+            "examples/react/basic-ssr-streaming-file-based/src/routerContext.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:examples/solid",
+        "source": {
+          "project": "examples/solid/basic-virtual-file-based/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/basic-virtual-file-based/src/routeTree.gen.ts",
+            "examples/solid/basic-virtual-inside-file-based/src/routeTree.gen.ts",
+            "examples/solid/large-file-based/src/routeTree.gen.ts",
+            "examples/solid/start-basic-netlify/src/routeTree.gen.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 104
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 104
+          },
+          {
+            "degree": 8,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 8,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 8,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 104
+          },
+          {
+            "degree": 9,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 6,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 2,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 6,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 2,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 6,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 2,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 6,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 85
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:examples/solid",
+        "source": {
+          "project": "examples/solid/basic-virtual-file-based/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/basic-virtual-file-based/src/routeTree.gen.ts",
+            "examples/solid/basic-virtual-inside-file-based/src/routeTree.gen.ts",
+            "examples/solid/large-file-based/src/routeTree.gen.ts",
+            "examples/solid/start-basic-netlify/src/routeTree.gen.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 63
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 63
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:examples/solid:verse",
+        "source": {
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/start-basic-cloudflare/worker-configuration.d.ts",
+            "examples/solid/kitchen-sink-file-based/src/components/Spinner.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/components/Spinner.tsx",
+            "examples/solid/search-validator-adapters/src/components/Content.tsx",
+            "examples/solid/search-validator-adapters/src/components/Header.tsx",
+            "examples/solid/start-basic-auth/src/prisma-generated/enums.ts",
+            "examples/solid/start-basic-auth/src/utils/session.ts",
+            "examples/solid/start-basic-cloudflare/src/components/NotFound.tsx"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:examples/solid:verse",
+        "source": {
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/start-basic-cloudflare/worker-configuration.d.ts",
+            "examples/solid/kitchen-sink-file-based/src/components/Spinner.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/components/Spinner.tsx",
+            "examples/solid/search-validator-adapters/src/components/Content.tsx",
+            "examples/solid/search-validator-adapters/src/components/Header.tsx",
+            "examples/solid/start-basic-auth/src/prisma-generated/enums.ts",
+            "examples/solid/start-basic-auth/src/utils/session.ts",
+            "examples/solid/start-basic-cloudflare/src/components/NotFound.tsx"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/solid:1",
+        "source": {
+          "project": "examples/solid/start-convex-better-auth/convex/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/start-convex-better-auth/convex/auth.ts",
+            "examples/solid/start-convex-better-auth/convex/_generated/server.d.ts",
+            "examples/solid/start-convex-better-auth/convex/_generated/dataModel.d.ts",
+            "examples/solid/start-convex-better-auth/convex/schema.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/solid:2",
+        "source": {
+          "project": "examples/solid/start-basic-auth/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/start-basic-auth/src/prisma-generated/internal/class.ts",
+            "examples/solid/start-basic-auth/src/prisma-generated/internal/prismaNamespace.ts",
+            "examples/solid/start-basic-auth/src/prisma-generated/models.ts",
+            "examples/solid/start-basic-auth/src/prisma-generated/commonInputTypes.ts",
+            "examples/solid/start-basic-auth/src/prisma-generated/enums.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 5,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 109
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/solid:3",
+        "source": {
+          "project": "examples/solid/kitchen-sink-solid-query-file-based/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/kitchen-sink-solid-query-file-based/src/utils/queryOptions.ts",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/utils/mockTodos.ts",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/utils/utils.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 7,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/solid:4",
+        "source": {
+          "project": "examples/solid/basic-ssr-file-based/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/basic-ssr-file-based/src/routeTree.gen.ts",
+            "examples/solid/basic-ssr-file-based/src/routes/__root.tsx",
+            "examples/solid/basic-ssr-file-based/src/routerContext.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:examples/solid:5",
+        "source": {
+          "project": "examples/solid/basic-ssr-streaming-file-based/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/basic-ssr-streaming-file-based/src/router.tsx",
+            "examples/solid/basic-ssr-streaming-file-based/src/routeTree.gen.ts",
+            "examples/solid/basic-ssr-streaming-file-based/src/routes/__root.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1,
+            "velocity": 106
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 3,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 94
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "arp:examples/solid",
+        "source": {
+          "project": "examples/solid/kitchen-sink-solid-query-file-based/tsconfig.json",
+          "subsystem": "examples/solid",
+          "files": [
+            "examples/solid/kitchen-sink-solid-query-file-based/src/utils/queryOptions.ts",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/main.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/routeTree.gen.ts",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.index.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.invoices.$invoiceId.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.invoices.index.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.invoices.route.tsx",
+            "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.users.route.tsx"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 7,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 11,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 11,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 12,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 12,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 12,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 9,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "bass:packages",
+        "source": {
+          "project": "packages/start-plugin-core/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/start-plugin-core/src/utils.ts",
+            "packages/solid-router/src/useMatch.tsx",
+            "packages/react-router/src/useMatch.tsx",
+            "packages/router-generator/src/utils.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 110
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 9,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 9,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 9,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 109
+          },
+          {
+            "degree": 8,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 8,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 8,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 8,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 97
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages",
+        "source": {
+          "project": "packages/start-plugin-core/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/start-plugin-core/src/utils.ts",
+            "packages/solid-router/src/useMatch.tsx",
+            "packages/react-router/src/useMatch.tsx",
+            "packages/router-generator/src/utils.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 6,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 7,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 9,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 11,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 1,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 3,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 8,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 10,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages:verse",
+        "source": {
+          "subsystem": "packages",
+          "files": [
+            "packages/start-plugin-core/src/constants.ts",
+            "packages/react-start-rsc/src/ServerComponentTypes.ts",
+            "packages/start-plugin-core/src/utils.ts",
+            "packages/router-plugin/src/core/router-plugin-context.ts",
+            "packages/start-client-core/src/hydration/types.ts",
+            "packages/start-client-core/src/constants.ts",
+            "packages/react-router/src/structuralSharing.ts",
+            "packages/react-start-rsc/src/global.d.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages:verse",
+        "source": {
+          "subsystem": "packages",
+          "files": [
+            "packages/start-plugin-core/src/constants.ts",
+            "packages/react-start-rsc/src/ServerComponentTypes.ts",
+            "packages/start-plugin-core/src/utils.ts",
+            "packages/router-plugin/src/core/router-plugin-context.ts",
+            "packages/start-client-core/src/hydration/types.ts",
+            "packages/start-client-core/src/constants.ts",
+            "packages/react-router/src/structuralSharing.ts",
+            "packages/react-start-rsc/src/global.d.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages:1",
+        "source": {
+          "project": "packages/router-core/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/router-core/src/router.ts",
+            "packages/router-core/src/utils.ts",
+            "packages/router-core/src/isServer/development.ts",
+            "packages/router-core/src/load-server.ts",
+            "packages/router-core/src/load-client.ts",
+            "packages/router-core/src/not-found.ts",
+            "packages/router-core/src/routeInfo.ts",
+            "packages/router-core/src/fileRoute.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 1,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 3,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 5,
+            "start": 3.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 0.5,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:packages:2",
+        "source": {
+          "project": "packages/router-core/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/router-core/src/route.ts",
+            "packages/router-core/src/path.ts",
+            "packages/router-core/src/utils.ts",
+            "packages/router-core/src/isServer/development.ts",
+            "packages/router-core/src/load-server.ts",
+            "packages/router-core/src/router.ts",
+            "packages/router-core/src/new-process-route-tree.ts",
+            "packages/router-core/src/sieve-cache.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 3,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 4,
+            "duration": 1.5,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:packages:3",
+        "source": {
+          "project": "packages/solid-router/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/solid-router/src/useMatch.tsx",
+            "packages/solid-router/src/useRouter.tsx",
+            "packages/solid-router/src/routerContext.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages:4",
+        "source": {
+          "project": "packages/vue-router/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/vue-router/src/useMatch.tsx",
+            "packages/vue-router/src/useRouter.tsx",
+            "packages/vue-router/src/routerContext.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages:5",
+        "source": {
+          "project": "packages/react-router/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/react-router/src/useMatch.tsx",
+            "packages/react-router/src/useRouter.tsx",
+            "packages/react-router/src/routerContext.tsx"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "arp:packages",
+        "source": {
+          "project": "packages/router-core/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/router-core/src/router.ts",
+            "packages/router-core/src/utils.ts",
+            "packages/router-core/src/routeInfo.ts",
+            "packages/router-core/src/route.ts",
+            "packages/router-core/src/path.ts",
+            "packages/router-core/src/load-server.ts",
+            "packages/router-core/src/isServer/development.ts",
+            "packages/router-core/src/link.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 3,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 3,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      }
+    ],
+    "sections": [
+      {
+        "name": "intro",
+        "form": "intro",
+        "source": "examples/react",
+        "start": 0,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      },
+      {
+        "name": "react",
+        "form": "chorus",
+        "source": "examples/react",
+        "start": 32,
+        "length": 64,
+        "intensity": 1,
+        "area": 0
+      },
+      {
+        "name": "solid",
+        "form": "verse",
+        "source": "examples/solid",
+        "start": 96,
+        "length": 48,
+        "intensity": 0.7220968982312228,
+        "area": 4
+      },
+      {
+        "name": "packages",
+        "form": "verse",
+        "source": "packages",
+        "start": 144,
+        "length": 48,
+        "intensity": 0.9,
+        "area": 5
+      },
+      {
+        "name": "outro",
+        "form": "outro",
+        "source": "examples/react",
+        "start": 192,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      }
+    ]
+  },
+  "evidence": {
+    "files": 2244,
+    "meanFanOut": 1.374777183600713,
+    "leafShare": 0.5222816399286988,
+    "fifths": 2,
+    "regions": [
+      {
+        "path": "examples/react",
+        "name": "react",
+        "files": 790,
+        "share": 0.3520499108734403,
+        "weight": 0.3050734983887306,
+        "foundation": 0.5,
+        "density": 1.1278481012658228,
+        "leafShare": 0.5848101265822785,
+        "clusters": 116,
+        "cycles": 28
+      },
+      {
+        "path": "examples/solid",
+        "name": "solid",
+        "files": 664,
+        "share": 0.29590017825311943,
+        "weight": 0.25861313548435483,
+        "foundation": 0.5,
+        "density": 1.0873493975903614,
+        "leafShare": 0.5963855421686747,
+        "clusters": 92,
+        "cycles": 22
+      },
+      {
+        "path": "packages",
+        "name": "packages",
+        "files": 720,
+        "share": 0.32085561497326204,
+        "weight": 0.41426744409198574,
+        "foundation": 0,
+        "density": 1.9583333333333333,
+        "leafShare": 0.35694444444444445,
+        "clusters": 99,
+        "cycles": 11
+      }
+    ],
+    "measures": {
+      "examples/react/basic-ssr-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 6,
+        "depth": 2,
+        "centrality": 0.0008252851551577389,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9505127061970575,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9324565314311191
+        }
+      },
+      "examples/react/basic-ssr-file-based/src/routerContext.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0005627394075726212,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.8613464110566206
+        }
+      },
+      "examples/react/basic-ssr-file-based/src/routes/__root.tsx": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0003673801228352146,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.635309852875613,
+          "depth": 0.6431119037004013,
+          "centrality": 0.6803388319215337
+        }
+      },
+      "examples/react/basic-ssr-streaming-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 6,
+        "depth": 2,
+        "centrality": 0.0008252851551577389,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9505127061970575,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9324565314311191
+        }
+      },
+      "examples/react/basic-ssr-streaming-file-based/src/routerContext.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0005627394075726212,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.8613464110566206
+        }
+      },
+      "examples/react/basic-ssr-streaming-file-based/src/routes/__root.tsx": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0003673801228352146,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.635309852875613,
+          "depth": 0.6431119037004013,
+          "centrality": 0.6803388319215337
+        }
+      },
+      "examples/react/basic-virtual-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 13,
+        "depth": 1,
+        "centrality": 0.0004633593394386753,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9870708872046366,
+          "depth": 0.3016049933125279,
+          "centrality": 0.8007133303611235
+        }
+      },
+      "examples/react/basic-virtual-inside-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 11,
+        "depth": 1,
+        "centrality": 0.0004633593394386753,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9846188140882747,
+          "depth": 0.3016049933125279,
+          "centrality": 0.8007133303611235
+        }
+      },
+      "examples/react/kitchen-sink-file-based/src/components/Spinner.tsx": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0006813168550273867,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9030316540347748
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/components/Spinner.tsx": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.000733137698058438,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9168524297815426
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/main.tsx": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 4,
+        "centrality": 0.00041814724819743494,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.8432902362906821,
+          "centrality": 0.7385198395006688
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 18,
+        "depth": 4,
+        "centrality": 0.00029489218712476094,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.992643780650914,
+          "depth": 0.8432902362906821,
+          "centrality": 0.5200624164065983
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.index.tsx": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.invoices.$invoiceId.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.invoices.index.tsx": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.invoices.route.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/routes/dashboard.users.route.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/utils/mockTodos.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.0014521350638340973,
+        "rank": {
+          "fanIn": 0.9072670530539456,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9770396790013375
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/utils/queryOptions.ts": {
+        "fanIn": 6,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.0011836387033213967,
+        "rank": {
+          "fanIn": 0.9772625947391886,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9650022291573785
+        }
+      },
+      "examples/react/kitchen-sink-react-query-file-based/src/utils/utils.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0014847902105195546,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9779313419527419
+        }
+      },
+      "examples/react/large-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 9,
+        "depth": 1,
+        "centrality": 0.0004633593394386753,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9745876058849755,
+          "depth": 0.3016049933125279,
+          "centrality": 0.8007133303611235
+        }
+      },
+      "examples/react/search-validator-adapters/src/components/Content.tsx": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0005769579829796716,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.8682567989300044
+        }
+      },
+      "examples/react/search-validator-adapters/src/components/Header.tsx": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0005769579829796716,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.8682567989300044
+        }
+      },
+      "examples/react/start-basic-auth/src/prisma-generated/commonInputTypes.ts": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 3,
+        "centrality": 0.0009245602899042779,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9458314757021846
+        }
+      },
+      "examples/react/start-basic-auth/src/prisma-generated/enums.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0013099116170202782,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9699063753901025
+        }
+      },
+      "examples/react/start-basic-auth/src/prisma-generated/internal/class.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0016829156958953844,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.635309852875613,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9828354881854658
+        }
+      },
+      "examples/react/start-basic-auth/src/prisma-generated/internal/prismaNamespace.ts": {
+        "fanIn": 5,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.002785657396827346,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9921979491752118
+        }
+      },
+      "examples/react/start-basic-auth/src/prisma-generated/models.ts": {
+        "fanIn": 2,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0015860794608246022,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9810521622826571
+        }
+      },
+      "examples/react/start-basic-cloudflare/worker-configuration.d.ts": {
+        "fanIn": 10,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0026532202496215786,
+        "rank": {
+          "fanIn": 0.9919750334373607,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9913062862238075
+        }
+      },
+      "examples/react/start-basic-react-query/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 20,
+        "depth": 4,
+        "centrality": 0.00030645530420679237,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9968791796700847,
+          "depth": 0.8432902362906821,
+          "centrality": 0.5595185020062416
+        }
+      },
+      "examples/react/start-convex-trellaux/convex/_generated/api.d.ts": {
+        "fanIn": 4,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.0016702337001080047,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9817209094962104
+        }
+      },
+      "examples/react/start-convex-trellaux/convex/_generated/dataModel.d.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.0009712760585926795,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9500668747213553
+        }
+      },
+      "examples/react/start-convex-trellaux/convex/_generated/server.d.ts": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.0007946526909589594,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9282211324119483
+        }
+      },
+      "examples/react/start-convex-trellaux/convex/board.ts": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 4,
+        "centrality": 0.0009603215181661239,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9489522960320999
+        }
+      },
+      "examples/react/start-convex-trellaux/convex/schema.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0011468093570961447,
+        "rank": {
+          "fanIn": 0.9072670530539456,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9616584930896122
+        }
+      },
+      "examples/react/start-convex-trellaux/src/invariant.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0005549242331973305,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.8582255907267053
+        }
+      },
+      "examples/react/start-trellaux/src/invariant.ts": {
+        "fanIn": 6,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0012008522941602694,
+        "rank": {
+          "fanIn": 0.9772625947391886,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.966116807846634
+        }
+      },
+      "examples/solid/basic-ssr-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 6,
+        "depth": 2,
+        "centrality": 0.0008252851551577389,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9505127061970575,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9324565314311191
+        }
+      },
+      "examples/solid/basic-ssr-file-based/src/routerContext.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0005627394075726212,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.8613464110566206
+        }
+      },
+      "examples/solid/basic-ssr-file-based/src/routes/__root.tsx": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0003673801228352146,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.635309852875613,
+          "depth": 0.6431119037004013,
+          "centrality": 0.6803388319215337
+        }
+      },
+      "examples/solid/basic-ssr-streaming-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 10,
+        "depth": 2,
+        "centrality": 0.0008252851551577389,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9814979937583593,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9324565314311191
+        }
+      },
+      "examples/solid/basic-ssr-streaming-file-based/src/router.tsx": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.0006762550139895288,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.635309852875613,
+          "depth": 0.3016049933125279,
+          "centrality": 0.898573339277753
+        }
+      },
+      "examples/solid/basic-ssr-streaming-file-based/src/routes/__root.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0003206135396562575,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.5958537672759697
+        }
+      },
+      "examples/solid/basic-virtual-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 13,
+        "depth": 1,
+        "centrality": 0.0004633593394386753,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9870708872046366,
+          "depth": 0.3016049933125279,
+          "centrality": 0.8007133303611235
+        }
+      },
+      "examples/solid/basic-virtual-inside-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 11,
+        "depth": 1,
+        "centrality": 0.0004633593394386753,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9846188140882747,
+          "depth": 0.3016049933125279,
+          "centrality": 0.8007133303611235
+        }
+      },
+      "examples/solid/kitchen-sink-file-based/src/components/Spinner.tsx": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0006813168550273867,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9030316540347748
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/components/Spinner.tsx": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.000733137698058438,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9168524297815426
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/main.tsx": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 4,
+        "centrality": 0.00041814724819743494,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.8432902362906821,
+          "centrality": 0.7385198395006688
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 18,
+        "depth": 4,
+        "centrality": 0.00029489218712476094,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.992643780650914,
+          "depth": 0.8432902362906821,
+          "centrality": 0.5200624164065983
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.index.tsx": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.invoices.$invoiceId.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.invoices.index.tsx": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.invoices.route.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/routes/dashboard.users.route.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.00026438923721309787,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.33058403923316987
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/utils/mockTodos.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.0014521350638340973,
+        "rank": {
+          "fanIn": 0.9072670530539456,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9770396790013375
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/utils/queryOptions.ts": {
+        "fanIn": 6,
+        "fanOut": 2,
+        "depth": 4,
+        "centrality": 0.0011836387033213967,
+        "rank": {
+          "fanIn": 0.9772625947391886,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9650022291573785
+        }
+      },
+      "examples/solid/kitchen-sink-solid-query-file-based/src/utils/utils.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0014847902105195546,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9779313419527419
+        }
+      },
+      "examples/solid/large-file-based/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 9,
+        "depth": 1,
+        "centrality": 0.0004633593394386753,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9745876058849755,
+          "depth": 0.3016049933125279,
+          "centrality": 0.8007133303611235
+        }
+      },
+      "examples/solid/search-validator-adapters/src/components/Content.tsx": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0005769579829796716,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.8682567989300044
+        }
+      },
+      "examples/solid/search-validator-adapters/src/components/Header.tsx": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0005769579829796716,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.8682567989300044
+        }
+      },
+      "examples/solid/start-basic-auth/src/prisma-generated/commonInputTypes.ts": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 3,
+        "centrality": 0.0009245602899042779,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9458314757021846
+        }
+      },
+      "examples/solid/start-basic-auth/src/prisma-generated/enums.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0013099116170202782,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9699063753901025
+        }
+      },
+      "examples/solid/start-basic-auth/src/prisma-generated/internal/class.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0016829156958953844,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.635309852875613,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9828354881854658
+        }
+      },
+      "examples/solid/start-basic-auth/src/prisma-generated/internal/prismaNamespace.ts": {
+        "fanIn": 5,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.002785657396827346,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9921979491752118
+        }
+      },
+      "examples/solid/start-basic-auth/src/prisma-generated/models.ts": {
+        "fanIn": 2,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0015860794608246022,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9810521622826571
+        }
+      },
+      "examples/solid/start-basic-auth/src/utils/session.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0006873369676982436,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9048149799375836
+        }
+      },
+      "examples/solid/start-basic-cloudflare/src/components/NotFound.tsx": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0006172365504403167,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.8807400802496657
+        }
+      },
+      "examples/solid/start-basic-cloudflare/worker-configuration.d.ts": {
+        "fanIn": 10,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0026532202496215786,
+        "rank": {
+          "fanIn": 0.9919750334373607,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9913062862238075
+        }
+      },
+      "examples/solid/start-basic-netlify/src/routeTree.gen.ts": {
+        "fanIn": 1,
+        "fanOut": 19,
+        "depth": 4,
+        "centrality": 0.00030660237186014245,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.9953187695051271,
+          "depth": 0.8432902362906821,
+          "centrality": 0.5619705751226036
+        }
+      },
+      "examples/solid/start-convex-better-auth/convex/_generated/dataModel.d.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.0020552675182134786,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9866250557289344
+        }
+      },
+      "examples/solid/start-convex-better-auth/convex/_generated/server.d.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 4,
+        "centrality": 0.0015604033063119681,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.635309852875613,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9803834150691039
+        }
+      },
+      "examples/solid/start-convex-better-auth/convex/auth.ts": {
+        "fanIn": 5,
+        "fanOut": 3,
+        "depth": 4,
+        "centrality": 0.00225147001093907,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.8740526081141329,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9893000445831476
+        }
+      },
+      "examples/solid/start-convex-better-auth/convex/schema.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.001997466724893321,
+        "rank": {
+          "fanIn": 0.4930896121266161,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.8432902362906821,
+          "centrality": 0.9861792242532322
+        }
+      },
+      "packages/react-router/src/routerContext.tsx": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.003980107355955776,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9942041908158716
+        }
+      },
+      "packages/react-router/src/structuralSharing.ts": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0012077107533999972,
+        "rank": {
+          "fanIn": 0.9884083816317432,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9665626393223361
+        }
+      },
+      "packages/react-router/src/useMatch.tsx": {
+        "fanIn": 11,
+        "fanOut": 3,
+        "depth": 2,
+        "centrality": 0.0017988306465064193,
+        "rank": {
+          "fanIn": 0.9935354436023183,
+          "fanOut": 0.8740526081141329,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9848417298261257
+        }
+      },
+      "packages/react-router/src/useRouter.tsx": {
+        "fanIn": 22,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.004080289046414076,
+        "rank": {
+          "fanIn": 0.9991083370485956,
+          "fanOut": 0.635309852875613,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9950958537672759
+        }
+      },
+      "packages/react-start-rsc/src/ServerComponentTypes.ts": {
+        "fanIn": 14,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0025363427987987446,
+        "rank": {
+          "fanIn": 0.9955416852429781,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.990191707534552
+        }
+      },
+      "packages/react-start-rsc/src/global.d.ts": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0011943934079593796,
+        "rank": {
+          "fanIn": 0.9884083816317432,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9656709763709318
+        }
+      },
+      "packages/router-core/src/fileRoute.ts": {
+        "fanIn": 3,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.0011317282979465243,
+        "rank": {
+          "fanIn": 0.9072670530539456,
+          "fanOut": 0.8740526081141329,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9607668301382077
+        }
+      },
+      "packages/router-core/src/isServer/development.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.0025733854808831845,
+        "rank": {
+          "fanIn": 0.9072670530539456,
+          "fanOut": 0.635309852875613,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9906375390102541
+        }
+      },
+      "packages/router-core/src/link.ts": {
+        "fanIn": 10,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.0020704854207232682,
+        "rank": {
+          "fanIn": 0.9919750334373607,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9875167186803389
+        }
+      },
+      "packages/router-core/src/load-client.ts": {
+        "fanIn": 7,
+        "fanOut": 11,
+        "depth": 1,
+        "centrality": 0.0015287953570238847,
+        "rank": {
+          "fanIn": 0.9841729826125725,
+          "fanOut": 0.9846188140882747,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9799375835934017
+        }
+      },
+      "packages/router-core/src/load-server.ts": {
+        "fanIn": 3,
+        "fanOut": 9,
+        "depth": 1,
+        "centrality": 0.002842324233730639,
+        "rank": {
+          "fanIn": 0.9072670530539456,
+          "fanOut": 0.9745876058849755,
+          "depth": 0.3016049933125279,
+          "centrality": 0.992866696388765
+        }
+      },
+      "packages/router-core/src/new-process-route-tree.ts": {
+        "fanIn": 2,
+        "fanOut": 4,
+        "depth": 2,
+        "centrality": 0.0015174245827846505,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9786000891662952
+        }
+      },
+      "packages/router-core/src/not-found.ts": {
+        "fanIn": 5,
+        "fanOut": 2,
+        "depth": 1,
+        "centrality": 0.0009751958488599874,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9509585376727597
+        }
+      },
+      "packages/router-core/src/path.ts": {
+        "fanIn": 5,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.002858313168080113,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.9190815871600535,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9933125278644672
+        }
+      },
+      "packages/router-core/src/route.ts": {
+        "fanIn": 12,
+        "fanOut": 15,
+        "depth": 1,
+        "centrality": 0.004057765339325626,
+        "rank": {
+          "fanIn": 0.9942041908158716,
+          "fanOut": 0.9888542131074454,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9946500222915737
+        }
+      },
+      "packages/router-core/src/routeInfo.ts": {
+        "fanIn": 16,
+        "fanOut": 5,
+        "depth": 1,
+        "centrality": 0.004268772495226469,
+        "rank": {
+          "fanIn": 0.9966562639322336,
+          "fanOut": 0.9386981720909496,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9955416852429781
+        }
+      },
+      "packages/router-core/src/router.ts": {
+        "fanIn": 33,
+        "fanOut": 24,
+        "depth": 1,
+        "centrality": 0.00969067130704952,
+        "rank": {
+          "fanIn": 0.999777084262149,
+          "fanOut": 0.9982166740971913,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9991083370485956
+        }
+      },
+      "packages/router-core/src/sieve-cache.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0013358182632304185,
+        "rank": {
+          "fanIn": 0.9473918858671422,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9719126170307624
+        }
+      },
+      "packages/router-core/src/utils.ts": {
+        "fanIn": 20,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.007559897479442578,
+        "rank": {
+          "fanIn": 0.9979937583593401,
+          "fanOut": 0.8740526081141329,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9986625055728935
+        }
+      },
+      "packages/router-generator/src/utils.ts": {
+        "fanIn": 5,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.0011674079398176836,
+        "rank": {
+          "fanIn": 0.9670084707980383,
+          "fanOut": 0.8740526081141329,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9625501560410165
+        }
+      },
+      "packages/router-plugin/src/core/router-plugin-context.ts": {
+        "fanIn": 10,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.001105646353467632,
+        "rank": {
+          "fanIn": 0.9919750334373607,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.958983504235399
+        }
+      },
+      "packages/solid-router/src/routerContext.tsx": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.005092913883335275,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9959875167186804
+        }
+      },
+      "packages/solid-router/src/useMatch.tsx": {
+        "fanIn": 8,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0022375435256130637,
+        "rank": {
+          "fanIn": 0.9884083816317432,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9888542131074454
+        }
+      },
+      "packages/solid-router/src/useRouter.tsx": {
+        "fanIn": 20,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.005570334157460882,
+        "rank": {
+          "fanIn": 0.9979937583593401,
+          "fanOut": 0.635309852875613,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9973250111457869
+        }
+      },
+      "packages/start-client-core/src/constants.ts": {
+        "fanIn": 9,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.002069592223107174,
+        "rank": {
+          "fanIn": 0.990191707534552,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9870708872046366
+        }
+      },
+      "packages/start-client-core/src/hydration/types.ts": {
+        "fanIn": 10,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.002091214708071914,
+        "rank": {
+          "fanIn": 0.9919750334373607,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.9884083816317432
+        }
+      },
+      "packages/start-plugin-core/src/constants.ts": {
+        "fanIn": 16,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0013160735581586637,
+        "rank": {
+          "fanIn": 0.9966562639322336,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.3016049933125279,
+          "centrality": 0.971020954079358
+        }
+      },
+      "packages/start-plugin-core/src/utils.ts": {
+        "fanIn": 14,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.003115116870555279,
+        "rank": {
+          "fanIn": 0.9955416852429781,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9937583593401694
+        }
+      },
+      "packages/vue-router/src/routerContext.tsx": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.005212537049295346,
+        "rank": {
+          "fanIn": 0.8259028087382969,
+          "fanOut": 0.26103432902362905,
+          "depth": 0.6431119037004013,
+          "centrality": 0.9964333481943826
+        }
+      },
+      "packages/vue-router/src/useMatch.tsx": {
+        "fanIn": 8,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0019714258106636813,
+        "rank": {
+          "fanIn": 0.9884083816317432,
+          "fanOut": 0.7949175211769951,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9852875613018279
+        }
+      },
+      "packages/vue-router/src/useRouter.tsx": {
+        "fanIn": 21,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.005481434072218759,
+        "rank": {
+          "fanIn": 0.9986625055728935,
+          "fanOut": 0.635309852875613,
+          "depth": 0.4942041908158716,
+          "centrality": 0.9968791796700847
+        }
+      }
+    }
+  }
+}

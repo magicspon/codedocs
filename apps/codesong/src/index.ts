@@ -5,6 +5,13 @@
 
 export { compose, DEFAULT_OPTIONS } from './compose/compose.ts'
 export type * from './model.ts'
+export {
+  evidence,
+  type Evidence,
+  type FileMeasures,
+  type RegionEvidence,
+  type Song,
+} from './evidence.ts'
 export { toMidi } from './render/midi.ts'
 export {
   realise,

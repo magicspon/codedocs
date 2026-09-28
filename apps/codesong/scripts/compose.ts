@@ -4,10 +4,11 @@
  *     pnpm --filter @codedocs/codesong compose <repo | index.db | atlas.json>
  *       [--seed n] [--bars n] [--tempo n] [--scale name] [--tracks n] [--out dir]
  *
- * Writes `<name>.composition.json`, `<name>.mid` and `<name>.live.json`, the
- * plan the Live extension builds from (`pnpm live`). A repository or index is
- * read through code-art's pipeline; an atlas JSON that code-art already
- * exported is read as it is.
+ * Writes `<name>.composition.json`, `<name>.mid`, `<name>.live.json` (the
+ * plan the Live extension builds from, `pnpm live`) and `<name>.song.json`,
+ * the composition with its evidence, which the CodeSong site plays. A
+ * repository or index is read through code-art's pipeline; an atlas JSON that
+ * code-art already exported is read as it is.
  */
 
 import {
@@ -19,7 +20,7 @@ import {
 } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
-import type { Atlas } from '@codedocs/code-art/atlas'
+import type { Atlas, SymbolNames } from '@codedocs/code-art/atlas'
 import { snapshot } from '@codedocs/code-art/pipeline'
 import { SCALES, NOTE_NAMES } from '../src/theory.ts'
 import {
@@ -27,6 +28,7 @@ import {
   compose,
   DEFAULT_OPTIONS,
   DEFAULT_PALETTE,
+  evidence,
   findKit,
   livePlan,
   readStructure,
@@ -34,6 +36,7 @@ import {
   toMidi,
   type ComposeOptions,
   type ScaleName,
+  type Song,
 } from '../src/index.ts'
 
 /** pnpm runs scripts from the package directory; paths mean the caller's. */
@@ -77,6 +80,16 @@ function readAtlas(target: string): Atlas {
   })
 }
 
+/**
+ * The symbol names code-art exported beside an atlas JSON, as
+ * `<name>.symbols.json`, if it did. They give the site's song names to show.
+ */
+function readNames(target: string): SymbolNames | undefined {
+  const path = target.replace(/\.json$/, '.symbols.json')
+  if (!target.endsWith('.json') || !existsSync(path)) return undefined
+  return JSON.parse(readFileSync(path, 'utf8')) as SymbolNames
+}
+
 function number(value: string | undefined, fallback: number): number {
   if (value === undefined) return fallback
   const n = Number(value)
@@ -113,6 +126,7 @@ mkdirSync(outDir, { recursive: true })
 const json = join(outDir, `${atlas.name}.composition.json`)
 const mid = join(outDir, `${atlas.name}.mid`)
 const live = join(outDir, `${atlas.name}.live.json`)
+const song = join(outDir, `${atlas.name}.song.json`)
 const kit = findKit(DEFAULT_PALETTE)
 writeFileSync(json, `${JSON.stringify(composition, null, 2)}\n`)
 writeFileSync(mid, toMidi(composition, tracks))
@@ -120,6 +134,11 @@ writeFileSync(
   live,
   `${JSON.stringify(livePlan(composition, tracks, DEFAULT_PALETTE, kit), null, 2)}\n`,
 )
+const played: Song = {
+  composition,
+  evidence: evidence(analysis, composition, readNames(fromCaller(given))),
+}
+writeFileSync(song, `${JSON.stringify(played, null, 2)}\n`)
 const missing = Object.keys(DEFAULT_PALETTE.kit).filter((v) => !(v in kit))
 
 const beats = composition.sections.reduce((sum, s) => sum + s.length, 0)
@@ -131,7 +150,8 @@ console.log(`${atlas.name}
   ${tracks.reduce((n, t) => n + t.notes.length, 0)} notes
 ✓ ${json}
 ✓ ${mid}
-✓ ${live}`)
+✓ ${live}
+✓ ${song}`)
 if (missing.length > 0) {
   console.warn(
     `  no Ableton Live drum samples found for ${missing.join(', ')}; those pads stay empty`,

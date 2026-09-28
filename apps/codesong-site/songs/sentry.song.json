@@ -1,0 +1,4706 @@
+{
+  "composition": {
+    "composerVersion": "0.2.1",
+    "origin": {
+      "repository": "sentry",
+      "commit": "bd3ce5fa6913130868e1547df810655770e3becd",
+      "options": {
+        "seed": 0,
+        "tempo": 96,
+        "bars": "auto",
+        "scale": "minor",
+        "tracks": 6,
+        "maxMotifs": 16
+      }
+    },
+    "tempo": 96,
+    "key": 2,
+    "scale": "minor",
+    "beatsPerBar": 4,
+    "tracks": [
+      {
+        "id": "lead",
+        "name": "lead",
+        "role": "lead",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "theme",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": -1,
+              "stretch": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 136,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 160,
+            "length": 16,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 200,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 232,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 240,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 256,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 2
+            }
+          }
+        ]
+      },
+      {
+        "id": "bass",
+        "name": "bass",
+        "role": "bass",
+        "register": "low",
+        "parts": [
+          {
+            "motif": "bass:dev-packages/e2e-tests/test-applications",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages",
+            "start": 96,
+            "length": 48,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:dev-packages/node-integration-tests/suites",
+            "start": 176,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:dev-packages/cloudflare-integration-tests/suites",
+            "start": 208,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:dev-packages/e2e-tests/test-applications",
+            "start": 240,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "pad",
+        "name": "pad",
+        "role": "pad",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "pad:dev-packages/e2e-tests/test-applications",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:dev-packages/e2e-tests/test-applications",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages",
+            "start": 96,
+            "length": 48,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:dev-packages/browser-integration-tests/suites",
+            "start": 144,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:dev-packages/node-integration-tests/suites",
+            "start": 176,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:dev-packages/cloudflare-integration-tests/suites",
+            "start": 208,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:dev-packages/e2e-tests/test-applications",
+            "start": 240,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "percussion",
+        "name": "percussion",
+        "role": "percussion",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "groove:dev-packages/e2e-tests/test-applications:intro",
+            "start": 0,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:dev-packages/e2e-tests/test-applications:intro",
+            "start": 28,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:dev-packages/e2e-tests/test-applications:chorus",
+            "start": 32,
+            "length": 60,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:dev-packages/e2e-tests/test-applications:chorus",
+            "start": 92,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages:verse",
+            "start": 96,
+            "length": 44,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages:verse",
+            "start": 140,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:dev-packages/node-integration-tests/suites:verse",
+            "start": 176,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:dev-packages/node-integration-tests/suites:verse",
+            "start": 204,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:dev-packages/cloudflare-integration-tests/suites:verse",
+            "start": 208,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:dev-packages/cloudflare-integration-tests/suites:verse",
+            "start": 236,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "counter",
+        "name": "counter",
+        "role": "counter",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:1",
+            "start": 32,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:2",
+            "start": 36,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:3",
+            "start": 40,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:1",
+            "start": 44,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:2",
+            "start": 48,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:3",
+            "start": 52,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:1",
+            "start": 56,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:2",
+            "start": 60,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:3",
+            "start": 64,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:1",
+            "start": 68,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:2",
+            "start": 72,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:3",
+            "start": 76,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:1",
+            "start": 80,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:2",
+            "start": 84,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:3",
+            "start": 88,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/e2e-tests/test-applications:1",
+            "start": 92,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 96,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 100,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:3",
+            "start": 108,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 116,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 120,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:3",
+            "start": 128,
+            "length": 8,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 136,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 140,
+            "length": 4,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 176,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 180,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 184,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 188,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 192,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 196,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 200,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:dev-packages/node-integration-tests/suites:1",
+            "start": 204,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "arp",
+        "name": "arp",
+        "role": "arp",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "arp:packages",
+            "start": 96,
+            "length": 48,
+            "transform": {
+              "transpose": 4,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      }
+    ],
+    "motifs": [
+      {
+        "id": "theme",
+        "source": {
+          "project": "dev-packages/browser-integration-tests/tsconfig.json",
+          "files": [
+            "dev-packages/browser-integration-tests/utils/fixtures.ts",
+            "dev-packages/browser-integration-tests/utils/generatePage.ts",
+            "dev-packages/browser-integration-tests/utils/generatePlugin.ts",
+            "dev-packages/browser-integration-tests/utils/staticAssets.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "pad:dev-packages/e2e-tests/test-applications",
+        "source": {
+          "project": "dev-packages/e2e-tests/test-applications/react-router-7-lazy-routes/tsconfig.json",
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/react-router-7-lazy-routes/src/pages/Deep.tsx",
+            "dev-packages/e2e-tests/test-applications/nextjs-16-userfeedback/app/examples/attachToFeedbackButton.tsx",
+            "dev-packages/e2e-tests/test-applications/nestjs-basic/src/app.service.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-app-dir/components/client-error-debug-tools.tsx"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 58
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 58
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:dev-packages/e2e-tests/test-applications:intro",
+        "source": {
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/nextjs-14/app/propagation/utils.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/server/api/trpc.ts",
+            "dev-packages/e2e-tests/test-applications/nestjs-distributed-tracing/src/utils.ts",
+            "dev-packages/e2e-tests/test-applications/supabase-nextjs/lib/initSupabaseAdmin.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react-static/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/cloudflare-workers-send-to-sentry/deployed-worker.ts",
+            "dev-packages/e2e-tests/test-applications/ember-classic/app/config/environment.d.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:dev-packages/e2e-tests/test-applications:intro",
+        "source": {
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/nextjs-14/app/propagation/utils.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/server/api/trpc.ts",
+            "dev-packages/e2e-tests/test-applications/nestjs-distributed-tracing/src/utils.ts",
+            "dev-packages/e2e-tests/test-applications/supabase-nextjs/lib/initSupabaseAdmin.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react-static/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/cloudflare-workers-send-to-sentry/deployed-worker.ts",
+            "dev-packages/e2e-tests/test-applications/ember-classic/app/config/environment.d.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:dev-packages/e2e-tests/test-applications",
+        "source": {
+          "project": "dev-packages/e2e-tests/test-applications/react-router-7-lazy-routes/tsconfig.json",
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/react-router-7-lazy-routes/src/pages/Deep.tsx",
+            "dev-packages/e2e-tests/test-applications/nextjs-16-userfeedback/app/examples/attachToFeedbackButton.tsx",
+            "dev-packages/e2e-tests/test-applications/nestjs-basic/src/app.service.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-app-dir/components/client-error-debug-tools.tsx"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 101
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 89
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 1.8,
+            "velocity": 101
+          },
+          {
+            "degree": 1,
+            "start": 6,
+            "duration": 1.8,
+            "velocity": 89
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 2,
+            "start": 10,
+            "duration": 1.8,
+            "velocity": 95
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 0.9,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 13,
+            "duration": 0.9,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 14,
+            "duration": 0.9,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 15,
+            "duration": 0.9,
+            "velocity": 98
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:dev-packages/e2e-tests/test-applications:chorus",
+        "source": {
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/nextjs-14/app/propagation/utils.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/server/api/trpc.ts",
+            "dev-packages/e2e-tests/test-applications/nestjs-distributed-tracing/src/utils.ts",
+            "dev-packages/e2e-tests/test-applications/supabase-nextjs/lib/initSupabaseAdmin.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react-static/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/cloudflare-workers-send-to-sentry/deployed-worker.ts",
+            "dev-packages/e2e-tests/test-applications/ember-classic/app/config/environment.d.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 3,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 80
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:dev-packages/e2e-tests/test-applications:chorus",
+        "source": {
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/nextjs-14/app/propagation/utils.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/server/api/trpc.ts",
+            "dev-packages/e2e-tests/test-applications/nestjs-distributed-tracing/src/utils.ts",
+            "dev-packages/e2e-tests/test-applications/supabase-nextjs/lib/initSupabaseAdmin.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react-static/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/tanstackstart-react/src/middleware.ts",
+            "dev-packages/e2e-tests/test-applications/cloudflare-workers-send-to-sentry/deployed-worker.ts",
+            "dev-packages/e2e-tests/test-applications/ember-classic/app/config/environment.d.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:dev-packages/e2e-tests/test-applications:1",
+        "source": {
+          "project": "dev-packages/e2e-tests/test-applications/nextjs-orpc/tsconfig.json",
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/client.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/router.ts",
+            "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/sentry-middleware.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 109
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 2,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:dev-packages/e2e-tests/test-applications:2",
+        "source": {
+          "project": "dev-packages/e2e-tests/test-applications/remix-v3/tsconfig.json",
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/remix-v3/app/router.ts",
+            "dev-packages/e2e-tests/test-applications/remix-v3/app/actions/controller.tsx",
+            "dev-packages/e2e-tests/test-applications/remix-v3/app/assets.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 106
+          },
+          {
+            "degree": 5,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 104
+          },
+          {
+            "degree": 8,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 107
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:dev-packages/e2e-tests/test-applications:3",
+        "source": {
+          "project": "dev-packages/e2e-tests/test-applications/nextjs-15-t3/tsconfig.json",
+          "subsystem": "dev-packages/e2e-tests/test-applications",
+          "files": [
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/app/_components/post.tsx",
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/trpc/react.tsx",
+            "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/trpc/query-client.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 104
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 9,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 109
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:packages",
+        "source": {
+          "project": "packages/core/test/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/types/span.ts",
+            "packages/server-utils/src/orchestrion/apmTypes.ts",
+            "packages/cloudflare/src/client.ts",
+            "packages/bundler-plugins/src/core/utils.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 1.8,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 6,
+            "duration": 1.8,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 6,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 6,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 6,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 1.8,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 14,
+            "duration": 1.8,
+            "velocity": 98
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages",
+        "source": {
+          "project": "packages/core/test/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/types/span.ts",
+            "packages/server-utils/src/orchestrion/apmTypes.ts",
+            "packages/cloudflare/src/client.ts",
+            "packages/bundler-plugins/src/core/utils.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 6,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 7,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 8,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 7,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages:verse",
+        "source": {
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/debug-build.ts",
+            "packages/server-utils/src/orchestrion/apmTypes.ts",
+            "packages/server-utils/src/ai/core/utils.ts",
+            "packages/browser/src/helpers.ts",
+            "packages/server-utils/src/ai/core/gen-ai-attributes.ts",
+            "packages/server-utils/src/debug-build.ts",
+            "packages/core/src/semanticAttributes.ts",
+            "packages/feedback/src/constants/index.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages:verse",
+        "source": {
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/debug-build.ts",
+            "packages/server-utils/src/orchestrion/apmTypes.ts",
+            "packages/server-utils/src/ai/core/utils.ts",
+            "packages/browser/src/helpers.ts",
+            "packages/server-utils/src/ai/core/gen-ai-attributes.ts",
+            "packages/server-utils/src/debug-build.ts",
+            "packages/core/src/semanticAttributes.ts",
+            "packages/feedback/src/constants/index.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages:1",
+        "source": {
+          "project": "dev-packages/browser-integration-tests/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/replay-internal/src/types/replay.ts",
+            "packages/replay-internal/src/types/performance.ts",
+            "packages/replay-internal/src/types/request.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages:2",
+        "source": {
+          "project": "packages/core/test/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/types/span.ts",
+            "packages/core/src/attributes.ts",
+            "packages/core/src/utils/is.ts",
+            "packages/core/src/types/misc.ts",
+            "packages/core/src/types/request.ts",
+            "packages/core/src/types/webfetchapi.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 9,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 2.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:packages:3",
+        "source": {
+          "project": "packages/core/test/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/carrier.ts",
+            "packages/core/src/asyncContext/stackStrategy.ts",
+            "packages/core/src/scope.ts",
+            "packages/core/src/client.ts",
+            "packages/core/src/utils/is.ts",
+            "packages/core/src/types/misc.ts",
+            "packages/core/src/types/request.ts",
+            "packages/core/src/types/webfetchapi.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 9,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 7,
+            "start": 3.5,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 4.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "arp:packages",
+        "source": {
+          "project": "packages/core/test/tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/core/src/client.ts",
+            "packages/core/src/carrier.ts",
+            "packages/core/src/utils/worldwide.ts",
+            "packages/core/src/scope.ts",
+            "packages/core/src/types/event.ts",
+            "packages/core/src/utils/debug-logger.ts",
+            "packages/core/src/currentScopes.ts",
+            "packages/core/src/types/integration.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:dev-packages/browser-integration-tests/suites",
+        "source": {
+          "project": "dev-packages/browser-integration-tests/tsconfig.json",
+          "subsystem": "dev-packages/browser-integration-tests/suites",
+          "files": [
+            "dev-packages/browser-integration-tests/suites/profiling/test-utils.ts",
+            "dev-packages/browser-integration-tests/suites/errors/fetch-enhance-messages-off/test.ts",
+            "dev-packages/browser-integration-tests/suites/errors/fetch-enhance-messages-report-only/test.ts",
+            "dev-packages/browser-integration-tests/suites/errors/fetch/test.ts"
+          ],
+          "structure": "central-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 8,
+            "start": 12,
+            "duration": 4,
+            "velocity": 56
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "bass:dev-packages/node-integration-tests/suites",
+        "source": {
+          "project": "dev-packages/node-integration-tests/suites/tsconfig.json",
+          "subsystem": "dev-packages/node-integration-tests/suites",
+          "files": [
+            "dev-packages/node-integration-tests/suites/tracing/double-baggage/expects.ts",
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 109
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 97
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 1.8,
+            "velocity": 108
+          },
+          {
+            "degree": 2,
+            "start": 6,
+            "duration": 1.8,
+            "velocity": 96
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "pad:dev-packages/node-integration-tests/suites",
+        "source": {
+          "project": "dev-packages/node-integration-tests/suites/tsconfig.json",
+          "subsystem": "dev-packages/node-integration-tests/suites",
+          "files": [
+            "dev-packages/node-integration-tests/suites/tracing/double-baggage/expects.ts",
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "groove:dev-packages/node-integration-tests/suites:verse",
+        "source": {
+          "subsystem": "dev-packages/node-integration-tests/suites",
+          "files": [
+            "dev-packages/node-integration-tests/suites/tracing/double-baggage/expects.ts",
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts",
+            "dev-packages/node-integration-tests/suites/express/with-http/maxIncomingRequestBodySize/generatePayload.ts",
+            "dev-packages/node-integration-tests/suites/tracing/mysql/mysql-test-server.ts",
+            "dev-packages/node-integration-tests/suites/tracing/tracePropagationTargets/baggage-org-id/server.ts",
+            "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-all.ts",
+            "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-opt-out.ts",
+            "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:dev-packages/node-integration-tests/suites:verse",
+        "source": {
+          "subsystem": "dev-packages/node-integration-tests/suites",
+          "files": [
+            "dev-packages/node-integration-tests/suites/tracing/double-baggage/expects.ts",
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts",
+            "dev-packages/node-integration-tests/suites/express/with-http/maxIncomingRequestBodySize/generatePayload.ts",
+            "dev-packages/node-integration-tests/suites/tracing/mysql/mysql-test-server.ts",
+            "dev-packages/node-integration-tests/suites/tracing/tracePropagationTargets/baggage-org-id/server.ts",
+            "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-all.ts",
+            "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-opt-out.ts",
+            "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:dev-packages/node-integration-tests/suites:1",
+        "source": {
+          "project": "dev-packages/node-integration-tests/suites/tsconfig.json",
+          "subsystem": "dev-packages/node-integration-tests/suites",
+          "files": [
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/scenario.ts",
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/other-file.ts",
+            "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1,
+            "velocity": 82
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 1,
+            "velocity": 106
+          },
+          {
+            "degree": 5,
+            "start": 2,
+            "duration": 1.5,
+            "velocity": 108
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:dev-packages/cloudflare-integration-tests/suites",
+        "source": {
+          "project": "dev-packages/cloudflare-integration-tests/tsconfig.json",
+          "subsystem": "dev-packages/cloudflare-integration-tests/suites",
+          "files": [
+            "dev-packages/cloudflare-integration-tests/suites/flush-timeout/lastSend.ts",
+            "dev-packages/cloudflare-integration-tests/suites/tracing/workers-ai/mocks.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/durableobject-reexport-instrumented/counter.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workerentrypoint-reexport-instrumented/greeter.ts"
+          ],
+          "structure": "central-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 109
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 97
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 1,
+            "start": 6,
+            "duration": 1.8,
+            "velocity": 95
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 2,
+            "start": 10,
+            "duration": 1.8,
+            "velocity": 95
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 1,
+            "start": 14,
+            "duration": 1.8,
+            "velocity": 95
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:dev-packages/cloudflare-integration-tests/suites",
+        "source": {
+          "project": "dev-packages/cloudflare-integration-tests/tsconfig.json",
+          "subsystem": "dev-packages/cloudflare-integration-tests/suites",
+          "files": [
+            "dev-packages/cloudflare-integration-tests/suites/flush-timeout/lastSend.ts",
+            "dev-packages/cloudflare-integration-tests/suites/tracing/workers-ai/mocks.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/durableobject-reexport-instrumented/counter.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workerentrypoint-reexport-instrumented/greeter.ts"
+          ],
+          "structure": "central-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 56
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 56
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:dev-packages/cloudflare-integration-tests/suites:verse",
+        "source": {
+          "subsystem": "dev-packages/cloudflare-integration-tests/suites",
+          "files": [
+            "dev-packages/cloudflare-integration-tests/suites/flush-timeout/lastSend.ts",
+            "dev-packages/cloudflare-integration-tests/suites/tracing/workers-ai/mocks.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/durableobject-reexport-instrumented/counter.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workerentrypoint-reexport-instrumented/greeter.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workflow-reexport-instrumented/workflow.ts",
+            "dev-packages/cloudflare-integration-tests/suites/basic/index.ts",
+            "dev-packages/cloudflare-integration-tests/suites/binding-connect/index.ts",
+            "dev-packages/cloudflare-integration-tests/suites/cache-client/index.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:dev-packages/cloudflare-integration-tests/suites:verse",
+        "source": {
+          "subsystem": "dev-packages/cloudflare-integration-tests/suites",
+          "files": [
+            "dev-packages/cloudflare-integration-tests/suites/flush-timeout/lastSend.ts",
+            "dev-packages/cloudflare-integration-tests/suites/tracing/workers-ai/mocks.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/durableobject-reexport-instrumented/counter.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workerentrypoint-reexport-instrumented/greeter.ts",
+            "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workflow-reexport-instrumented/workflow.ts",
+            "dev-packages/cloudflare-integration-tests/suites/basic/index.ts",
+            "dev-packages/cloudflare-integration-tests/suites/binding-connect/index.ts",
+            "dev-packages/cloudflare-integration-tests/suites/cache-client/index.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      }
+    ],
+    "sections": [
+      {
+        "name": "intro",
+        "form": "intro",
+        "source": "dev-packages/e2e-tests/test-applications",
+        "start": 0,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      },
+      {
+        "name": "test-applications",
+        "form": "chorus",
+        "source": "dev-packages/e2e-tests/test-applications",
+        "start": 32,
+        "length": 64,
+        "intensity": 1,
+        "area": 0
+      },
+      {
+        "name": "packages",
+        "form": "verse",
+        "source": "packages",
+        "start": 96,
+        "length": 48,
+        "intensity": 0.9,
+        "area": 4
+      },
+      {
+        "name": "suites",
+        "form": "breakdown",
+        "source": "dev-packages/browser-integration-tests/suites",
+        "start": 144,
+        "length": 32,
+        "intensity": 0.35,
+        "area": 5
+      },
+      {
+        "name": "suites",
+        "form": "verse",
+        "source": "dev-packages/node-integration-tests/suites",
+        "start": 176,
+        "length": 32,
+        "intensity": 0.5032724325532617,
+        "area": 5
+      },
+      {
+        "name": "suites",
+        "form": "verse",
+        "source": "dev-packages/cloudflare-integration-tests/suites",
+        "start": 208,
+        "length": 32,
+        "intensity": 0.5037384435181249,
+        "area": 5
+      },
+      {
+        "name": "outro",
+        "form": "outro",
+        "source": "dev-packages/e2e-tests/test-applications",
+        "start": 240,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      }
+    ]
+  },
+  "evidence": {
+    "files": 4737,
+    "meanFanOut": 1.414819506016466,
+    "leafShare": 0.5224825839138696,
+    "fifths": 2,
+    "regions": [
+      {
+        "path": "dev-packages/browser-integration-tests/suites",
+        "name": "suites",
+        "files": 493,
+        "share": 0.10407430863415663,
+        "weight": 0.06053988968444265,
+        "foundation": 0,
+        "density": 0.006085192697768763,
+        "leafShare": 0.002028397565922921,
+        "clusters": 1,
+        "cycles": 0
+      },
+      {
+        "path": "dev-packages/cloudflare-integration-tests/suites",
+        "name": "suites",
+        "files": 237,
+        "share": 0.050031665611146296,
+        "weight": 0.029685858598516888,
+        "foundation": 0,
+        "density": 0.02531645569620253,
+        "leafShare": 0.6075949367088608,
+        "clusters": 1,
+        "cycles": 0
+      },
+      {
+        "path": "dev-packages/e2e-tests/test-applications",
+        "name": "test-applications",
+        "files": 1985,
+        "share": 0.4190415875026388,
+        "weight": 0.27950826245738736,
+        "foundation": 0.5,
+        "density": 0.2584382871536524,
+        "leafShare": 0.8604534005037784,
+        "clusters": 104,
+        "cycles": 0
+      },
+      {
+        "path": "dev-packages/node-integration-tests/suites",
+        "name": "suites",
+        "files": 361,
+        "share": 0.07620857082541693,
+        "weight": 0.04486352360244354,
+        "foundation": 0,
+        "density": 0.0221606648199446,
+        "leafShare": 0.3047091412742382,
+        "clusters": 2,
+        "cycles": 0
+      },
+      {
+        "path": "packages",
+        "name": "packages",
+        "files": 1528,
+        "share": 0.322567025543593,
+        "weight": 0.3990119849144188,
+        "foundation": 0.36065573770491804,
+        "density": 2.7087696335078535,
+        "leafShare": 0.3036649214659686,
+        "clusters": 227,
+        "cycles": 12
+      }
+    ],
+    "measures": {
+      "dev-packages/browser-integration-tests/suites/errors/fetch-enhance-messages-off/test.ts": {
+        "fanIn": 0,
+        "fanOut": 2,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.7501055743243243,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/browser-integration-tests/suites/errors/fetch-enhance-messages-report-only/test.ts": {
+        "fanIn": 0,
+        "fanOut": 2,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.7501055743243243,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/browser-integration-tests/suites/errors/fetch/test.ts": {
+        "fanIn": 0,
+        "fanOut": 2,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.7501055743243243,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/browser-integration-tests/suites/profiling/test-utils.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00021175224279703953,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8616976351351351
+        }
+      },
+      "dev-packages/browser-integration-tests/utils/fixtures.ts": {
+        "fanIn": 519,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.02073999438014536,
+        "rank": {
+          "fanIn": 1,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9995777027027027
+        }
+      },
+      "dev-packages/browser-integration-tests/utils/generatePage.ts": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.017751637395320232,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.7501055743243243,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9991554054054054
+        }
+      },
+      "dev-packages/browser-integration-tests/utils/generatePlugin.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.007719188926231715,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9987331081081081
+        }
+      },
+      "dev-packages/browser-integration-tests/utils/staticAssets.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0067881666045795635,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9983108108108109
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/basic/index.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/binding-connect/index.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/cache-client/index.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/flush-timeout/lastSend.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00033106928802511566,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9400337837837838
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/tracing/workers-ai/mocks.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00022684372677845627,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8783783783783784
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/durableobject-reexport-instrumented/counter.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00022684372677845627,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8783783783783784
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workerentrypoint-reexport-instrumented/greeter.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00022684372677845627,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8783783783783784
+        }
+      },
+      "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workflow-reexport-instrumented/workflow.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00022684372677845627,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8783783783783784
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/cloudflare-workers-send-to-sentry/deployed-worker.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00033106928802511566,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9400337837837838
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/ember-classic/app/config/environment.d.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00033106928802511566,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9400337837837838
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nestjs-basic/src/app.service.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0002275010593194052,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.8855574324324325
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nestjs-distributed-tracing/src/utils.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.000624844137246886,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.9522804054054054,
+          "centrality": 0.9769847972972973
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-14/app/propagation/utils.ts": {
+        "fanIn": 6,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0007479715330117532,
+        "rank": {
+          "fanIn": 0.9674831081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9824746621621622
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/app/_components/post.tsx": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.00019210187302956983,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8444890202702703
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/server/api/trpc.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0005656903447490691,
+        "rank": {
+          "fanIn": 0.9496410472972973,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9742398648648649
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/trpc/query-client.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.00039807793942964035,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.953125
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/trpc/react.tsx": {
+        "fanIn": 2,
+        "fanOut": 2,
+        "depth": 1,
+        "centrality": 0.00039013051989809656,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.7501055743243243,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9517525337837838
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-16-userfeedback/app/examples/attachToFeedbackButton.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00013419878344809238,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.6894003378378378
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-app-dir/components/client-error-debug-tools.tsx": {
+        "fanIn": 8,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.000956422655505072,
+        "rank": {
+          "fanIn": 0.9767736486486487,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9864864864864865
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/client.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.0005082529836440584,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9674831081081081
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/router.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.0006588593668921059,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9786739864864865
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/sentry-middleware.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0006826494738291275,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9793074324324325
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/react-router-7-lazy-routes/src/pages/Deep.tsx": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00013865286726205217,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.7009079391891891
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/remix-v3/app/actions/controller.tsx": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0001868906352171738,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.7501055743243243,
+          "depth": 0.8651815878378378,
+          "centrality": 0.8373099662162162
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/remix-v3/app/assets.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.00026631925574608603,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9156461148648649
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/remix-v3/app/router.ts": {
+        "fanIn": 1,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.00022684372677845627,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.8722550675675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8783783783783784
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/supabase-nextjs/lib/initSupabaseAdmin.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00043529484927177505,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9588260135135135
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/tanstackstart-react-static/src/middleware.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00043529484927177505,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9588260135135135
+        }
+      },
+      "dev-packages/e2e-tests/test-applications/tanstackstart-react/src/middleware.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00043529484927177505,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9588260135135135
+        }
+      },
+      "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-all.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-opt-out.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0003154355745879276,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9333826013513513
+        }
+      },
+      "dev-packages/node-integration-tests/suites/contextLines/memory-leak/other-file.ts": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.00022684372677845627,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.8783783783783784
+        }
+      },
+      "dev-packages/node-integration-tests/suites/contextLines/memory-leak/scenario.ts": {
+        "fanIn": 0,
+        "fanOut": 1,
+        "depth": 0,
+        "centrality": 0.00012261816553179689,
+        "rank": {
+          "fanIn": 0.31186655405405406,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.31186655405405406,
+          "centrality": 0.31186655405405406
+        }
+      },
+      "dev-packages/node-integration-tests/suites/express/with-http/maxIncomingRequestBodySize/generatePayload.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00016296354407889085,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.7757601351351351
+        }
+      },
+      "dev-packages/node-integration-tests/suites/tracing/double-baggage/expects.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00035712567833678054,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9455236486486487
+        }
+      },
+      "dev-packages/node-integration-tests/suites/tracing/mysql/mysql-test-server.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00013750753142417678,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.6974239864864865
+        }
+      },
+      "dev-packages/node-integration-tests/suites/tracing/tracePropagationTargets/baggage-org-id/server.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00013419878344809238,
+        "rank": {
+          "fanIn": 0.7252956081081081,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.6894003378378378
+        }
+      },
+      "packages/browser/src/helpers.ts": {
+        "fanIn": 24,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.002253397599383123,
+        "rank": {
+          "fanIn": 0.9941934121621622,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9940878378378378
+        }
+      },
+      "packages/bundler-plugins/src/core/utils.ts": {
+        "fanIn": 9,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0005677556475366714,
+        "rank": {
+          "fanIn": 0.9806798986486487,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9744510135135135
+        }
+      },
+      "packages/cloudflare/src/client.ts": {
+        "fanIn": 24,
+        "fanOut": 5,
+        "depth": 1,
+        "centrality": 0.0011648546285157949,
+        "rank": {
+          "fanIn": 0.9941934121621622,
+          "fanOut": 0.94921875,
+          "depth": 0.7150548986486487,
+          "centrality": 0.988597972972973
+        }
+      },
+      "packages/core/src/asyncContext/stackStrategy.ts": {
+        "fanIn": 2,
+        "fanOut": 8,
+        "depth": 2,
+        "centrality": 0.00046688641916510336,
+        "rank": {
+          "fanIn": 0.8688766891891891,
+          "fanOut": 0.9764569256756757,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9630489864864865
+        }
+      },
+      "packages/core/src/attributes.ts": {
+        "fanIn": 13,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.0012714429147795707,
+        "rank": {
+          "fanIn": 0.988597972972973,
+          "fanOut": 0.8722550675675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9904983108108109
+        }
+      },
+      "packages/core/src/carrier.ts": {
+        "fanIn": 15,
+        "fanOut": 9,
+        "depth": 1,
+        "centrality": 0.0025473311043715105,
+        "rank": {
+          "fanIn": 0.9900760135135135,
+          "fanOut": 0.981418918918919,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9953547297297297
+        }
+      },
+      "packages/core/src/client.ts": {
+        "fanIn": 64,
+        "fanOut": 56,
+        "depth": 1,
+        "centrality": 0.002612559851371796,
+        "rank": {
+          "fanIn": 0.9983108108108109,
+          "fanOut": 0.9997888513513513,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9955658783783784
+        }
+      },
+      "packages/core/src/currentScopes.ts": {
+        "fanIn": 45,
+        "fanOut": 6,
+        "depth": 1,
+        "centrality": 0.0012827618153194568,
+        "rank": {
+          "fanIn": 0.997043918918919,
+          "fanOut": 0.9616765202702703,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9907094594594594
+        }
+      },
+      "packages/core/src/debug-build.ts": {
+        "fanIn": 49,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0012689497884844133,
+        "rank": {
+          "fanIn": 0.9976773648648649,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9902871621621622
+        }
+      },
+      "packages/core/src/scope.ts": {
+        "fanIn": 47,
+        "fanOut": 26,
+        "depth": 1,
+        "centrality": 0.001758094526894017,
+        "rank": {
+          "fanIn": 0.9973606418918919,
+          "fanOut": 0.9978885135135135,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9928209459459459
+        }
+      },
+      "packages/core/src/semanticAttributes.ts": {
+        "fanIn": 18,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0002987997102758277,
+        "rank": {
+          "fanIn": 0.9917652027027027,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9288429054054054
+        }
+      },
+      "packages/core/src/types/event.ts": {
+        "fanIn": 41,
+        "fanOut": 17,
+        "depth": 1,
+        "centrality": 0.0017297991143259757,
+        "rank": {
+          "fanIn": 0.9963048986486487,
+          "fanOut": 0.9938766891891891,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9926097972972973
+        }
+      },
+      "packages/core/src/types/integration.ts": {
+        "fanIn": 23,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.0011916783152334499,
+        "rank": {
+          "fanIn": 0.9935599662162162,
+          "fanOut": 0.8722550675675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.989231418918919
+        }
+      },
+      "packages/core/src/types/misc.ts": {
+        "fanIn": 12,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.0015086262082139638,
+        "rank": {
+          "fanIn": 0.9871199324324325,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9917652027027027
+        }
+      },
+      "packages/core/src/types/request.ts": {
+        "fanIn": 11,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.0018501177939146559,
+        "rank": {
+          "fanIn": 0.9854307432432432,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9936655405405406
+        }
+      },
+      "packages/core/src/types/span.ts": {
+        "fanIn": 57,
+        "fanOut": 7,
+        "depth": 1,
+        "centrality": 0.003297492941198723,
+        "rank": {
+          "fanIn": 0.9978885135135135,
+          "fanOut": 0.9699113175675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.996410472972973
+        }
+      },
+      "packages/core/src/types/webfetchapi.ts": {
+        "fanIn": 7,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.00220302345466314,
+        "rank": {
+          "fanIn": 0.9720228040540541,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9938766891891891
+        }
+      },
+      "packages/core/src/utils/debug-logger.ts": {
+        "fanIn": 58,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.001412156361714022,
+        "rank": {
+          "fanIn": 0.9980996621621622,
+          "fanOut": 0.9269425675675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9911317567567568
+        }
+      },
+      "packages/core/src/utils/is.ts": {
+        "fanIn": 32,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.0030671409651521304,
+        "rank": {
+          "fanIn": 0.9958826013513513,
+          "fanOut": 0.9269425675675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9961993243243243
+        }
+      },
+      "packages/core/src/utils/worldwide.ts": {
+        "fanIn": 25,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.002374123348571909,
+        "rank": {
+          "fanIn": 0.9947212837837838,
+          "fanOut": 0.8722550675675675,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9949324324324325
+        }
+      },
+      "packages/feedback/src/constants/index.ts": {
+        "fanIn": 18,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0014574262920972515,
+        "rank": {
+          "fanIn": 0.9917652027027027,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9915540540540541
+        }
+      },
+      "packages/replay-internal/src/types/performance.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.0018423966630591985,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.5953336148648649,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9933488175675675
+        }
+      },
+      "packages/replay-internal/src/types/replay.ts": {
+        "fanIn": 24,
+        "fanOut": 5,
+        "depth": 1,
+        "centrality": 0.0041254824946105086,
+        "rank": {
+          "fanIn": 0.9941934121621622,
+          "fanOut": 0.94921875,
+          "depth": 0.7150548986486487,
+          "centrality": 0.997043918918919
+        }
+      },
+      "packages/replay-internal/src/types/request.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.002790461942997183,
+        "rank": {
+          "fanIn": 0.9269425675675675,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.995777027027027
+        }
+      },
+      "packages/server-utils/src/ai/core/gen-ai-attributes.ts": {
+        "fanIn": 21,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0004868790067419967,
+        "rank": {
+          "fanIn": 0.9929265202702703,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9649493243243243
+        }
+      },
+      "packages/server-utils/src/ai/core/utils.ts": {
+        "fanIn": 41,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.003593413019200646,
+        "rank": {
+          "fanIn": 0.9963048986486487,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9968327702702703
+        }
+      },
+      "packages/server-utils/src/debug-build.ts": {
+        "fanIn": 20,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0017256715664797511,
+        "rank": {
+          "fanIn": 0.992504222972973,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.8651815878378378,
+          "centrality": 0.9923986486486487
+        }
+      },
+      "packages/server-utils/src/orchestrion/apmTypes.ts": {
+        "fanIn": 43,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.004809836981315761,
+        "rank": {
+          "fanIn": 0.9967271959459459,
+          "fanOut": 0.2611908783783784,
+          "depth": 0.7150548986486487,
+          "centrality": 0.9974662162162162
+        }
+      }
+    },
+    "symbols": {
+      "dev-packages/browser-integration-tests/suites/errors/fetch-enhance-messages-off/test.ts": [
+        "url",
+        "reqPromise",
+        "pageErrorPromise",
+        "eventData",
+        "originalErrorMap",
+        "originalError"
+      ],
+      "dev-packages/browser-integration-tests/suites/errors/fetch-enhance-messages-report-only/test.ts": [
+        "url",
+        "reqPromise",
+        "pageErrorPromise",
+        "eventData",
+        "originalErrorMap",
+        "enhancedErrorMap",
+        "originalError",
+        "enhancedError"
+      ],
+      "dev-packages/browser-integration-tests/suites/errors/fetch/test.ts": [
+        "url",
+        "reqPromise",
+        "pageErrorPromise",
+        "eventData",
+        "errorMap",
+        "error",
+        "pageErrorMap",
+        "sentryErrorMap",
+        "pageError",
+        "sentryError"
+      ],
+      "dev-packages/browser-integration-tests/suites/profiling/test-utils.ts": [
+        "ValidateProfileOptions",
+        "CHUNK_SAMPLE_TIMESTAMP_EPSILON_SEC",
+        "validateProfilePayloadMetadata",
+        "validateProfile"
+      ],
+      "dev-packages/browser-integration-tests/utils/fixtures.ts": [
+        "TEST_HOST",
+        "getAsset",
+        "TestFixtures",
+        "sentryTest",
+        "build"
+      ],
+      "dev-packages/browser-integration-tests/utils/generatePage.ts": [
+        "generatePage"
+      ],
+      "dev-packages/browser-integration-tests/utils/generatePlugin.ts": [
+        "LOADER_TEMPLATE",
+        "PACKAGES_DIR",
+        "ROOT_PACKAGE_JSON_PATH",
+        "bundleKey",
+        "useCompiledModule",
+        "useBundleOrLoader",
+        "useLoader",
+        "IMPORTED_INTEGRATION_CDN_BUNDLE_PATHS",
+        "BUNDLE_PATHS",
+        "LOADER_CONFIGS",
+        "generateSentryAlias",
+        "SentryScenarioGenerationPlugin"
+      ],
+      "dev-packages/browser-integration-tests/utils/staticAssets.ts": [
+        "STATIC_DIR",
+        "setupStaticAssets",
+        "addStaticAsset",
+        "symlinkAsset"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/basic/index.ts": [
+        "Env",
+        "fetch"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/binding-connect/index.ts": [
+        "Env",
+        "ConnectDurableObject",
+        "tryConnect",
+        "fetch"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/cache-client/index.ts": [
+        "Env",
+        "runStorageOps",
+        "startDetachedWork",
+        "CacheDurableObjectBase",
+        "NoCacheDurableObjectBase",
+        "CacheDurableObject",
+        "NoCacheDurableObject",
+        "fetch"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/flush-timeout/lastSend.ts": [
+        "lastSend"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/tracing/workers-ai/mocks.ts": [
+        "createSseStream",
+        "MockAi"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/durableobject-reexport-instrumented/counter.ts": [
+        "Env",
+        "CounterImpl",
+        "Counter"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workerentrypoint-reexport-instrumented/greeter.ts": [
+        "Env",
+        "GreeterImpl",
+        "GreeterEntrypoint"
+      ],
+      "dev-packages/cloudflare-integration-tests/suites/vite-autoinstrument/workflow-reexport-instrumented/workflow.ts": [
+        "Env",
+        "MyWorkflowImpl",
+        "MyWorkflow"
+      ],
+      "dev-packages/e2e-tests/test-applications/cloudflare-workers-send-to-sentry/deployed-worker.ts": [
+        "__dirname",
+        "wrangler",
+        "nameWorkflowsAfterWorker",
+        "deployWorker",
+        "deleteWorker",
+        "keepsWorker",
+        "waitForWorker",
+        "fetchFromWorker"
+      ],
+      "dev-packages/e2e-tests/test-applications/ember-classic/app/config/environment.d.ts": [
+        "config"
+      ],
+      "dev-packages/e2e-tests/test-applications/nestjs-basic/src/app.service.ts": [
+        "monitorConfig",
+        "AppService"
+      ],
+      "dev-packages/e2e-tests/test-applications/nestjs-distributed-tracing/src/utils.ts": [
+        "makeHttpRequest",
+        "reportIsolationScopeOnSpan"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-14/app/propagation/utils.ts": [
+        "makeHttpRequest",
+        "checkHandler"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/app/_components/post.tsx": [
+        "LatestPost"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/server/api/trpc.ts": [
+        "createTRPCContext",
+        "t",
+        "createCallerFactory",
+        "createTRPCRouter",
+        "publicProcedure"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/trpc/query-client.ts": [
+        "createQueryClient"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-15-t3/src/trpc/react.tsx": [
+        "clientQueryClientSingleton",
+        "getQueryClient",
+        "api",
+        "RouterInputs",
+        "RouterOutputs",
+        "TRPCReactProvider",
+        "getBaseUrl"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-16-userfeedback/app/examples/attachToFeedbackButton.tsx": [
+        "AttachToFeedbackButton"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-app-dir/components/client-error-debug-tools.tsx": [
+        "ClientErrorDebugTools"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/client.ts": [
+        "global",
+        "link",
+        "client"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/router.ts": [
+        "PlanetSchema",
+        "base",
+        "listPlanet",
+        "findPlanet",
+        "throwingFindPlanet",
+        "router"
+      ],
+      "dev-packages/e2e-tests/test-applications/nextjs-orpc/src/orpc/sentry-middleware.ts": [
+        "sentryTracingMiddleware"
+      ],
+      "dev-packages/e2e-tests/test-applications/react-router-7-lazy-routes/src/pages/Deep.tsx": [
+        "Deep"
+      ],
+      "dev-packages/e2e-tests/test-applications/remix-v3/app/actions/controller.tsx": [
+        "HomePage",
+        "assets",
+        "home"
+      ],
+      "dev-packages/e2e-tests/test-applications/remix-v3/app/assets.ts": [
+        "assets",
+        "entry",
+        "entryHref",
+        "entryPreloads"
+      ],
+      "dev-packages/e2e-tests/test-applications/remix-v3/app/router.ts": [
+        "renderMiddleware",
+        "AppContext",
+        "remix/router",
+        "router"
+      ],
+      "dev-packages/e2e-tests/test-applications/supabase-nextjs/lib/initSupabaseAdmin.ts": [
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "getSupabaseClient"
+      ],
+      "dev-packages/e2e-tests/test-applications/tanstackstart-react-static/src/middleware.ts": [
+        "globalRequestMiddleware",
+        "globalFunctionMiddleware",
+        "serverFnMiddleware",
+        "serverRouteRequestMiddleware",
+        "earlyReturnMiddleware",
+        "errorMiddleware"
+      ],
+      "dev-packages/e2e-tests/test-applications/tanstackstart-react/src/middleware.ts": [
+        "globalRequestMiddleware",
+        "globalFunctionMiddleware",
+        "serverFnMiddleware",
+        "serverRouteRequestMiddleware",
+        "earlyReturnMiddleware",
+        "errorMiddleware"
+      ],
+      "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-all.ts": [
+        "run"
+      ],
+      "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario-opt-out.ts": [
+        "run"
+      ],
+      "dev-packages/node-integration-tests/suites/bun-runtime-metrics/scenario.ts": [
+        "run"
+      ],
+      "dev-packages/node-integration-tests/suites/contextLines/memory-leak/nested-file.ts": [
+        "captureException"
+      ],
+      "dev-packages/node-integration-tests/suites/contextLines/memory-leak/other-file.ts": [
+        "runSentry"
+      ],
+      "dev-packages/node-integration-tests/suites/contextLines/memory-leak/scenario.ts": [
+        "lsofOutput",
+        "lsofTable",
+        "mainPath",
+        "numberOfLsofEntriesWithMainPath"
+      ],
+      "dev-packages/node-integration-tests/suites/express/with-http/maxIncomingRequestBodySize/generatePayload.ts": [
+        "generatePayload",
+        "generatePayloadString",
+        "generateEmojiPayload",
+        "generateEmojiPayloadString"
+      ],
+      "dev-packages/node-integration-tests/suites/tracing/double-baggage/expects.ts": [
+        "expectNoDuplicateSentryBaggageKeys",
+        "expectConsistentTraceId",
+        "expectUserSetTraceId"
+      ],
+      "dev-packages/node-integration-tests/suites/tracing/mysql/mysql-test-server.ts": [
+        "CLIENT_PROTOCOL_41",
+        "CLIENT_SECURE_CONNECTION",
+        "CLIENT_PLUGIN_AUTH",
+        "SERVER_CAPABILITIES",
+        "packet",
+        "initialHandshake",
+        "okPacket",
+        "errPacket",
+        "startMysqlTestServer"
+      ],
+      "dev-packages/node-integration-tests/suites/tracing/tracePropagationTargets/baggage-org-id/server.ts": [
+        "TestAPIResponse",
+        "app",
+        "headers"
+      ],
+      "packages/browser/src/helpers.ts": [
+        "WINDOW",
+        "ignoreOnError",
+        "ErrorReport",
+        "ignoredErrorReports",
+        "shouldIgnoreOnError",
+        "ignoreNextOnErrorMatching",
+        "isSameErrorReport",
+        "ignoreNextOnError",
+        "WrappableFunction",
+        "wrap",
+        "getHttpRequestData"
+      ],
+      "packages/bundler-plugins/src/core/utils.ts": [
+        "arrayify",
+        "PackageJson",
+        "getPackageJson",
+        "parseMajorVersion",
+        "PACKAGES_TO_INCLUDE_VERSION",
+        "getDependencies",
+        "findPackageJson",
+        "lookupPackageJson",
+        "stringToUUID",
+        "gitRevision",
+        "determineReleaseName",
+        "generateReleaseInjectorCode"
+      ],
+      "packages/cloudflare/src/client.ts": [
+        "CloudflareClient",
+        "BaseCloudflareOptions",
+        "CloudflareOptions",
+        "CloudflareClientOptions"
+      ],
+      "packages/core/src/asyncContext/stackStrategy.ts": [
+        "Layer",
+        "AsyncContextStack",
+        "getAsyncContextStack",
+        "withScope",
+        "withSetScope",
+        "withIsolationScope",
+        "getStackAsyncContextStrategy",
+        "suppressTracingInStack"
+      ],
+      "packages/core/src/attributes.ts": [
+        "RawAttributes",
+        "RawAttribute",
+        "Attributes",
+        "AttributeValueType",
+        "AttributeTypeMap",
+        "AttributeUnion",
+        "TypedAttributeValue",
+        "AttributeObject",
+        "AttributeUnit",
+        "ValidatedAttributes",
+        "isAttributeObject",
+        "attributeValueToTypedAttributeValue"
+      ],
+      "packages/core/src/carrier.ts": [
+        "Carrier",
+        "VersionedCarrier",
+        "SentryCarrier",
+        "getMainCarrier",
+        "getSentryCarrier",
+        "getGlobalSingleton"
+      ],
+      "packages/core/src/client.ts": [
+        "ALREADY_SEEN_ERROR",
+        "MISSING_RELEASE_FOR_SESSION_ERROR",
+        "INTERNAL_ERROR_SYMBOL",
+        "DO_NOT_SEND_EVENT_SYMBOL",
+        "DEFAULT_FLUSH_INTERVAL",
+        "InternalError",
+        "DoNotSendEventError",
+        "_makeInternalError",
+        "_makeDoNotSendEventError",
+        "_isInternalError",
+        "_isDoNotSendEventError",
+        "setupWeightBasedFlushing"
+      ],
+      "packages/core/src/currentScopes.ts": [
+        "registerExternalPropagationContext",
+        "getExternalPropagationContext",
+        "hasExternalPropagationContext",
+        "getCurrentScope",
+        "getIsolationScope",
+        "getGlobalScope",
+        "withScope",
+        "withIsolationScope",
+        "getClient",
+        "getTraceContextFromScope"
+      ],
+      "packages/core/src/debug-build.ts": ["__DEBUG_BUILD__", "DEBUG_BUILD"],
+      "packages/core/src/scope.ts": [
+        "DEFAULT_MAX_BREADCRUMBS",
+        "CaptureContext",
+        "ScopeContext",
+        "SdkProcessingMetadata",
+        "ScopeData",
+        "Scope"
+      ],
+      "packages/core/src/semanticAttributes.ts": [
+        "SEMANTIC_ATTRIBUTE_SENTRY_SAMPLE_RATE",
+        "SEMANTIC_ATTRIBUTE_SENTRY_PREVIOUS_TRACE_SAMPLE_RATE",
+        "SEMANTIC_ATTRIBUTE_SENTRY_OP",
+        "SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN",
+        "SEMANTIC_ATTRIBUTE_SENTRY_STATUS_MESSAGE",
+        "SEMANTIC_ATTRIBUTE_SENTRY_IDLE_SPAN_FINISH_REASON",
+        "SEMANTIC_ATTRIBUTE_SENTRY_MEASUREMENT_UNIT",
+        "SEMANTIC_ATTRIBUTE_SENTRY_MEASUREMENT_VALUE",
+        "SEMANTIC_ATTRIBUTE_SENTRY_RELEASE",
+        "SEMANTIC_ATTRIBUTE_SENTRY_ENVIRONMENT",
+        "SEMANTIC_ATTRIBUTE_SENTRY_SEGMENT_NAME",
+        "SEMANTIC_ATTRIBUTE_SENTRY_SEGMENT_ID"
+      ],
+      "packages/core/src/types/event.ts": [
+        "Event",
+        "EventType",
+        "ErrorEvent",
+        "TransactionEvent",
+        "EventHint"
+      ],
+      "packages/core/src/types/integration.ts": [
+        "Integration",
+        "IntegrationFn"
+      ],
+      "packages/core/src/types/misc.ts": [
+        "ExtractedNodeRequestData",
+        "WorkerLocation",
+        "Primitive",
+        "HttpHeaderValue"
+      ],
+      "packages/core/src/types/request.ts": [
+        "RequestEventData",
+        "QueryParams",
+        "SanitizedRequestData",
+        "RequestHookInfo",
+        "ResponseHookInfo"
+      ],
+      "packages/core/src/types/span.ts": [
+        "SpanOriginType",
+        "SpanOriginCategory",
+        "SpanOriginIntegrationName",
+        "SpanOriginIntegrationPart",
+        "SpanOrigin",
+        "SpanAttributeValue",
+        "SpanAttributes",
+        "SpanTimeInput",
+        "StreamedSpanJSON",
+        "SerializedStreamedSpan",
+        "SerializedStreamedSpanContainer",
+        "SpanJSON"
+      ],
+      "packages/core/src/types/webfetchapi.ts": [
+        "WebFetchHeaders",
+        "WebFetchRequest"
+      ],
+      "packages/core/src/utils/debug-logger.ts": [
+        "SentryDebugLogger",
+        "CONSOLE_LEVELS",
+        "PREFIX",
+        "originalConsoleMethods",
+        "consoleSandbox",
+        "enable",
+        "disable",
+        "isEnabled",
+        "log",
+        "warn",
+        "error",
+        "_maybeLog"
+      ],
+      "packages/core/src/utils/is.ts": [
+        "objectToString",
+        "isError",
+        "isBuiltin",
+        "isErrorEvent",
+        "isDOMError",
+        "isDOMException",
+        "isString",
+        "isParameterizedString",
+        "isPrimitive",
+        "isPlainObject",
+        "isObjectLike",
+        "isEvent"
+      ],
+      "packages/core/src/utils/worldwide.ts": ["InternalGlobal", "GLOBAL_OBJ"],
+      "packages/feedback/src/constants/index.ts": [
+        "WINDOW",
+        "DOCUMENT",
+        "NAVIGATOR",
+        "TRIGGER_LABEL",
+        "CANCEL_BUTTON_LABEL",
+        "SUBMIT_BUTTON_LABEL",
+        "CONFIRM_BUTTON_LABEL",
+        "FORM_TITLE",
+        "EMAIL_PLACEHOLDER",
+        "EMAIL_LABEL",
+        "MESSAGE_PLACEHOLDER",
+        "MESSAGE_LABEL"
+      ],
+      "packages/replay-internal/src/types/performance.ts": [
+        "AllPerformanceEntry",
+        "PerformancePaintTiming",
+        "PerformanceNavigationTiming",
+        "ExperimentalPerformanceResourceTiming",
+        "PaintData",
+        "NavigationData",
+        "ResourceData",
+        "WebVitalData",
+        "AllPerformanceEntryData",
+        "MemoryData",
+        "NetworkRequestData",
+        "HistoryData"
+      ],
+      "packages/replay-internal/src/types/replay.ts": [
+        "RecordingEvent",
+        "RecordingOptions",
+        "SendReplayData",
+        "Timeouts",
+        "WorkerRequest",
+        "WorkerResponse",
+        "AddEventResult",
+        "BeforeAddRecordingEvent",
+        "ReplayNetworkOptions",
+        "ReplayWorkerURL",
+        "ReplayPluginOptions",
+        "InitialReplayPluginOptions"
+      ],
+      "packages/replay-internal/src/types/request.ts": [
+        "JsonObject",
+        "JsonArray",
+        "NetworkBody",
+        "NetworkMeta",
+        "ReplayNetworkRequestOrResponse"
+      ],
+      "packages/server-utils/src/ai/core/gen-ai-attributes.ts": [
+        "GEN_AI_REQUEST_STREAM_ATTRIBUTE",
+        "GEN_AI_REQUEST_ENCODING_FORMAT_ATTRIBUTE",
+        "GEN_AI_REQUEST_DIMENSIONS_ATTRIBUTE",
+        "GEN_AI_RESPONSE_STOP_REASON_ATTRIBUTE",
+        "GEN_AI_TOOL_CALL_ID_ATTRIBUTE"
+      ],
+      "packages/server-utils/src/ai/core/utils.ts": [
+        "GenAiOptions",
+        "InstrumentedMethodEntry",
+        "InstrumentedMethodRegistry",
+        "NON_INFERENCE_OPERATIONS",
+        "getGenAiSpanOp",
+        "resolveAIRecordingOptions",
+        "buildMethodPath",
+        "isReadableStream",
+        "setTokenUsageAttributes",
+        "GenAiOutputMessage",
+        "setOutputMessagesAttribute",
+        "buildOutputMessage"
+      ],
+      "packages/server-utils/src/debug-build.ts": [
+        "__DEBUG_BUILD__",
+        "DEBUG_BUILD"
+      ],
+      "packages/server-utils/src/orchestrion/apmTypes.ts": [
+        "FunctionKind",
+        "FunctionQuery",
+        "CustomTransform",
+        "FunctionBehavior",
+        "ModuleMatcher",
+        "InstrumentationConfig",
+        "SerializedRegExp",
+        "SerializableInstrumentationConfig",
+        "AnyInstrumentationConfig",
+        "TransformDiagnostics",
+        "TransformIdFilter",
+        "CodeTransformerPluginOptions"
+      ]
+    }
+  }
+}

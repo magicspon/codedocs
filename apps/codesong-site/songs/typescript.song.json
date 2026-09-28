@@ -1,0 +1,5868 @@
+{
+  "composition": {
+    "composerVersion": "0.2.1",
+    "origin": {
+      "repository": "typescript",
+      "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "options": {
+        "seed": 0,
+        "tempo": 96,
+        "bars": "auto",
+        "scale": "minor",
+        "tracks": 6,
+        "maxMotifs": 16
+      }
+    },
+    "tempo": 96,
+    "key": 5,
+    "scale": "minor",
+    "beatsPerBar": 4,
+    "tracks": [
+      {
+        "id": "lead",
+        "name": "lead",
+        "role": "lead",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "theme",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": -1,
+              "stretch": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 120,
+            "length": 8,
+            "transform": {
+              "transpose": 3,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 152,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 184,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 216,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 256,
+            "length": 16,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 296,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 304,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 320,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 2
+            }
+          }
+        ]
+      },
+      {
+        "id": "bass",
+        "name": "bass",
+        "role": "bass",
+        "register": "low",
+        "parts": [
+          {
+            "motif": "bass:src/compiler",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:src/services/_namespaces",
+            "start": 96,
+            "length": 32,
+            "transform": {
+              "transpose": 3,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:src/services",
+            "start": 128,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:src",
+            "start": 160,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:src/server",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:src/harness",
+            "start": 272,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:src/compiler",
+            "start": 304,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "pad",
+        "name": "pad",
+        "role": "pad",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "pad:src/compiler",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/compiler",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/services/_namespaces",
+            "start": 96,
+            "length": 32,
+            "transform": {
+              "transpose": 3,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/services",
+            "start": 128,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src",
+            "start": 160,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/server",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/services/codefixes",
+            "start": 224,
+            "length": 48,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/harness",
+            "start": 272,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:src/compiler",
+            "start": 304,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "percussion",
+        "name": "percussion",
+        "role": "percussion",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "groove:src/compiler:intro",
+            "start": 0,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src/compiler:intro",
+            "start": 28,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:src/compiler:chorus",
+            "start": 32,
+            "length": 60,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src/compiler:chorus",
+            "start": 92,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:src/services/_namespaces:verse",
+            "start": 96,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src/services/_namespaces:verse",
+            "start": 124,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:src/services:verse",
+            "start": 128,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src/services:verse",
+            "start": 156,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:src:verse",
+            "start": 160,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src:verse",
+            "start": 188,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:src/server:verse",
+            "start": 192,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src/server:verse",
+            "start": 220,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:src/harness:verse",
+            "start": 272,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:src/harness:verse",
+            "start": 300,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "counter",
+        "name": "counter",
+        "role": "counter",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 32,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 40,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 48,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 56,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 64,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 72,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 80,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/compiler:1",
+            "start": 88,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/services:1",
+            "start": 128,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/services:2",
+            "start": 132,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/services:1",
+            "start": 140,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/services:2",
+            "start": 144,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/services:1",
+            "start": 152,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/services:2",
+            "start": 156,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src:1",
+            "start": 160,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src:2",
+            "start": 168,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src:1",
+            "start": 176,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src:2",
+            "start": 184,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/server:2",
+            "start": 192,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/server:1",
+            "start": 200,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/server:2",
+            "start": 208,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/server:1",
+            "start": 216,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/harness:2",
+            "start": 272,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/harness:1",
+            "start": 280,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/harness:2",
+            "start": 288,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:src/harness:1",
+            "start": 296,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "arp",
+        "name": "arp",
+        "role": "arp",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "arp:src/compiler",
+            "start": 16,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:src/compiler",
+            "start": 32,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:src/server",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:src/harness",
+            "start": 272,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      }
+    ],
+    "motifs": [
+      {
+        "id": "theme",
+        "source": {
+          "project": "src/compiler/tsconfig.json",
+          "files": [
+            "src/compiler/_namespaces/ts.ts",
+            "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+            "src/compiler/moduleSpecifiers.ts",
+            "src/compiler/path.ts",
+            "src/compiler/core.ts",
+            "src/compiler/debug.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 2,
+            "velocity": 102
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 1,
+            "velocity": 105
+          },
+          {
+            "degree": 9,
+            "start": 3.5,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 5,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "pad:src/compiler",
+        "source": {
+          "project": "src/compiler/tsconfig.json",
+          "subsystem": "src/compiler",
+          "files": [
+            "src/compiler/_namespaces/ts.ts",
+            "src/compiler/factory/nodeTests.ts",
+            "src/compiler/performanceCore.ts",
+            "src/compiler/scanner.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 6,
+            "start": 0,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 10,
+            "start": 4,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 11,
+            "start": 8,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 8,
+            "start": 12,
+            "duration": 4,
+            "velocity": 80
+          },
+          {
+            "degree": 10,
+            "start": 12,
+            "duration": 4,
+            "velocity": 80
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:src/compiler:intro",
+        "source": {
+          "subsystem": "src/compiler",
+          "files": ["src/compiler/corePublic.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src/compiler:intro",
+        "source": {
+          "subsystem": "src/compiler",
+          "files": ["src/compiler/corePublic.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "arp:src/compiler",
+        "source": {
+          "project": "src/compiler/tsconfig.json",
+          "subsystem": "src/compiler",
+          "files": [
+            "src/compiler/_namespaces/ts.ts",
+            "src/compiler/debug.ts",
+            "src/compiler/factory/nodeTests.ts",
+            "src/compiler/core.ts",
+            "src/compiler/types.ts",
+            "src/compiler/utilities.ts",
+            "src/compiler/utilitiesPublic.ts",
+            "src/compiler/path.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "bass:src/compiler",
+        "source": {
+          "project": "src/compiler/tsconfig.json",
+          "subsystem": "src/compiler",
+          "files": [
+            "src/compiler/_namespaces/ts.ts",
+            "src/compiler/factory/nodeTests.ts",
+            "src/compiler/performanceCore.ts",
+            "src/compiler/scanner.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 3.6,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 1.8,
+            "velocity": 109
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 1.8,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 1.8,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 1.8,
+            "velocity": 98
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:src/compiler:chorus",
+        "source": {
+          "subsystem": "src/compiler",
+          "files": ["src/compiler/corePublic.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 3,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 80
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src/compiler:chorus",
+        "source": {
+          "subsystem": "src/compiler",
+          "files": ["src/compiler/corePublic.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:src/compiler:1",
+        "source": {
+          "project": "src/compiler/tsconfig.json",
+          "subsystem": "src/compiler",
+          "files": [
+            "src/compiler/_namespaces/ts.ts",
+            "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+            "src/compiler/moduleSpecifiers.ts",
+            "src/compiler/path.ts",
+            "src/compiler/core.ts",
+            "src/compiler/debug.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 2,
+            "velocity": 102
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 1,
+            "velocity": 105
+          },
+          {
+            "degree": 9,
+            "start": 3.5,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 5,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 1.5,
+            "velocity": 110
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "bass:src/services/_namespaces",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services/_namespaces",
+          "files": [
+            "src/services/_namespaces/ts.ts",
+            "src/services/_namespaces/ts.refactor.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 99
+          },
+          {
+            "degree": 5,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 87
+          },
+          {
+            "degree": 1,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 87
+          },
+          {
+            "degree": 5,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 87
+          },
+          {
+            "degree": 1,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 87
+          },
+          {
+            "degree": 5,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 87
+          },
+          {
+            "degree": 1,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 87
+          },
+          {
+            "degree": 5,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 87
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "pad:src/services/_namespaces",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services/_namespaces",
+          "files": [
+            "src/services/_namespaces/ts.ts",
+            "src/services/_namespaces/ts.refactor.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 62
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 62
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 62
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 62
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 62
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 62
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "groove:src/services/_namespaces:verse",
+        "source": {
+          "subsystem": "src/services/_namespaces",
+          "files": [],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src/services/_namespaces:verse",
+        "source": {
+          "subsystem": "src/services/_namespaces",
+          "files": [],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:src/services",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services",
+          "files": [
+            "src/services/textChanges.ts",
+            "src/services/utilities.ts",
+            "src/services/types.ts",
+            "src/services/pasteEdits.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 109
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 3.6,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 100
+          },
+          {
+            "degree": 5,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 88
+          },
+          {
+            "degree": 1,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 88
+          },
+          {
+            "degree": 5,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 88
+          },
+          {
+            "degree": 1,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 88
+          },
+          {
+            "degree": 5,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 88
+          },
+          {
+            "degree": 1,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 88
+          },
+          {
+            "degree": 5,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 88
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:src/services",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services",
+          "files": [
+            "src/services/textChanges.ts",
+            "src/services/utilities.ts",
+            "src/services/types.ts",
+            "src/services/pasteEdits.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 72
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:src/services:verse",
+        "source": {
+          "subsystem": "src/services",
+          "files": [],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src/services:verse",
+        "source": {
+          "subsystem": "src/services",
+          "files": [],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:src/services:1",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services",
+          "files": [
+            "src/services/textChanges.ts",
+            "src/services/utilities.ts",
+            "src/services/types.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 6,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 9,
+            "start": 1,
+            "duration": 2,
+            "velocity": 109
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:src/services:2",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services",
+          "files": [
+            "src/services/refactors/generateGetAccessorAndSetAccessor.ts",
+            "src/services/refactors/helpers.ts",
+            "src/services/refactors/moveToFile.ts",
+            "src/services/textChanges.ts",
+            "src/services/utilities.ts",
+            "src/services/types.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 1,
+            "velocity": 94
+          },
+          {
+            "degree": 7,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 95
+          },
+          {
+            "degree": 9,
+            "start": 2.5,
+            "duration": 0.5,
+            "velocity": 95
+          },
+          {
+            "degree": 5,
+            "start": 3,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 8,
+            "start": 3.5,
+            "duration": 0.5,
+            "velocity": 109
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 2,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "bass:src",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src",
+          "files": [
+            "src/jsTyping/_namespaces/ts.ts",
+            "src/jsTyping/shared.ts",
+            "src/deprecatedCompat/_namespaces/ts.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 109
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 97
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 3.6,
+            "velocity": 107
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 1.8,
+            "velocity": 102
+          },
+          {
+            "degree": 4,
+            "start": 10,
+            "duration": 1.8,
+            "velocity": 90
+          }
+        ],
+        "length": 12
+      },
+      {
+        "id": "pad:src",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src",
+          "files": [
+            "src/jsTyping/_namespaces/ts.ts",
+            "src/jsTyping/shared.ts",
+            "src/deprecatedCompat/_namespaces/ts.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 7,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 8,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          }
+        ],
+        "length": 12
+      },
+      {
+        "id": "groove:src:verse",
+        "source": {
+          "subsystem": "src",
+          "files": ["src/watchGuard/watchGuard.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src:verse",
+        "source": {
+          "subsystem": "src",
+          "files": ["src/watchGuard/watchGuard.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:src:1",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src",
+          "files": [
+            "src/jsTyping/_namespaces/ts.ts",
+            "src/jsTyping/_namespaces/ts.JsTyping.ts",
+            "src/jsTyping/jsTyping.ts",
+            "src/jsTyping/_namespaces/ts.server.ts",
+            "src/jsTyping/shared.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 108
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 2,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 1,
+            "velocity": 106
+          },
+          {
+            "degree": 4,
+            "start": 4.5,
+            "duration": 1.5,
+            "velocity": 108
+          },
+          {
+            "degree": 7,
+            "start": 6,
+            "duration": 2,
+            "velocity": 106
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:src:2",
+        "source": {
+          "project": "src/deprecatedCompat/tsconfig.json",
+          "subsystem": "src",
+          "files": [
+            "src/deprecatedCompat/_namespaces/ts.ts",
+            "src/deprecatedCompat/deprecations.ts",
+            "src/deprecatedCompat/deprecate.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 99
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 96
+          },
+          {
+            "degree": -1,
+            "start": 3,
+            "duration": 1.5,
+            "velocity": 91
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "bass:src/server",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/server",
+          "files": [
+            "src/server/_namespaces/ts.ts",
+            "src/server/project.ts",
+            "src/server/_namespaces/ts.server.ts",
+            "src/server/utilitiesPublic.ts"
+          ],
+          "structure": "central-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 95
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 105
+          },
+          {
+            "degree": 8,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 8,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 8,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 93
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 103
+          },
+          {
+            "degree": 9,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 5,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 9,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 9,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 5,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 9,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 91
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 1.8,
+            "velocity": 102
+          },
+          {
+            "degree": 3,
+            "start": 14,
+            "duration": 1.8,
+            "velocity": 90
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:src/server",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/server",
+          "files": [
+            "src/server/_namespaces/ts.ts",
+            "src/server/project.ts",
+            "src/server/_namespaces/ts.server.ts",
+            "src/server/utilitiesPublic.ts"
+          ],
+          "structure": "central-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 74
+          },
+          {
+            "degree": 7,
+            "start": 12,
+            "duration": 4,
+            "velocity": 74
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:src/server:verse",
+        "source": {
+          "subsystem": "src/server",
+          "files": [],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src/server:verse",
+        "source": {
+          "subsystem": "src/server",
+          "files": [],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:src/server:2",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/server",
+          "files": [
+            "src/server/utilitiesPublic.ts",
+            "src/server/project.ts",
+            "src/server/editorServices.ts",
+            "src/server/scriptInfo.ts",
+            "src/server/scriptVersionCache.ts",
+            "src/server/_namespaces/ts.server.ts",
+            "src/server/_namespaces/ts.server.protocol.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 99
+          },
+          {
+            "degree": 3,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 103
+          },
+          {
+            "degree": 6,
+            "start": 2,
+            "duration": 0.5,
+            "velocity": 99
+          },
+          {
+            "degree": 8,
+            "start": 2.5,
+            "duration": 0.5,
+            "velocity": 93
+          },
+          {
+            "degree": 3,
+            "start": 3,
+            "duration": 1.5,
+            "velocity": 88
+          },
+          {
+            "degree": 6,
+            "start": 4.5,
+            "duration": 0.5,
+            "velocity": 100
+          },
+          {
+            "degree": 5,
+            "start": 5,
+            "duration": 2,
+            "velocity": 85
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:src/server:1",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/server",
+          "files": [
+            "src/server/_namespaces/ts.ts",
+            "src/server/_namespaces/ts.server.ts",
+            "src/server/_namespaces/ts.server.protocol.ts",
+            "src/server/protocol.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 106
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 100
+          },
+          {
+            "degree": 3,
+            "start": 2,
+            "duration": 2,
+            "velocity": 85
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 2,
+            "velocity": 96
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "arp:src/server",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/server",
+          "files": [
+            "src/server/_namespaces/ts.ts",
+            "src/server/project.ts",
+            "src/server/_namespaces/ts.server.ts",
+            "src/server/utilitiesPublic.ts",
+            "src/server/editorServices.ts",
+            "src/server/protocol.ts",
+            "src/server/scriptInfo.ts",
+            "src/server/types.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 0,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 3,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 3,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:src/services/codefixes",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/services/codefixes",
+          "files": [
+            "src/services/codefixes/helpers.ts",
+            "src/services/codefixes/generateAccessors.ts",
+            "src/services/codefixes/importFixes.ts",
+            "src/services/codefixes/annotateWithTypeFromJSDoc.ts"
+          ],
+          "structure": "central-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 3,
+            "start": 8,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 57
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 57
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "bass:src/harness",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/harness",
+          "files": [
+            "src/harness/_namespaces/ts.ts",
+            "src/harness/vfsUtil.ts",
+            "src/harness/harnessIO.ts",
+            "src/harness/_namespaces/Harness.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 102
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 90
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.9,
+            "velocity": 102
+          },
+          {
+            "degree": 8,
+            "start": 5,
+            "duration": 0.9,
+            "velocity": 90
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.9,
+            "velocity": 90
+          },
+          {
+            "degree": 8,
+            "start": 7,
+            "duration": 0.9,
+            "velocity": 90
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 102
+          },
+          {
+            "degree": 9,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 5,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 9,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 9,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 5,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 9,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 90
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 1.8,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 1.8,
+            "velocity": 86
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:src/harness",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/harness",
+          "files": [
+            "src/harness/_namespaces/ts.ts",
+            "src/harness/vfsUtil.ts",
+            "src/harness/harnessIO.ts",
+            "src/harness/_namespaces/Harness.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 72
+          },
+          {
+            "degree": 8,
+            "start": 12,
+            "duration": 4,
+            "velocity": 72
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:src/harness:verse",
+        "source": {
+          "subsystem": "src/harness",
+          "files": ["src/harness/findUpDir.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:src/harness:verse",
+        "source": {
+          "subsystem": "src/harness",
+          "files": ["src/harness/findUpDir.ts"],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:src/harness:2",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/harness",
+          "files": [
+            "src/harness/fourslashImpl.ts",
+            "src/harness/harnessIO.ts",
+            "src/harness/util.ts",
+            "src/harness/_namespaces/ts.ts",
+            "src/harness/_namespaces/ts.server.ts",
+            "src/harness/client.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 99
+          },
+          {
+            "degree": 7,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 99
+          },
+          {
+            "degree": 9,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 100
+          },
+          {
+            "degree": 7,
+            "start": 4,
+            "duration": 1.5,
+            "velocity": 87
+          },
+          {
+            "degree": 9,
+            "start": 5.5,
+            "duration": 1,
+            "velocity": 87
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:src/harness:1",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/harness",
+          "files": [
+            "src/harness/vfsUtil.ts",
+            "src/harness/collectionsImpl.ts",
+            "src/harness/_namespaces/ts.ts",
+            "src/harness/_namespaces/ts.server.ts",
+            "src/harness/client.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1,
+            "velocity": 100
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 99
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 100
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 1.5,
+            "velocity": 87
+          },
+          {
+            "degree": 3,
+            "start": 5.5,
+            "duration": 1,
+            "velocity": 87
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "arp:src/harness",
+        "source": {
+          "project": "src/harness/tsconfig.json",
+          "subsystem": "src/harness",
+          "files": [
+            "src/harness/vfsUtil.ts",
+            "src/harness/harnessIO.ts",
+            "src/harness/vpathUtil.ts",
+            "src/harness/harnessLanguageService.ts",
+            "src/harness/documentsUtil.ts",
+            "src/harness/sourceMapRecorder.ts",
+            "src/harness/fakesHosts.ts",
+            "src/harness/compilerImpl.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 0,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      }
+    ],
+    "sections": [
+      {
+        "name": "intro",
+        "form": "intro",
+        "source": "src/compiler",
+        "start": 0,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      },
+      {
+        "name": "compiler",
+        "form": "chorus",
+        "source": "src/compiler",
+        "start": 32,
+        "length": 64,
+        "intensity": 1,
+        "area": 0
+      },
+      {
+        "name": "_namespaces",
+        "form": "verse",
+        "source": "src/services/_namespaces",
+        "start": 96,
+        "length": 32,
+        "intensity": 0.5351303398389519,
+        "area": 3
+      },
+      {
+        "name": "services",
+        "form": "verse",
+        "source": "src/services",
+        "start": 128,
+        "length": 32,
+        "intensity": 0.637659275037085,
+        "area": 5
+      },
+      {
+        "name": "src",
+        "form": "verse",
+        "source": "src",
+        "start": 160,
+        "length": 32,
+        "intensity": 0.5660950267325734,
+        "area": 5
+      },
+      {
+        "name": "server",
+        "form": "verse",
+        "source": "src/server",
+        "start": 192,
+        "length": 32,
+        "intensity": 0.6737354988399072,
+        "area": 5
+      },
+      {
+        "name": "codefixes",
+        "form": "breakdown",
+        "source": "src/services/codefixes",
+        "start": 224,
+        "length": 48,
+        "intensity": 0.35,
+        "area": 5
+      },
+      {
+        "name": "harness",
+        "form": "verse",
+        "source": "src/harness",
+        "start": 272,
+        "length": 32,
+        "intensity": 0.6447795823665894,
+        "area": 5
+      },
+      {
+        "name": "outro",
+        "form": "outro",
+        "source": "src/compiler",
+        "start": 304,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      }
+    ]
+  },
+  "evidence": {
+    "files": 355,
+    "meanFanOut": 8.766197183098592,
+    "leafShare": 0.09014084507042254,
+    "fifths": 11,
+    "regions": [
+      {
+        "path": "src",
+        "name": "src",
+        "files": 23,
+        "share": 0.0647887323943662,
+        "weight": 0.0307013559285583,
+        "foundation": 0.1099476439790576,
+        "density": 1.826086956521739,
+        "leafShare": 0.043478260869565216,
+        "clusters": 3,
+        "cycles": 3
+      },
+      {
+        "path": "src/compiler",
+        "name": "compiler",
+        "files": 78,
+        "share": 0.21971830985915494,
+        "weight": 0.7531347123859592,
+        "foundation": 1,
+        "density": 11.051282051282051,
+        "leafShare": 0.01282051282051282,
+        "clusters": 4,
+        "cycles": 1
+      },
+      {
+        "path": "src/harness",
+        "name": "harness",
+        "files": 38,
+        "share": 0.10704225352112676,
+        "weight": 0.03095400068088758,
+        "foundation": 0,
+        "density": 4,
+        "leafShare": 0.02631578947368421,
+        "clusters": 5,
+        "cycles": 3
+      },
+      {
+        "path": "src/server",
+        "name": "server",
+        "files": 15,
+        "share": 0.04225352112676056,
+        "weight": 0.016581986130260882,
+        "foundation": 0.07598784194528875,
+        "density": 4.8,
+        "leafShare": 0,
+        "clusters": 1,
+        "cycles": 1
+      },
+      {
+        "path": "src/services",
+        "name": "services",
+        "files": 61,
+        "share": 0.17183098591549295,
+        "weight": 0.07872063588781207,
+        "foundation": 0.19701006512729427,
+        "density": 3.80327868852459,
+        "leafShare": 0,
+        "clusters": 7,
+        "cycles": 0
+      },
+      {
+        "path": "src/services/_namespaces",
+        "name": "_namespaces",
+        "files": 34,
+        "share": 0.09577464788732394,
+        "weight": 0.036439912527120644,
+        "foundation": 0.6382978723404256,
+        "density": 0.9705882352941176,
+        "leafShare": 0,
+        "clusters": 2,
+        "cycles": 0
+      },
+      {
+        "path": "src/services/codefixes",
+        "name": "codefixes",
+        "files": 73,
+        "share": 0.2056338028169014,
+        "weight": 0.03648827629864422,
+        "foundation": 0.029460811561978877,
+        "density": 0.2465753424657534,
+        "leafShare": 0,
+        "clusters": 1,
+        "cycles": 0
+      }
+    ],
+    "measures": {
+      "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.002074592728964572,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.3884180790960452,
+          "centrality": 0.7966101694915254
+        }
+      },
+      "src/compiler/_namespaces/ts.ts": {
+        "fanIn": 81,
+        "fanOut": 75,
+        "depth": 2,
+        "centrality": 0.14185954071943208,
+        "rank": {
+          "fanIn": 0.9717514124293786,
+          "fanOut": 1,
+          "depth": 0.2033898305084746,
+          "centrality": 1
+        }
+      },
+      "src/compiler/core.ts": {
+        "fanIn": 188,
+        "fanOut": 2,
+        "depth": 1,
+        "centrality": 0.0798523613228547,
+        "rank": {
+          "fanIn": 1,
+          "fanOut": 0.269774011299435,
+          "depth": 0.12005649717514125,
+          "centrality": 0.9915254237288136
+        }
+      },
+      "src/compiler/corePublic.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0021472969317646784,
+        "rank": {
+          "fanIn": 0.7810734463276836,
+          "fanOut": 0.043785310734463276,
+          "depth": 0.3884180790960452,
+          "centrality": 0.8418079096045198
+        }
+      },
+      "src/compiler/debug.ts": {
+        "fanIn": 151,
+        "fanOut": 6,
+        "depth": 1,
+        "centrality": 0.09250245604255732,
+        "rank": {
+          "fanIn": 0.9915254237288136,
+          "fanOut": 0.403954802259887,
+          "depth": 0.12005649717514125,
+          "centrality": 0.9971751412429378
+        }
+      },
+      "src/compiler/factory/nodeTests.ts": {
+        "fanIn": 143,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.08334272677407951,
+        "rank": {
+          "fanIn": 0.9858757062146892,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9943502824858758
+        }
+      },
+      "src/compiler/moduleSpecifiers.ts": {
+        "fanIn": 8,
+        "fanOut": 12,
+        "depth": 4,
+        "centrality": 0.002286497949684762,
+        "rank": {
+          "fanIn": 0.8516949152542372,
+          "fanOut": 0.7344632768361582,
+          "depth": 0.6031073446327684,
+          "centrality": 0.8728813559322034
+        }
+      },
+      "src/compiler/path.ts": {
+        "fanIn": 63,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.02012787603201926,
+        "rank": {
+          "fanIn": 0.96045197740113,
+          "fanOut": 0.3403954802259887,
+          "depth": 0.12005649717514125,
+          "centrality": 0.980225988700565
+        }
+      },
+      "src/compiler/performanceCore.ts": {
+        "fanIn": 10,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.005063423046981331,
+        "rank": {
+          "fanIn": 0.8742937853107344,
+          "fanOut": 0.269774011299435,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9548022598870056
+        }
+      },
+      "src/compiler/scanner.ts": {
+        "fanIn": 70,
+        "fanOut": 5,
+        "depth": 2,
+        "centrality": 0.012227537617472965,
+        "rank": {
+          "fanIn": 0.963276836158192,
+          "fanOut": 0.3728813559322034,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9774011299435028
+        }
+      },
+      "src/compiler/types.ts": {
+        "fanIn": 185,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.05781232416723847,
+        "rank": {
+          "fanIn": 0.9971751412429378,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9887005649717514
+        }
+      },
+      "src/compiler/utilities.ts": {
+        "fanIn": 179,
+        "fanOut": 24,
+        "depth": 2,
+        "centrality": 0.05258203073125722,
+        "rank": {
+          "fanIn": 0.9943502824858758,
+          "fanOut": 0.961864406779661,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9858757062146892
+        }
+      },
+      "src/compiler/utilitiesPublic.ts": {
+        "fanIn": 150,
+        "fanOut": 8,
+        "depth": 2,
+        "centrality": 0.02995908253864608,
+        "rank": {
+          "fanIn": 0.9887005649717514,
+          "fanOut": 0.4858757062146893,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9830508474576272
+        }
+      },
+      "src/deprecatedCompat/_namespaces/ts.ts": {
+        "fanIn": 4,
+        "fanOut": 2,
+        "depth": 3,
+        "centrality": 0.001290372601101314,
+        "rank": {
+          "fanIn": 0.7387005649717514,
+          "fanOut": 0.269774011299435,
+          "depth": 0.3884180790960452,
+          "centrality": 0.7146892655367232
+        }
+      },
+      "src/deprecatedCompat/deprecate.ts": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 5,
+        "centrality": 0.0007540051935057385,
+        "rank": {
+          "fanIn": 0.2966101694915254,
+          "fanOut": 0.3403954802259887,
+          "depth": 0.827683615819209,
+          "centrality": 0.5282485875706214
+        }
+      },
+      "src/deprecatedCompat/deprecations.ts": {
+        "fanIn": 1,
+        "fanOut": 3,
+        "depth": 4,
+        "centrality": 0.0010148677004712184,
+        "rank": {
+          "fanIn": 0.2966101694915254,
+          "fanOut": 0.3107344632768362,
+          "depth": 0.6031073446327684,
+          "centrality": 0.6412429378531074
+        }
+      },
+      "src/harness/_namespaces/Harness.ts": {
+        "fanIn": 11,
+        "fanOut": 5,
+        "depth": 2,
+        "centrality": 0.0008988892860934837,
+        "rank": {
+          "fanIn": 0.882768361581921,
+          "fanOut": 0.3728813559322034,
+          "depth": 0.2033898305084746,
+          "centrality": 0.5819209039548022
+        }
+      },
+      "src/harness/_namespaces/ts.server.ts": {
+        "fanIn": 3,
+        "fanOut": 4,
+        "depth": 3,
+        "centrality": 0.0006668578571028958,
+        "rank": {
+          "fanIn": 0.6878531073446328,
+          "fanOut": 0.3403954802259887,
+          "depth": 0.3884180790960452,
+          "centrality": 0.423728813559322
+        }
+      },
+      "src/harness/_namespaces/ts.ts": {
+        "fanIn": 22,
+        "fanOut": 8,
+        "depth": 2,
+        "centrality": 0.001691994829809542,
+        "rank": {
+          "fanIn": 0.923728813559322,
+          "fanOut": 0.4858757062146893,
+          "depth": 0.2033898305084746,
+          "centrality": 0.7344632768361582
+        }
+      },
+      "src/harness/client.ts": {
+        "fanIn": 3,
+        "fanOut": 10,
+        "depth": 4,
+        "centrality": 0.0006624410152033333,
+        "rank": {
+          "fanIn": 0.6878531073446328,
+          "fanOut": 0.615819209039548,
+          "depth": 0.6031073446327684,
+          "centrality": 0.4209039548022599
+        }
+      },
+      "src/harness/collectionsImpl.ts": {
+        "fanIn": 5,
+        "fanOut": 2,
+        "depth": 3,
+        "centrality": 0.001672103770996508,
+        "rank": {
+          "fanIn": 0.7810734463276836,
+          "fanOut": 0.269774011299435,
+          "depth": 0.3884180790960452,
+          "centrality": 0.731638418079096
+        }
+      },
+      "src/harness/compilerImpl.ts": {
+        "fanIn": 3,
+        "fanOut": 20,
+        "depth": 2,
+        "centrality": 0.0009552644204223415,
+        "rank": {
+          "fanIn": 0.6878531073446328,
+          "fanOut": 0.9477401129943502,
+          "depth": 0.2033898305084746,
+          "centrality": 0.6186440677966102
+        }
+      },
+      "src/harness/documentsUtil.ts": {
+        "fanIn": 6,
+        "fanOut": 4,
+        "depth": 3,
+        "centrality": 0.001008581166220498,
+        "rank": {
+          "fanIn": 0.809322033898305,
+          "fanOut": 0.3403954802259887,
+          "depth": 0.3884180790960452,
+          "centrality": 0.6384180790960452
+        }
+      },
+      "src/harness/fakesHosts.ts": {
+        "fanIn": 6,
+        "fanOut": 20,
+        "depth": 2,
+        "centrality": 0.0009966904820062673,
+        "rank": {
+          "fanIn": 0.809322033898305,
+          "fanOut": 0.9477401129943502,
+          "depth": 0.2033898305084746,
+          "centrality": 0.6299435028248588
+        }
+      },
+      "src/harness/findUpDir.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.000617746246567438,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.043785310734463276,
+          "depth": 0.6031073446327684,
+          "centrality": 0.3954802259887006
+        }
+      },
+      "src/harness/fourslashImpl.ts": {
+        "fanIn": 2,
+        "fanOut": 34,
+        "depth": 6,
+        "centrality": 0.0015758434348472877,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.9858757062146892,
+          "depth": 0.9830508474576272,
+          "centrality": 0.7259887005649718
+        }
+      },
+      "src/harness/harnessIO.ts": {
+        "fanIn": 8,
+        "fanOut": 31,
+        "depth": 3,
+        "centrality": 0.0015447678458424222,
+        "rank": {
+          "fanIn": 0.8516949152542372,
+          "fanOut": 0.980225988700565,
+          "depth": 0.3884180790960452,
+          "centrality": 0.7231638418079096
+        }
+      },
+      "src/harness/harnessLanguageService.ts": {
+        "fanIn": 2,
+        "fanOut": 35,
+        "depth": 4,
+        "centrality": 0.0010732073053583092,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.9887005649717514,
+          "depth": 0.6031073446327684,
+          "centrality": 0.6468926553672316
+        }
+      },
+      "src/harness/sourceMapRecorder.ts": {
+        "fanIn": 2,
+        "fanOut": 14,
+        "depth": 3,
+        "centrality": 0.0010011247468946869,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.8206214689265536,
+          "depth": 0.3884180790960452,
+          "centrality": 0.635593220338983
+        }
+      },
+      "src/harness/util.ts": {
+        "fanIn": 4,
+        "fanOut": 3,
+        "depth": 3,
+        "centrality": 0.0007776742906335761,
+        "rank": {
+          "fanIn": 0.7387005649717514,
+          "fanOut": 0.3107344632768362,
+          "depth": 0.3884180790960452,
+          "centrality": 0.5423728813559322
+        }
+      },
+      "src/harness/vfsUtil.ts": {
+        "fanIn": 8,
+        "fanOut": 11,
+        "depth": 2,
+        "centrality": 0.0017860967042714446,
+        "rank": {
+          "fanIn": 0.8516949152542372,
+          "fanOut": 0.6765536723163842,
+          "depth": 0.2033898305084746,
+          "centrality": 0.7372881355932204
+        }
+      },
+      "src/harness/vpathUtil.ts": {
+        "fanIn": 4,
+        "fanOut": 5,
+        "depth": 3,
+        "centrality": 0.0011391850635104194,
+        "rank": {
+          "fanIn": 0.7387005649717514,
+          "fanOut": 0.3728813559322034,
+          "depth": 0.3884180790960452,
+          "centrality": 0.7033898305084746
+        }
+      },
+      "src/jsTyping/_namespaces/ts.JsTyping.ts": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0018328637569940832,
+        "rank": {
+          "fanIn": 0.2966101694915254,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.3884180790960452,
+          "centrality": 0.7401129943502824
+        }
+      },
+      "src/jsTyping/_namespaces/ts.server.ts": {
+        "fanIn": 7,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0037342833393833523,
+        "rank": {
+          "fanIn": 0.8305084745762712,
+          "fanOut": 0.269774011299435,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9322033898305084
+        }
+      },
+      "src/jsTyping/_namespaces/ts.ts": {
+        "fanIn": 8,
+        "fanOut": 3,
+        "depth": 2,
+        "centrality": 0.0048226034369331094,
+        "rank": {
+          "fanIn": 0.8516949152542372,
+          "fanOut": 0.3107344632768362,
+          "depth": 0.2033898305084746,
+          "centrality": 0.9491525423728814
+        }
+      },
+      "src/jsTyping/jsTyping.ts": {
+        "fanIn": 4,
+        "fanOut": 9,
+        "depth": 1,
+        "centrality": 0.00250084919619083,
+        "rank": {
+          "fanIn": 0.7387005649717514,
+          "fanOut": 0.5466101694915254,
+          "depth": 0.12005649717514125,
+          "centrality": 0.8898305084745762
+        }
+      },
+      "src/jsTyping/shared.ts": {
+        "fanIn": 8,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.002501386340051378,
+        "rank": {
+          "fanIn": 0.8516949152542372,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.12005649717514125,
+          "centrality": 0.8926553672316384
+        }
+      },
+      "src/server/_namespaces/ts.server.protocol.ts": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0005853714900475822,
+        "rank": {
+          "fanIn": 0.2966101694915254,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.3884180790960452,
+          "centrality": 0.3757062146892655
+        }
+      },
+      "src/server/_namespaces/ts.server.ts": {
+        "fanIn": 13,
+        "fanOut": 14,
+        "depth": 2,
+        "centrality": 0.001958552976224473,
+        "rank": {
+          "fanIn": 0.8926553672316384,
+          "fanOut": 0.8206214689265536,
+          "depth": 0.2033898305084746,
+          "centrality": 0.7429378531073446
+        }
+      },
+      "src/server/_namespaces/ts.ts": {
+        "fanIn": 14,
+        "fanOut": 5,
+        "depth": 2,
+        "centrality": 0.002600599079662194,
+        "rank": {
+          "fanIn": 0.8983050847457628,
+          "fanOut": 0.3728813559322034,
+          "depth": 0.2033898305084746,
+          "centrality": 0.8983050847457628
+        }
+      },
+      "src/server/editorServices.ts": {
+        "fanIn": 10,
+        "fanOut": 29,
+        "depth": 2,
+        "centrality": 0.0012756302244838493,
+        "rank": {
+          "fanIn": 0.8742937853107344,
+          "fanOut": 0.9745762711864406,
+          "depth": 0.2033898305084746,
+          "centrality": 0.711864406779661
+        }
+      },
+      "src/server/project.ts": {
+        "fanIn": 9,
+        "fanOut": 30,
+        "depth": 2,
+        "centrality": 0.0021263283617844095,
+        "rank": {
+          "fanIn": 0.867231638418079,
+          "fanOut": 0.9774011299435028,
+          "depth": 0.2033898305084746,
+          "centrality": 0.827683615819209
+        }
+      },
+      "src/server/protocol.ts": {
+        "fanIn": 6,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.001025409375847976,
+        "rank": {
+          "fanIn": 0.809322033898305,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.3884180790960452,
+          "centrality": 0.6440677966101694
+        }
+      },
+      "src/server/scriptInfo.ts": {
+        "fanIn": 6,
+        "fanOut": 18,
+        "depth": 3,
+        "centrality": 0.0008979064007811493,
+        "rank": {
+          "fanIn": 0.809322033898305,
+          "fanOut": 0.923728813559322,
+          "depth": 0.3884180790960452,
+          "centrality": 0.576271186440678
+        }
+      },
+      "src/server/scriptVersionCache.ts": {
+        "fanIn": 2,
+        "fanOut": 6,
+        "depth": 3,
+        "centrality": 0.0006968531274353174,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.403954802259887,
+          "depth": 0.3884180790960452,
+          "centrality": 0.4435028248587571
+        }
+      },
+      "src/server/types.ts": {
+        "fanIn": 7,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.0008123433834974503,
+        "rank": {
+          "fanIn": 0.8305084745762712,
+          "fanOut": 0.269774011299435,
+          "depth": 0.2033898305084746,
+          "centrality": 0.5536723163841808
+        }
+      },
+      "src/server/utilitiesPublic.ts": {
+        "fanIn": 12,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.001584183129437975,
+        "rank": {
+          "fanIn": 0.8870056497175142,
+          "fanOut": 0.3403954802259887,
+          "depth": 0.12005649717514125,
+          "centrality": 0.7288135593220338
+        }
+      },
+      "src/services/_namespaces/ts.refactor.ts": {
+        "fanIn": 19,
+        "fanOut": 16,
+        "depth": 4,
+        "centrality": 0.0009876740956296264,
+        "rank": {
+          "fanIn": 0.9180790960451978,
+          "fanOut": 0.884180790960452,
+          "depth": 0.6031073446327684,
+          "centrality": 0.6271186440677966
+        }
+      },
+      "src/services/_namespaces/ts.ts": {
+        "fanIn": 137,
+        "fanOut": 39,
+        "depth": 3,
+        "centrality": 0.011674912830469704,
+        "rank": {
+          "fanIn": 0.9830508474576272,
+          "fanOut": 0.9915254237288136,
+          "depth": 0.3884180790960452,
+          "centrality": 0.9745762711864406
+        }
+      },
+      "src/services/codefixes/annotateWithTypeFromJSDoc.ts": {
+        "fanIn": 2,
+        "fanOut": 13,
+        "depth": 5,
+        "centrality": 0.0005029880113134199,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.7810734463276836,
+          "depth": 0.827683615819209,
+          "centrality": 0.3093220338983051
+        }
+      },
+      "src/services/codefixes/generateAccessors.ts": {
+        "fanIn": 3,
+        "fanOut": 11,
+        "depth": 5,
+        "centrality": 0.0006871369246829433,
+        "rank": {
+          "fanIn": 0.6878531073446328,
+          "fanOut": 0.6765536723163842,
+          "depth": 0.827683615819209,
+          "centrality": 0.4378531073446328
+        }
+      },
+      "src/services/codefixes/helpers.ts": {
+        "fanIn": 13,
+        "fanOut": 14,
+        "depth": 5,
+        "centrality": 0.0007146239937295106,
+        "rank": {
+          "fanIn": 0.8926553672316384,
+          "fanOut": 0.8206214689265536,
+          "depth": 0.827683615819209,
+          "centrality": 0.4519774011299435
+        }
+      },
+      "src/services/codefixes/importFixes.ts": {
+        "fanIn": 13,
+        "fanOut": 20,
+        "depth": 5,
+        "centrality": 0.0006447268926810131,
+        "rank": {
+          "fanIn": 0.8926553672316384,
+          "fanOut": 0.9477401129943502,
+          "depth": 0.827683615819209,
+          "centrality": 0.4152542372881356
+        }
+      },
+      "src/services/pasteEdits.ts": {
+        "fanIn": 2,
+        "fanOut": 14,
+        "depth": 4,
+        "centrality": 0.0010807189678094988,
+        "rank": {
+          "fanIn": 0.5819209039548022,
+          "fanOut": 0.8206214689265536,
+          "depth": 0.6031073446327684,
+          "centrality": 0.6638418079096046
+        }
+      },
+      "src/services/refactors/generateGetAccessorAndSetAccessor.ts": {
+        "fanIn": 1,
+        "fanOut": 9,
+        "depth": 6,
+        "centrality": 0.0009075494467431918,
+        "rank": {
+          "fanIn": 0.2966101694915254,
+          "fanOut": 0.5466101694915254,
+          "depth": 0.9830508474576272,
+          "centrality": 0.5932203389830508
+        }
+      },
+      "src/services/refactors/helpers.ts": {
+        "fanIn": 16,
+        "fanOut": 8,
+        "depth": 5,
+        "centrality": 0.0009982051520996816,
+        "rank": {
+          "fanIn": 0.9067796610169492,
+          "fanOut": 0.4858757062146893,
+          "depth": 0.827683615819209,
+          "centrality": 0.632768361581921
+        }
+      },
+      "src/services/refactors/moveToFile.ts": {
+        "fanIn": 6,
+        "fanOut": 19,
+        "depth": 4,
+        "centrality": 0.0009594319062470256,
+        "rank": {
+          "fanIn": 0.809322033898305,
+          "fanOut": 0.9364406779661016,
+          "depth": 0.6031073446327684,
+          "centrality": 0.6242937853107344
+        }
+      },
+      "src/services/textChanges.ts": {
+        "fanIn": 95,
+        "fanOut": 17,
+        "depth": 4,
+        "centrality": 0.006330540407025689,
+        "rank": {
+          "fanIn": 0.9774011299435028,
+          "fanOut": 0.9067796610169492,
+          "depth": 0.6031073446327684,
+          "centrality": 0.963276836158192
+        }
+      },
+      "src/services/types.ts": {
+        "fanIn": 91,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.00861519315756015,
+        "rank": {
+          "fanIn": 0.9745762711864406,
+          "fanOut": 0.16666666666666666,
+          "depth": 0.3884180790960452,
+          "centrality": 0.9689265536723164
+        }
+      },
+      "src/services/utilities.ts": {
+        "fanIn": 132,
+        "fanOut": 24,
+        "depth": 3,
+        "centrality": 0.008759332002503211,
+        "rank": {
+          "fanIn": 0.980225988700565,
+          "fanOut": 0.961864406779661,
+          "depth": 0.3884180790960452,
+          "centrality": 0.9717514124293786
+        }
+      },
+      "src/watchGuard/watchGuard.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.00046645934507793087,
+        "rank": {
+          "fanIn": 0.046610169491525424,
+          "fanOut": 0.043785310734463276,
+          "depth": 0.046610169491525424,
+          "centrality": 0.046610169491525424
+        }
+      }
+    }
+  }
+}
