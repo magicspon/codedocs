@@ -61,6 +61,38 @@ export function HomeIcon(): JSX.Element {
   )
 }
 
+/** A spiral of two arms round a core, for the galaxy scene. */
+export function GalaxyIcon(): JSX.Element {
+  return (
+    <Icon>
+      <circle cx="12" cy="12" r="1.6" />
+      <path d="M12 10.4c3.5-2.6 8 .2 7.5 4.3" />
+      <path d="M12 13.6c-3.5 2.6-8-.2-7.5-4.3" />
+      <path d="M13.6 12c2.1 3.4-.3 7.2-4.1 6.6" />
+    </Icon>
+  )
+}
+
+/** Two peaks over a river, for the terrain scene. */
+export function TerrainIcon(): JSX.Element {
+  return (
+    <Icon>
+      <path d="m2.5 17 6-9 3.5 5 2.5-3.5 7 7.5" />
+      <path d="M4 20.5c3-1.5 5 1 8 0s5-1.5 8 0" />
+    </Icon>
+  )
+}
+
+/** A skyline on a curve of ground, for the metro. */
+export function MetroIcon(): JSX.Element {
+  return (
+    <Icon>
+      <path d="M3 20c5.5-2.5 12.5-2.5 18 0" />
+      <path d="M6 18.5V11h3v7M10.5 17.8V5.5h3v12.3M15 18.5V9l3 2v7.5" />
+    </Icon>
+  )
+}
+
 /** A magnifying glass, for the search. */
 export function SearchIcon(): JSX.Element {
   return (

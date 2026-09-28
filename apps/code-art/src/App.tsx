@@ -11,6 +11,10 @@ import { traceOf, type TraceQuery } from './lib/trace.ts'
 import { queryOf } from './search.ts'
 import { GalaxyHud } from './GalaxyHud.tsx'
 import { Hud } from './Hud.tsx'
+import { ArtHud } from './ArtHud.tsx'
+import { METRO_LEGEND } from './lib/metro-text.ts'
+import { TERRAIN_LEGEND } from './lib/terrain-text.ts'
+import { MetroDash } from './MetroDash.tsx'
 import { Loader } from './Loader.tsx'
 import { SCENES, Stage } from './Stage.tsx'
 import { toggleTracks } from './scenes/tracks.ts'
@@ -79,8 +83,9 @@ export function App(): JSX.Element {
   // One playhead per loaded series. A history starts at its first commit so it
   // can be watched growing; a single index sits at its only frame.
   const playhead = useMemo<Playhead>(() => ({ t: 0 }), [series, scene])
-  // The galaxy keeps its own bare overlay.
-  const bare = scene === 'galaxy'
+  // The galaxy and the art pieces keep their own bare overlays.
+  const art = scene === 'terrain' || scene === 'metro'
+  const bare = scene === 'galaxy' || art
   // Keyed like the canvas, so a new dataset or scene shows the spinner again
   // until it too has drawn.
   const [drawn, setDrawn] = useState<string | null>(null)
@@ -104,8 +109,37 @@ export function App(): JSX.Element {
         onReady={() => setDrawn(view)}
       />
       {loading && <Loader />}
-      {bare ? (
+      {art ? (
+        <ArtHud
+          scenes={Object.keys(SCENES)}
+          scene={scene}
+          onScene={setScene}
+          series={series}
+          frame={frame}
+          hovered={hovered}
+          {...(scene === 'metro'
+            ? {
+                legend: METRO_LEGEND,
+                labels: [
+                  'Show how to drive and what the city means',
+                  'Hide how to drive and what the city means',
+                ],
+              }
+            : {
+                legend: TERRAIN_LEGEND,
+                labels: [
+                  'Show what the terrain means',
+                  'Hide what the terrain means',
+                ],
+              })}
+        >
+          {scene === 'metro' && <MetroDash ahead={hovered} />}
+        </ArtHud>
+      ) : bare ? (
         <GalaxyHud
+          scenes={Object.keys(SCENES)}
+          scene={scene}
+          onScene={setScene}
           fly={flying}
           onFly={setFly}
           series={series}

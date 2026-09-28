@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import type { FileSymbols } from './lib/atlas.ts'
+import type { FileSymbols, SymbolNames } from './lib/atlas.ts'
 import { loadNames } from './lib/names.ts'
 import type { TraceQuery } from './lib/trace.ts'
 import { searchOf } from './search.ts'
@@ -53,6 +53,20 @@ export function useBookmark(view: {
 }
 
 /**
+ * Every symbol name in repository `repo`: `undefined` while they load, `null`
+ * for good when none were exported. Loaded once per repository and kept.
+ */
+export function useNames(repo: string): SymbolNames | null | undefined {
+  const { data, isPending } = useQuery({
+    queryKey: ['names', repo],
+    queryFn: () => loadNames(repo),
+    // One parse per repository, kept for the session: they can be large.
+    gcTime: Infinity,
+  })
+  return isPending ? undefined : (data ?? null)
+}
+
+/**
  * The symbols of the file at `path` in repository `repo`: `undefined` while
  * they load, `null` for good when none were exported. Only called once a file
  * is picked, so nothing is read before then.
@@ -61,12 +75,7 @@ export function useSymbols(
   repo: string,
   path: string,
 ): FileSymbols | null | undefined {
-  const { data, isPending } = useQuery({
-    queryKey: ['names', repo],
-    queryFn: () => loadNames(repo),
-    // One parse per repository, kept for the session: they can be large.
-    gcTime: Infinity,
-  })
-  if (isPending) return undefined
-  return data?.[path] ?? null
+  const names = useNames(repo)
+  if (names === undefined) return undefined
+  return names?.[path] ?? null
 }

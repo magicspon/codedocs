@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1790607840.384174,
-    "ast_hash": "47546346c0673590d452fd4734a0fafe",
+    "mtime": 1790609754.6968334,
+    "ast_hash": "726b7d171d3eef2e8efba22f143e2a1c",
     "semantic_hash": ""
   },
   ".changeset/README.md": {
@@ -185,8 +185,8 @@
     "semantic_hash": ""
   },
   "cspell.words.txt": {
-    "mtime": 1790609387.401187,
-    "ast_hash": "c2a18a9c2089f5e09f7d42754f9328d6",
+    "mtime": 1790609754.6874862,
+    "ast_hash": "886f4ab17d9faf6e4c3d42400b278c1d",
     "semantic_hash": ""
   },
   "docs/REQUIREMENTS.md": {
@@ -1555,8 +1555,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/App.tsx": {
-    "mtime": 1790607024.4382799,
-    "ast_hash": "5ef496b118cf8f1d76502c5bbdaa1627",
+    "mtime": 1790609754.6734967,
+    "ast_hash": "9f2f71c3deae1153674d1b4a32041942",
     "semantic_hash": ""
   },
   "apps/code-art/src/FilePanel.tsx": {
@@ -1645,8 +1645,8 @@
     "semantic_hash": ""
   },
   "apps/code-art/README.md": {
-    "mtime": 1790607024.4269168,
-    "ast_hash": "7d1ab3800d1c487f172537fa02cf1944",
+    "mtime": 1790609754.6732159,
+    "ast_hash": "bbe7753a300ab7b5dfc850185b348439",
     "semantic_hash": ""
   },
   "apps/code-art/index.html": {
@@ -1775,13 +1775,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/Stage.tsx": {
-    "mtime": 1790607024.4417956,
-    "ast_hash": "ca2c407adce2548821a9b3ad0195a5bb",
+    "mtime": 1790609754.67497,
+    "ast_hash": "cbf3b78a0273434dfec56b83b5ba6ac9",
     "semantic_hash": ""
   },
   "apps/code-art/src/hooks.ts": {
-    "mtime": 1790607024.5516553,
-    "ast_hash": "6344e1c180fae57e502c2dd571c21f7e",
+    "mtime": 1790609754.6751413,
+    "ast_hash": "df46f59cb5360a72e85efacf0f20d57e",
     "semantic_hash": ""
   },
   "apps/code-art/src/lib/frame.ts": {
@@ -2150,13 +2150,13 @@
     "semantic_hash": ""
   },
   "apps/code-art/src/GalaxyHud.tsx": {
-    "mtime": 1790607024.4396768,
-    "ast_hash": "250f782c67000f1c9ebcabf21a78b98c",
+    "mtime": 1790609754.6741543,
+    "ast_hash": "572efbaafd59d5ccacca80826be3bfc7",
     "semantic_hash": ""
   },
   "apps/code-art/src/icons.tsx": {
-    "mtime": 1790607024.5518804,
-    "ast_hash": "06baf2887ae818fdc414ad786e1a33aa",
+    "mtime": 1790609754.6753619,
+    "ast_hash": "ebe07d55708cbf042067bf786ad2bad5",
     "semantic_hash": ""
   },
   "apps/code-art/src/SearchCorner.tsx": {
@@ -2789,6 +2789,361 @@
     "ast_hash": "46a41abc60ca9003968170a2afd467ea",
     "semantic_hash": ""
   },
+  "apps/code-art/src/SceneSwitch.tsx": {
+    "mtime": 1790609754.6746747,
+    "ast_hash": "266523ae140a8d4f2ca7aba0d2180ac6",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-field.ts": {
+    "mtime": 1790609754.6802,
+    "ast_hash": "feb37bf5d72be4691013e8cdddfbea5a",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-layout.ts": {
+    "mtime": 1790609754.6804323,
+    "ast_hash": "42011234e4edfd2951d5f6fbc2618f05",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-noise.ts": {
+    "mtime": 1790609754.680738,
+    "ast_hash": "b76aa924309dfac82cdc28018c936214",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-rivers.ts": {
+    "mtime": 1790609754.6813567,
+    "ast_hash": "c7de0674cc762e73aed354c781076a49",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-text.ts": {
+    "mtime": 1790609754.6819801,
+    "ast_hash": "74a77aea8a16cdab7c382f459b94de15",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-tree.ts": {
+    "mtime": 1790609754.682317,
+    "ast_hash": "9eb3b518d0d53526b7d1b20880dc6cca",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/Terrain.tsx": {
+    "mtime": 1790609754.6843863,
+    "ast_hash": "a17acc5f58dcc1db4e648e373d6c0ac2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/terrain-material.ts": {
+    "mtime": 1790609754.6862276,
+    "ast_hash": "d455ec36ae22808e2a3331cd2a88282b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/terrain.test.ts": {
+    "mtime": 1790609754.687229,
+    "ast_hash": "099d6f3fb6500408347498d6544dada2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/terrain-strata.ts": {
+    "mtime": 1790609754.6818402,
+    "ast_hash": "3f95ecb26c66bcb020e6dcb12a521d90",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/ArtHud.tsx": {
+    "mtime": 1790609754.673622,
+    "ast_hash": "4f5a1512f4321bc773abf1e9e00bd5ec",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/MetroDash.tsx": {
+    "mtime": 1790609754.6743217,
+    "ast_hash": "bfef176fd9e19d9a8e8e7303dfcd08b2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/buggy.ts": {
+    "mtime": 1790609754.675567,
+    "ast_hash": "1a718eda5e088ebfc4d8eebb4dfc936d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/legend.ts": {
+    "mtime": 1790609754.6758575,
+    "ast_hash": "78f046d953551cd06ebefd403126980a",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-buildings.ts": {
+    "mtime": 1790609754.676289,
+    "ast_hash": "849fa2858c9f50ca0a2d20e9101038b6",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-dash.ts": {
+    "mtime": 1790609754.6764193,
+    "ast_hash": "f8846ebdd935eb9f2ec9198c7e21d065",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-frames.ts": {
+    "mtime": 1790609754.676544,
+    "ast_hash": "58a32c536413778c40e4328d00c60a8b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-hash.ts": {
+    "mtime": 1790609754.6766858,
+    "ast_hash": "4897de1c86a98af54177c90146c454c6",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-layout.ts": {
+    "mtime": 1790609754.677005,
+    "ast_hash": "83c5d3da4e2b2f84212263009ab5399d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-paths.ts": {
+    "mtime": 1790609754.6773098,
+    "ast_hash": "68170b5fd76738d8d2c25bb977365a28",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-relax.ts": {
+    "mtime": 1790609754.6776698,
+    "ast_hash": "d91f00a063b67d0ea988e2519d1ad4ed",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-ribbons.ts": {
+    "mtime": 1790609754.6780055,
+    "ast_hash": "8f14f121722bd11a14180ccca5d0083d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-roads.ts": {
+    "mtime": 1790609754.6785848,
+    "ast_hash": "885f423768aa0e60975db573c521c747",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-sight.ts": {
+    "mtime": 1790609754.6787245,
+    "ast_hash": "3d2d33373b6f834711fd4e6378ad910f",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-sites.ts": {
+    "mtime": 1790609754.6790383,
+    "ast_hash": "26dfda8efde35bc5b5a470d1c485e37f",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-sphere.ts": {
+    "mtime": 1790609754.6791852,
+    "ast_hash": "ba80e20c0e85e888e6c1b6471f9118f7",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-text.ts": {
+    "mtime": 1790609754.6794827,
+    "ast_hash": "8605c2013b14be512a74c565471349ef",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-traffic.ts": {
+    "mtime": 1790609754.6796672,
+    "ast_hash": "62c234d1eb367bb28d137d590bf59f59",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-warp.ts": {
+    "mtime": 1790609754.6798332,
+    "ast_hash": "bc33feb4eeef25cd6b85eb7d0c31207f",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/most-called.ts": {
+    "mtime": 1790609754.679993,
+    "ast_hash": "16f812975f67bd2da236caf4f1f08a08",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/Buggy.tsx": {
+    "mtime": 1790609754.6828082,
+    "ast_hash": "45197f1a9d6c163df3742223db879046",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/BuggyBody.tsx": {
+    "mtime": 1790609754.6829853,
+    "ast_hash": "56d9cd8000bcfb5eb2740a0a58078b76",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/Metro.tsx": {
+    "mtime": 1790609754.6831589,
+    "ast_hash": "1c802111ae6ad21cd3465a3be9dfb9cd",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroAir.tsx": {
+    "mtime": 1790609754.683286,
+    "ast_hash": "e1196d73f54595908a764e56f3c8bcec",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroBuildings.tsx": {
+    "mtime": 1790609754.6834495,
+    "ast_hash": "f6a9d70699fc70e3e185ab032d0c9020",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroRain.tsx": {
+    "mtime": 1790609754.6837835,
+    "ast_hash": "e5e4725053c6a059d5ef818372370c6e",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/buggy-view.ts": {
+    "mtime": 1790609754.6847725,
+    "ast_hash": "41e070fb743da96fb138310c85040050",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/drag-look.ts": {
+    "mtime": 1790609754.6848931,
+    "ast_hash": "f057f531499142c7aaa87075d28713f0",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/metro-air-material.ts": {
+    "mtime": 1790609754.6850538,
+    "ast_hash": "d470d74bc3c7d9ba10660a01f6013f52",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/metro-building-material.ts": {
+    "mtime": 1790609754.6852295,
+    "ast_hash": "e763b78f03920debea170f9f65534621",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/metro-glsl.ts": {
+    "mtime": 1790609754.6853588,
+    "ast_hash": "172a8be789f57acdc24a074d81702c70",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/metro-ground-material.ts": {
+    "mtime": 1790609754.6855264,
+    "ast_hash": "34c43e5cfd44a581dcb2297ff411ce0e",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/metro-shapes.ts": {
+    "mtime": 1790609754.6856441,
+    "ast_hash": "5acc2241b1569535cc533da595feef18",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/metro.test.ts": {
+    "mtime": 1790609754.6870573,
+    "ast_hash": "66b99f644fcaaafc5d9b971304e370e5",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/MetroMap.tsx": {
+    "mtime": 1790609754.6744392,
+    "ast_hash": "c058c7dc10e6dd4095c890d05790e9c7",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/MetroTouch.tsx": {
+    "mtime": 1790609754.674557,
+    "ast_hash": "373f5b62b8c3b971d37e69824647a32d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-autopilot.ts": {
+    "mtime": 1790609754.6760762,
+    "ast_hash": "46c5dff455ebd41279d7335d53332f2b",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-hop.ts": {
+    "mtime": 1790609754.6768267,
+    "ast_hash": "566cfa4cff16ed5d59b9d8f00b4eb755",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-obstacles.ts": {
+    "mtime": 1790609754.677149,
+    "ast_hash": "7aea265321471f08b566159807624d45",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-road-calls.ts": {
+    "mtime": 1790609754.6781843,
+    "ast_hash": "9dfe9aabc812cdcd1886da3ad901425c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-road-index.ts": {
+    "mtime": 1790609754.6783915,
+    "ast_hash": "8354431cdf2ca95d1e23ce4969685be4",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-signs.ts": {
+    "mtime": 1790609754.6788995,
+    "ast_hash": "5ad84e04bc212cd06d9285f54d5007f6",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-tags.ts": {
+    "mtime": 1790609754.679325,
+    "ast_hash": "f9ee4d0ea16ae293acb879804ca15cf4",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/metro-map-draw.ts": {
+    "mtime": 1790609754.6825206,
+    "ast_hash": "4b970086bf1968bae0affee08c671a57",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/metro-sound.ts": {
+    "mtime": 1790609754.682657,
+    "ast_hash": "69cf1e5623e63e625c13412ac6296ceb",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroSigns.tsx": {
+    "mtime": 1790609754.6839342,
+    "ast_hash": "6d40c97ef6b07aeedad04f976691c6f2",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroSkyTags.tsx": {
+    "mtime": 1790609754.68406,
+    "ast_hash": "02413aede716d8a3ff1c38a8df8fe2ec",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroTagged.tsx": {
+    "mtime": 1790609754.6842213,
+    "ast_hash": "cca2f294cda2ede7643b2edc0d35f872",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/buggy-keys.ts": {
+    "mtime": 1790609754.6845098,
+    "ast_hash": "fc6799c45c7172b1848086bc46c4e144",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/buggy-steer.ts": {
+    "mtime": 1790609754.6846306,
+    "ast_hash": "4f5659078892d23a15a94b57542c335d",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/metro-sign-material.ts": {
+    "mtime": 1790609754.6858125,
+    "ast_hash": "128109a1c82b49b97970e89ff8ade031",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/metro-drive.test.ts": {
+    "mtime": 1790609754.686787,
+    "ast_hash": "0537acbdfca2589b0d2a9eafe148c974",
+    "semantic_hash": ""
+  },
+  "apps/code-art/test/metro-fixture.ts": {
+    "mtime": 1790609754.6868992,
+    "ast_hash": "27c41711203760c94b0722cedc24d003",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/CallCard.tsx": {
+    "mtime": 1790609754.6737363,
+    "ast_hash": "397c73a4f235e590f3a57b617c11f2da",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/call-names.ts": {
+    "mtime": 1790609754.6757016,
+    "ast_hash": "bc8ba2c5aabdcd5e9a7af30abacecc0c",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/lib/metro-poster.ts": {
+    "mtime": 1790609754.6774771,
+    "ast_hash": "6999178c9077d9a07042ded8b5c2eb0e",
+    "semantic_hash": ""
+  },
+  "apps/code-art/src/scenes/MetroPoster.tsx": {
+    "mtime": 1790609754.6836448,
+    "ast_hash": "69259b169912425fb69603fd48edd574",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/songs/nextjs.song.json": {
+    "mtime": 1790608720.603181,
+    "ast_hash": "0dca2237092cc564d441aab86cf131a5",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/songs/nuxt.song.json": {
+    "mtime": 1790608720.6027462,
+    "ast_hash": "4f3e200138c6541f26bc5b55185edba3",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/songs/opencode.song.json": {
+    "mtime": 1790608720.6045463,
+    "ast_hash": "1bfcaf707467159481402ae8216f18d0",
+    "semantic_hash": ""
+  },
   "apps/codesong-site/songs/payload.song.json": {
     "mtime": 1790608720.6045282,
     "ast_hash": "8e297105e3bf16449d9c28ff8498907f",
@@ -2799,9 +3154,29 @@
     "ast_hash": "538dc00b4d8d033628028d41dbb1d104",
     "semantic_hash": ""
   },
+  "apps/codesong-site/songs/sentry.song.json": {
+    "mtime": 1790608720.6025424,
+    "ast_hash": "d45a72a0eeef6339e80a0bbe94714e6a",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/songs/sst.song.json": {
+    "mtime": 1790608720.603118,
+    "ast_hash": "154c25f8491dc75d18d9ade803a1d72b",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/songs/typescript.song.json": {
+    "mtime": 1790608720.6031106,
+    "ast_hash": "b2ccbf32e24b454d6e3539a822828c02",
+    "semantic_hash": ""
+  },
   "apps/codesong-site/songs/vscode.song.json": {
     "mtime": 1790608590.6174593,
     "ast_hash": "23fc7c466be74086c433690d81f040bc",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/SoundPanel.tsx": {
+    "mtime": 1790609293.3552902,
+    "ast_hash": "dceb19b4c68a1c8af08f62540606987a",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/Transport.tsx": {
@@ -2824,6 +3199,11 @@
     "ast_hash": "4195b42a06f26b49479a593dfa42a128",
     "semantic_hash": ""
   },
+  "apps/codesong-site/src/audio/sound.ts": {
+    "mtime": 1790609220.6241052,
+    "ast_hash": "1fbabdb77217b81f8f8c76810a4572de",
+    "semantic_hash": ""
+  },
   "apps/codesong-site/src/audio/usePlayer.ts": {
     "mtime": 1790609220.6237385,
     "ast_hash": "86892b12a76f9215cda5c7cef5c497ab",
@@ -2832,6 +3212,16 @@
   "apps/codesong-site/src/explain/explain.ts": {
     "mtime": 1790607753.6130607,
     "ast_hash": "f7fa7bd95b7697890d72835ea77ee75a",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/explain/names.ts": {
+    "mtime": 1790608620.1556334,
+    "ast_hash": "10da3878486b6ffdaebefb058e6a3c84",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/icons.tsx": {
+    "mtime": 1790609552.0952747,
+    "ast_hash": "3accdf9f623b719f0faa351d0d8131ab",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/Inspector.tsx": {
@@ -2864,6 +3254,11 @@
     "ast_hash": "713ca3f59e11b224ae5fb517616422fe",
     "semantic_hash": ""
   },
+  "apps/codesong-site/src/scene/Names.tsx": {
+    "mtime": 1790608635.7996576,
+    "ast_hash": "0ac5ab966e61e53935736d2105370bce",
+    "semantic_hash": ""
+  },
   "apps/codesong-site/src/scene/Notes.tsx": {
     "mtime": 1790607668.6958563,
     "ast_hash": "f63b3d9b21597596d6bee44841e43ea0",
@@ -2884,6 +3279,16 @@
     "ast_hash": "39e9cdf6072de06d4e077aab6c83c480",
     "semantic_hash": ""
   },
+  "apps/codesong-site/test/names.test.ts": {
+    "mtime": 1790608720.202708,
+    "ast_hash": "929c832bb166c70d9f440e62e6b3e73f",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/test/sound.test.ts": {
+    "mtime": 1790609230.5812235,
+    "ast_hash": "20ae6f4bc4b8684078a035710187b9df",
+    "semantic_hash": ""
+  },
   "apps/codesong-site/vitest.config.ts": {
     "mtime": 1790607651.6128006,
     "ast_hash": "50cc4104ffcf3b9204237c02a1608124",
@@ -2902,71 +3307,6 @@
   "apps/codesong/test/evidence.test.ts": {
     "mtime": 1790608720.2053494,
     "ast_hash": "ae111f572c59f4897fc3d38da8936ecc",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/songs/nextjs.song.json": {
-    "mtime": 1790608720.603181,
-    "ast_hash": "0dca2237092cc564d441aab86cf131a5",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/songs/nuxt.song.json": {
-    "mtime": 1790608720.6027462,
-    "ast_hash": "4f3e200138c6541f26bc5b55185edba3",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/songs/opencode.song.json": {
-    "mtime": 1790608720.6045463,
-    "ast_hash": "1bfcaf707467159481402ae8216f18d0",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/songs/sentry.song.json": {
-    "mtime": 1790608720.6025424,
-    "ast_hash": "d45a72a0eeef6339e80a0bbe94714e6a",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/songs/sst.song.json": {
-    "mtime": 1790608720.603118,
-    "ast_hash": "154c25f8491dc75d18d9ade803a1d72b",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/songs/typescript.song.json": {
-    "mtime": 1790608720.6031106,
-    "ast_hash": "b2ccbf32e24b454d6e3539a822828c02",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/src/explain/names.ts": {
-    "mtime": 1790608620.1556334,
-    "ast_hash": "10da3878486b6ffdaebefb058e6a3c84",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/src/scene/Names.tsx": {
-    "mtime": 1790608635.7996576,
-    "ast_hash": "0ac5ab966e61e53935736d2105370bce",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/test/names.test.ts": {
-    "mtime": 1790608720.202708,
-    "ast_hash": "929c832bb166c70d9f440e62e6b3e73f",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/src/SoundPanel.tsx": {
-    "mtime": 1790609293.3552902,
-    "ast_hash": "dceb19b4c68a1c8af08f62540606987a",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/src/audio/sound.ts": {
-    "mtime": 1790609220.6241052,
-    "ast_hash": "1fbabdb77217b81f8f8c76810a4572de",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/test/sound.test.ts": {
-    "mtime": 1790609230.5812235,
-    "ast_hash": "20ae6f4bc4b8684078a035710187b9df",
-    "semantic_hash": ""
-  },
-  "apps/codesong-site/src/icons.tsx": {
-    "mtime": 1790609552.0952747,
-    "ast_hash": "3accdf9f623b719f0faa351d0d8131ab",
     "semantic_hash": ""
   }
 }
