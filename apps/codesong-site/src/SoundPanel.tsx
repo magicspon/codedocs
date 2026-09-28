@@ -2,7 +2,7 @@ import type { RealisedTrack } from '@codedocs/codesong/browser'
 import { button, folder, LevaPanel, useControls, useCreateStore } from 'leva'
 import type { Schema } from 'leva/plugin'
 import { useEffect, useMemo, type JSX } from 'react'
-import { defaults, SETTINGS, type Sound } from './audio/sound.ts'
+import { controls, defaults, type Sound } from './audio/sound.ts'
 import { ROLE_COLOUR } from './scene/layout.ts'
 
 interface Props {
@@ -35,22 +35,22 @@ const THEME = {
   fontSizes: { root: '12px' },
 }
 
-/** The role's settings as a Leva schema: one folder per group, starting from `initial`. */
-function schema(track: RealisedTrack, initial: Sound): Schema {
-  const out: Schema = {}
-  for (const [group, settings] of Object.entries(SETTINGS[track.role])) {
-    const inputs: Schema = {}
-    for (const [key, setting] of Object.entries(settings)) {
-      const value = initial[key] ?? setting.value
-      inputs[key] =
-        'options' in setting
-          ? { value: String(value), options: [...setting.options] }
-          : { ...setting, value: Number(value) }
-    }
-    out[group] = folder(inputs)
-  }
-  return out
-}
+/** The track's settings as a Leva schema: one folder per group. */
+const schema = (track: RealisedTrack, initial: Sound): Schema =>
+  Object.fromEntries(
+    Object.entries(controls(track.role, initial)).map(([group, inputs]) => [
+      group,
+      // Leva wants mutable option lists; ours are shared, so copy them.
+      folder(
+        Object.fromEntries(
+          Object.entries(inputs).map(([key, s]) => [
+            key,
+            'options' in s ? { ...s, options: [...s.options] } : { ...s },
+          ]),
+        ),
+      ),
+    ]),
+  )
 
 /**
  * The synth settings for one track, in a Leva panel over the scene. Each
