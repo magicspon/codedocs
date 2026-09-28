@@ -1,10 +1,11 @@
 import type { JSX, MouseEvent } from 'react'
-import { GalaxyIcon, TerrainIcon } from './icons.tsx'
+import { GalaxyIcon, MetroIcon, TerrainIcon } from './icons.tsx'
 
 /** Each scene's icon and what its button says; a scene without one gets no button. */
 const LOOKS: Record<string, readonly [() => JSX.Element, string]> = {
   galaxy: [GalaxyIcon, 'Show as a galaxy'],
   terrain: [TerrainIcon, 'Show as terrain'],
+  metro: [MetroIcon, 'Drive round it as a city'],
 }
 
 /**

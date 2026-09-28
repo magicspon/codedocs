@@ -592,22 +592,200 @@ kbd {
   right: 16px;
 }
 
-/* What each shape in the terrain means, under the info button. */
-.terrain-legend dl {
+/* What each shape in an art piece means, under the info button. */
+.art-legend dl {
   display: grid;
   gap: 10px;
   margin: 0;
 }
 
-.terrain-legend dt {
+.art-legend dt {
   color: var(--ink);
   font-size: var(--text-small);
   font-weight: 600;
 }
 
-.terrain-legend dd {
+.art-legend dd {
   margin: 2px 0 0;
   color: var(--muted);
   font-size: var(--text-small);
   line-height: 1.45;
+}
+
+/* The metro's dashboard, bottom left: the minimap over the speed and switches. */
+.metro-dash {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.metro-map {
+  width: 168px;
+  height: 168px;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  box-shadow: 0 0 24px rgb(0 0 0 / 45%);
+}
+
+.metro-meter {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+  font:
+    var(--text-small) / 1.2 ui-monospace,
+    monospace;
+}
+
+.metro-speed {
+  min-width: 3ch;
+  text-align: right;
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.metro-unit,
+.metro-keys {
+  color: var(--muted);
+}
+
+.metro-keys {
+  margin-left: 4px;
+}
+
+.metro-switch {
+  pointer-events: auto;
+  align-self: center;
+  padding: 3px 8px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.metro-switch[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #111;
+}
+
+/* The touch controls only show where there is no keyboard. */
+.metro-touch {
+  display: none;
+}
+
+/* No room for the keys beside the speed on a narrow screen. */
+@media (max-width: 640px) {
+  .metro-keys {
+    display: none;
+  }
+}
+
+/* A touch screen: the dashboard moves up out of the thumbs' way, and the
+   steering pad and pedals take the bottom corners. */
+@media (hover: none) and (pointer: coarse) {
+  .metro-keys,
+  .metro-switch kbd {
+    display: none;
+  }
+
+  .metro-dash {
+    top: 16px;
+    bottom: auto;
+  }
+
+  .metro-map {
+    width: 112px;
+    height: 112px;
+  }
+
+  .metro-touch {
+    position: fixed;
+    inset: auto 16px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+  }
+
+  .metro-steer {
+    width: 150px;
+    height: 110px;
+    pointer-events: auto;
+    touch-action: none;
+    border: 1px dashed var(--edge);
+    border-radius: 20px;
+    background: rgb(255 255 255 / 4%);
+  }
+
+  .metro-pedals {
+    display: flex;
+    gap: 12px;
+  }
+
+  .metro-pedals button {
+    width: 68px;
+    height: 68px;
+    pointer-events: auto;
+    touch-action: none;
+    border: 1px solid var(--edge);
+    border-radius: 50%;
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 22px;
+  }
+}
+
+/* A named car's label: the symbol calling over the symbol called, with their files, and how often. */
+.metro-tag {
+  display: flex;
+  flex-direction: column;
+  padding: 3px 9px;
+  white-space: nowrap;
+  background: rgb(6 6 14 / 72%);
+  border: 1px solid rgb(255 244 220 / 55%);
+  border-radius: 8px;
+  color: #fff4dc;
+  font:
+    11px / 1.4 ui-monospace,
+    monospace;
+}
+
+.metro-tag.away {
+  border-color: rgb(255 59 88 / 60%);
+  color: #ffb3bf;
+}
+
+.metro-tag.aloft {
+  border-color: rgb(77 217 255 / 60%);
+  color: #b5ecff;
+}
+
+.metro-tag b {
+  font-weight: 600;
+}
+
+/* The file a symbol lives in, after its name. */
+.metro-tag i {
+  margin-left: 6px;
+  font-style: normal;
+  opacity: 0.55;
+}
+
+.metro-tag em {
+  font-style: normal;
+  opacity: 0.6;
 }

@@ -1,17 +1,17 @@
 import { Link } from '@tanstack/react-router'
 import { AnimatePresence, motion } from 'motion/react'
-import { useState, type JSX } from 'react'
+import { useState, type JSX, type ReactNode } from 'react'
 import { hoveredFile } from './lib/frame.ts'
+import type { Legend } from './lib/legend.ts'
 import { panel } from './lib/motion.ts'
 import type { Series } from './lib/series.ts'
-import { TERRAIN_LEGEND } from './lib/terrain-text.ts'
 import { HomeIcon, IconToggle, InfoIcon } from './icons.tsx'
 import { SceneSwitch } from './SceneSwitch.tsx'
 
 /** Drops down into the top corner. */
 const DROP_IN = panel({ y: -10 })
 
-interface TerrainHudProps {
+interface ArtHudProps {
   readonly scenes: readonly string[]
   readonly scene: string
   readonly onScene: (scene: string) => void
@@ -20,21 +20,27 @@ interface TerrainHudProps {
   readonly frame: number
   /** The file under the pointer, an index into the series' `merged.files`. */
   readonly hovered: number | null
+  /** What the scene's shapes mean, behind the info button. */
+  readonly legend: Legend
+  /** The info button's labels, to show and to hide the legend. */
+  readonly labels: readonly [show: string, hide: string]
+  /** Anything else the scene puts on screen. */
+  readonly children?: ReactNode
 }
 
-/** What each shape in the terrain means. */
-function Legend(): JSX.Element {
+/** What each shape in the scene means. */
+function LegendPanel(props: { legend: Legend }): JSX.Element {
   return (
     <motion.div
-      id="terrain-legend"
-      className="panel terrain-legend"
+      id="art-legend"
+      className="panel art-legend"
       variants={DROP_IN}
       initial="hidden"
       animate="shown"
       exit="gone"
     >
       <dl>
-        {TERRAIN_LEGEND.map(([shape, meaning]) => (
+        {props.legend.map(([shape, meaning]) => (
           <div key={shape}>
             <dt>{shape}</dt>
             <dd>{meaning}</dd>
@@ -46,11 +52,11 @@ function Legend(): JSX.Element {
 }
 
 /**
- * The terrain's overlay, as bare as the galaxy's: home, the scene switch, the
- * name of the file under the pointer, and a legend behind the info button.
- * The terrain is an art piece, so it has no search or trace.
+ * The overlay for an art piece, as bare as the galaxy's: home, the scene
+ * switch, the name of the file under the pointer, and a legend behind the
+ * info button. The art pieces have no search or trace.
  */
-export function TerrainHud(props: TerrainHudProps): JSX.Element {
+export function ArtHud(props: ArtHudProps): JSX.Element {
   // Opens once asked, and stays open until closed.
   const [info, setInfo] = useState(false)
   const name = hoveredFile(props.series, props.frame, props.hovered)?.path
@@ -75,17 +81,17 @@ export function TerrainHud(props: TerrainHudProps): JSX.Element {
           <IconToggle
             open={info}
             onToggle={setInfo}
-            labels={[
-              'Show what the terrain means',
-              'Hide what the terrain means',
-            ]}
-            controls="terrain-legend"
+            labels={props.labels}
+            controls="art-legend"
           >
             <InfoIcon />
           </IconToggle>
         </div>
-        <AnimatePresence>{info && <Legend />}</AnimatePresence>
+        <AnimatePresence>
+          {info && <LegendPanel legend={props.legend} />}
+        </AnimatePresence>
       </div>
+      {props.children}
     </>
   )
 }

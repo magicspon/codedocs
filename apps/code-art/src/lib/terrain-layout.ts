@@ -1,6 +1,7 @@
 import { Color } from 'three'
-import { isTest, type FileDatum } from './atlas.ts'
+import type { FileDatum } from './atlas.ts'
 import { galaxyPalette } from './galaxy-palette.ts'
+import { mostCalled } from './most-called.ts'
 import { hash } from './rng.ts'
 import type { Series } from './series.ts'
 import {
@@ -11,7 +12,7 @@ import {
 } from './terrain-field.ts'
 import { edgeFlows, riversOf, type River } from './terrain-rivers.ts'
 import { strataOf, type Strata } from './terrain-strata.ts'
-import { radialTree, type RadialTree, type TreeNode } from './terrain-tree.ts'
+import { radialTree, type RadialTree } from './terrain-tree.ts'
 
 /**
  * Everything the terrain scene draws, as flat buffers. Pure, so it is tested
@@ -66,16 +67,17 @@ const FLOOR = -0.35
  * from the galaxy's palette, so a repository's terrain and galaxy share their
  * colours. Neighbouring folders sit at neighbouring angles, so each range
  * takes its own band of the wheel and blends into the next. The fan is held
- * wide enough that the ranges always part.
+ * wide enough that the ranges always part. The metro tints its districts the
+ * same way.
  */
-function groundColors(
+export function groundColors(
   name: string,
   files: readonly FileDatum[],
-): (node: TreeNode) => Rgb {
+): (angle: number) => Rgb {
   const palette = galaxyPalette(name, files)
   const spread = Math.max(200, palette.spread)
-  return (node) => {
-    const turn = node.angle / (Math.PI * 2)
+  return (angle) => {
+    const turn = angle / (Math.PI * 2)
     const hue = (palette.hue + spread * (turn - 0.5) + 360) % 360
     const c = new Color().setHSL(hue / 360, 0.85, 0.6)
     return [c.r, c.g, c.b]
@@ -181,11 +183,7 @@ function hubsOf(
   tree: RadialTree,
   files: readonly FileDatum[],
 ): TerrainLayout['hubs'] {
-  const picked = files
-    .map((f, i) => [i, f.callsIn] as const)
-    .filter(([i, calls]) => calls > 0 && !isTest(files[i]!))
-    .sort((a, b) => b[1] - a[1] || a[0] - b[0])
-    .slice(0, HUBS)
+  const picked = mostCalled(files, HUBS)
   const most = Math.log1p(picked[0]?.[1] ?? 1)
   const spots = new Float32Array(picked.length * 3)
   picked.forEach(([file, calls], n) => {
@@ -200,11 +198,12 @@ export function terrainLayout(series: Series, size?: number): TerrainLayout {
   const { files, calls, name } = series.merged
   const tree = radialTree(files, TERRAIN_RADIUS)
   const rivers = riversOf(tree, edgeFlows(tree, calls))
+  const ground = groundColors(name, files)
   const field = terrainField({
     tree,
     files,
     rivers,
-    colorOf: groundColors(name, files),
+    colorOf: (node) => ground(node.angle),
     seed: hash(name),
     size,
   })

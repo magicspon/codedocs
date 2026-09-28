@@ -187,6 +187,52 @@ at the top right explains each shape.
   (`test/terrain.test.ts`); `src/scenes/Terrain.tsx` and
   `terrain-material.ts` draw it.
 
+## The metro
+
+Press the skyline button at the bottom right (or add `?scene=metro` to the URL)
+to drive round the same data as a small neon city on a planet. You start in a
+buggy near the north pole, on the busiest avenue out of the root.
+
+| Key   | Does                                             |
+| ----- | ------------------------------------------------ |
+| W / S | drive; brake, then reverse                       |
+| A / D | steer                                            |
+| Shift | go faster, and let the back slide round corners  |
+| V     | swap the driver's seat for a view from behind    |
+| R     | go back to the start                             |
+| N     | go to the next landmark (a most-called file)     |
+| P     | autopilot: tour the city by road until you steer |
+| M     | engine and rain sound on or off                  |
+| Drag  | look round; let go to look ahead again           |
+
+The planet is sized to the repository, so the horizon is near and most of the
+city is round the curve. The name of the building ahead shows at the top
+right, and a poster on the wall facing you lists what the file declares. A
+heading-up minimap sits at the bottom left. A touch screen gets a steering
+pad and pedals. The info button explains each shape.
+
+| Shape     | Reading                                                                                                                         |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Building  | one per file; taller for more symbols, wider for a bigger file                                                                  |
+| Shape     | the main kind of symbol: classes step back, functions are towers, types are spires; tests are pods                              |
+| Windows   | lit by how busy the file is: calls in, out and within, and references in, per symbol                                            |
+| Sign      | the most-used files' names in lights: on the roof, or running up a slender tower's side                                         |
+| Street    | one per folder, down the middle of its own files                                                                                |
+| Avenue    | joins a folder's street to its subfolders' streets, out from the root at the north pole                                         |
+| Ring road | pink loops round the planet, so you can get round without doubling back                                                         |
+| Traffic   | calls along the folder tree: white lights head to the root, red away; busy lanes queue at junctions                             |
+| Named car | the heaviest calls on the roads near you, as cars labelled with the calling symbol → the export it calls; the five nearest show |
+| Sky lane  | the busiest calls between files, flying roof to roof                                                                            |
+| Beam      | amber light over the 12 files other files call most; seen over the horizon                                                      |
+| Trouble   | with fallow: hotspots flash red, worn files grime over, dead code goes dark, blind spots flicker                                |
+
+- Each file is dealt a plot in bands round the pole, in the order the folder
+  tree put it, so the ground fills evenly and a folder's files stay together.
+- A timeline is drawn at its largest: each file as big as it ever got.
+- `src/lib/metro-*.ts` and `src/lib/buggy.ts` build the layout and drive the
+  buggy, and are tested (`test/metro.test.ts`); `src/scenes/Metro.tsx` and the
+  `metro-*` and `Buggy*` files beside it draw it.
+
 ## How it fits together
 
 - `scripts/read-index.ts` reads the SQLite index read-only and aggregates it to

@@ -2,6 +2,7 @@ ablx
 attero
 calcom
 callees
+chaikin
 charang
 codedocs
 codegen
@@ -58,6 +59,7 @@ reslot
 rspack
 Saturator
 SCIP
+slerp
 sperno
 squarified
 squarify
