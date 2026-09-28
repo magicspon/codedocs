@@ -1066,17 +1066,33 @@ can change.
 
 This allows the same repository to produce multiple musical interpretations.
 
-**Built (composer 0.5.0).** Five genres live in `apps/codesong/src/compose/genre.ts`: ambient,
-lo-fi hip hop, techno, drum and bass and jazz. Each sets the tempo, scale, swing (on eighths or
-sixteenths), a section-length multiplier (so fast genres last about as long as slow ones), whether
-chords always carry the seventh, a drum style, a bass style, a melody speed and the roles that rest
-in each kind of section. The code still decides the key, chords, melodies, form and how many drum
-hits there are.
+**Built (composer 0.8.0).** Six genres live in `apps/codesong/src/compose/genre.ts`: ambient,
+lo-fi hip hop, techno, drum and bass, jazz and math rock. Each sets the tempo, scale, swing (on
+eighths or sixteenths), a section-length multiplier (so fast genres last about as long as slow
+ones), whether chords always carry the seventh, a drum style, a bass style, a pad style, an
+arpeggio style, a melody speed and the roles that rest in each kind of section. The code still
+decides the key, chords, melodies, form and how many drum hits there are.
+
+Math rock (`compose/odd.ts`) phrases its drums and bass over four bars. The sixteenths fall into
+odd groups: a cell such as 7+5 or 5+3+3+7, picked by the region's file count, repeated until the
+phrase is full. Each group is a kick at the start and a snare two from the end, so the accents drift
+against the bar line. What is left at the end of the phrase is a stop: every drum at once, then
+silence. The bass reads the same groups: the root on the kick, then the fifth or octave, the third
+in long groups, and a step into the next group's root. The tapped arpeggio has an odd number of
+notes, so it crosses the bar line too. None of this is a real odd time signature: every part still
+sits in 4/4 bars.
+
+The arpeggio (`compose/arp.ts`) gives each file in a cycle its own chord tone, ranked by tension
+against the other files in the cycle. The genre's arpeggio style sets the speed, range and shape.
+The most central file sets the note the figure starts from, and its fan-out sets whether the figure
+goes up or down. Small cycles leave gaps (Euclidean rests); the answer plays the region's second
+cycle, or the first one backwards.
 
 The code suggests a genre from two measures. Energy is the mean dependencies per file inside each
 subsystem, weighted by size (busy from 2.5). Tangle is the share of files in a dependency cycle
 (tangled from 15%, knotted from 35%). Knotted code is jazz; otherwise calm and orderly is ambient,
-calm and tangled lo-fi, busy and orderly techno, busy and tangled drum and bass. `compose --genre
+calm and tangled lo-fi, busy and orderly techno, busy and tangled drum and bass. The code never
+suggests math rock; a listener picks it. `compose --genre
 name` overrides it. The site's `<name>.song.json` holds the piece in every genre, so a listener can
 switch while it plays; the switch keeps the same place in the same section. The browser sound for
 each genre is in `apps/codesong-site/src/audio/genres.ts`. The Live palette is still one for every

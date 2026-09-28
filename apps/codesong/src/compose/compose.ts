@@ -90,7 +90,7 @@ function regionMaterial(
     pad: played,
     held,
     bass: bassMotifs(region, chords, genre.bass),
-    arp: arpMotifs(structure, region, chords),
+    arp: arpMotifs(structure, region, chords, genre),
     phrases: dependencyPaths(structure, phrases, within).map((path, i) =>
       pathMotif(structure, path, `phrase:${region.path}:${i + 1}`, region.path),
     ),

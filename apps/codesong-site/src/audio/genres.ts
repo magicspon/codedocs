@@ -138,4 +138,37 @@ export const GENRE_SOUND: Readonly<Record<GenreName, GenreSound>> = {
       },
     },
   },
+  mathrock: {
+    // A small, live room: dry enough to hear every tapped note.
+    reverb: { decay: 1.4, wet: 0.15 },
+    tone: 14000,
+    sounds: {
+      lead: { wave: 'fatsquare', attack: 0.01, sustain: 0.5, release: 0.3 },
+      // A picked bass: a bright pluck that fades fast.
+      bass: {
+        wave: 'sawtooth',
+        cutoff: 600,
+        attack: 0.003,
+        decay: 0.25,
+        sustain: 0.3,
+        release: 0.1,
+      },
+      // Clean guitar chords, struck and let ring.
+      pad: { attack: 0.005, decay: 0.6, sustain: 0.2, release: 0.4 },
+      // The tapped guitar: a clean pluck, not a synth blip.
+      arp: {
+        wave: 'triangle',
+        attack: 0.002,
+        decay: 0.3,
+        sustain: 0.05,
+        release: 0.4,
+      },
+      percussion: {
+        kickDecay: 0.3,
+        snareDecay: 0.18,
+        closedDecay: 0.04,
+        hatLevel: -18,
+      },
+    },
+  },
 }
