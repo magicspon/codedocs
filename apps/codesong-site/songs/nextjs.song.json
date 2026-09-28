@@ -1,7 +1,7 @@
 {
   "versions": {
     "ambient": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nextjs",
         "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -37,6 +37,17 @@
                 "transpose": 0,
                 "invert": false,
                 "octave": -1,
+                "stretch": 4
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 32,
+              "length": 16,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
                 "stretch": 4
               }
             },
@@ -554,6 +565,28 @@
           "role": "percussion",
           "register": "mid",
           "parts": [
+            {
+              "motif": "groove:packages/next/src/shared/lib:breakdown",
+              "start": 32,
+              "length": 28,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages/next/src/shared/lib:breakdown",
+              "start": 60,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
             {
               "motif": "groove:packages/next/src/lib:verse",
               "start": 64,
@@ -1451,6 +1484,142 @@
             }
           ],
           "length": 16
+        },
+        {
+          "id": "groove:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 32
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 32
+            }
+          ],
+          "length": 4
         },
         {
           "id": "phrase:packages/next/src/shared/lib:2",
@@ -4878,7 +5047,7 @@
       ]
     },
     "lofi": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nextjs",
         "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -4914,6 +5083,17 @@
                 "transpose": 0,
                 "invert": false,
                 "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 32,
+              "length": 16,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
                 "stretch": 2
               }
             },
@@ -5445,6 +5625,28 @@
             {
               "motif": "fill:packages/next/src/shared/lib:intro",
               "start": 28,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages/next/src/shared/lib:breakdown",
+              "start": 32,
+              "length": 28,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages/next/src/shared/lib:breakdown",
+              "start": 60,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6743,6 +6945,154 @@
             }
           ],
           "length": 16
+        },
+        {
+          "id": "groove:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 60
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
         },
         {
           "id": "phrase:packages/next/src/shared/lib:2",
@@ -12787,7 +13137,7 @@
       ]
     },
     "techno": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nextjs",
         "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -12815,6 +13165,17 @@
           "role": "lead",
           "register": "high",
           "parts": [
+            {
+              "motif": "theme",
+              "start": 48,
+              "length": 24,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
             {
               "motif": "theme",
               "start": 80,
@@ -13541,6 +13902,28 @@
             {
               "motif": "fill:packages/next/src/shared/lib:intro",
               "start": 44,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages/next/src/shared/lib:breakdown",
+              "start": 48,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages/next/src/shared/lib:breakdown",
+              "start": 92,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -14965,6 +15348,124 @@
         },
         {
           "id": "fill:packages/next/src/shared/lib:intro",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "groove:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 72
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages/next/src/shared/lib:breakdown",
           "source": {
             "subsystem": "packages/next/src/shared/lib",
             "files": [
@@ -23790,7 +24291,7 @@
       ]
     },
     "dnb": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nextjs",
         "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -23826,6 +24327,17 @@
                 "transpose": 0,
                 "invert": false,
                 "octave": -1,
+                "stretch": 4
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 64,
+              "length": 32,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
                 "stretch": 4
               }
             },
@@ -24742,6 +25254,28 @@
             {
               "motif": "fill:packages/next/src/shared/lib:intro",
               "start": 60,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages/next/src/shared/lib:breakdown",
+              "start": 64,
+              "length": 60,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages/next/src/shared/lib:breakdown",
+              "start": 124,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -26566,6 +27100,154 @@
             }
           ],
           "length": 16
+        },
+        {
+          "id": "groove:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 78
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
         },
         {
           "id": "phrase:packages/next/src/shared/lib:2",
@@ -31014,7 +31696,7 @@
       ]
     },
     "jazz": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nextjs",
         "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -31050,6 +31732,17 @@
                 "transpose": 0,
                 "invert": false,
                 "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 48,
+              "length": 24,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
                 "stretch": 2
               }
             },
@@ -31765,6 +32458,28 @@
           "role": "percussion",
           "register": "mid",
           "parts": [
+            {
+              "motif": "groove:packages/next/src/shared/lib:breakdown",
+              "start": 48,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages/next/src/shared/lib:breakdown",
+              "start": 92,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
             {
               "motif": "groove:packages/next/src/lib:verse",
               "start": 96,
@@ -33110,6 +33825,118 @@
             }
           ],
           "length": 16
+        },
+        {
+          "id": "groove:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
         },
         {
           "id": "phrase:packages/next/src/shared/lib:2",
@@ -40532,7 +41359,7 @@
       ]
     },
     "mathrock": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nextjs",
         "commit": "0423222b7eb3a1373b5bff4c939fd69858928993",
@@ -40560,6 +41387,17 @@
           "role": "lead",
           "register": "high",
           "parts": [
+            {
+              "motif": "theme",
+              "start": 48,
+              "length": 24,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
             {
               "motif": "theme",
               "start": 80,
@@ -41272,6 +42110,28 @@
           "role": "percussion",
           "register": "mid",
           "parts": [
+            {
+              "motif": "groove:packages/next/src/shared/lib:breakdown",
+              "start": 48,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages/next/src/shared/lib:breakdown",
+              "start": 92,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
             {
               "motif": "groove:packages/next/src/lib:verse",
               "start": 96,
@@ -43249,6 +44109,436 @@
             }
           ],
           "length": 16
+        },
+        {
+          "id": "groove:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 4.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 4.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 4.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 5,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 5.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 6,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 6,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 6.25,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 6.5,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 7,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 7.5,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 7.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 7.75,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 8,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 8.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 8.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 9,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 9.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 9.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 10,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 10.25,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 10.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 11,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 11,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 11.5,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 12.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 12.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 12.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 13,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 13.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 14,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 14.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 14.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 14.75,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 3,
+              "start": 14.75,
+              "duration": 0.25,
+              "velocity": 110
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "fill:packages/next/src/shared/lib:breakdown",
+          "source": {
+            "subsystem": "packages/next/src/shared/lib",
+            "files": [
+              "packages/next/src/shared/lib/invariant-error.ts",
+              "packages/next/src/shared/lib/deep-readonly.ts",
+              "packages/next/src/shared/lib/page-path/normalize-path-sep.ts",
+              "packages/next/src/shared/lib/image-config.ts",
+              "packages/next/src/shared/lib/promise-with-resolvers.ts",
+              "packages/next/src/shared/lib/i18n/normalize-locale-path.ts",
+              "packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts",
+              "packages/next/src/shared/lib/deployment-id.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 64
+            },
+            {
+              "degree": 1,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 0,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 71
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 79
+            },
+            {
+              "degree": 0,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 0,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 94
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 101
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 109
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 113
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 116
+            }
+          ],
+          "length": 4
         },
         {
           "id": "phrase:packages/next/src/shared/lib:2",

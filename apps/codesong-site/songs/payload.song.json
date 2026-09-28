@@ -1,7 +1,7 @@
 {
   "versions": {
     "ambient": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "payload",
         "commit": "124b55a8747d9b45db0af30aad337569d37a9b3e",
@@ -109,6 +109,17 @@
                 "octave": 0,
                 "stretch": 2,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 272,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 4
               }
             },
             {
@@ -700,6 +711,28 @@
             {
               "motif": "fill:templates:verse",
               "start": 268,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:examples:breakdown",
+              "start": 272,
+              "length": 28,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:examples:breakdown",
+              "start": 300,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6246,6 +6279,118 @@
           "length": 16
         },
         {
+          "id": "groove:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:examples:1",
           "source": {
             "project": "examples/localization/tsconfig.json",
@@ -6721,7 +6866,7 @@
       ]
     },
     "lofi": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "payload",
         "commit": "124b55a8747d9b45db0af30aad337569d37a9b3e",
@@ -6829,6 +6974,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 272,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -7442,6 +7598,28 @@
             {
               "motif": "fill:templates:verse",
               "start": 268,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:examples:breakdown",
+              "start": 272,
+              "length": 28,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:examples:breakdown",
+              "start": 300,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -16139,6 +16317,166 @@
           "length": 16
         },
         {
+          "id": "groove:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 60
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:examples:1",
           "source": {
             "project": "examples/localization/tsconfig.json",
@@ -16614,7 +16952,7 @@
       ]
     },
     "techno": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "payload",
         "commit": "124b55a8747d9b45db0af30aad337569d37a9b3e",
@@ -16711,6 +17049,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 416,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -17544,6 +17893,28 @@
             {
               "motif": "fill:templates:verse",
               "start": 412,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:examples:breakdown",
+              "start": 416,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:examples:breakdown",
+              "start": 460,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -30887,6 +31258,148 @@
           "length": 16
         },
         {
+          "id": "groove:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 3,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 3,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 52
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:examples:1",
           "source": {
             "project": "examples/localization/tsconfig.json",
@@ -31650,7 +32163,7 @@
       ]
     },
     "dnb": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "payload",
         "commit": "124b55a8747d9b45db0af30aad337569d37a9b3e",
@@ -31758,6 +32271,17 @@
                 "octave": 0,
                 "stretch": 2,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 544,
+              "length": 32,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 4
               }
             },
             {
@@ -32778,6 +33302,28 @@
             {
               "motif": "fill:templates:verse",
               "start": 540,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:examples:breakdown",
+              "start": 544,
+              "length": 60,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:examples:breakdown",
+              "start": 604,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -41603,6 +42149,166 @@
           "length": 16
         },
         {
+          "id": "groove:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 50
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:examples:1",
           "source": {
             "project": "examples/localization/tsconfig.json",
@@ -42366,7 +43072,7 @@
       ]
     },
     "jazz": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "payload",
         "commit": "124b55a8747d9b45db0af30aad337569d37a9b3e",
@@ -42474,6 +43180,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 416,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -43285,6 +44002,28 @@
             {
               "motif": "fill:templates:verse",
               "start": 412,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:examples:breakdown",
+              "start": 416,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:examples:breakdown",
+              "start": 460,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -54314,6 +55053,118 @@
           "length": 16
         },
         {
+          "id": "groove:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:examples:1",
           "source": {
             "project": "examples/localization/tsconfig.json",
@@ -54933,7 +55784,7 @@
       ]
     },
     "mathrock": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "payload",
         "commit": "124b55a8747d9b45db0af30aad337569d37a9b3e",
@@ -55030,6 +55881,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 416,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -55841,6 +56703,28 @@
             {
               "motif": "fill:templates:verse",
               "start": 412,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:examples:breakdown",
+              "start": 416,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:examples:breakdown",
+              "start": 460,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -73690,6 +74574,472 @@
           "length": 16
         },
         {
+          "id": "groove:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 4.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 4.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 5.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 5.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 5.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 6,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 6.25,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 6.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 7,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 7.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 7.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 7.5,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 7.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 8,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 8.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 8.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 8.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 9,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 9.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 9.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 10,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 10.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 10.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 11,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 11.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 11.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 11.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 12.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 13,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 13.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 13.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 13.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 14,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 14.25,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 1,
+              "start": 14.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 14.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 15,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 3,
+              "start": 15,
+              "duration": 0.25,
+              "velocity": 110
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "fill:examples:breakdown",
+          "source": {
+            "subsystem": "examples",
+            "files": [
+              "examples/localization/src/payload-types.ts",
+              "examples/localization/src/utilities/ui.ts",
+              "examples/form-builder/src/components/Blocks/Form/Width/index.tsx",
+              "examples/localization/src/blocks/Form/Width/index.tsx",
+              "examples/auth/src/app/(app)/_components/Gutter/index.tsx",
+              "examples/form-builder/src/components/Blocks/Form/Error/index.tsx",
+              "examples/localization/src/blocks/Form/Error/index.tsx",
+              "examples/multi-tenant/src/payload-types.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 64
+            },
+            {
+              "degree": 1,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 0,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 71
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 79
+            },
+            {
+              "degree": 0,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 0,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 94
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 101
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 109
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 113
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 116
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:examples:1",
           "source": {
             "project": "examples/localization/tsconfig.json",
@@ -74550,6 +75900,18 @@
       }
     ],
     "measures": {
+      "examples/auth/src/app/(app)/_components/Gutter/index.tsx": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0002314203927788256,
+        "rank": {
+          "fanIn": 0.9332477535301669,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.19266153187847668,
+          "centrality": 0.8769790329482242
+        }
+      },
       "examples/auth/src/app/(app)/_components/Message/index.tsx": {
         "fanIn": 6,
         "fanOut": 0,
@@ -74634,6 +75996,30 @@
           "centrality": 0.9370988446726572
         }
       },
+      "examples/form-builder/src/components/Blocks/Form/Error/index.tsx": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 6,
+        "centrality": 0.00027657693848004064,
+        "rank": {
+          "fanIn": 0.9332477535301669,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.9688703465982028,
+          "centrality": 0.8962344886606761
+        }
+      },
+      "examples/form-builder/src/components/Blocks/Form/Width/index.tsx": {
+        "fanIn": 9,
+        "fanOut": 0,
+        "depth": 6,
+        "centrality": 0.00030600953176370413,
+        "rank": {
+          "fanIn": 0.9440522036799316,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.9688703465982028,
+          "centrality": 0.9112109542148054
+        }
+      },
       "examples/localization/src/access/anyone.ts": {
         "fanIn": 2,
         "fanOut": 0,
@@ -74668,6 +76054,30 @@
           "fanOut": 0.6369276850663244,
           "depth": 0.417201540436457,
           "centrality": 0.6885964912280702
+        }
+      },
+      "examples/localization/src/blocks/Form/Error/index.tsx": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 5,
+        "centrality": 0.0001643417320920979,
+        "rank": {
+          "fanIn": 0.9332477535301669,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.928540864356012,
+          "centrality": 0.8305519897304237
+        }
+      },
+      "examples/localization/src/blocks/Form/Width/index.tsx": {
+        "fanIn": 9,
+        "fanOut": 0,
+        "depth": 5,
+        "centrality": 0.00019381402865314225,
+        "rank": {
+          "fanIn": 0.9440522036799316,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.928540864356012,
+          "centrality": 0.8568677792041078
         }
       },
       "examples/localization/src/blocks/MediaBlock/Component.tsx": {
@@ -74730,6 +76140,18 @@
           "centrality": 0.8675652545999144
         }
       },
+      "examples/localization/src/payload-types.ts": {
+        "fanIn": 36,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0014141166654421035,
+        "rank": {
+          "fanIn": 0.9900513478818999,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.19266153187847668,
+          "centrality": 0.9865211810012837
+        }
+      },
       "examples/localization/src/payload.config.ts": {
         "fanIn": 17,
         "fanOut": 12,
@@ -74740,6 +76162,30 @@
           "fanOut": 0.9470474967907574,
           "depth": 0.19266153187847668,
           "centrality": 0.9694052203679931
+        }
+      },
+      "examples/localization/src/utilities/ui.ts": {
+        "fanIn": 20,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.001529199700317659,
+        "rank": {
+          "fanIn": 0.9762516046213093,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.19266153187847668,
+          "centrality": 0.9875909285408644
+        }
+      },
+      "examples/multi-tenant/src/payload-types.ts": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0010323994026584474,
+        "rank": {
+          "fanIn": 0.9332477535301669,
+          "fanOut": 0.1069747539580659,
+          "depth": 0.417201540436457,
+          "centrality": 0.9813863928112966
         }
       },
       "packages/codemod/src/types.ts": {
@@ -76712,6 +78158,10 @@
       }
     },
     "symbols": {
+      "examples/auth/src/app/(app)/_components/Gutter/index.tsx": [
+        "Props",
+        "Gutter"
+      ],
       "examples/auth/src/app/(app)/_components/Message/index.tsx": ["Message"],
       "examples/custom-components/src/app/(payload)/admin/importMap.js": [
         "importMap"
@@ -76729,6 +78179,12 @@
       ],
       "examples/draft-preview/src/collections/Pages/index.ts": ["Pages"],
       "examples/draft-preview/src/payload.config.ts": ["filename", "dirname"],
+      "examples/form-builder/src/components/Blocks/Form/Error/index.tsx": [
+        "Error"
+      ],
+      "examples/form-builder/src/components/Blocks/Form/Width/index.tsx": [
+        "Width"
+      ],
       "examples/localization/src/access/anyone.ts": ["anyone"],
       "examples/localization/src/blocks/Banner/Component.tsx": [
         "Props",
@@ -76738,6 +78194,8 @@
         "Props",
         "CallToActionBlock"
       ],
+      "examples/localization/src/blocks/Form/Error/index.tsx": ["Error"],
+      "examples/localization/src/blocks/Form/Width/index.tsx": ["Width"],
       "examples/localization/src/blocks/MediaBlock/Component.tsx": [
         "Props",
         "MediaBlock"
@@ -76753,12 +78211,41 @@
         "Props",
         "serializeLexical"
       ],
+      "examples/localization/src/payload-types.ts": [
+        "Config",
+        "UserAuthOperations",
+        "Page",
+        "Media",
+        "CallToActionBlock",
+        "ContentBlock",
+        "MediaBlock",
+        "ArchiveBlock",
+        "Category",
+        "Post",
+        "User",
+        "FormBlock"
+      ],
       "examples/localization/src/payload.config.ts": [
         "filename",
         "dirname",
         "generateTitle",
         "generateURL",
         "defaultFieldsWithoutUrl"
+      ],
+      "examples/localization/src/utilities/ui.ts": ["cn"],
+      "examples/multi-tenant/src/payload-types.ts": [
+        "SupportedTimezones",
+        "Config",
+        "UserAuthOperations",
+        "Page",
+        "Tenant",
+        "User",
+        "PayloadLockedDocument",
+        "PayloadPreference",
+        "PayloadMigration",
+        "PagesSelect",
+        "UsersSelect",
+        "TenantsSelect"
       ],
       "packages/codemod/src/types.ts": [
         "PackageJsonFile",

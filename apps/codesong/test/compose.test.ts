@@ -80,11 +80,12 @@ describe('compose', () => {
     expect(piece.tracks[0]!.parts.every((p) => p.motif === 'theme')).toBe(true)
   })
 
-  it('drops the bass and drums for the breakdown', () => {
+  it('drops the bass for the breakdown but keeps it moving', () => {
     const breakdown = piece.sections.findIndex((s) => s.form === 'breakdown')
     expect(plays(piece, 'bass', breakdown)).toBe(false)
-    expect(plays(piece, 'percussion', breakdown)).toBe(false)
-    expect(plays(piece, 'pad', breakdown)).toBe(true)
+    for (const role of ['pad', 'percussion', 'counter', 'lead']) {
+      expect(plays(piece, role, breakdown)).toBe(true)
+    }
   })
 
   it('traces every motif a track plays back to files in the repository', () => {

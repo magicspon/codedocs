@@ -1,7 +1,7 @@
 {
   "versions": {
     "ambient": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nuxt",
         "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
@@ -97,6 +97,17 @@
                 "octave": 0,
                 "stretch": 2,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 224,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 4
               }
             },
             {
@@ -656,6 +667,28 @@
             {
               "motif": "fill:packages/nitro-server/src:verse",
               "start": 220,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages:breakdown",
+              "start": 224,
+              "length": 28,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages:breakdown",
+              "start": 252,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -4186,6 +4219,142 @@
           "length": 16
         },
         {
+          "id": "groove:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 32
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 32
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:packages:2",
           "source": {
             "project": "tsconfig.json",
@@ -5089,7 +5258,7 @@
       ]
     },
     "lofi": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nuxt",
         "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
@@ -5185,6 +5354,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 224,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -5766,6 +5946,28 @@
             {
               "motif": "fill:packages/nitro-server/src:verse",
               "start": 220,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages:breakdown",
+              "start": 224,
+              "length": 28,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages:breakdown",
+              "start": 252,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -11820,6 +12022,148 @@
           "length": 16
         },
         {
+          "id": "groove:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 84
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 60
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:packages:2",
           "source": {
             "project": "tsconfig.json",
@@ -13077,7 +13421,7 @@
       ]
     },
     "techno": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nuxt",
         "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
@@ -13162,6 +13506,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -13941,6 +14296,28 @@
             {
               "motif": "fill:packages/nitro-server/src:verse",
               "start": 332,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages:breakdown",
+              "start": 336,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages:breakdown",
+              "start": 380,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -22461,6 +22838,124 @@
           "length": 16
         },
         {
+          "id": "groove:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 72
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:packages:2",
           "source": {
             "project": "tsconfig.json",
@@ -24330,7 +24825,7 @@
       ]
     },
     "dnb": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nuxt",
         "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
@@ -24426,6 +24921,17 @@
                 "octave": 0,
                 "stretch": 2,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 448,
+              "length": 32,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 4
               }
             },
             {
@@ -25392,6 +25898,28 @@
             {
               "motif": "fill:packages/nitro-server/src:verse",
               "start": 444,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages:breakdown",
+              "start": 448,
+              "length": 60,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages:breakdown",
+              "start": 508,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -30690,6 +31218,148 @@
           "length": 16
         },
         {
+          "id": "groove:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 78
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 78
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:packages:2",
           "source": {
             "project": "tsconfig.json",
@@ -32007,7 +32677,7 @@
       ]
     },
     "jazz": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nuxt",
         "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
@@ -32103,6 +32773,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -32860,6 +33541,28 @@
             {
               "motif": "fill:packages/nitro-server/src:verse",
               "start": 332,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages:breakdown",
+              "start": 336,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages:breakdown",
+              "start": 380,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -40176,6 +40879,118 @@
           "length": 16
         },
         {
+          "id": "groove:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:packages:2",
           "source": {
             "project": "tsconfig.json",
@@ -41751,7 +42566,7 @@
       ]
     },
     "mathrock": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "nuxt",
         "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
@@ -41836,6 +42651,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -42593,6 +43419,28 @@
             {
               "motif": "fill:packages/nitro-server/src:verse",
               "start": 332,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:packages:breakdown",
+              "start": 336,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:packages:breakdown",
+              "start": 380,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -54775,6 +55623,394 @@
           "length": 16
         },
         {
+          "id": "groove:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 4.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 4.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 5.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 5.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 6,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 6.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 6.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 6.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 7,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 7.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 8,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 8.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 8.75,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 9,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 9.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 10,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 10,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 10.5,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 10.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 11,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 11.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 12.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 12.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 13,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 13.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 13.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 14,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 3,
+              "start": 14,
+              "duration": 0.25,
+              "velocity": 110
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "fill:packages:breakdown",
+          "source": {
+            "subsystem": "packages",
+            "files": [
+              "packages/ui-templates/lib/paths.mjs",
+              "packages/ui-templates/templates/messages.json",
+              "packages/vite-server/src/dirs.ts",
+              "packages/ui-templates/templates/loading/shader/renderer.ts",
+              "packages/vite-server/src/templates/spa-loading-icon.ts",
+              "packages/rspack/tsdown.config.ts",
+              "packages/ui-templates/lib/prerender.ts",
+              "packages/ui-templates/styles.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 64
+            },
+            {
+              "degree": 1,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 0,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 71
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 79
+            },
+            {
+              "degree": 0,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 0,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 94
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 101
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 109
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 113
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 116
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "phrase:packages:2",
           "source": {
             "project": "tsconfig.json",
@@ -58097,6 +59333,18 @@
           "centrality": 0.9285714285714286
         }
       },
+      "packages/rspack/tsdown.config.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.0005773921212242775,
+        "rank": {
+          "fanIn": 0.11721611721611722,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.11721611721611722,
+          "centrality": 0.11721611721611722
+        }
+      },
       "packages/schema/src/config/adhoc.ts": {
         "fanIn": 1,
         "fanOut": 1,
@@ -58313,6 +59561,54 @@
           "centrality": 0.8040293040293041
         }
       },
+      "packages/ui-templates/lib/prerender.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.0005773921212242775,
+        "rank": {
+          "fanIn": 0.11721611721611722,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.11721611721611722,
+          "centrality": 0.11721611721611722
+        }
+      },
+      "packages/ui-templates/styles.ts": {
+        "fanIn": 0,
+        "fanOut": 0,
+        "depth": 0,
+        "centrality": 0.0005773921212242775,
+        "rank": {
+          "fanIn": 0.11721611721611722,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.11721611721611722,
+          "centrality": 0.11721611721611722
+        }
+      },
+      "packages/ui-templates/templates/loading/shader/renderer.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0010681786471996324,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7252747252747253
+        }
+      },
+      "packages/ui-templates/templates/messages.json": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0011602024765603458,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.7509157509157509
+        }
+      },
       "packages/vite-server/src/dev.ts": {
         "fanIn": 1,
         "fanOut": 3,
@@ -58323,6 +59619,18 @@
           "fanOut": 0.6593406593406593,
           "depth": 0.3708791208791209,
           "centrality": 0.4175824175824176
+        }
+      },
+      "packages/vite-server/src/dirs.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.000629647754698782,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.4249084249084249
         }
       },
       "packages/vite-server/src/document.ts": {
@@ -59145,6 +60453,7 @@
         "STYLE_QUERY_RE",
         "MACRO_QUERY_RE"
       ],
+      "packages/rspack/tsdown.config.ts": [],
       "packages/schema/src/config/adhoc.ts": [],
       "packages/schema/src/config/index.ts": [],
       "packages/schema/src/constants.ts": [
@@ -59256,11 +60565,29 @@
         "generatedTemplateCopies",
         "generatedOutputs"
       ],
+      "packages/ui-templates/lib/prerender.ts": ["templatesRoot", "main"],
+      "packages/ui-templates/styles.ts": [],
+      "packages/ui-templates/templates/loading/shader/renderer.ts": [
+        "COLS",
+        "ROWS",
+        "TERRAIN_VERTICES",
+        "SNOWFLAKES",
+        "WINTER_VERTICES",
+        "SOFTWARE_RENDERERS",
+        "MAX_RENDER_WIDTH",
+        "MAX_PIXEL_RATIO",
+        "FRAME_INTERVAL_MS",
+        "POINTER_FOLLOW_SECONDS",
+        "POINTER_HOLD_SECONDS",
+        "WAVE_RATE"
+      ],
+      "packages/ui-templates/templates/messages.json": [],
       "packages/vite-server/src/dev.ts": [
         "DevServerListenerPlugin",
         "setupDevServer",
         "handledByVite"
       ],
+      "packages/vite-server/src/dirs.ts": ["_distDir", "distDir"],
       "packages/vite-server/src/document.ts": [
         "documentPath",
         "resolveDocument",
