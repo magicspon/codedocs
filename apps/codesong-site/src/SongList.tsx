@@ -5,7 +5,12 @@ import { SONGS } from './songs.ts'
 /** Every song, each linking to its own page. */
 export function SongList(): JSX.Element {
   if (SONGS.length === 0)
-    return <p>No songs yet. Add an mp3 to apps/codesong-site/public.</p>
+    return (
+      <p>
+        No songs yet. Copy a song.json from the composer into
+        apps/codesong-site/songs.
+      </p>
+    )
 
   return (
     <ul className="songs">

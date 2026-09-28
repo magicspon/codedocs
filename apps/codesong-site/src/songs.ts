@@ -1,28 +1,29 @@
+import type { Song as Score } from '@codedocs/codesong/browser'
+
 /**
- * The songs on the site: every mp3 in `public`. Adding a file
- * there adds a song; the glob makes Vite copy each one into the build with a
- * hashed name, so a re-rendered song is never served stale.
+ * The songs on the site: every `<name>.song.json` in `songs/`, which the
+ * composer writes. Each loads only when its page opens, since a song carries
+ * every note and the files behind them.
  */
-const files = import.meta.glob<string>('../public/*.mp3', {
-  eager: true,
-  query: '?url',
+const scores = import.meta.glob<Score>('../songs/*.song.json', {
   import: 'default',
 })
 
-/** One rendered song. */
+/** One song, before its score has loaded. */
 export interface Song {
-  /** The file name without `.mp3`; also the song's path on the site. */
+  /** The repository's name; also the song's path on the site. */
   readonly slug: string
-  /** Where the browser fetches the mp3 from. */
-  readonly url: string
+  /** Loads the composition and its evidence. */
+  readonly load: () => Promise<Score>
 }
 
+/** The file name between the last `/` and the first `.`. */
+const slugOf = (path: string): string =>
+  path.slice(path.lastIndexOf('/') + 1).split('.')[0]!
+
 /** Every song, in name order. */
-export const SONGS: readonly Song[] = Object.entries(files)
-  .map(([path, url]) => ({
-    slug: path.slice(path.lastIndexOf('/') + 1, -'.mp3'.length),
-    url,
-  }))
+export const SONGS: readonly Song[] = Object.entries(scores)
+  .map(([path, load]) => ({ slug: slugOf(path), load }))
   .sort((a, b) => a.slug.localeCompare(b.slug))
 
 /** The song at `/slug`, if there is one. */

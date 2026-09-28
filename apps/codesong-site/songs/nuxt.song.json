@@ -1,0 +1,7273 @@
+{
+  "composition": {
+    "composerVersion": "0.2.1",
+    "origin": {
+      "repository": "nuxt",
+      "commit": "9ceeba8c6d6a2faaded90d1fbb5efb1a8ee86945",
+      "options": {
+        "seed": 0,
+        "tempo": 96,
+        "bars": "auto",
+        "scale": "minor",
+        "tracks": 6,
+        "maxMotifs": 16
+      }
+    },
+    "tempo": 96,
+    "key": 11,
+    "scale": "minor",
+    "beatsPerBar": 4,
+    "tracks": [
+      {
+        "id": "lead",
+        "name": "lead",
+        "role": "lead",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "theme",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": -1,
+              "stretch": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 56,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 88,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 96,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 184,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 216,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 240,
+            "length": 16,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 2
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 280,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1,
+              "fragment": 3
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 288,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "theme",
+            "start": 304,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 2
+            }
+          }
+        ]
+      },
+      {
+        "id": "bass",
+        "name": "bass",
+        "role": "bass",
+        "register": "low",
+        "parts": [
+          {
+            "motif": "bass:packages/kit/src",
+            "start": 32,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages/schema/src",
+            "start": 64,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages/nuxt/src",
+            "start": 96,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages/webpack/src",
+            "start": 160,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages/nitro-server/src",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages/vite/src",
+            "start": 256,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "bass:packages/kit/src",
+            "start": 288,
+            "length": 16,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "pad",
+        "name": "pad",
+        "role": "pad",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "pad:packages/kit/src",
+            "start": 0,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/kit/src",
+            "start": 32,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/schema/src",
+            "start": 64,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/nuxt/src",
+            "start": 96,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/webpack/src",
+            "start": 160,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/nitro-server/src",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages",
+            "start": 224,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/vite/src",
+            "start": 256,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "pad:packages/kit/src",
+            "start": 288,
+            "length": 32,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "percussion",
+        "name": "percussion",
+        "role": "percussion",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "groove:packages/kit/src:intro",
+            "start": 0,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/kit/src:intro",
+            "start": 28,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages/kit/src:verse",
+            "start": 32,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/kit/src:verse",
+            "start": 60,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages/schema/src:verse",
+            "start": 64,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/schema/src:verse",
+            "start": 92,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages/nuxt/src:chorus",
+            "start": 96,
+            "length": 60,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/nuxt/src:chorus",
+            "start": 156,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages/webpack/src:verse",
+            "start": 160,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/webpack/src:verse",
+            "start": 188,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages/nitro-server/src:verse",
+            "start": 192,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/nitro-server/src:verse",
+            "start": 220,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "groove:packages/vite/src:verse",
+            "start": 256,
+            "length": 28,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "fill:packages/vite/src:verse",
+            "start": 284,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "counter",
+        "name": "counter",
+        "role": "counter",
+        "register": "mid",
+        "parts": [
+          {
+            "motif": "phrase:packages/kit/src:2",
+            "start": 32,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/kit/src:1",
+            "start": 36,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/kit/src:2",
+            "start": 44,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/kit/src:1",
+            "start": 48,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/kit/src:2",
+            "start": 56,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/kit/src:1",
+            "start": 60,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/schema/src:1",
+            "start": 64,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/schema/src:2",
+            "start": 72,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/schema/src:1",
+            "start": 80,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/schema/src:2",
+            "start": 88,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:2",
+            "start": 96,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:1",
+            "start": 104,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:2",
+            "start": 108,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:1",
+            "start": 116,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:2",
+            "start": 120,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:1",
+            "start": 128,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:2",
+            "start": 132,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:1",
+            "start": 140,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:2",
+            "start": 144,
+            "length": 8,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:1",
+            "start": 152,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nuxt/src:2",
+            "start": 156,
+            "length": 4,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:1",
+            "start": 160,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:2",
+            "start": 164,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:1",
+            "start": 168,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:2",
+            "start": 172,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:1",
+            "start": 176,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:2",
+            "start": 180,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:1",
+            "start": 184,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/webpack/src:2",
+            "start": 188,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nitro-server/src:1",
+            "start": 192,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nitro-server/src:2",
+            "start": 196,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nitro-server/src:1",
+            "start": 204,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nitro-server/src:2",
+            "start": 208,
+            "length": 8,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nitro-server/src:1",
+            "start": 216,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/nitro-server/src:2",
+            "start": 220,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 224,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 228,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 232,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 236,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 240,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 244,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:2",
+            "start": 248,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages:1",
+            "start": 252,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": true,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:1",
+            "start": 256,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:2",
+            "start": 260,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:1",
+            "start": 264,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:2",
+            "start": 268,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:1",
+            "start": 272,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:2",
+            "start": 276,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:1",
+            "start": 280,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "phrase:packages/vite/src:2",
+            "start": 284,
+            "length": 4,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "arp",
+        "name": "arp",
+        "role": "arp",
+        "register": "high",
+        "parts": [
+          {
+            "motif": "arp:packages/nuxt/src",
+            "start": 96,
+            "length": 64,
+            "transform": {
+              "transpose": 0,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:packages/nitro-server/src",
+            "start": 192,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          },
+          {
+            "motif": "arp:packages/vite/src",
+            "start": 256,
+            "length": 32,
+            "transform": {
+              "transpose": 5,
+              "invert": false,
+              "octave": 0,
+              "stretch": 1
+            }
+          }
+        ]
+      }
+    ],
+    "motifs": [
+      {
+        "id": "theme",
+        "source": {
+          "project": "tsconfig.json",
+          "files": [
+            "packages/schema/src/index.ts",
+            "packages/schema/src/config/index.ts",
+            "packages/schema/src/config/adhoc.ts",
+            "packages/schema/src/utils/definition.ts",
+            "packages/schema/src/types/schema.ts",
+            "packages/nitro-server/src/augments.ts",
+            "packages/nitro-server/src/compat.ts",
+            "packages/kit/src/resolve.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 106
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 4.5,
+            "duration": 1,
+            "velocity": 109
+          },
+          {
+            "degree": 6,
+            "start": 5.5,
+            "duration": 0.5,
+            "velocity": 105
+          },
+          {
+            "degree": 9,
+            "start": 6,
+            "duration": 0.5,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "pad:packages/kit/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/context.ts",
+            "packages/kit/src/diagnostics/_shared.ts",
+            "packages/kit/src/dependency.ts",
+            "packages/kit/src/internal/esm.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 8,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/kit/src:intro",
+        "source": {
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/diagnostics/_shared.ts",
+            "packages/kit/src/utils.ts",
+            "packages/kit/src/constants.ts",
+            "packages/kit/src/internal/package-json.ts",
+            "packages/kit/src/logger.ts",
+            "packages/kit/src/internal/interop.ts",
+            "packages/kit/src/watch.ts",
+            "packages/kit/src/internal/trace.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/kit/src:intro",
+        "source": {
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/diagnostics/_shared.ts",
+            "packages/kit/src/utils.ts",
+            "packages/kit/src/constants.ts",
+            "packages/kit/src/internal/package-json.ts",
+            "packages/kit/src/logger.ts",
+            "packages/kit/src/internal/interop.ts",
+            "packages/kit/src/watch.ts",
+            "packages/kit/src/internal/trace.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:packages/kit/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/context.ts",
+            "packages/kit/src/diagnostics/_shared.ts",
+            "packages/kit/src/dependency.ts",
+            "packages/kit/src/internal/esm.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.9,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 1,
+            "duration": 0.9,
+            "velocity": 98
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.9,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 3,
+            "duration": 0.9,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 3.6,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 0.9,
+            "velocity": 107
+          },
+          {
+            "degree": 8,
+            "start": 9,
+            "duration": 0.9,
+            "velocity": 95
+          },
+          {
+            "degree": 4,
+            "start": 10,
+            "duration": 0.9,
+            "velocity": 95
+          },
+          {
+            "degree": 8,
+            "start": 11,
+            "duration": 0.9,
+            "velocity": 95
+          },
+          {
+            "degree": 1,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 109
+          },
+          {
+            "degree": 5,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 1,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 5,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 1,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 5,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 1,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 5,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 97
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/kit/src:verse",
+        "source": {
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/diagnostics/_shared.ts",
+            "packages/kit/src/utils.ts",
+            "packages/kit/src/constants.ts",
+            "packages/kit/src/internal/package-json.ts",
+            "packages/kit/src/logger.ts",
+            "packages/kit/src/internal/interop.ts",
+            "packages/kit/src/watch.ts",
+            "packages/kit/src/internal/trace.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/kit/src:verse",
+        "source": {
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/diagnostics/_shared.ts",
+            "packages/kit/src/utils.ts",
+            "packages/kit/src/constants.ts",
+            "packages/kit/src/internal/package-json.ts",
+            "packages/kit/src/logger.ts",
+            "packages/kit/src/internal/interop.ts",
+            "packages/kit/src/watch.ts",
+            "packages/kit/src/internal/trace.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/kit/src:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/module/install.ts",
+            "packages/kit/src/internal/jiti.ts",
+            "packages/kit/src/internal/esm.ts",
+            "packages/kit/src/internal/trace.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 104
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 103
+          },
+          {
+            "degree": 6,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 108
+          },
+          {
+            "degree": 8,
+            "start": 2,
+            "duration": 2,
+            "velocity": 104
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/kit/src:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/kit/src",
+          "files": [
+            "packages/kit/src/context.ts",
+            "packages/kit/src/diagnostics/kit-api.ts",
+            "packages/kit/src/diagnostics/_shared.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 110
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 109
+          },
+          {
+            "degree": 9,
+            "start": 2.5,
+            "duration": 2,
+            "velocity": 110
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "bass:packages/schema/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/schema/src",
+          "files": [
+            "packages/schema/src/utils/definition.ts",
+            "packages/schema/src/index.ts",
+            "packages/schema/src/types/imports.ts",
+            "packages/schema/src/diagnostics.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 110
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 8,
+            "duration": 3.6,
+            "velocity": 110
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 3.6,
+            "velocity": 104
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages/schema/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/schema/src",
+          "files": [
+            "packages/schema/src/utils/definition.ts",
+            "packages/schema/src/index.ts",
+            "packages/schema/src/types/imports.ts",
+            "packages/schema/src/diagnostics.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 8,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 3,
+            "start": 8,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 68
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 68
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/schema/src:verse",
+        "source": {
+          "subsystem": "packages/schema/src",
+          "files": [
+            "packages/schema/src/diagnostics.ts",
+            "packages/schema/src/types/ignore.ts",
+            "packages/schema/src/types/head.ts",
+            "packages/schema/src/types/imports.ts",
+            "packages/schema/src/constants.ts",
+            "packages/schema/src/types/hookable.ts",
+            "packages/schema/src/types/manifest.ts",
+            "packages/schema/src/templates/loading.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/schema/src:verse",
+        "source": {
+          "subsystem": "packages/schema/src",
+          "files": [
+            "packages/schema/src/diagnostics.ts",
+            "packages/schema/src/types/ignore.ts",
+            "packages/schema/src/types/head.ts",
+            "packages/schema/src/types/imports.ts",
+            "packages/schema/src/constants.ts",
+            "packages/schema/src/types/hookable.ts",
+            "packages/schema/src/types/manifest.ts",
+            "packages/schema/src/templates/loading.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/schema/src:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/schema/src",
+          "files": [
+            "packages/schema/src/index.ts",
+            "packages/schema/src/config/index.ts",
+            "packages/schema/src/config/adhoc.ts",
+            "packages/schema/src/utils/definition.ts",
+            "packages/schema/src/types/schema.ts",
+            "packages/schema/src/types/compiler.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 106
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 3,
+            "start": 4.5,
+            "duration": 1.5,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:packages/schema/src:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/schema/src",
+          "files": [
+            "packages/schema/src/types/module.ts",
+            "packages/schema/src/types/compatibility.ts",
+            "packages/schema/src/types/nitro.ts",
+            "packages/schema/src/types/imports.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 109
+          },
+          {
+            "degree": 6,
+            "start": 1,
+            "duration": 1.5,
+            "velocity": 108
+          },
+          {
+            "degree": 8,
+            "start": 2.5,
+            "duration": 1.5,
+            "velocity": 109
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 2,
+            "velocity": 110
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "bass:packages/nuxt/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/nuxt/src/app/types.ts",
+            "packages/nuxt/src/core/nuxt.ts",
+            "packages/nuxt/src/app/nuxt.ts",
+            "packages/nuxt/src/utils.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 110
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 0.45,
+            "velocity": 101
+          },
+          {
+            "degree": 6,
+            "start": 4.5,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 2,
+            "start": 5,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 6,
+            "start": 5.5,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 2,
+            "start": 6,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 6,
+            "start": 6.5,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 2,
+            "start": 7,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 6,
+            "start": 7.5,
+            "duration": 0.45,
+            "velocity": 89
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 0.45,
+            "velocity": 110
+          },
+          {
+            "degree": 8,
+            "start": 8.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 9,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 9.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 10,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 10.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 4,
+            "start": 11,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 8,
+            "start": 11.5,
+            "duration": 0.45,
+            "velocity": 98
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 0.9,
+            "velocity": 108
+          },
+          {
+            "degree": 6,
+            "start": 13,
+            "duration": 0.9,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 14,
+            "duration": 0.9,
+            "velocity": 96
+          },
+          {
+            "degree": 6,
+            "start": 15,
+            "duration": 0.9,
+            "velocity": 96
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages/nuxt/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/nuxt/src/app/types.ts",
+            "packages/nuxt/src/core/nuxt.ts",
+            "packages/nuxt/src/app/nuxt.ts",
+            "packages/nuxt/src/utils.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 2,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 8,
+            "start": 8,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 2,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 69
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/nuxt/src:chorus",
+        "source": {
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/nuxt/src/core/utils/plugins.ts",
+            "packages/nuxt/src/app/utils.ts",
+            "packages/nuxt/src/app/diagnostics/_shared.ts",
+            "packages/nuxt/src/dirs.ts",
+            "packages/nuxt/src/app/internal/prefetch-util.ts",
+            "packages/nuxt/src/runtime/server/renderer-config.ts",
+            "packages/nuxt/src/app/types/internal-modules.d.ts",
+            "packages/nuxt/src/runtime/server/renderer/url.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 3,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 80
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/nuxt/src:chorus",
+        "source": {
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/nuxt/src/core/utils/plugins.ts",
+            "packages/nuxt/src/app/utils.ts",
+            "packages/nuxt/src/app/diagnostics/_shared.ts",
+            "packages/nuxt/src/dirs.ts",
+            "packages/nuxt/src/app/internal/prefetch-util.ts",
+            "packages/nuxt/src/runtime/server/renderer-config.ts",
+            "packages/nuxt/src/app/types/internal-modules.d.ts",
+            "packages/nuxt/src/runtime/server/renderer/url.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/nuxt/src:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/nuxt/src/core/utils/names.ts",
+            "packages/nuxt/src/core/utils/index.ts",
+            "packages/nuxt/src/core/utils/plugins.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 107
+          },
+          {
+            "degree": 7,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 109
+          },
+          {
+            "degree": 3,
+            "start": 2.5,
+            "duration": 2,
+            "velocity": 109
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "phrase:packages/nuxt/src:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/nuxt/src/app/types/augments.ts",
+            "packages/nuxt/src/app/nuxt.ts",
+            "packages/nuxt/src/app/internal/context.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 110
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 110
+          },
+          {
+            "degree": 5,
+            "start": 2,
+            "duration": 2,
+            "velocity": 108
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "arp:packages/nuxt/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nuxt/src",
+          "files": [
+            "packages/schema/src/index.ts",
+            "packages/nuxt/src/app/nuxt.ts",
+            "packages/nuxt/src/app/types/augments.ts",
+            "packages/schema/src/types/schema.ts",
+            "packages/kit/src/context.ts",
+            "packages/schema/src/utils/definition.ts",
+            "packages/nuxt/schema.d.ts",
+            "packages/nuxt/src/pages/runtime/composables.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 0.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 1,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 1.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 2.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 3,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 3.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 4.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 4.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 4.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 5.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 5.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 6.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 6.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 6.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 7,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 7.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 7.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 8.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 8.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 8.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 9,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 9.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 9.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 9.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 10,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 10.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 10.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 10.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 8,
+            "start": 11,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 11,
+            "start": 11.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 11.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 11.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 12.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 12.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 12.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 13.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 13.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 0.2,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 14.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 14.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 14.75,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 9,
+            "start": 15.25,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.5,
+            "duration": 0.2,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 15.75,
+            "duration": 0.2,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "bass:packages/webpack/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/webpack/src",
+          "files": [
+            "packages/webpack/src/plugins/vue/util.ts",
+            "packages/webpack/src/builder.ts",
+            "packages/webpack/src/builder-registry.ts",
+            "packages/webpack/src/presets/nuxt.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 1.8,
+            "velocity": 95
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 1.8,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 6,
+            "duration": 1.8,
+            "velocity": 93
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 3.6,
+            "velocity": 108
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 7,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 3,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 7,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 3,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 7,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 3,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 7,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 85
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages/webpack/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/webpack/src",
+          "files": [
+            "packages/webpack/src/plugins/vue/util.ts",
+            "packages/webpack/src/builder.ts",
+            "packages/webpack/src/builder-registry.ts",
+            "packages/webpack/src/presets/nuxt.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 65
+          },
+          {
+            "degree": 7,
+            "start": 12,
+            "duration": 4,
+            "velocity": 65
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/webpack/src:verse",
+        "source": {
+          "subsystem": "packages/webpack/src",
+          "files": [
+            "packages/webpack/src/builder-registry.ts",
+            "packages/webpack/src/loaders/vue-module-identifier.ts",
+            "packages/webpack/src/plugins/dynamic-base.ts",
+            "packages/webpack/src/plugins/warning-ignore.ts",
+            "packages/webpack/src/utils/index.ts",
+            "packages/webpack/src/utils/mfs.ts",
+            "packages/webpack/src/utils/same-origin.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/webpack/src:verse",
+        "source": {
+          "subsystem": "packages/webpack/src",
+          "files": [
+            "packages/webpack/src/builder-registry.ts",
+            "packages/webpack/src/loaders/vue-module-identifier.ts",
+            "packages/webpack/src/plugins/dynamic-base.ts",
+            "packages/webpack/src/plugins/warning-ignore.ts",
+            "packages/webpack/src/utils/index.ts",
+            "packages/webpack/src/utils/mfs.ts",
+            "packages/webpack/src/utils/same-origin.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/webpack/src:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/webpack/src",
+          "files": [
+            "packages/webpack/src/webpack.ts",
+            "packages/webpack/src/utils/config.ts",
+            "packages/webpack/src/utils/index.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 99
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 1,
+            "velocity": 107
+          },
+          {
+            "degree": 5,
+            "start": 1.5,
+            "duration": 2,
+            "velocity": 104
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/webpack/src:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/webpack/src",
+          "files": [
+            "packages/webpack/src/presets/vue.ts",
+            "packages/webpack/src/plugins/vue/client.ts",
+            "packages/webpack/src/plugins/vue/util.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 1,
+            "velocity": 89
+          },
+          {
+            "degree": 5,
+            "start": 1,
+            "duration": 1,
+            "velocity": 94
+          },
+          {
+            "degree": 7,
+            "start": 2,
+            "duration": 1.5,
+            "velocity": 105
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:packages/nitro-server/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/runtime/utils/base.ts",
+            "packages/nitro-server/src/augments.ts",
+            "packages/nitro-server/src/internal.d.ts",
+            "packages/nitro-server/src/compat.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.9,
+            "velocity": 106
+          },
+          {
+            "degree": 4,
+            "start": 1,
+            "duration": 0.9,
+            "velocity": 94
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.9,
+            "velocity": 94
+          },
+          {
+            "degree": 4,
+            "start": 3,
+            "duration": 0.9,
+            "velocity": 94
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 0.9,
+            "velocity": 109
+          },
+          {
+            "degree": 8,
+            "start": 5,
+            "duration": 0.9,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 6,
+            "duration": 0.9,
+            "velocity": 97
+          },
+          {
+            "degree": 8,
+            "start": 7,
+            "duration": 0.9,
+            "velocity": 97
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 1.8,
+            "velocity": 107
+          },
+          {
+            "degree": 5,
+            "start": 10,
+            "duration": 1.8,
+            "velocity": 95
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 0.45,
+            "velocity": 106
+          },
+          {
+            "degree": 8,
+            "start": 12.5,
+            "duration": 0.45,
+            "velocity": 94
+          },
+          {
+            "degree": 4,
+            "start": 13,
+            "duration": 0.45,
+            "velocity": 94
+          },
+          {
+            "degree": 8,
+            "start": 13.5,
+            "duration": 0.45,
+            "velocity": 94
+          },
+          {
+            "degree": 4,
+            "start": 14,
+            "duration": 0.45,
+            "velocity": 94
+          },
+          {
+            "degree": 8,
+            "start": 14.5,
+            "duration": 0.45,
+            "velocity": 94
+          },
+          {
+            "degree": 4,
+            "start": 15,
+            "duration": 0.45,
+            "velocity": 94
+          },
+          {
+            "degree": 8,
+            "start": 15.5,
+            "duration": 0.45,
+            "velocity": 94
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages/nitro-server/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/runtime/utils/base.ts",
+            "packages/nitro-server/src/augments.ts",
+            "packages/nitro-server/src/internal.d.ts",
+            "packages/nitro-server/src/compat.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 8,
+            "start": 4,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 5,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 9,
+            "start": 8,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 4,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          },
+          {
+            "degree": 8,
+            "start": 12,
+            "duration": 4,
+            "velocity": 66
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/nitro-server/src:verse",
+        "source": {
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/runtime/diagnostics.ts",
+            "packages/nitro-server/src/runtime/compat/render-response.ts",
+            "packages/nitro-server/src/runtime/compat/error-shape.ts",
+            "packages/nitro-server/src/runtime/utils/prerender.ts",
+            "packages/nitro-server/src/runtime/compat/runtime-config.ts",
+            "packages/nitro-server/src/diagnostics.ts",
+            "packages/nitro-server/src/runtime/utils/body.ts",
+            "packages/nitro-server/src/runtime/utils/island-props.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/nitro-server/src:verse",
+        "source": {
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/runtime/diagnostics.ts",
+            "packages/nitro-server/src/runtime/compat/render-response.ts",
+            "packages/nitro-server/src/runtime/compat/error-shape.ts",
+            "packages/nitro-server/src/runtime/utils/prerender.ts",
+            "packages/nitro-server/src/runtime/compat/runtime-config.ts",
+            "packages/nitro-server/src/diagnostics.ts",
+            "packages/nitro-server/src/runtime/utils/body.ts",
+            "packages/nitro-server/src/runtime/utils/island-props.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/nitro-server/src:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/augments.ts",
+            "packages/nitro-server/src/compat.ts",
+            "packages/nitro-server/src/registrations.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1,
+            "velocity": 109
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 105
+          },
+          {
+            "degree": 5,
+            "start": 1.5,
+            "duration": 0.5,
+            "velocity": 98
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/nitro-server/src:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/internal.d.ts",
+            "packages/nitro-server/src/runtime/utils/error-channel.ts",
+            "packages/nitro-server/src/runtime/utils/base.ts",
+            "packages/nitro-server/src/augments.ts",
+            "packages/nitro-server/src/compat.ts",
+            "packages/nitro-server/src/registrations.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1.5,
+            "velocity": 106
+          },
+          {
+            "degree": 3,
+            "start": 1.5,
+            "duration": 1,
+            "velocity": 107
+          },
+          {
+            "degree": 6,
+            "start": 2.5,
+            "duration": 1,
+            "velocity": 105
+          },
+          {
+            "degree": 9,
+            "start": 3.5,
+            "duration": 1,
+            "velocity": 109
+          },
+          {
+            "degree": 4,
+            "start": 4.5,
+            "duration": 0.5,
+            "velocity": 105
+          },
+          {
+            "degree": 6,
+            "start": 5,
+            "duration": 0.5,
+            "velocity": 98
+          }
+        ],
+        "length": 8
+      },
+      {
+        "id": "arp:packages/nitro-server/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/nitro-server/src",
+          "files": [
+            "packages/nitro-server/src/runtime/utils/error-channel.ts",
+            "packages/nitro-server/src/internal.d.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 4,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 4.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 5,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 5.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 6,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 6.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 7,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 7.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 8,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 8.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 9,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 9.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 10,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 10.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 7,
+            "start": 11,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 7,
+            "start": 11.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 12,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 12.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 13,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 13.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 14,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 14.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 6,
+            "start": 15,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 6,
+            "start": 15.5,
+            "duration": 0.4,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/ui-templates/lib/paths.mjs",
+            "packages/vite-server/src/route-rules.ts",
+            "packages/vite-server/src/document.ts",
+            "packages/vite-server/src/runtime/dev-error.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 8,
+            "start": 8,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 7,
+            "start": 12,
+            "duration": 4,
+            "velocity": 61
+          },
+          {
+            "degree": 9,
+            "start": 12,
+            "duration": 4,
+            "velocity": 61
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "phrase:packages:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/vite-server/src/ssr.ts",
+            "packages/vite-server/src/output.ts",
+            "packages/vite-server/src/templates/spa-loading-icon.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 0.5,
+            "velocity": 85
+          },
+          {
+            "degree": 3,
+            "start": 0.5,
+            "duration": 0.5,
+            "velocity": 100
+          },
+          {
+            "degree": 4,
+            "start": 1,
+            "duration": 2,
+            "velocity": 96
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages",
+          "files": [
+            "packages/vite-server/src/dev.ts",
+            "packages/vite-server/src/document.ts",
+            "packages/vite-server/src/html.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1,
+            "velocity": 87
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 94
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "bass:packages/vite/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/vite.ts",
+            "packages/vite/src/utils/config.ts",
+            "packages/vite/src/utils/index.ts",
+            "packages/vite/src/utils/inline-styles.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.45,
+            "velocity": 97
+          },
+          {
+            "degree": 4,
+            "start": 0.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 0,
+            "start": 1,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 4,
+            "start": 1.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 0,
+            "start": 2,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 4,
+            "start": 2.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 0,
+            "start": 3,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 4,
+            "start": 3.5,
+            "duration": 0.45,
+            "velocity": 85
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 1.8,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 6,
+            "duration": 1.8,
+            "velocity": 93
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 0.9,
+            "velocity": 106
+          },
+          {
+            "degree": 6,
+            "start": 9,
+            "duration": 0.9,
+            "velocity": 94
+          },
+          {
+            "degree": 2,
+            "start": 10,
+            "duration": 0.9,
+            "velocity": 94
+          },
+          {
+            "degree": 6,
+            "start": 11,
+            "duration": 0.9,
+            "velocity": 94
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 3.6,
+            "velocity": 101
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "pad:packages/vite/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/vite.ts",
+            "packages/vite/src/utils/config.ts",
+            "packages/vite/src/utils/index.ts",
+            "packages/vite/src/utils/inline-styles.ts"
+          ],
+          "structure": "clusters"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 4,
+            "start": 0,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 1,
+            "start": 4,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 5,
+            "start": 4,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 2,
+            "start": 8,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 6,
+            "start": 8,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 3,
+            "start": 12,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 4,
+            "velocity": 64
+          },
+          {
+            "degree": 7,
+            "start": 12,
+            "duration": 4,
+            "velocity": 64
+          }
+        ],
+        "length": 16
+      },
+      {
+        "id": "groove:packages/vite/src:verse",
+        "source": {
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/utils/inline-styles.ts",
+            "packages/vite/src/dirs.ts",
+            "packages/vite/src/plugins/replace.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 112
+          },
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 0.75,
+            "duration": 0.25,
+            "velocity": 40
+          },
+          {
+            "degree": 1,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 1.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 1.5,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 2,
+            "start": 1.75,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 0,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 96
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 100
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 84
+          },
+          {
+            "degree": 2,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 2,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 60
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "fill:packages/vite/src:verse",
+        "source": {
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/utils/inline-styles.ts",
+            "packages/vite/src/dirs.ts",
+            "packages/vite/src/plugins/replace.ts"
+          ],
+          "structure": "leaf-files"
+        },
+        "notes": [
+          {
+            "degree": 0,
+            "start": 0,
+            "duration": 0.25,
+            "velocity": 110
+          },
+          {
+            "degree": 1,
+            "start": 2,
+            "duration": 0.25,
+            "velocity": 60
+          },
+          {
+            "degree": 1,
+            "start": 2.25,
+            "duration": 0.25,
+            "velocity": 68
+          },
+          {
+            "degree": 1,
+            "start": 2.5,
+            "duration": 0.25,
+            "velocity": 75
+          },
+          {
+            "degree": 1,
+            "start": 2.75,
+            "duration": 0.25,
+            "velocity": 83
+          },
+          {
+            "degree": 1,
+            "start": 3,
+            "duration": 0.25,
+            "velocity": 90
+          },
+          {
+            "degree": 1,
+            "start": 3.25,
+            "duration": 0.25,
+            "velocity": 98
+          },
+          {
+            "degree": 1,
+            "start": 3.5,
+            "duration": 0.25,
+            "velocity": 105
+          },
+          {
+            "degree": 1,
+            "start": 3.75,
+            "duration": 0.25,
+            "velocity": 113
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/vite/src:1",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/vite-node-runner.ts",
+            "packages/vite/src/plugins/vite-node.ts",
+            "packages/vite/src/utils/config.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 1,
+            "start": 0,
+            "duration": 1,
+            "velocity": 98
+          },
+          {
+            "degree": 3,
+            "start": 1,
+            "duration": 0.5,
+            "velocity": 103
+          },
+          {
+            "degree": 6,
+            "start": 1.5,
+            "duration": 1.5,
+            "velocity": 103
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "phrase:packages/vite/src:2",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/utils/logger.ts",
+            "packages/vite/src/plugins/public-dirs.ts",
+            "packages/vite/src/utils/inline-styles.ts"
+          ],
+          "structure": "dependency-path"
+        },
+        "notes": [
+          {
+            "degree": 3,
+            "start": 0,
+            "duration": 1,
+            "velocity": 82
+          },
+          {
+            "degree": 5,
+            "start": 1,
+            "duration": 1,
+            "velocity": 96
+          },
+          {
+            "degree": 7,
+            "start": 2,
+            "duration": 2,
+            "velocity": 99
+          }
+        ],
+        "length": 4
+      },
+      {
+        "id": "arp:packages/vite/src",
+        "source": {
+          "project": "tsconfig.json",
+          "subsystem": "packages/vite/src",
+          "files": [
+            "packages/vite/src/plugins/vite-node.ts",
+            "packages/vite/src/vite-node-runner.ts",
+            "packages/vite/src/vite-node.ts"
+          ],
+          "structure": "cycle"
+        },
+        "notes": [
+          {
+            "degree": 2,
+            "start": 0,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 0.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 1.5,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 2,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 2.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 2,
+            "start": 3,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 2,
+            "start": 3.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 4,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 4.5,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 3,
+            "start": 5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 5.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 6,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 3,
+            "start": 6.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 7,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 3,
+            "start": 7.5,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 8,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 8.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 9,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 9.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 10,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 10.5,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 4,
+            "start": 11,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 4,
+            "start": 11.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 12,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 12.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 13.5,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 14,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 14.5,
+            "duration": 0.4,
+            "velocity": 70
+          },
+          {
+            "degree": 5,
+            "start": 15,
+            "duration": 0.4,
+            "velocity": 92
+          },
+          {
+            "degree": 5,
+            "start": 15.5,
+            "duration": 0.4,
+            "velocity": 70
+          }
+        ],
+        "length": 16
+      }
+    ],
+    "sections": [
+      {
+        "name": "intro",
+        "form": "intro",
+        "source": "packages/kit/src",
+        "start": 0,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      },
+      {
+        "name": "kit",
+        "form": "verse",
+        "source": "packages/kit/src",
+        "start": 32,
+        "length": 32,
+        "intensity": 0.9,
+        "area": 0
+      },
+      {
+        "name": "schema",
+        "form": "verse",
+        "source": "packages/schema/src",
+        "start": 64,
+        "length": 32,
+        "intensity": 0.8138104448742747,
+        "area": 0
+      },
+      {
+        "name": "nuxt",
+        "form": "chorus",
+        "source": "packages/nuxt/src",
+        "start": 96,
+        "length": 64,
+        "intensity": 1,
+        "area": 0
+      },
+      {
+        "name": "webpack",
+        "form": "verse",
+        "source": "packages/webpack/src",
+        "start": 160,
+        "length": 32,
+        "intensity": 0.715522971652004,
+        "area": 5
+      },
+      {
+        "name": "nitro-server",
+        "form": "verse",
+        "source": "packages/nitro-server/src",
+        "start": 192,
+        "length": 32,
+        "intensity": 0.7296103896103896,
+        "area": 5
+      },
+      {
+        "name": "packages",
+        "form": "breakdown",
+        "source": "packages",
+        "start": 224,
+        "length": 32,
+        "intensity": 0.35,
+        "area": 5
+      },
+      {
+        "name": "vite",
+        "form": "verse",
+        "source": "packages/vite/src",
+        "start": 256,
+        "length": 32,
+        "intensity": 0.6820875420875421,
+        "area": 5
+      },
+      {
+        "name": "outro",
+        "form": "outro",
+        "source": "packages/kit/src",
+        "start": 288,
+        "length": 32,
+        "intensity": 0.3,
+        "area": 0
+      }
+    ]
+  },
+  "evidence": {
+    "files": 547,
+    "meanFanOut": 3.3089579524680075,
+    "leafShare": 0.22120658135283364,
+    "fifths": 5,
+    "regions": [
+      {
+        "path": "packages",
+        "name": "packages",
+        "files": 33,
+        "share": 0.0603290676416819,
+        "weight": 0.02422893591100476,
+        "foundation": 0.028985507246376812,
+        "density": 0.7575757575757576,
+        "leafShare": 0.42424242424242425,
+        "clusters": 4,
+        "cycles": 0
+      },
+      {
+        "path": "packages/kit/src",
+        "name": "kit",
+        "files": 52,
+        "share": 0.09506398537477148,
+        "weight": 0.15295744009869078,
+        "foundation": 0.9502664298401421,
+        "density": 3.173076923076923,
+        "leafShare": 0.19230769230769232,
+        "clusters": 6,
+        "cycles": 0
+      },
+      {
+        "path": "packages/nitro-server/src",
+        "name": "nitro-server",
+        "files": 56,
+        "share": 0.10237659963436929,
+        "weight": 0.05839144273708804,
+        "foundation": 0.045454545454545456,
+        "density": 1.8214285714285714,
+        "leafShare": 0.23214285714285715,
+        "clusters": 8,
+        "cycles": 1
+      },
+      {
+        "path": "packages/nuxt/src",
+        "name": "nuxt",
+        "files": 246,
+        "share": 0.44972577696526506,
+        "weight": 0.42608005453771985,
+        "foundation": 0.2504743833017078,
+        "density": 2.9430894308943087,
+        "leafShare": 0.15853658536585366,
+        "clusters": 39,
+        "cycles": 4
+      },
+      {
+        "path": "packages/schema/src",
+        "name": "schema",
+        "files": 47,
+        "share": 0.08592321755027423,
+        "weight": 0.23203560364498238,
+        "foundation": 0.9473684210526315,
+        "density": 2.4893617021276597,
+        "leafShare": 0.2553191489361702,
+        "clusters": 7,
+        "cycles": 0
+      },
+      {
+        "path": "packages/vite/src",
+        "name": "vite",
+        "files": 45,
+        "share": 0.08226691042047532,
+        "weight": 0.03354056307870492,
+        "foundation": 0,
+        "density": 1.4444444444444444,
+        "leafShare": 0.06666666666666667,
+        "clusters": 6,
+        "cycles": 1
+      },
+      {
+        "path": "packages/webpack/src",
+        "name": "webpack",
+        "files": 31,
+        "share": 0.056672760511883,
+        "weight": 0.032837381828288374,
+        "foundation": 0.0851063829787234,
+        "density": 1.7096774193548387,
+        "leafShare": 0.22580645161290322,
+        "clusters": 5,
+        "cycles": 0
+      }
+    ],
+    "measures": {
+      "packages/kit/src/constants.ts": {
+        "fanIn": 6,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.00238753453501745,
+        "rank": {
+          "fanIn": 0.8983516483516484,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8571428571428571
+        }
+      },
+      "packages/kit/src/context.ts": {
+        "fanIn": 40,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.019360592786031926,
+        "rank": {
+          "fanIn": 0.9871794871794872,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.6428571428571429,
+          "centrality": 0.989010989010989
+        }
+      },
+      "packages/kit/src/dependency.ts": {
+        "fanIn": 16,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.003083006075769928,
+        "rank": {
+          "fanIn": 0.9597069597069597,
+          "fanOut": 0.7380952380952381,
+          "depth": 0.3708791208791209,
+          "centrality": 0.891941391941392
+        }
+      },
+      "packages/kit/src/diagnostics/_shared.ts": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.017837670882467297,
+        "rank": {
+          "fanIn": 0.924908424908425,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8214285714285714,
+          "centrality": 0.9871794871794872
+        }
+      },
+      "packages/kit/src/diagnostics/kit-api.ts": {
+        "fanIn": 10,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.010387626313639143,
+        "rank": {
+          "fanIn": 0.9413919413919414,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9706959706959707
+        }
+      },
+      "packages/kit/src/internal/esm.ts": {
+        "fanIn": 23,
+        "fanOut": 6,
+        "depth": 2,
+        "centrality": 0.005827659051176855,
+        "rank": {
+          "fanIn": 0.9761904761904762,
+          "fanOut": 0.8406593406593407,
+          "depth": 0.6428571428571429,
+          "centrality": 0.945054945054945
+        }
+      },
+      "packages/kit/src/internal/interop.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0016592281767129954,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8186813186813187
+        }
+      },
+      "packages/kit/src/internal/jiti.ts": {
+        "fanIn": 4,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.001754992974652204,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8241758241758241
+        }
+      },
+      "packages/kit/src/internal/package-json.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0036832636550625493,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9139194139194139
+        }
+      },
+      "packages/kit/src/internal/trace.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0022754303429409753,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8498168498168498
+        }
+      },
+      "packages/kit/src/logger.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.002538200144530724,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.86996336996337
+        }
+      },
+      "packages/kit/src/module/install.ts": {
+        "fanIn": 7,
+        "fanOut": 13,
+        "depth": 1,
+        "centrality": 0.0018490145612437229,
+        "rank": {
+          "fanIn": 0.9139194139194139,
+          "fanOut": 0.9615384615384616,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8315018315018315
+        }
+      },
+      "packages/kit/src/resolve.ts": {
+        "fanIn": 34,
+        "fanOut": 7,
+        "depth": 1,
+        "centrality": 0.007375542524130948,
+        "rank": {
+          "fanIn": 0.9853479853479854,
+          "fanOut": 0.8763736263736264,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9578754578754579
+        }
+      },
+      "packages/kit/src/utils.ts": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0034269012390264002,
+        "rank": {
+          "fanIn": 0.924908424908425,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9029304029304029
+        }
+      },
+      "packages/kit/src/watch.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.000912333848687388,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.6813186813186813
+        }
+      },
+      "packages/nitro-server/src/augments.ts": {
+        "fanIn": 23,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.00648509535910315,
+        "rank": {
+          "fanIn": 0.9761904761904762,
+          "fanOut": 0.6593406593406593,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9523809523809523
+        }
+      },
+      "packages/nitro-server/src/compat.ts": {
+        "fanIn": 2,
+        "fanOut": 12,
+        "depth": 1,
+        "centrality": 0.0024762037274074565,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.956959706959707,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8626373626373627
+        }
+      },
+      "packages/nitro-server/src/diagnostics.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0006411738361141511,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.4432234432234432
+        }
+      },
+      "packages/nitro-server/src/internal.d.ts": {
+        "fanIn": 11,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.003279159709772999,
+        "rank": {
+          "fanIn": 0.9468864468864469,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8992673992673993
+        }
+      },
+      "packages/nitro-server/src/registrations.ts": {
+        "fanIn": 2,
+        "fanOut": 5,
+        "depth": 1,
+        "centrality": 0.0009737153696183899,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.7939560439560439,
+          "depth": 0.3708791208791209,
+          "centrality": 0.6978021978021978
+        }
+      },
+      "packages/nitro-server/src/runtime/compat/error-shape.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0012622683067268644,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7710622710622711
+        }
+      },
+      "packages/nitro-server/src/runtime/compat/render-response.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0014144257506930862,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7857142857142857
+        }
+      },
+      "packages/nitro-server/src/runtime/compat/runtime-config.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0007994145972607475,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.608058608058608
+        }
+      },
+      "packages/nitro-server/src/runtime/diagnostics.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0017246291789407343,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8205128205128205
+        }
+      },
+      "packages/nitro-server/src/runtime/utils/base.ts": {
+        "fanIn": 5,
+        "fanOut": 2,
+        "depth": 1,
+        "centrality": 0.0024742052847941255,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8608058608058609
+        }
+      },
+      "packages/nitro-server/src/runtime/utils/body.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0007176168429315217,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.5256410256410257
+        }
+      },
+      "packages/nitro-server/src/runtime/utils/error-channel.ts": {
+        "fanIn": 4,
+        "fanOut": 4,
+        "depth": 1,
+        "centrality": 0.0038309480757717134,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.7380952380952381,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9157509157509157
+        }
+      },
+      "packages/nitro-server/src/runtime/utils/island-props.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0006230466817801245,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.4157509157509158
+        }
+      },
+      "packages/nitro-server/src/runtime/utils/prerender.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0007184512855299164,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.5274725274725275
+        }
+      },
+      "packages/nuxt/schema.d.ts": {
+        "fanIn": 47,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.015952359327108947,
+        "rank": {
+          "fanIn": 0.9908424908424909,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9835164835164835
+        }
+      },
+      "packages/nuxt/src/app/diagnostics/_shared.ts": {
+        "fanIn": 7,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.011399835657965048,
+        "rank": {
+          "fanIn": 0.9139194139194139,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9761904761904762
+        }
+      },
+      "packages/nuxt/src/app/internal/context.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.005181091730608424,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9322344322344323
+        }
+      },
+      "packages/nuxt/src/app/internal/prefetch-util.ts": {
+        "fanIn": 6,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.001207792475255656,
+        "rank": {
+          "fanIn": 0.8983516483516484,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7619047619047619
+        }
+      },
+      "packages/nuxt/src/app/nuxt.ts": {
+        "fanIn": 68,
+        "fanOut": 15,
+        "depth": 1,
+        "centrality": 0.048744411112989494,
+        "rank": {
+          "fanIn": 0.9963369963369964,
+          "fanOut": 0.9706959706959707,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9981684981684982
+        }
+      },
+      "packages/nuxt/src/app/types.ts": {
+        "fanIn": 23,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.011964478696163242,
+        "rank": {
+          "fanIn": 0.9761904761904762,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.3708791208791209,
+          "centrality": 0.978021978021978
+        }
+      },
+      "packages/nuxt/src/app/types/augments.ts": {
+        "fanIn": 67,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.022559786835081183,
+        "rank": {
+          "fanIn": 0.9945054945054945,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9926739926739927
+        }
+      },
+      "packages/nuxt/src/app/types/internal-modules.d.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0014689613261081487,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.793040293040293
+        }
+      },
+      "packages/nuxt/src/app/utils.ts": {
+        "fanIn": 8,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0028636128807276754,
+        "rank": {
+          "fanIn": 0.924908424908425,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8864468864468864
+        }
+      },
+      "packages/nuxt/src/core/nuxt.ts": {
+        "fanIn": 1,
+        "fanOut": 50,
+        "depth": 3,
+        "centrality": 0.0009099281860221809,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 1,
+          "depth": 0.8214285714285714,
+          "centrality": 0.6785714285714286
+        }
+      },
+      "packages/nuxt/src/core/utils/index.ts": {
+        "fanIn": 20,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.00797185609034967,
+        "rank": {
+          "fanIn": 0.9697802197802198,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9615384615384616
+        }
+      },
+      "packages/nuxt/src/core/utils/names.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.004077284130030127,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.8214285714285714,
+          "centrality": 0.9267399267399268
+        }
+      },
+      "packages/nuxt/src/core/utils/plugins.ts": {
+        "fanIn": 13,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.007117104324886376,
+        "rank": {
+          "fanIn": 0.9523809523809523,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8214285714285714,
+          "centrality": 0.9560439560439561
+        }
+      },
+      "packages/nuxt/src/dirs.ts": {
+        "fanIn": 7,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0012240054184812586,
+        "rank": {
+          "fanIn": 0.9139194139194139,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8965201465201466,
+          "centrality": 0.7692307692307693
+        }
+      },
+      "packages/nuxt/src/pages/runtime/composables.ts": {
+        "fanIn": 27,
+        "fanOut": 6,
+        "depth": 1,
+        "centrality": 0.013581938367061263,
+        "rank": {
+          "fanIn": 0.9826007326007326,
+          "fanOut": 0.8406593406593407,
+          "depth": 0.3708791208791209,
+          "centrality": 0.9816849816849816
+        }
+      },
+      "packages/nuxt/src/runtime/server/renderer-config.ts": {
+        "fanIn": 6,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0015265815220664477,
+        "rank": {
+          "fanIn": 0.8983516483516484,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8021978021978022
+        }
+      },
+      "packages/nuxt/src/runtime/server/renderer/url.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.002525929093082639,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8663003663003663
+        }
+      },
+      "packages/nuxt/src/utils.ts": {
+        "fanIn": 20,
+        "fanOut": 4,
+        "depth": 4,
+        "centrality": 0.004094074482711268,
+        "rank": {
+          "fanIn": 0.9697802197802198,
+          "fanOut": 0.7380952380952381,
+          "depth": 0.8965201465201466,
+          "centrality": 0.9285714285714286
+        }
+      },
+      "packages/schema/src/config/adhoc.ts": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.0007308217955796897,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.8214285714285714,
+          "centrality": 0.5540293040293041
+        }
+      },
+      "packages/schema/src/config/index.ts": {
+        "fanIn": 1,
+        "fanOut": 16,
+        "depth": 2,
+        "centrality": 0.0028880537386804165,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.978021978021978,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8882783882783882
+        }
+      },
+      "packages/schema/src/constants.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0008569337349724398,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8965201465201466,
+          "centrality": 0.6575091575091575
+        }
+      },
+      "packages/schema/src/diagnostics.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0014263703555705484,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8965201465201466,
+          "centrality": 0.7912087912087912
+        }
+      },
+      "packages/schema/src/index.ts": {
+        "fanIn": 103,
+        "fanOut": 19,
+        "depth": 1,
+        "centrality": 0.05164951001671054,
+        "rank": {
+          "fanIn": 1,
+          "fanOut": 0.9844322344322345,
+          "depth": 0.3708791208791209,
+          "centrality": 1
+        }
+      },
+      "packages/schema/src/templates/loading.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 4,
+        "centrality": 0.0007844599832599532,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8965201465201466,
+          "centrality": 0.6025641025641025
+        }
+      },
+      "packages/schema/src/types/compatibility.ts": {
+        "fanIn": 5,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.005905001671880894,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9487179487179487
+        }
+      },
+      "packages/schema/src/types/compiler.ts": {
+        "fanIn": 3,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.006526183144699218,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9542124542124543
+        }
+      },
+      "packages/schema/src/types/head.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.005537281673430462,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9432234432234432
+        }
+      },
+      "packages/schema/src/types/hookable.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.00404291816250041,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9230769230769231
+        }
+      },
+      "packages/schema/src/types/ignore.ts": {
+        "fanIn": 5,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.005485859539925221,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9413919413919414
+        }
+      },
+      "packages/schema/src/types/imports.ts": {
+        "fanIn": 4,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.01292181216511357,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9798534798534798
+        }
+      },
+      "packages/schema/src/types/manifest.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0035196046737119117,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9056776556776557
+        }
+      },
+      "packages/schema/src/types/module.ts": {
+        "fanIn": 6,
+        "fanOut": 4,
+        "depth": 2,
+        "centrality": 0.010484839159504935,
+        "rank": {
+          "fanIn": 0.8983516483516484,
+          "fanOut": 0.7380952380952381,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9725274725274725
+        }
+      },
+      "packages/schema/src/types/nitro.ts": {
+        "fanIn": 4,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.009697840167999563,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.967032967032967
+        }
+      },
+      "packages/schema/src/types/schema.ts": {
+        "fanIn": 4,
+        "fanOut": 15,
+        "depth": 2,
+        "centrality": 0.020450957035479406,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.9706959706959707,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9908424908424909
+        }
+      },
+      "packages/schema/src/utils/definition.ts": {
+        "fanIn": 18,
+        "fanOut": 1,
+        "depth": 3,
+        "centrality": 0.016348295802333792,
+        "rank": {
+          "fanIn": 0.9615384615384616,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.8214285714285714,
+          "centrality": 0.9853479853479854
+        }
+      },
+      "packages/ui-templates/lib/paths.mjs": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.001546696052321737,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8040293040293041
+        }
+      },
+      "packages/vite-server/src/dev.ts": {
+        "fanIn": 1,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.0006234033580344669,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.6593406593406593,
+          "depth": 0.3708791208791209,
+          "centrality": 0.4175824175824176
+        }
+      },
+      "packages/vite-server/src/document.ts": {
+        "fanIn": 2,
+        "fanOut": 5,
+        "depth": 1,
+        "centrality": 0.000881373147766893,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.7939560439560439,
+          "depth": 0.3708791208791209,
+          "centrality": 0.6684981684981685
+        }
+      },
+      "packages/vite-server/src/html.ts": {
+        "fanIn": 1,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.0007914413878871723,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.6043956043956044
+        }
+      },
+      "packages/vite-server/src/output.ts": {
+        "fanIn": 4,
+        "fanOut": 5,
+        "depth": 1,
+        "centrality": 0.0011232482866951477,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.7939560439560439,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7435897435897436
+        }
+      },
+      "packages/vite-server/src/route-rules.ts": {
+        "fanIn": 2,
+        "fanOut": 4,
+        "depth": 2,
+        "centrality": 0.0010810991598217763,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.7380952380952381,
+          "depth": 0.6428571428571429,
+          "centrality": 0.7326007326007326
+        }
+      },
+      "packages/vite-server/src/runtime/dev-error.ts": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 1,
+        "centrality": 0.0007307629105915758,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.3708791208791209,
+          "centrality": 0.5384615384615384
+        }
+      },
+      "packages/vite-server/src/ssr.ts": {
+        "fanIn": 1,
+        "fanOut": 10,
+        "depth": 1,
+        "centrality": 0.0006080662790977371,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.9322344322344323,
+          "depth": 0.3708791208791209,
+          "centrality": 0.3882783882783883
+        }
+      },
+      "packages/vite-server/src/templates/spa-loading-icon.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0008501829804036892,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.6556776556776557
+        }
+      },
+      "packages/vite/src/dirs.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0005853648274638636,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.25274725274725274
+        }
+      },
+      "packages/vite/src/plugins/public-dirs.ts": {
+        "fanIn": 2,
+        "fanOut": 3,
+        "depth": 2,
+        "centrality": 0.0008455076520428286,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.6593406593406593,
+          "depth": 0.6428571428571429,
+          "centrality": 0.6373626373626373
+        }
+      },
+      "packages/vite/src/plugins/replace.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0005933375337034497,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.3159340659340659
+        }
+      },
+      "packages/vite/src/plugins/vite-node.ts": {
+        "fanIn": 4,
+        "fanOut": 14,
+        "depth": 1,
+        "centrality": 0.0016205942655182016,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.9661172161172161,
+          "depth": 0.3708791208791209,
+          "centrality": 0.8131868131868132
+        }
+      },
+      "packages/vite/src/utils/config.ts": {
+        "fanIn": 5,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.0018097804572314792,
+        "rank": {
+          "fanIn": 0.8727106227106227,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.826007326007326
+        }
+      },
+      "packages/vite/src/utils/index.ts": {
+        "fanIn": 9,
+        "fanOut": 2,
+        "depth": 2,
+        "centrality": 0.002346410199634391,
+        "rank": {
+          "fanIn": 0.9340659340659341,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.6428571428571429,
+          "centrality": 0.8553113553113553
+        }
+      },
+      "packages/vite/src/utils/inline-styles.ts": {
+        "fanIn": 2,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.001028433605940983,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8214285714285714,
+          "centrality": 0.7087912087912088
+        }
+      },
+      "packages/vite/src/utils/logger.ts": {
+        "fanIn": 1,
+        "fanOut": 3,
+        "depth": 2,
+        "centrality": 0.0005933375337034497,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.6593406593406593,
+          "depth": 0.6428571428571429,
+          "centrality": 0.3159340659340659
+        }
+      },
+      "packages/vite/src/vite-node-runner.ts": {
+        "fanIn": 3,
+        "fanOut": 3,
+        "depth": 1,
+        "centrality": 0.0010220106670345498,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.6593406593406593,
+          "depth": 0.3708791208791209,
+          "centrality": 0.706959706959707
+        }
+      },
+      "packages/vite/src/vite-node.ts": {
+        "fanIn": 2,
+        "fanOut": 1,
+        "depth": 1,
+        "centrality": 0.0008086781683035336,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.3708791208791209,
+          "centrality": 0.6117216117216118
+        }
+      },
+      "packages/vite/src/vite.ts": {
+        "fanIn": 1,
+        "fanOut": 41,
+        "depth": 1,
+        "centrality": 0.0007409876298827291,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.9981684981684982,
+          "depth": 0.3708791208791209,
+          "centrality": 0.5723443223443223
+        }
+      },
+      "packages/webpack/src/builder-registry.ts": {
+        "fanIn": 3,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0036690150001364836,
+        "rank": {
+          "fanIn": 0.7683150183150184,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9120879120879121
+        }
+      },
+      "packages/webpack/src/builder.ts": {
+        "fanIn": 10,
+        "fanOut": 1,
+        "depth": 2,
+        "centrality": 0.0019916059533068805,
+        "rank": {
+          "fanIn": 0.9413919413919414,
+          "fanOut": 0.34065934065934067,
+          "depth": 0.6428571428571429,
+          "centrality": 0.836996336996337
+        }
+      },
+      "packages/webpack/src/loaders/vue-module-identifier.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 1,
+        "centrality": 0.0010681786471996324,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7252747252747253
+        }
+      },
+      "packages/webpack/src/plugins/dynamic-base.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0006168685702169388,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.40934065934065933
+        }
+      },
+      "packages/webpack/src/plugins/vue/client.ts": {
+        "fanIn": 1,
+        "fanOut": 2,
+        "depth": 6,
+        "centrality": 0.0007637407217952325,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.5347985347985348,
+          "depth": 0.9917582417582418,
+          "centrality": 0.5879120879120879
+        }
+      },
+      "packages/webpack/src/plugins/vue/util.ts": {
+        "fanIn": 4,
+        "fanOut": 1,
+        "depth": 7,
+        "centrality": 0.0027025142677891225,
+        "rank": {
+          "fanIn": 0.8287545787545788,
+          "fanOut": 0.34065934065934067,
+          "depth": 1,
+          "centrality": 0.8772893772893773
+        }
+      },
+      "packages/webpack/src/plugins/warning-ignore.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 6,
+        "centrality": 0.000643162215543438,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.9917582417582418,
+          "centrality": 0.4542124542124542
+        }
+      },
+      "packages/webpack/src/presets/nuxt.ts": {
+        "fanIn": 2,
+        "fanOut": 7,
+        "depth": 4,
+        "centrality": 0.0007558005107090051,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.8763736263736264,
+          "depth": 0.8965201465201466,
+          "centrality": 0.5805860805860806
+        }
+      },
+      "packages/webpack/src/presets/vue.ts": {
+        "fanIn": 1,
+        "fanOut": 4,
+        "depth": 5,
+        "centrality": 0.0006576964858912532,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.7380952380952381,
+          "depth": 0.956959706959707,
+          "centrality": 0.47710622710622713
+        }
+      },
+      "packages/webpack/src/utils/config.ts": {
+        "fanIn": 11,
+        "fanOut": 3,
+        "depth": 2,
+        "centrality": 0.00366528976630558,
+        "rank": {
+          "fanIn": 0.9468864468864469,
+          "fanOut": 0.6593406593406593,
+          "depth": 0.6428571428571429,
+          "centrality": 0.9102564102564102
+        }
+      },
+      "packages/webpack/src/utils/index.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 3,
+        "centrality": 0.0021351525178267424,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.8214285714285714,
+          "centrality": 0.8424908424908425
+        }
+      },
+      "packages/webpack/src/utils/mfs.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0006563450192096001,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.46886446886446886
+        }
+      },
+      "packages/webpack/src/utils/same-origin.ts": {
+        "fanIn": 1,
+        "fanOut": 0,
+        "depth": 2,
+        "centrality": 0.0006958214682022614,
+        "rank": {
+          "fanIn": 0.4258241758241758,
+          "fanOut": 0.10989010989010989,
+          "depth": 0.6428571428571429,
+          "centrality": 0.5146520146520146
+        }
+      },
+      "packages/webpack/src/webpack.ts": {
+        "fanIn": 2,
+        "fanOut": 15,
+        "depth": 1,
+        "centrality": 0.0010681786471996324,
+        "rank": {
+          "fanIn": 0.6758241758241759,
+          "fanOut": 0.9706959706959707,
+          "depth": 0.3708791208791209,
+          "centrality": 0.7252747252747253
+        }
+      }
+    },
+    "symbols": {
+      "packages/kit/src/constants.ts": [
+        "DEFAULT_JSX_FILE_EXTENSIONS",
+        "DEFAULT_JS_FILE_EXTENSIONS"
+      ],
+      "packages/kit/src/context.ts": [
+        "NuxtContext",
+        "nuxtCtx",
+        "asyncNuxtStorage",
+        "getNuxtCtx",
+        "useNuxt",
+        "tryUseNuxt",
+        "runWithNuxtContext"
+      ],
+      "packages/kit/src/dependency.ts": [
+        "isStackblitz",
+        "EnsureDependencyInstalledOptions",
+        "ensureDependencyInstalled",
+        "findMissing",
+        "isResolvable",
+        "getAddDependencyCommand"
+      ],
+      "packages/kit/src/diagnostics/_shared.ts": ["docsBase", "reporters"],
+      "packages/kit/src/diagnostics/kit-api.ts": ["kitDiagnostics"],
+      "packages/kit/src/internal/esm.ts": [
+        "ResolveModuleOptions",
+        "directoryToURL",
+        "tryResolveModule",
+        "resolveModule",
+        "ImportModuleOptions",
+        "importModule",
+        "tryImportModule",
+        "requireModule",
+        "requireJiti",
+        "tryRequireModule"
+      ],
+      "packages/kit/src/internal/interop.ts": ["interopDefault"],
+      "packages/kit/src/internal/jiti.ts": [
+        "Jiti",
+        "JitiModule",
+        "LOADER_ERROR_CODES",
+        "CJS_GLOBAL_ERROR_RE",
+        "isLoaderError",
+        "getMissingCjsGlobal",
+        "DEPENDENCY_FIELDS",
+        "declaredJitiCache",
+        "nuxtJitiCache",
+        "reportedFallbacks",
+        "shouldReportJitiFallbackOnce",
+        "jitiIsGuaranteed"
+      ],
+      "packages/kit/src/internal/package-json.ts": [
+        "ResolveOptions",
+        "WORKSPACE_FILES",
+        "LOCK_FILES",
+        "isFile",
+        "resolveStartPath",
+        "findUp",
+        "resolvePackageJSON",
+        "resolvePackageDir",
+        "readPackageJSON",
+        "findWorkspaceDir",
+        "resolveWorkspaceDir"
+      ],
+      "packages/kit/src/internal/trace.ts": [
+        "distURL",
+        "getUserCaller",
+        "warnings",
+        "warn"
+      ],
+      "packages/kit/src/logger.ts": [
+        "NuxtLogLevel",
+        "NuxtLogType",
+        "NuxtLogInput",
+        "NuxtLogObject",
+        "NuxtLogReporter",
+        "NuxtLogFn",
+        "NuxtLoggerOptions",
+        "NuxtPromptCommonOptions",
+        "NuxtTextPromptOptions",
+        "NuxtConfirmPromptOptions",
+        "NuxtSelectPromptOptions",
+        "NuxtMultiSelectPromptOptions"
+      ],
+      "packages/kit/src/module/install.ts": [
+        "NODE_MODULES_RE",
+        "ModuleToInstall",
+        "ResolvedModule",
+        "ignoredConfigKeys",
+        "installModules",
+        "installModule",
+        "resolveModuleWithOptions",
+        "_jitiCache",
+        "getSharedJiti",
+        "CJS_GLOBALS_HINT",
+        "describeNativeImportFailure",
+        "loadNuxtModuleInstance"
+      ],
+      "packages/kit/src/resolve.ts": [
+        "ResolvePathOptions",
+        "resolvePath",
+        "findPath",
+        "resolveAlias",
+        "Resolver",
+        "createResolver",
+        "resolveNuxtModule",
+        "PathType",
+        "PathResolution",
+        "_resolvePathType",
+        "normalizeExtension",
+        "_resolvePathGranularly"
+      ],
+      "packages/kit/src/utils.ts": [
+        "toArray",
+        "filterInPlace",
+        "MODE_RE",
+        "distDirURL",
+        "RequirePicked"
+      ],
+      "packages/kit/src/watch.ts": [
+        "RECHECK_DELAY",
+        "MTIME_EPSILON",
+        "RECOVERY_FLAG",
+        "RecoverableWatcher",
+        "TrackedFile",
+        "recoverThrottledChanges"
+      ],
+      "packages/nitro-server/src/augments.ts": [
+        "NuxtTracingChannelOptions",
+        "SSRSourceMaps",
+        "nitro/types",
+        "h3/rules",
+        "_NitroOnlyRuntimeConfig",
+        "NitroSchemaTypes",
+        "NitroServerTypes",
+        "@nuxt/schema",
+        "nuxt/schema",
+        "srvx",
+        "h3"
+      ],
+      "packages/nitro-server/src/compat.ts": [
+        "NitroLegacyOptions",
+        "ResolvedNitroLegacyOptions",
+        "LEGACY_KEYS",
+        "resolveNitroLegacyOptions",
+        "isLegacyEnabled",
+        "REMOVED_NITRO_OPTIONS",
+        "CompatScope",
+        "TAG_SCOPE",
+        "NITRO_V2_SPECIFIER_RE",
+        "GLOB_SUFFIX_RE",
+        "TRANSFORMABLE_RE",
+        "DECLARATION_RE"
+      ],
+      "packages/nitro-server/src/diagnostics.ts": [
+        "docsBase",
+        "nitroBuildDiagnostics"
+      ],
+      "packages/nitro-server/src/internal.d.ts": [
+        "#internal/nuxt.config.mjs",
+        "#internal/nuxt/nitro-config.mjs",
+        "#internal/nuxt/app-config",
+        "#internal/nuxt/dev-client-css",
+        "#internal/nuxt/error-channel",
+        "#internal/nuxt/island-renderer.mjs",
+        "#internal/dev-server-logs-options",
+        "#nuxt-compat/import-meta",
+        "#nuxt-compat/flags"
+      ],
+      "packages/nitro-server/src/registrations.ts": [
+        "serverApiOf",
+        "unusedVariantsOf",
+        "collectServerRegistrations",
+        "migrated",
+        "migratedPlugins"
+      ],
+      "packages/nitro-server/src/runtime/compat/error-shape.ts": [
+        "H3ErrorInput",
+        "kLegacyShape",
+        "hasLegacyErrorKeys",
+        "createError",
+        "withLegacyErrorShape",
+        "isLegacyH3Error",
+        "fromLegacyH3Error",
+        "toUnhandledError",
+        "toScrubbedStatusError",
+        "toLegacyError"
+      ],
+      "packages/nitro-server/src/runtime/compat/render-response.ts": [
+        "LegacyHooks",
+        "LegacyRenderResponse",
+        "applyLegacyRenderResponse",
+        "streamedResponses",
+        "markStreamedResponse",
+        "isStreamedResponse",
+        "renderBodies",
+        "rememberRenderBody",
+        "applyLegacyRenderResponseTo"
+      ],
+      "packages/nitro-server/src/runtime/compat/runtime-config.ts": [
+        "useRuntimeConfig"
+      ],
+      "packages/nitro-server/src/runtime/diagnostics.ts": [
+        "ansi",
+        "colors",
+        "docsBase",
+        "serverDiagnostics"
+      ],
+      "packages/nitro-server/src/runtime/utils/base.ts": [
+        "BASE_URL",
+        "BASE_URL_PREFIX",
+        "withoutBaseURL",
+        "createEvent",
+        "withBaseURL"
+      ],
+      "packages/nitro-server/src/runtime/utils/body.ts": [
+        "BUFFERED",
+        "BODY_READ_METHODS",
+        "bufferRequestBody"
+      ],
+      "packages/nitro-server/src/runtime/utils/error-channel.ts": [
+        "ERROR_CHANNEL_ENV",
+        "ERROR_CHANNEL_BROADCAST",
+        "shouldForwardReports",
+        "getErrorChannelPath",
+        "useErrorChannel",
+        "publishErrorReport",
+        "createErrorReport",
+        "resolveTransformPath",
+        "compiledPositionLoader",
+        "lineCount",
+        "observeDevError"
+      ],
+      "packages/nitro-server/src/runtime/utils/island-props.ts": [
+        "MAX_ISLAND_BODY_BYTES",
+        "MAX_ISLAND_PROP_DEPTH",
+        "MAX_ISLAND_DRAIN_BYTES",
+        "exceedsMaxDepth",
+        "exceedsMaxBytes"
+      ],
+      "packages/nitro-server/src/runtime/utils/prerender.ts": [
+        "NITRO_PRERENDER_HEADER",
+        "NUXT_PRERENDER_HEADER",
+        "encodeHints",
+        "applyPrerenderHints",
+        "applyIslandPrerenderHints"
+      ],
+      "packages/nuxt/schema.d.ts": ["nuxt/schema"],
+      "packages/nuxt/src/app/diagnostics/_shared.ts": [
+        "docsBase",
+        "ansi",
+        "colors",
+        "devReporters",
+        "reporters",
+        "prodReporter",
+        "prodReporters"
+      ],
+      "packages/nuxt/src/app/internal/context.ts": [
+        "NuxtAppContext",
+        "clientContexts",
+        "getClientContext",
+        "getContext"
+      ],
+      "packages/nuxt/src/app/internal/prefetch-util.ts": [
+        "NetworkInformationLike",
+        "NavigatorWithConnection",
+        "IS_2G_RE",
+        "canPrefetch",
+        "prefetchGroup"
+      ],
+      "packages/nuxt/src/app/nuxt.ts": [
+        "getNuxtAppCtx",
+        "HookResult",
+        "RuntimeNuxtHooks",
+        "_NuxtApp",
+        "NuxtApp",
+        "NuxtPluginIndicator",
+        "PluginEnvContext",
+        "ResolvedPluginMeta",
+        "Plugin",
+        "ObjectPlugin",
+        "ObjectPluginInput",
+        "CreateOptions"
+      ],
+      "packages/nuxt/src/app/types.ts": [
+        "HookResult",
+        "DevServerLog",
+        "NuxtAppLiterals",
+        "PluginMeta",
+        "AppRenderedContext",
+        "NuxtServerRuntimeHooks",
+        "NuxtServerApp",
+        "NuxtError",
+        "NuxtErrorJSON",
+        "SerializedErrorCause",
+        "NuxtPayload",
+        "NuxtSSRContext"
+      ],
+      "packages/nuxt/src/app/types/augments.ts": [
+        "global",
+        "vue",
+        "_NuxtAugmentsAnchor"
+      ],
+      "packages/nuxt/src/app/types/internal-modules.d.ts": [
+        "#internal/nuxt/paths"
+      ],
+      "packages/nuxt/src/app/utils.ts": [
+        "toArray",
+        "ArrayItems",
+        "UnionToIntersection",
+        "BOT_RE",
+        "isBotUserAgent",
+        "distURL",
+        "Trace",
+        "getUserTrace",
+        "getUserCaller"
+      ],
+      "packages/nuxt/src/core/nuxt.ts": [
+        "createNuxt",
+        "fullyUnwrap",
+        "stripDebugProxies",
+        "fallbackCompatibilityDate",
+        "nightlies",
+        "warnedAboutCompatDate",
+        "initNuxt",
+        "loadNuxt",
+        "JS_EXTENSION_RE",
+        "RESTART_RE",
+        "deduplicateArray",
+        "createPortalProperties"
+      ],
+      "packages/nuxt/src/core/utils/index.ts": [
+        "uniqueBy",
+        "QUOTE_RE",
+        "EXTENSION_RE",
+        "SX_RE",
+        "decodeRoutePath"
+      ],
+      "packages/nuxt/src/core/utils/names.ts": [
+        "GROUPING_FOLDER_RE",
+        "isGroupingFolder",
+        "getNameFromPath",
+        "hasSuffix",
+        "resolveComponentNameSegments"
+      ],
+      "packages/nuxt/src/core/utils/plugins.ts": [
+        "parseModuleId",
+        "combineRE",
+        "VUE_FILE_RE",
+        "MACRO_QUERY_RE",
+        "EXACT_MACRO_QUERY_RE",
+        "VUE_QUERY_RE",
+        "VUE_SCRIPT_BLOCK_RE",
+        "VUE_TEMPLATE_BLOCK_RE",
+        "VUE_ID_FILTER",
+        "VUE_SCRIPT_ID_FILTER",
+        "VUE_TEMPLATE_ID_FILTER",
+        "VUE_SCRIPT_TEMPLATE_ID_FILTER"
+      ],
+      "packages/nuxt/src/dirs.ts": ["_distDir", "distDir", "pkgDir"],
+      "packages/nuxt/src/pages/runtime/composables.ts": [
+        "NuxtLayouts",
+        "PageMeta",
+        "vue-router",
+        "warnRuntimeUsage",
+        "definePageMeta",
+        "defineRouteRules"
+      ],
+      "packages/nuxt/src/runtime/server/renderer-config.ts": [
+        "NUXT_NO_SSR",
+        "NUXT_PRERENDER_ERROR_PAGES",
+        "NUXT_PRERENDER_NO_SSR_ROUTES",
+        "NUXT_EARLY_HINTS",
+        "NUXT_NO_SCRIPTS",
+        "NUXT_HAS_NO_SCRIPTS_ROUTES",
+        "NUXT_NO_SCRIPTS_PROD",
+        "NUXT_INLINE_STYLES",
+        "NUXT_VIEW_TRANSITIONS",
+        "NUXT_NO_SCRIPTS_PATTERNS",
+        "NUXT_PAGE_PATTERNS",
+        "NUXT_EARLY_404"
+      ],
+      "packages/nuxt/src/runtime/server/renderer/url.ts": [
+        "urlHash",
+        "PAYLOAD_FILENAME",
+        "PAYLOAD_BUILD_ID_PARAM",
+        "parseRequestPath",
+        "payloadRequestToRoute",
+        "LEADING_SLASHES_RE",
+        "TRAILING_SLASHES_RE",
+        "routeToPayloadURL"
+      ],
+      "packages/nuxt/src/utils.ts": [
+        "toArray",
+        "isDirectory",
+        "isDirectorySync",
+        "LEADING_DOT_RE",
+        "normalizeExtension",
+        "stripExtension",
+        "isWhitespace",
+        "JS_EXT_RE",
+        "SUPPORTED_EXT_RE",
+        "NUXT_LIB_RE",
+        "STYLE_QUERY_RE",
+        "MACRO_QUERY_RE"
+      ],
+      "packages/schema/src/config/adhoc.ts": [],
+      "packages/schema/src/config/index.ts": [],
+      "packages/schema/src/constants.ts": [
+        "DEFAULT_JSX_FILE_EXTENSIONS",
+        "DEFAULT_JS_FILE_EXTENSIONS"
+      ],
+      "packages/schema/src/diagnostics.ts": ["docsBase", "schemaDiagnostics"],
+      "packages/schema/src/index.ts": [],
+      "packages/schema/src/templates/loading.ts": [
+        "DefaultMessages",
+        "_messages",
+        "template"
+      ],
+      "packages/schema/src/types/compatibility.ts": [
+        "NuxtCompatibility",
+        "NuxtCompatibilityIssue",
+        "NuxtCompatibilityIssues"
+      ],
+      "packages/schema/src/types/compiler.ts": [
+        "KeyedFunction",
+        "KeyedFunctionFactory",
+        "NuxtCompilerOptions",
+        "CompilerScanDir"
+      ],
+      "packages/schema/src/types/head.ts": [
+        "MetaObjectRaw",
+        "MetaObject",
+        "AppHeadMetaObject",
+        "SerializableHtmlAttributes"
+      ],
+      "packages/schema/src/types/hookable.ts": [
+        "NuxtHookCallback",
+        "NuxtHookKeys",
+        "NuxtDeprecatedHook",
+        "ValueOf",
+        "Strings",
+        "KnownKeys",
+        "StripGeneric",
+        "OnlyGeneric",
+        "Namespaces",
+        "BareHooks",
+        "HooksInNamespace",
+        "WithoutNamespace"
+      ],
+      "packages/schema/src/types/ignore.ts": [
+        "NuxtIgnoreOptions",
+        "NuxtIgnoreTestResult",
+        "NuxtIgnoreMatcher"
+      ],
+      "packages/schema/src/types/imports.ts": [
+        "NuxtImportPresetName",
+        "NuxtImportDeclarationType",
+        "NuxtImportCommon",
+        "NuxtImport",
+        "NuxtImportEntry",
+        "NuxtImportPreset",
+        "NuxtPackageImportPreset",
+        "NuxtImportPresetSource",
+        "NuxtImportScanDir",
+        "NuxtImportScanOptions",
+        "NuxtImportAddonsOptions",
+        "ImportsOptions"
+      ],
+      "packages/schema/src/types/manifest.ts": [
+        "NuxtManifestResource",
+        "NuxtManifest"
+      ],
+      "packages/schema/src/types/module.ts": [
+        "ModuleMeta",
+        "ModuleOptions",
+        "ModuleSetupInstallResult",
+        "Awaitable",
+        "Prettify",
+        "ModuleSetupReturn",
+        "ResolvedModuleOptions",
+        "ModuleDependencyMeta",
+        "ModuleDependencies",
+        "ModuleDefinition",
+        "NuxtModule"
+      ],
+      "packages/schema/src/types/nitro.ts": [
+        "NitroTypes",
+        "ServerImportsOptions",
+        "ServerHandlerFallback",
+        "DevServerHandlerFallback",
+        "ServerApi",
+        "ServerApiVariants",
+        "ServerHandlerMethod",
+        "ServerHandlerEnv",
+        "ServerRouteMeta",
+        "ServerHandlerBase",
+        "ServerHandler",
+        "ServerHandlerInput"
+      ],
+      "packages/schema/src/types/schema.ts": ["ConfigSchema"],
+      "packages/schema/src/utils/definition.ts": [
+        "KeysOf",
+        "ReturnFromKey",
+        "Awaitable",
+        "JavascriptExtension",
+        "VueExtension",
+        "AugmentProperty",
+        "ResolverGetter",
+        "Resolvers",
+        "Resolvable",
+        "defineResolvers"
+      ],
+      "packages/ui-templates/lib/paths.mjs": [
+        "generatedTemplateCopies",
+        "generatedOutputs"
+      ],
+      "packages/vite-server/src/dev.ts": [
+        "DevServerListenerPlugin",
+        "setupDevServer",
+        "handledByVite"
+      ],
+      "packages/vite-server/src/document.ts": [
+        "documentPath",
+        "resolveDocument",
+        "DocumentPlugin",
+        "EntryImportMapPlugin",
+        "BuildEnvironmentsPlugin",
+        "escape"
+      ],
+      "packages/vite-server/src/html.ts": [
+        "ESCAPES",
+        "escapeAttr",
+        "renderAttrs",
+        "renderTag",
+        "VOID_TAGS",
+        "renderConfiguredHead",
+        "renderPayload",
+        "renderIndexHtml"
+      ],
+      "packages/vite-server/src/output.ts": [
+        "SPA_FALLBACK_FILES",
+        "writeStaticOutput",
+        "finishStaticOutput",
+        "spaLoadingTemplate",
+        "publicDirs"
+      ],
+      "packages/vite-server/src/route-rules.ts": [
+        "SUPPORTED_RULES",
+        "defuPath",
+        "createRouteRulesMatcher",
+        "addRouteRulesTemplate"
+      ],
+      "packages/vite-server/src/runtime/dev-error.ts": [
+        "DevErrorContext",
+        "context",
+        "forwarding",
+        "setDevErrorContext",
+        "isErrorChannelRequest",
+        "fetchErrorChannel",
+        "observeDevError",
+        "reporter",
+        "buildReport",
+        "ssrOnly",
+        "fixStacktraces",
+        "errorCause"
+      ],
+      "packages/vite-server/src/ssr.ts": [
+        "SUPPORTED_SERVER_RUNTIME_VERSION",
+        "setupSSR",
+        "AppServerEnvironmentsPlugin",
+        "addServerEntry",
+        "ServerEnvironmentPlugin",
+        "BundledVuePlugin",
+        "ServerRuntimeModulesPlugin",
+        "disableUnsupported"
+      ],
+      "packages/vite-server/src/templates/spa-loading-icon.ts": ["template"],
+      "packages/vite/src/dirs.ts": ["_distDir", "distDir"],
+      "packages/vite/src/plugins/public-dirs.ts": [
+        "PREFIX",
+        "PREFIX_RE",
+        "CSS_URL_RE",
+        "CSS_URL_SINGLE_RE",
+        "QUOTE_RE",
+        "enclosingQuote",
+        "VitePublicDirsPluginOptions",
+        "PublicDirsPlugin",
+        "PUBLIC_ASSETS_RE",
+        "useResolveFromPublicAssets"
+      ],
+      "packages/vite/src/plugins/replace.ts": ["ReplacePlugin"],
+      "packages/vite/src/plugins/vite-node.ts": [
+        "serializeViteNodeError",
+        "ResolveIdResponse",
+        "ViteNodeRequestMap",
+        "RequestOf",
+        "ViteNodeRequest",
+        "ViteNodeFetch",
+        "getManifest",
+        "SocketPathInfo",
+        "pickSocketPath",
+        "generateSocketPath",
+        "useInvalidates",
+        "ViteNodePlugin"
+      ],
+      "packages/vite/src/utils/config.ts": [
+        "resolveClientManifestFile",
+        "resolveClientEntry",
+        "resolveServerEntry"
+      ],
+      "packages/vite/src/utils/index.ts": [
+        "IS_CSS_RE",
+        "isCSS",
+        "toArray",
+        "INVALID_FILENAME_CHAR_RE",
+        "URI_ESCAPE_RE",
+        "QUERY_RE",
+        "PATH_SEPARATOR_RE",
+        "WINDOWS_DRIVE_RE",
+        "sanitizeFilePath"
+      ],
+      "packages/vite/src/utils/inline-styles.ts": [
+        "LANG_MARKER_RE",
+        "withInlineQuery",
+        "INLINE_STYLE_ID_RE",
+        "isInlineStyleId"
+      ],
+      "packages/vite/src/utils/logger.ts": [
+        "duplicateCount",
+        "lastType",
+        "lastMsg",
+        "logLevelMap",
+        "logLevelMapReverse",
+        "RUNTIME_RESOLVE_REF_RE",
+        "createViteLogger"
+      ],
+      "packages/vite/src/vite-node-runner.ts": [
+        "runner",
+        "getCode",
+        "DRIVE_LETTER_RE",
+        "moduleCacheFor",
+        "moduleIds",
+        "parsedMaps",
+        "sourceMapFor",
+        "traceMapFor",
+        "getOriginalPosition",
+        "getCompiledPosition",
+        "prepareStackTrace",
+        "withLocation"
+      ],
+      "packages/vite/src/vite-node.ts": [
+        "getViteNodeOptionsEnvVar",
+        "viteNodeOptions",
+        "pendingRequests",
+        "requestIdCounter",
+        "clientSocket",
+        "currentConnectPromise",
+        "MAX_RETRY_ATTEMPTS",
+        "BASE_RETRY_DELAY_MS",
+        "MAX_RETRY_DELAY_MS",
+        "REQUEST_TIMEOUT_MS",
+        "calculateRetryDelay",
+        "connectSocket"
+      ],
+      "packages/vite/src/vite.ts": [
+        "bundle",
+        "WARMUP_MAX_MODULES",
+        "WARMUP_MAX_DURATION",
+        "warmupEntries",
+        "startWarmup",
+        "withLogs"
+      ],
+      "packages/webpack/src/builder-registry.ts": [
+        "BuilderImpl",
+        "_impl",
+        "setBuilderImpl",
+        "getBuilderImpl"
+      ],
+      "packages/webpack/src/builder.ts": [],
+      "packages/webpack/src/loaders/vue-module-identifier.ts": [
+        "LoaderOptions",
+        "vueModuleIdentifierLoader"
+      ],
+      "packages/webpack/src/plugins/dynamic-base.ts": [
+        "ENTRY_RE",
+        "DynamicBasePlugin"
+      ],
+      "packages/webpack/src/plugins/vue/client.ts": [
+        "PluginOptions",
+        "VueSSRClientPlugin"
+      ],
+      "packages/webpack/src/plugins/vue/util.ts": [
+        "validate",
+        "isJSRegExp",
+        "isJS",
+        "extractQueryPartJS",
+        "isCSSRegExp",
+        "isCSS",
+        "isHotUpdate"
+      ],
+      "packages/webpack/src/plugins/warning-ignore.ts": [
+        "WarningFilter",
+        "WarningIgnorePlugin"
+      ],
+      "packages/webpack/src/presets/nuxt.ts": ["nuxt"],
+      "packages/webpack/src/presets/vue.ts": ["vue"],
+      "packages/webpack/src/utils/config.ts": [
+        "WebpackConfigContext",
+        "WebpackConfigPreset",
+        "WebpackConfigPresetItem",
+        "createWebpackConfigContext",
+        "applyPresets",
+        "fileName"
+      ],
+      "packages/webpack/src/utils/index.ts": ["toArray"],
+      "packages/webpack/src/utils/mfs.ts": ["createMFS"],
+      "packages/webpack/src/utils/same-origin.ts": [
+        "LOOPBACK_HOSTNAMES",
+        "firstHeader",
+        "isLoopbackHost",
+        "isSameOriginRequest"
+      ],
+      "packages/webpack/src/webpack.ts": [
+        "bundle",
+        "createRsbuildInstance",
+        "getRsbuildCompilers",
+        "startRsbuildDevServer",
+        "kHandled",
+        "rsbuildToH3Handler",
+        "createDevMiddleware",
+        "wdmToH3Handler",
+        "compile",
+        "GenericHandler",
+        "defineEventHandler",
+        "srvx"
+      ]
+    }
+  }
+}

@@ -31,7 +31,8 @@
     "repos",
     "docs/research",
     "spike",
-    "apps/code-art/src/data"
+    "apps/code-art/src/data",
+    "apps/codesong-site/songs"
   ],
   "language": "en,en-GB",
   "ignoreRegExpList": ["/%[0-9A-Fa-f]{2}/g"]
