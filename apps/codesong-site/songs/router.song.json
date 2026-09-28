@@ -1,7 +1,7 @@
 {
   "versions": {
     "ambient": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "router",
         "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
@@ -3522,7 +3522,7 @@
       ]
     },
     "lofi": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "router",
         "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
@@ -9338,7 +9338,7 @@
       ]
     },
     "techno": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "router",
         "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
@@ -17349,7 +17349,7 @@
       ]
     },
     "dnb": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "router",
         "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
@@ -22951,7 +22951,7 @@
       ]
     },
     "jazz": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "router",
         "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",
@@ -29729,7 +29729,7 @@
       ]
     },
     "mathrock": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "router",
         "commit": "763ac8b8add670ccb31887dab6509343e4827d5a",

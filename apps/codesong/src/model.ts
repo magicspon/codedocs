@@ -8,7 +8,7 @@
  */
 
 /** Bumped whenever the same inputs would compose a different piece. */
-export const COMPOSER_VERSION = '0.8.0'
+export const COMPOSER_VERSION = '0.9.0'
 
 /** What a track does in the piece; the renderer turns a role into a sound. */
 export type MusicalRole =

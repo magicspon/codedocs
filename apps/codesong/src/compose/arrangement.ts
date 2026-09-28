@@ -173,13 +173,36 @@ const TEXTURES: Readonly<Record<Section['form'], (c: Scene) => SectionParts>> =
       arp: loop(c),
       percussion: drums(c.material, c.section),
     }),
-    // No bass or drums: the loop, held chords and the phrases upside down.
-    breakdown: (c) => ({
-      pad: held(c),
-      counter: phrases(c, { ...c.tune, invert: true }),
-      lead: [motto(c.theme, c.section, 2, 4, c.m)],
-      arp: loop(c),
-    }),
+    // No bass or kick: held chords, the loop, the phrases upside down, and
+    // the theme slowed down before the motto builds back into the next section.
+    breakdown: (c) => {
+      const link = motto(c.theme, c.section, 2, 4, c.m)
+      const echo = Math.min(c.half, link.start - c.section.start)
+      const mirror = { ...c.tune, invert: true }
+      return {
+        pad: held(c),
+        // The loosest subsystem often has no paths of its own to phrase.
+        counter:
+          c.material.phrases.length > 0
+            ? phrases(c, mirror)
+            : sequence([c.theme], c.section, 0, { ...mirror, octave: -1 }),
+        lead: [
+          ...(echo > 0
+            ? [
+                part(
+                  c.theme,
+                  c.section.start,
+                  echo,
+                  shift(c.section.area, { stretch: 2 * c.m }),
+                ),
+              ]
+            : []),
+          link,
+        ],
+        arp: loop(c),
+        percussion: drums(c.material, c.section),
+      }
+    },
     // The theme once more, then again at half speed as the bass drops out.
     outro: (c) => ({
       pad: held(c),

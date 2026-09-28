@@ -1,7 +1,7 @@
 {
   "versions": {
     "ambient": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "typescript",
         "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -97,6 +97,17 @@
                 "octave": 0,
                 "stretch": 2,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 224,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 4
               }
             },
             {
@@ -742,6 +753,28 @@
               }
             },
             {
+              "motif": "groove:src/services/codefixes:breakdown",
+              "start": 224,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:src/services/codefixes:breakdown",
+              "start": 268,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:src/harness:verse",
               "start": 272,
               "length": 28,
@@ -889,6 +922,39 @@
                 "transpose": 5,
                 "invert": false,
                 "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 224,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 240,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 256,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
                 "stretch": 2
               }
             },
@@ -4118,6 +4184,75 @@
           "length": 16
         },
         {
+          "id": "groove:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [],
+          "length": 4
+        },
+        {
+          "id": "fill:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 32
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 44
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 32
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "bass:src/harness",
           "source": {
             "project": "src/harness/tsconfig.json",
@@ -5034,7 +5169,7 @@
       ]
     },
     "lofi": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "typescript",
         "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -5130,6 +5265,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 224,
+              "length": 24,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -5797,6 +5943,28 @@
               }
             },
             {
+              "motif": "groove:src/services/codefixes:breakdown",
+              "start": 224,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:src/services/codefixes:breakdown",
+              "start": 268,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:src/harness:verse",
               "start": 272,
               "length": 28,
@@ -6065,6 +6233,72 @@
                 "transpose": 5,
                 "invert": false,
                 "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 224,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 232,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 240,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 248,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 256,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 264,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
                 "stretch": 1
               }
             },
@@ -11418,6 +11652,124 @@
           "length": 16
         },
         {
+          "id": "groove:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 60
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "bass:src/harness",
           "source": {
             "project": "src/harness/tsconfig.json",
@@ -12712,7 +13064,7 @@
       ]
     },
     "techno": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "typescript",
         "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -12797,6 +13149,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 40,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -13695,6 +14058,28 @@
               }
             },
             {
+              "motif": "groove:src/services/codefixes:breakdown",
+              "start": 336,
+              "length": 76,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:src/services/codefixes:breakdown",
+              "start": 412,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:src/harness:verse",
               "start": 416,
               "length": 44,
@@ -14073,6 +14458,116 @@
                 "transpose": 5,
                 "invert": false,
                 "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 344,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 352,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 360,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 368,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 376,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 384,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 392,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 400,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 408,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
                 "stretch": 1
               }
             },
@@ -21533,6 +22028,130 @@
           "length": 16
         },
         {
+          "id": "groove:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 3,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 3,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 3,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 3,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 72
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 52
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "bass:src/harness",
           "source": {
             "project": "src/harness/tsconfig.json",
@@ -23511,7 +24130,7 @@
       ]
     },
     "dnb": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "typescript",
         "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -23607,6 +24226,17 @@
                 "octave": 0,
                 "stretch": 2,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 448,
+              "length": 48,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 4
               }
             },
             {
@@ -24736,6 +25366,28 @@
               }
             },
             {
+              "motif": "groove:src/services/codefixes:breakdown",
+              "start": 448,
+              "length": 92,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:src/services/codefixes:breakdown",
+              "start": 540,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:src/harness:verse",
               "start": 544,
               "length": 60,
@@ -25004,6 +25656,72 @@
                 "transpose": 5,
                 "invert": false,
                 "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 448,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 464,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 480,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 496,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 512,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 528,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
                 "stretch": 2
               }
             },
@@ -29792,6 +30510,124 @@
           "length": 16
         },
         {
+          "id": "groove:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 1,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 40
+            },
+            {
+              "degree": 2,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 2,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 2,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 50
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 50
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "bass:src/harness",
           "source": {
             "project": "src/harness/tsconfig.json",
@@ -31206,7 +32042,7 @@
       ]
     },
     "jazz": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "typescript",
         "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -31302,6 +32138,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 40,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -32178,6 +33025,28 @@
               }
             },
             {
+              "motif": "groove:src/services/codefixes:breakdown",
+              "start": 336,
+              "length": 76,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:src/services/codefixes:breakdown",
+              "start": 412,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:src/harness:verse",
               "start": 416,
               "length": 44,
@@ -32556,6 +33425,116 @@
                 "transpose": 5,
                 "invert": false,
                 "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 344,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 352,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 360,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 368,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 376,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 384,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 392,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 400,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 408,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
                 "stretch": 1
               }
             },
@@ -38812,6 +39791,100 @@
           "length": 16
         },
         {
+          "id": "groove:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 1,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
           "id": "bass:src/harness",
           "source": {
             "project": "src/harness/tsconfig.json",
@@ -40448,7 +41521,7 @@
       ]
     },
     "mathrock": {
-      "composerVersion": "0.8.0",
+      "composerVersion": "0.9.0",
       "origin": {
         "repository": "typescript",
         "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -40533,6 +41606,17 @@
                 "octave": 0,
                 "stretch": 1,
                 "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 40,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
               }
             },
             {
@@ -41409,6 +42493,28 @@
               }
             },
             {
+              "motif": "groove:src/services/codefixes:breakdown",
+              "start": 336,
+              "length": 76,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:src/services/codefixes:breakdown",
+              "start": 412,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:src/harness:verse",
               "start": 416,
               "length": 44,
@@ -41787,6 +42893,116 @@
                 "transpose": 5,
                 "invert": false,
                 "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 336,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 344,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 352,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 360,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 368,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 376,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 384,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 392,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 400,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 408,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": true,
+                "octave": -1,
                 "stretch": 1
               }
             },
@@ -52329,6 +53545,376 @@
             }
           ],
           "length": 16
+        },
+        {
+          "id": "groove:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 4.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 4.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 4.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 5.25,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 5.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 5.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 6.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 6.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 7,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 7.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 7.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 8.25,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 8.75,
+              "duration": 0.25,
+              "velocity": 38
+            },
+            {
+              "degree": 2,
+              "start": 8.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 9,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 9.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 9.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 10.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 10.75,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 10.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 11.25,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 11.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 12.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 12.75,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 12.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 13.25,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 13.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 14.25,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 14.5,
+              "duration": 0.25,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 14.75,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 1,
+              "start": 15,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 3,
+              "start": 15,
+              "duration": 0.25,
+              "velocity": 110
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "fill:src/services/codefixes:breakdown",
+          "source": {
+            "subsystem": "src/services/codefixes",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 0.25,
+              "duration": 0.25,
+              "velocity": 64
+            },
+            {
+              "degree": 1,
+              "start": 0.5,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 0,
+              "start": 0.75,
+              "duration": 0.25,
+              "velocity": 71
+            },
+            {
+              "degree": 1,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 1.25,
+              "duration": 0.25,
+              "velocity": 79
+            },
+            {
+              "degree": 0,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 1.75,
+              "duration": 0.25,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 0,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 94
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 101
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 109
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 113
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 116
+            }
+          ],
+          "length": 4
         },
         {
           "id": "bass:src/harness",
