@@ -84,7 +84,7 @@ function regionMaterial(
   const chords = chordSource(structure, region)
   const within = new Set(region.files)
   return {
-    pad: padMotif(structure, region, chords),
+    pad: padMotif(structure, region, chords, genre.sevenths),
     bass: bassMotif(region, chords, genre.bass),
     arp: arpMotif(structure, region, chords),
     phrases: dependencyPaths(structure, phrases, within).map((path, i) =>
@@ -155,7 +155,7 @@ export function compose(
     regions.map((r) => [r, regionMaterial(structure, r, perRegion, genre)]),
   )
   const planned = plan(regions)
-  const form: Section[] = sections(planned, options.bars)
+  const form: Section[] = sections(planned, options.bars, genre.length)
 
   const parts = new Map<MusicalRole, Part[]>(
     ROLE_ORDER.map((role) => [role, []]),

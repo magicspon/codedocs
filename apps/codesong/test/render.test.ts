@@ -37,7 +37,7 @@ const piece: Composition = {
   },
   tempo: 120,
   genre: 'techno',
-  swing: 0,
+  swing: { unit: 0.25, late: 0 },
   key: 0,
   scale: 'major',
   beatsPerBar: 4,

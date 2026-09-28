@@ -91,14 +91,16 @@ export function plan(regions: readonly Region[]): Planned[] {
 
 /**
  * Places the plan in time. With a bar budget, every section is scaled to fit
- * it, though none drops below one unit.
+ * it, though none drops below one unit. Without one, `stretch` lengthens
+ * every section, so a fast genre plays about as long as a slow one.
  */
 export function sections(
   planned: readonly Planned[],
   bars: number | 'auto',
+  stretch = 1,
 ): Section[] {
   const natural = planned.reduce((sum, p) => sum + p.units, 0)
-  const scale = bars === 'auto' ? 1 : (bars * BAR) / (natural * UNIT)
+  const scale = bars === 'auto' ? stretch : (bars * BAR) / (natural * UNIT)
   let start = 0
   return planned.map((p) => {
     const length = Math.max(1, Math.round(p.units * scale)) * UNIT

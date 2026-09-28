@@ -39,9 +39,9 @@ const IDLE: Actions = {
  * the old player's synths before the new one's are built. The actions are
  * made with the player, so none can reach a player that has been disposed.
  *
- * Every genre of a song has the same sections at the same beats, so a new
- * composition in the same hook (a genre switch) carries on from where the
- * last one was, with the same tracks muted. Key the hook's component by
+ * Every genre of a song has the same sections, so a new composition in the
+ * same hook (a genre switch) carries on from the same place in the same
+ * section, with the same tracks muted. Key the hook's component by
  * song so a new song starts over.
  */
 export function usePlayer(
@@ -58,7 +58,7 @@ export function usePlayer(
     const p = new Player(composition, tracks, length, () => setPlaying(false))
     setPlaying(false)
     // Held beside the player, so muting never reads a stale render's set.
-    const off = takeOver(p, handover.current, setPlaying)
+    const off = takeOver(p, handover.current, composition.sections, setPlaying)
     setMuted(new Set(off))
     setActions({
       beats: () => p.beats,
@@ -82,7 +82,12 @@ export function usePlayer(
       tune: (track, sound) => p.tune(track, sound),
     })
     return () => {
-      handover.current = { beats: p.beats, playing: p.playing, muted: off }
+      handover.current = {
+        beats: p.beats,
+        sections: composition.sections,
+        playing: p.playing,
+        muted: off,
+      }
       p.dispose()
     }
   }, [composition, tracks, length])

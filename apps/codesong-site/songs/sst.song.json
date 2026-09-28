@@ -1,7 +1,7 @@
 {
   "versions": {
     "ambient": {
-      "composerVersion": "0.4.0",
+      "composerVersion": "0.5.0",
       "origin": {
         "repository": "sst",
         "commit": "a0bd20f762883e72a35caccb4896c42ce5b3f707",
@@ -15,7 +15,10 @@
       },
       "tempo": 70,
       "genre": "ambient",
-      "swing": 0,
+      "swing": {
+        "unit": 0.25,
+        "late": 0
+      },
       "key": 6,
       "scale": "major",
       "beatsPerBar": 4,
@@ -2659,7 +2662,7 @@
       ]
     },
     "lofi": {
-      "composerVersion": "0.4.0",
+      "composerVersion": "0.5.0",
       "origin": {
         "repository": "sst",
         "commit": "a0bd20f762883e72a35caccb4896c42ce5b3f707",
@@ -2673,7 +2676,10 @@
       },
       "tempo": 82,
       "genre": "lofi",
-      "swing": 0.08,
+      "swing": {
+        "unit": 0.25,
+        "late": 0.08
+      },
       "key": 6,
       "scale": "dorian",
       "beatsPerBar": 4,
@@ -6218,7 +6224,7 @@
       ]
     },
     "techno": {
-      "composerVersion": "0.4.0",
+      "composerVersion": "0.5.0",
       "origin": {
         "repository": "sst",
         "commit": "a0bd20f762883e72a35caccb4896c42ce5b3f707",
@@ -6232,7 +6238,10 @@
       },
       "tempo": 126,
       "genre": "techno",
-      "swing": 0,
+      "swing": {
+        "unit": 0.25,
+        "late": 0
+      },
       "key": 6,
       "scale": "minor",
       "beatsPerBar": 4,
@@ -6243,18 +6252,6 @@
           "role": "lead",
           "register": "high",
           "parts": [
-            {
-              "motif": "theme",
-              "start": 56,
-              "length": 8,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1,
-                "fragment": 3
-              }
-            },
             {
               "motif": "theme",
               "start": 88,
@@ -6269,7 +6266,19 @@
             },
             {
               "motif": "theme",
-              "start": 112,
+              "start": 136,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1,
+                "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 176,
               "length": 16,
               "transform": {
                 "transpose": 3,
@@ -6281,7 +6290,7 @@
             },
             {
               "motif": "theme",
-              "start": 152,
+              "start": 232,
               "length": 8,
               "transform": {
                 "transpose": 3,
@@ -6293,8 +6302,8 @@
             },
             {
               "motif": "theme",
-              "start": 160,
-              "length": 64,
+              "start": 240,
+              "length": 96,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6304,7 +6313,7 @@
             },
             {
               "motif": "theme",
-              "start": 248,
+              "start": 376,
               "length": 8,
               "transform": {
                 "transpose": 5,
@@ -6316,8 +6325,8 @@
             },
             {
               "motif": "theme",
-              "start": 256,
-              "length": 16,
+              "start": 384,
+              "length": 24,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6327,8 +6336,8 @@
             },
             {
               "motif": "theme",
-              "start": 272,
-              "length": 16,
+              "start": 408,
+              "length": 24,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6346,8 +6355,8 @@
           "parts": [
             {
               "motif": "bass:platform/src/components",
-              "start": 32,
-              "length": 32,
+              "start": 48,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6357,8 +6366,8 @@
             },
             {
               "motif": "bass:platform/src/components/aws/helpers",
-              "start": 64,
-              "length": 32,
+              "start": 96,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6368,8 +6377,8 @@
             },
             {
               "motif": "bass:platform/src/components/aws/step-functions",
-              "start": 128,
-              "length": 32,
+              "start": 192,
+              "length": 48,
               "transform": {
                 "transpose": 3,
                 "invert": false,
@@ -6379,8 +6388,8 @@
             },
             {
               "motif": "bass:platform/src/components/aws",
-              "start": 160,
-              "length": 64,
+              "start": 240,
+              "length": 96,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6390,8 +6399,8 @@
             },
             {
               "motif": "bass:platform/src/components/cloudflare",
-              "start": 224,
-              "length": 32,
+              "start": 336,
+              "length": 48,
               "transform": {
                 "transpose": 5,
                 "invert": false,
@@ -6401,8 +6410,8 @@
             },
             {
               "motif": "bass:platform/src/components",
-              "start": 256,
-              "length": 16,
+              "start": 384,
+              "length": 24,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6421,7 +6430,7 @@
             {
               "motif": "pad:platform/src/components",
               "start": 0,
-              "length": 32,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6431,8 +6440,8 @@
             },
             {
               "motif": "pad:platform/src/components",
-              "start": 32,
-              "length": 32,
+              "start": 48,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6442,8 +6451,8 @@
             },
             {
               "motif": "pad:platform/src/components/aws/helpers",
-              "start": 64,
-              "length": 32,
+              "start": 96,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6453,8 +6462,8 @@
             },
             {
               "motif": "pad:platform/src/components/aws/providers",
-              "start": 96,
-              "length": 32,
+              "start": 144,
+              "length": 48,
               "transform": {
                 "transpose": 3,
                 "invert": false,
@@ -6464,8 +6473,8 @@
             },
             {
               "motif": "pad:platform/src/components/aws/step-functions",
-              "start": 128,
-              "length": 32,
+              "start": 192,
+              "length": 48,
               "transform": {
                 "transpose": 3,
                 "invert": false,
@@ -6475,8 +6484,8 @@
             },
             {
               "motif": "pad:platform/src/components/aws",
-              "start": 160,
-              "length": 64,
+              "start": 240,
+              "length": 96,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6486,8 +6495,8 @@
             },
             {
               "motif": "pad:platform/src/components/cloudflare",
-              "start": 224,
-              "length": 32,
+              "start": 336,
+              "length": 48,
               "transform": {
                 "transpose": 5,
                 "invert": false,
@@ -6497,8 +6506,8 @@
             },
             {
               "motif": "pad:platform/src/components",
-              "start": 256,
-              "length": 32,
+              "start": 384,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6517,7 +6526,7 @@
             {
               "motif": "groove:platform/src/components:intro",
               "start": 0,
-              "length": 28,
+              "length": 44,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6527,7 +6536,7 @@
             },
             {
               "motif": "fill:platform/src/components:intro",
-              "start": 28,
+              "start": 44,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6538,8 +6547,8 @@
             },
             {
               "motif": "groove:platform/src/components:verse",
-              "start": 32,
-              "length": 28,
+              "start": 48,
+              "length": 44,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6549,28 +6558,6 @@
             },
             {
               "motif": "fill:platform/src/components:verse",
-              "start": 60,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "groove:platform/src/components/aws/helpers:verse",
-              "start": 64,
-              "length": 28,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "fill:platform/src/components/aws/helpers:verse",
               "start": 92,
               "length": 4,
               "transform": {
@@ -6581,9 +6568,31 @@
               }
             },
             {
+              "motif": "groove:platform/src/components/aws/helpers:verse",
+              "start": 96,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components/aws/helpers:verse",
+              "start": 140,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "groove:platform/src/components/aws/step-functions:verse",
-              "start": 128,
-              "length": 28,
+              "start": 192,
+              "length": 44,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6593,7 +6602,7 @@
             },
             {
               "motif": "fill:platform/src/components/aws/step-functions:verse",
-              "start": 156,
+              "start": 236,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6604,8 +6613,8 @@
             },
             {
               "motif": "groove:platform/src/components/aws:chorus",
-              "start": 160,
-              "length": 60,
+              "start": 240,
+              "length": 92,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6615,7 +6624,7 @@
             },
             {
               "motif": "fill:platform/src/components/aws:chorus",
-              "start": 220,
+              "start": 332,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6626,8 +6635,8 @@
             },
             {
               "motif": "groove:platform/src/components/cloudflare:verse",
-              "start": 224,
-              "length": 28,
+              "start": 336,
+              "length": 44,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6637,7 +6646,7 @@
             },
             {
               "motif": "fill:platform/src/components/cloudflare:verse",
-              "start": 252,
+              "start": 380,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6656,51 +6665,7 @@
           "parts": [
             {
               "motif": "phrase:platform/src/components:1",
-              "start": 32,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components:2",
-              "start": 36,
-              "length": 8,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components:1",
-              "start": 44,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components:2",
               "start": 48,
-              "length": 8,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components:1",
-              "start": 56,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -6711,6 +6676,17 @@
             },
             {
               "motif": "phrase:platform/src/components:2",
+              "start": 52,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:1",
               "start": 60,
               "length": 4,
               "transform": {
@@ -6721,206 +6697,327 @@
               }
             },
             {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 160,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 164,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 168,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 172,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 176,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 180,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 184,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 188,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 192,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 196,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 200,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 204,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 208,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 212,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:2",
-              "start": 216,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/aws:1",
-              "start": 220,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "phrase:platform/src/components/cloudflare:2",
-              "start": 224,
+              "motif": "phrase:platform/src/components:2",
+              "start": 64,
               "length": 8,
               "transform": {
-                "transpose": 5,
+                "transpose": 0,
                 "invert": false,
                 "octave": 0,
                 "stretch": 1
               }
             },
             {
-              "motif": "phrase:platform/src/components/cloudflare:1",
-              "start": 232,
+              "motif": "phrase:platform/src/components:1",
+              "start": 72,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 76,
               "length": 8,
               "transform": {
-                "transpose": 5,
+                "transpose": 0,
                 "invert": false,
                 "octave": 0,
                 "stretch": 1
               }
             },
             {
-              "motif": "phrase:platform/src/components/cloudflare:2",
+              "motif": "phrase:platform/src/components:1",
+              "start": 84,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 88,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
               "start": 240,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 244,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 248,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 252,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 256,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 260,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 264,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 268,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 272,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 276,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 280,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 284,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 288,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 292,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 296,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 300,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 304,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 308,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 312,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 316,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 320,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 324,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 328,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 332,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 336,
               "length": 8,
               "transform": {
                 "transpose": 5,
@@ -6931,7 +7028,51 @@
             },
             {
               "motif": "phrase:platform/src/components/cloudflare:1",
-              "start": 248,
+              "start": 344,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 352,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:1",
+              "start": 360,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 368,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:1",
+              "start": 376,
               "length": 8,
               "transform": {
                 "transpose": 5,
@@ -6950,8 +7091,8 @@
           "parts": [
             {
               "motif": "arp:platform/src/components",
-              "start": 32,
-              "length": 32,
+              "start": 48,
+              "length": 48,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -6961,8 +7102,8 @@
             },
             {
               "motif": "arp:platform/src/components/aws",
-              "start": 160,
-              "length": 64,
+              "start": 240,
+              "length": 96,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -9853,7 +9994,7 @@
           "form": "intro",
           "source": "platform/src/components",
           "start": 0,
-          "length": 32,
+          "length": 48,
           "intensity": 0.3,
           "area": 0
         },
@@ -9861,8 +10002,8 @@
           "name": "components",
           "form": "verse",
           "source": "platform/src/components",
-          "start": 32,
-          "length": 32,
+          "start": 48,
+          "length": 48,
           "intensity": 0.7191464821222606,
           "area": 0
         },
@@ -9870,8 +10011,8 @@
           "name": "helpers",
           "form": "verse",
           "source": "platform/src/components/aws/helpers",
-          "start": 64,
-          "length": 32,
+          "start": 96,
+          "length": 48,
           "intensity": 0.5119534444793961,
           "area": 0
         },
@@ -9879,8 +10020,8 @@
           "name": "providers",
           "form": "breakdown",
           "source": "platform/src/components/aws/providers",
-          "start": 96,
-          "length": 32,
+          "start": 144,
+          "length": 48,
           "intensity": 0.35,
           "area": 3
         },
@@ -9888,8 +10029,8 @@
           "name": "step-functions",
           "form": "verse",
           "source": "platform/src/components/aws/step-functions",
-          "start": 128,
-          "length": 32,
+          "start": 192,
+          "length": 48,
           "intensity": 0.616878123798539,
           "area": 3
         },
@@ -9897,8 +10038,8 @@
           "name": "aws",
           "form": "chorus",
           "source": "platform/src/components/aws",
-          "start": 160,
-          "length": 64,
+          "start": 240,
+          "length": 96,
           "intensity": 1,
           "area": 0
         },
@@ -9906,8 +10047,8 @@
           "name": "cloudflare",
           "form": "verse",
           "source": "platform/src/components/cloudflare",
-          "start": 224,
-          "length": 32,
+          "start": 336,
+          "length": 48,
           "intensity": 0.7941176470588236,
           "area": 5
         },
@@ -9915,15 +10056,15 @@
           "name": "outro",
           "form": "outro",
           "source": "platform/src/components",
-          "start": 256,
-          "length": 32,
+          "start": 384,
+          "length": 48,
           "intensity": 0.3,
           "area": 0
         }
       ]
     },
     "dnb": {
-      "composerVersion": "0.4.0",
+      "composerVersion": "0.5.0",
       "origin": {
         "repository": "sst",
         "commit": "a0bd20f762883e72a35caccb4896c42ce5b3f707",
@@ -9937,7 +10078,10 @@
       },
       "tempo": 172,
       "genre": "dnb",
-      "swing": 0,
+      "swing": {
+        "unit": 0.25,
+        "late": 0
+      },
       "key": 6,
       "scale": "minor",
       "beatsPerBar": 4,
@@ -9951,7 +10095,7 @@
             {
               "motif": "theme",
               "start": 0,
-              "length": 32,
+              "length": 64,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -9961,7 +10105,7 @@
             },
             {
               "motif": "theme",
-              "start": 56,
+              "start": 120,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -9973,7 +10117,7 @@
             },
             {
               "motif": "theme",
-              "start": 88,
+              "start": 184,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -9985,7 +10129,7 @@
             },
             {
               "motif": "theme",
-              "start": 112,
+              "start": 240,
               "length": 16,
               "transform": {
                 "transpose": 3,
@@ -9997,7 +10141,7 @@
             },
             {
               "motif": "theme",
-              "start": 152,
+              "start": 312,
               "length": 8,
               "transform": {
                 "transpose": 3,
@@ -10009,8 +10153,8 @@
             },
             {
               "motif": "theme",
-              "start": 160,
-              "length": 64,
+              "start": 320,
+              "length": 128,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10020,7 +10164,7 @@
             },
             {
               "motif": "theme",
-              "start": 248,
+              "start": 504,
               "length": 8,
               "transform": {
                 "transpose": 5,
@@ -10032,8 +10176,8 @@
             },
             {
               "motif": "theme",
-              "start": 256,
-              "length": 16,
+              "start": 512,
+              "length": 32,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10043,8 +10187,8 @@
             },
             {
               "motif": "theme",
-              "start": 272,
-              "length": 16,
+              "start": 544,
+              "length": 32,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10062,40 +10206,7 @@
           "parts": [
             {
               "motif": "bass:platform/src/components",
-              "start": 32,
-              "length": 32,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "bass:platform/src/components/aws/helpers",
               "start": 64,
-              "length": 32,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "bass:platform/src/components/aws/step-functions",
-              "start": 128,
-              "length": 32,
-              "transform": {
-                "transpose": 3,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "bass:platform/src/components/aws",
-              "start": 160,
               "length": 64,
               "transform": {
                 "transpose": 0,
@@ -10105,9 +10216,42 @@
               }
             },
             {
+              "motif": "bass:platform/src/components/aws/helpers",
+              "start": 128,
+              "length": 64,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components/aws/step-functions",
+              "start": 256,
+              "length": 64,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components/aws",
+              "start": 320,
+              "length": 128,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "bass:platform/src/components/cloudflare",
-              "start": 224,
-              "length": 32,
+              "start": 448,
+              "length": 64,
               "transform": {
                 "transpose": 5,
                 "invert": false,
@@ -10117,8 +10261,8 @@
             },
             {
               "motif": "bass:platform/src/components",
-              "start": 256,
-              "length": 16,
+              "start": 512,
+              "length": 32,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10137,61 +10281,6 @@
             {
               "motif": "pad:platform/src/components",
               "start": 0,
-              "length": 32,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "pad:platform/src/components",
-              "start": 32,
-              "length": 32,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "pad:platform/src/components/aws/helpers",
-              "start": 64,
-              "length": 32,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "pad:platform/src/components/aws/providers",
-              "start": 96,
-              "length": 32,
-              "transform": {
-                "transpose": 3,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "pad:platform/src/components/aws/step-functions",
-              "start": 128,
-              "length": 32,
-              "transform": {
-                "transpose": 3,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "pad:platform/src/components/aws",
-              "start": 160,
               "length": 64,
               "transform": {
                 "transpose": 0,
@@ -10201,9 +10290,64 @@
               }
             },
             {
+              "motif": "pad:platform/src/components",
+              "start": 64,
+              "length": 64,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws/helpers",
+              "start": 128,
+              "length": 64,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws/providers",
+              "start": 192,
+              "length": 64,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws/step-functions",
+              "start": 256,
+              "length": 64,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws",
+              "start": 320,
+              "length": 128,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
               "motif": "pad:platform/src/components/cloudflare",
-              "start": 224,
-              "length": 32,
+              "start": 448,
+              "length": 64,
               "transform": {
                 "transpose": 5,
                 "invert": false,
@@ -10213,8 +10357,8 @@
             },
             {
               "motif": "pad:platform/src/components",
-              "start": 256,
-              "length": 32,
+              "start": 512,
+              "length": 64,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10233,7 +10377,7 @@
             {
               "motif": "groove:platform/src/components:intro",
               "start": 0,
-              "length": 28,
+              "length": 60,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10243,28 +10387,6 @@
             },
             {
               "motif": "fill:platform/src/components:intro",
-              "start": 28,
-              "length": 4,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "groove:platform/src/components:verse",
-              "start": 32,
-              "length": 28,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "fill:platform/src/components:verse",
               "start": 60,
               "length": 4,
               "transform": {
@@ -10275,9 +10397,31 @@
               }
             },
             {
-              "motif": "groove:platform/src/components/aws/helpers:verse",
+              "motif": "groove:platform/src/components:verse",
               "start": 64,
-              "length": 28,
+              "length": 60,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components:verse",
+              "start": 124,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:platform/src/components/aws/helpers:verse",
+              "start": 128,
+              "length": 60,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10287,7 +10431,7 @@
             },
             {
               "motif": "fill:platform/src/components/aws/helpers:verse",
-              "start": 92,
+              "start": 188,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -10298,8 +10442,8 @@
             },
             {
               "motif": "groove:platform/src/components/aws/step-functions:verse",
-              "start": 128,
-              "length": 28,
+              "start": 256,
+              "length": 60,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10309,7 +10453,7 @@
             },
             {
               "motif": "fill:platform/src/components/aws/step-functions:verse",
-              "start": 156,
+              "start": 316,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -10320,8 +10464,8 @@
             },
             {
               "motif": "groove:platform/src/components/aws:chorus",
-              "start": 160,
-              "length": 60,
+              "start": 320,
+              "length": 124,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10331,7 +10475,7 @@
             },
             {
               "motif": "fill:platform/src/components/aws:chorus",
-              "start": 220,
+              "start": 444,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -10342,8 +10486,8 @@
             },
             {
               "motif": "groove:platform/src/components/cloudflare:verse",
-              "start": 224,
-              "length": 28,
+              "start": 448,
+              "length": 60,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -10353,7 +10497,7 @@
             },
             {
               "motif": "fill:platform/src/components/cloudflare:verse",
-              "start": 252,
+              "start": 508,
               "length": 4,
               "transform": {
                 "transpose": 0,
@@ -10372,7 +10516,7 @@
           "parts": [
             {
               "motif": "phrase:platform/src/components:1",
-              "start": 32,
+              "start": 64,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10383,7 +10527,7 @@
             },
             {
               "motif": "phrase:platform/src/components:2",
-              "start": 40,
+              "start": 72,
               "length": 16,
               "transform": {
                 "transpose": 0,
@@ -10394,7 +10538,40 @@
             },
             {
               "motif": "phrase:platform/src/components:1",
-              "start": 56,
+              "start": 88,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 96,
+              "length": 16,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:1",
+              "start": 112,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 120,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10405,7 +10582,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:2",
-              "start": 160,
+              "start": 320,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10416,7 +10593,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:1",
-              "start": 168,
+              "start": 328,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10427,7 +10604,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:2",
-              "start": 176,
+              "start": 336,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10438,7 +10615,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:1",
-              "start": 184,
+              "start": 344,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10449,7 +10626,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:2",
-              "start": 192,
+              "start": 352,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10460,7 +10637,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:1",
-              "start": 200,
+              "start": 360,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10471,7 +10648,7 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:2",
-              "start": 208,
+              "start": 368,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10482,7 +10659,95 @@
             },
             {
               "motif": "phrase:platform/src/components/aws:1",
-              "start": 216,
+              "start": 376,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 384,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 392,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 400,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 408,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 416,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 424,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 432,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 440,
               "length": 8,
               "transform": {
                 "transpose": 0,
@@ -10493,7 +10758,7 @@
             },
             {
               "motif": "phrase:platform/src/components/cloudflare:2",
-              "start": 224,
+              "start": 448,
               "length": 16,
               "transform": {
                 "transpose": 5,
@@ -10504,7 +10769,29 @@
             },
             {
               "motif": "phrase:platform/src/components/cloudflare:1",
-              "start": 240,
+              "start": 464,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 480,
+              "length": 16,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:1",
+              "start": 496,
               "length": 16,
               "transform": {
                 "transpose": 5,
@@ -10523,17 +10810,6 @@
           "parts": [
             {
               "motif": "arp:platform/src/components",
-              "start": 16,
-              "length": 16,
-              "transform": {
-                "transpose": 0,
-                "invert": false,
-                "octave": 0,
-                "stretch": 1
-              }
-            },
-            {
-              "motif": "arp:platform/src/components",
               "start": 32,
               "length": 32,
               "transform": {
@@ -10544,9 +10820,20 @@
               }
             },
             {
-              "motif": "arp:platform/src/components/aws",
-              "start": 160,
+              "motif": "arp:platform/src/components",
+              "start": 64,
               "length": 64,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "arp:platform/src/components/aws",
+              "start": 320,
+              "length": 128,
               "transform": {
                 "transpose": 0,
                 "invert": false,
@@ -13119,7 +13406,7 @@
           "form": "intro",
           "source": "platform/src/components",
           "start": 0,
-          "length": 32,
+          "length": 64,
           "intensity": 0.3,
           "area": 0
         },
@@ -13127,8 +13414,8 @@
           "name": "components",
           "form": "verse",
           "source": "platform/src/components",
-          "start": 32,
-          "length": 32,
+          "start": 64,
+          "length": 64,
           "intensity": 0.7191464821222606,
           "area": 0
         },
@@ -13136,8 +13423,8 @@
           "name": "helpers",
           "form": "verse",
           "source": "platform/src/components/aws/helpers",
-          "start": 64,
-          "length": 32,
+          "start": 128,
+          "length": 64,
           "intensity": 0.5119534444793961,
           "area": 0
         },
@@ -13145,8 +13432,8 @@
           "name": "providers",
           "form": "breakdown",
           "source": "platform/src/components/aws/providers",
-          "start": 96,
-          "length": 32,
+          "start": 192,
+          "length": 64,
           "intensity": 0.35,
           "area": 3
         },
@@ -13154,8 +13441,8 @@
           "name": "step-functions",
           "form": "verse",
           "source": "platform/src/components/aws/step-functions",
-          "start": 128,
-          "length": 32,
+          "start": 256,
+          "length": 64,
           "intensity": 0.616878123798539,
           "area": 3
         },
@@ -13163,8 +13450,8 @@
           "name": "aws",
           "form": "chorus",
           "source": "platform/src/components/aws",
-          "start": 160,
-          "length": 64,
+          "start": 320,
+          "length": 128,
           "intensity": 1,
           "area": 0
         },
@@ -13172,8 +13459,8 @@
           "name": "cloudflare",
           "form": "verse",
           "source": "platform/src/components/cloudflare",
-          "start": 224,
-          "length": 32,
+          "start": 448,
+          "length": 64,
           "intensity": 0.7941176470588236,
           "area": 5
         },
@@ -13181,8 +13468,3587 @@
           "name": "outro",
           "form": "outro",
           "source": "platform/src/components",
-          "start": 256,
-          "length": 32,
+          "start": 512,
+          "length": 64,
+          "intensity": 0.3,
+          "area": 0
+        }
+      ]
+    },
+    "jazz": {
+      "composerVersion": "0.5.0",
+      "origin": {
+        "repository": "sst",
+        "commit": "a0bd20f762883e72a35caccb4896c42ce5b3f707",
+        "options": {
+          "seed": 0,
+          "genre": "jazz",
+          "bars": "auto",
+          "tracks": 6,
+          "maxMotifs": 16
+        }
+      },
+      "tempo": 132,
+      "genre": "jazz",
+      "swing": {
+        "unit": 0.5,
+        "late": 0.16666666666666666
+      },
+      "key": 6,
+      "scale": "dorian",
+      "beatsPerBar": 4,
+      "tracks": [
+        {
+          "id": "lead",
+          "name": "lead",
+          "role": "lead",
+          "register": "high",
+          "parts": [
+            {
+              "motif": "theme",
+              "start": 0,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": -1,
+                "stretch": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 88,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1,
+                "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 136,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1,
+                "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 176,
+              "length": 16,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1,
+                "fragment": 2
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 232,
+              "length": 8,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1,
+                "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 240,
+              "length": 96,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 376,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1,
+                "fragment": 3
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 384,
+              "length": 24,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "theme",
+              "start": 408,
+              "length": 24,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "bass",
+          "name": "bass",
+          "role": "bass",
+          "register": "low",
+          "parts": [
+            {
+              "motif": "bass:platform/src/components",
+              "start": 48,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components/aws/helpers",
+              "start": 96,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components/aws/step-functions",
+              "start": 192,
+              "length": 48,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components/aws",
+              "start": 240,
+              "length": 96,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components/cloudflare",
+              "start": 336,
+              "length": 48,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "bass:platform/src/components",
+              "start": 384,
+              "length": 24,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "pad",
+          "name": "pad",
+          "role": "pad",
+          "register": "mid",
+          "parts": [
+            {
+              "motif": "pad:platform/src/components",
+              "start": 0,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components",
+              "start": 48,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws/helpers",
+              "start": 96,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws/providers",
+              "start": 144,
+              "length": 48,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws/step-functions",
+              "start": 192,
+              "length": 48,
+              "transform": {
+                "transpose": 3,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/aws",
+              "start": 240,
+              "length": 96,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components/cloudflare",
+              "start": 336,
+              "length": 48,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "pad:platform/src/components",
+              "start": 384,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "percussion",
+          "name": "percussion",
+          "role": "percussion",
+          "register": "mid",
+          "parts": [
+            {
+              "motif": "groove:platform/src/components:verse",
+              "start": 48,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components:verse",
+              "start": 92,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:platform/src/components/aws/helpers:verse",
+              "start": 96,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components/aws/helpers:verse",
+              "start": 140,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:platform/src/components/aws/step-functions:verse",
+              "start": 192,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components/aws/step-functions:verse",
+              "start": 236,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:platform/src/components/aws:chorus",
+              "start": 240,
+              "length": 92,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components/aws:chorus",
+              "start": 332,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "groove:platform/src/components/cloudflare:verse",
+              "start": 336,
+              "length": 44,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "fill:platform/src/components/cloudflare:verse",
+              "start": 380,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "counter",
+          "name": "counter",
+          "role": "counter",
+          "register": "mid",
+          "parts": [
+            {
+              "motif": "phrase:platform/src/components:1",
+              "start": 48,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 52,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:1",
+              "start": 60,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 64,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:1",
+              "start": 72,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 76,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:1",
+              "start": 84,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components:2",
+              "start": 88,
+              "length": 8,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 240,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 244,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 248,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 252,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 256,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 260,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 264,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 268,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 272,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 276,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 280,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 284,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 288,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 292,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 296,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 300,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 304,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 308,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 312,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 316,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 320,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 324,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:2",
+              "start": 328,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/aws:1",
+              "start": 332,
+              "length": 4,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 336,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:1",
+              "start": 344,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 352,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:1",
+              "start": 360,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:2",
+              "start": 368,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "phrase:platform/src/components/cloudflare:1",
+              "start": 376,
+              "length": 8,
+              "transform": {
+                "transpose": 5,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "arp",
+          "name": "arp",
+          "role": "arp",
+          "register": "high",
+          "parts": [
+            {
+              "motif": "arp:platform/src/components",
+              "start": 48,
+              "length": 48,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            },
+            {
+              "motif": "arp:platform/src/components/aws",
+              "start": 240,
+              "length": 96,
+              "transform": {
+                "transpose": 0,
+                "invert": false,
+                "octave": 0,
+                "stretch": 1
+              }
+            }
+          ]
+        }
+      ],
+      "motifs": [
+        {
+          "id": "theme",
+          "source": {
+            "project": "sdk/js/tsconfig.json",
+            "files": [
+              "sdk/js/src/resource/index.ts",
+              "sdk/js/src/resource/node.ts",
+              "sdk/js/src/resource/shared.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 1.5,
+              "velocity": 100
+            },
+            {
+              "degree": -2,
+              "start": 1.5,
+              "duration": 1.5,
+              "velocity": 74
+            },
+            {
+              "degree": -3,
+              "start": 3,
+              "duration": 2,
+              "velocity": 86
+            }
+          ],
+          "length": 8
+        },
+        {
+          "id": "pad:platform/src/components",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/error.ts",
+              "platform/src/components/rpc/rpc.ts"
+            ],
+            "structure": "clusters"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 6,
+              "start": 0,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 3,
+              "start": 4,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 5,
+              "start": 4,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 7,
+              "start": 4,
+              "duration": 4,
+              "velocity": 65
+            },
+            {
+              "degree": 9,
+              "start": 4,
+              "duration": 4,
+              "velocity": 65
+            }
+          ],
+          "length": 8
+        },
+        {
+          "id": "bass:platform/src/components",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/error.ts",
+              "platform/src/components/rpc/rpc.ts"
+            ],
+            "structure": "clusters"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.9,
+              "velocity": 110
+            },
+            {
+              "degree": -1,
+              "start": 1,
+              "duration": 0.9,
+              "velocity": 98
+            },
+            {
+              "degree": -3,
+              "start": 2,
+              "duration": 0.9,
+              "velocity": 98
+            },
+            {
+              "degree": 4,
+              "start": 3,
+              "duration": 0.9,
+              "velocity": 98
+            },
+            {
+              "degree": 3,
+              "start": 4,
+              "duration": 0.9,
+              "velocity": 110
+            },
+            {
+              "degree": 2,
+              "start": 5,
+              "duration": 0.9,
+              "velocity": 98
+            },
+            {
+              "degree": 0,
+              "start": 6,
+              "duration": 0.9,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 7,
+              "duration": 0.9,
+              "velocity": 98
+            }
+          ],
+          "length": 8
+        },
+        {
+          "id": "groove:platform/src/components:verse",
+          "source": {
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/input.ts",
+              "platform/src/components/error.ts",
+              "platform/src/components/naming.ts",
+              "platform/src/components/duration.ts",
+              "platform/src/components/rpc/rpc.ts",
+              "platform/src/components/size.ts",
+              "platform/src/components/cpu.ts",
+              "platform/src/components/esbuild.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 0,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:platform/src/components:verse",
+          "source": {
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/input.ts",
+              "platform/src/components/error.ts",
+              "platform/src/components/naming.ts",
+              "platform/src/components/duration.ts",
+              "platform/src/components/rpc/rpc.ts",
+              "platform/src/components/size.ts",
+              "platform/src/components/cpu.ts",
+              "platform/src/components/esbuild.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 113
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "phrase:platform/src/components:1",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/linkable.ts",
+              "platform/src/components/link.ts",
+              "platform/src/components/error.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 1,
+              "velocity": 100
+            },
+            {
+              "degree": 6,
+              "start": 1,
+              "duration": 1,
+              "velocity": 86
+            },
+            {
+              "degree": 7,
+              "start": 2,
+              "duration": 2,
+              "velocity": 86
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "phrase:platform/src/components:2",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/experimental/dev-command.ts",
+              "platform/src/components/component.ts",
+              "platform/src/components/error.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 1,
+              "velocity": 100
+            },
+            {
+              "degree": 8,
+              "start": 1.5,
+              "duration": 1,
+              "velocity": 74
+            },
+            {
+              "degree": 7,
+              "start": 2.5,
+              "duration": 2,
+              "velocity": 74
+            }
+          ],
+          "length": 8
+        },
+        {
+          "id": "arp:platform/src/components",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components",
+            "files": [
+              "platform/src/components/link.ts",
+              "platform/src/components/linkable.ts"
+            ],
+            "structure": "cycle"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 2,
+              "start": 0.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 0,
+              "start": 1,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 0,
+              "start": 3,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 4,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 5,
+              "start": 4.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 5,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 5,
+              "start": 5.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 6,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 5,
+              "start": 6.5,
+              "duration": 0.4,
+              "velocity": 70
+            },
+            {
+              "degree": 3,
+              "start": 7,
+              "duration": 0.4,
+              "velocity": 92
+            },
+            {
+              "degree": 5,
+              "start": 7.5,
+              "duration": 0.4,
+              "velocity": 70
+            }
+          ],
+          "length": 8
+        },
+        {
+          "id": "bass:platform/src/components/aws/helpers",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws/helpers",
+            "files": [
+              "platform/src/components/aws/helpers/function-builder.ts",
+              "platform/src/components/aws/helpers/arn.ts",
+              "platform/src/components/aws/helpers/provider.ts",
+              "platform/src/components/aws/helpers/site-builder.ts"
+            ],
+            "structure": "central-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.9,
+              "velocity": 109
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 4,
+              "start": 2,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 3,
+              "start": 3,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 0.9,
+              "velocity": 108
+            },
+            {
+              "degree": 3,
+              "start": 5,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 1,
+              "start": 6,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 6,
+              "start": 7,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 5,
+              "start": 8,
+              "duration": 0.9,
+              "velocity": 105
+            },
+            {
+              "degree": 4,
+              "start": 9,
+              "duration": 0.9,
+              "velocity": 93
+            },
+            {
+              "degree": 2,
+              "start": 10,
+              "duration": 0.9,
+              "velocity": 93
+            },
+            {
+              "degree": 3,
+              "start": 11,
+              "duration": 0.9,
+              "velocity": 93
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 0.9,
+              "velocity": 103
+            },
+            {
+              "degree": 1,
+              "start": 13,
+              "duration": 0.9,
+              "velocity": 91
+            },
+            {
+              "degree": -1,
+              "start": 14,
+              "duration": 0.9,
+              "velocity": 91
+            },
+            {
+              "degree": 1,
+              "start": 15,
+              "duration": 0.9,
+              "velocity": 91
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "pad:platform/src/components/aws/helpers",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws/helpers",
+            "files": [
+              "platform/src/components/aws/helpers/function-builder.ts",
+              "platform/src/components/aws/helpers/arn.ts",
+              "platform/src/components/aws/helpers/provider.ts",
+              "platform/src/components/aws/helpers/site-builder.ts"
+            ],
+            "structure": "central-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 6,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 6,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 8,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 10,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 5,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 7,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 9,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 11,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 6,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 8,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "groove:platform/src/components/aws/helpers:verse",
+          "source": {
+            "subsystem": "platform/src/components/aws/helpers",
+            "files": [
+              "platform/src/components/aws/helpers/load-balancer.ts",
+              "platform/src/components/aws/helpers/client.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:platform/src/components/aws/helpers:verse",
+          "source": {
+            "subsystem": "platform/src/components/aws/helpers",
+            "files": [
+              "platform/src/components/aws/helpers/load-balancer.ts",
+              "platform/src/components/aws/helpers/client.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "pad:platform/src/components/aws/providers",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws/providers",
+            "files": [
+              "platform/src/components/aws/providers/kv-keys.ts",
+              "platform/src/components/aws/providers/kv-routes-update.ts",
+              "platform/src/components/aws/providers/hosted-zone-lookup.ts",
+              "platform/src/components/aws/providers/function-environment-update.ts"
+            ],
+            "structure": "central-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 6,
+              "start": 0,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 6,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 8,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 10,
+              "start": 4,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 5,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 7,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 9,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 11,
+              "start": 8,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 6,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 8,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            },
+            {
+              "degree": 10,
+              "start": 12,
+              "duration": 4,
+              "velocity": 56
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "bass:platform/src/components/aws/step-functions",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws/step-functions",
+            "files": [
+              "platform/src/components/aws/step-functions/state.ts",
+              "platform/src/components/aws/step-functions/task.ts",
+              "platform/src/components/aws/step-functions/choice.ts",
+              "platform/src/components/aws/step-functions/fail.ts"
+            ],
+            "structure": "central-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.9,
+              "velocity": 109
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 4,
+              "start": 2,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 0.9,
+              "velocity": 94
+            },
+            {
+              "degree": 4,
+              "start": 5,
+              "duration": 0.9,
+              "velocity": 82
+            },
+            {
+              "degree": 6,
+              "start": 6,
+              "duration": 0.9,
+              "velocity": 82
+            },
+            {
+              "degree": 2,
+              "start": 7,
+              "duration": 0.9,
+              "velocity": 82
+            },
+            {
+              "degree": 3,
+              "start": 8,
+              "duration": 0.9,
+              "velocity": 87
+            },
+            {
+              "degree": 2,
+              "start": 9,
+              "duration": 0.9,
+              "velocity": 75
+            },
+            {
+              "degree": 0,
+              "start": 10,
+              "duration": 0.9,
+              "velocity": 75
+            },
+            {
+              "degree": 3,
+              "start": 11,
+              "duration": 0.9,
+              "velocity": 75
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 0.9,
+              "velocity": 87
+            },
+            {
+              "degree": 1,
+              "start": 13,
+              "duration": 0.9,
+              "velocity": 75
+            },
+            {
+              "degree": -1,
+              "start": 14,
+              "duration": 0.9,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 15,
+              "duration": 0.9,
+              "velocity": 75
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "pad:platform/src/components/aws/step-functions",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws/step-functions",
+            "files": [
+              "platform/src/components/aws/step-functions/state.ts",
+              "platform/src/components/aws/step-functions/task.ts",
+              "platform/src/components/aws/step-functions/choice.ts",
+              "platform/src/components/aws/step-functions/fail.ts"
+            ],
+            "structure": "central-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 6,
+              "start": 0,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 6,
+              "start": 4,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 8,
+              "start": 4,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 3,
+              "start": 8,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 5,
+              "start": 8,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 7,
+              "start": 8,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 9,
+              "start": 8,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 6,
+              "start": 12,
+              "duration": 4,
+              "velocity": 61
+            },
+            {
+              "degree": 8,
+              "start": 12,
+              "duration": 4,
+              "velocity": 61
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "groove:platform/src/components/aws/step-functions:verse",
+          "source": {
+            "subsystem": "platform/src/components/aws/step-functions",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 1,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:platform/src/components/aws/step-functions:verse",
+          "source": {
+            "subsystem": "platform/src/components/aws/step-functions",
+            "files": [],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 113
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "bass:platform/src/components/aws",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws",
+            "files": [
+              "platform/src/components/aws/ssr-site.ts",
+              "platform/src/components/aws/vpc.ts",
+              "platform/src/components/aws/apigatewayv2-base-route.ts",
+              "platform/src/components/aws/bucket.ts"
+            ],
+            "structure": "clusters"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.9,
+              "velocity": 108
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 4,
+              "start": 2,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 3,
+              "start": 3,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 0.9,
+              "velocity": 104
+            },
+            {
+              "degree": 6,
+              "start": 5,
+              "duration": 0.9,
+              "velocity": 92
+            },
+            {
+              "degree": 8,
+              "start": 6,
+              "duration": 0.9,
+              "velocity": 92
+            },
+            {
+              "degree": 1,
+              "start": 7,
+              "duration": 0.9,
+              "velocity": 92
+            },
+            {
+              "degree": 2,
+              "start": 8,
+              "duration": 0.9,
+              "velocity": 106
+            },
+            {
+              "degree": 1,
+              "start": 9,
+              "duration": 0.9,
+              "velocity": 94
+            },
+            {
+              "degree": -1,
+              "start": 10,
+              "duration": 0.9,
+              "velocity": 94
+            },
+            {
+              "degree": 5,
+              "start": 11,
+              "duration": 0.9,
+              "velocity": 94
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 0.9,
+              "velocity": 106
+            },
+            {
+              "degree": 6,
+              "start": 13,
+              "duration": 0.9,
+              "velocity": 94
+            },
+            {
+              "degree": 8,
+              "start": 14,
+              "duration": 0.9,
+              "velocity": 94
+            },
+            {
+              "degree": -1,
+              "start": 15,
+              "duration": 0.9,
+              "velocity": 94
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "pad:platform/src/components/aws",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws",
+            "files": [
+              "platform/src/components/aws/ssr-site.ts",
+              "platform/src/components/aws/vpc.ts",
+              "platform/src/components/aws/apigatewayv2-base-route.ts",
+              "platform/src/components/aws/bucket.ts"
+            ],
+            "structure": "clusters"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 0,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 4,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 4,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 10,
+              "start": 4,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 8,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 8,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 8,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 8,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 12,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 12,
+              "duration": 4,
+              "velocity": 70
+            },
+            {
+              "degree": 10,
+              "start": 12,
+              "duration": 4,
+              "velocity": 70
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "groove:platform/src/components/aws:chorus",
+          "source": {
+            "subsystem": "platform/src/components/aws",
+            "files": ["platform/src/components/aws/logging.ts"],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 1,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:platform/src/components/aws:chorus",
+          "source": {
+            "subsystem": "platform/src/components/aws",
+            "files": ["platform/src/components/aws/logging.ts"],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 113
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "phrase:platform/src/components/aws:2",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws",
+            "files": [
+              "platform/src/components/aws/permission.ts",
+              "platform/src/components/aws/function.ts",
+              "platform/src/components/aws/router.ts",
+              "platform/src/components/aws/cdn.ts",
+              "platform/src/components/aws/dns-validated-certificate.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 1,
+              "velocity": 100
+            },
+            {
+              "degree": 3,
+              "start": 1,
+              "duration": 0.5,
+              "velocity": 86
+            },
+            {
+              "degree": 1,
+              "start": 1.5,
+              "duration": 0.5,
+              "velocity": 74
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.5,
+              "velocity": 86
+            },
+            {
+              "degree": 2,
+              "start": 2.5,
+              "duration": 1,
+              "velocity": 74
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "phrase:platform/src/components/aws:1",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws",
+            "files": [
+              "platform/src/components/aws/ssr-site.ts",
+              "platform/src/components/aws/function.ts",
+              "platform/src/components/aws/permission.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 7,
+              "start": 0,
+              "duration": 0.5,
+              "velocity": 100
+            },
+            {
+              "degree": 9,
+              "start": 0.5,
+              "duration": 0.5,
+              "velocity": 74
+            },
+            {
+              "degree": 7,
+              "start": 1,
+              "duration": 1,
+              "velocity": 86
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "arp:platform/src/components/aws",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/aws",
+            "files": [
+              "platform/src/components/aws/function.ts",
+              "platform/src/components/aws/step-functions/state.ts",
+              "platform/src/components/aws/helpers/function-builder.ts",
+              "platform/src/components/aws/ssr-site.ts",
+              "platform/src/components/aws/helpers/arn.ts",
+              "platform/src/components/aws/permission.ts",
+              "platform/src/components/aws/queue.ts",
+              "platform/src/components/cloudflare/worker.ts"
+            ],
+            "structure": "cycle"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 7,
+              "start": 0.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 0.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 7,
+              "start": 0.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 1.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 1.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 7,
+              "start": 2.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 2.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 7,
+              "start": 2.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 3.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 3.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 11,
+              "start": 4.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 4.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 11,
+              "start": 4.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 5.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 5.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 5.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 6,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 11,
+              "start": 6.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 6.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 11,
+              "start": 6.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 7,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 7.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 7.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 7.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 8,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 9,
+              "start": 8.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 8.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 9,
+              "start": 8.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 9,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 9.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 9.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 9.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 2,
+              "start": 10,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 9,
+              "start": 10.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 10.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 9,
+              "start": 10.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 11,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 11.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 11.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 11.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 11,
+              "start": 12.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 12.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 11,
+              "start": 12.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 13,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 13.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 13.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 13.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 4,
+              "start": 14,
+              "duration": 0.2,
+              "velocity": 92
+            },
+            {
+              "degree": 11,
+              "start": 14.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 14.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 11,
+              "start": 14.75,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 15,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 15.25,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 6,
+              "start": 15.5,
+              "duration": 0.2,
+              "velocity": 70
+            },
+            {
+              "degree": 8,
+              "start": 15.75,
+              "duration": 0.2,
+              "velocity": 70
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "bass:platform/src/components/cloudflare",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/cloudflare",
+            "files": [
+              "platform/src/components/cloudflare/binding.ts",
+              "platform/src/components/cloudflare/helpers/fetch.ts",
+              "platform/src/components/cloudflare/helpers/validation.ts",
+              "platform/src/components/cloudflare/helpers/worker-builder.ts"
+            ],
+            "structure": "clusters"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.9,
+              "velocity": 108
+            },
+            {
+              "degree": -1,
+              "start": 1,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": -3,
+              "start": 2,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 3,
+              "start": 3,
+              "duration": 0.9,
+              "velocity": 96
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 0.9,
+              "velocity": 109
+            },
+            {
+              "degree": 1,
+              "start": 5,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": -1,
+              "start": 6,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 4,
+              "start": 7,
+              "duration": 0.9,
+              "velocity": 97
+            },
+            {
+              "degree": 3,
+              "start": 8,
+              "duration": 0.9,
+              "velocity": 104
+            },
+            {
+              "degree": 2,
+              "start": 9,
+              "duration": 0.9,
+              "velocity": 92
+            },
+            {
+              "degree": 0,
+              "start": 10,
+              "duration": 0.9,
+              "velocity": 92
+            },
+            {
+              "degree": 3,
+              "start": 11,
+              "duration": 0.9,
+              "velocity": 92
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 0.9,
+              "velocity": 101
+            },
+            {
+              "degree": 1,
+              "start": 13,
+              "duration": 0.9,
+              "velocity": 89
+            },
+            {
+              "degree": -1,
+              "start": 14,
+              "duration": 0.9,
+              "velocity": 89
+            },
+            {
+              "degree": 1,
+              "start": 15,
+              "duration": 0.9,
+              "velocity": 89
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "pad:platform/src/components/cloudflare",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/cloudflare",
+            "files": [
+              "platform/src/components/cloudflare/binding.ts",
+              "platform/src/components/cloudflare/helpers/fetch.ts",
+              "platform/src/components/cloudflare/helpers/validation.ts",
+              "platform/src/components/cloudflare/helpers/worker-builder.ts"
+            ],
+            "structure": "clusters"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 6,
+              "start": 0,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 2,
+              "start": 4,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 4,
+              "start": 4,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 6,
+              "start": 4,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 8,
+              "start": 4,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 3,
+              "start": 8,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 5,
+              "start": 8,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 7,
+              "start": 8,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 9,
+              "start": 8,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 2,
+              "start": 12,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 4,
+              "start": 12,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 6,
+              "start": 12,
+              "duration": 4,
+              "velocity": 67
+            },
+            {
+              "degree": 8,
+              "start": 12,
+              "duration": 4,
+              "velocity": 67
+            }
+          ],
+          "length": 16
+        },
+        {
+          "id": "groove:platform/src/components/cloudflare:verse",
+          "source": {
+            "subsystem": "platform/src/components/cloudflare",
+            "files": [
+              "platform/src/components/cloudflare/account-id.ts",
+              "platform/src/components/cloudflare/helpers/fetch.ts",
+              "platform/src/components/cloudflare/helpers/wrangler.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 1,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 52
+            },
+            {
+              "degree": 2,
+              "start": 1.5,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 62
+            },
+            {
+              "degree": 0,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 34
+            },
+            {
+              "degree": 2,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 80
+            },
+            {
+              "degree": 2,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 62
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "fill:platform/src/components/cloudflare:verse",
+          "source": {
+            "subsystem": "platform/src/components/cloudflare",
+            "files": [
+              "platform/src/components/cloudflare/account-id.ts",
+              "platform/src/components/cloudflare/helpers/fetch.ts",
+              "platform/src/components/cloudflare/helpers/wrangler.ts"
+            ],
+            "structure": "leaf-files"
+          },
+          "notes": [
+            {
+              "degree": 0,
+              "start": 0,
+              "duration": 0.25,
+              "velocity": 110
+            },
+            {
+              "degree": 1,
+              "start": 2,
+              "duration": 0.25,
+              "velocity": 60
+            },
+            {
+              "degree": 1,
+              "start": 2.25,
+              "duration": 0.25,
+              "velocity": 68
+            },
+            {
+              "degree": 1,
+              "start": 2.5,
+              "duration": 0.25,
+              "velocity": 75
+            },
+            {
+              "degree": 1,
+              "start": 2.75,
+              "duration": 0.25,
+              "velocity": 83
+            },
+            {
+              "degree": 1,
+              "start": 3,
+              "duration": 0.25,
+              "velocity": 90
+            },
+            {
+              "degree": 1,
+              "start": 3.25,
+              "duration": 0.25,
+              "velocity": 98
+            },
+            {
+              "degree": 1,
+              "start": 3.5,
+              "duration": 0.25,
+              "velocity": 105
+            },
+            {
+              "degree": 1,
+              "start": 3.75,
+              "duration": 0.25,
+              "velocity": 113
+            }
+          ],
+          "length": 4
+        },
+        {
+          "id": "phrase:platform/src/components/cloudflare:2",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/cloudflare",
+            "files": [
+              "platform/src/components/cloudflare/experimental/solid-start.ts",
+              "platform/src/components/cloudflare/ssr-site.ts",
+              "platform/src/components/cloudflare/helpers/wrangler.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 7,
+              "start": 0,
+              "duration": 1,
+              "velocity": 100
+            },
+            {
+              "degree": 9,
+              "start": 1.5,
+              "duration": 0.5,
+              "velocity": 74
+            },
+            {
+              "degree": 7,
+              "start": 2.5,
+              "duration": 2,
+              "velocity": 74
+            }
+          ],
+          "length": 8
+        },
+        {
+          "id": "phrase:platform/src/components/cloudflare:1",
+          "source": {
+            "project": "platform/tsconfig.json",
+            "subsystem": "platform/src/components/cloudflare",
+            "files": [
+              "platform/src/components/cloudflare/worker.ts",
+              "platform/src/components/cloudflare/providers/zone-lookup.ts",
+              "platform/src/components/cloudflare/helpers/fetch.ts"
+            ],
+            "structure": "dependency-path"
+          },
+          "notes": [
+            {
+              "degree": 4,
+              "start": 0,
+              "duration": 0.5,
+              "velocity": 100
+            },
+            {
+              "degree": 2,
+              "start": 1,
+              "duration": 1.5,
+              "velocity": 86
+            },
+            {
+              "degree": 4,
+              "start": 3,
+              "duration": 2,
+              "velocity": 86
+            }
+          ],
+          "length": 8
+        }
+      ],
+      "sections": [
+        {
+          "name": "intro",
+          "form": "intro",
+          "source": "platform/src/components",
+          "start": 0,
+          "length": 48,
+          "intensity": 0.3,
+          "area": 0
+        },
+        {
+          "name": "components",
+          "form": "verse",
+          "source": "platform/src/components",
+          "start": 48,
+          "length": 48,
+          "intensity": 0.7191464821222606,
+          "area": 0
+        },
+        {
+          "name": "helpers",
+          "form": "verse",
+          "source": "platform/src/components/aws/helpers",
+          "start": 96,
+          "length": 48,
+          "intensity": 0.5119534444793961,
+          "area": 0
+        },
+        {
+          "name": "providers",
+          "form": "breakdown",
+          "source": "platform/src/components/aws/providers",
+          "start": 144,
+          "length": 48,
+          "intensity": 0.35,
+          "area": 3
+        },
+        {
+          "name": "step-functions",
+          "form": "verse",
+          "source": "platform/src/components/aws/step-functions",
+          "start": 192,
+          "length": 48,
+          "intensity": 0.616878123798539,
+          "area": 3
+        },
+        {
+          "name": "aws",
+          "form": "chorus",
+          "source": "platform/src/components/aws",
+          "start": 240,
+          "length": 96,
+          "intensity": 1,
+          "area": 0
+        },
+        {
+          "name": "cloudflare",
+          "form": "verse",
+          "source": "platform/src/components/cloudflare",
+          "start": 336,
+          "length": 48,
+          "intensity": 0.7941176470588236,
+          "area": 5
+        },
+        {
+          "name": "outro",
+          "form": "outro",
+          "source": "platform/src/components",
+          "start": 384,
+          "length": 48,
           "intensity": 0.3,
           "area": 0
         }
@@ -13195,7 +17061,7 @@
     "leafShare": 0.1700404858299595,
     "fifths": 6,
     "genre": {
-      "genre": "lofi",
+      "genre": "jazz",
       "energy": 1.7125506072874495,
       "tangle": 0.4777327935222672
     },

@@ -68,17 +68,31 @@ function provenance(region: Region, source: ChordSource): Provenance {
   }
 }
 
+/** Chord tones above the root, as scale steps: a triad, a seventh, a ninth. */
+const TRIAD = [0, 2, 4]
+const SEVENTH = [0, 2, 4, 6]
+const NINTH = [0, 2, 4, 6, 8]
+
 /**
- * Sustained chords, one bar each. A region denser than the codebase around
- * it adds the seventh: tangled code, richer chords.
+ * The chord tones for a region. A region denser than the codebase around it
+ * adds the seventh: tangled code, richer chords. With `sevenths`, the genre
+ * always adds it, and dense code adds the ninth as well.
  */
+function voicing(structure: Structure, region: Region, sevenths: boolean) {
+  const dense = region.density > structure.meanFanOut
+  if (sevenths) return dense ? NINTH : SEVENTH
+  return dense ? SEVENTH : TRIAD
+}
+
+/** Sustained chords, one bar each, voiced as `voicing` says. */
 export function padMotif(
   structure: Structure,
   region: Region,
   source: ChordSource,
+  sevenths = false,
 ): Motif {
   const roots = progression(source.nodes)
-  const tones = region.density > structure.meanFanOut ? [0, 2, 4, 6] : [0, 2, 4]
+  const tones = voicing(structure, region, sevenths)
   const velocity = 56 + quantise(region.density / (region.density + 4), 0, 32)
   const notes: MotifNote[] = roots.flatMap((root, bar) =>
     tones.map((tone) => ({
@@ -96,8 +110,66 @@ export function padMotif(
   }
 }
 
-/** One bar of bass under `root` in `style`, starts relative to the bar. */
-function bar(style: BassStyle, root: number, node: StructureNode): MotifNote[] {
+/** What one bar of bass is built from. */
+interface BassBar {
+  readonly root: number
+  /** The next bar's root, which a walking line steps towards. */
+  readonly next: number
+  readonly node: StructureNode
+  /** A note, accented or not, at the bar's velocity. */
+  readonly note: (
+    degree: number,
+    start: number,
+    duration: number,
+    accent: boolean,
+  ) => MotifNote
+}
+
+/** Each bass style's bar, starts relative to the bar. */
+const BASS: Readonly<Record<BassStyle, (b: BassBar) => MotifNote[]>> = {
+  held: ({ root, note }) => [note(root, 0, BAR, true)],
+  // A file that depends on a lot moves to the fifth halfway through.
+  sub: ({ root, node, note }) => [
+    note(root, 0, 2, true),
+    note(node.rank.fanOut > 0.5 ? root + 4 : root, 2, 2, false),
+  ],
+  // Between the kicks, jumping the octave on the and-of-two and -four.
+  offbeat: ({ root, note }) =>
+    [0, 1, 2, 3].map((beat) =>
+      note(beat % 2 === 1 ? root + 7 : root, beat + 0.5, 0.45, beat === 0),
+    ),
+  // Past two notes a bar, every other is the fifth, so busy lines still
+  // outline the chord.
+  pulse: ({ root, node, note }) => {
+    const pulses = [1, 2, 4, 8][quantise(node.rank.fanOut, 0, 3)]!
+    const step = BAR / pulses
+    return Array.from({ length: pulses }, (_, k) =>
+      note(
+        pulses > 2 && k % 2 === 1 ? root + 4 : root,
+        k * step,
+        step * 0.9,
+        k === 0,
+      ),
+    )
+  },
+  // Root, through the chord, then a step from the next root: a file that
+  // depends on a lot walks up, one that depends on little walks down.
+  walking: ({ root, next, node, note }) => {
+    const up = node.rank.fanOut > 0.5
+    const line = up
+      ? [root, root + 2, root + 4, next - 1]
+      : [root, root - 1, root - 3, next + 1]
+    return line.map((degree, beat) => note(degree, beat, 0.9, beat === 0))
+  },
+}
+
+/** One bar of bass under `root` in `style`. */
+function bar(
+  style: BassStyle,
+  root: number,
+  next: number,
+  node: StructureNode,
+): MotifNote[] {
   const velocity = 80 + quantise(node.rank.centrality, 0, 30)
   const note = (
     degree: number,
@@ -110,34 +182,7 @@ function bar(style: BassStyle, root: number, node: StructureNode): MotifNote[] {
     duration,
     velocity: accent ? velocity : velocity - 12,
   })
-  switch (style) {
-    case 'held':
-      return [note(root, 0, BAR, true)]
-    case 'sub': {
-      // A file that depends on a lot moves to the fifth halfway through.
-      const second = node.rank.fanOut > 0.5 ? root + 4 : root
-      return [note(root, 0, 2, true), note(second, 2, 2, false)]
-    }
-    case 'offbeat':
-      // Between the kicks, jumping the octave on the and-of-two and -four.
-      return [0, 1, 2, 3].map((beat) =>
-        note(beat % 2 === 1 ? root + 7 : root, beat + 0.5, 0.45, beat === 0),
-      )
-    case 'pulse': {
-      // Past two notes a bar, every other is the fifth, so busy lines still
-      // outline the chord.
-      const pulses = [1, 2, 4, 8][quantise(node.rank.fanOut, 0, 3)]!
-      const step = BAR / pulses
-      return Array.from({ length: pulses }, (_, k) =>
-        note(
-          pulses > 2 && k % 2 === 1 ? root + 4 : root,
-          k * step,
-          step * 0.9,
-          k === 0,
-        ),
-      )
-    }
-  }
+  return BASS[style]({ root, next, node, note })
 }
 
 /**
@@ -152,10 +197,10 @@ export function bassMotif(
 ): Motif {
   const roots = progression(source.nodes)
   const notes = roots.flatMap((root, i) =>
-    bar(style, root, source.nodes[i]!).map((n) => ({
-      ...n,
-      start: i * BAR + n.start,
-    })),
+    // The progression loops, so the last bar walks back to the first.
+    bar(style, root, roots[(i + 1) % roots.length]!, source.nodes[i]!).map(
+      (n) => ({ ...n, start: i * BAR + n.start }),
+    ),
   )
   return {
     id: `bass:${region.path}`,

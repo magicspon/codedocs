@@ -9,7 +9,13 @@ import type {
   Section,
   Song,
 } from '@codedocs/codesong/browser'
-import { BUSY, GENRES, NOTE_NAMES, TANGLED } from '@codedocs/codesong/browser'
+import {
+  BUSY,
+  GENRES,
+  KNOTTED,
+  NOTE_NAMES,
+  TANGLED,
+} from '@codedocs/codesong/browser'
 
 /**
  * Why the piece is the way it is, in plain words. Each explanation restates
@@ -42,21 +48,24 @@ export function keyReason({ composition, evidence }: Song): string {
 export function genreReason({ composition, evidence }: Song): string[] {
   const { genre, energy, tangle } = evidence.genre
   const busy = energy >= BUSY ? 'busy' : 'calm'
-  const tangled = tangle >= TANGLED ? 'tangled' : 'orderly'
+  const tangled =
+    tangle >= KNOTTED ? 'knotted' : tangle >= TANGLED ? 'tangled' : 'orderly'
   const reason = [
     `Inside each part of the code, a file uses ${decimal(energy)} other ` +
       `files on average, so the code is ${busy} (busy from ${BUSY}). ` +
       `${percent(tangle)} of files sit in loops of files that depend on each ` +
-      `other, so it is ${tangled} (tangled from ${percent(TANGLED)}).`,
+      `other, so it is ${tangled} (tangled from ${percent(TANGLED)}, knotted ` +
+      `from ${percent(KNOTTED)}).`,
     `Calm, orderly code suggests ambient; calm, tangled code lo-fi hip hop; ` +
-      `busy, orderly code techno; busy, tangled code drum and bass. This ` +
-      `code suggests ${GENRES[genre].label.toLowerCase()}.`,
+      `busy, orderly code techno; busy, tangled code drum and bass. Knotted ` +
+      `code, busy or calm, suggests jazz. This code suggests ` +
+      `${GENRES[genre].label.toLowerCase()}.`,
   ]
   if (composition.genre !== genre) {
     reason.push(
       `You are hearing it as ${GENRES[composition.genre].label.toLowerCase()} ` +
         `instead. The notes still come from the same code; only the tempo, ` +
-        `scale, drums, bass rhythm and sounds change.`,
+        `scale, section lengths, drums, bass rhythm and sounds change.`,
     )
   }
   return reason
