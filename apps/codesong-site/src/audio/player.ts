@@ -1,5 +1,6 @@
 import type { Composition, RealisedTrack } from '@codedocs/codesong/browser'
 import * as Tone from 'tone'
+import { GENRE_SOUND } from './genres.ts'
 import { voice, type Voice } from './instruments.ts'
 import { defaults, num, type Sound } from './sound.ts'
 
@@ -17,6 +18,7 @@ export class Player {
   readonly #sounds = new Map<string, Sound>()
   readonly #parts: Tone.Part[] = []
   readonly #reverb: Tone.Reverb
+  readonly #tone: Tone.Filter
   readonly #onEnd: () => void
 
   /**
@@ -32,7 +34,10 @@ export class Player {
     this.#secondsPerBeat = 60 / composition.tempo
     this.#end = beats * this.#secondsPerBeat
     this.#onEnd = onEnd
-    this.#reverb = new Tone.Reverb({ decay: 3.5, wet: 0.25 }).toDestination()
+    // The genre's room, then its tone over the whole mix.
+    const room = GENRE_SOUND[composition.genre]
+    this.#tone = new Tone.Filter(room.tone, 'lowpass').toDestination()
+    this.#reverb = new Tone.Reverb(room.reverb).connect(this.#tone)
 
     const transport = Tone.getTransport()
     transport.cancel()
@@ -42,7 +47,7 @@ export class Player {
 
     for (const track of tracks) {
       const channel = new Tone.Channel().connect(this.#reverb)
-      const sound = voice(track.role, channel)
+      const sound = voice(track.role, composition.genre, channel)
       const part = new Tone.Part<{
         time: number
         note: RealisedTrack['notes'][number]
@@ -61,7 +66,7 @@ export class Player {
       ).start(0)
       this.#channels.set(track.id, channel)
       this.#voices.set(track.id, sound)
-      this.#sounds.set(track.id, defaults(track.role))
+      this.#sounds.set(track.id, defaults(track.role, composition.genre))
       this.#parts.push(part)
     }
     transport.scheduleOnce((time) => {
@@ -141,6 +146,7 @@ export class Player {
     for (const sound of this.#voices.values()) sound.dispose()
     for (const channel of this.#channels.values()) channel.dispose()
     this.#reverb.dispose()
+    this.#tone.dispose()
   }
 
   #silence(): void {

@@ -8,6 +8,7 @@ import type { Motif, MotifNote, Provenance } from '../model.ts'
 import type { Region } from '../regions.ts'
 import type { Structure, StructureNode } from '../structure.ts'
 import { quantise } from '../theory.ts'
+import type { BassStyle } from './genre.ts'
 
 /** Chords per progression, one per bar. */
 const CHORDS = 4
@@ -95,25 +96,67 @@ export function padMotif(
   }
 }
 
-/**
- * The chord roots again, with a rhythm per bar from that chord's file: a file
- * that depends on a lot pulses faster. Past two notes a bar, every other note
- * is the fifth, so busy bass lines still outline the chord.
- */
-export function bassMotif(region: Region, source: ChordSource): Motif {
-  const roots = progression(source.nodes)
-  const notes: MotifNote[] = roots.flatMap((root, bar) => {
-    const node = source.nodes[bar]!
-    const pulses = [1, 2, 4, 8][quantise(node.rank.fanOut, 0, 3)]!
-    const step = BAR / pulses
-    const velocity = 80 + quantise(node.rank.centrality, 0, 30)
-    return Array.from({ length: pulses }, (_, k) => ({
-      degree: pulses > 2 && k % 2 === 1 ? root + 4 : root,
-      start: bar * BAR + k * step,
-      duration: step * 0.9,
-      velocity: k === 0 ? velocity : velocity - 12,
-    }))
+/** One bar of bass under `root` in `style`, starts relative to the bar. */
+function bar(style: BassStyle, root: number, node: StructureNode): MotifNote[] {
+  const velocity = 80 + quantise(node.rank.centrality, 0, 30)
+  const note = (
+    degree: number,
+    start: number,
+    duration: number,
+    accent: boolean,
+  ): MotifNote => ({
+    degree,
+    start,
+    duration,
+    velocity: accent ? velocity : velocity - 12,
   })
+  switch (style) {
+    case 'held':
+      return [note(root, 0, BAR, true)]
+    case 'sub': {
+      // A file that depends on a lot moves to the fifth halfway through.
+      const second = node.rank.fanOut > 0.5 ? root + 4 : root
+      return [note(root, 0, 2, true), note(second, 2, 2, false)]
+    }
+    case 'offbeat':
+      // Between the kicks, jumping the octave on the and-of-two and -four.
+      return [0, 1, 2, 3].map((beat) =>
+        note(beat % 2 === 1 ? root + 7 : root, beat + 0.5, 0.45, beat === 0),
+      )
+    case 'pulse': {
+      // Past two notes a bar, every other is the fifth, so busy lines still
+      // outline the chord.
+      const pulses = [1, 2, 4, 8][quantise(node.rank.fanOut, 0, 3)]!
+      const step = BAR / pulses
+      return Array.from({ length: pulses }, (_, k) =>
+        note(
+          pulses > 2 && k % 2 === 1 ? root + 4 : root,
+          k * step,
+          step * 0.9,
+          k === 0,
+        ),
+      )
+    }
+  }
+}
+
+/**
+ * The chord roots again, one bar each, in the genre's bass style. Where the
+ * style leaves room, the chord's file decides the rhythm: a file that
+ * depends on a lot moves more.
+ */
+export function bassMotif(
+  region: Region,
+  source: ChordSource,
+  style: BassStyle = 'pulse',
+): Motif {
+  const roots = progression(source.nodes)
+  const notes = roots.flatMap((root, i) =>
+    bar(style, root, source.nodes[i]!).map((n) => ({
+      ...n,
+      start: i * BAR + n.start,
+    })),
+  )
   return {
     id: `bass:${region.path}`,
     source: provenance(region, source),

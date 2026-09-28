@@ -1,4 +1,4 @@
-import type { MusicalRole } from '@codedocs/codesong/browser'
+import type { GenreName, MusicalRole } from '@codedocs/codesong/browser'
 import { DRUM_NOTES } from '@codedocs/codesong/browser'
 import * as Tone from 'tone'
 import { defaults, num, type Sound } from './sound.ts'
@@ -140,9 +140,13 @@ const BUILD: Readonly<Record<MusicalRole, (out: Tone.ToneAudioNode) => Voice>> =
     percussion: drums,
   }
 
-/** Builds the voice for `role` at its default sound, playing into `out`. */
-export function voice(role: MusicalRole, out: Tone.ToneAudioNode): Voice {
+/** Builds the voice for `role` at its default sound in `genre`, playing into `out`. */
+export function voice(
+  role: MusicalRole,
+  genre: GenreName,
+  out: Tone.ToneAudioNode,
+): Voice {
   const sound = BUILD[role](out)
-  sound.tune(defaults(role))
+  sound.tune(defaults(role, genre))
   return sound
 }

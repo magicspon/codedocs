@@ -4,6 +4,13 @@
  */
 
 export { compose, DEFAULT_OPTIONS } from './compose/compose.ts'
+export {
+  GENRE_NAMES,
+  GENRES,
+  suggest,
+  type Genre,
+  type Suggestion,
+} from './compose/genre.ts'
 export type * from './model.ts'
 export {
   evidence,
@@ -11,6 +18,7 @@ export {
   type FileMeasures,
   type RegionEvidence,
   type Song,
+  type SongFile,
 } from './evidence.ts'
 export { toMidi } from './render/midi.ts'
 export {

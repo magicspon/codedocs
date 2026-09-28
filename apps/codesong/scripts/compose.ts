@@ -2,11 +2,13 @@
  * Composes one repository.
  *
  *     pnpm --filter @codedocs/codesong compose <repo | index.db | atlas.json>
- *       [--seed n] [--bars n] [--tempo n] [--scale name] [--tracks n] [--out dir]
+ *       [--genre name] [--seed n] [--bars n] [--tempo n] [--scale name]
+ *       [--tracks n] [--out dir]
  *
  * Writes `<name>.composition.json`, `<name>.mid`, `<name>.live.json` (the
  * plan the Live extension builds from, `pnpm live`) and `<name>.song.json`,
- * the composition with its evidence, which the CodeSong site plays. A
+ * the piece in every genre with its evidence, which the CodeSong site plays.
+ * The genre is the one the code suggests unless `--genre` names one. A
  * repository or index is read through code-art's pipeline; an atlas JSON that
  * code-art already exported is read as it is.
  */
@@ -30,13 +32,17 @@ import {
   DEFAULT_PALETTE,
   evidence,
   findKit,
+  GENRE_NAMES,
+  GENRES,
   livePlan,
   readStructure,
   realise,
   toMidi,
   type ComposeOptions,
+  type Composition,
+  type GenreName,
   type ScaleName,
-  type Song,
+  type SongFile,
 } from '../src/index.ts'
 
 /** pnpm runs scripts from the package directory; paths mean the caller's. */
@@ -46,6 +52,7 @@ const fromCaller = (path: string): string =>
 const { values, positionals } = parseArgs({
   allowPositionals: true,
   options: {
+    genre: { type: 'string' },
     seed: { type: 'string' },
     bars: { type: 'string' },
     tempo: { type: 'string' },
@@ -58,7 +65,7 @@ const { values, positionals } = parseArgs({
 const given = positionals[0]
 if (given === undefined) {
   console.error(
-    'usage: compose <repo | index.db | atlas.json> [--seed n] [--bars n] [--out dir]',
+    'usage: compose <repo | index.db | atlas.json> [--genre name] [--seed n] [--bars n] [--out dir]',
   )
   process.exit(1)
 }
@@ -97,20 +104,27 @@ function number(value: string | undefined, fallback: number): number {
   return n
 }
 
-const scale = values.scale ?? DEFAULT_OPTIONS.scale
-if (!(scale in SCALES)) {
-  console.error(
-    `unknown scale ${scale}; one of ${Object.keys(SCALES).join(', ')}`,
-  )
+/** A name from `known`, or exit saying which names there are. */
+function oneOf<T extends string>(
+  what: string,
+  value: string | undefined,
+  known: readonly string[],
+): T | undefined {
+  if (value === undefined || known.includes(value)) return value as T
+  console.error(`unknown ${what} ${value}; one of ${known.join(', ')}`)
   process.exit(1)
 }
+
 const options: ComposeOptions = {
   ...DEFAULT_OPTIONS,
+  genre:
+    oneOf<GenreName>('genre', values.genre, GENRE_NAMES) ??
+    DEFAULT_OPTIONS.genre,
   seed: number(values.seed, DEFAULT_OPTIONS.seed),
   bars: values.bars === undefined ? 'auto' : number(values.bars, 0),
-  tempo: number(values.tempo, DEFAULT_OPTIONS.tempo),
+  tempo: values.tempo === undefined ? undefined : number(values.tempo, 0),
   tracks: number(values.tracks, DEFAULT_OPTIONS.tracks),
-  scale: scale as ScaleName,
+  scale: oneOf<ScaleName>('scale', values.scale, Object.keys(SCALES)),
 }
 
 const atlas = readAtlas(fromCaller(given))
@@ -134,9 +148,17 @@ writeFileSync(
   live,
   `${JSON.stringify(livePlan(composition, tracks, DEFAULT_PALETTE, kit), null, 2)}\n`,
 )
-const played: Song = {
-  composition,
-  evidence: evidence(analysis, composition, readNames(fromCaller(given))),
+// Every genre for the site, so a listener can switch without recomposing.
+const versions = Object.fromEntries(
+  GENRE_NAMES.map((genre) => [genre, compose(analysis, { ...options, genre })]),
+) as Record<GenreName, Composition>
+const played: SongFile = {
+  versions,
+  evidence: evidence(
+    analysis,
+    Object.values(versions),
+    readNames(fromCaller(given)),
+  ),
 }
 writeFileSync(song, `${JSON.stringify(played, null, 2)}\n`)
 const missing = Object.keys(DEFAULT_PALETTE.kit).filter((v) => !(v in kit))
@@ -146,6 +168,7 @@ const seconds = Math.round((beats * 60) / composition.tempo)
 console.log(`${atlas.name}
   ${atlas.files.length} files, ${structure.nodes.length} composed from
   ${composition.motifs.length} motifs, ${composition.tracks.length} tracks, ${composition.sections.length} sections
+  ${GENRES[composition.genre].label}${options.genre === 'auto' ? ' (suggested by the code)' : ''}
   ${NOTE_NAMES[composition.key]} ${composition.scale}, ${composition.tempo} bpm, ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}
   ${tracks.reduce((n, t) => n + t.notes.length, 0)} notes
 ✓ ${json}

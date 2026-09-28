@@ -62,10 +62,24 @@ function pitcher(composition: Composition, track: Track): Pitcher {
 }
 
 /**
+ * `start` pushed late by `swing` if it falls on an off-beat sixteenth (the
+ * "e" or "a" of a beat), which is what makes a straight beat lean.
+ */
+export function swung(start: number, swing: number): number {
+  const within = start % 0.5
+  return Math.abs(within - 0.25) < 1e-6 ? start + swing : start
+}
+
+/**
  * One part's notes. The motif, stretched and cut to its fragment, loops until
  * the part ends; a note is cut rather than let ring into whatever comes next.
  */
-function partNotes(part: Part, motif: Motif, pitch: Pitcher): NoteEvent[] {
+function partNotes(
+  part: Part,
+  motif: Motif,
+  pitch: Pitcher,
+  swing: number,
+): NoteEvent[] {
   const notes: NoteEvent[] = []
   const { stretch, fragment } = part.transform
   const length = motif.length * stretch
@@ -80,7 +94,7 @@ function partNotes(part: Part, motif: Motif, pitch: Pitcher): NoteEvent[] {
       if (start >= end) continue
       notes.push({
         pitch: pitch(note, first, part),
-        start,
+        start: swung(start, swing),
         duration: Math.min(note.duration * stretch, end - start),
         velocity: note.velocity,
         motif: motif.id,
@@ -97,7 +111,7 @@ export function realise(composition: Composition): RealisedTrack[] {
     const pitch = pitcher(composition, track)
     const notes = track.parts.flatMap((part) => {
       const motif = motifs.get(part.motif)
-      return motif ? partNotes(part, motif, pitch) : []
+      return motif ? partNotes(part, motif, pitch, composition.swing) : []
     })
     notes.sort((a, b) => a.start - b.start || a.pitch - b.pitch)
     return { id: track.id, name: track.name, role: track.role, notes }

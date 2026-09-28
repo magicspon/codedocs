@@ -1,5 +1,6 @@
 ablx
 attero
+boombap
 calcom
 callees
 chaikin
@@ -36,6 +37,7 @@ Kythe
 lerp
 LLBT
 lockfiles
+lofi
 logomark
 LSIF
 magicspon
@@ -50,6 +52,7 @@ npmjs
 nums
 numstat
 nuxt
+octaved
 opencode
 pinnable
 playhead

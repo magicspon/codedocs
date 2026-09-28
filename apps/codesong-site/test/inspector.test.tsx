@@ -1,10 +1,11 @@
-import { realise, type Song } from '@codedocs/codesong/browser'
+import { realise } from '@codedocs/codesong/browser'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { Inspector, type Selection } from '../src/inspect/Inspector.tsx'
 import router from '../songs/router.song.json' with { type: 'json' }
+import { heard } from './heard.ts'
 
-const score = router as unknown as Song
+const score = heard(router)
 const { composition, evidence } = score
 const tracks = realise(composition)
 

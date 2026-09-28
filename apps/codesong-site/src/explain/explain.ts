@@ -9,7 +9,7 @@ import type {
   Section,
   Song,
 } from '@codedocs/codesong/browser'
-import { NOTE_NAMES } from '@codedocs/codesong/browser'
+import { BUSY, GENRES, NOTE_NAMES, TANGLED } from '@codedocs/codesong/browser'
 
 /**
  * Why the piece is the way it is, in plain words. Each explanation restates
@@ -33,6 +33,33 @@ export function keyReason({ composition, evidence }: Song): string {
     `circle of fifths from C, to ${NOTE_NAMES[composition.key]}. ` +
     `Loosely connected code plays near C; tangled code plays in distant keys.`
   )
+}
+
+/**
+ * How the code chose the genre, and what the listener is hearing if they
+ * picked another.
+ */
+export function genreReason({ composition, evidence }: Song): string[] {
+  const { genre, energy, tangle } = evidence.genre
+  const busy = energy >= BUSY ? 'busy' : 'calm'
+  const tangled = tangle >= TANGLED ? 'tangled' : 'orderly'
+  const reason = [
+    `Inside each part of the code, a file uses ${decimal(energy)} other ` +
+      `files on average, so the code is ${busy} (busy from ${BUSY}). ` +
+      `${percent(tangle)} of files sit in loops of files that depend on each ` +
+      `other, so it is ${tangled} (tangled from ${percent(TANGLED)}).`,
+    `Calm, orderly code suggests ambient; calm, tangled code lo-fi hip hop; ` +
+      `busy, orderly code techno; busy, tangled code drum and bass. This ` +
+      `code suggests ${GENRES[genre].label.toLowerCase()}.`,
+  ]
+  if (composition.genre !== genre) {
+    reason.push(
+      `You are hearing it as ${GENRES[composition.genre].label.toLowerCase()} ` +
+        `instead. The notes still come from the same code; only the tempo, ` +
+        `scale, drums, bass rhythm and sounds change.`,
+    )
+  }
+  return reason
 }
 
 /** Harmonic areas by scale-degree shift, as a musician would name them. */

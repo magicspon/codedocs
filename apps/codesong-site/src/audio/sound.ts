@@ -1,4 +1,5 @@
-import type { MusicalRole } from '@codedocs/codesong/browser'
+import type { GenreName, MusicalRole } from '@codedocs/codesong/browser'
+import { GENRE_SOUND } from './genres.ts'
 
 /**
  * The settings a listener can change on each role's synth, with their
@@ -62,7 +63,7 @@ const MIX = {
   pan: knob(0, -1, 1),
 }
 
-/** Each role's settings. The values match the sound the song was written for. */
+/** Each role's settings. The values are the sound before a genre changes it. */
 export const SETTINGS: Readonly<Record<MusicalRole, Settings>> = {
   lead: {
     Oscillator: { wave: { value: 'fatsawtooth', options: WAVES } },
@@ -115,13 +116,16 @@ export const SETTINGS: Readonly<Record<MusicalRole, Settings>> = {
   },
 }
 
-/** A role's starting values, flattened out of their groups. */
-export function defaults(role: MusicalRole): Sound {
+/**
+ * A role's starting values in `genre`, flattened out of their groups: the
+ * role's defaults with the genre's changes on top.
+ */
+export function defaults(role: MusicalRole, genre: GenreName): Sound {
   const sound: Record<string, number | string> = {}
   for (const group of Object.values(SETTINGS[role]))
     for (const [key, setting] of Object.entries(group))
       sound[key] = setting.value
-  return sound
+  return { ...sound, ...GENRE_SOUND[genre].sounds[role] }
 }
 
 /** A number setting's value, falling back to 0 if the key is not one. */

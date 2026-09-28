@@ -1,11 +1,11 @@
-import type { Song as Score } from '@codedocs/codesong/browser'
+import type { SongFile } from '@codedocs/codesong/browser'
 
 /**
  * The songs on the site: every `<name>.song.json` in `songs/`, which the
  * composer writes. Each loads only when its page opens, since a song carries
  * every note and the files behind them.
  */
-const scores = import.meta.glob<Score>('../songs/*.song.json', {
+const scores = import.meta.glob<SongFile>('../songs/*.song.json', {
   import: 'default',
 })
 
@@ -13,8 +13,8 @@ const scores = import.meta.glob<Score>('../songs/*.song.json', {
 export interface Song {
   /** The repository's name; also the song's path on the site. */
   readonly slug: string
-  /** Loads the composition and its evidence. */
-  readonly load: () => Promise<Score>
+  /** Loads the song in every genre, and its evidence. */
+  readonly load: () => Promise<SongFile>
 }
 
 /** The file name between the last `/` and the first `.`. */

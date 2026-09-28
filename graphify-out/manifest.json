@@ -2425,23 +2425,23 @@
     "semantic_hash": ""
   },
   "apps/codesong/scripts/compose.ts": {
-    "mtime": 1790611693.5852892,
-    "ast_hash": "c304c67438f11dd21214f9589ee2c126",
+    "mtime": 1790612625.2903266,
+    "ast_hash": "72c13915698b61500ceceff843841fef",
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/arrangement.ts": {
-    "mtime": 1790516894.7617655,
-    "ast_hash": "ef0aaaf9892a358290924802b63fdba5",
+    "mtime": 1790612945.0118847,
+    "ast_hash": "34455209f7958609e3a4520d8e4be139",
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/compose.ts": {
-    "mtime": 1790611693.5857108,
-    "ast_hash": "5da3231d56554ffd223a73749d7372d3",
+    "mtime": 1790612580.0746195,
+    "ast_hash": "3c37dfa372ba996c2a6c34396e0820b7",
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/harmony.ts": {
-    "mtime": 1790516894.7663884,
-    "ast_hash": "30533c73a7d0c67cfb2d1b4cd934920f",
+    "mtime": 1790612870.833664,
+    "ast_hash": "b32e7a69f85996e069ae05630098e3ae",
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/melody.ts": {
@@ -2450,13 +2450,13 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/compose/rhythm.ts": {
-    "mtime": 1790516894.7678125,
-    "ast_hash": "18d807d9535497fca7be91791017b8c9",
+    "mtime": 1790612932.1549537,
+    "ast_hash": "499b60c68b3ef6e6665364cdd68be430",
     "semantic_hash": ""
   },
   "apps/codesong/src/index.ts": {
-    "mtime": 1790611693.5860517,
-    "ast_hash": "35d75574d7b18bd90b43a47b73be03ee",
+    "mtime": 1790612603.5508912,
+    "ast_hash": "ab43af11fa268d5170983046019a7da6",
     "semantic_hash": ""
   },
   "apps/codesong/src/metrics.ts": {
@@ -2465,8 +2465,8 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/model.ts": {
-    "mtime": 1790612128.1430845,
-    "ast_hash": "ef4610e654d7a15f3f22c949c95d4391",
+    "mtime": 1790612477.3725011,
+    "ast_hash": "2a7f9890197d2bc1dca6eea62aa165a5",
     "semantic_hash": ""
   },
   "apps/codesong/src/paths.ts": {
@@ -2475,13 +2475,13 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/render/midi.ts": {
-    "mtime": 1790516894.7717555,
-    "ast_hash": "8e859844a30feb22a4a94660f674201c",
+    "mtime": 1790613139.8029306,
+    "ast_hash": "f9be54ed1fb9894401e22506a61217cb",
     "semantic_hash": ""
   },
   "apps/codesong/src/render/realise.ts": {
-    "mtime": 1790516894.771976,
-    "ast_hash": "a942323b1950a2bd219efe334fec6a2f",
+    "mtime": 1790612589.770114,
+    "ast_hash": "984b4a15622ba36352286370ef8223c1",
     "semantic_hash": ""
   },
   "apps/codesong/src/structure.ts": {
@@ -2495,8 +2495,8 @@
     "semantic_hash": ""
   },
   "apps/codesong/test/compose.test.ts": {
-    "mtime": 1790516894.7744706,
-    "ast_hash": "7058c16be8fb1937cf7ac533fd915eac",
+    "mtime": 1790612657.4912865,
+    "ast_hash": "09828b85aa96549d8b525c3af10cd23b",
     "semantic_hash": ""
   },
   "apps/codesong/test/fixture.ts": {
@@ -2505,8 +2505,8 @@
     "semantic_hash": ""
   },
   "apps/codesong/test/render.test.ts": {
-    "mtime": 1790516894.779451,
-    "ast_hash": "e56b1874eb6278868d8b6cf6d9bcef1e",
+    "mtime": 1790612630.9675736,
+    "ast_hash": "4c9cc7c6c061df6355b1d0e8e2089e05",
     "semantic_hash": ""
   },
   "apps/codesong/test/structure.test.ts": {
@@ -2525,8 +2525,8 @@
     "semantic_hash": ""
   },
   "docs/AUDIO.md": {
-    "mtime": 1790516894.7832797,
-    "ast_hash": "1258d1301f4aa16cace02e2bae665774",
+    "mtime": 1790612869.2218163,
+    "ast_hash": "45301b92b92ad8eae97ca3e613de02fd",
     "semantic_hash": ""
   },
   "apps/codesong/src/clusters.ts": {
@@ -2640,8 +2640,8 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/SongPage.tsx": {
-    "mtime": 1790611693.5791674,
-    "ast_hash": "c9384eb2b31e6a88e009ffb52c379aec",
+    "mtime": 1790613313.6746216,
+    "ast_hash": "8d60e425789b3fb15e00dd77489b9d59",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/main.tsx": {
@@ -2650,13 +2650,13 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/router.tsx": {
-    "mtime": 1790611693.5821593,
-    "ast_hash": "3c1886ffc5c663e23aca1d579f7a1ae0",
+    "mtime": 1790613139.835687,
+    "ast_hash": "e16e8c02cd0e35e108cc12033c10b79e",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/songs.ts": {
-    "mtime": 1790611693.583104,
-    "ast_hash": "d5e3475cd906732fe8c668ef93038270",
+    "mtime": 1790612691.7936738,
+    "ast_hash": "2b1c10f93455219c4c538fb718b4d005",
     "semantic_hash": ""
   },
   "apps/codesong-site/tsconfig.json": {
@@ -2685,8 +2685,8 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/HowItWorks.tsx": {
-    "mtime": 1790611693.5787086,
-    "ast_hash": "728494474323f485e6693b1d0e0d441c",
+    "mtime": 1790612869.2211163,
+    "ast_hash": "17599b8b6998e0a04d963e0bb8ce97ce",
     "semantic_hash": ""
   },
   "apps/code-art/src/data/sentry.json": {
@@ -3120,58 +3120,58 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/nextjs.song.json": {
-    "mtime": 1790612159.4564,
-    "ast_hash": "56d5dd6f8f812be48d29d368b4aa4aa0",
+    "mtime": 1790612870.7916286,
+    "ast_hash": "31a719e393c239a12708db94a540d36f",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/nuxt.song.json": {
-    "mtime": 1790612160.180174,
-    "ast_hash": "63d03cb8fa383d2e3c95aaa2977ba93c",
+    "mtime": 1790612870.784395,
+    "ast_hash": "598bfd3238f962bfa51f7a93bd90041d",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/opencode.song.json": {
-    "mtime": 1790612160.9663303,
-    "ast_hash": "860f31f5c3ce7c99235b3f57b1f7cc1f",
+    "mtime": 1790612870.7932575,
+    "ast_hash": "136bcaa24b5d232199fbc49a2f595c60",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/payload.song.json": {
-    "mtime": 1790612161.8159642,
-    "ast_hash": "c7a529962b85082b6c24a6dfee18837c",
+    "mtime": 1790612870.8087525,
+    "ast_hash": "c35c36141a629fd57087a1e4c311d192",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/router.song.json": {
-    "mtime": 1790612162.5734074,
-    "ast_hash": "d12476a8b92d36a64f3292f1a64ead1f",
+    "mtime": 1790612814.9280217,
+    "ast_hash": "bc097a61a5ec8dd046e80fe987a9bc53",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/sentry.song.json": {
-    "mtime": 1790612163.4567683,
-    "ast_hash": "f9215ba8bf7a22786d4b1d7540596a49",
+    "mtime": 1790612870.776206,
+    "ast_hash": "e5cb2ef2e8eef3fb8881814708d31edd",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/sst.song.json": {
-    "mtime": 1790612164.1625972,
-    "ast_hash": "e9aec59158357b010c12c8a5a5885948",
+    "mtime": 1790612870.7971406,
+    "ast_hash": "34bd053591a338483c61a88b884b47da",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/typescript.song.json": {
-    "mtime": 1790612164.8794363,
-    "ast_hash": "db8ac3d2f4627a3ff1b04c2198642c82",
+    "mtime": 1790612870.7983632,
+    "ast_hash": "fd2542d50b45b0c6f2382ef443e58a0c",
     "semantic_hash": ""
   },
   "apps/codesong-site/songs/vscode.song.json": {
-    "mtime": 1790612165.7744985,
-    "ast_hash": "e2a3caf2471ea6473ccfb6d318fb814d",
+    "mtime": 1790612818.180882,
+    "ast_hash": "45551b11f093fa2f7d86ae6db9110452",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/SoundPanel.tsx": {
-    "mtime": 1790611693.5792904,
-    "ast_hash": "a028d48d53076fff298f26c2a6bda8c5",
+    "mtime": 1790612723.6600819,
+    "ast_hash": "dfcc0b21074e7abaff3dab856d20e413",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/Transport.tsx": {
-    "mtime": 1790611693.5794482,
-    "ast_hash": "2ae9be53a42ddcf62ef4ea5541de047b",
+    "mtime": 1790612870.2201927,
+    "ast_hash": "9e4ebeee4d8c5f0159fa5b429ec988b0",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/UnknownSong.tsx": {
@@ -3180,28 +3180,28 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/instruments.ts": {
-    "mtime": 1790611693.5798979,
-    "ast_hash": "b50cf54a6384655fe8ec09093a7445db",
+    "mtime": 1790612714.691991,
+    "ast_hash": "6f9cad29b66f503af27ee023abc8f5de",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/player.ts": {
-    "mtime": 1790611693.5800796,
-    "ast_hash": "4195b42a06f26b49479a593dfa42a128",
+    "mtime": 1790612714.6923144,
+    "ast_hash": "a47efdc6906bea39c7f44f93e7cb7cde",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/sound.ts": {
-    "mtime": 1790611693.5802495,
-    "ast_hash": "f158de3bed9d79ad633f87c24228188a",
+    "mtime": 1790612714.6916063,
+    "ast_hash": "c69fd136f07894ddba3df59fecf41cbd",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/audio/usePlayer.ts": {
-    "mtime": 1790611693.580375,
-    "ast_hash": "9b497cc157c25708bf09b2a693159659",
+    "mtime": 1790612971.9498253,
+    "ast_hash": "33cc3e894cd38803c13ea915c1e34dd1",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/explain/explain.ts": {
-    "mtime": 1790611693.5805876,
-    "ast_hash": "f7fa7bd95b7697890d72835ea77ee75a",
+    "mtime": 1790612870.6861167,
+    "ast_hash": "4d914d8d7772f8163425f14669945fed",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/explain/names.ts": {
@@ -3210,8 +3210,8 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/icons.tsx": {
-    "mtime": 1790611693.5808446,
-    "ast_hash": "3accdf9f623b719f0faa351d0d8131ab",
+    "mtime": 1790613109.8543448,
+    "ast_hash": "0091df1954e8123c9433cfd2771efdd7",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/Inspector.tsx": {
@@ -3230,8 +3230,8 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/SongView.tsx": {
-    "mtime": 1790611693.5814261,
-    "ast_hash": "951d10884a6cf363454a846bb7bdbf26",
+    "mtime": 1790612783.984009,
+    "ast_hash": "8499cc6184ad65f39d89cd5605b1e59c",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/ThisNote.tsx": {
@@ -3265,18 +3265,18 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/test/explain.test.ts": {
-    "mtime": 1790611693.5834785,
-    "ast_hash": "39e9cdf6072de06d4e077aab6c83c480",
+    "mtime": 1790612851.5398002,
+    "ast_hash": "24533acb9b7eaac2f2ae521ff6a94ecd",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/names.test.ts": {
-    "mtime": 1790611693.5838256,
-    "ast_hash": "929c832bb166c70d9f440e62e6b3e73f",
+    "mtime": 1790612870.4134912,
+    "ast_hash": "33eb3649b3eb9850389692f7d9c1de35",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/sound.test.ts": {
-    "mtime": 1790611693.5840533,
-    "ast_hash": "fa250e78ac4490013a30e4b68f56be66",
+    "mtime": 1790612834.130437,
+    "ast_hash": "393de7553a36bd2d9121de0bbcece1d1",
     "semantic_hash": ""
   },
   "apps/codesong-site/vitest.config.ts": {
@@ -3285,18 +3285,18 @@
     "semantic_hash": ""
   },
   "apps/codesong/src/browser.ts": {
-    "mtime": 1790611693.585457,
-    "ast_hash": "5acd174868430fa4f2634e14fe43e586",
+    "mtime": 1790613109.8539689,
+    "ast_hash": "92c90f7e6107516ad883fdc589877284",
     "semantic_hash": ""
   },
   "apps/codesong/src/evidence.ts": {
-    "mtime": 1790611693.5858495,
-    "ast_hash": "812416102e65dab160ed454896893288",
+    "mtime": 1790612603.5507557,
+    "ast_hash": "dbe116e380093cecfbfb7b6b1223adda",
     "semantic_hash": ""
   },
   "apps/codesong/test/evidence.test.ts": {
-    "mtime": 1790611693.5862057,
-    "ast_hash": "ae111f572c59f4897fc3d38da8936ecc",
+    "mtime": 1790612630.9678464,
+    "ast_hash": "a49a3816640b3f24a87de119e6372ad2",
     "semantic_hash": ""
   },
   "apps/codesong-site/src/inspect/select.ts": {
@@ -3315,23 +3315,23 @@
     "semantic_hash": ""
   },
   "apps/codesong-site/test/inspector.test.tsx": {
-    "mtime": 1790611693.5835938,
-    "ast_hash": "5c604a5210f6a40d425496f52a846972",
+    "mtime": 1790612838.8081336,
+    "ast_hash": "281392f74258989644ce9bc7a2117d2b",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/launch.test.ts": {
-    "mtime": 1790611693.5837088,
+    "mtime": 1790612834.1220238,
     "ast_hash": "27e1c778b7106f9dd70bd74c68af5810",
     "semantic_hash": ""
   },
   "apps/codesong-site/test/select.test.ts": {
-    "mtime": 1790611693.583943,
-    "ast_hash": "cc172bf7e4bf7e544181c437f8f342ff",
+    "mtime": 1790612838.8103862,
+    "ast_hash": "ac4742ebbc4f1954194bc800bd03dade",
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1790612128.0609493,
-    "ast_hash": "6032be0fb734322048b913842213242a",
+    "mtime": 1790612870.2845685,
+    "ast_hash": "cc2633ff87d69ee7bd3bb360865b44f3",
     "semantic_hash": ""
   },
   ".codedocs/art/data/codedocs.json": {
@@ -3692,6 +3692,51 @@
   "apps/codesong/test/melody.test.ts": {
     "mtime": 1790612146.3151443,
     "ast_hash": "b8380cd968fac5465cd32afafa2e0e1d",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/GenrePicker.tsx": {
+    "mtime": 1790613241.3382657,
+    "ast_hash": "f2b6be846bf3c5d09b6d110e474a2dc1",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/audio/genres.ts": {
+    "mtime": 1790612714.5398788,
+    "ast_hash": "f1ba8d794b1410d55e88dd5beeb65c06",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/audio/handover.ts": {
+    "mtime": 1790612971.9551384,
+    "ast_hash": "97457e0b1307e4cc7b9aff28de15d6aa",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/test/handover.test.ts": {
+    "mtime": 1790612973.6774864,
+    "ast_hash": "e4b217a78413a474a75cff2dd39cf419",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/test/heard.ts": {
+    "mtime": 1790612834.1191194,
+    "ast_hash": "56ef4a0b759b12fe080ac6ebcb20245c",
+    "semantic_hash": ""
+  },
+  "apps/codesong/src/compose/genre.ts": {
+    "mtime": 1790612783.9835985,
+    "ast_hash": "9e784b43e716fad5b2ed4d9660a3cf79",
+    "semantic_hash": ""
+  },
+  "apps/codesong/test/genre.test.ts": {
+    "mtime": 1790612870.8483691,
+    "ast_hash": "008c01842c426f9db703d03a9d258c2a",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/src/MidiDownload.tsx": {
+    "mtime": 1790613109.8598073,
+    "ast_hash": "d68314d7ff606978d4e068737e5bbb04",
+    "semantic_hash": ""
+  },
+  "apps/codesong-site/test/genre.test.ts": {
+    "mtime": 1790613241.3438456,
+    "ast_hash": "5b8da0c9e2ffa2c4b1fdf5e0199d4ca7",
     "semantic_hash": ""
   }
 }

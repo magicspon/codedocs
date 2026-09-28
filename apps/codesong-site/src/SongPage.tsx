@@ -1,4 +1,8 @@
-import { realise } from '@codedocs/codesong/browser'
+import {
+  realise,
+  type GenreName,
+  type SongFile,
+} from '@codedocs/codesong/browser'
 import { getRouteApi, Link } from '@tanstack/react-router'
 import { useMemo, useState, type JSX } from 'react'
 import { usePlayer } from './audio/usePlayer.ts'
@@ -9,6 +13,8 @@ import { length } from './scene/layout.ts'
 import { Stage } from './scene/Stage.tsx'
 import { SoundPanel } from './SoundPanel.tsx'
 import { HomeIcon, IconToggle, InfoIcon } from './icons.tsx'
+import { GenrePicker, genreSearch } from './GenrePicker.tsx'
+import { MidiDownload } from './MidiDownload.tsx'
 import { Transport } from './Transport.tsx'
 
 // By path rather than by import, so the page and the router do not import each other.
@@ -45,11 +51,44 @@ function Corner(props: {
  * One song as a 3D score filling the window: the bars run across a floor,
  * every note stands above its track, and a panel behind the info button says
  * which code each part, section and note came from. Tone.js plays it in the
- * browser.
+ * browser, in the genre the code suggested until the listener picks another.
  */
 export function SongPage(): JSX.Element {
-  const { slug, score } = songRoute.useLoaderData()
-  const { composition } = score
+  const { slug, file } = songRoute.useLoaderData()
+  // Keyed by song, so a new song starts over rather than taking the last
+  // song's place.
+  return <Song key={slug} slug={slug} file={file} />
+}
+
+/**
+ * The genre playing, from the URL's `?genre=`, or the one the code suggested.
+ * Picking one replaces the URL rather than pushing it, so Back leaves the
+ * song instead of stepping through genres.
+ */
+function useGenre(
+  suggested: GenreName,
+): readonly [GenreName, (next: GenreName) => void] {
+  const genre = songRoute.useSearch().genre ?? suggested
+  const navigate = songRoute.useNavigate()
+  const pick = (next: GenreName): void =>
+    void navigate({ search: genreSearch(next, suggested), replace: true })
+  return [genre, pick]
+}
+
+function Song({
+  slug,
+  file,
+}: {
+  readonly slug: string
+  readonly file: SongFile
+}): JSX.Element {
+  const suggested = file.evidence.genre.genre
+  const [genre, setGenre] = useGenre(suggested)
+  const composition = file.versions[genre]
+  const score = useMemo(
+    () => ({ composition, evidence: file.evidence }),
+    [composition, file.evidence],
+  )
   const tracks = useMemo(() => realise(composition), [composition])
   const beats = useMemo(() => length(composition), [composition])
   const names = useMemo(
@@ -87,6 +126,20 @@ export function SongPage(): JSX.Element {
           <Transport
             corner={<Corner info={view.info} onInfo={view.setInfo} />}
             title={slug}
+            beside={
+              <>
+                <GenrePicker
+                  genre={genre}
+                  suggested={suggested}
+                  onChange={setGenre}
+                />
+                <MidiDownload
+                  slug={slug}
+                  composition={composition}
+                  tracks={tracks}
+                />
+              </>
+            }
             tracks={tracks}
             length={beats}
             composition={composition}
@@ -113,8 +166,9 @@ export function SongPage(): JSX.Element {
         </div>
         {tuned && (
           <SoundPanel
-            key={tuned.id}
+            key={`${genre}:${tuned.id}`}
             track={tuned}
+            genre={genre}
             initial={player.sound(tuned.id)}
             onTune={player.tune}
             onClose={view.closeTuning}

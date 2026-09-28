@@ -8,7 +8,7 @@
  */
 
 /** Bumped whenever the same inputs would compose a different piece. */
-export const COMPOSER_VERSION = '0.3.0'
+export const COMPOSER_VERSION = '0.4.0'
 
 /** What a track does in the piece; the renderer turns a role into a sound. */
 export type MusicalRole =
@@ -28,18 +28,27 @@ export type ScaleName =
   | 'lydian'
   | 'mixolydian'
 
+/**
+ * The genres a piece can be played in. A genre is a way of playing the same
+ * code-derived material, not a different composition: see `compose/genre.ts`.
+ */
+export type GenreName = 'ambient' | 'lofi' | 'techno' | 'dnb'
+
 /** What the caller controls. Everything else comes from the code and the seed. */
 export interface ComposeOptions {
   /** Varies the piece without changing what it is derived from. */
   readonly seed: number
-  /** Beats per minute, fixed for the whole piece. */
-  readonly tempo: number
+  /** A genre, or `'auto'` to let the code suggest one. */
+  readonly genre: GenreName | 'auto'
+  /** Beats per minute, fixed for the whole piece; absent takes the genre's. */
+  readonly tempo?: number
   /**
    * Length in 4/4 bars, or `'auto'` to let the subsystems decide. Either way
    * the piece does not grow with the repository.
    */
   readonly bars: number | 'auto'
-  readonly scale: ScaleName
+  /** Absent takes the genre's. */
+  readonly scale?: ScaleName
   /** 1–6: roles are dropped from the end of `ROLE_ORDER` first. */
   readonly tracks: number
   /** Most melodic motifs across the whole piece, the theme included. */
@@ -170,6 +179,13 @@ export interface Composition {
     readonly options: ComposeOptions
   }
   readonly tempo: number
+  /** The genre it was composed in, which the renderers use to pick sounds. */
+  readonly genre: GenreName
+  /**
+   * Beats by which every off-beat sixteenth is played late: 0 is straight.
+   * Kept apart from the notes so the score stays on the grid.
+   */
+  readonly swing: number
   /** Tonic as a pitch class, 0 (C) to 11 (B). */
   readonly key: number
   readonly scale: ScaleName

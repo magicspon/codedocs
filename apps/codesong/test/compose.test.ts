@@ -30,7 +30,8 @@ function plays(piece: Composition, role: string, section: number): boolean {
 }
 
 describe('compose', () => {
-  const piece = compose(vscode, DEFAULT_OPTIONS)
+  // Lo-fi rests no role, so every section's full texture is there to test.
+  const piece = compose(vscode, { ...DEFAULT_OPTIONS, genre: 'lofi' })
 
   it('is deterministic', () => {
     expect(compose(codedocs, DEFAULT_OPTIONS)).toEqual(

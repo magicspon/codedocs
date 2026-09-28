@@ -6,6 +6,7 @@ import {
   notFound,
   RouterProvider,
 } from '@tanstack/react-router'
+import { GENRE_NAMES, type GenreName } from '@codedocs/codesong/browser'
 import type { JSX } from 'react'
 import { HowItWorks } from './HowItWorks.tsx'
 import { Layout } from './Layout.tsx'
@@ -36,10 +37,16 @@ const howItWorksRoute = createRoute({
 const songRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '$song',
+  // `?genre=techno` plays that genre, so a link can share it. Anything else
+  // is dropped, and the page plays the genre the code suggests.
+  validateSearch: (search: Record<string, unknown>): { genre?: GenreName } =>
+    GENRE_NAMES.includes(search.genre as GenreName)
+      ? { genre: search.genre as GenreName }
+      : {},
   loader: async ({ params }) => {
     const song = findSong(params.song)
     if (!song) throw notFound()
-    return { slug: song.slug, score: await song.load() }
+    return { slug: song.slug, file: await song.load() }
   },
   // Loaded on demand: the scene and the synths are most of the site's code,
   // and the list and the explainer need none of it.

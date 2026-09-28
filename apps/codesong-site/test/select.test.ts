@@ -1,9 +1,10 @@
-import { realise, type Song } from '@codedocs/codesong/browser'
+import { realise } from '@codedocs/codesong/browser'
 import { describe, expect, it } from 'vitest'
 import { highlight, motifAt, pickNote } from '../src/inspect/select.ts'
 import router from '../songs/router.song.json' with { type: 'json' }
+import { heard } from './heard.ts'
 
-const tracks = realise((router as unknown as Song).composition)
+const tracks = realise(heard(router).composition)
 const lead = tracks.find((t) => t.role === 'lead')!
 const first = { track: lead.id, index: 0 }
 const second = { track: lead.id, index: lead.notes.length - 1 }
